@@ -1,0 +1,350 @@
+<div class="p-10 space-y-8 h-screen w-full bg-background transition-colors text-foreground overflow-auto">
+  <header>
+    <h1 class="text-3xl font-bold text-foreground">&#64;tolle/ui</h1>
+    <p class="text-muted-foreground">Amazing Professional Angular components.</p>
+  </header>
+
+  <section class="p-4 border rounded-lg space-y-4 text-foreground">
+    <h2 class="font-semibold ">Live Theme Engine</h2>
+    <div class="flex items-center gap-4">
+      <label>Change Primary Color:</label>
+      <input type="color"
+             (input)="changeColor($event)"
+             value="#2563eb"
+             class="h-10 w-20 cursor-pointer" />
+
+      <tolle-button variant="ghost" size="icon" (click)="toggle()">
+        <i [class]="(theme.isDark$ | async) ? 'ri-sun-line' : 'ri-moon-line'"></i>
+      </tolle-button>
+    </div>
+  </section>
+
+  <div class="flex flex-wrap gap-4">
+    <tolle-button>Primary (Auto)</tolle-button>
+    <tolle-button size="xs" variant="secondary">Secondary (Derived)</tolle-button>
+    <tolle-button variant="outline">Outline</tolle-button>
+    <tolle-button variant="ghost">Ghost</tolle-button>
+  </div>
+  <div class="p-10 flex flex-col gap-6">
+    <h1 class="text-2xl font-bold">Icon Integration</h1>
+
+    <div class="flex items-center gap-4">
+      <tolle-button variant="default">
+        <i class="ri-flashlight-line"></i>
+        Explore
+      </tolle-button>
+
+      <tolle-button variant="secondary" size="sm">
+        <i class="ri-github-fill"></i>
+        Source Code
+      </tolle-button>
+
+      <tolle-button variant="outline" size="icon-sm">
+        <i class="ri-settings-3-line"></i>
+      </tolle-button>
+    </div>
+  </div>
+
+  <div class="p-10 max-w-md space-y-6">
+    <h2 class="text-xl font-semibold">Input Collection</h2>
+
+    <div class="space-y-1.5">
+      <label class="text-sm font-medium">Email Address</label>
+      <tolle-input placeholder="name@example.com"></tolle-input>
+    </div>
+
+    <div class="space-y-1.5">
+      <label class="text-sm font-medium">Search</label>
+      <tolle-input size="xs" placeholder="Search products...">
+        <i prefix class="ri-search-line"></i>
+      </tolle-input>
+    </div>
+
+    <div class="space-y-1.5">
+      <label class="text-sm font-medium text-destructive">Password</label>
+      <tolle-input type="password" [error]="true" placeholder="Enter password">
+        <i suffix class="ri-lock-line"></i>
+      </tolle-input>
+      <p class="text-xs text-destructive">Password is too weak.</p>
+    </div>
+
+    <div class="space-y-1.5">
+      <label class="text-sm font-medium">API Key</label>
+      <tolle-input [disabled]="true" placeholder="Hidden key..."></tolle-input>
+    </div>
+  </div>
+
+  <div class="p-10 space-y-8">
+    <h2 class="text-xl font-bold">Size Synchronization</h2>
+    <div class="flex items-center gap-2">
+      <tolle-input size="xs" placeholder="Small search..." class="w-64">
+        <i prefix class="ri-search-line"></i>
+      </tolle-input>
+      <tolle-button size="xs">Search</tolle-button>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <tolle-input size="sm" placeholder="Small search..." class="w-64">
+        <i prefix class="ri-search-line"></i>
+      </tolle-input>
+      <tolle-button size="sm">Search</tolle-button>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <tolle-input size="default" placeholder="Default input..." class="w-64">
+        <i prefix class="ri-user-line"></i>
+      </tolle-input>
+      <tolle-button size="default">Submit</tolle-button>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <tolle-input size="lg" placeholder="Large footprint..." class="w-64">
+        <i prefix class="ri-mail-line"></i>
+      </tolle-input>
+      <tolle-button size="lg">Subscribe</tolle-button>
+    </div>
+  </div>
+
+  <div class="p-10 bg-muted/30">
+    <tolle-card class="max-w-md mx-auto">
+      <tolle-card-header>
+        <tolle-card-title class="flex items-center gap-2">
+          <i class="ri-palette-line text-primary"></i>
+          Theme Settings
+        </tolle-card-title>
+        <p class="text-sm text-muted-foreground">
+          Derived colors will update as you change the primary.
+        </p>
+      </tolle-card-header>
+
+      <tolle-card-content class="space-y-4">
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold uppercase text-muted-foreground">Primary Hex</label>
+          <tolle-input [ngModel]="'#2563eb'" (ngModelChange)="changeColor($event)">
+            <i prefix class="ri-drop-line"></i>
+          </tolle-input>
+        </div>
+
+        <div class="p-4 rounded-lg bg-secondary text-secondary-foreground text-sm">
+          <strong>Pro Tip:</strong> This background is auto-generated using <code>color-mix</code>
+          based on your primary color!
+        </div>
+      </tolle-card-content>
+
+      <tolle-card-footer class="flex justify-between">
+        <tolle-button variant="ghost">Cancel</tolle-button>
+        <tolle-button>Save Changes</tolle-button>
+      </tolle-card-footer>
+    </tolle-card>
+  </div>
+
+  <div class="max-w-xs space-y-4 p-10">
+    <label class="text-sm font-medium">Favorite Food</label>
+
+    <form [formGroup]="form" class="flex flex-col space-y-2">
+      <tolle-select placeholder="Select a timezone..." formControlName="timezone">
+
+        <tolle-select-group>North America</tolle-select-group>
+        <tolle-select-item value="est">Eastern Standard Time (EST)</tolle-select-item>
+        <tolle-select-item value="pst">Pacific Standard Time (PST)</tolle-select-item>
+
+        <tolle-select-separator></tolle-select-separator>
+
+        <tolle-select-group>Europe</tolle-select-group>
+        <tolle-select-item value="gmt">Greenwich Mean Time (GMT)</tolle-select-item>
+        <tolle-select-item value="cet">Central European Time (CET)</tolle-select-item>
+
+      </tolle-select>
+      <tolle-select [searchable]="true" placeholder="Select a Country" formControlName="country">
+        <tolle-select-item value="us">United States</tolle-select-item>
+        <tolle-select-item value="de">Germany</tolle-select-item>
+        <tolle-select-item value="gh">Ghana</tolle-select-item>
+        <tolle-select-item value="fr">France</tolle-select-item>
+      </tolle-select>
+
+      <tolle-select formControlName="favoriteFood" placeholder="What's for dinner?">
+        <tolle-select-item [value]="item.value" *ngFor="let item of foodOptions">
+          <div class="flex items-center gap-2">
+            <div class="w-6 h-6 rounded-full bg-primary/20 text-[10px] flex items-center justify-center">JD</div>
+            <span>{{ item.label }}</span>
+          </div>
+        </tolle-select-item>
+      </tolle-select>
+    </form>
+
+    <p class="text-xs text-muted-foreground">
+      Selected Value: {{ form.value.favoriteFood }}
+    </p>
+
+    <div class="p-10 flex items-center gap-2">
+      <tolle-select size="xs" placeholder="Sort by" class="w-32">
+        <tolle-select-item value="new">Newest</tolle-select-item>
+        <tolle-select-item value="old">Oldest</tolle-select-item>
+      </tolle-select>
+
+      <tolle-input size="xs" placeholder="Filter..." class="w-40">
+        <i prefix class="ri-filter-3-line"></i>
+      </tolle-input>
+
+      <tolle-button size="xs">
+        Apply
+      </tolle-button>
+    </div>
+  </div>
+
+  <div class="p-10 max-w-md mx-auto space-y-6">
+    <tolle-card>
+      <tolle-card-header>
+        <tolle-card-title>Preferences</tolle-card-title>
+      </tolle-card-header>
+
+      <tolle-card-content class="space-y-6">
+        <div class="flex items-center justify-between">
+          <div class="space-y-0.5">
+            <label class="text-sm font-medium">Email Notifications</label>
+            <p class="text-xs text-muted-foreground">Receive updates about your account.</p>
+          </div>
+          <tolle-switch [formControl]="emailControl"></tolle-switch>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <div class="space-y-0.5">
+            <label class="text-sm font-medium">Marketing Emails</label>
+            <p class="text-xs text-muted-foreground">Stay up to date with new features.</p>
+          </div>
+          <tolle-switch [formControl]="marketingControl"></tolle-switch>
+        </div>
+      </tolle-card-content>
+    </tolle-card>
+  </div>
+
+  <div class="p-10 space-y-6">
+    <div class="flex items-center gap-2">
+      <tolle-switch size="xs"></tolle-switch>
+      <span class="text-[10px] font-medium uppercase text-muted-foreground">Status</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <tolle-switch size="sm"></tolle-switch>
+      <span class="text-xs">Notifications</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <tolle-switch size="default"></tolle-switch>
+      <span class="text-sm font-medium">Auto-Update</span>
+    </div>
+  </div>
+  <div class="p-10 space-y-8 bg-background">
+
+    <div class="flex flex-wrap gap-4 items-center">
+      <h2 class="text-xl font-bold">Status Indicators</h2>
+
+      <tolle-badge>Active</tolle-badge>
+      <tolle-badge variant="secondary">Draft</tolle-badge>
+      <tolle-badge variant="outline">Archived</tolle-badge>
+      <tolle-badge variant="destructive">Error</tolle-badge>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <tolle-badge size="xs">XS Tag</tolle-badge>
+      <tolle-badge size="sm">SM Tag</tolle-badge>
+      <tolle-badge size="default">Default Tag</tolle-badge>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <span class="text-sm font-medium">Notifications</span>
+      <tolle-badge variant="destructive" size="xs" class="rounded-sm">99+</tolle-badge>
+    </div>
+
+  </div>
+  <div class="p-10 space-y-4">
+    <h3 class="text-foreground font-semibold">Interactive Pills</h3>
+
+    <div class="flex flex-wrap gap-2">
+      <tolle-badge variant="secondary">
+        <i prefix class="ri-price-tag-3-line"></i>
+        Ecommerce
+      </tolle-badge>
+
+      <tolle-badge
+        variant="outline"
+        [removable]="true"
+        (onRemove)="handleRemove('Design')">
+        Design
+      </tolle-badge>
+
+      <tolle-badge [removable]="true">
+        Verified
+      </tolle-badge>
+    </div>
+  </div>
+
+  <div class="p-10 max-w-sm mx-auto">
+    <tolle-card>
+      <tolle-card-header class="flex flex-row items-center gap-4">
+        <tolle-skeleton variant="circle" class="h-12 w-12"></tolle-skeleton>
+
+        <div class="space-y-2 flex flex-col">
+          <tolle-skeleton class="h-4 w-32"></tolle-skeleton>
+          <tolle-skeleton class="h-3 w-24"></tolle-skeleton>
+        </div>
+      </tolle-card-header>
+
+      <tolle-card-content class="space-y-4 flex flex-col">
+        <tolle-skeleton class="h-4 w-full"></tolle-skeleton>
+        <tolle-skeleton class="h-4 w-full"></tolle-skeleton>
+        <tolle-skeleton class="h-4 w-3/4"></tolle-skeleton>
+
+        <tolle-skeleton class="h-10 w-full mt-4"></tolle-skeleton>
+      </tolle-card-content>
+    </tolle-card>
+  </div>
+
+  <div class="p-10 space-y-6 bg-background">
+    <h3 class="text-foreground font-semibold">Form Selection</h3>
+
+    <div class="flex items-start gap-3">
+      <tolle-checkbox [formControl]="termsControl"></tolle-checkbox>
+      <div class="grid gap-1.5 leading-none">
+        <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          Accept terms and conditions
+        </label>
+        <p class="text-xs text-muted-foreground">
+          You agree to our Terms of Service and Privacy Policy.
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <tolle-checkbox size="xs"></tolle-checkbox>
+      <span class="text-xs">Remember me</span>
+    </div>
+  </div>
+
+  <div class="p-10 flex gap-4 bg-background">
+
+    <tolle-button
+      variant="outline"
+      size="icon"
+      tolleTooltip="Edit Profile"
+      placement="top"
+    >
+      <i class="ri-edit-line"></i>
+    </tolle-button>
+
+    <tolle-badge
+      variant="secondary"
+      tolleTooltip="Verified Account Status"
+    >
+      <i prefix class="ri-shield-check-line"></i>
+      Verified
+    </tolle-badge>
+
+  </div>
+  <div class="p-10 flex gap-4 bg-background">
+    <tolle-badge (click)="saveSettings()">Success</tolle-badge>
+    <tolle-badge variant="destructive" (click)="showError()">Error</tolle-badge>
+  </div>
+</div>
+
+<tolle-toaster position="top-center"/>
