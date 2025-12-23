@@ -1,24 +1,35 @@
-# Tolle
+## 🛡️ License & Attribution
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.0.
+This library is **Open Source** and free to use for both personal and commercial projects.
 
-## Code scaffolding
+However, you **cannot** replicate this library and claim it as your own work.
+If you redistribute the source code or use it in a public project, the original
+copyright notice and author attribution must remain intact.
 
-Run `ng generate component component-name --project tolle` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project tolle`.
-> Note: Don't forget to add `--project tolle` or else it will be added to the default project in your `angular.json` file. 
+**Built with ❤️ by Bernard Kojo Ossei-Agyei**
 
-## Build
+# @tolle/ui
 
-Run `ng build tolle` to build the project. The build artifacts will be stored in the `dist/` directory.
+A premium, high-performance Angular UI library meticulously crafted with a **Google Dark Mode** aesthetic. Built for speed, accessibility, and a modern "charcoal" look.
 
-## Publishing
 
-After building your library with `ng build tolle`, go to the dist folder `cd dist/tolle` and run `npm publish`.
 
-## Running unit tests
+## ✨ Features
 
-Run `ng test tolle` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- 🌑 **Google Dark Mode First:** Optimized for `#121212` backgrounds using `color-mix` CSS technology.
+- ⚡ **Zero-Animation Base:** Clean, instant state changes for a "snappy" enterprise feel.
+- 🧩 **Angular Native:** Built with Reactive Forms and `ControlValueAccessor` integration.
+- 📏 **Unified Sizing:** Every component scales perfectly from `xs` to `lg`.
+- 🔍 **Searchable Comboboxes:** Select components with built-in real-time filtering.
+- 🍞 **Advanced Toast System:** Stackable notifications with "Pause-on-Hover" and progress timers.
 
-## Further help
+---
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🚀 Installation
+
+Install the library and its peer dependency (Floating UI):
+
+```bash
+npm install @tolle/ui @floating-ui/dom
+
+@import "@tolle/ui/styles/theme.css";

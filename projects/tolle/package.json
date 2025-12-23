@@ -1,9 +1,16 @@
 {
-  "name": "tolle",
-  "version": "0.0.1",
+  "name": "@kojo-io/tolle-ui",
+  "version": "1.0.0-beta",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "A high-performance Angular UI library.",
+  "author": "Bernard Kojo Ossei-Agyei <bernard.ossei@gmail.com>",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^18.2.0",
-    "@angular/core": "^18.2.0"
+    "@angular/core": "^18.2.0",
+    "@floating-ui/dom": "^1.7.4"
   },
   "dependencies": {
     "tslib": "^2.3.0"
