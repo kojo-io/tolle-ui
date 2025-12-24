@@ -24,6 +24,7 @@
     <tolle-button size="xs" variant="secondary">Secondary (Derived)</tolle-button>
     <tolle-button variant="outline">Outline</tolle-button>
     <tolle-button variant="ghost">Ghost</tolle-button>
+    <tolle-button variant="ghost">Cancel</tolle-button>
   </div>
   <div class="p-10 flex flex-col gap-6">
     <h1 class="text-2xl font-bold">Icon Integration</h1>
@@ -56,7 +57,7 @@
     <div class="space-y-1.5">
       <label class="text-sm font-medium">Search</label>
       <tolle-input size="xs" placeholder="Search products...">
-        <i prefix class="ri-search-line"></i>
+        <i prefix class="ri-search-line border-input"></i>
       </tolle-input>
     </div>
 
@@ -106,7 +107,7 @@
   </div>
 
   <div class="p-10 bg-muted/30">
-    <tolle-card class="max-w-md mx-auto">
+    <tolle-card class="max-w-md">
       <tolle-card-header>
         <tolle-card-title class="flex items-center gap-2">
           <i class="ri-palette-line text-primary"></i>
@@ -192,7 +193,7 @@
     </div>
   </div>
 
-  <div class="p-10 max-w-md mx-auto space-y-6">
+  <div class="p-10 max-w-md space-y-6">
     <tolle-card>
       <tolle-card-header>
         <tolle-card-title>Preferences</tolle-card-title>
@@ -279,7 +280,7 @@
     </div>
   </div>
 
-  <div class="p-10 max-w-sm mx-auto">
+  <div class="p-10 max-w-sm">
     <tolle-card>
       <tolle-card-header class="flex flex-row items-center gap-4">
         <tolle-skeleton variant="circle" class="h-12 w-12"></tolle-skeleton>
@@ -345,6 +346,268 @@
     <tolle-badge (click)="saveSettings()">Success</tolle-badge>
     <tolle-badge variant="destructive" (click)="showError()">Error</tolle-badge>
   </div>
+
+  <div class="p-10 flex flex-col gap-4 bg-background">
+
+    <h2 class="text-xl font-bold text-foreground">Select a Date</h2>
+
+    <tolle-calendar
+      [formControl]="dateControl"
+      [disablePastDates]="true"
+    ></tolle-calendar>
+
+    <div class="text-muted-foreground text-sm">
+      Selected: {{ dateControl.value | date:'fullDate' }}
+    </div>
+
+  </div>
+
+  <div class="p-10 space-y-6 max-w-md bg-background">
+
+    <h3 class="font-bold text-foreground">Masked Inputs</h3>
+
+    <div class="space-y-1">
+      <label class="text-sm font-medium text-foreground">Phone Number</label>
+      <tolle-masked-input
+        mask="(000) 000-0000"
+        placeholder="(555) 000-0000"
+        [returnRaw]="true"
+        [formControl]="phoneControl">
+      </tolle-masked-input>
+      <p class="text-xs text-muted-foreground">Value: {{ phoneControl.value }}</p>
+    </div>
+
+    <div class="space-y-1">
+      <label class="text-sm font-medium text-foreground">Date of Birth</label>
+      <tolle-masked-input
+        mask="00/00/0000"
+        placeholder="MM/DD/YYYY">
+      </tolle-masked-input>
+    </div>
+
+    <div class="space-y-1">
+      <label class="text-sm font-medium text-foreground">Card Number</label>
+      <tolle-masked-input
+        mask="0000 0000 0000 0000"
+        placeholder="0000 0000 0000 0000">
+      </tolle-masked-input>
+    </div>
+
+    <div class="space-y-1">
+      <label class="text-sm font-medium text-foreground">License Key</label>
+      <tolle-masked-input
+        mask="****-****-****-****"
+        class="font-mono uppercase"
+        placeholder="XXXX-XXXX-XXXX-XXXX">
+      </tolle-masked-input>
+    </div>
+    <div class="space-y-1">
+      <label class="text-sm font-medium">Phone</label>
+      <tolle-masked-input mask="(000) 000-0000" placeholder="Enter Phone">
+
+        <i prefix class="ri-phone-line"></i>
+
+        <i suffix class="ri-error-warning-line text-destructive"></i>
+
+      </tolle-masked-input>
+    </div>
+    <div class="space-y-1">
+      <label class="text-sm font-medium">Weight</label>
+      <tolle-masked-input
+        mask="000"
+        placeholder="000"
+        class="w-32">
+
+        <span suffix class="text-xs font-bold text-muted-foreground">kg</span>
+
+      </tolle-masked-input>
+    </div>
+  </div>
+  <div class="p-20">
+
+    <div class="max-w-xs space-y-2">
+      <label class="text-sm font-medium text-foreground">Date of Birth</label>
+
+      <tolle-date-picker
+        [formControl]="dobControl"
+        [disablePastDates]="false"
+        [disabled]="false"
+        placeholder="Select your birthday"
+      ></tolle-date-picker>
+
+      <p class="text-xs text-muted-foreground">
+        Stored Value: {{ dobControl.value | date:'fullDate' }}
+      </p>
+    </div>
+
+  </div>
+  <tolle-pagination
+    [totalRecords]="totalItems"
+    [currentPage]="currentPage"
+    [currentPageSize]="pageSize"
+    [showCurrentPageInfo]="true"
+    (onPageNumberChange)="handlePageChange($event)"
+    (onPageSizeChange)="handleSizeChange($event)"
+  ></tolle-pagination>
+
+  <tolle-pagination
+    [totalRecords]="100"
+    [currentPageSize]="10"
+    currentPageInfoTemplate="Showing {first} to {last} of {totalRecords} users"
+  ></tolle-pagination>
+
+  <tolle-pagination
+    [totalRecords]="200"
+    [showPageLinks]="false"
+    [showPageOptions]="false"
+    [showCurrentPageInfo]="true"
+  ></tolle-pagination>
+
+  <div class="p-8 bg-background border rounded-xl shadow-sm">
+    <h2 class="text-xl font-bold mb-6">Recent Orders</h2>
+
+    <tolle-data-table
+      [columns]="orderColumns"
+      [data]="orders"
+      [expandable]="true"
+      [expandedTemplate]="orderItemsTpl"
+      [pageSize]="5"
+    >
+      <ng-template tolleCell="status" let-value>
+        <div class="flex items-center gap-2">
+        <span [class]="cn(
+          'h-2 w-2 rounded-full',
+          value === 'Paid' ? 'bg-emerald-500' :
+          value === 'Pending' ? 'bg-amber-500' : 'bg-slate-400'
+        )"></span>
+          <span class="text-xs font-medium">{{ value }}</span>
+        </div>
+      </ng-template>
+    </tolle-data-table>
+  </div>
+
+  <ng-template #orderItemsTpl let-row="row">
+    <div class="p-2 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+          Line Items for {{ row.orderNumber }}
+        </h3>
+        <button class="text-xs text-primary hover:underline">Download Invoice</button>
+      </div>
+
+      <tolle-data-table
+        [columns]="itemColumns"
+        [data]="row.items"
+        [paginate]="false"
+        [searchable]="false"
+      ></tolle-data-table>
+    </div>
+  </ng-template>
+
+  <div class="max-w-2xl p-10 bg-background text-foreground">
+    <h2 class="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+
+    <tolle-accordion type="single">
+      <tolle-accordion-item *ngFor="let faq of faqs" [title]="faq.question">
+        {{ faq.answer }}
+      </tolle-accordion-item>
+    </tolle-accordion>
+
+    <div class="mt-12">
+      <h3 class="text-sm font-semibold uppercase text-muted-foreground mb-4">Multiple Selection</h3>
+      <tolle-accordion type="multiple">
+        <tolle-accordion-item title="Can I open many at once?">
+          Yes, because the type is set to multiple.
+        </tolle-accordion-item>
+        <tolle-accordion-item title="Is it animated?">
+          No, it uses static rendering for a snappy, high-performance feel.
+        </tolle-accordion-item>
+      </tolle-accordion>
+    </div>
+  </div>
+
+  <app-user-list/>
+
+  <tolle-button-group>
+    <tolle-button variant="outline">
+      <i class="ri-arrow-left-s-line mr-2"></i> Previous
+    </tolle-button>
+    <tolle-button variant="outline">
+      Next <i class="ri-arrow-right-s-line ml-2"></i>
+    </tolle-button>
+  </tolle-button-group>
+  <tolle-button-group>
+    <tolle-button variant="outline">Yearly</tolle-button>
+    <tolle-button variant="outline">Monthly</tolle-button>
+    <tolle-button variant="outline">Monthly</tolle-button>
+    <tolle-button variant="outline">Monthly</tolle-button>
+    <tolle-button variant="outline">Monthly</tolle-button>
+    <tolle-button variant="outline">Daily</tolle-button>
+  </tolle-button-group>
+
+  <div class="p-10 space-y-12 max-w-4xl mx-auto border">
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-bold tracking-tight">Filter by Date</h2>
+      <p class="text-muted-foreground text-sm">Use this for table filters or report generation.</p>
+
+      <div class="flex items-end gap-4">
+        <div class="border">
+          <label class="text-sm font-medium mb-1.5 block">Registration Date</label>
+
+          <div class="w-72">
+            <tolle-date-range-picker
+              [(ngModel)]="filterRange"
+              (ngModelChange)="onRangeChange($event)"
+              [disablePastDates]="true"
+              placeholder="Select dates..."
+            ></tolle-date-range-picker>
+          </div>
+        </div>
+
+        <button (click)="resetFilter()" class="text-sm text-primary hover:underline pb-2">
+          Reset
+        </button>
+      </div>
+
+      <div class="p-4 bg-muted/50 rounded-md font-mono text-xs">
+        <strong>Value:</strong>
+        Start: {{ filterRange.start | date:'shortDate' }} |
+        End: {{ filterRange.end | date:'shortDate' }}
+      </div>
+    </section>
+
+
+    <hr class="border-border">
+
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-bold tracking-tight">Dashboard Schedule</h2>
+      <p class="text-muted-foreground text-sm">Use this for sidebars or booking interfaces where the calendar must be always visible.</p>
+
+      <div class="flex gap-8 items-start">
+        <tolle-range-calendar
+          [(ngModel)]="dashboardRange"
+          (rangeSelect)="onRangeChange($event)"
+          class="shadow-lg"
+        ></tolle-range-calendar>
+
+        <div class="flex-1 p-6 border rounded-lg bg-card">
+          <h3 class="font-semibold mb-2">Selected Period</h3>
+          <div *ngIf="dashboardRange.start && dashboardRange.end; else noSel">
+            <div class="text-3xl font-bold text-primary mb-1">
+              {{ dashboardRange.start | date:'MMM d' }} - {{ dashboardRange.end | date:'MMM d' }}
+            </div>
+            <p class="text-muted-foreground">{{ dashboardRange.end.getDate() - dashboardRange.start.getDate() }} days selected</p>
+          </div>
+          <ng-template #noSel>
+            <p class="text-muted-foreground italic">Please select a start and end date.</p>
+          </ng-template>
+        </div>
+      </div>
+    </section>
+
+  </div>
 </div>
 
-<tolle-toaster position="top-center"/>
+<tolle-toaster position="top-right"/>

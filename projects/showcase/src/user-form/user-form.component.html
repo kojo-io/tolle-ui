@@ -1,0 +1,15 @@
+<form [formGroup]="form" (ngSubmit)="save()" class="space-y-4 flex flex-col">
+  <div class="space-y-2">
+    <p class="text-sm text-foreground">
+      {{ isEdit ? 'Update the user details below.' : 'Enter the details for the new user.' }}
+    </p>
+  </div>
+
+  <tolle-input formControlName="name" placeholder="John Doe"></tolle-input>
+  <tolle-input formControlName="email" placeholder="john@example.com"></tolle-input>
+
+  <div class="flex justify-end gap-2 pt-4">
+    <tolle-button variant="ghost">Cancel</tolle-button>
+    <tolle-button type="submit"> {{ isEdit ? 'Save Changes' : 'Create User' }}</tolle-button>
+  </div>
+</form>

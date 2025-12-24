@@ -1,6 +1,7 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import {Injectable, Inject, PLATFORM_ID, Optional} from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
+import {TOLLE_CONFIG, TolleConfig} from '@tolle/ui/tolle-config';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class ThemeService {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Optional() @Inject(TOLLE_CONFIG) private config: TolleConfig
   ) {
     if (isPlatformBrowser(this.platformId)) {
       const savedTheme = localStorage.getItem('tolle-theme');
@@ -20,6 +22,23 @@ export class ThemeService {
       if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
         this.enableDarkMode();
       }
+    }
+    if (this.config) {
+      this.applyConfig(this.config);
+    }
+  }
+
+  private applyConfig(config: TolleConfig) {
+    const root = this.document.documentElement;
+
+    if (config.primaryColor) {
+      root.style.setProperty('--primary', config.primaryColor);
+    }
+    if (config.radius) {
+      root.style.setProperty('--radius', config.radius);
+    }
+    if (config.darkByDefault) {
+      root.classList.add('dark');
     }
   }
 

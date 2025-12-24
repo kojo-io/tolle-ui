@@ -37,7 +37,7 @@ export class BadgeComponent {
   get computedClass() {
     return cn(
       // Base styles - Pills are always rounded-full
-      'inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 font-medium transition-colors gap-1',
+      'inline-flex items-center justify-center rounded-full border px-2 py-0.5 font-medium transition-colors gap-1',
 
       // Variants (Google Dark Mode theme)
       this.variant === 'default' && 'border-transparent bg-primary text-primary-foreground',

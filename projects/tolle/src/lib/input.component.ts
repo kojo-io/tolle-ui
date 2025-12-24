@@ -17,7 +17,7 @@ import { cn } from './utils/cn';
   template: `
     <div [class]="cn('relative flex items-center w-full group', 'size-' + size, containerClass)">
 
-      <div class="absolute left-3 flex items-center justify-center pointer-events-none text-muted-foreground group-focus-within:text-primary transition-colors"
+      <div class="absolute left-3 flex items-center justify-center text-muted-foreground group-focus-within:text-primary transition-colors"
            [class.left-2.5]="size === 'xs'">
         <ng-content select="[prefix]"></ng-content>
       </div>
@@ -32,7 +32,7 @@ import { cn } from './utils/cn';
         [class]="computedInputClass"
       />
 
-      <div class="absolute right-3 flex items-center justify-center pointer-events-none text-muted-foreground group-focus-within:text-primary transition-colors"
+      <div class="absolute right-3 flex items-center justify-center text-muted-foreground group-focus-within:text-primary transition-colors"
            [class.right-2.5]="size === 'xs'">
         <ng-content select="[suffix]"></ng-content>
       </div>
@@ -88,7 +88,8 @@ export class InputComponent implements ControlValueAccessor {
 
   get computedInputClass() {
     return cn(
-      "flex w-full rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all",
+      "flex w-full rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring focus-visible:ring-ring focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 transition-all",
+      'disabled:opacity-50 shadow-sm transition-shadow',
       this.size === 'xs' && "h-8 text-xs px-2",
       this.size === 'sm' && "h-9 px-3",
       this.size === 'default' && "h-10 px-3",

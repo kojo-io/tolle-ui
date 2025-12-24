@@ -117,7 +117,8 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   // UPDATED: Centralized sizing logic for the trigger
   get computedTriggerClass() {
     return cn(
-      'flex w-full items-center justify-between rounded-md border border-input bg-background ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all',
+      'flex w-full items-center justify-between rounded-md border border-input bg-background ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring focus:ring-ring focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 transition-all',
+      'disabled:opacity-50 shadow-sm transition-shadow',
       this.size === 'xs' && 'h-8 px-2 text-xs',
       this.size === 'sm' && 'h-9 px-3 text-sm',
       this.size === 'default' && 'h-10 px-3 text-sm',
