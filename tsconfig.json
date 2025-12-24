@@ -25,8 +25,8 @@
       "dom"
     ],
     "paths": {
-      "@tolle/ui": ["projects/tolle/src/public-api.ts"],
-      "@tolle/ui/*": ["projects/tolle/src/lib/*"]
+      "@tolle/ui": ["dist/tolle-ui"],
+      "@tolle/ui/*": ["dist/tolle-ui/*"]
     }
   },
   "angularCompilerOptions": {

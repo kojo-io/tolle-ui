@@ -1,13 +1,13 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import {provideTolleConfig} from '@tolle/ui';
+import {provideTolleConfig} from '../../../tolle/src/lib/tolle-config';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideTolleConfig({
-      primaryColor: '#121212', // Custom brand color
+      primaryColor: '#9e1f1f', // Custom brand color
       radius: '0.7rem',          // Super rounded design
-      darkByDefault: false
+      darkByDefault: true
     })
   ]
 };

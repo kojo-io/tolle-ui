@@ -1,25 +1,41 @@
 import {Component, inject} from '@angular/core';
+
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {AsyncPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
+import {UserListComponent} from '../user-list/user-list.component';
+import {InputComponent} from '../../../tolle/src/lib/input.component';
+import {ButtonComponent} from '../../../tolle/src/lib/button.component';
 import {
-  AccordionComponent, AccordionItemComponent,
-  BadgeComponent,
-  ButtonComponent, ButtonGroupComponent, CalendarComponent,
   CardComponent,
   CardContentComponent, CardFooterComponent,
   CardHeaderComponent,
-  CardTitleComponent, CheckboxComponent, cn, DataTableComponent, DatePickerComponent,
-  DateRangePickerComponent,
-  InputComponent,
-  MaskedInputComponent, ModalComponent,
-  PaginationComponent,
-  RangeCalendarComponent, SelectComponent, SelectGroupComponent, SelectItemComponent, SelectSeparatorComponent,
-  SkeletonComponent, SwitchComponent, TableColumn, ToastService, TolleCellDirective, TooltipDirective
-} from '@tolle/ui';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AsyncPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
-import {ThemeService} from '@tolle/ui/theme.service';
-import {ToastContainerComponent} from '@tolle/ui/toaster.component';
-import {UserListComponent} from '../user-list/user-list.component';
-import {DateRange} from '@tolle/ui/types/date-range';
+  CardTitleComponent
+} from '../../../tolle/src/lib/card.component';
+import {SelectComponent} from '../../../tolle/src/lib/select.component';
+import {SelectItemComponent} from '../../../tolle/src/lib/select-item.component';
+import {SelectGroupComponent} from '../../../tolle/src/lib/select-group.component';
+import {SelectSeparatorComponent} from '../../../tolle/src/lib/select-separator.component';
+import {SwitchComponent} from '../../../tolle/src/lib/switch.component';
+import {BadgeComponent} from '../../../tolle/src/lib/badge.component';
+import {SkeletonComponent} from '../../../tolle/src/lib/skeleton.component';
+import {CheckboxComponent} from '../../../tolle/src/lib/checkbox.component';
+import {TooltipDirective} from '../../../tolle/src/lib/tooltip.directive';
+import {ToastContainerComponent} from '../../../tolle/src/lib/toaster.component';
+import {CalendarComponent} from '../../../tolle/src/lib/calendar.component';
+import {MaskedInputComponent} from '../../../tolle/src/lib/masked-input.component';
+import {DatePickerComponent} from '../../../tolle/src/lib/date-picker.component';
+import {PaginationComponent} from '../../../tolle/src/lib/pagination.component';
+import {DataTableComponent, TableColumn} from '../../../tolle/src/lib/data-table.component';
+import {TolleCellDirective} from '../../../tolle/src/lib/tolle-cell.directive';
+import {AccordionComponent} from '../../../tolle/src/lib/accordion.component';
+import {AccordionItemComponent} from '../../../tolle/src/lib/accordion-item.component';
+import {ButtonGroupComponent} from '../../../tolle/src/lib/button-group.component';
+import {DateRangePickerComponent} from '../../../tolle/src/lib/date-range-picker.component';
+import {RangeCalendarComponent} from '../../../tolle/src/lib/range-calendar.component';
+import {ThemeService} from '../../../tolle/src/lib/theme.service';
+import {ToastService} from '../../../tolle/src/lib/toast.service';
+import {DateRange} from '../../../tolle/src/lib/types/date-range';
+import {cn} from '../../../tolle/src/lib/utils/cn';
 
 @Component({
   selector: 'app-root',

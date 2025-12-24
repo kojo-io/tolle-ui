@@ -5,6 +5,7 @@
     "entryFile": "src/public-api.ts"
   },
   "assets": [
-    "src/styles/theme.css"
+    "theme.css",
+    "tailwind.preset.js"
   ]
 }

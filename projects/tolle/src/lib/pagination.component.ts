@@ -12,8 +12,9 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
-import {SelectItemComponent, SelectComponent} from '@tolle/ui';
 import {FormsModule} from '@angular/forms';
+import {SelectComponent} from './select.component';
+import {SelectItemComponent} from './select-item.component';
 
 @Component({
   selector: 'tolle-pagination',

@@ -1,7 +1,7 @@
 import {Injectable, Inject, PLATFORM_ID, Optional} from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
-import {TOLLE_CONFIG, TolleConfig} from '@tolle/ui/tolle-config';
+import {TOLLE_CONFIG, TolleConfig} from './tolle-config';
 
 @Injectable({
   providedIn: 'root'

@@ -10,6 +10,7 @@ export * from './lib/select.component';
 export * from './lib/select-item.component';
 export * from './lib/select-group.component';
 export * from './lib/select-separator.component';
+export * from './lib/select.service';
 export * from './lib/switch.component';
 export * from './lib/badge.component';
 export * from './lib/skeleton.component';

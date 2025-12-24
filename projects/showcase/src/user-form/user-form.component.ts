@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ButtonComponent, InputComponent, ModalRef} from '@tolle/ui';
-
+import {InputComponent} from '../../../tolle/src/lib/input.component';
+import {ButtonComponent} from '../../../tolle/src/lib/button.component';
+import {ModalRef} from '../../../tolle/src/lib/modal-ref';
 @Component({
   selector: 'app-user-form',
   standalone: true,

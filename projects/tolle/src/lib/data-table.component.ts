@@ -5,9 +5,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
-import {PaginationComponent} from '@tolle/ui/pagination.component';
-import {InputComponent} from '@tolle/ui/input.component';
-import {TolleCellDirective} from '@tolle/ui/tolle-cell.directive';
+import {InputComponent} from './input.component';
+import {PaginationComponent} from './pagination.component';
+import {TolleCellDirective} from './tolle-cell.directive';
 
 export interface TableColumn {
   key: string;
@@ -19,7 +19,7 @@ export interface TableColumn {
 @Component({
   selector: 'tolle-data-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, PaginationComponent, InputComponent],
+  imports: [CommonModule, FormsModule, PaginationComponent, InputComponent, InputComponent],
   template: `
     <div class="space-y-4">
       <div *ngIf="searchable" class="flex items-center py-2">

@@ -6,9 +6,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/f
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 import { cn } from './utils/cn';
 import { RangeCalendarComponent } from './range-calendar.component';
-import {DateRange} from '@tolle/ui/types/date-range';
-import {InputComponent} from '@tolle/ui/input.component';
 import {format} from 'date-fns';
+import {InputComponent} from './input.component';
+import {DateRange} from './types/date-range';
 
 @Component({
   selector: 'tolle-date-range-picker',

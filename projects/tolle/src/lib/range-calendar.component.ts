@@ -8,7 +8,7 @@ import {
   isBefore, startOfDay, isWithinInterval, isAfter
 } from 'date-fns';
 import { cn } from './utils/cn';
-import {DateRange} from '@tolle/ui/types/date-range';
+import {DateRange} from './types/date-range';
 
 @Component({
   selector: 'tolle-range-calendar',

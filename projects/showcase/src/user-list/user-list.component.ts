@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import {DataTableComponent, Modal, ModalService, TableColumn, TolleCellDirective} from '@tolle/ui';
 import {UserFormComponent} from '../user-form/user-form.component';
+import {ModalService} from '../../../tolle/src/lib/modal.service';
+import {Modal} from '../../../tolle/src/lib/modal';
+import {DataTableComponent, TableColumn} from '../../../tolle/src/lib/data-table.component';
+import {TolleCellDirective} from '../../../tolle/src/lib/tolle-cell.directive';
 
 @Component({
   selector: 'app-user-list',
