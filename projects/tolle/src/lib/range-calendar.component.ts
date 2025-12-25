@@ -5,10 +5,10 @@ import {
   addMonths, subMonths, startOfMonth, endOfMonth,
   startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth,
   isSameDay, isToday, setMonth, setYear, addYears, subYears,
-  isBefore, startOfDay, isWithinInterval, isAfter
+  isBefore, startOfDay, isWithinInterval
 } from 'date-fns';
 import { cn } from './utils/cn';
-import {DateRange} from '@tolle/ui/types/date-range';
+import {DateRange} from './types/date-range';
 
 @Component({
   selector: 'tolle-range-calendar',

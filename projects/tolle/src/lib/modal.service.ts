@@ -43,10 +43,15 @@ export class ModalService {
   private createOverlay(): OverlayRef {
     const config = new OverlayConfig({
       hasBackdrop: true,
-      backdropClass: ['bg-black/80', 'backdrop-blur-sm'],
-      // 1. Remove hardcoded 'fixed' classes from here
-      // 2. Add 'w-full' and 'h-full' to the panel to create a workspace
-      panelClass: ['w-full', 'h-full', 'flex', 'items-center', 'justify-center', 'pointer-events-none'],
+      backdropClass: ['cdk-overlay-backdrop', 'bg-black/80', 'backdrop-blur-sm'],
+      panelClass: [
+        'w-full',
+        'h-full',
+        'flex',
+        'items-center',
+        'justify-center',
+        'pointer-events-none'
+      ],
       scrollStrategy: this.overlay.scrollStrategies.block(),
       positionStrategy: this.overlay.position()
         .global()

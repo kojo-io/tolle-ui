@@ -5,8 +5,8 @@ import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/d
 import { SelectItemComponent } from './select-item.component';
 import { SelectService } from './select.service';
 import { cn } from './utils/cn';
-import {BadgeComponent} from '@tolle/ui/badge.component';
-import {InputComponent} from '@tolle/ui/input.component';
+import {InputComponent} from './input.component';
+import {BadgeComponent} from './badge.component';
 
 @Component({
   selector: 'tolle-multi-select',

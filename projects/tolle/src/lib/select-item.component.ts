@@ -1,7 +1,7 @@
 import {Component, Input, HostListener, ElementRef, Optional} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
-import {SelectService} from '@tolle/ui/select.service';
+import {SelectService} from './select.service';
 
 @Component({
   selector: 'tolle-select-item',
