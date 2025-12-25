@@ -50,10 +50,9 @@ import { InputComponent } from './input.component';
         #popover
         *ngIf="isOpen"
         [ngStyle]="{minWidth: container.clientWidth+'px'}"
-        class="absolute bg-popover z-50 min-w-full overflow-auto max-h-[300px] rounded-md border border-border text-popover-foreground shadow-md"
-        style="visibility: hidden; top: 0; left: 0;"
-      >
-        <div *ngIf="searchable" class="p-2 border-b border-border bg-popover">
+        class="absolute bg-popover z-50 min-w-full max-h-[300px] overflow-auto flex flex-col rounded-md border border-border text-popover-foreground shadow-md"
+        style="visibility: hidden; top: 0; left: 0;">
+        <div *ngIf="searchable" class="p-2 border-b border-border bg-popover h-auto">
           <tolle-input
             size="xs"
             placeholder="Search..."
@@ -64,7 +63,7 @@ import { InputComponent } from './input.component';
           </tolle-input>
         </div>
 
-        <div class="p-1 max-h-60 overflow-y-auto">
+        <div class="p-1 overflow-y-auto scrollbar-hidden grow h-full w-full">
           <ng-content></ng-content>
           <div *ngIf="noResults" class="py-6 text-center text-sm text-muted-foreground">
             No results found.

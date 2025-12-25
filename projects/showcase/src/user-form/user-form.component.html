@@ -7,7 +7,7 @@
 
   <tolle-input formControlName="name" placeholder="John Doe"></tolle-input>
   <tolle-input formControlName="email" placeholder="john@example.com"></tolle-input>
-  <tolle-select placeholder="Select a timezone..." formControlName="timezone">
+  <tolle-select [searchable]="true" placeholder="Select a timezone..." formControlName="timezone">
 
     <tolle-select-group>North America</tolle-select-group>
     <tolle-select-item value="est">Eastern Standard Time (EST)</tolle-select-item>

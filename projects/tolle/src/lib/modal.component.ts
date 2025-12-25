@@ -58,7 +58,7 @@ export class ModalComponent implements OnInit {
 
     return cn(
       // Base classes: Added 'w-full' and 'mx-auto'
-      'bg-background border border-border shadow-lg relative flex flex-col w-full mx-auto overflow-hidden',
+      'bg-background border border-border shadow-lg relative flex flex-col w-full mx-auto ',
 
       size === 'fullscreen' ? 'h-screen w-screen rounded-none' : 'rounded-lg',
 
