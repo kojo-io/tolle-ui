@@ -110,19 +110,27 @@
 /* 4. COMPONENT OVERRIDES                                                     */
 /* -------------------------------------------------------------------------- */
 @layer components {
-  /* Interactive Element Transitions */
-  tolle-input input,
+  /* Updated: Target the container div (tolle-input > div) instead of the input tag */
+  tolle-input > div,
   tolle-select button,
-  tolle-masked-input input,
-  tolle-date-picker tolle-masked-input input {
+  tolle-masked-input > div,
+  tolle-date-picker tolle-masked-input > div {
     box-shadow: var(--input-shadow);
-    transition: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms ease;
   }
 
-  tolle-input input:focus,
+  /* When the container is focused-within, we clear the shadow and let the ring handle the focus */
+  tolle-input > div:focus-within,
   tolle-select button:focus,
-  tolle-masked-input input:focus {
+  tolle-masked-input > div:focus-within {
     box-shadow: 0 0 #0000;
+  }
+
+  /* Remove shadow from the native input since the container now handles the elevation */
+  tolle-input input,
+  tolle-masked-input input {
+    box-shadow: none !important;
+    background: transparent;
   }
 
   /* Dark Mode specific component adjustments */
@@ -131,13 +139,19 @@
     border-color: var(--border);
   }
 
-  .dark tolle-input,
+  /* Dark mode backgrounds for form components */
+  .dark tolle-input > div,
   .dark tolle-select button {
     background-color: transparent;
   }
 
-  /* Icon sizing inside buttons */
-  tolle-button svg { @apply w-4 h-4; }
+  /* Icon sizing inside buttons and input slots */
+  tolle-button svg,
+  tolle-input [prefix] svg,
+  tolle-input [suffix] svg {
+    @apply w-4 h-4;
+  }
+
   .h-8 svg { @apply w-3.5 h-3.5; }
 
   /* Compact Select Items */

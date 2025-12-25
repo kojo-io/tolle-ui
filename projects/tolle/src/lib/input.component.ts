@@ -15,10 +15,9 @@ import { cn } from './utils/cn';
     }
   ],
   template: `
-    <div [class]="cn('relative flex items-center w-full group', 'size-' + size, containerClass)">
+    <div [class]="computedContainerClass">
 
-      <div class="absolute left-3 flex items-center justify-center text-muted-foreground group-focus-within:text-primary transition-colors"
-           [class.left-2.5]="size === 'xs'">
+      <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors">
         <ng-content select="[prefix]"></ng-content>
       </div>
 
@@ -32,8 +31,7 @@ import { cn } from './utils/cn';
         [class]="computedInputClass"
       />
 
-      <div class="absolute right-3 flex items-center justify-center text-muted-foreground group-focus-within:text-primary transition-colors"
-           [class.right-2.5]="size === 'xs'">
+      <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors">
         <ng-content select="[suffix]"></ng-content>
       </div>
     </div>
@@ -86,17 +84,24 @@ export class InputComponent implements ControlValueAccessor {
   // --- Styling Logic ---
   protected readonly cn = cn;
 
+  get computedContainerClass() {
+    return cn(
+      "group relative flex items-center w-full rounded-md border border-input bg-background ring-offset-background transition-all focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1 shadow-sm",
+      this.size === 'xs' && "h-8 px-2 gap-1.5",
+      this.size === 'sm' && "h-9 px-3 gap-2",
+      this.size === 'default' && "h-10 px-3 gap-2",
+      this.size === 'lg' && "h-11 px-4 gap-3",
+      this.disabled && "cursor-not-allowed opacity-50",
+      this.error && "border-destructive focus-within:ring-destructive",
+      this.containerClass
+    );
+  }
+
   get computedInputClass() {
     return cn(
-      "flex w-full rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring focus-visible:ring-ring focus-visible:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 transition-all",
-      'disabled:opacity-50 shadow-sm transition-shadow',
-      this.size === 'xs' && "h-8 text-xs px-2",
-      this.size === 'sm' && "h-9 px-3",
-      this.size === 'default' && "h-10 px-3",
-      this.size === 'lg' && "h-11 px-4 text-base",
-      "group-has-[[prefix]]:pl-10 group-has-[[suffix]]:pr-10",
-      this.size === 'xs' && "group-has-[[prefix]]:pl-8 group-has-[[suffix]]:pr-8",
-      this.error && "border-destructive focus-visible:ring-destructive",
+      "flex-1 bg-transparent border-none p-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-0 disabled:cursor-not-allowed",
+      this.size === 'xs' && "text-xs",
+      this.size === 'lg' && "text-base",
       this.class
     );
   }
