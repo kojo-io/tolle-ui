@@ -16,6 +16,7 @@ export * from './lib/skeleton.component';
 export * from './lib/checkbox.component';
 export * from './lib/tooltip.directive';
 export * from './lib/toast.service'
+export * from './lib/toaster.component';
 export * from './lib/tolle-config';
 export * from './lib/multi-select.component'
 export * from './lib/calendar.component'
