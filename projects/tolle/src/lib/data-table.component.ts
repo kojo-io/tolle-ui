@@ -5,10 +5,9 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
-import {PaginationComponent} from '@tolle/ui/pagination.component';
-import {InputComponent} from '@tolle/ui/input.component';
-import {TolleCellDirective} from '@tolle/ui/tolle-cell.directive';
-
+import {PaginationComponent} from './pagination.component';
+import {TolleCellDirective} from './tolle-cell.directive';
+import {InputComponent} from './input.component';
 export interface TableColumn {
   key: string;
   label: string;

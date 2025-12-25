@@ -12,13 +12,14 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
-import {SelectItemComponent, SelectComponent} from '@tolle/ui';
 import {FormsModule} from '@angular/forms';
+import {SelectComponent} from './select.component';
+import {SelectItemComponent} from './select-item.component';
 
 @Component({
   selector: 'tolle-pagination',
   standalone: true,
-  imports: [CommonModule, SelectComponent, SelectItemComponent, FormsModule],
+  imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
   template: `
     <div [class]="cn('flex items-center justify-between px-2 py-4', class)">
 
