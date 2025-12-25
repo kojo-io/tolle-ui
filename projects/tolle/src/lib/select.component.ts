@@ -32,7 +32,7 @@ import { InputComponent } from './input.component';
     }
   ],
   template: `
-    <div [class]="cn('relative w-full', 'size-' + size)" #container>
+    <div [class]="cn('w-full', 'size-' + size)" #container>
       <button
         type="button"
         #trigger
@@ -49,7 +49,8 @@ import { InputComponent } from './input.component';
       <div
         #popover
         *ngIf="isOpen"
-        class="absolute bg-popover z-50 min-w-full overflow-hidden rounded-md border border-border text-popover-foreground bg-background shadow-md"
+        [ngStyle]="{minWidth: container.clientWidth+'px'}"
+        class="absolute bg-popover z-50 min-w-full overflow-auto max-h-[300px] rounded-md border border-border text-popover-foreground shadow-md"
         style="visibility: hidden; top: 0; left: 0;"
       >
         <div *ngIf="searchable" class="p-2 border-b border-border bg-popover">

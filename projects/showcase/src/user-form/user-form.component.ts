@@ -1,8 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {InputComponent} from '../../../tolle/src/lib/input.component';
 import {ButtonComponent} from '../../../tolle/src/lib/button.component';
 import {ModalRef} from '../../../tolle/src/lib/modal-ref';
+import {SelectComponent} from '../../../tolle/src/lib/select.component';
+import {SelectGroupComponent} from '../../../tolle/src/lib/select-group.component';
+import {SelectItemComponent} from '../../../tolle/src/lib/select-item.component';
+import {SelectSeparatorComponent} from '../../../tolle/src/lib/select-separator.component';
 
 @Component({
   selector: 'app-user-form',
@@ -10,7 +14,11 @@ import {ModalRef} from '../../../tolle/src/lib/modal-ref';
   imports: [
     InputComponent,
     ReactiveFormsModule,
-    ButtonComponent
+    ButtonComponent,
+    SelectComponent,
+    SelectGroupComponent,
+    SelectItemComponent,
+    SelectSeparatorComponent
   ],
   templateUrl: './user-form.component.html',
   styleUrl: './user-form.component.css'
@@ -25,7 +33,8 @@ export class UserFormComponent implements OnInit {
   ) {
     this.form = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      timezone: new FormControl(''),
     });
   }
 

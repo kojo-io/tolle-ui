@@ -7,7 +7,49 @@
 
   <tolle-input formControlName="name" placeholder="John Doe"></tolle-input>
   <tolle-input formControlName="email" placeholder="john@example.com"></tolle-input>
+  <tolle-select placeholder="Select a timezone..." formControlName="timezone">
 
+    <tolle-select-group>North America</tolle-select-group>
+    <tolle-select-item value="est">Eastern Standard Time (EST)</tolle-select-item>
+    <tolle-select-item value="pst">Pacific Standard Time (PST)</tolle-select-item>
+
+    <tolle-select-separator></tolle-select-separator>
+
+    <tolle-select-group>Europe</tolle-select-group>
+    <tolle-select-item value="gmt">Greenwich Mean Time (GMT)</tolle-select-item>
+    <tolle-select-item value="cet">Central European Time (CET)</tolle-select-item>
+
+    <tolle-select-group>North America</tolle-select-group>
+    <tolle-select-item value="est">Eastern Standard Time (EST)</tolle-select-item>
+    <tolle-select-item value="pst">Pacific Standard Time (PST)</tolle-select-item>
+
+    <tolle-select-separator></tolle-select-separator>
+
+    <tolle-select-group>Europe</tolle-select-group>
+    <tolle-select-item value="gmt">Greenwich Mean Time (GMT)</tolle-select-item>
+    <tolle-select-item value="cet">Central European Time (CET)</tolle-select-item>
+
+    <tolle-select-group>North America</tolle-select-group>
+    <tolle-select-item value="est">Eastern Standard Time (EST)</tolle-select-item>
+    <tolle-select-item value="pst">Pacific Standard Time (PST)</tolle-select-item>
+
+    <tolle-select-separator></tolle-select-separator>
+
+    <tolle-select-group>Europe</tolle-select-group>
+    <tolle-select-item value="gmt">Greenwich Mean Time (GMT)</tolle-select-item>
+    <tolle-select-item value="cet">Central European Time (CET)</tolle-select-item>
+
+    <tolle-select-group>North America</tolle-select-group>
+    <tolle-select-item value="est">Eastern Standard Time (EST)</tolle-select-item>
+    <tolle-select-item value="pst">Pacific Standard Time (PST)</tolle-select-item>
+
+    <tolle-select-separator></tolle-select-separator>
+
+    <tolle-select-group>Europe</tolle-select-group>
+    <tolle-select-item value="gmt">Greenwich Mean Time (GMT)</tolle-select-item>
+    <tolle-select-item value="cet">Central European Time (CET)</tolle-select-item>
+
+  </tolle-select>
   <div class="flex justify-end gap-2 pt-4">
     <tolle-button variant="ghost">Cancel</tolle-button>
     <tolle-button type="submit"> {{ isEdit ? 'Save Changes' : 'Create User' }}</tolle-button>
