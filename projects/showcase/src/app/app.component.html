@@ -606,7 +606,55 @@
         </div>
       </div>
     </section>
+    <tolle-dropdown-menu #userSettings>
+      <tolle-dropdown-label>My Account</tolle-dropdown-label>
+      <tolle-dropdown-item>
+        <i class="ri-user-3-line"></i>
+        <span>Personal Profile</span>
+      </tolle-dropdown-item>
+      <tolle-dropdown-item>
+        <i class="ri-shield-user-line"></i>
+        <span>Security Settings</span>
+      </tolle-dropdown-item>
 
+      <tolle-dropdown-separator></tolle-dropdown-separator>
+
+      <tolle-dropdown-label>Workspace</tolle-dropdown-label>
+      <tolle-dropdown-item>
+        <i class="ri-team-line"></i>
+        <span>Team Management</span>
+      </tolle-dropdown-item>
+      <tolle-dropdown-item>
+        <i class="ri-notification-3-line"></i>
+        <span>Notifications</span>
+      </tolle-dropdown-item>
+
+      <tolle-dropdown-separator></tolle-dropdown-separator>
+
+      <tolle-dropdown-item class="text-destructive hover:bg-destructive/10">
+        <i class="ri-logout-box-r-line"></i>
+        <span>Sign Out</span>
+      </tolle-dropdown-item>
+    </tolle-dropdown-menu>
+
+    <div class="flex gap-4 p-10">
+
+      <tolle-button
+        [tolleDropdownTrigger]="userSettings"
+        variant="default">
+        <i class="ri-user-fill"></i>
+        Account
+        <i class="ri-arrow-down-s-line ml-2"></i>
+      </tolle-button>
+
+      <tolle-button
+        [tolleDropdownTrigger]="userSettings"
+        variant="outline"
+        size="icon">
+        <i class="ri-more-2-fill"></i>
+      </tolle-button>
+
+    </div>
   </div>
 </div>
 

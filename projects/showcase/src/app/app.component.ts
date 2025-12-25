@@ -36,6 +36,11 @@ import {ThemeService} from '../../../tolle/src/lib/theme.service';
 import {ToastService} from '../../../tolle/src/lib/toast.service';
 import {DateRange} from '../../../tolle/src/lib/types/date-range';
 import {cn} from '../../../tolle/src/lib/utils/cn';
+import {DropdownMenuComponent} from '../../../tolle/src/lib/dropdown-menu.component';
+import {DropdownLabelComponent} from '../../../tolle/src/lib/dropdown-label.component';
+import {DropdownSeparatorComponent} from '../../../tolle/src/lib/dropdown-separator.component';
+import {DropdownTriggerDirective} from '../../../tolle/src/lib/dropdown-trigger.directive';
+import {DropdownItemComponent} from '../../../tolle/src/lib/dropdown-item.component';
 
 @Component({
   selector: 'app-root',
@@ -75,7 +80,12 @@ import {cn} from '../../../tolle/src/lib/utils/cn';
     UserListComponent,
     ButtonGroupComponent,
     DateRangePickerComponent,
-    RangeCalendarComponent
+    RangeCalendarComponent,
+    DropdownMenuComponent,
+    DropdownLabelComponent,
+    DropdownSeparatorComponent,
+    DropdownTriggerDirective,
+    DropdownItemComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

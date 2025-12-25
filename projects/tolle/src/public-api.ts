@@ -35,3 +35,8 @@ export * from './lib/button-group.component'
 export * from './lib/date-range-picker.component'
 export * from './lib/range-calendar.component'
 export * from './lib/theme.service'
+export * from './lib/dropdown-item.component';
+export * from './lib/dropdown-label.component'
+export * from './lib/dropdown-menu.component'
+export * from './lib/dropdown-separator.component';
+export * from './lib/dropdown-trigger.directive';
