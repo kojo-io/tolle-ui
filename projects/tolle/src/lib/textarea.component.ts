@@ -42,7 +42,7 @@ import { cn } from './utils/cn';
       <div *ngIf="(showCharacterCount || hint) && !disabled" class="flex justify-between items-center px-1">
         <p *ngIf="hint" class="text-xs text-muted-foreground">{{ hint }}</p>
         <p *ngIf="showCharacterCount" class="text-[10px] uppercase tracking-wider text-muted-foreground ml-auto font-medium">
-          {{ value?.length || 0 }}{{ maxLength ? ' / ' + maxLength : '' }}
+          {{ value.length || 0 }}{{ maxLength ? ' / ' + maxLength : '' }}
         </p>
       </div>
     </div>
