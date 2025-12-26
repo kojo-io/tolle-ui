@@ -117,6 +117,20 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() pageSize = 10;
   @Input() expandable = false;
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+
+  // --- NEW INPUTS FOR COLUMN HIDING ---
+  @Input() allowColumnHiding = true;
+  @Input() showSettings = true; // Set to false to hide the gear icon/menu entirely
+
+  // Track visibility state: { 'columnKey': true/false }
+  columnVisibility: Record<string, boolean> = {};
+  showColumnMenu = false;
+
+  // Filter columns based on visibility state
+  get activeColumns() {
+    return this.columns.filter(col => this.columnVisibility[col.key]);
+  }
+
   // Track which rows are open
   expandedRows = new Set<number>();
 
@@ -169,12 +183,26 @@ export class DataTableComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) { this.refreshTable(); }
+    if (changes['columns']) { this.initializeVisibility(); }
+  }
+
+  private initializeVisibility() {
+    // Default all columns to visible if not already set
+    this.columns.forEach(col => {
+      if (this.columnVisibility[col.key] === undefined) {
+        this.columnVisibility[col.key] = true;
+      }
+    });
   }
 
   // --- Search & Sort & Page Logic ---
   // (Your existing implementation of applySearch, applySort, and updatePage goes here)
   refreshTable() { this.applySearch(); this.applySort(); this.updatePage(); }
   onSearch() { this.currentPage = 1; this.refreshTable(); }
+
+  toggleColumn(key: string) {
+    this.columnVisibility[key] = !this.columnVisibility[key];
+  }
 
   private applySearch() {
     if (!this.searchTerm) { this.filteredData = [...this.data]; return; }

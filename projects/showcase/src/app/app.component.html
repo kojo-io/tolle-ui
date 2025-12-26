@@ -53,7 +53,16 @@
       <label class="text-sm font-medium">Email Address</label>
       <tolle-input placeholder="name@example.com"></tolle-input>
     </div>
-
+    <div class="space-y-1.5">
+      <tolle-input
+        label="Email Address"
+        placeholder="name@company.com"
+        hint="We'll never share your email."
+        [readonly]="true"
+        errorMessage="Please enter a valid email.">
+        <i prefix class="ri-mail-line"></i>
+      </tolle-input>
+    </div>
     <div class="space-y-1.5">
       <label class="text-sm font-medium">Search</label>
       <tolle-input size="xs" placeholder="Search products...">
@@ -654,6 +663,18 @@
         <i class="ri-more-2-fill"></i>
       </tolle-button>
 
+    </div>
+
+
+    <div class="flex gap-4 p-10">
+      <tolle-textarea label="Comments"></tolle-textarea>
+
+      <tolle-textarea
+        label="Detailed Bio"
+        [autoGrow]="true"
+        [readonly]="true"
+        placeholder="Start typing, I will grow with you...">
+      </tolle-textarea>
     </div>
   </div>
 </div>

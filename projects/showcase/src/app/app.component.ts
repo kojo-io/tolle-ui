@@ -41,6 +41,7 @@ import {DropdownLabelComponent} from '../../../tolle/src/lib/dropdown-label.comp
 import {DropdownSeparatorComponent} from '../../../tolle/src/lib/dropdown-separator.component';
 import {DropdownTriggerDirective} from '../../../tolle/src/lib/dropdown-trigger.directive';
 import {DropdownItemComponent} from '../../../tolle/src/lib/dropdown-item.component';
+import {TextareaComponent} from '../../../tolle/src/lib/textarea.component';
 
 @Component({
   selector: 'app-root',
@@ -86,6 +87,7 @@ import {DropdownItemComponent} from '../../../tolle/src/lib/dropdown-item.compon
     DropdownSeparatorComponent,
     DropdownTriggerDirective,
     DropdownItemComponent,
+    TextareaComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

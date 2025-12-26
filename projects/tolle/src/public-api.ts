@@ -41,3 +41,4 @@ export * from './lib/dropdown-label.component'
 export * from './lib/dropdown-menu.component'
 export * from './lib/dropdown-separator.component';
 export * from './lib/dropdown-trigger.directive';
+export * from './lib/textarea.component';
