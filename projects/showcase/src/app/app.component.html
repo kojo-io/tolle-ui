@@ -25,7 +25,19 @@
     <tolle-button variant="outline">Outline</tolle-button>
     <tolle-button variant="ghost">Ghost</tolle-button>
     <tolle-button variant="ghost">Cancel</tolle-button>
+    <tolle-button (click)="save()" [busy]="isSaving">
+      Save Changes
+    </tolle-button>
+
+    <tolle-button variant="outline" size="sm" [busy]="isSaving">
+      Refresh Data
+    </tolle-button>
+
+    <tolle-button variant="ghost" size="icon" [busy]="true">
+      <i class="ri-settings-line"></i>
+    </tolle-button>
   </div>
+
   <div class="p-10 flex flex-col gap-6">
     <h1 class="text-2xl font-bold">Icon Integration</h1>
 
@@ -151,6 +163,14 @@
   <div class="max-w-xs space-y-4 p-10">
     <label class="text-sm font-medium">Favorite Food</label>
 
+    <tolle-select placeholder="What's for dinner?" [disabled]="true">
+      <tolle-select-item [value]="item.value" *ngFor="let item of foodOptions">
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-full bg-primary/20 text-[10px] flex items-center justify-center">JD</div>
+          <span>{{ item.label }}</span>
+        </div>
+      </tolle-select-item>
+    </tolle-select>
     <form [formGroup]="form" class="flex flex-col space-y-2">
       <tolle-select placeholder="Select a timezone..." formControlName="timezone">
 

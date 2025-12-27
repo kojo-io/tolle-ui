@@ -79,6 +79,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   @Input() disabled = false;
   @Input() searchable = false;
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  @Input() readonly = false;
 
   @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
@@ -117,12 +118,23 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   // UPDATED: Centralized sizing logic for the trigger
   get computedTriggerClass() {
     return cn(
-      'flex w-full items-center justify-between rounded-md border border-input bg-background ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring focus:ring-ring focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50 transition-all',
-      'disabled:opacity-50 shadow-sm transition-shadow',
+      'flex w-full items-center justify-between rounded-md border transition-all shadow-sm',
+      'bg-background ring-offset-background placeholder:text-muted-foreground',
+
+      // Sizing
       this.size === 'xs' && 'h-8 px-2 text-xs',
       this.size === 'sm' && 'h-9 px-3 text-sm',
       this.size === 'default' && 'h-10 px-3 text-sm',
       this.size === 'lg' && 'h-11 px-4 text-base',
+
+      // Interaction States (Focus ring disabled for Readonly/Disabled)
+      !(this.readonly || this.disabled) && 'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1',
+
+      // Colors & Borders (Matching your Hex-based theme logic)
+      this.disabled && 'cursor-not-allowed opacity-50 bg-muted/30 border-input',
+      this.readonly && 'cursor-default bg-muted/10 border-dashed border-input focus:ring-0',
+      !this.disabled && !this.readonly && 'border-input hover:border-accent cursor-pointer',
+
       this.class
     );
   }
@@ -132,7 +144,9 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     return cn(
       'ri-arrow-down-s-line text-muted-foreground ml-2 transition-transform duration-200',
       this.isOpen ? 'rotate-180' : '',
-      (this.size === 'xs' || this.size === 'sm') ? 'text-[14px]' : 'text-[18px]'
+      (this.size === 'xs' || this.size === 'sm') ? 'text-[14px]' : 'text-[18px]',
+      // Hide or fade icon when interaction is blocked
+      (this.disabled || this.readonly) && 'opacity-30'
     );
   }
 
@@ -150,7 +164,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   }
 
   toggle() {
-    if (this.disabled) return;
+    if (this.disabled || this.readonly) return;
     this.isOpen ? this.close() : this.open();
   }
 

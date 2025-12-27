@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AsyncPipe, DatePipe, NgForOf, NgIf} from '@angular/common';
@@ -42,6 +42,7 @@ import {DropdownSeparatorComponent} from '../../../tolle/src/lib/dropdown-separa
 import {DropdownTriggerDirective} from '../../../tolle/src/lib/dropdown-trigger.directive';
 import {DropdownItemComponent} from '../../../tolle/src/lib/dropdown-item.component';
 import {TextareaComponent} from '../../../tolle/src/lib/textarea.component';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -92,7 +93,7 @@ import {TextareaComponent} from '../../../tolle/src/lib/textarea.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'showcase';
   emailControl = new FormControl();
   marketingControl = new FormControl();
@@ -118,10 +119,22 @@ export class AppComponent {
 
   // The data currently displayed in the table
   pagedData: any[] = [];
-
+  isSaving = false;
+  save() {
+    this.isSaving = !this.isSaving;
+    timer(1000).subscribe({
+      next: () => {
+        this.isSaving = !this.isSaving;
+      }
+    })
+  }
   constructor() {
     this.updateTableData();
   }
+
+  ngOnInit(): void {
+        this.form.controls.favoriteFood.disable({onlySelf: true});
+    }
 
   // 1. Data for the Picker (Input Field)
   filterRange: DateRange = { start: null, end: null };
