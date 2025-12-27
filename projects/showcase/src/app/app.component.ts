@@ -52,6 +52,10 @@ import {BreadcrumbLinkComponent} from '../../../tolle/src/lib/breadcrumb-link.co
 import {BreadcrumbSeparatorComponent} from '../../../tolle/src/lib/breadcrumb-separator.component';
 import {BreadcrumbItemComponent} from '../../../tolle/src/lib/breadcrumb-item.component';
 import {RouterLink} from '@angular/router';
+import {EmptyStateComponent} from '../../../tolle/src/lib/empty-state.component';
+import {OtpComponent} from '../../../tolle/src/lib/otp.component';
+import {OtpSlotComponent} from '../../../tolle/src/lib/otp-slot.component';
+import {OtpGroupComponent} from '../../../tolle/src/lib/otp-group.component';
 
 @Component({
   selector: 'app-root',
@@ -106,7 +110,11 @@ import {RouterLink} from '@angular/router';
     BreadcrumbLinkComponent,
     BreadcrumbSeparatorComponent,
     BreadcrumbItemComponent,
-    RouterLink
+    RouterLink,
+    EmptyStateComponent,
+    OtpComponent,
+    OtpGroupComponent,
+    OtpSlotComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -121,7 +129,7 @@ export class AppComponent implements OnInit {
   dobControl = new FormControl();
   theme = inject(ThemeService);
   toast = inject(ToastService);
-
+  myOtp: string = '';
 
   // Mock Data: 100 items
   allUsers = Array.from({ length: 100 }, (_, i) => ({

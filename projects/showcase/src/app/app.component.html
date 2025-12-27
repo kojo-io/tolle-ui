@@ -740,7 +740,7 @@
 
   <div>
     <tolle-aspect-ratio ratio="1/1" class="w-32 rounded-full border-2 border-primary">
-      <img src="invalid-link.jpg" alt="User Avatar">
+      <img alt="User Avatar">
     </tolle-aspect-ratio>
   </div>
   <div class="flex gap-2">
@@ -822,6 +822,54 @@
         <a routerLink="/dashboard">Dashboard</a>
       </tolle-breadcrumb-link>
     </tolle-breadcrumb-item>
+  </div>
+  <div class="mt-2">
+    <div class="w-64 border rounded-md">
+      <div class="p-2 font-bold border-b">Notifications</div>
+      <tolle-empty-state
+        variant="minimal"
+        title="All caught up!"
+        description="No new alerts.">
+        <i icon class="ri-notification-off-line"></i>
+      </tolle-empty-state>
+    </div>
+    <tolle-empty-state
+      title="No files yet"
+      description="Upload your first document to get started with the project.">
+      <i icon class="ri-file-upload-line"></i>
+
+      <tolle-button actions>
+        Upload File
+      </tolle-button>
+    </tolle-empty-state>
+  </div>
+  <div class="mt-2">
+    <tolle-otp [length]="4" [auto]="true" [(ngModel)]="myOtp"></tolle-otp>
+  </div>
+  <div class="mt-2">
+    <tolle-otp #otp [length]="6" [(ngModel)]="myOtp">
+      <tolle-otp-group>
+        <tolle-otp-slot [isFirst]="true" [char]="myOtp[0]" [isActive]="otp.isFocused && myOtp.length === 0"></tolle-otp-slot>
+        <tolle-otp-slot [char]="myOtp[1]" [isActive]="otp.isFocused && myOtp.length === 1"></tolle-otp-slot>
+        <tolle-otp-slot [isLast]="true" [char]="myOtp[2]" [isActive]="otp.isFocused && myOtp.length === 2"></tolle-otp-slot>
+      </tolle-otp-group>
+
+      <div class="px-2 text-muted-foreground">-</div>
+
+      <tolle-otp-group>
+        <tolle-otp-slot [isFirst]="true" [char]="myOtp[3]" [isActive]="otp.isFocused && myOtp.length === 3"></tolle-otp-slot>
+        <tolle-otp-slot [char]="myOtp[4]" [isActive]="otp.isFocused && myOtp.length === 4"></tolle-otp-slot>
+        <tolle-otp-slot [isLast]="true" [char]="myOtp[5]" [isActive]="otp.isFocused && myOtp.length === 5"></tolle-otp-slot>
+      </tolle-otp-group>
+    </tolle-otp>
+  </div>
+  <div class="mt-2">
+    <tolle-otp-group>
+      <tolle-otp-slot [isFirst]="true" [char]="myOtp[0]" [isActive]="otp.isFocused && myOtp.length === 0"></tolle-otp-slot>
+      <tolle-otp-slot [char]="myOtp[1]" [isActive]="otp.isFocused && myOtp.length === 1"></tolle-otp-slot>
+      <tolle-otp-slot [char]="myOtp[2]" [isActive]="otp.isFocused && myOtp.length === 2"></tolle-otp-slot>
+      <tolle-otp-slot [isLast]="true" [char]="myOtp[3]" [isActive]="otp.isFocused && myOtp.length === 3"></tolle-otp-slot>
+    </tolle-otp-group>
   </div>
 </div>
 
