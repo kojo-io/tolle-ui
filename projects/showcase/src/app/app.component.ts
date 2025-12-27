@@ -43,6 +43,15 @@ import {DropdownTriggerDirective} from '../../../tolle/src/lib/dropdown-trigger.
 import {DropdownItemComponent} from '../../../tolle/src/lib/dropdown-item.component';
 import {TextareaComponent} from '../../../tolle/src/lib/textarea.component';
 import {timer} from 'rxjs';
+import {AlertComponent} from '../../../tolle/src/lib/alert.component';
+import {AspectRatioComponent} from '../../../tolle/src/lib/aspect-ratio.component';
+import {AvatarComponent} from '../../../tolle/src/lib/avatar.component';
+import {AvatarFallbackComponent} from '../../../tolle/src/lib/avatar-fallback.component';
+import {BreadcrumbComponent} from '../../../tolle/src/lib/breadcrumb.component';
+import {BreadcrumbLinkComponent} from '../../../tolle/src/lib/breadcrumb-link.component';
+import {BreadcrumbSeparatorComponent} from '../../../tolle/src/lib/breadcrumb-separator.component';
+import {BreadcrumbItemComponent} from '../../../tolle/src/lib/breadcrumb-item.component';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -88,7 +97,16 @@ import {timer} from 'rxjs';
     DropdownSeparatorComponent,
     DropdownTriggerDirective,
     DropdownItemComponent,
-    TextareaComponent
+    TextareaComponent,
+    AlertComponent,
+    AspectRatioComponent,
+    AvatarComponent,
+    AvatarFallbackComponent,
+    BreadcrumbComponent,
+    BreadcrumbLinkComponent,
+    BreadcrumbSeparatorComponent,
+    BreadcrumbItemComponent,
+    RouterLink
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
@@ -169,6 +187,10 @@ export class AppComponent implements OnInit {
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
     this.pagedData = this.allUsers.slice(start, end);
+  }
+
+  handleAlertClosed() {
+    alert('close');
   }
 
   toggle() {

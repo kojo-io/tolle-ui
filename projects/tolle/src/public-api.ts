@@ -42,3 +42,10 @@ export * from './lib/dropdown-menu.component'
 export * from './lib/dropdown-separator.component';
 export * from './lib/dropdown-trigger.directive';
 export * from './lib/textarea.component';
+export * from './lib/alert.component';
+export * from './lib/avatar.component';
+export * from './lib/avatar-fallback.component';
+export * from './lib/breadcrumb.component';
+export * from './lib/breadcrumb-link.component';
+export * from './lib/breadcrumb-separator.component';
+export * from './lib/breadcrumb-item.component';

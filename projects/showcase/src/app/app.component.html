@@ -697,6 +697,132 @@
       </tolle-textarea>
     </div>
   </div>
+  <div class="mt-2">
+    <tolle-alert title="Heads up!">
+      <i icon class="ri-information-line"></i>
+      You can add components to your app using the cli.
+    </tolle-alert>
+  </div>
+  <div class="mt-2">
+    <tolle-alert variant="destructive" title="Error">
+      <i icon class="ri-error-warning-line"></i>
+      Your session has expired. Please log in again.
+    </tolle-alert>
+  </div>
+  <div class="mt-2">
+    <tolle-alert variant="success" title="Success!">
+      <i icon class="ri-checkbox-circle-line"></i>
+      Your profile has been updated successfully.
+    </tolle-alert>
+  </div>
+  <tolle-alert
+    variant="warning"
+    title="System Maintenance"
+    [dismissible]="true"
+  >
+    <i icon class="ri-error-warning-line"></i>
+    The server will be down for 5 minutes at midnight.
+  </tolle-alert>
+
+  <tolle-alert
+    [dismissible]="true"
+    (onClose)="handleAlertClosed()"
+  >
+    Click the X to dismiss me.
+  </tolle-alert>
+
+  <div class="flex gap-4 w-96">
+    <tolle-aspect-ratio ratio="16/9" class="rounded-xl border border-border">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb" alt="Landscape">
+    </tolle-aspect-ratio>
+
+  </div>
+
+  <div>
+    <tolle-aspect-ratio ratio="1/1" class="w-32 rounded-full border-2 border-primary">
+      <img src="invalid-link.jpg" alt="User Avatar">
+    </tolle-aspect-ratio>
+  </div>
+  <div class="flex gap-2">
+    <tolle-avatar src="https://github.com/nutlope.png" alt="User Name">
+      <tolle-avatar-fallback>JD</tolle-avatar-fallback>
+    </tolle-avatar>
+
+    <tolle-avatar size="lg">
+      <tolle-avatar-fallback>
+        <i class="ri-user-line text-2xl"></i>
+      </tolle-avatar-fallback>
+    </tolle-avatar>
+
+    <tolle-avatar src="invalid-image.jpg" size="xl">
+      <tolle-avatar-fallback>Error</tolle-avatar-fallback>
+    </tolle-avatar>
+
+    <div class="flex -space-x-4">
+      <tolle-avatar src="user1.jpg" class="ring-2 ring-background"></tolle-avatar>
+      <tolle-avatar src="user2.jpg" class="ring-2 ring-background"></tolle-avatar>
+      <tolle-avatar src="user3.jpg" class="ring-2 ring-background"></tolle-avatar>
+      <tolle-avatar class="ring-2 ring-background">
+        <tolle-avatar-fallback>+5</tolle-avatar-fallback>
+      </tolle-avatar>
+    </div>
+  </div>
+  <div class="mt-2">
+    <tolle-breadcrumb>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link>Home</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+
+      <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
+
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link>Components</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+
+      <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
+
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link [active]="true">Breadcrumb</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+    </tolle-breadcrumb>
+  </div>
+  <div class="mt-2">
+    <tolle-breadcrumb>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link class="flex items-center gap-1">
+          <i class="ri-home-4-line"></i>
+        </tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+
+      <tolle-breadcrumb-separator>/</tolle-breadcrumb-separator>
+
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link [active]="true">Settings</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+    </tolle-breadcrumb>
+  </div>
+  <div class="mt-2">
+    <tolle-breadcrumb>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link class="flex items-center gap-1">
+          <i class="ri-home-4-line"></i>
+        </tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+
+      <tolle-breadcrumb-separator>/</tolle-breadcrumb-separator>
+
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link>Settings</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+    </tolle-breadcrumb>
+  </div>
+  <div class="mt-2">
+    <tolle-breadcrumb-item>
+      <tolle-breadcrumb-link>
+        <a routerLink="/dashboard">Dashboard</a>
+      </tolle-breadcrumb-link>
+    </tolle-breadcrumb-item>
+  </div>
 </div>
 
 <tolle-toaster position="top-right"/>
