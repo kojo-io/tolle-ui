@@ -4,8 +4,10 @@ module.exports = {
     require('./projects/tolle/preset.js') // Point to your library preset
   ],
   content: [
-    "./projects/showcase/src/**/*.{html,ts}", // Scan the showcase app
-    "./projects/tolle/src/**/*.{html,ts}"      // Scan the library components
+    "./src/**/*.{html,ts}",
+    "./projects/**/*.{html,ts}",
+    "./projects/tolle/src/**/*.{html,ts}",
+    "./.storybook/**/*.{html,ts,js}",
   ],
   theme: {
     extend: {

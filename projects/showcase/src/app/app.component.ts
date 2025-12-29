@@ -56,6 +56,13 @@ import {EmptyStateComponent} from '../../../tolle/src/lib/empty-state.component'
 import {OtpComponent} from '../../../tolle/src/lib/otp.component';
 import {OtpSlotComponent} from '../../../tolle/src/lib/otp-slot.component';
 import {OtpGroupComponent} from '../../../tolle/src/lib/otp-group.component';
+import {PopoverComponent} from '../../../tolle/src/lib/popover.component';
+import {PopoverContentComponent} from '../../../tolle/src/lib/popover-content.component';
+import {RadioGroupComponent} from '../../../tolle/src/lib/radio-group.component';
+import {RadioItemComponent} from '../../../tolle/src/lib/radio-item.component';
+import {ResizablePanelGroupComponent} from '../../../tolle/src/lib/resizable-panel-group.component';
+import {ResizablePanelComponent} from '../../../tolle/src/lib/resizable-panel.component';
+import {ResizableHandleComponent} from '../../../tolle/src/lib/resizable-handle.component';
 
 @Component({
   selector: 'app-root',
@@ -114,8 +121,15 @@ import {OtpGroupComponent} from '../../../tolle/src/lib/otp-group.component';
     EmptyStateComponent,
     OtpComponent,
     OtpGroupComponent,
-    OtpSlotComponent
-  ],
+    OtpSlotComponent,
+    PopoverComponent,
+    PopoverContentComponent,
+    RadioGroupComponent,
+    RadioItemComponent,
+    ResizablePanelGroupComponent,
+    ResizablePanelComponent,
+    ResizableHandleComponent,
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -311,5 +325,21 @@ export class AppComponent implements OnInit {
       answer: "Absolutely. Use the provideTolleConfig function in your app config to set your brand colors."
     }
   ];
+
+  // This tracks the collapsed state for the UI
+  isSidebarCollapsed = false;
+
+  /**
+   * This is triggered by the (onCollapse) event emitter
+   * from the tolle-resizable-panel component.
+   */
+  handleCollapse(collapsed: boolean) {
+    this.isSidebarCollapsed = collapsed;
+
+    // Optional: Log or trigger side effects like
+    // saving user preference to localStorage
+    console.log('Sidebar is now:', collapsed ? 'Hidden' : 'Visible');
+  }
+
   protected readonly cn = cn;
 }

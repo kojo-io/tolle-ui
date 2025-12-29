@@ -53,3 +53,7 @@ export * from './lib/empty-state.component';
 export * from './lib/otp.component';
 export * from './lib/otp-slot.component';
 export * from './lib/otp-group.component';
+export * from './lib/popover.component';
+export * from './lib/popover-content.component';
+export * from './lib/radio-group.component';
+export * from './lib/radio-item.component';

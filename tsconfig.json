@@ -29,6 +29,12 @@
       "@tolle/ui/*": ["dist/tolle-ui/*"]
     }
   },
+  "include": [
+    "src/**/*.ts",
+    "projects/**/*.ts",
+    "projects/**/*.stories.ts",  // Add this
+    "stories/**/*.ts"
+  ],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,

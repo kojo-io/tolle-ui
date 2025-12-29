@@ -1,0 +1,464 @@
+{
+    "pipes": [],
+    "interfaces": [],
+    "injectables": [],
+    "guards": [],
+    "interceptors": [],
+    "classes": [],
+    "directives": [],
+    "components": [],
+    "modules": [],
+    "miscellaneous": {
+        "variables": [
+            {
+                "name": "Busy",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    busy: true,\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'The busy state reveals the SVG spinner defined in the component template and hides the text.',\n      }\n    }\n  }\n}"
+            },
+            {
+                "name": "Destructive",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    variant: 'destructive',\n  },\n}"
+            },
+            {
+                "name": "Disabled",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    disabled: true,\n  },\n}"
+            },
+            {
+                "name": "FullWidth",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    block: true,\n  },\n}"
+            },
+            {
+                "name": "Ghost",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    variant: 'ghost',\n  },\n}"
+            },
+            {
+                "name": "IconOnly",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    variant: 'outline',\n    size: 'icon',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <tolle-button [variant]=\"variant\" [size]=\"size\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n          <path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path>\n          <circle cx=\"12\" cy=\"7\" r=\"4\"></circle>\n        </svg>\n      </tolle-button>\n    `,\n  }),\n}"
+            },
+            {
+                "name": "Link",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    variant: 'link',\n  },\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<ButtonComponent>",
+                "defaultValue": "{\n  title: 'UI/Button',\n  component: ButtonComponent,\n  tags: ['autodocs'],\n  // Define controls for the inputs\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],\n      description: 'Visual style of the button',\n    },\n    size: {\n      control: 'select',\n      options: ['default', 'xs', 'sm', 'lg', 'icon-xs', 'icon-sm', 'icon', 'icon-lg'],\n      description: 'Size dimensions of the button',\n    },\n    block: {\n      control: 'boolean',\n      description: 'If true, spans full width',\n    },\n    disabled: {\n      control: 'boolean',\n    },\n    busy: {\n      control: 'boolean',\n      description: 'Shows loading spinner and disables interaction',\n    }\n  },\n  // Default args for all stories\n  args: {\n    variant: 'default',\n    size: 'default',\n    disabled: false,\n    busy: false,\n    block: false,\n  },\n  // Custom render function to handle ng-content\n  render: (args) => {\n    const { label, ...props } = args as any;\n    return {\n      props,\n      template: `\n        <tolle-button\n          [variant]=\"variant\"\n          [size]=\"size\"\n          [block]=\"block\"\n          [disabled]=\"disabled\"\n          [busy]=\"busy\"\n          [class]=\"class\"\n        >\n         Button\n        </tolle-button>\n      `,\n    };\n  },\n}"
+            },
+            {
+                "name": "Outline",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    variant: 'outline',\n  },\n}"
+            },
+            {
+                "name": "Playground",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{}"
+            },
+            {
+                "name": "preview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/.storybook/preview.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Preview",
+                "defaultValue": "{\n  decorators: [\n    (storyFn, context) => {\n      // Get values from globals\n      const {\n        primaryColor = '#551a65',\n        radius = '0.75rem',\n        theme = false\n      } = context.globals;\n\n      // Convert theme to darkByDefault\n      const darkByDefault = theme === 'dark';\n\n      return {\n        ...storyFn(),\n        applicationConfig: {\n          providers: [\n            provideZoneChangeDetection({ eventCoalescing: true }),\n            provideTolleConfig({\n              primaryColor,\n              radius,\n              darkByDefault\n            }),\n          ],\n        },\n        // Also add theme class to wrapper for CSS variables\n        template: `\n          <div class=\"${theme}\">\n            ${storyFn().template}\n          </div>\n        `,\n      };\n    },\n  ],\n  parameters: {\n    controls: {\n      matchers: {\n       color: /(background|color)$/i,\n       date: /Date$/i,\n      },\n    },\n  },\n\n  globalTypes: {\n    theme: {\n      name: 'Theme Mode',\n      description: 'Light or dark mode',\n      defaultValue: 'light',\n      toolbar: {\n        icon: 'contrast',\n        items: [\n          { value: false, title: 'Light', icon: 'sun' },\n          { value: true, title: 'Dark', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    primaryColor: {\n      name: 'Primary Color',\n      description: 'Pick your primary brand color',\n      defaultValue: '#551a65',\n      toolbar: {\n        icon: 'paintbrush',\n        items: [\n          { value: '#551a65', title: 'Purple (#551a65)' },\n          { value: '#2563eb', title: 'Blue (#2563eb)' },\n          { value: '#ef4444', title: 'Red (#ef4444)' },\n          { value: '#059669', title: 'Green (#059669)' },\n          { value: '#f59e0b', title: 'Yellow (#f59e0b)' },\n          { value: '#8b5cf6', title: 'Violet (#8b5cf6)' },\n          { value: '#ec4899', title: 'Pink (#ec4899)' },\n          { value: '#000000', title: 'Custom...' },\n        ],\n        dynamicTitle: true,\n      },\n    }\n  },\n}"
+            },
+            {
+                "name": "Secondary",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    variant: 'secondary',\n  },\n}"
+            },
+            {
+                "name": "TextWithIcon",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    variant: 'default',\n    size: 'default',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <tolle-button [variant]=\"variant\" [size]=\"size\" class=\"gap-2\">\n        <svg prefix xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n          <path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path>\n          <polyline points=\"22,6 12,13 2,6\"></polyline>\n        </svg>\n        Login with Email\n      </tolle-button>\n    `,\n  }),\n}"
+            }
+        ],
+        "functions": [],
+        "typealiases": [
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<ButtonComponent>",
+                "file": "projects/tolle/src/stories/button.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 184
+            }
+        ],
+        "enumerations": [],
+        "groupedVariables": {
+            "projects/tolle/src/stories/button.stories.ts": [
+                {
+                    "name": "Busy",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    busy: true,\n  },\n  parameters: {\n    docs: {\n      description: {\n        story: 'The busy state reveals the SVG spinner defined in the component template and hides the text.',\n      }\n    }\n  }\n}"
+                },
+                {
+                    "name": "Destructive",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    variant: 'destructive',\n  },\n}"
+                },
+                {
+                    "name": "Disabled",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    disabled: true,\n  },\n}"
+                },
+                {
+                    "name": "FullWidth",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    block: true,\n  },\n}"
+                },
+                {
+                    "name": "Ghost",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    variant: 'ghost',\n  },\n}"
+                },
+                {
+                    "name": "IconOnly",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    variant: 'outline',\n    size: 'icon',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <tolle-button [variant]=\"variant\" [size]=\"size\">\n        <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n          <path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\"></path>\n          <circle cx=\"12\" cy=\"7\" r=\"4\"></circle>\n        </svg>\n      </tolle-button>\n    `,\n  }),\n}"
+                },
+                {
+                    "name": "Link",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    variant: 'link',\n  },\n}"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<ButtonComponent>",
+                    "defaultValue": "{\n  title: 'UI/Button',\n  component: ButtonComponent,\n  tags: ['autodocs'],\n  // Define controls for the inputs\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],\n      description: 'Visual style of the button',\n    },\n    size: {\n      control: 'select',\n      options: ['default', 'xs', 'sm', 'lg', 'icon-xs', 'icon-sm', 'icon', 'icon-lg'],\n      description: 'Size dimensions of the button',\n    },\n    block: {\n      control: 'boolean',\n      description: 'If true, spans full width',\n    },\n    disabled: {\n      control: 'boolean',\n    },\n    busy: {\n      control: 'boolean',\n      description: 'Shows loading spinner and disables interaction',\n    }\n  },\n  // Default args for all stories\n  args: {\n    variant: 'default',\n    size: 'default',\n    disabled: false,\n    busy: false,\n    block: false,\n  },\n  // Custom render function to handle ng-content\n  render: (args) => {\n    const { label, ...props } = args as any;\n    return {\n      props,\n      template: `\n        <tolle-button\n          [variant]=\"variant\"\n          [size]=\"size\"\n          [block]=\"block\"\n          [disabled]=\"disabled\"\n          [busy]=\"busy\"\n          [class]=\"class\"\n        >\n         Button\n        </tolle-button>\n      `,\n    };\n  },\n}"
+                },
+                {
+                    "name": "Outline",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    variant: 'outline',\n  },\n}"
+                },
+                {
+                    "name": "Playground",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{}"
+                },
+                {
+                    "name": "Secondary",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    variant: 'secondary',\n  },\n}"
+                },
+                {
+                    "name": "TextWithIcon",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    variant: 'default',\n    size: 'default',\n  },\n  render: (args) => ({\n    props: args,\n    template: `\n      <tolle-button [variant]=\"variant\" [size]=\"size\" class=\"gap-2\">\n        <svg prefix xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\">\n          <path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path>\n          <polyline points=\"22,6 12,13 2,6\"></polyline>\n        </svg>\n        Login with Email\n      </tolle-button>\n    `,\n  }),\n}"
+                }
+            ],
+            "projects/tolle/.storybook/preview.ts": [
+                {
+                    "name": "preview",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/tolle/.storybook/preview.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Preview",
+                    "defaultValue": "{\n  decorators: [\n    (storyFn, context) => {\n      // Get values from globals\n      const {\n        primaryColor = '#551a65',\n        radius = '0.75rem',\n        theme = false\n      } = context.globals;\n\n      // Convert theme to darkByDefault\n      const darkByDefault = theme === 'dark';\n\n      return {\n        ...storyFn(),\n        applicationConfig: {\n          providers: [\n            provideZoneChangeDetection({ eventCoalescing: true }),\n            provideTolleConfig({\n              primaryColor,\n              radius,\n              darkByDefault\n            }),\n          ],\n        },\n        // Also add theme class to wrapper for CSS variables\n        template: `\n          <div class=\"${theme}\">\n            ${storyFn().template}\n          </div>\n        `,\n      };\n    },\n  ],\n  parameters: {\n    controls: {\n      matchers: {\n       color: /(background|color)$/i,\n       date: /Date$/i,\n      },\n    },\n  },\n\n  globalTypes: {\n    theme: {\n      name: 'Theme Mode',\n      description: 'Light or dark mode',\n      defaultValue: 'light',\n      toolbar: {\n        icon: 'contrast',\n        items: [\n          { value: false, title: 'Light', icon: 'sun' },\n          { value: true, title: 'Dark', icon: 'moon' },\n        ],\n        dynamicTitle: true,\n      },\n    },\n    primaryColor: {\n      name: 'Primary Color',\n      description: 'Pick your primary brand color',\n      defaultValue: '#551a65',\n      toolbar: {\n        icon: 'paintbrush',\n        items: [\n          { value: '#551a65', title: 'Purple (#551a65)' },\n          { value: '#2563eb', title: 'Blue (#2563eb)' },\n          { value: '#ef4444', title: 'Red (#ef4444)' },\n          { value: '#059669', title: 'Green (#059669)' },\n          { value: '#f59e0b', title: 'Yellow (#f59e0b)' },\n          { value: '#8b5cf6', title: 'Violet (#8b5cf6)' },\n          { value: '#ec4899', title: 'Pink (#ec4899)' },\n          { value: '#000000', title: 'Custom...' },\n        ],\n        dynamicTitle: true,\n      },\n    }\n  },\n}"
+                }
+            ]
+        },
+        "groupedFunctions": {},
+        "groupedEnumerations": {},
+        "groupedTypeAliases": {
+            "projects/tolle/src/stories/button.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<ButtonComponent>",
+                    "file": "projects/tolle/src/stories/button.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 184
+                }
+            ]
+        }
+    },
+    "routes": {
+        "name": "<root>",
+        "kind": "module",
+        "children": []
+    },
+    "coverage": {
+        "count": 0,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "projects/tolle/.storybook/preview.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "preview",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Busy",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Destructive",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Disabled",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "FullWidth",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Ghost",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "IconOnly",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Link",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Outline",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Playground",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Secondary",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "TextWithIcon",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/tolle/src/stories/button.stories.ts",
+                "type": "type alias",
+                "linktype": "miscellaneous",
+                "linksubtype": "typealias",
+                "name": "Story",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            }
+        ]
+    }
+}

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, HostBinding, Input} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -90,14 +90,46 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
   `]
 })
 export class ButtonComponent {
+  /** * Additional CSS classes to apply to the button element.
+   * Useful for custom margins or absolute positioning.
+   */
   @Input() class: string = '';
+
+  /** * The visual style of the button.
+   * @default 'default'
+   */
   @Input() variant: ButtonProps['variant'] = 'default';
+
+  /** * The vertical and horizontal padding/scaling of the button.
+   * @default 'default'
+   */
   @Input() size: ButtonProps['size'] = 'default';
+
+  /** * If true, the button will take up the full width of its container.
+   */
   @Input() block: boolean = false;
+
+  /** * Disables all user interactions and applies grayed-out styling.
+   */
   @Input() disabled: boolean = false;
+
+  /** * Shows a loading state. Disables interaction and typically triggers a spinner.
+   */
   @Input() busy: boolean = false;
+
+  /** * If true, the button is focusable but not clickable.
+   */
   @Input() readonly: boolean = false;
 
+  @HostBinding('class.w-full')
+  get isBlock() {
+    return this.block;
+  }
+
+  /**
+   * Internal getter that merges variant logic with custom classes.
+   * @internal
+   */
   get computedClass() {
     return cn(
       buttonVariants({
@@ -106,7 +138,6 @@ export class ButtonComponent {
         block: this.block,
         busy: this.busy
       }),
-      // Adds 'size-icon-sm', 'size-xs', etc. for the CSS selectors to work
       'size-' + this.size,
       this.class
     );

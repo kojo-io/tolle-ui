@@ -6,12 +6,14 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "docs:json": "npx compodoc -p projects/tolle/tsconfig.lib.json -e json -d projects/showcase/.storybook",
+    "storybook": "npm run docs:json && ng run showcase:build-storybook"
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "^18.2.0",
-    "@angular/cdk": "^18.2.14",
+    "@angular/cdk": "^18.2.0",
     "@angular/common": "^18.2.0",
     "@angular/compiler": "^18.2.0",
     "@angular/core": "^18.2.0",
@@ -23,6 +25,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "remark-gfm": "^4.0.1",
     "remixicon": "^4.7.0",
     "rxjs": "~7.8.0",
     "tailwind-merge": "^3.4.0",
@@ -30,11 +33,19 @@
     "zone.js": "~0.14.10"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.1802.0",
     "@angular-devkit/build-angular": "^18.2.21",
+    "@angular-devkit/core": "^18.2.0",
     "@angular/cli": "^18.2.21",
     "@angular/compiler-cli": "^18.2.0",
+    "@compodoc/compodoc": "^1.1.32",
+    "@storybook/addon-a11y": "^10.1.10",
+    "@storybook/addon-docs": "^10.1.10",
+    "@storybook/addon-themes": "^10.1.11",
+    "@storybook/angular": "^10.1.10",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.23",
+    "css-loader": "^7.1.2",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
@@ -43,8 +54,11 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^18.2.0",
     "postcss": "^8.5.6",
+    "postcss-loader": "^8.2.0",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "storybook": "^10.1.10",
+    "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.19",
     "typescript": "~5.5.2"
   }
