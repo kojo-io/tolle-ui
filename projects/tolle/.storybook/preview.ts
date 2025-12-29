@@ -29,13 +29,7 @@ const preview: Preview = {
               darkByDefault
             }),
           ],
-        },
-        // Also add theme class to wrapper for CSS variables
-        template: `
-          <div class="${theme}">
-            ${storyFn().template}
-          </div>
-        `,
+        }
       };
     },
   ],

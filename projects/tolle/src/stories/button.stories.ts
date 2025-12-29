@@ -18,10 +18,6 @@ const meta: Meta<ButtonComponent> = {
       options: ['default', 'xs', 'sm', 'lg', 'icon-xs', 'icon-sm', 'icon', 'icon-lg'],
       description: 'Size dimensions of the button',
     },
-    block: {
-      control: 'boolean',
-      description: 'If true, spans full width',
-    },
     disabled: {
       control: 'boolean',
     },
@@ -36,7 +32,6 @@ const meta: Meta<ButtonComponent> = {
     size: 'default',
     disabled: false,
     busy: false,
-    block: false,
   },
   // Custom render function to handle ng-content
   render: (args) => {
@@ -47,7 +42,6 @@ const meta: Meta<ButtonComponent> = {
         <tolle-button
           [variant]="variant"
           [size]="size"
-          [block]="block"
           [disabled]="disabled"
           [busy]="busy"
           [class]="class"
@@ -120,7 +114,7 @@ export const Disabled: Story = {
 
 export const FullWidth: Story = {
   args: {
-    block: true,
+    class:'w-full',
   },
 };
 

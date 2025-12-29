@@ -1,4 +1,4 @@
-import {Component, HostBinding, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -20,19 +20,16 @@ const buttonVariants = cva(
         xs: "h-8 px-2 py-1 text-xs",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
-        // RESTORED: Square icon button variants
         "icon-xs": "h-8 w-8",
         "icon-sm": "h-9 w-9",
         icon: "h-10 w-10",
         "icon-lg": "h-11 w-11",
       },
-      block: { true: "w-full flex" },
       busy: { true: "relative !cursor-wait !pointer-events-none" }
     },
     defaultVariants: {
       variant: "default",
       size: "default",
-      block: false,
     },
   }
 );
@@ -62,10 +59,11 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
     </button>
   `,
   styles: [`
-    :host { display: inline-block; }
-    :host(.w-full) { display: block; }
+    :host {
+      display: inline-block;
+      vertical-align: middle;
+    }
 
-    /* Centering and Resetting for icons */
     :host ::ng-deep i {
       display: inline-flex;
       align-items: center;
@@ -73,69 +71,34 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
       line-height: 1;
     }
 
-    /* MATCHING YOUR theme.css LOGIC: Responsive icon sizing */
     :host-context(.size-xs) ::ng-deep i,
     :host-context(.size-icon-xs) ::ng-deep i,
     :host-context(.size-sm) ::ng-deep i,
     :host-context(.size-icon-sm) ::ng-deep i {
-      font-size: 1rem; /* 16px */
+      font-size: 1rem;
     }
 
     :host-context(.size-default) ::ng-deep i,
     :host-context(.size-icon) ::ng-deep i,
     :host-context(.size-lg) ::ng-deep i,
     :host-context(.size-icon-lg) ::ng-deep i {
-      font-size: 1.2rem; /* ~19-20px */
+      font-size: 1.2rem;
     }
   `]
 })
 export class ButtonComponent {
-  /** * Additional CSS classes to apply to the button element.
-   * Useful for custom margins or absolute positioning.
-   */
   @Input() class: string = '';
-
-  /** * The visual style of the button.
-   * @default 'default'
-   */
   @Input() variant: ButtonProps['variant'] = 'default';
-
-  /** * The vertical and horizontal padding/scaling of the button.
-   * @default 'default'
-   */
   @Input() size: ButtonProps['size'] = 'default';
-
-  /** * If true, the button will take up the full width of its container.
-   */
-  @Input() block: boolean = false;
-
-  /** * Disables all user interactions and applies grayed-out styling.
-   */
   @Input() disabled: boolean = false;
-
-  /** * Shows a loading state. Disables interaction and typically triggers a spinner.
-   */
   @Input() busy: boolean = false;
-
-  /** * If true, the button is focusable but not clickable.
-   */
   @Input() readonly: boolean = false;
 
-  @HostBinding('class.w-full')
-  get isBlock() {
-    return this.block;
-  }
-
-  /**
-   * Internal getter that merges variant logic with custom classes.
-   * @internal
-   */
   get computedClass() {
     return cn(
       buttonVariants({
         variant: this.variant,
         size: this.size,
-        block: this.block,
         busy: this.busy
       }),
       'size-' + this.size,
