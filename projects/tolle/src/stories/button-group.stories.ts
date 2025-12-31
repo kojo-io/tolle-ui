@@ -4,7 +4,7 @@ import {ButtonGroupComponent} from '../lib/button-group.component';
 import {ButtonComponent} from '../lib/button.component';
 
 const meta: Meta<ButtonGroupComponent> = {
-  title: 'UI/Button Group',
+  title: 'Components/Button Group',
   component: ButtonGroupComponent,
   tags: ['autodocs'],
   decorators: [

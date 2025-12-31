@@ -38,6 +38,21 @@ export class ThemeService {
       this.disableDarkMode();
     }
 
+    const savedPrimary = localStorage.getItem('tolle-primary-color');
+
+    if (savedPrimary) {
+      this.setPrimaryColor(savedPrimary, false);
+    } else if (this.config?.primaryColor) {
+      this.setPrimaryColor(this.config.primaryColor, false);
+    }
+
+    if (this.config?.radius) {
+      this.renderer.setStyle(
+        this.document.documentElement,
+        '--radius',
+        this.config.radius
+      );
+    }
     // 2. Apply Brand Config - This will generate full palette
     if (this.config) {
       this.applyBrandConfig(this.config);
@@ -155,7 +170,29 @@ export class ThemeService {
     this.isDarkSubject.next(false);
   }
 
+  setPrimaryColor(color: string, persist = true) {
+    if (!isPlatformBrowser(this.platformId)) return;
+
+    // Update CSS variables + palette
+    this.renderer.setStyle(
+      this.document.documentElement,
+      '--primary',
+      color
+    );
+
+    this.generatePrimaryShades(color);
+
+    // Persist user preference
+    if (persist) {
+      localStorage.setItem('tolle-primary-color', color);
+    }
+  }
+
   get currentTheme(): 'dark' | 'light' {
     return this.isDarkSubject.value ? 'dark' : 'light';
+  }
+
+  get primaryColor() {
+    return localStorage.getItem('tolle-primary-color');
   }
 }

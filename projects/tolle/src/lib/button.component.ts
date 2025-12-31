@@ -53,7 +53,7 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
         </svg>
       </div>
 
-      <span class="flex items-center justify-center w-full h-full" [class.invisible]="busy">
+      <span class="flex items-center justify-center w-full h-full pointer-events-none" [class.invisible]="busy">
         <ng-content></ng-content>
       </span>
     </button>

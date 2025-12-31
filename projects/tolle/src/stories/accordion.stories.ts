@@ -4,7 +4,7 @@ import {AccordionComponent} from '../lib/accordion.component';
 import {AccordionItemComponent} from '../lib/accordion-item.component';
 
 const meta: Meta<AccordionComponent> = {
-  title: 'UI/Accordion',
+  title: 'Components/Accordion',
   component: AccordionComponent,
   tags: ['autodocs'],
   decorators: [

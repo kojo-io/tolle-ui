@@ -55,7 +55,7 @@ class MaskedWrapperComponent {
 
 // 2. Metadata Configuration
 const meta: Meta<MaskedInputComponent> = {
-  title: 'UI/Masked Input',
+  title: 'Components/Masked Input',
   component: MaskedInputComponent,
   tags: ['autodocs'],
   decorators: [

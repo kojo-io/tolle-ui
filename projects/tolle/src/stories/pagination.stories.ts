@@ -51,7 +51,7 @@ class PaginationWrapperComponent {
 }
 
 const meta: Meta<PaginationComponent> = {
-  title: 'UI/Pagination',
+  title: 'Components/Pagination',
   component: PaginationComponent,
   tags: ['autodocs'],
   decorators: [

@@ -3,7 +3,7 @@ import {ButtonComponent} from '../lib/button.component';
 
 // Define the metadata for the story
 const meta: Meta<ButtonComponent> = {
-  title: 'UI/Button',
+  title: 'Components/Button',
   component: ButtonComponent,
   tags: ['autodocs'],
   // Define controls for the inputs

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {CheckboxComponent} from '../lib/checkbox.component';
 
 const meta: Meta<CheckboxComponent> = {
-  title: 'UI/Checkbox',
+  title: 'Components/Checkbox',
   component: CheckboxComponent,
   tags: ['autodocs'],
   decorators: [
