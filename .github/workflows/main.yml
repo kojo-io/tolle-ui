@@ -48,3 +48,4 @@ jobs:
           key: ${{ secrets.AWS_SSH_KEY }}
           source: dist/storybook/tolle/*
           target: /var/www/tolle-ui-docs
+          strip_components: 3
