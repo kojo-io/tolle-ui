@@ -5,7 +5,7 @@ import {BreadcrumbLinkComponent} from '../lib/breadcrumb-link.component';
 import {BreadcrumbSeparatorComponent} from '../lib/breadcrumb-separator.component';
 
 const meta: Meta = {
-  title: 'UI/Breadcrumb',
+  title: 'Components/Breadcrumb',
   decorators: [
     moduleMetadata({
       imports: [

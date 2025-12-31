@@ -6,7 +6,7 @@ import {OtpGroupComponent} from '../lib/otp-group.component';
 import {OtpSlotComponent} from '../lib/otp-slot.component';
 
 const meta: Meta<OtpComponent> = {
-  title: 'UI/OTP Input',
+  title: 'Components/OTP Input',
   component: OtpComponent,
   tags: ['autodocs'],
   decorators: [

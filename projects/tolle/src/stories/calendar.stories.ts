@@ -38,7 +38,7 @@ class CalendarWrapperComponent {
 
 // 2. Story Metadata
 const meta: Meta<CalendarComponent> = {
-  title: 'UI/Calendar',
+  title: 'Components/Calendar',
   component: CalendarComponent,
   tags: ['autodocs'],
   decorators: [

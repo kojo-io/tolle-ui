@@ -7,8 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "docs:json": "npx compodoc -p projects/tolle/tsconfig.lib.json -e json -d projects/showcase/.storybook",
-    "storybook": "npm run docs:json && ng run showcase:build-storybook"
+    "build:web": "ng build showcase --configuration production",
+    "docs:json": "npx compodoc -p projects/tolle/tsconfig.lib.json -e json -d projects/tolle/.storybook",
+    "build:storybook": "npm run docs:json && ng run tolle:build-storybook"
   },
   "private": true,
   "dependencies": {
@@ -28,6 +29,7 @@
     "remark-gfm": "^4.0.1",
     "remixicon": "^4.7.0",
     "rxjs": "~7.8.0",
+    "@melloware/coloris": "^0.25.0",
     "tailwind-merge": "^3.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

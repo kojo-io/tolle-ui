@@ -4,7 +4,7 @@ import { moduleMetadata } from '@storybook/angular';
 import {InputComponent} from '../lib/input.component';
 
 const meta: Meta<InputComponent> = {
-  title: 'UI/Input',
+  title: 'Components/Input',
   component: InputComponent,
   tags: ['autodocs'],
   decorators: [

@@ -5,8 +5,35 @@ import { ButtonComponent } from '../lib/button.component';
 import { ToastPosition, ToastService } from '../lib/toast.service';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
-// 1. Define the Wrapper Component
-// This creates a valid Injection Context for the service
+// 1. Define Source Code for Documentation
+const TS_CODE = `
+import { Component, inject } from '@angular/core';
+import { ToastService } from '@tolle_/tolle-ui';
+
+@Component({ ... })
+export class MyComponent {
+  private toast = inject(ToastService);
+
+  showSuccess() {
+    this.toast.show({
+      title: 'Success',
+      description: 'Action completed successfully.',
+      variant: 'success',
+    });
+  }
+}
+`;
+
+const HTML_CODE = `
+<tolle-button (click)="showSuccess()">
+  Show Toast
+</tolle-button>
+
+<!-- Usually placed once in app.component.html -->
+<tolle-toaster position="top-right" />
+`;
+
+// 2. Define the Wrapper Component
 @Component({
   selector: 'toast-story-wrapper',
   standalone: true,
@@ -58,19 +85,18 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 })
 class ToastStoryWrapper {
   @Input() position: ToastPosition = 'top-right';
-  // Safe to use inject() here because it's inside a class field initializer
   toast = inject(ToastService);
 }
 
-// 2. Configure the Story Metadata
+// 3. Configure the Story Metadata
 const meta: Meta = {
-  title: 'UI/Toast',
+  title: 'Components/Toast',
+  tags: ['autodocs'],
   decorators: [
     applicationConfig({
       providers: [ToastService, provideAnimations()],
     }),
     moduleMetadata({
-      // IMPORTANT: Import the wrapper here so the template below recognizes it
       imports: [ToastStoryWrapper],
     }),
   ],
@@ -81,7 +107,6 @@ const meta: Meta = {
       description: 'Position of the toast container viewport',
     },
   },
-  // 2. Set Default
   args: {
     position: 'top-right',
   },
@@ -90,16 +115,27 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-// 3. Render using the Template approach
-// This avoids the "inject() must be called from an injection context" error
+// 4. Render using the Template approach
 export const InteractiveDemo: Story = {
   args: {
-    position: 'top-center',
+    position: 'top-right', // Default position for the demo
   },
-
   render: args => ({
-    // 3. Pass args (which contains 'position') to the template
     props: args,
     template: `<toast-story-wrapper [position]="position"></toast-story-wrapper>`,
   }),
+  parameters: {
+    docs: {
+      source: {
+        code: `
+/* --- example.component.ts --- */
+${TS_CODE.trim()}
+
+/* --- example.component.html --- */
+${HTML_CODE.trim()}
+        `,
+        language: 'typescript'
+      }
+    }
+  }
 };

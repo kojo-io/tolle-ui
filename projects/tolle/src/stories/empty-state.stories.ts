@@ -3,7 +3,7 @@ import {EmptyStateComponent} from '../lib/empty-state.component';
 import {ButtonComponent} from '../lib/button.component';
 
 const meta: Meta<EmptyStateComponent> = {
-  title: 'UI/Empty State',
+  title: 'Components/Empty State',
   component: EmptyStateComponent,
   tags: ['autodocs'],
   decorators: [

@@ -5,7 +5,7 @@ import {TooltipDirective} from '../lib/tooltip.directive';
 import {ButtonComponent} from '../lib/button.component';
 
 const meta: Meta = {
-  title: 'UI/Tooltip',
+  title: 'Components/Tooltip',
   tags: ['autodocs'],
   decorators: [
     moduleMetadata({

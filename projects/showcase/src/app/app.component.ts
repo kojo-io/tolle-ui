@@ -51,7 +51,7 @@ import {BreadcrumbComponent} from '../../../tolle/src/lib/breadcrumb.component';
 import {BreadcrumbLinkComponent} from '../../../tolle/src/lib/breadcrumb-link.component';
 import {BreadcrumbSeparatorComponent} from '../../../tolle/src/lib/breadcrumb-separator.component';
 import {BreadcrumbItemComponent} from '../../../tolle/src/lib/breadcrumb-item.component';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterOutlet} from '@angular/router';
 import {EmptyStateComponent} from '../../../tolle/src/lib/empty-state.component';
 import {OtpComponent} from '../../../tolle/src/lib/otp.component';
 import {OtpSlotComponent} from '../../../tolle/src/lib/otp-slot.component';
@@ -122,14 +122,8 @@ import {ResizableHandleComponent} from '../../../tolle/src/lib/resizable-handle.
     OtpComponent,
     OtpGroupComponent,
     OtpSlotComponent,
-    PopoverComponent,
-    PopoverContentComponent,
-    RadioGroupComponent,
-    RadioItemComponent,
-    ResizablePanelGroupComponent,
-    ResizablePanelComponent,
-    ResizableHandleComponent,
-],
+    RouterOutlet,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

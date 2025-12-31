@@ -47,7 +47,7 @@ class RangePickerWrapperComponent {
 }
 
 const meta: Meta = {
-  title: 'UI/Date Range Picker',
+  title: 'Components/Date Range Picker',
   decorators: [
     applicationConfig({ providers: [provideAnimations()] }),
     moduleMetadata({ imports: [RangePickerWrapperComponent] }),

@@ -9,7 +9,7 @@ import {InputComponent} from '../lib/input.component';
 import {ButtonComponent} from '../lib/button.component';
 
 const meta: Meta<SelectComponent> = {
-  title: 'UI/Select',
+  title: 'Components/Select',
   component: SelectComponent,
   tags: ['autodocs'],
   decorators: [
