@@ -4,10 +4,9 @@
     <div class="flex h-16 items-center justify-between">
       <div class="flex items-center space-x-4">
         <div class="flex items-center space-x-2">
-          <div class="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-            <i class="ri-code-s-slash-line text-white text-lg"></i>
+          <div class="w-32">
+            <img [src]="(theme.isDark$ | async) ? 'tolle-white.png' : 'tolle-black.png'" alt="logo">
           </div>
-          <span class="text-lg font-semibold text-primary dark:text-white">tolle/ui</span>
         </div>
       </div>
       <nav class="hidden md:flex items-center space-x-8 text-primary-700 dark:text-white">
@@ -20,7 +19,7 @@
           <span>GitHub</span>
         </a>
         <tolle-button variant="ghost" size="icon" (click)="toggle()">
-          <i [class]="(theme.isDark$ | async) ? 'ri-sun-line' : 'ri-moon-line'"></i>
+          <i class="ri-moon-line dark:ri-sun-line"></i>
         </tolle-button>
       </nav>
       <button class="md:hidden w-8 h-8 flex items-center justify-center">
