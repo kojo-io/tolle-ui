@@ -12,7 +12,7 @@ import { DatePickerComponent } from '../lib/date-picker.component';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, DatePickerComponent],
   template: `
-    <div class="flex min-h-[400px] flex-col items-center justify-center bg-background p-20">
+    <div class="p-10 w-full h-screen flex flex-col justify-content-center items-center">
       <div class="w-full max-w-xs space-y-4">
         <div>
           <label class="text-sm font-medium text-foreground">Pick a Date</label>
@@ -45,7 +45,7 @@ class DatePickerWrapperComponent {
 
 // 2. Metadata Configuration
 const meta: Meta<DatePickerComponent> = {
-  title: 'UI/Date Picker',
+  title: 'Components/Date Picker',
   component: DatePickerComponent,
   tags: ['autodocs'],
   decorators: [
@@ -94,7 +94,7 @@ export const DisabledState: Story = {
   render: args => ({
     props: args,
     template: `
-      <div class="p-10 max-w-xs">
+      <div class="p-10 w-full">
         <tolle-date-picker [disabled]="disabled" [placeholder]="placeholder"></tolle-date-picker>
       </div>
     `,
@@ -109,7 +109,7 @@ export const CustomPlaceholder: Story = {
   render: args => ({
     props: args,
     template: `
-      <div class="p-10 max-w-xs">
+       <div class="p-10 w-full h-screen flex flex-col justify-content-center items-center">
         <tolle-date-picker [placeholder]="placeholder"></tolle-date-picker>
       </div>
     `,

@@ -120,8 +120,8 @@ export class InputComponent implements ControlValueAccessor {
       this.error ? "border-destructive focus-within:ring-destructive" : "border-input",
 
       // Disabled vs Readonly styling
-      this.disabled && "cursor-not-allowed opacity-50 bg-muted/30",
-      this.readonly && "cursor-default bg-muted/10 border-dashed focus-within:ring-0",
+      this.disabled && "cursor-not-allowed opacity-50",
+      this.readonly && "cursor-default border-dashed focus-within:ring-0",
 
       this.containerClass
     );

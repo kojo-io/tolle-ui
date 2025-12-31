@@ -55,7 +55,8 @@
           "options": {
             "configDir": "projects/tolle/.storybook",
             "browserTarget": "tolle:build",
-            "compodoc": true,
+            "styles": ["projects/tolle/theme.css", "node_modules/remixicon/fonts/remixicon.css"],
+            "docs": true,
             "compodocArgs": [
               "-e",
               "json",
@@ -91,6 +92,7 @@
               }
             ],
             "styles": [
+              "node_modules/@melloware/coloris/dist/coloris.css",
               "projects/showcase/src/styles.css"
             ],
             "scripts": []
@@ -109,7 +111,13 @@
                   "maximumError": "4kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "projects/showcase/src/environments/environment.ts",
+                  "with": "projects/showcase/src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "optimization": false,

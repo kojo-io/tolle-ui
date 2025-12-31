@@ -1,8 +1,9 @@
-import {applicationConfig, Preview} from '@storybook/angular'
+import { Preview} from '@storybook/angular'
 import { setCompodocJson } from "@storybook/addon-docs/angular";
 import docJson from "../documentation.json";
 import {provideZoneChangeDetection} from '@angular/core';
 import {provideTolleConfig} from '../src/lib/tolle-config';
+import {themes} from 'storybook/theming';
 setCompodocJson(docJson);
 
 const preview: Preview = {
@@ -34,6 +35,9 @@ const preview: Preview = {
     },
   ],
   parameters: {
+    docs: {
+      theme: themes.dark,
+    },
     controls: {
       matchers: {
        color: /(background|color)$/i,
@@ -43,19 +47,6 @@ const preview: Preview = {
   },
 
   globalTypes: {
-    theme: {
-      name: 'Theme Mode',
-      description: 'Light or dark mode',
-      defaultValue: 'light',
-      toolbar: {
-        icon: 'contrast',
-        items: [
-          { value: false, title: 'Light', icon: 'sun' },
-          { value: true, title: 'Dark', icon: 'moon' },
-        ],
-        dynamicTitle: true,
-      },
-    },
     primaryColor: {
       name: 'Primary Color',
       description: 'Pick your primary brand color',

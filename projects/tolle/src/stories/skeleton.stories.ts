@@ -4,7 +4,7 @@ import {SkeletonComponent} from '../lib/skeleton.component';
 import {CardComponent, CardContentComponent, CardHeaderComponent} from '../lib/card.component';
 
 const meta: Meta<SkeletonComponent> = {
-  title: 'UI/Skeleton',
+  title: 'Components/Skeleton',
   component: SkeletonComponent,
   tags: ['autodocs'],
   decorators: [

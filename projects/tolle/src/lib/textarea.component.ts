@@ -86,8 +86,8 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
       this.error ? 'border-destructive' : 'border-input',
 
       // Disabled vs Readonly styles
-      this.disabled && 'cursor-not-allowed opacity-50 bg-muted/30',
-      this.readonly && 'cursor-default bg-muted/10 border-dashed focus-visible:ring-0',
+      this.disabled && 'cursor-not-allowed opacity-50',
+      this.readonly && 'cursor-default border-dashed focus-visible:ring-0',
 
       'scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent',
       'min-h-[80px]',

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {SwitchComponent} from '../lib/switch.component';
 
 const meta: Meta<SwitchComponent> = {
-  title: 'UI/Switch',
+  title: 'Components/Switch',
   component: SwitchComponent,
   tags: ['autodocs'],
   decorators: [

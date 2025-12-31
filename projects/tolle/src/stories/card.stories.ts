@@ -13,7 +13,7 @@ import {ButtonComponent} from '../lib/button.component';
 import {InputComponent} from '../lib/input.component';
 
 const meta: Meta<CardComponent> = {
-  title: 'UI/Card',
+  title: 'Components/Card',
   component: CardComponent,
   tags: ['autodocs'],
   decorators: [

@@ -2,6 +2,7 @@ import type { StorybookConfig } from '@storybook/angular';
 import remarkGfm from 'remark-gfm';
 
 const config: StorybookConfig = {
+  staticDirs: ['assets'],
   stories: [
     '../src/**/*.mdx',
     '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
