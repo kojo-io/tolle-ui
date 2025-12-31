@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Angular App (tolle-ui)
         run: |
-          npm run build:build:web
+          npm run build:web
 
       - name: Build Storybook (tolle-ui-docs)
         run: |
