@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ResizableHandleComponent } from './resizable-handle.component';
+import { ResizableComponent } from './resizable.component';
 
-describe('ResizableHandleComponent', () => {
-  let component: ResizableHandleComponent;
-  let fixture: ComponentFixture<ResizableHandleComponent>;
+describe('ResizableComponent', () => {
+  let component: ResizableComponent;
+  let fixture: ComponentFixture<ResizableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ResizableHandleComponent]
+      imports: [ResizableComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ResizableHandleComponent);
+    fixture = TestBed.createComponent(ResizableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

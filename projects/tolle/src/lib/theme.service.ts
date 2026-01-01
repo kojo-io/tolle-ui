@@ -23,35 +23,64 @@ export class ThemeService {
   private initializeTheme() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // 1. Determine Initial Mode (Dark/Light)
+    // LOGIC: User Saved Preferences > Config Defaults > System Preference
     const savedTheme = localStorage.getItem('tolle-theme');
+    const savedPrimary = localStorage.getItem('tolle-primary-color');
+    const savedRadius = localStorage.getItem('tolle-radius');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    // Logic: Saved Preference > Config Default > System Preference
-    const shouldBeDark = savedTheme
-      ? savedTheme === 'dark'
-      : (this.config?.darkByDefault ?? systemPrefersDark);
+    console.log('Theme initialization:', {
+      savedTheme,
+      savedPrimary,
+      savedRadius,
+      config: this.config,
+      systemPrefersDark
+    });
 
+    // 1. Determine Dark/Light Mode
+    // Priority: Saved Theme > Config Default > System Preference
+    let shouldBeDark = systemPrefersDark; // Start with system
+
+    if (savedTheme) {
+      // User has saved preference
+      shouldBeDark = savedTheme === 'dark';
+    } else if (this.config?.darkByDefault !== undefined) {
+      // Use config default if no user preference
+      shouldBeDark = this.config.darkByDefault;
+    }
+
+    // Apply theme mode
     if (shouldBeDark) {
-      this.enableDarkMode();
+      this.enableDarkMode(false); // Don't save, we'll save after checking all preferences
     } else {
-      this.disableDarkMode();
+      this.disableDarkMode(false);
     }
 
-    const savedPrimary = localStorage.getItem('tolle-primary-color');
-
+    // 2. Apply Primary Color
+    // Priority: Saved Color > Config Color
     if (savedPrimary) {
-      this.setPrimaryColor(savedPrimary, false);
+      // User has saved color preference
+      this.setPrimaryColor(savedPrimary, false); // Don't save again
     } else if (this.config?.primaryColor) {
-      this.setPrimaryColor(this.config.primaryColor, false);
+      // Use config default if no user preference
+      this.setPrimaryColor(this.config.primaryColor, false); // Save this as user preference
     }
 
-    // Set radius from config
-    if (this.config?.radius) {
+    // 3. Apply Radius
+    // Priority: Saved Radius > Config Radius
+    if (savedRadius) {
+      // User has saved radius preference
+      this.setRadius(savedRadius, false);
+    } else if (this.config?.radius) {
+      // Use config default if no user preference
       this.setRadius(this.config.radius, false);
     }
-  }
 
+    // Save theme mode preference if it came from config or system
+    if (!savedTheme) {
+      localStorage.setItem('tolle-theme', shouldBeDark ? 'dark' : 'light');
+    }
+  }
   /**
    * Sets the border radius for all components
    */
@@ -284,18 +313,21 @@ export class ThemeService {
     isCurrentlyDark ? this.disableDarkMode() : this.enableDarkMode();
   }
 
-  private enableDarkMode() {
+  private enableDarkMode(saveToStorage = true) {
     this.renderer.addClass(this.document.documentElement, 'dark');
-    localStorage.setItem('tolle-theme', 'dark');
+    if (saveToStorage) {
+      localStorage.setItem('tolle-theme', 'dark');
+    }
     this.isDarkSubject.next(true);
   }
 
-  private disableDarkMode() {
+  private disableDarkMode(saveToStorage = true) {
     this.renderer.removeClass(this.document.documentElement, 'dark');
-    localStorage.setItem('tolle-theme', 'light');
+    if (saveToStorage) {
+      localStorage.setItem('tolle-theme', 'light');
+    }
     this.isDarkSubject.next(false);
   }
-
   setPrimaryColor(color: string, persist = true) {
     if (!isPlatformBrowser(this.platformId)) return;
 
@@ -337,33 +369,61 @@ export class ThemeService {
     return localStorage.getItem('tolle-primary-color');
   }
 
-  get radius(): string | null {
-    if (!isPlatformBrowser(this.platformId)) return null;
+  /**
+   * Reset to config defaults (clears user preferences)
+   */
+  resetToConfigDefaults() {
+    if (!isPlatformBrowser(this.platformId)) return;
 
-    const root = this.document.documentElement;
-    const cssValue = getComputedStyle(root).getPropertyValue('--radius').trim();
+    // Clear user preferences
+    localStorage.removeItem('tolle-theme');
+    localStorage.removeItem('tolle-primary-color');
+    localStorage.removeItem('tolle-radius');
 
-    if (cssValue && cssValue !== '') {
-      return cssValue;
-    }
-
-    return localStorage.getItem('tolle-radius') || '0.5rem';
+    // Re-initialize with config defaults
+    this.initializeTheme();
   }
 
   /**
-   * Applies the brand identity variables with full shade palette
+   * Get current user preferences
    */
-  applyBrandConfig(config: TolleConfig) {
+  getUserPreferences() {
+    if (!isPlatformBrowser(this.platformId)) return null;
+
+    return {
+      theme: localStorage.getItem('tolle-theme'),
+      primaryColor: localStorage.getItem('tolle-primary-color'),
+      radius: localStorage.getItem('tolle-radius')
+    };
+  }
+
+  /**
+   * Clear all user preferences
+   */
+  clearUserPreferences() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    // Set primary color if provided
-    if (config.primaryColor) {
-      this.setPrimaryColor(config.primaryColor, false);
+    localStorage.removeItem('tolle-theme');
+    localStorage.removeItem('tolle-primary-color');
+    localStorage.removeItem('tolle-radius');
+
+    // Reset to system defaults (not config defaults)
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (systemPrefersDark) {
+      this.enableDarkMode(false);
+    } else {
+      this.disableDarkMode(false);
     }
 
-    // Set border radius if provided
-    if (config.radius) {
-      this.setRadius(config.radius, false);
+    // Remove CSS variables
+    const root = this.document.documentElement;
+    this.renderer.removeStyle(root, '--primary');
+    this.renderer.removeStyle(root, '--radius');
+
+    // Clear dynamic styles
+    const existingStyle = this.document.getElementById(this.styleId);
+    if (existingStyle) {
+      existingStyle.remove();
     }
   }
 }

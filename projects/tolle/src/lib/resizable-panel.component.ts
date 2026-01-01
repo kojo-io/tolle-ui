@@ -1,59 +1,54 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
+import {ResizablePanelItemComponent} from './resizable-panel-item.component';
 
 @Component({
   selector: 'tolle-resizable-panel',
   standalone: true,
+  imports: [CommonModule],
   template: `
-    <div
-      [style.flex]="(isCollapsed ? collapsedSize : size) + ' 1 0px'"
-      [class]="cn(
-        'overflow-hidden',
-        !isDragging ? 'transition-all duration-300 ease-in-out' : '',
-        class
-      )"
-    >
-      <ng-content></ng-content>
+    <div [class]="computedContainerClass">
+      <div class="flex" [class.flex-col]="direction === 'vertical'" [class.flex-row]="direction === 'horizontal'">
+        <ng-content></ng-content>
+      </div>
     </div>
-  `
-})
-export class ResizablePanelComponent {
-  @Input() size = 0;
-  @Input() minSize = 10;
-  @Input() collapsible = false;
-  @Input() collapsedSize = 0;
-  @Input() class = '';
-  @Input() isDragging = false;
-  @Output() onCollapse = new EventEmitter<boolean>();
-
-  isCollapsed = false;
-
-  updateSize(newSize: number) {
-    if (this.collapsible) {
-      const collapseThreshold = this.minSize * 0.25;
-
-      // 1. If we are currently visible and drag way below the threshold -> Collapse
-      if (newSize < collapseThreshold && !this.isCollapsed) {
-        this.isCollapsed = true;
-        this.size = this.collapsedSize;
-        this.onCollapse.emit(true);
-        return;
-      }
-
-      // 2. If we are collapsed and drag past 50% of minSize -> Expand
-      if (this.isCollapsed && newSize > this.minSize * 0.5) {
-        this.isCollapsed = false;
-        this.onCollapse.emit(false);
-      }
+  `,
+  styles: [`
+    :host {
+      display: block;
     }
+  `]
+})
+export class ResizablePanelComponent implements AfterContentInit {
+  @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
+  @Input() class: string = '';
 
-    // 3. Clamping: If not collapsed, force the size to be at least minSize
-    // This prevents the panel from visually shrinking below minSize
-    // until the snap threshold is actually hit.
-    if (!this.isCollapsed) {
-      this.size = Math.max(this.minSize, newSize);
+  @ContentChildren(ResizablePanelItemComponent) panels!: QueryList<ResizablePanelItemComponent>;
+
+  ngAfterContentInit() {
+    // Initialize panel sizes if needed
+    setTimeout(() => this.updatePanelSizes());
+  }
+
+  private updatePanelSizes() {
+    const panels = this.panels.toArray();
+    const totalPanels = panels.length;
+
+    if (totalPanels > 0) {
+      const defaultSize = 100 / totalPanels;
+      panels.forEach(panel => {
+        if (!panel.size) {
+          panel.size = defaultSize;
+        }
+      });
     }
   }
 
-  protected cn = cn;
+  get computedContainerClass() {
+    return cn(
+      'w-full h-full',
+      this.class
+    );
+  }
 }
