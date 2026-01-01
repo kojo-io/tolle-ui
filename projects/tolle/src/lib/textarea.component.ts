@@ -16,9 +16,11 @@ import { cn } from './utils/cn';
   ],
   template: `
     <div class="flex flex-col gap-1.5 w-full">
-      <label *ngIf="label" [for]="id"
-             [class.opacity-50]="disabled"
-             class="text-sm font-medium text-foreground leading-none transition-opacity">
+      <label
+        *ngIf="label"
+        [for]="id"
+        [class]="computedLabelClass"
+      >
         {{ label }}
       </label>
 
@@ -32,16 +34,37 @@ import { cn } from './utils/cn';
           [rows]="rows"
           [(ngModel)]="value"
           (input)="handleInput($event)"
-          (blur)="onTouched()"
+          (blur)="onBlur()"
+          (focus)="onFocus()"
           [class]="textareaClasses"
           [style.resize]="(autoGrow || readonly || disabled) ? 'none' : 'vertical'"
           [style.overflow]="autoGrow ? 'hidden' : 'auto'"
+          [attr.aria-invalid]="error"
+          [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
+          [attr.maxlength]="maxLength"
         ></textarea>
       </div>
 
-      <div *ngIf="(showCharacterCount || hint) && !disabled" class="flex justify-between items-center px-1">
-        <p *ngIf="hint" class="text-xs text-muted-foreground">{{ hint }}</p>
-        <p *ngIf="showCharacterCount" class="text-[10px] uppercase tracking-wider text-muted-foreground ml-auto font-medium">
+      <div *ngIf="(showCharacterCount || hint || errorMessage) && !disabled" class="flex justify-between items-center px-1">
+        <p
+          *ngIf="hint && !error"
+          class="text-xs text-muted-foreground transition-opacity duration-200"
+          [class.opacity-0]="isFocused && hideHintOnFocus"
+        >
+          {{ hint }}
+        </p>
+        <p
+          *ngIf="error && errorMessage"
+          [id]="id + '-error'"
+          class="text-xs text-destructive"
+        >
+          {{ errorMessage }}
+        </p>
+        <p
+          *ngIf="showCharacterCount"
+          class="text-[10px] uppercase tracking-wider text-muted-foreground ml-auto font-medium transition-opacity duration-200"
+          [class.opacity-0]="isFocused && hideCharacterCountOnFocus"
+        >
           {{ value.length || 0 }}{{ maxLength ? ' / ' + maxLength : '' }}
         </p>
       </div>
@@ -55,6 +78,7 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
   @Input() label = '';
   @Input() placeholder = '';
   @Input() hint = '';
+  @Input() errorMessage = '';
   @Input() rows = 3;
   @Input() maxLength?: number;
   @Input() showCharacterCount = false;
@@ -62,11 +86,16 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
   @Input() error = false;
   @Input() className = '';
 
+  // Focus behavior
+  @Input() hideHintOnFocus = true;
+  @Input() hideCharacterCountOnFocus = false;
+
   // New States
   @Input() disabled = false;
   @Input() readonly = false;
 
   value: string = '';
+  isFocused: boolean = false;
   onChange: any = () => {};
   onTouched: any = () => {};
 
@@ -74,23 +103,62 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
     if (this.autoGrow) this.resize();
   }
 
+  get computedLabelClass() {
+    return cn(
+      "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
+      this.disabled && "opacity-50"
+    );
+  }
+
   get textareaClasses() {
     return cn(
-      'flex w-full rounded-md border bg-background px-3 py-2 text-sm ring-offset-background transition-all duration-200 shadow-sm',
-      'placeholder:text-muted-foreground focus-visible:outline-none',
+      // Base styles
+      'flex w-full rounded-md border bg-background px-3 py-2 text-sm',
+      'ring-offset-background transition-all duration-200',
+      'placeholder:text-muted-foreground',
 
-      // Focus States (Disabled only when readonly or disabled is true)
-      !(this.readonly || this.disabled) && 'focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1',
+      // Border and shadow
+      'border-input shadow-sm',
 
-      // Border colors
-      this.error ? 'border-destructive' : 'border-input',
-
-      // Disabled vs Readonly styles
-      this.disabled && 'cursor-not-allowed opacity-50',
-      this.readonly && 'cursor-default border-dashed focus-visible:ring-0',
-
-      'scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent',
+      // Minimum height
       'min-h-[80px]',
+
+      // Focus state - SIMPLE LIKE ZARDUI
+      !(this.readonly || this.disabled) && [
+        'focus:outline-none',
+        'focus:ring-4',
+        'focus:ring-ring/30',
+        'focus:ring-offset-0',
+        'focus:shadow-none',
+        // Border darkens on focus automatically
+        'focus:border-primary/80'
+      ],
+
+      // Error state
+      this.error && [
+        'border-destructive',
+        !(this.readonly || this.disabled) && [
+          'focus:border-destructive/80',
+          'focus:ring-destructive/30'
+        ]
+      ],
+
+      // Disabled state
+      this.disabled && [
+        'cursor-not-allowed opacity-50',
+        'border-opacity-50'
+      ],
+
+      // Readonly state
+      this.readonly && [
+        'cursor-default',
+        'border-dashed',
+        !this.disabled && 'focus:ring-0 focus:border-opacity-100'
+      ],
+
+      // Scrollbar styling
+      'scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent',
+
       this.className
     );
   }
@@ -103,6 +171,15 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
     if (this.autoGrow) this.resize();
   }
 
+  onFocus(): void {
+    this.isFocused = true;
+  }
+
+  onBlur(): void {
+    this.isFocused = false;
+    this.onTouched();
+  }
+
   private resize() {
     const textarea = this.textareaElement.nativeElement;
     textarea.style.height = 'auto';
@@ -113,7 +190,16 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
     this.value = value;
     if (this.autoGrow) setTimeout(() => this.resize());
   }
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
 }

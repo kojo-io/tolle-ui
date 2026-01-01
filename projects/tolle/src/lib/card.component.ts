@@ -7,7 +7,7 @@ import { cn } from './utils/cn';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div [class]="cn('rounded-xl border border-border bg-card text-card-foreground shadow', class)">
+    <div [class]="cn('rounded-md border border-border bg-card text-card-foreground shadow', class)">
       <ng-content></ng-content>
     </div>
   `,

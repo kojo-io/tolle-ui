@@ -17,7 +17,7 @@ import { cn } from './utils/cn';
       <button
         *ngIf="removable"
         (click)="onRemove.emit($event)"
-        class="ml-1 -mr-1 rounded-full p-0.5 hover:bg-foreground/20 transition-colors outline-none focus:ring-1 focus:ring-ring"
+        class="ml-1 -mr-1 rounded-md p-0.5 hover:bg-foreground/20 transition-colors outline-none focus:ring-1 focus:ring-ring"
       >
         <i class="ri-close-line text-[1.1em]"></i>
       </button>
@@ -37,7 +37,7 @@ export class BadgeComponent {
   get computedClass() {
     return cn(
       // Base styles - Pills are always rounded-full
-      'inline-flex items-center justify-center rounded-full border px-2 py-0.5 font-medium transition-colors gap-1',
+      'inline-flex items-center justify-center rounded-md border px-2 py-0.5 font-medium transition-colors gap-1',
 
       // Variants (Google Dark Mode theme)
       this.variant === 'default' && 'border-transparent bg-primary text-primary-foreground',
