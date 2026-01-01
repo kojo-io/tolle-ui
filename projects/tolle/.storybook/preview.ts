@@ -12,7 +12,7 @@ const preview: Preview = {
       // Get values from globals
       const {
         primaryColor = '#551a65',
-        radius = '0.75rem',
+        radius = '0.625rem',
         theme = false
       } = context.globals;
 

@@ -10,16 +10,16 @@ import { cn } from './utils/cn';
   template: `
     <div [class]="modalClasses" class="pointer-events-auto" (mousedown)="$event.stopPropagation()">
 
-      <div class="flex items-center justify-between p-6 border-b border-border">
+      <div *ngIf="ref.modal.showCloseButton || ref.modal.title" class="flex items-center justify-between px-6 pt-6">
         <h3 *ngIf="ref.modal.title" class="text-lg font-semibold text-foreground tracking-tight">
           {{ ref.modal.title }}
         </h3>
-        <button (click)="ref.close()" class="ml-auto p-1 text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
+        <button *ngIf="ref.modal.showCloseButton" (click)="ref.close()" class="ml-auto p-1 text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
           <i class="ri-close-line text-2xl"></i>
         </button>
       </div>
 
-      <div class="p-6 overflow-y-auto max-h-[80vh] text-foreground">
+      <div class="px-6 pb-6 pt-4 overflow-y-auto max-h-[80vh] text-foreground">
         <ng-container [ngSwitch]="contentType">
           <div *ngSwitchCase="'string'">{{ content }}</div>
 
@@ -60,7 +60,7 @@ export class ModalComponent implements OnInit {
       // Base classes: Added 'w-full' and 'mx-auto'
       'bg-background border border-border shadow-lg relative flex flex-col w-full mx-auto ',
 
-      size === 'fullscreen' ? 'h-screen w-screen rounded-none' : 'rounded-lg',
+      size === 'fullscreen' ? 'h-screen w-screen rounded-none' : 'rounded-md',
 
       // Sizing scale with explicit max-widths
       size === 'xs' && 'max-w-[320px]',

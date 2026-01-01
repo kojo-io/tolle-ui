@@ -357,7 +357,7 @@
         },
         {
             "name": "ModalStoryHost",
-            "id": "component-ModalStoryHost-b9938773cba604420240e844088a08b0757e5534029c490a81d1a50fb6c200e150e73f2a35a843489e6135cf481d55e47b245d49c2b84bc89bfbc2ffd0bb6406",
+            "id": "component-ModalStoryHost-e0b05fc9f210e79a1229efa25ffd4a6346b04e43a9fb888f7671abc0425a40aca2c790609f942df230a4d33fd0aac93015fe4f4125cd501f0ebfbca7f60078a2",
             "file": "projects/tolle/src/stories/modal.stories.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -382,6 +382,15 @@
                     "decorators": []
                 },
                 {
+                    "name": "showCloseButton",
+                    "defaultValue": "true",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "line": 54,
+                    "type": "boolean",
+                    "decorators": []
+                },
+                {
                     "name": "size",
                     "defaultValue": "'default'",
                     "deprecated": false,
@@ -402,7 +411,7 @@
                     "indexKey": "",
                     "optional": false,
                     "description": "",
-                    "line": 54
+                    "line": 55
                 }
             ],
             "methodsClass": [
@@ -412,7 +421,7 @@
                     "optional": false,
                     "returnType": "void",
                     "typeParameters": [],
-                    "line": 58,
+                    "line": 59,
                     "deprecated": false,
                     "deprecationMessage": ""
                 }
@@ -435,7 +444,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { moduleMetadata, applicationConfig } from '@storybook/angular';\nimport { Component, Input } from '@angular/core';\nimport {CommonModule} from '@angular/common';\nimport {ButtonComponent} from '../lib/button.component';\nimport {ModalService} from '../lib/modal.service'; // Add CommonModule for ngIf\n\n// 1. Define the \"Real World\" usage code as strings\nconst TS_CODE = `\nimport { Component } from '@angular/core';\nimport { ModalService } from '@tolle_/tolle-ui';\n\n@Component({\n  selector: 'app-example',\n  templateUrl: './example.html'\n})\nexport class ExampleComponent {\n  constructor(private modalService: ModalService) {}\n\n  openModal() {\n    this.modalService.open({\n      content: 'This is a modal triggered from TypeScript!',\n      size: 'normal',\n      backdropClose: true,\n      center: true\n    });\n  }\n}\n`;\n\nconst HTML_CODE = `\n<tolle-button (click)=\"openModal()\">\n  Open Modal\n</tolle-button>\n`;\n\n// 2. Create a dummy component to actually run in the canvas\n@Component({\n  selector: 'modal-story-host',\n  standalone: true,\n  imports: [ButtonComponent, CommonModule], // Add CommonModule\n  template: `\n    <div class=\"p-4 flex flex-col gap-4 items-start\">\n      <tolle-button (click)=\"open()\">Open Modal</tolle-button>\n      <div *ngIf=\"lastEvent\" class=\"text-sm text-muted-foreground\">\n        Last Event: {{ lastEvent }}\n      </div>\n    </div>\n  `\n})\nclass ModalStoryHost {\n  @Input() size: \"fullscreen\" | \"xs\" | \"sm\" | \"default\" | \"lg\" = 'default';\n  @Input() backdropClose = true;\n  lastEvent = '';\n\n  constructor(private modalService: ModalService) {}\n\n  open() {\n    const ref = this.modalService.open({\n      content: 'Hello! I am a service-driven modal.',\n      size: this.size,\n      backdropClose: this.backdropClose\n    });\n\n    ref.afterClosed$.subscribe(res => this.lastEvent = `Closed (${res.type})`);\n  }\n}\n\n// 3. Define Meta\nconst meta: Meta<ModalStoryHost> = {\n  title: 'Components/Modal',\n  component: ModalStoryHost,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ModalStoryHost], // Ensure the host component itself is imported here!\n      providers: [ModalService]\n    })\n  ],\n  argTypes: {\n    size: {\n      control: 'select',\n      options: ['normal', 'large', 'fullscreen']\n    }\n  },\n  // This helps clean up the args table to only show relevant controls\n  parameters: {\n    controls: { include: ['size', 'backdropClose'] }\n  }\n};\n\nexport default meta;\ntype Story = StoryObj<ModalStoryHost>;\n\n// 4. The Default Story with Combined Source\nexport const Basic: Story = {\n  args: {\n    size: 'default',\n    backdropClose: true\n  },\n  parameters: {\n    docs: {\n      source: {\n        // This overrides the \"Show Code\" button content\n        code: `\n/* --- example.component.ts --- */\n${TS_CODE.trim()}\n\n/* --- example.component.html --- */\n${HTML_CODE.trim()}\n        `,\n        language: 'typescript'\n      }\n    }\n  }\n};\n",
+            "sourceCode": "import type { Meta, StoryObj } from '@storybook/angular';\nimport { moduleMetadata, applicationConfig } from '@storybook/angular';\nimport { Component, Input } from '@angular/core';\nimport {CommonModule} from '@angular/common';\nimport {ButtonComponent} from '../lib/button.component';\nimport {ModalService} from '../lib/modal.service'; // Add CommonModule for ngIf\n\n// 1. Define the \"Real World\" usage code as strings\nconst TS_CODE = `\nimport { Component } from '@angular/core';\nimport { ModalService } from '@tolle_/tolle-ui';\n\n@Component({\n  selector: 'app-example',\n  templateUrl: './example.html'\n})\nexport class ExampleComponent {\n  constructor(private modalService: ModalService) {}\n\n  openModal() {\n    this.modalService.open({\n      content: 'This is a modal triggered from TypeScript!',\n      size: 'normal',\n      backdropClose: true,\n      center: true\n    });\n  }\n}\n`;\n\nconst HTML_CODE = `\n<tolle-button (click)=\"openModal()\">\n  Open Modal\n</tolle-button>\n`;\n\n// 2. Create a dummy component to actually run in the canvas\n@Component({\n  selector: 'modal-story-host',\n  standalone: true,\n  imports: [ButtonComponent, CommonModule], // Add CommonModule\n  template: `\n    <div class=\"p-4 flex flex-col gap-4 items-start\">\n      <tolle-button (click)=\"open()\">Open Modal</tolle-button>\n      <div *ngIf=\"lastEvent\" class=\"text-sm text-muted-foreground\">\n        Last Event: {{ lastEvent }}\n      </div>\n    </div>\n  `\n})\nclass ModalStoryHost {\n  @Input() size: \"fullscreen\" | \"xs\" | \"sm\" | \"default\" | \"lg\" = 'default';\n  @Input() backdropClose = true;\n  @Input() showCloseButton  = true;\n  lastEvent = '';\n\n  constructor(private modalService: ModalService) {}\n\n  open() {\n    const ref = this.modalService.open({\n      content: 'Hello! I am a service-driven modal.',\n      size: this.size,\n      backdropClose: this.backdropClose,\n      showCloseButton: this.showCloseButton\n    });\n\n    ref.afterClosed$.subscribe(res => this.lastEvent = `Closed (${res.type})`);\n  }\n}\n\n// 3. Define Meta\nconst meta: Meta<ModalStoryHost> = {\n  title: 'Components/Modal',\n  component: ModalStoryHost,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ModalStoryHost], // Ensure the host component itself is imported here!\n      providers: [ModalService]\n    })\n  ],\n  argTypes: {\n    size: {\n      control: 'select',\n      options: [\"fullscreen\" , \"xs\" , \"sm\" , \"default\" , \"lg\"]\n    }\n  },\n  // This helps clean up the args table to only show relevant controls\n  parameters: {\n    controls: { include: ['size', 'backdropClose'] }\n  }\n};\n\nexport default meta;\ntype Story = StoryObj<ModalStoryHost>;\n\n// 4. The Default Story with Combined Source\nexport const Basic: Story = {\n  args: {\n    size: 'default',\n    backdropClose: true,\n    showCloseButton: true\n  },\n  parameters: {\n    docs: {\n      source: {\n        // This overrides the \"Show Code\" button content\n        code: `\n/* --- example.component.ts --- */\n${TS_CODE.trim()}\n\n/* --- example.component.html --- */\n${HTML_CODE.trim()}\n        `,\n        language: 'typescript'\n      }\n    }\n  }\n};\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -452,7 +461,7 @@
                         "deprecationMessage": ""
                     }
                 ],
-                "line": 54,
+                "line": 55,
                 "jsdoctags": [
                     {
                         "name": "modalService",
@@ -875,7 +884,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Story",
-                "defaultValue": "{\n  args: {\n    size: 'default',\n    backdropClose: true\n  },\n  parameters: {\n    docs: {\n      source: {\n        // This overrides the \"Show Code\" button content\n        code: `\n/* --- example.component.ts --- */\n${TS_CODE.trim()}\n\n/* --- example.component.html --- */\n${HTML_CODE.trim()}\n        `,\n        language: 'typescript'\n      }\n    }\n  }\n}"
+                "defaultValue": "{\n  args: {\n    size: 'default',\n    backdropClose: true,\n    showCloseButton: true\n  },\n  parameters: {\n    docs: {\n      source: {\n        // This overrides the \"Show Code\" button content\n        code: `\n/* --- example.component.ts --- */\n${TS_CODE.trim()}\n\n/* --- example.component.html --- */\n${HTML_CODE.trim()}\n        `,\n        language: 'typescript'\n      }\n    }\n  }\n}"
             },
             {
                 "name": "Basic",
@@ -1555,7 +1564,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<ModalStoryHost>",
-                "defaultValue": "{\n  title: 'Components/Modal',\n  component: ModalStoryHost,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ModalStoryHost], // Ensure the host component itself is imported here!\n      providers: [ModalService]\n    })\n  ],\n  argTypes: {\n    size: {\n      control: 'select',\n      options: ['normal', 'large', 'fullscreen']\n    }\n  },\n  // This helps clean up the args table to only show relevant controls\n  parameters: {\n    controls: { include: ['size', 'backdropClose'] }\n  }\n}"
+                "defaultValue": "{\n  title: 'Components/Modal',\n  component: ModalStoryHost,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ModalStoryHost], // Ensure the host component itself is imported here!\n      providers: [ModalService]\n    })\n  ],\n  argTypes: {\n    size: {\n      control: 'select',\n      options: [\"fullscreen\" , \"xs\" , \"sm\" , \"default\" , \"lg\"]\n    }\n  },\n  // This helps clean up the args table to only show relevant controls\n  parameters: {\n    controls: { include: ['size', 'backdropClose'] }\n  }\n}"
             },
             {
                 "name": "meta",
@@ -1785,7 +1794,7 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Preview",
-                "defaultValue": "{\n  decorators: [\n    (storyFn, context) => {\n      // Get values from globals\n      const {\n        primaryColor = '#551a65',\n        radius = '0.75rem',\n        theme = false\n      } = context.globals;\n\n      // Convert theme to darkByDefault\n      const darkByDefault = theme === 'dark';\n\n      return {\n        ...storyFn(),\n        applicationConfig: {\n          providers: [\n            provideZoneChangeDetection({ eventCoalescing: true }),\n            provideTolleConfig({\n              primaryColor,\n              radius,\n              darkByDefault\n            }),\n          ],\n        }\n      };\n    },\n  ],\n  parameters: {\n    docs: {\n      theme: themes.dark,\n    },\n    controls: {\n      matchers: {\n       color: /(background|color)$/i,\n       date: /Date$/i,\n      },\n    },\n  },\n\n  globalTypes: {\n    primaryColor: {\n      name: 'Primary Color',\n      description: 'Pick your primary brand color',\n      defaultValue: '#551a65',\n      toolbar: {\n        icon: 'paintbrush',\n        items: [\n          { value: '#551a65', title: 'Purple (#551a65)' },\n          { value: '#2563eb', title: 'Blue (#2563eb)' },\n          { value: '#ef4444', title: 'Red (#ef4444)' },\n          { value: '#059669', title: 'Green (#059669)' },\n          { value: '#f59e0b', title: 'Yellow (#f59e0b)' },\n          { value: '#8b5cf6', title: 'Violet (#8b5cf6)' },\n          { value: '#ec4899', title: 'Pink (#ec4899)' },\n          { value: '#000000', title: 'Custom...' },\n        ],\n        dynamicTitle: true,\n      },\n    }\n  },\n}"
+                "defaultValue": "{\n  decorators: [\n    (storyFn, context) => {\n      // Get values from globals\n      const {\n        primaryColor = '#551a65',\n        radius = '0.625rem',\n        theme = false\n      } = context.globals;\n\n      // Convert theme to darkByDefault\n      const darkByDefault = theme === 'dark';\n\n      return {\n        ...storyFn(),\n        applicationConfig: {\n          providers: [\n            provideZoneChangeDetection({ eventCoalescing: true }),\n            provideTolleConfig({\n              primaryColor,\n              radius,\n              darkByDefault\n            }),\n          ],\n        }\n      };\n    },\n  ],\n  parameters: {\n    docs: {\n      theme: themes.dark,\n    },\n    controls: {\n      matchers: {\n       color: /(background|color)$/i,\n       date: /Date$/i,\n      },\n    },\n  },\n\n  globalTypes: {\n    primaryColor: {\n      name: 'Primary Color',\n      description: 'Pick your primary brand color',\n      defaultValue: '#551a65',\n      toolbar: {\n        icon: 'paintbrush',\n        items: [\n          { value: '#551a65', title: 'Purple (#551a65)' },\n          { value: '#2563eb', title: 'Blue (#2563eb)' },\n          { value: '#ef4444', title: 'Red (#ef4444)' },\n          { value: '#059669', title: 'Green (#059669)' },\n          { value: '#f59e0b', title: 'Yellow (#f59e0b)' },\n          { value: '#8b5cf6', title: 'Violet (#8b5cf6)' },\n          { value: '#ec4899', title: 'Pink (#ec4899)' },\n          { value: '#000000', title: 'Custom...' },\n        ],\n        dynamicTitle: true,\n      },\n    }\n  },\n}"
             },
             {
                 "name": "PricingPlan",
@@ -2636,7 +2645,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Story",
-                    "defaultValue": "{\n  args: {\n    size: 'default',\n    backdropClose: true\n  },\n  parameters: {\n    docs: {\n      source: {\n        // This overrides the \"Show Code\" button content\n        code: `\n/* --- example.component.ts --- */\n${TS_CODE.trim()}\n\n/* --- example.component.html --- */\n${HTML_CODE.trim()}\n        `,\n        language: 'typescript'\n      }\n    }\n  }\n}"
+                    "defaultValue": "{\n  args: {\n    size: 'default',\n    backdropClose: true,\n    showCloseButton: true\n  },\n  parameters: {\n    docs: {\n      source: {\n        // This overrides the \"Show Code\" button content\n        code: `\n/* --- example.component.ts --- */\n${TS_CODE.trim()}\n\n/* --- example.component.html --- */\n${HTML_CODE.trim()}\n        `,\n        language: 'typescript'\n      }\n    }\n  }\n}"
                 },
                 {
                     "name": "HTML_CODE",
@@ -2656,7 +2665,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Meta<ModalStoryHost>",
-                    "defaultValue": "{\n  title: 'Components/Modal',\n  component: ModalStoryHost,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ModalStoryHost], // Ensure the host component itself is imported here!\n      providers: [ModalService]\n    })\n  ],\n  argTypes: {\n    size: {\n      control: 'select',\n      options: ['normal', 'large', 'fullscreen']\n    }\n  },\n  // This helps clean up the args table to only show relevant controls\n  parameters: {\n    controls: { include: ['size', 'backdropClose'] }\n  }\n}"
+                    "defaultValue": "{\n  title: 'Components/Modal',\n  component: ModalStoryHost,\n  tags: ['autodocs'],\n  decorators: [\n    moduleMetadata({\n      imports: [ModalStoryHost], // Ensure the host component itself is imported here!\n      providers: [ModalService]\n    })\n  ],\n  argTypes: {\n    size: {\n      control: 'select',\n      options: [\"fullscreen\" , \"xs\" , \"sm\" , \"default\" , \"lg\"]\n    }\n  },\n  // This helps clean up the args table to only show relevant controls\n  parameters: {\n    controls: { include: ['size', 'backdropClose'] }\n  }\n}"
                 },
                 {
                     "name": "TS_CODE",
@@ -3624,7 +3633,7 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "Preview",
-                    "defaultValue": "{\n  decorators: [\n    (storyFn, context) => {\n      // Get values from globals\n      const {\n        primaryColor = '#551a65',\n        radius = '0.75rem',\n        theme = false\n      } = context.globals;\n\n      // Convert theme to darkByDefault\n      const darkByDefault = theme === 'dark';\n\n      return {\n        ...storyFn(),\n        applicationConfig: {\n          providers: [\n            provideZoneChangeDetection({ eventCoalescing: true }),\n            provideTolleConfig({\n              primaryColor,\n              radius,\n              darkByDefault\n            }),\n          ],\n        }\n      };\n    },\n  ],\n  parameters: {\n    docs: {\n      theme: themes.dark,\n    },\n    controls: {\n      matchers: {\n       color: /(background|color)$/i,\n       date: /Date$/i,\n      },\n    },\n  },\n\n  globalTypes: {\n    primaryColor: {\n      name: 'Primary Color',\n      description: 'Pick your primary brand color',\n      defaultValue: '#551a65',\n      toolbar: {\n        icon: 'paintbrush',\n        items: [\n          { value: '#551a65', title: 'Purple (#551a65)' },\n          { value: '#2563eb', title: 'Blue (#2563eb)' },\n          { value: '#ef4444', title: 'Red (#ef4444)' },\n          { value: '#059669', title: 'Green (#059669)' },\n          { value: '#f59e0b', title: 'Yellow (#f59e0b)' },\n          { value: '#8b5cf6', title: 'Violet (#8b5cf6)' },\n          { value: '#ec4899', title: 'Pink (#ec4899)' },\n          { value: '#000000', title: 'Custom...' },\n        ],\n        dynamicTitle: true,\n      },\n    }\n  },\n}"
+                    "defaultValue": "{\n  decorators: [\n    (storyFn, context) => {\n      // Get values from globals\n      const {\n        primaryColor = '#551a65',\n        radius = '0.625rem',\n        theme = false\n      } = context.globals;\n\n      // Convert theme to darkByDefault\n      const darkByDefault = theme === 'dark';\n\n      return {\n        ...storyFn(),\n        applicationConfig: {\n          providers: [\n            provideZoneChangeDetection({ eventCoalescing: true }),\n            provideTolleConfig({\n              primaryColor,\n              radius,\n              darkByDefault\n            }),\n          ],\n        }\n      };\n    },\n  ],\n  parameters: {\n    docs: {\n      theme: themes.dark,\n    },\n    controls: {\n      matchers: {\n       color: /(background|color)$/i,\n       date: /Date$/i,\n      },\n    },\n  },\n\n  globalTypes: {\n    primaryColor: {\n      name: 'Primary Color',\n      description: 'Pick your primary brand color',\n      defaultValue: '#551a65',\n      toolbar: {\n        icon: 'paintbrush',\n        items: [\n          { value: '#551a65', title: 'Purple (#551a65)' },\n          { value: '#2563eb', title: 'Blue (#2563eb)' },\n          { value: '#ef4444', title: 'Red (#ef4444)' },\n          { value: '#059669', title: 'Green (#059669)' },\n          { value: '#f59e0b', title: 'Yellow (#f59e0b)' },\n          { value: '#8b5cf6', title: 'Violet (#8b5cf6)' },\n          { value: '#ec4899', title: 'Pink (#ec4899)' },\n          { value: '#000000', title: 'Custom...' },\n        ],\n        dynamicTitle: true,\n      },\n    }\n  },\n}"
                 }
             ]
         },
@@ -4989,7 +4998,7 @@
                 "linktype": "component",
                 "name": "ModalStoryHost",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/7",
                 "status": "low"
             },
             {

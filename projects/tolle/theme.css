@@ -194,36 +194,49 @@ tolle-select button:focus {
 }
 
 /* -------------------------------------------------------------------------- */
-/* 6. CDK OVERLAY STYLES                                                      */
+/* 5. CDK OVERLAY & MODAL SYSTEM (Structural)                                 */
 /* -------------------------------------------------------------------------- */
 .cdk-overlay-container {
   position: fixed;
+  z-index: 1000;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
 }
 
-.cdk-overlay-backdrop {
-  position: fixed;
+.cdk-global-overlay-wrapper {
+  display: flex;
+  position: absolute;
+  z-index: 1001;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 50;
-  background-color: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(4px);
-  transition-property: opacity;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-  opacity: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 .cdk-overlay-pane {
-  position: fixed;
-  z-index: 50;
+  position: absolute;
+  pointer-events: auto;
+  box-sizing: border-box;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Backdrop Styles */
+.cdk-overlay-backdrop {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  z-index: 1000;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  opacity: 0;
 }
 
 .cdk-overlay-backdrop-showing {
@@ -233,6 +246,7 @@ tolle-select button:focus {
 .tolle-modal-backdrop {
   background-color: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(4px);
+  z-index: 50;
 }
 
 /* Add these to your theme.css file */
