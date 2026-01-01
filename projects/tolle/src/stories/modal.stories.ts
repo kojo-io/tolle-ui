@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { moduleMetadata, applicationConfig } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { Component, Input } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ButtonComponent} from '../lib/button.component';
@@ -51,6 +51,7 @@ const HTML_CODE = `
 class ModalStoryHost {
   @Input() size: "fullscreen" | "xs" | "sm" | "default" | "lg" = 'default';
   @Input() backdropClose = true;
+  @Input() showCloseButton  = true;
   lastEvent = '';
 
   constructor(private modalService: ModalService) {}
@@ -59,7 +60,8 @@ class ModalStoryHost {
     const ref = this.modalService.open({
       content: 'Hello! I am a service-driven modal.',
       size: this.size,
-      backdropClose: this.backdropClose
+      backdropClose: this.backdropClose,
+      showCloseButton: this.showCloseButton
     });
 
     ref.afterClosed$.subscribe(res => this.lastEvent = `Closed (${res.type})`);
@@ -80,7 +82,7 @@ const meta: Meta<ModalStoryHost> = {
   argTypes: {
     size: {
       control: 'select',
-      options: ['normal', 'large', 'fullscreen']
+      options: ["fullscreen" , "xs" , "sm" , "default" , "lg"]
     }
   },
   // This helps clean up the args table to only show relevant controls
@@ -96,7 +98,8 @@ type Story = StoryObj<ModalStoryHost>;
 export const Basic: Story = {
   args: {
     size: 'default',
-    backdropClose: true
+    backdropClose: true,
+    showCloseButton: true
   },
   parameters: {
     docs: {

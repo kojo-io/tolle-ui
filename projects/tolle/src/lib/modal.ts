@@ -30,4 +30,6 @@ export class Modal<T = any> {
    * Accessed via `let-val` in the HTML.
    */
   context?: T;
+
+  showCloseButton?: boolean = true;
 }

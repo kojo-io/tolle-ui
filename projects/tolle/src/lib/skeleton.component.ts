@@ -19,7 +19,7 @@ export class SkeletonComponent {
   get computedClass() {
     return cn(
       // The background matches the Google Dark Mode "Muted" color
-      'animate-pulse bg-muted rounded-md',
+      'animate-pulse bg-muted dark:bg-secondary rounded-md',
 
       this.variant === 'circle' && 'rounded-full',
       this.variant === 'pill' && 'rounded-full',
