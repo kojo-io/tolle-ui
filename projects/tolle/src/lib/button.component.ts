@@ -4,16 +4,16 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background active:scale-[0.98]",
+  "tolle-button-base inline-flex items-center justify-center rounded-md text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background active:scale-[0.98]",
   {
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input hover:bg-accent hover:text-accent-foreground",
+        outline: "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "underline-offset-4 hover:underline text-primary",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -25,7 +25,7 @@ const buttonVariants = cva(
         icon: "h-10 w-10",
         "icon-lg": "h-11 w-11",
       },
-      busy: { true: "relative !cursor-wait !pointer-events-none" }
+      busy: { true: "tolle-button--busy relative !cursor-wait !pointer-events-none" }
     },
     defaultVariants: {
       variant: "default",
@@ -58,33 +58,9 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
       </span>
     </button>
   `,
-  styles: [`
-    :host {
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    :host ::ng-deep i {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }
-
-    :host-context(.size-xs) ::ng-deep i,
-    :host-context(.size-icon-xs) ::ng-deep i,
-    :host-context(.size-sm) ::ng-deep i,
-    :host-context(.size-icon-sm) ::ng-deep i {
-      font-size: 1rem;
-    }
-
-    :host-context(.size-default) ::ng-deep i,
-    :host-context(.size-icon) ::ng-deep i,
-    :host-context(.size-lg) ::ng-deep i,
-    :host-context(.size-icon-lg) ::ng-deep i {
-      font-size: 1.2rem;
-    }
-  `]
+  host: {
+    'class': 'tolle-button-wrapper inline-block align-middle'
+  }
 })
 export class ButtonComponent {
   @Input() class: string = '';
@@ -92,7 +68,6 @@ export class ButtonComponent {
   @Input() size: ButtonProps['size'] = 'default';
   @Input() disabled: boolean = false;
   @Input() busy: boolean = false;
-  @Input() readonly: boolean = false;
 
   get computedClass() {
     return cn(
@@ -101,7 +76,6 @@ export class ButtonComponent {
         size: this.size,
         busy: this.busy
       }),
-      'size-' + this.size,
       this.class
     );
   }

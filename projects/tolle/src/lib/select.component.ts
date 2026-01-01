@@ -83,6 +83,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
 
   @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
+  @ViewChild('container') container!: ElementRef;
   @ContentChildren(SelectItemComponent, { descendants: true }) items!: QueryList<SelectItemComponent>;
 
   private sub = new Subscription();
@@ -115,11 +116,15 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     );
   }
 
-  // UPDATED: Centralized sizing logic for the trigger
+  // SIMPLIFIED: Zardui-inspired trigger styling
   get computedTriggerClass() {
     return cn(
-      'flex w-full items-center justify-between rounded-md border transition-all shadow-sm',
-      'bg-background ring-offset-background placeholder:text-muted-foreground',
+      // Base styles
+      'flex w-full items-center justify-between rounded-md border transition-all duration-200',
+      'bg-background text-foreground',
+
+      // Border and shadow
+      'border-input shadow-sm',
 
       // Sizing
       this.size === 'xs' && 'h-8 px-2 text-xs',
@@ -127,13 +132,32 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       this.size === 'default' && 'h-10 px-3 text-sm',
       this.size === 'lg' && 'h-11 px-4 text-base',
 
-      // Interaction States (Focus ring disabled for Readonly/Disabled)
-      !(this.readonly || this.disabled) && 'focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-1',
+      // Focus state - SIMPLE LIKE ZARDUI
+      !(this.readonly || this.disabled) && [
+        'focus:outline-none',
+        'focus:ring-4',
+        'focus:ring-ring/30',
+        'focus:ring-offset-0',
+        'focus:shadow-none',
+        // Border darkens on focus automatically
+        'focus:border-primary/80'
+      ],
 
-      // Colors & Borders (Matching your Hex-based theme logic)
-      this.disabled && 'cursor-not-allowed opacity-50 bg-muted/30 border-input',
-      this.readonly && 'cursor-default bg-muted/10 border-dashed border-input focus:ring-0',
-      !this.disabled && !this.readonly && 'border-input hover:border-accent cursor-pointer',
+      // Hover state
+      !(this.readonly || this.disabled) && 'hover:border-accent',
+
+      // Disabled state
+      this.disabled && [
+        'cursor-not-allowed opacity-50',
+        'border-opacity-50'
+      ],
+
+      // Readonly state
+      this.readonly && [
+        'cursor-default',
+        'border-dashed',
+        !this.disabled && 'focus:ring-0 focus:border-opacity-100'
+      ],
 
       this.class
     );
@@ -170,6 +194,8 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
 
   open() {
     this.isOpen = true;
+    // Trigger focus on the button for focus styling
+    this.trigger.nativeElement.focus();
     // Tick to ensure DOM is rendered before positioning
     setTimeout(() => this.updatePosition());
   }

@@ -22,15 +22,17 @@ import { cn } from './utils/cn';
       <label
         *ngIf="label"
         [for]="id"
-        [class.opacity-50]="disabled"
-        class="text-sm font-medium text-foreground leading-none transition-opacity"
+        [class]="computedLabelClass"
       >
         {{ label }}
       </label>
 
-      <div [class]="computedContainerClass">
+      <div
+        [class]="computedContainerClass"
+        (click)="focusInput()"
+      >
         <!-- Prefix Icon -->
-        <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors">
+        <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
           <ng-content select="[prefix]"></ng-content>
         </div>
 
@@ -43,21 +45,32 @@ import { cn } from './utils/cn';
           [readOnly]="readonly"
           [value]="displayValue"
           (input)="onInput($event)"
-          (blur)="onTouched()"
+          (blur)="onBlur()"
+          (focus)="onFocus()"
           [class]="computedInputClass"
+          [attr.aria-invalid]="error"
+          [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
         />
 
         <!-- Suffix Icon -->
-        <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors">
+        <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
           <ng-content select="[suffix]"></ng-content>
         </div>
       </div>
 
       <ng-container *ngIf="!disabled">
-        <p *ngIf="hint && !error" class="text-xs text-muted-foreground px-1">
+        <p
+          *ngIf="hint && !error"
+          class="text-xs text-muted-foreground px-1 transition-opacity duration-200"
+          [class.opacity-0]="isFocused && hideHintOnFocus"
+        >
           {{ hint }}
         </p>
-        <p *ngIf="error && errorMessage" class="text-xs text-destructive px-1">
+        <p
+          *ngIf="error && errorMessage"
+          [id]="id + '-error'"
+          class="text-xs text-destructive px-1"
+        >
           {{ errorMessage }}
         </p>
       </ng-container>
@@ -79,12 +92,14 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
   @Input() error: boolean = false;
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
   @Input() returnRaw = false;
+  @Input() hideHintOnFocus: boolean = true;
 
   @ViewChild('inputEl', { static: true }) inputEl!: ElementRef<HTMLInputElement>;
 
   hasPrefix = false;
   hasSuffix = false;
   displayValue = '';
+  isFocused: boolean = false;
 
   private tokens: { [key: string]: RegExp } = {
     '0': /\d/, '9': /\d/, 'a': /[a-z]/i, 'A': /[a-z]/i, '*': /[a-z0-9]/i
@@ -106,26 +121,58 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
     }
   }
 
+  get computedLabelClass() {
+    return cn(
+      "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
+      this.disabled && "opacity-50"
+    );
+  }
+
   get computedContainerClass() {
     return cn(
-      "group relative flex items-center w-full rounded-md border transition-all shadow-sm",
-      "bg-background ring-offset-background",
+      // Base styles
+      "group relative flex items-center w-full rounded-md border transition-all duration-200",
+      "bg-background",
+
+      // Border and shadow
+      "border-input shadow-sm",
 
       // Sizing
-      this.size === 'xs' && "h-8 px-2 gap-1.5",
-      this.size === 'sm' && "h-9 px-3 gap-2",
-      this.size === 'default' && "h-10 px-3 gap-2",
-      this.size === 'lg' && "h-11 px-4 gap-3",
+      this.size === 'xs' && "h-8 px-2 gap-1.5 text-xs",
+      this.size === 'sm' && "h-9 px-3 gap-2 text-sm",
+      this.size === 'default' && "h-10 px-3 gap-2 text-sm",
+      this.size === 'lg' && "h-11 px-4 gap-3 text-base",
 
-      // Interaction States (Inherited from Input focus style)
-      !(this.readonly || this.disabled) && "focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-1",
+      // Focus state - SIMPLE LIKE ZARDUI
+      !(this.readonly || this.disabled) && [
+        "focus-within:border-primary/80",
+        "focus-within:ring-4",
+        "focus-within:ring-ring/30",
+        "focus-within:ring-offset-0",
+        "focus-within:shadow-none",
+      ],
 
-      // Colors & Borders
-      this.error ? "border-destructive focus-within:ring-destructive" : "border-input",
+      // Error state
+      this.error && [
+        "border-destructive",
+        !(this.readonly || this.disabled) && [
+          "focus-within:border-destructive/80",
+          "focus-within:ring-destructive/30"
+        ]
+      ],
 
-      // Disabled vs Readonly styling
-      this.disabled && "cursor-not-allowed opacity-50",
-      this.readonly && "cursor-default border-dashed focus-within:ring-0",
+      // Disabled state
+      this.disabled && [
+        "cursor-not-allowed opacity-50",
+        "border-opacity-50"
+      ],
+
+      // Readonly state
+      this.readonly && [
+        "cursor-default",
+        "border-dashed",
+        !this.disabled && "focus-within:ring-0 focus-within:border-opacity-100"
+      ],
 
       this.containerClass
     );
@@ -133,13 +180,46 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
 
   get computedInputClass() {
     return cn(
-      "flex-1 bg-transparent border-none p-0 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-0",
+      // Base styles
+      "flex-1 bg-transparent border-none p-0",
+      "placeholder:text-muted-foreground",
+
+      // Remove all default focus styles
+      "focus:outline-none focus:ring-0 focus:shadow-none",
+
+      // Text sizing
       this.size === 'xs' && "text-xs",
+      this.size === 'sm' && "text-sm",
+      this.size === 'default' && "text-sm",
       this.size === 'lg' && "text-base",
+
+      // Cursor states
       this.disabled && "cursor-not-allowed",
       this.readonly && "cursor-default",
+
+      // Text color
+      "text-foreground",
+
+      // Selection color
+      "selection:bg-primary/20 selection:text-foreground",
+
       this.class
     );
+  }
+
+  focusInput(): void {
+    if (!this.disabled && this.inputEl) {
+      this.inputEl.nativeElement.focus();
+    }
+  }
+
+  onFocus(): void {
+    this.isFocused = true;
+  }
+
+  onBlur(): void {
+    this.isFocused = false;
+    this.onTouched();
   }
 
   // --- Masking Logic ---
@@ -154,30 +234,49 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
   }
 
   private applyMask(rawValue: string): string {
-    let rawIndex = 0; let formatted = '';
+    let rawIndex = 0;
+    let formatted = '';
     for (let i = 0; i < this.mask.length; i++) {
       if (rawIndex >= rawValue.length) break;
       const maskChar = this.mask[i];
       const rawChar = rawValue[rawIndex];
       if (this.tokens[maskChar]) {
-        if (this.tokens[maskChar].test(rawChar)) { formatted += rawChar; rawIndex++; }
-        else { rawIndex++; i--; }
-      } else { formatted += maskChar; if (rawChar === maskChar) rawIndex++; }
+        if (this.tokens[maskChar].test(rawChar)) {
+          formatted += rawChar;
+          rawIndex++;
+        } else {
+          rawIndex++;
+          i--;
+        }
+      } else {
+        formatted += maskChar;
+        if (rawChar === maskChar) rawIndex++;
+      }
     }
     return formatted;
   }
 
-  private unmask(val: string): string { return val.replace(/[^a-zA-Z0-9]/g, ''); }
+  private unmask(val: string): string {
+    return val.replace(/[^a-zA-Z0-9]/g, '');
+  }
 
   writeValue(value: any): void {
     this.displayValue = value ? this.applyMask(this.unmask(value.toString())) : '';
     this.cdr.markForCheck();
   }
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.cdr.markForCheck();
   }
+
   protected cn = cn;
 }
