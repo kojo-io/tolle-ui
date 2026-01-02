@@ -46,6 +46,7 @@ import {ModalService} from '../../../../tolle/src/lib/modal.service';
 import {UserFormComponent} from '../../user-form/user-form.component';
 import {MultiSelectComponent} from '../../../../tolle/src/lib/multi-select.component';
 import {SegmentedComponent} from '../../../../tolle/src/lib/segment.component';
+import {AnalyticsService} from '../analytics.service';
 
 @Component({
   selector: 'app-index',
@@ -100,6 +101,7 @@ import {SegmentedComponent} from '../../../../tolle/src/lib/segment.component';
 })
 export class IndexComponent implements OnInit {
   modalService = inject(ModalService);
+  analytics = inject(AnalyticsService);
   baseUrl = environment.docsUrl;
   github = environment.gitHubUrl;
   myOtp: string = '';
@@ -126,6 +128,7 @@ export class IndexComponent implements OnInit {
   ];
   view = 'list';
   ngOnInit(): void {
+    this.analytics.init();
     const base = this.theme.primaryColor;
     if (base) {
       this.theme.setPrimaryColor(base, true);
