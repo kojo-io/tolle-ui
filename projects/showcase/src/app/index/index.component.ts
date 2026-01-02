@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ButtonComponent} from '../../../../tolle/src/lib/button.component';
-import {AsyncPipe, NgStyle} from '@angular/common';
+import {AsyncPipe, NgIf, NgStyle} from '@angular/common';
 import {ThemeService} from '../../../../tolle/src/lib/theme.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {coloris, init} from '@melloware/coloris';
@@ -43,6 +43,9 @@ import {OtpGroupComponent} from '../../../../tolle/src/lib/otp-group.component';
 import {OtpSlotComponent} from '../../../../tolle/src/lib/otp-slot.component';
 import {environment} from '../../environments/environment';
 import {ModalService} from '../../../../tolle/src/lib/modal.service';
+import {UserFormComponent} from '../../user-form/user-form.component';
+import {MultiSelectComponent} from '../../../../tolle/src/lib/multi-select.component';
+import {SegmentedComponent} from '../../../../tolle/src/lib/segment.component';
 
 @Component({
   selector: 'app-index',
@@ -88,6 +91,9 @@ import {ModalService} from '../../../../tolle/src/lib/modal.service';
     OtpComponent,
     OtpGroupComponent,
     OtpSlotComponent,
+    MultiSelectComponent,
+    SegmentedComponent,
+    NgIf
   ],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css'
@@ -97,6 +103,28 @@ export class IndexComponent implements OnInit {
   baseUrl = environment.docsUrl;
   github = environment.gitHubUrl;
   myOtp: string = '';
+  activeTab = 'All';
+
+  tabs = [
+    { label: 'Properties', value: 'properties' },
+    { label: 'Pages', value: 'pages' },
+    { label: 'Settings', value: 'settings', disabled: true }
+  ];
+
+  advanceTabs = [
+    { label: 'All', value: 'all', icon: 'ri-apps-line' },
+    { label: 'Messages', value: 'messages', icon: 'ri-mail-line', data: { count: 3 } }, // Has badge data
+    { label: 'Archived', value: 'archived', icon: 'ri-archive-line' }
+  ];
+
+  selectedTab = 'properties';
+
+  viewOptions = [
+    { label: 'List', value: 'list', icon: 'ri-list-check' },
+    { label: 'Board', value: 'board', icon: 'ri-layout-masonry-line' },
+    { label: 'Graph', value: 'graph', icon: 'ri-node-tree' }
+  ];
+  view = 'list';
   ngOnInit(): void {
     const base = this.theme.primaryColor;
     if (base) {
@@ -124,7 +152,7 @@ export class IndexComponent implements OnInit {
 
   openModal() {
     this.modalService.open({
-      content: 'This is a modal triggered from TypeScript!',
+      content: UserFormComponent,
       size: 'default',
       backdropClose: true
     });
