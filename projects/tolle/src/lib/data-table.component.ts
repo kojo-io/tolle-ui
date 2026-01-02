@@ -32,7 +32,7 @@ export interface TableColumn {
         </tolle-input>
       </div>
 
-      <div class="rounded-md border border-border bg-background overflow-hidden shadow-sm">
+      <div class="rounded-md border border-border overflow-hidden shadow-sm">
         <table class="w-full text-sm">
           <thead class="border-b bg-muted/30">
             <tr>

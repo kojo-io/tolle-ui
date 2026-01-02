@@ -48,7 +48,7 @@ import { CalendarComponent } from './calendar.component';
       <div
         #popover
         *ngIf="isOpen"
-        class="absolute bg-popover z-50 max-w-max left-0 right-0 overflow-hidden rounded-md border border-border text-popover-foreground bg-background shadow-md"
+        class="absolute z-50 max-w-max left-0 right-0 overflow-hidden rounded-md border border-border text-popover-foreground bg-background shadow-md"
         style="visibility: hidden; top: 0; left: 0;"
       >
         <tolle-calendar
