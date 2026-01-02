@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  CARD COMPONENT OVERRIDES
+  Leave these empty for custom styling
+*/
+
+/* Main Card Container */
+tolle-card > div {
+  @apply bg-neutral-200 !important;
+  border-radius: 20px !important;
+}
+
+/* Card Header */
+tolle-card-header > div {
+  /* Header wrapper div */
+  /* Your custom styles here */
+}
+
+/* Card Title */
+tolle-card-title > h3 {
+  /* Title h3 element */
+  /* Your custom styles here */
+}
+
+/* Card Content */
+tolle-card-content > div {
+  /* Content wrapper div */
+  /* Your custom styles here */
+}
+
+/* Card Footer */
+tolle-card-footer > div {
+  /* Footer wrapper div */
+  /* Your custom styles here */
+}
+
+.dark {
+  /* Main Card Container */
+  tolle-card > div {
+    @apply bg-neutral-200/20 !important;
+  }
+
+  /* Card Header */
+  tolle-card-header > div {
+    /* Header wrapper div */
+    /* Your custom styles here */
+  }
+
+  /* Card Title */
+  tolle-card-title > h3 {
+    /* Title h3 element */
+    /* Your custom styles here */
+  }
+
+  /* Card Content */
+  tolle-card-content > div {
+    /* Content wrapper div */
+    /* Your custom styles here */
+  }
+
+  /* Card Footer */
+  tolle-card-footer > div {
+    /* Footer wrapper div */
+    /* Your custom styles here */
+  }
+}

@@ -17,7 +17,6 @@ import {SelectItemComponent} from '../../../../tolle/src/lib/select-item.compone
 import {SelectSeparatorComponent} from '../../../../tolle/src/lib/select-separator.component';
 import {SwitchComponent} from '../../../../tolle/src/lib/switch.component';
 import {BadgeComponent} from '../../../../tolle/src/lib/badge.component';
-import {SkeletonComponent} from '../../../../tolle/src/lib/skeleton.component';
 import {CheckboxComponent} from '../../../../tolle/src/lib/checkbox.component';
 import {TooltipDirective} from '../../../../tolle/src/lib/tooltip.directive';
 import {ToastService} from '../../../../tolle/src/lib/toast.service';
@@ -43,6 +42,7 @@ import {OtpComponent} from '../../../../tolle/src/lib/otp.component';
 import {OtpGroupComponent} from '../../../../tolle/src/lib/otp-group.component';
 import {OtpSlotComponent} from '../../../../tolle/src/lib/otp-slot.component';
 import {environment} from '../../environments/environment';
+import {ModalService} from '../../../../tolle/src/lib/modal.service';
 
 @Component({
   selector: 'app-index',
@@ -93,6 +93,7 @@ import {environment} from '../../environments/environment';
   styleUrl: './index.component.css'
 })
 export class IndexComponent implements OnInit {
+  modalService = inject(ModalService);
   baseUrl = environment.docsUrl;
   github = environment.gitHubUrl;
   myOtp: string = '';
@@ -119,6 +120,14 @@ export class IndexComponent implements OnInit {
 
   toggle() {
     this.theme.toggleTheme();
+  }
+
+  openModal() {
+    this.modalService.open({
+      content: 'This is a modal triggered from TypeScript!',
+      size: 'default',
+      backdropClose: true
+    });
   }
 
   saveSettings() {
