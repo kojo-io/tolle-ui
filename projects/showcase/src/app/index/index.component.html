@@ -19,7 +19,7 @@
           <span>GitHub</span>
         </a>
         <tolle-button variant="ghost" size="icon" (click)="toggle()">
-          <i class="ri-moon-line dark:ri-sun-line"></i>
+          <i [class]="(theme.isDark$ | async) ? 'ri-sun-line' : 'ri-moon-line'"></i>
         </tolle-button>
       </nav>
       <button class="md:hidden w-8 h-8 flex items-center justify-center">
@@ -162,11 +162,11 @@
               <tolle-input placeholder="Filter..." class="w-40">
                 <i prefix class="ri-filter-3-line"></i>
               </tolle-input>
-
-              <tolle-button >
-                Apply
-              </tolle-button>
             </div>
+
+            <tolle-button (click)="openModal()">
+              Open Modal
+            </tolle-button>
           </div>
         </div>
         <div class="py-4 break-inside-avoid border-b">

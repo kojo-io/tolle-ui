@@ -20,9 +20,8 @@ export class ExampleComponent {
   openModal() {
     this.modalService.open({
       content: 'This is a modal triggered from TypeScript!',
-      size: 'normal',
-      backdropClose: true,
-      center: true
+      size: 'default',
+      backdropClose: true
     });
   }
 }

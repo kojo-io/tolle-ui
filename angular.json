@@ -93,7 +93,8 @@
             ],
             "styles": [
               "node_modules/@melloware/coloris/dist/coloris.css",
-              "projects/showcase/src/styles.css"
+              "projects/showcase/src/styles.css",
+              "projects/showcase/src/override.css"
             ],
             "scripts": []
           },
