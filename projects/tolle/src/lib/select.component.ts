@@ -12,7 +12,8 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
+// 1. Import 'size' middleware
+import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom';
 import { cn } from './utils/cn';
 import { SelectItemComponent } from './select-item.component';
 import { Subscription } from 'rxjs';
@@ -32,7 +33,7 @@ import { InputComponent } from './input.component';
     }
   ],
   template: `
-    <div [class]="cn('w-full', 'size-' + size)" #container>
+    <div [class]="cn('relative w-full', 'size-' + size)" #container>
       <button
         type="button"
         #trigger
@@ -49,8 +50,7 @@ import { InputComponent } from './input.component';
       <div
         #popover
         *ngIf="isOpen"
-        [ngStyle]="{minWidth: container.clientWidth+'px'}"
-        class="absolute bg-popover z-50 min-w-full max-h-[300px] overflow-auto flex flex-col rounded-md border border-border text-popover-foreground shadow-md"
+        class="fixed bg-popover z-[999] overflow-auto flex flex-col rounded-md border border-border text-popover-foreground shadow-md"
         style="visibility: hidden; top: 0; left: 0;">
         <div *ngIf="searchable" class="p-2 border-b border-border bg-popover h-auto">
           <tolle-input
@@ -116,60 +116,42 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     );
   }
 
-  // SIMPLIFIED: Zardui-inspired trigger styling
   get computedTriggerClass() {
     return cn(
-      // Base styles
       'flex w-full items-center justify-between rounded-md border transition-all duration-200',
       'bg-background text-foreground',
-
-      // Border and shadow
       'border-input shadow-sm',
-
-      // Sizing
       this.size === 'xs' && 'h-8 px-2 text-xs',
       this.size === 'sm' && 'h-9 px-3 text-sm',
       this.size === 'default' && 'h-10 px-3 text-sm',
       this.size === 'lg' && 'h-11 px-4 text-base',
-
-      // Focus state - SIMPLE LIKE ZARDUI
       !(this.readonly || this.disabled) && [
         'focus:outline-none',
         'focus:ring-4',
         'focus:ring-ring/30',
         'focus:ring-offset-0',
         'focus:shadow-none',
-        // Border darkens on focus automatically
         'focus:border-primary/80'
       ],
-
-      // Hover state
       !(this.readonly || this.disabled) && 'hover:border-accent',
-
-      // Disabled state
       this.disabled && [
         'cursor-not-allowed opacity-50',
         'border-opacity-50'
       ],
-
-      // Readonly state
       this.readonly && [
         'cursor-default',
         'border-dashed',
         !this.disabled && 'focus:ring-0 focus:border-opacity-100'
       ],
-
       this.class
     );
   }
 
-  // UPDATED: Dynamic icon sizing relative to the trigger size
   get iconClass() {
     return cn(
       'ri-arrow-down-s-line text-muted-foreground ml-2 transition-transform duration-200',
       this.isOpen ? 'rotate-180' : '',
       (this.size === 'xs' || this.size === 'sm') ? 'text-[14px]' : 'text-[18px]',
-      // Hide or fade icon when interaction is blocked
       (this.disabled || this.readonly) && 'opacity-30'
     );
   }
@@ -194,9 +176,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
 
   open() {
     this.isOpen = true;
-    // Trigger focus on the button for focus styling
     this.trigger.nativeElement.focus();
-    // Tick to ensure DOM is rendered before positioning
     setTimeout(() => this.updatePosition());
   }
 
@@ -215,10 +195,25 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       this.popover.nativeElement,
       () => {
         computePosition(this.trigger.nativeElement, this.popover.nativeElement, {
+          strategy: 'fixed', // 3. Use fixed strategy
           placement: 'bottom-start',
-          middleware: [offset(4), flip(), shift({ padding: 8 })],
-        }).then(({ x, y }) => {
+          middleware: [
+            offset(4),
+            flip(),
+            shift({ padding: 8 }),
+            // 4. Use size middleware to sync width and handle constraints
+            size({
+              apply({ rects, elements, availableHeight }) {
+                Object.assign(elements.floating.style, {
+                  width: `${rects.reference.width}px`,
+                  maxHeight: `${availableHeight}px`
+                });
+              },
+            }),
+          ],
+        }).then(({ x, y, strategy }) => {
           Object.assign(this.popover.nativeElement.style, {
+            position: strategy, // 5. Apply strategy to style
             left: `${x}px`,
             top: `${y}px`,
             visibility: 'visible',

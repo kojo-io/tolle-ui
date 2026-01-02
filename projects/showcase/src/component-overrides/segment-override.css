@@ -1,0 +1,148 @@
+/*
+  SEGMENTED COMPONENT OVERRIDES
+  Leave these empty for custom styling
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Main Container */
+tolle-segment {
+  /* The host component wrapper */
+}
+
+/* Container Div */
+tolle-segment > div {
+  /* Main container with flex layout */
+}
+
+/* Active Glider/Slider */
+tolle-segment > div > div:first-child {
+  /* The sliding background element */
+  @apply bg-primary !important;
+}
+
+/* All Segment Buttons */
+tolle-segment button[role="tab"] {
+  /* All segment buttons */
+
+}
+
+/* Individual Segment Button */
+tolle-segment button[role="tab"]:nth-child(1) {
+  /* First button */
+}
+
+tolle-segment button[role="tab"]:nth-child(2) {
+  /* Second button */
+}
+
+/* Add more nth-child selectors as needed */
+
+/* Selected Segment */
+tolle-segment button[role="tab"][aria-selected="true"] {
+  /* Currently selected segment */
+  @apply text-white !important;
+}
+
+/* Unselected Segments */
+tolle-segment button[role="tab"][aria-selected="false"] {
+  /* Unselected segments */
+}
+
+/* Hover State */
+tolle-segment button[role="tab"]:hover {
+  /* Hover state for buttons */
+}
+
+/* Focus State */
+tolle-segment button[role="tab"]:focus-visible {
+  /* Focus ring state */
+}
+
+/* Disabled Segments */
+tolle-segment button[role="tab"][disabled] {
+  /* Disabled segment buttons */
+}
+
+/* Icons in Segments */
+tolle-segment button[role="tab"] i {
+  /* Icon elements inside segments */
+}
+
+/* Text in Segments */
+tolle-segment button[role="tab"] span {
+  /* Text label inside segments */
+}
+
+.dark {
+  /*
+  SEGMENTED COMPONENT OVERRIDES
+  Leave these empty for custom styling
+*/
+
+  /* Main Container */
+  tolle-segment {
+    /* The host component wrapper */
+  }
+
+  /* Container Div */
+  tolle-segment > div {
+    /* Main container with flex layout */
+  }
+
+  /* Active Glider/Slider */
+  tolle-segment > div > div:first-child {
+    /* The sliding background element */
+  }
+
+  /* All Segment Buttons */
+  tolle-segment button[role="tab"] {
+    /* All segment buttons */
+  }
+
+  /* Individual Segment Button */
+  tolle-segment button[role="tab"]:nth-child(1) {
+    /* First button */
+  }
+
+  tolle-segment button[role="tab"]:nth-child(2) {
+    /* Second button */
+  }
+
+  /* Add more nth-child selectors as needed */
+
+  /* Selected Segment */
+  tolle-segment button[role="tab"][aria-selected="true"] {
+    /* Currently selected segment */
+  }
+
+  /* Unselected Segments */
+  tolle-segment button[role="tab"][aria-selected="false"] {
+    /* Unselected segments */
+  }
+
+  /* Hover State */
+  tolle-segment button[role="tab"]:hover {
+    /* Hover state for buttons */
+  }
+
+  /* Focus State */
+  tolle-segment button[role="tab"]:focus-visible {
+    /* Focus ring state */
+  }
+
+  /* Disabled Segments */
+  tolle-segment button[role="tab"][disabled] {
+    /* Disabled segment buttons */
+  }
+
+  /* Icons in Segments */
+  tolle-segment button[role="tab"] i {
+    /* Icon elements inside segments */
+  }
+
+  /* Text in Segments */
+  tolle-segment button[role="tab"] span {
+    /* Text label inside segments */
+  }
+}
