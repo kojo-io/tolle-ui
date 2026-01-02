@@ -7,7 +7,7 @@ import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/d
 import { format, parse, isValid, startOfDay } from 'date-fns';
 import { cn } from './utils/cn';
 import { MaskedInputComponent } from './masked-input.component';
-import { CalendarComponent } from './calendar.component';
+import { CalendarComponent, CalendarMode } from './calendar.component';
 
 @Component({
   selector: 'tolle-date-picker',
@@ -24,8 +24,8 @@ import { CalendarComponent } from './calendar.component';
     <div class="relative w-full" #triggerContainer>
       <tolle-masked-input
         #maskInput
-        [mask]="'00/00/0000'"
-        [placeholder]="placeholder"
+        [mask]="getMask()"
+        [placeholder]="getPlaceholder()"
         [disabled]="disabled"
         [(ngModel)]="inputValue"
         (ngModelChange)="onInputChange($event)"
@@ -33,14 +33,17 @@ import { CalendarComponent } from './calendar.component';
       >
         <div suffix class="flex items-center gap-1.5 cursor-pointer">
           <i
-            *ngIf="value && !disabled"
+            *ngIf="value && !disabled && showClear"
             (click)="clear($event)"
             class="ri-close-line cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
           ></i>
 
           <i
             (click)="togglePopover($event)"
-            class="ri-calendar-line cursor-pointer text-muted-foreground hover:text-primary transition-colors"
+            [class]="cn(
+              'cursor-pointer text-muted-foreground transition-colors',
+              'ri-calendar-line'
+            )"
           ></i>
         </div>
       </tolle-masked-input>
@@ -48,13 +51,19 @@ import { CalendarComponent } from './calendar.component';
       <div
         #popover
         *ngIf="isOpen"
-        class="absolute z-50 max-w-max left-0 right-0 overflow-hidden rounded-md border border-border text-popover-foreground bg-background shadow-md"
+        class="fixed z-[50]"
         style="visibility: hidden; top: 0; left: 0;"
       >
-        <tolle-calendar
+        <tolle-calendar class="shadow-lg"
           [(ngModel)]="value"
           (ngModelChange)="onCalendarChange($event)"
+          [mode]="mode"
           [disablePastDates]="disablePastDates"
+          [minDate]="minDate"
+          [maxDate]="maxDate"
+          [showQuickActions]="showQuickActions"
+          [formatMonthFn]="formatMonthFn"
+          [formatYearFn]="formatYearFn"
         ></tolle-calendar>
       </div>
     </div>
@@ -65,6 +74,16 @@ export class DatePickerComponent implements ControlValueAccessor {
   @Input() disabled = false;
   @Input() class = '';
   @Input() disablePastDates = false;
+  @Input() showClear = true;
+  @Input() showQuickActions = true;
+  @Input() minDate?: Date;
+  @Input() maxDate?: Date;
+  @Input() mode: CalendarMode = 'date';
+  @Input() formatMonthFn?: (date: Date) => string;
+  @Input() formatYearFn?: (date: Date) => string;
+
+  // Format functions for display
+  @Input() displayFormat?: (date: Date, mode: CalendarMode) => string;
 
   @ViewChild('triggerContainer') triggerContainer!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
@@ -76,13 +95,62 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  // --- Logic ---
+  getMask(): string {
+    switch (this.mode) {
+      case 'date': return '00/00/0000';
+      case 'month': return '00/0000';
+      case 'year': return '0000';
+      default: return '00/00/0000';
+    }
+  }
+
+  getPlaceholder(): string {
+    switch (this.mode) {
+      case 'date': return 'MM/DD/YYYY';
+      case 'month': return 'MM/YYYY';
+      case 'year': return 'YYYY';
+      default: return 'MM/DD/YYYY';
+    }
+  }
+
+  getFormatString(): string {
+    switch (this.mode) {
+      case 'date': return 'MM/dd/yyyy';
+      case 'month': return 'MM/yyyy';
+      case 'year': return 'yyyy';
+      default: return 'MM/dd/yyyy';
+    }
+  }
+
+  formatDate(date: Date): string {
+    if (this.displayFormat) {
+      return this.displayFormat(date, this.mode);
+    }
+
+    switch (this.mode) {
+      case 'date': return format(date, 'MM/dd/yyyy');
+      case 'month': return format(date, 'MM/yyyy');
+      case 'year': return format(date, 'yyyy');
+      default: return format(date, 'MM/dd/yyyy');
+    }
+  }
+
+  parseDate(str: string): Date | null {
+    try {
+      const parsed = parse(str, this.getFormatString(), new Date());
+      return isValid(parsed) ? startOfDay(parsed) : null;
+    } catch {
+      return null;
+    }
+  }
 
   onInputChange(str: string) {
-    if (str?.length === 10) {
-      const parsed = parse(str, 'MM/dd/yyyy', new Date());
-      if (isValid(parsed)) {
-        this.value = startOfDay(parsed);
+    const expectedLength = this.getFormatString().replace(/[^0]/g, '').length;
+
+    if (str?.length === expectedLength) {
+      const parsed = this.parseDate(str);
+      if (parsed) {
+        this.value = parsed;
         this.onChange(this.value);
       }
     } else if (!str) {
@@ -91,15 +159,19 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
   }
 
-  onCalendarChange(date: Date) {
+  onCalendarChange(date: Date | null) {
     this.value = date;
-    this.inputValue = format(date, 'MM/dd/yyyy');
+    if (date) {
+      this.inputValue = this.formatDate(date);
+    } else {
+      this.inputValue = '';
+    }
     this.onChange(this.value);
     this.close();
   }
 
   togglePopover(event: MouseEvent) {
-    event.stopPropagation(); // Prevent bubbling to document
+    event.stopPropagation();
     if (this.disabled) return;
     this.isOpen ? this.close() : this.open();
   }
@@ -115,14 +187,12 @@ export class DatePickerComponent implements ControlValueAccessor {
   }
 
   clear(event: MouseEvent) {
-    event.stopPropagation(); // CRITICAL: Stop the calendar from opening
+    event.stopPropagation();
     this.value = null;
     this.inputValue = '';
     this.onChange(null);
     this.cdr.markForCheck();
   }
-
-  // --- Positioning ---
 
   private updatePosition() {
     if (!this.triggerContainer || !this.popover) return;
@@ -132,10 +202,16 @@ export class DatePickerComponent implements ControlValueAccessor {
       this.popover.nativeElement,
       () => {
         computePosition(this.triggerContainer.nativeElement, this.popover.nativeElement, {
-          placement: 'bottom-end', // Aligned to the right where the icon is
-          middleware: [offset(4), flip(), shift({ padding: 8 })],
-        }).then(({ x, y }) => {
+          strategy: 'fixed', // ADDED: Fixed strategy
+          placement: 'bottom-start', // Changed to bottom-start to align with input left edge
+          middleware: [
+            offset(4),
+            flip(),
+            shift({ padding: 8 })
+          ],
+        }).then(({ x, y, strategy }) => {
           Object.assign(this.popover.nativeElement.style, {
+            position: strategy,
             left: `${x}px`,
             top: `${y}px`,
             visibility: 'visible',
@@ -154,7 +230,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
   }
 
-  // --- CVA ---
+  // CVA Implementation
   onChange: any = () => {};
   onTouched: any = () => {};
 
@@ -163,7 +239,7 @@ export class DatePickerComponent implements ControlValueAccessor {
       const date = new Date(val);
       if (isValid(date)) {
         this.value = startOfDay(date);
-        this.inputValue = format(this.value, 'MM/dd/yyyy');
+        this.inputValue = this.formatDate(this.value);
       }
     } else {
       this.value = null;

@@ -153,6 +153,17 @@
               <tolle-select-item value="fr">France</tolle-select-item>
             </tolle-select>
 
+            <tolle-multi-select [searchable]="true" placeholder="Select a list Country">
+              <tolle-select-item value="us">United States</tolle-select-item>
+              <tolle-select-item value="de">Germany</tolle-select-item>
+              <tolle-select-item value="gh">Ghana</tolle-select-item>
+              <tolle-select-item value="ff">France</tolle-select-item>
+              <tolle-select-item value="fh">United States</tolle-select-item>
+              <tolle-select-item value="er">Germany</tolle-select-item>
+              <tolle-select-item value="wt">Ghana</tolle-select-item>
+              <tolle-select-item value="sg">France</tolle-select-item>
+            </tolle-multi-select>
+
             <div class="flex items-center gap-2">
               <tolle-select placeholder="Sort by" class="w-32">
                 <tolle-select-item value="new">Newest</tolle-select-item>
@@ -270,15 +281,13 @@
               variant="outline"
               size="icon"
               tolleTooltip="Edit Profile"
-              placement="top"
-            >
+              placement="top">
               <i class="ri-edit-line"></i>
             </tolle-button>
 
             <tolle-badge
               variant="secondary"
-              tolleTooltip="Verified Account Status"
-            >
+              tolleTooltip="Verified Account Status">
               <i prefix class="ri-shield-check-line"></i>
               Verified Tooltip
             </tolle-badge>
@@ -294,15 +303,6 @@
         <div class="py-4 break-inside-avoid border-b">
           <div class="flex justify-center">
             <tolle-calendar [disablePastDates]="true"></tolle-calendar>
-          </div>
-        </div>
-        <div class="py-4 break-inside-avoid border-b">
-          <div class="flex flex-col space-y-2">
-            <tolle-date-picker
-              [disablePastDates]="false"
-              [disabled]="false"
-              placeholder="Select your birthday"
-            ></tolle-date-picker>
           </div>
         </div>
 
@@ -381,8 +381,7 @@
 
         <div class="py-4 break-inside-avoid border-b">
           <div class="flex flex-col space-y-2">
-            <tolle-range-calendar
-            ></tolle-range-calendar>
+            <tolle-range-calendar></tolle-range-calendar>
           </div>
         </div>
 
@@ -438,8 +437,7 @@
 
         <div class="py-4 break-inside-avoid border-b">
           <div class="flex flex-col space-y-2">
-            <tolle-range-calendar
-            ></tolle-range-calendar>
+            <tolle-range-calendar></tolle-range-calendar>
           </div>
         </div>
 
@@ -545,6 +543,33 @@
             </tolle-empty-state>
           </div>
         </div>
+        <div class="py-4 break-inside-avoid border-b">
+          <div class="flex flex-col space-y-2">
+            <tolle-date-picker
+              [disablePastDates]="false"
+              [disabled]="false"
+              placeholder="Select your birthday"></tolle-date-picker>
+          </div>
+        </div>
+        <div class="py-4 break-inside-avoid border-b">
+          <div class="flex flex-col space-y-2">
+            <tolle-date-picker
+              [disablePastDates]="false"
+              [disabled]="false"
+              mode="month"
+              placeholder="Select your month"></tolle-date-picker>
+          </div>
+        </div>
+
+        <div class="py-4 break-inside-avoid border-b">
+          <div class="flex flex-col space-y-2">
+            <tolle-date-picker
+              [disablePastDates]="false"
+              [disabled]="false"
+              mode="year"
+              placeholder="Select your year"></tolle-date-picker>
+          </div>
+        </div>
 
         <div class="py-4 break-inside-avoid border-b">
           <div class="flex flex-col space-y-2 item-center">
@@ -566,6 +591,36 @@
             </tolle-otp>
           </div>
         </div>
+        <div class="py-4 break-inside-avoid border-b gap-2">
+          <tolle-segment
+            [items]="tabs"
+            [(ngModel)]="selectedTab"
+          ></tolle-segment>
+
+          <div class="w-[300px] mt-2">
+            <tolle-segment
+              [items]="tabs"
+              [(ngModel)]="selectedTab"
+            ></tolle-segment>
+          </div>
+
+          <tolle-segment class="mt-2" [items]="viewOptions" [(ngModel)]="view"></tolle-segment>
+
+          <tolle-segment class="mt-2" [items]="advanceTabs" [(ngModel)]="activeTab" [itemTemplate]="customTab">
+          </tolle-segment>
+
+          <ng-template #customTab let-item>
+            <div class="flex items-center gap-2">
+              <i [class]="item.icon"></i>
+
+              <span>{{ item.label }}</span>
+
+              <span *ngIf="item.data?.count"
+                    class="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/10 px-1 text-[10px] font-bold text-primary">{{ item.data.count }}</span>
+            </div>
+          </ng-template>
+        </div>
+
       </div>
     </div>
   </section>

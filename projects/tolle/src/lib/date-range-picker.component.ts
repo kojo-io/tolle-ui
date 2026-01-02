@@ -3,12 +3,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
+import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom';
 import { cn } from './utils/cn';
 import { RangeCalendarComponent } from './range-calendar.component';
-import {format} from 'date-fns';
-import {InputComponent} from './input.component';
-import {DateRange} from './types/date-range';
+import { format } from 'date-fns';
+import { InputComponent } from './input.component';
+import { DateRange } from './types/date-range';
 
 @Component({
   selector: 'tolle-date-range-picker',
@@ -23,7 +23,12 @@ import {DateRange} from './types/date-range';
   ],
   template: `
     <div class="relative w-full" #triggerContainer>
-      <tolle-input [placeholder]="placeholder" [disabled]="disabled" [ngModel]="displayValue">
+      <tolle-input
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [ngModel]="displayValue"
+        [class]="class"
+      >
         <div suffix class="flex items-center gap-1.5 cursor-pointer">
           <i
             *ngIf="(value.start || value.end) && !disabled"
@@ -37,13 +42,14 @@ import {DateRange} from './types/date-range';
           ></i>
         </div>
       </tolle-input>
+
       <div
         #popover
         *ngIf="isOpen"
-        class="absolute z-50 min-w-72"
-        style="visibility: hidden; top: 0; left: 0;"
+        class="fixed z-50"
+        style="visibility: hidden;"
       >
-        <tolle-range-calendar
+        <tolle-range-calendar class="shadow-lg"
           [ngModel]="value"
           (rangeSelect)="onCalendarSelect($event)"
           [disablePastDates]="disablePastDates"
@@ -57,8 +63,6 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   @Input() placeholder = 'Pick a date range';
   @Input() class = '';
   @Input() disablePastDates = false;
-
-  // Standardized Sizes
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
 
   @ViewChild('triggerContainer') triggerContainer!: ElementRef;
@@ -73,7 +77,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   get displayValue(): string {
     if (!this.value.start) return '';
 
-    const startStr = format(this.value.start, 'MMM dd, yyyy'); // Using date-fns format
+    const startStr = format(this.value.start, 'MMM dd, yyyy');
     if (!this.value.end) return startStr;
 
     const endStr = format(this.value.end, 'MMM dd, yyyy');
@@ -86,13 +90,12 @@ export class DateRangePickerComponent implements ControlValueAccessor {
 
     // Close only if range is complete
     if (range.start && range.end) {
-      this.onChange(this.value);
-      // Small delay for UX
       setTimeout(() => this.close(), 150);
     }
   }
 
-  togglePopover(_: MouseEvent) {
+  togglePopover(event: MouseEvent) {
+    event.stopPropagation();
     if (this.disabled) return;
     this.isOpen ? this.close() : this.open();
   }
@@ -104,16 +107,20 @@ export class DateRangePickerComponent implements ControlValueAccessor {
 
   close() {
     this.isOpen = false;
-    if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
+    if (this.cleanupAutoUpdate) {
+      this.cleanupAutoUpdate();
+      this.cleanupAutoUpdate = undefined;
+    }
   }
 
   clear(event: MouseEvent) {
-    event.stopPropagation(); // Stop button click
+    event.stopPropagation();
     this.value = { start: null, end: null };
     this.onChange(this.value);
+    this.cdr.markForCheck();
   }
 
-  // --- Floating UI Positioning ---
+  // --- Floating UI Positioning with Fixed Strategy ---
   private updatePosition() {
     if (!this.triggerContainer || !this.popover) return;
 
@@ -122,14 +129,39 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       this.popover.nativeElement,
       () => {
         computePosition(this.triggerContainer.nativeElement, this.popover.nativeElement, {
-          placement: 'bottom-start', // Aligned to the right where the icon is
-          middleware: [offset(4), flip(), shift({ padding: 8 })],
-        }).then(({ x, y }) => {
+          placement: 'bottom-end',
+          strategy: 'fixed', // Use fixed to escape column layout
+          middleware: [
+            offset(4),
+            flip({
+              fallbackAxisSideDirection: 'start',
+              padding: 8
+            }),
+            shift({ padding: 8 }),
+            size({
+              apply({ rects, elements, availableHeight }) {
+                // Constrain popover to available space
+                Object.assign(elements.floating.style, {
+                  maxHeight: `${Math.min(400, availableHeight)}px`,
+                  minWidth: `${Math.max(rects.reference.width, 320)}px`, // Calendar minimum width
+                });
+              }
+            })
+          ],
+        }).then(({ x, y, placement }) => {
           Object.assign(this.popover.nativeElement.style, {
             left: `${x}px`,
             top: `${y}px`,
             visibility: 'visible',
           });
+
+          // Optional: Add placement class for styling
+          this.popover.nativeElement.classList.remove('calendar-top', 'calendar-bottom');
+          if (placement.includes('top')) {
+            this.popover.nativeElement.classList.add('calendar-top');
+          } else {
+            this.popover.nativeElement.classList.add('calendar-bottom');
+          }
         });
       }
     );
@@ -139,12 +171,24 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   onClickOutside(event: MouseEvent) {
     if (this.isOpen &&
       !this.triggerContainer.nativeElement.contains(event.target) &&
-      !this.popover.nativeElement.contains(event.target)) {
+      !this.popover?.nativeElement.contains(event.target)) {
       this.close();
     }
   }
 
-  // CVA
+  @HostListener('window:resize')
+  onWindowResize() {
+    if (this.isOpen) {
+      this.close(); // Close on resize for simplicity
+    }
+  }
+
+  @HostListener('window:scroll')
+  onWindowScroll() {
+    // Floating-UI's autoUpdate handles scroll repositioning
+  }
+
+  // --- Control Value Accessor ---
   onChange: any = () => {};
   onTouched: any = () => {};
 
@@ -160,5 +204,6 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
   setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+
   protected cn = cn;
 }
