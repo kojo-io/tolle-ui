@@ -11,12 +11,24 @@ export const routes: Routes = [
         loadComponent: () => import('./getting-started/getting-started.component').then(m => m.GettingStartedComponent),
       },
       {
-        path: 'installation',
-        loadComponent: () => import('./installation/installation.component').then(m => m.InstallationComponent),
-      },
-      {
         path: 'theming',
         loadComponent: () => import('./theming/theming.component').then(m => m.ThemingComponent),
+      },
+      {
+        path: 'components',
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('./components/components.component').then(m => m.ComponentsComponent),
+          },
+          {
+            path: 'accordion',
+            loadComponent: () => import('./components/accordion-docs/accordion-docs.component').then(m => m.AccordionDocsComponent),
+          },
+          {
+
+          }
+        ]
       },
       {
         path: '',

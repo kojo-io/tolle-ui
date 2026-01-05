@@ -55,18 +55,15 @@ export class DocLayoutComponent implements OnInit {
     {
       title: "Sections",
       items: [
-        { title: "Get Started", url: "/getting-started", icon: "ri-home-6-fill" },
-        { title: "Theming", url: "/theming", icon: "ri-paint-line" },
-        { title: "Components", url: "/components", icon: "ri-dashboard-fill" },
-        { title: "Projects", url: "/projects", icon: "ri-folder-6-line" },
+        { title: "Get Started", url: "/getting-started", },
+        { title: "Theming", url: "/theming" },
+        { title: "Components", url: "/components" },
       ]
     },
     {
-      title: "Get Started",
+      title: "Components",
       items: [
-        { title: "Installation", url: "/installation", icon: "ri-bank-card-line" },
-        { title: "Settings", url: "/settings", icon: "ri-settings-4-line" },
-        { title: "Audit Logs", url: "/logs", icon: "ri-file-list-3-line" },
+        { title: "Accordion", url: "/components/accordion"},
       ]
     }
   ];
