@@ -1,4 +1,4 @@
-name: Deploy Tolle UI & Storybook
+name: Deploy Tolle UI & Docs
 
 on:
   push:
@@ -26,9 +26,9 @@ jobs:
         run: |
           npm run build:web
 
-      - name: Build Storybook (tolle-ui-docs)
+      - name: Build Documentation (tolle-ui-docs)
         run: |
-          npm run build:storybook
+          npm run build:docs
 
       - name: Deploy Angular App to AWS
         uses: appleboy/scp-action@v0.1.7
@@ -40,12 +40,12 @@ jobs:
           target: /var/www/tolle-ui
           strip_components: 3
 
-      - name: Deploy Storybook to AWS
+      - name: Deploy Documentation to AWS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USER }}
           key: ${{ secrets.AWS_SSH_KEY }}
-          source: dist/storybook/tolle/*
+          source: dist/docs/browser/*
           target: /var/www/tolle-ui-docs
           strip_components: 3
