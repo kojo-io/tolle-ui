@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+/* Import the library theme */
+@import '../../tolle/theme.css';
+@import 'remixicon/fonts/remixicon.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input, textarea, select {
+  font-size: 16px !important;
+}
+

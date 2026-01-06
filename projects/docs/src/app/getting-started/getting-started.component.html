@@ -1,0 +1,222 @@
+<div class="flex w-full h-full">
+  <div class="flex-1 h-full overflow-auto no-scrollbar">
+    <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
+      <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
+        <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
+          Getting Started
+        </h1>
+        <p class="text-xl text-slate-600 dark:text-foreground mb-6">
+          Config-first theming for Angular
+        </p>
+        <div class="space-y-4">
+          <p>
+            Tolle UI is designed to be <strong class="font-semibold ">globally configurable</strong>.
+            Instead of styling every component individually, you define your design tokens once at the root of your application.
+          </p>
+          <p>
+            This <strong class="font-semibold ">config-first</strong> approach allows you to rebrand your entire application in seconds.
+          </p>
+        </div>
+      </header>
+
+      <section class="mb-16" id="why">
+        <h2 class="text-2xl font-bold  mb-6 flex items-center">
+          Why Tolle UI
+        </h2>
+        <p class="text-xl text-slate-600 dark:text-foreground mb-6">
+          Tolle UI was created out of personal frustration.
+        </p>
+        <div class="space-y-4">
+          <p>
+            After building and maintaining multiple Angular applications, the same problems kept repeating — inconsistent UI, fragile overrides, unclear component behavior, and too much time spent rebuilding the same patterns over and over again.
+          </p>
+          <p>
+            Tolle UI is not about chasing trends.
+            It’s about making day-to-day Angular development calmer, clearer, and more predictable.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-16" id="installation">
+        <h2 class="text-2xl font-bold  mb-6 flex items-center">
+          Installation
+        </h2>
+        <p class="mb-6">
+          Tolle UI is built for <strong class="font-semibold ">Angular 18</strong> and relies on a small set of <strong class="font-semibold ">peer dependencies</strong> to stay lightweight and flexible.
+        </p>
+
+        <div class="mb-8">
+          <h3 class="text-lg font-semibold mb-3">1. Install Tolle UI</h3>
+          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="text-neutral-400">&gt;_</span>
+                <span>Terminal</span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(install)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="px-4 py-5 font-mono text-sm text-neutral-100">
+              <span class="text-neutral-400">$</span>
+              <span class="ml-2">{{install}}</span>
+            </div>
+          </div>
+
+          <div class="relative group mb-6 rounded-md overflow-hidden h-24 hidden">
+            <app-base-editor [code]="install" language="bash" />
+          </div>
+
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-3">2. Install Peer Dependencies</h3>
+
+
+          <div class="flex items-center gap-3 p-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 text-sm">
+            <span class="text-lg">💡</span>
+            <p>If you already have Angular 18 installed, you only need to install the <strong>non-Angular</strong> dependencies.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-16" id="provider">
+        <h2 class="text-2xl font-bold  mb-6">
+         Tolle Angular Provider
+        </h2>
+        <p class="mb-6">
+          The <code class="bg-slate-100 text-pink-600 px-1.5 py-0.5 rounded text-sm font-mono font-medium">provideTolleConfig</code> function is the brain of the library.
+          It injects your brand settings into all components using Angular’s <strong>Dependency Injection</strong> system.
+        </p>
+        <div class="relative group">
+          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="text-neutral-400">&gt;_</span>
+                <span>app.config.ts</span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(appConfigCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="appConfigCode" language="javascript" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-16" id="tailwind">
+        <h2 class="text-2xl font-bold  mb-6">
+          Tailwind Integration
+        </h2>
+        <p class="mb-6">
+          Tolle UI components use Tailwind utility classes that reference CSS variables generated by your configuration.
+        </p>
+
+        <div class="relative group">
+          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="text-neutral-400">&gt;_</span>
+                <span>tailwind.config.js</span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(tailwindConfigCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="tailwindConfigCode" language="javascript" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-16" id="global">
+        <h2 class="text-2xl font-bold  mb-6">
+          Global Styles
+        </h2>
+        <p class="mb-4">Add the theme CSS file to your styles array:</p>
+        <div class="relative group">
+          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="text-neutral-400">&gt;_</span>
+                <span>style.css</span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(globalStyles)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="globalStyles" language="json" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </div>
+  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
+    <div class="sticky top-0 z-10 pb-4">
+      <p class="text-sm font-semibold text-foreground">On this page</p>
+    </div>
+
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('why')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Why Tolle/UI
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('installation')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Installation
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('provider')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Tolle Provider
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('tailwind')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Tailwind Integration
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('global')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Styles
+        </a>
+      </li>
+      <li>
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Support
+        </a>
+      </li>
+    </ul>
+  </aside>
+</div>

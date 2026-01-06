@@ -1,9 +1,10 @@
-import { provideHttpClient, withInterceptorsFromDi, withFetch } from "@angular/common/http";
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import {provideTolleConfig} from '../../../tolle/src/lib/tolle-config';
 import { provideRouter } from '@angular/router';
-import {routes} from './app.routes';
+
+import { routes } from './app.routes';
 import {provideAnimations} from '@angular/platform-browser/animations';
+import {provideTolleConfig} from '../../../tolle/src/lib/tolle-config';
+import {provideHttpClient, withFetch, withInterceptorsFromDi} from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,5 +19,3 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi(), withFetch()),
   ]
 };
-
-

@@ -1,0 +1,46 @@
+<div class="flex h-screen w-screen justify-center overflow-hidden bg-secondary text-foreground">
+  <div class="container h-screen w-full flex">
+    <tolle-sidebar [items]="navGroups" [collapsed]="isCollapsed" class="border-none bg-secondary">
+      <!-- Header with improved shrinking logic -->
+      <div header
+           class="flex w-full items-center gap-2 overflow-hidden transition-all duration-300"
+           [class.justify-center]="isCollapsed"
+           [class.px-2]="!isCollapsed">
+        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
+          <i class="ri-flashlight-fill text-xl"></i>
+        </div>
+        @if (!isCollapsed) {
+          <div class="flex flex-col leading-tight animate-in fade-in slide-in-from-left-2 duration-200">
+            <span class="font-bold truncate text-foreground">Tolle UI</span>
+            <span class="text-[10px] text-muted-foreground uppercase font-bold tracking-tighter">Documentation</span>
+          </div>
+        }
+      </div>
+    </tolle-sidebar>
+
+    <main class="flex-1 flex flex-col h-full overflow-auto bg-secondary px-8 pt-4">
+      <header class="flex items-center justify-end mb-4">
+        <div class="flex gap-2 items-center">
+          <tolle-button variant="ghost" size="sm">
+            <i class="ri-github-line mr-2"></i> GitHub
+          </tolle-button>
+          <div class="min-w-8 w-8 h-8 rounded-full relative overflow-hidden cursor-pointer" tolleTooltip="Select primary color">
+            <div class="absolute min-w-8 w-8 h-8 z-[2]"
+                 [ngStyle]="{'backgroundColor': theme.primaryColor ?? '#000000'}"
+                 (click)="color.click()"></div>
+            <input #color type="text"
+                   class="bg-coloris min-w-8 w-8 h-8 absolute z-[1] bg-transparent"
+                   [ngModel]="theme.primaryColor"
+                   (ngModelChange)="changeBrand($event)">
+          </div>
+          <tolle-button variant="ghost" size="icon" (click)="toggle()">
+            <i [class]="(theme.isDark$ | async) ? 'ri-sun-line' : 'ri-moon-line'"></i>
+          </tolle-button>
+        </div>
+      </header>
+      <div class="h-full w-full grow overflow-auto">
+        <router-outlet/>
+      </div>
+    </main>
+  </div>
+</div>

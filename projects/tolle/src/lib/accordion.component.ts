@@ -6,9 +6,9 @@ import { cn } from './utils/cn';
 @Component({
   selector: 'tolle-accordion',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule], // No AccordionItemComponent import needed here if projected via ng-content
   template: `
-    <div [class]="cn('w-full border-t border-border', class)">
+    <div [class]="cn('w-full', class)">
       <ng-content></ng-content>
     </div>
   `
@@ -20,11 +20,19 @@ export class AccordionComponent implements AfterContentInit {
   @ContentChildren(AccordionItemComponent) items!: QueryList<AccordionItemComponent>;
 
   ngAfterContentInit() {
-    this.items.forEach((item, index) => {
-      // Assign unique ID if none provided
-      if (item.id === undefined) item.id = index;
+    // 1. Assign IDs and Listeners on load
+    this.initItems();
 
-      // Hook into the item's toggle event
+    // 2. Re-init if items change dynamically (optional but good for robustness)
+    this.items.changes.subscribe(() => this.initItems());
+  }
+
+  private initItems() {
+    this.items.forEach((item, index) => {
+      // Auto-assign ID if missing
+      if (item.id === undefined) item.id = `accordion-item-${index}`;
+
+      // Set up the toggle bridge
       item.onToggle = (id) => this.handleToggle(id);
     });
   }
@@ -32,12 +40,11 @@ export class AccordionComponent implements AfterContentInit {
   private handleToggle(selectedId: string | number) {
     this.items.forEach(item => {
       if (item.id === selectedId) {
+        // Toggle the clicked item
         item.isOpen = !item.isOpen;
-      } else {
-        // If type is 'single', close all other items
-        if (this.type === 'single') {
-          item.isOpen = false;
-        }
+      } else if (this.type === 'single') {
+        // Close others if in single mode
+        item.isOpen = false;
       }
     });
   }
