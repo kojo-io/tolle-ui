@@ -1,1 +1,488 @@
-<p>alert-docs works!</p>
+<div class="flex w-full h-full">
+  <div class="flex-1 h-full overflow-auto no-scrollbar">
+    <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
+      <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
+        <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
+          Alert
+        </h1>
+        <div class="space-y-4">
+          <p>
+            Highlights important information to draw the user’s attention.
+          </p>
+
+          <div class="w-1/4">
+            <tolle-segment [items]="viewOptions" [(ngModel)]="selectedTab"/>
+          </div>
+          <div *ngIf="selectedTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-col space-y-4">
+            <tolle-alert title="Heads up!">
+              <i icon class="ri-information-line"></i>
+              You can add components to your app using the cli.
+            </tolle-alert>
+
+            <tolle-alert variant="destructive" title="Error">
+              <i icon class="ri-error-warning-line"></i>
+              Your session has expired. Please log in again.
+            </tolle-alert>
+
+            <tolle-alert variant="success" title="Success!">
+              <i icon class="ri-checkbox-circle-line"></i>
+              Your profile has been updated successfully.
+            </tolle-alert>
+
+            <tolle-alert
+              variant="warning"
+              title="System Maintenance"
+              [dismissible]="true">
+              <i icon class="ri-error-warning-line"></i>
+              The server will be down for 5 minutes at midnight.
+            </tolle-alert>
+          </div>
+          <div *ngIf="selectedTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(previewCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="previewCode" language="html" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold  mb-6 flex items-center">
+          Usage
+        </h2>
+
+        <div class="space-y-4">
+          <h2 class="text-xl font-bold  mb-6 flex items-center" id="installation">
+            Installation
+          </h2>
+          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(installation)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="installation" language="javascript" />
+            </div>
+          </div>
+
+          <p  id="basic">
+            Basic
+          </p>
+          <div class="w-1/4">
+            <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab"/>
+          </div>
+          <div *ngIf="basicTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-col space-y-4">
+            <tolle-alert title="Heads up!">
+              <i icon class="ri-information-line"></i>
+              You can add components to your app using the cli.
+            </tolle-alert>
+
+            <tolle-alert variant="destructive" title="Error">
+              <i icon class="ri-error-warning-line"></i>
+              Your session has expired. Please log in again.
+            </tolle-alert>
+
+            <tolle-alert variant="success" title="Success!">
+              <i icon class="ri-checkbox-circle-line"></i>
+              Your profile has been updated successfully.
+            </tolle-alert>
+          </div>
+
+          <div *ngIf="basicTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(previewNoDismissCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="previewNoDismissCode" language="html" />
+            </div>
+          </div>
+
+          <p  id="dismiss">
+            Dismissible
+          </p>
+          <div class="w-1/4">
+            <tolle-segment [items]="viewOptions" [(ngModel)]="dismissTab"/>
+          </div>
+          <div *ngIf="dismissTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-col space-y-4">
+            <tolle-alert
+              variant="warning"
+              title="System Maintenance"
+              [dismissible]="true">
+              <i icon class="ri-error-warning-line"></i>
+              The server will be down for 5 minutes at midnight.
+            </tolle-alert>
+          </div>
+
+          <div *ngIf="dismissTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(previewDismissCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="previewDismissCode" language="html" />
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold  mb-6 flex items-center">
+          Style Override
+        </h2>
+
+        <div class="space-y-4" id="component-style-override">
+          <h2 class="text-xl font-bold  mb-6 flex items-center">
+            Alert Component Style Override
+          </h2>
+
+          <div class="max-w-max">
+            <tolle-segment [items]="componentViewOptions" [(ngModel)]="componentExampleOverride"/>
+          </div>
+          <div *ngIf="componentExampleOverride === 'alert-component-override'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(componentOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="componentOverride" language="css" />
+            </div>
+          </div>
+          <div *ngIf="componentExampleOverride === 'override-example-tailwind'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(componentExampleTailwindOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="componentExampleTailwindOverride" language="css" />
+            </div>
+          </div>
+          <h2 class="text-xl font-bold  mb-6 flex items-center">
+            Alert Component Style Reference
+          </h2>
+          <table class="w-full text-left text-sm">
+            <thead class="bg-neutral-50 dark:bg-transparent border-b border-neutral-200">
+            <tr>
+              <th class="px-6 py-3 font-semibold">Component Area</th>
+              <th class="px-6 py-3 font-semibold">Selector</th>
+              <th class="px-6 py-3 font-semibold">What It Targets</th>
+            </tr>
+            </thead>
+            <tbody class="divide-y divide-neutral-200 bg-white dark:bg-transparent">
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Alert Container
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert > div</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Main alert container with border, padding, and animations
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Default Variant
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert[variant="default"] > div</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Default alert styling with neutral colors
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Destructive Variant
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert[variant="destructive"] > div</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Error/alert styling with red/destructive colors
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Success Variant
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert[variant="success"] > div</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Success notification styling with green colors
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Warning Variant
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert[variant="warning"] > div</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Warning notification styling with amber colors
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Alert Icon Slot
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert i</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Alert icon (from &lt;ng-content select="[icon]"&gt; slot)
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Alert Title
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert h5</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Alert title element (when title input is provided)
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Content Wrapper
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert > div > div:last-child</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Content wrapper div containing title and text
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Main Text
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert .text-sm</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Main text content with smaller font size
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Dismiss Button
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert button</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Close/dismiss button (only when dismissible is true)
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Dismiss Icon
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert button i</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Close icon (×) inside dismiss button
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Dismiss Button Hover
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert button:hover</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Hover state for dismiss button
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Dismiss Icon Hover
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert button:hover i</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Hover state for close icon
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Fade Animation
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert .opacity-0</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Fade out animation during dismissal
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Scale Animation
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert .scale-95</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Scale down animation during dismissal
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Content Paragraphs
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert p</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Paragraph elements inside alert content
+              </td>
+            </tr>
+            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
+              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
+                Group Hover States
+              </td>
+              <td class="px-6 py-4 font-mono">
+                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-alert .group-hover\:opacity-100</code>
+              </td>
+              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
+                Dismiss button opacity on group hover
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </article>
+  </div>
+
+  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
+    <div class="sticky top-0 z-10 pb-4">
+      <p class="text-sm font-semibold text-foreground">On this page</p>
+    </div>
+
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Usage Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('installation')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Installation
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('basic')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('dismiss')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Dismissible
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Style Override
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('component-style-override')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Component Override
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Support
+        </a>
+      </li>
+    </ul>
+  </aside>
+</div>

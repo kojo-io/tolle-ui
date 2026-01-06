@@ -26,7 +26,8 @@ export const routes: Routes = [
             loadComponent: () => import('./components/accordion-docs/accordion-docs.component').then(m => m.AccordionDocsComponent),
           },
           {
-
+            path: 'alert',
+            loadComponent: () => import('./components/alert-docs/alert-docs.component').then(m => m.AlertDocsComponent),
           }
         ]
       },

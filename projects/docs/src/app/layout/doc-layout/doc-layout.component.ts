@@ -64,6 +64,7 @@ export class DocLayoutComponent implements OnInit {
       title: "Components",
       items: [
         { title: "Accordion", url: "/components/accordion"},
+        { title: "Alert", url: "/components/alert"},
       ]
     }
   ];
