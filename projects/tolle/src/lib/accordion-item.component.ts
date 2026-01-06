@@ -1,28 +1,51 @@
-import { Component, Input, ContentChild, TemplateRef } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-accordion-item',
   standalone: true,
   imports: [CommonModule],
+  animations: [
+    trigger('expandCollapse', [
+      state('collapsed', style({
+        height: '0px',
+        opacity: '0',
+        overflow: 'hidden',
+        visibility: 'hidden'
+      })),
+      state('expanded', style({
+        height: '*', // "Star" means actual content height
+        opacity: '1',
+        overflow: 'hidden',
+        visibility: 'visible'
+      })),
+      // Use cubic-bezier to match Tailwind/shadcn-ui default ease
+      transition('collapsed <=> expanded', [
+        animate('300ms cubic-bezier(0.87, 0, 0.13, 1)')
+      ])
+    ])
+  ],
   template: `
     <div [class]="cn('flex flex-col border-b border-border', class)">
       <button
         type="button"
         (click)="toggle()"
-        class="flex flex-1 items-center justify-between py-4 font-medium transition-all [&[data-state=open]>i]:rotate-180"
+        [attr.aria-expanded]="isOpen"
         [attr.data-state]="isOpen ? 'open' : 'closed'"
+        class="flex flex-1 items-center justify-between py-4 font-medium transition-all group [&[data-state=open]>i]:rotate-180"
       >
-        <span class="text-left">{{ title }}</span>
-        <i class="ri-arrow-down-s-line text-muted-foreground transition-transform"></i>
+        <span class="text-left group-hover:underline">{{ title }}</span>
+        <i class="ri-arrow-down-s-line text-muted-foreground text-lg transition-transform duration-200 hover:no-underline"></i>
       </button>
 
       <div
-        *ngIf="isOpen"
-        class="pb-4 text-sm text-muted-foreground overflow-hidden"
-      >
-        <ng-content></ng-content>
+        [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'"
+        class="overflow-hidden">
+        <div class="pb-4 pt-0 text-sm text-muted-foreground">
+          <ng-content></ng-content>
+        </div>
       </div>
     </div>
   `

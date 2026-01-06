@@ -1,17 +1,23 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border p-4 transition-all duration-300 [&>i~div]:pl-7 [&>i]:absolute [&>i]:left-4 [&>i]:top-4 [&>i]:text-foreground",
+  "relative w-full rounded-lg border p-4 [&>i+div]:translate-y-[-3px] [&>i]:absolute [&>i]:left-4 [&>i]:top-4 [&>i]:text-foreground [&>i~div]:pl-7",
   {
     variants: {
       variant: {
         default: "bg-background text-foreground",
-        destructive: "border-destructive/50 text-destructive dark:border-destructive [&>i]:text-destructive",
-        success: "border-emerald-500/50 text-emerald-700 dark:text-emerald-400 [&>i]:text-emerald-600",
-        warning: "border-amber-500/50 text-amber-700 dark:text-amber-400 [&>i]:text-amber-600",
+        destructive:
+          "border-red-500/50 text-red-500 dark:border-red-500 [&>i]:text-red-500",
+        success:
+          "border-emerald-500/50 text-emerald-700 dark:border-emerald-500 [&>i]:text-emerald-600 dark:text-emerald-400",
+        warning:
+          "border-amber-500/50 text-amber-700 dark:border-amber-500 [&>i]:text-amber-600 dark:text-amber-400",
+        info:
+          "border-blue-500/50 text-blue-700 dark:border-blue-500 [&>i]:text-blue-600 dark:text-blue-400",
       },
     },
     defaultVariants: {
@@ -26,12 +32,19 @@ type AlertVariants = VariantProps<typeof alertVariants>;
   selector: 'tolle-alert',
   standalone: true,
   imports: [CommonModule],
+  animations: [
+    trigger('fade', [
+      transition(':leave', [
+        style({ opacity: 1, transform: 'scale(1)' }),
+        animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.95)', height: 0, margin: 0, padding: 0 }))
+      ])
+    ])
+  ],
   template: `
     <div
       *ngIf="!dismissed"
+      @fade
       [class]="cn(alertVariants({ variant }), class)"
-      [class.opacity-0]="isDismissing"
-      [class.scale-95]="isDismissing"
       role="alert"
     >
       <ng-content select="[icon]"></ng-content>
@@ -39,22 +52,23 @@ type AlertVariants = VariantProps<typeof alertVariants>;
       <button
         *ngIf="dismissible"
         (click)="dismiss()"
-        class="absolute right-2 top-2 rounded-md p-1 text-foreground/50 opacity-0 transition-opacity hover:text-foreground focus:opacity-100 group-hover:opacity-100"
-        [class.opacity-100]="dismissible"
+        class="absolute right-2 top-2 rounded-md p-1 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+        type="button"
       >
         <i class="ri-close-line text-lg"></i>
+        <span class="sr-only">Close</span>
       </button>
 
       <div>
         <h5 *ngIf="title" class="mb-1 font-medium leading-none tracking-tight">
           {{ title }}
         </h5>
-        <div class="text-sm [&_p]:leading-relaxed">
+        <div class="text-sm [&_p]:leading-relaxed opacity-90">
           <ng-content></ng-content>
         </div>
       </div>
     </div>
-  `,
+  `
 })
 export class AlertComponent {
   @Input() variant: AlertVariants['variant'] = 'default';
@@ -65,17 +79,11 @@ export class AlertComponent {
   @Output() onClose = new EventEmitter<void>();
 
   dismissed = false;
-  isDismissing = false;
-
   protected alertVariants = alertVariants;
   protected cn = cn;
 
   dismiss() {
-    this.isDismissing = true;
-    // Wait for animation to finish before removing from DOM
-    setTimeout(() => {
-      this.dismissed = true;
-      this.onClose.emit();
-    }, 300);
+    this.dismissed = true;
+    this.onClose.emit();
   }
 }

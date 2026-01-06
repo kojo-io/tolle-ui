@@ -23,8 +23,6 @@ import {ToastService} from '../../../../tolle/src/lib/toast.service';
 import {CalendarComponent} from '../../../../tolle/src/lib/calendar.component';
 import {MaskedInputComponent} from '../../../../tolle/src/lib/masked-input.component';
 import {DatePickerComponent} from '../../../../tolle/src/lib/date-picker.component';
-import {AccordionComponent} from '../../../../tolle/src/lib/accordion.component';
-import {AccordionItemComponent} from '../../../../tolle/src/lib/accordion-item.component';
 import {ButtonGroupComponent} from '../../../../tolle/src/lib/button-group.component';
 import {DateRangePickerComponent} from '../../../../tolle/src/lib/date-range-picker.component';
 import {RangeCalendarComponent} from '../../../../tolle/src/lib/range-calendar.component';
@@ -47,6 +45,8 @@ import {UserFormComponent} from '../../user-form/user-form.component';
 import {MultiSelectComponent} from '../../../../tolle/src/lib/multi-select.component';
 import {SegmentedComponent} from '../../../../tolle/src/lib/segment.component';
 import {AnalyticsService} from '../analytics.service';
+import {AccordionComponent} from '../../../../tolle/src/lib/accordion.component';
+import {AccordionItemComponent} from '../../../../tolle/src/lib/accordion-item.component';
 
 @Component({
   selector: 'app-index',
@@ -74,8 +74,6 @@ import {AnalyticsService} from '../analytics.service';
     CalendarComponent,
     MaskedInputComponent,
     DatePickerComponent,
-    AccordionComponent,
-    AccordionItemComponent,
     ButtonGroupComponent,
     DateRangePickerComponent,
     RangeCalendarComponent,
@@ -94,7 +92,9 @@ import {AnalyticsService} from '../analytics.service';
     OtpSlotComponent,
     MultiSelectComponent,
     SegmentedComponent,
-    NgIf
+    NgIf,
+    AccordionComponent,
+    AccordionItemComponent,
   ],
   templateUrl: './index.component.html',
   styleUrl: './index.component.css'
