@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:web": "ng build showcase --configuration production",
+    "build:lib": "ng build tolle --configuration production",
     "build:docs": "ng build docs --configuration production",
     "docs:json": "npx compodoc -p projects/tolle/tsconfig.lib.json -e json -d projects/tolle/.storybook",
     "build:storybook": "npm run docs:json && ng run tolle:build-storybook"

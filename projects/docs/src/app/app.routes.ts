@@ -28,6 +28,10 @@ export const routes: Routes = [
           {
             path: 'alert',
             loadComponent: () => import('./components/alert-docs/alert-docs.component').then(m => m.AlertDocsComponent),
+          },
+          {
+            path: 'avatar',
+            loadComponent: () => import('./components/avatar-docs/avatar-docs.component').then(m => m.AvatarDocsComponent),
           }
         ]
       },
