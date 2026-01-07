@@ -58,3 +58,4 @@ export * from './lib/popover-content.component';
 export * from './lib/radio-group.component';
 export * from './lib/radio-item.component';
 export * from './lib/segment.component';
+export * from './lib/sidebar.component';

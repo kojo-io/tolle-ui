@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { cn } from './utils/cn';
 
 // --- Interfaces ---
-export interface SidebarItem {
+export type SidebarItem = {
   title: string;
   url?: string;
   icon?: string;
@@ -14,7 +14,7 @@ export interface SidebarItem {
   expanded?: boolean;
 }
 
-export interface SidebarGroup {
+export type SidebarGroup = {
   title: string;
   items: SidebarItem[];
   id?: string;
