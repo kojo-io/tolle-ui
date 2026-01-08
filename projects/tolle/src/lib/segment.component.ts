@@ -45,7 +45,7 @@ export type SegmentItem = {
       role="tablist"
     >
       <div
-        class="absolute top-1 bottom-1 bg-background shadow-sm rounded-md transition-all duration-300 ease-[cubic-bezier(0.2,0.0,0.2,1)]"
+        class="absolute top-1 bottom-1 bg-primary shadow-sm rounded-md transition-all duration-300 ease-[cubic-bezier(0.2,0.0,0.2,1)]"
         [style.left.px]="gliderLeft"
         [style.width.px]="gliderWidth"
         [class.opacity-0]="!hasValue"
@@ -63,7 +63,7 @@ export type SegmentItem = {
           'relative z-10 flex-1 px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-md text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
           'flex items-center justify-center gap-2',
           value === item.value
-            ? 'text-foreground'
+            ? 'text-primary-foreground'
             : 'text-muted-foreground hover:text-foreground/70',
           item.disabled && 'opacity-50 cursor-not-allowed',
           item.class
