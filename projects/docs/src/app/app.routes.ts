@@ -32,6 +32,10 @@ export const routes: Routes = [
           {
             path: 'avatar',
             loadComponent: () => import('./components/avatar-docs/avatar-docs.component').then(m => m.AvatarDocsComponent),
+          },
+          {
+            path: 'badge',
+            loadComponent: () => import('./components/badge-docs/badge-docs.component').then(m => m.BadgeDocsComponent),
           }
         ]
       },
