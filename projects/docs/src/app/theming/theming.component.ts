@@ -1,6 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {BaseService} from '../shared/base.service';
 import {BaseEditorComponent} from '../shared/base-editor/base-editor.component';
+import {AnalyticsService} from '../../../../showcase/src/app/analytics.service';
+import {coloris, init} from '@melloware/coloris';
 
 @Component({
   selector: 'app-theming',
@@ -11,8 +13,13 @@ import {BaseEditorComponent} from '../shared/base-editor/base-editor.component';
   templateUrl: './theming.component.html',
   styleUrl: './theming.component.css'
 })
-export class ThemingComponent {
+export class ThemingComponent implements OnInit{
   baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
+
+  ngOnInit(): void {
+    this.analytics.init();
+  }
 
   primaryGen = "primary-50 → primary-950";
 

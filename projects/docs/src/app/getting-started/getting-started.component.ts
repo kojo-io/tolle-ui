@@ -1,6 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {BaseEditorComponent} from '../shared/base-editor/base-editor.component';
 import {BaseService} from '../shared/base.service';
+import {AnalyticsService} from '../../../../showcase/src/app/analytics.service';
 
 @Component({
   selector: 'app-getting-started',
@@ -11,8 +12,15 @@ import {BaseService} from '../shared/base.service';
   templateUrl: './getting-started.component.html',
   styleUrl: './getting-started.component.css'
 })
-export class GettingStartedComponent {
+export class GettingStartedComponent implements OnInit {
   baseService = inject(BaseService);
+
+  analytics = inject(AnalyticsService);
+
+  ngOnInit(): void {
+    this.analytics.init();
+  }
+
   install = 'npm install @tolle_/tolle-ui @floating-ui/dom class-variance-authority date-fns'
 
   appConfigCode = "import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';\n" +
