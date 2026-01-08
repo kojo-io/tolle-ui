@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {BaseEditorComponent} from "../../shared/base-editor/base-editor.component";
 import {NgIf} from "@angular/common";
 import {SegmentedComponent} from "../../../../../tolle/src/lib/segment.component";
@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {BadgeComponent} from '../../../../../tolle/src/lib/badge.component';
 import {AccordionComponent} from '../../../../../tolle/src/lib/accordion.component';
 import {AccordionItemComponent} from '../../../../../tolle/src/lib/accordion-item.component';
+import {AnalyticsService} from '../../../../../showcase/src/app/analytics.service';
 
 @Component({
   selector: 'app-badge-docs',
@@ -23,8 +24,14 @@ import {AccordionItemComponent} from '../../../../../tolle/src/lib/accordion-ite
   templateUrl: './badge-docs.component.html',
   styleUrl: './badge-docs.component.css'
 })
-export class BadgeDocsComponent {
+export class BadgeDocsComponent implements OnInit {
   baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
+
+  ngOnInit(): void {
+    this.analytics.init();
+  }
+
   selectedTab = "preview";
   singleUsage = "preview";
 

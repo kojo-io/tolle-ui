@@ -1,10 +1,11 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {BaseService} from '../../shared/base.service';
 import {NgIf} from '@angular/common';
 import {SegmentedComponent} from '../../../../../tolle/src/lib/segment.component';
 import {FormsModule} from '@angular/forms';
 import {AlertComponent} from '../../../../../tolle/src/lib/alert.component';
 import {BaseEditorComponent} from '../../shared/base-editor/base-editor.component';
+import {AnalyticsService} from '../../../../../showcase/src/app/analytics.service';
 
 @Component({
   selector: 'app-alert-docs',
@@ -19,8 +20,13 @@ import {BaseEditorComponent} from '../../shared/base-editor/base-editor.componen
   templateUrl: './alert-docs.component.html',
   styleUrl: './alert-docs.component.css'
 })
-export class AlertDocsComponent {
+export class AlertDocsComponent implements OnInit {
   baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
+
+  ngOnInit(): void {
+    this.analytics.init();
+  }
   selectedTab = "preview";
   basicTab = "preview";
   dismissTab = "preview";
