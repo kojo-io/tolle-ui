@@ -26,11 +26,11 @@ export type SidebarGroup = {
   imports: [CommonModule, RouterModule],
   template: `
     <aside [class]="cn(
-      'flex flex-col h-full border-r bg-background transition-[width] duration-300 ease-in-out shrink-0 overflow-hidden',
+      'flex flex-col h-full bg-background transition-[width] duration-300 ease-in-out shrink-0 overflow-hidden',
       collapsed ? 'w-16' : 'w-64',
       class
     )">
-      <div class="flex h-14 shrink-0 items-center border-b px-3 overflow-hidden whitespace-nowrap">
+      <div class="flex h-14 shrink-0 items-center px-3 overflow-hidden whitespace-nowrap">
         <ng-content select="[header]"></ng-content>
       </div>
 
@@ -50,6 +50,7 @@ export type SidebarGroup = {
               @for (item of group.items; track item.id || item.title || $index; let i = $index) {
 
                 @if (item.items && item.items.length) {
+                  <!-- Parent Item (Group) -->
                   <div class="relative">
                     <button
                       type="button"
@@ -84,6 +85,7 @@ export type SidebarGroup = {
                       }
                     </button>
 
+                    <!-- Submenu Grid Transition -->
                     <div [class]="cn(
                       'grid transition-[grid-template-rows] duration-300 ease-in-out',
                       isParentExpanded(group, item, gIndex, i) && !collapsed ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
@@ -92,8 +94,8 @@ export type SidebarGroup = {
                         <div class="flex flex-col gap-1 mt-1 ml-4 border-l border-border/50 pl-2">
 
                           @for (subItem of item.items; track subItem.id || subItem.title || $index; let j = $index) {
-
                             @if (subItem.items && subItem.items.length) {
+                              <!-- Grandchild Item Group (Recursive-ish logic for depth 2) -->
                               <div class="relative">
                                 <button
                                   type="button"
@@ -121,7 +123,7 @@ export type SidebarGroup = {
                                       @for (grandChild of subItem.items; track grandChild.title) {
                                         <a
                                           [routerLink]="grandChild.url"
-                                          routerLinkActive="bg-accent/50 text-accent-foreground"
+                                          [routerLinkActive]="activeClasses"
                                           [routerLinkActiveOptions]="{ exact: true }"
                                           class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
                                         >
@@ -135,9 +137,10 @@ export type SidebarGroup = {
                               </div>
                             }
                             @else {
+                              <!-- Standard Sub Item -->
                               <a
                                 [routerLink]="subItem.url"
-                                routerLinkActive="bg-accent/50 text-accent-foreground"
+                                [routerLinkActive]="activeClasses"
                                 [routerLinkActiveOptions]="{ exact: true }"
                                 class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
                               >
@@ -152,9 +155,10 @@ export type SidebarGroup = {
                   </div>
                 }
                 @else {
+                  <!-- Standard Top-Level Item -->
                   <a
                     [routerLink]="item.url"
-                    routerLinkActive="bg-primary/10 text-primary"
+                    [routerLinkActive]="activeClasses"
                     [routerLinkActiveOptions]="{ exact: true }"
                     [class]="cn(
                       'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
@@ -181,7 +185,7 @@ export type SidebarGroup = {
         }
       </div>
 
-      <div class="border-t shrink-0 p-3 overflow-hidden whitespace-nowrap">
+      <div class="shrink-0 p-3 overflow-hidden whitespace-nowrap">
         <ng-content select="[footer]"></ng-content>
       </div>
     </aside>
@@ -194,8 +198,6 @@ export type SidebarGroup = {
     .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(156, 163, 175, 0.3); border-radius: 20px; }
     button:disabled { cursor: not-allowed; opacity: 0.6; }
     * { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-    .ml-4 { margin-left: 1rem; }
-    .border-l { border-left-width: 1px; }
   `]
 })
 export class SidebarComponent implements OnChanges {
@@ -203,10 +205,36 @@ export class SidebarComponent implements OnChanges {
   @Input() collapsed = false;
   @Input() class = '';
 
+  /**
+   * Styling variant for active items.
+   * - default: Solid primary background, light text (Matches Badge Default)
+   * - secondary: Solid secondary background
+   * - ghost: Transparent background, accent text (Shadcn standard)
+   * - outline: Bordered
+   */
+  @Input() variant: 'default' | 'secondary' | 'ghost' | 'outline' = 'default';
+
   expandedParents = new Set<string>();
   expandedChildren = new Set<string>();
 
   protected readonly cn = cn;
+
+  get activeClasses(): string {
+    return cn(
+      'transition-colors',
+      // Default: Solid Primary (Badge-like) with lighter opacity (80% instead of 90%)
+      this.variant === 'default' && 'bg-primary/80 text-primary-foreground hover:bg-primary hover:text-primary-foreground',
+
+      // Secondary: Solid Secondary
+      this.variant === 'secondary' && 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+
+      // Ghost: Subtle background (Sidebar standard)
+      this.variant === 'ghost' && 'bg-accent text-accent-foreground',
+
+      // Outline: Bordered
+      this.variant === 'outline' && 'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground'
+    );
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['collapsed'] && this.collapsed) {
@@ -244,7 +272,7 @@ export class SidebarComponent implements OnChanges {
     });
   }
 
-  // --- ID GENERATORS (Now using Group Index correctly) ---
+  // --- ID GENERATORS ---
   getGroupId(group: SidebarGroup, index: number): string {
     return group.id || group.title || `g-${index}`;
   }
@@ -266,7 +294,6 @@ export class SidebarComponent implements OnChanges {
     if (this.collapsed) return;
     const id = this.getParentId(group, item, gIndex, iIndex);
 
-    // Create new Set reference to ensure Change Detection triggers
     const newSet = new Set(this.expandedParents);
     if (newSet.has(id)) {
       newSet.delete(id);
@@ -279,7 +306,6 @@ export class SidebarComponent implements OnChanges {
   toggleChild(group: SidebarGroup, parent: SidebarItem, subItem: SidebarItem, gIndex: number, iIndex: number, sIndex: number) {
     const id = this.getChildId(group, parent, subItem, gIndex, iIndex, sIndex);
 
-    // Create new Set reference
     const newSet = new Set(this.expandedChildren);
     if (newSet.has(id)) {
       newSet.delete(id);
