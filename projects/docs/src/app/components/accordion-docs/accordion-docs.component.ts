@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {BaseService} from '../../shared/base.service';
 import {BaseEditorComponent} from '../../shared/base-editor/base-editor.component';
 import {SegmentedComponent} from '../../../../../tolle/src/lib/segment.component';
@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
 import {AccordionItemComponent} from '../../../../../tolle/src/lib/accordion-item.component';
 import {AccordionComponent} from '../../../../../tolle/src/lib/accordion.component';
+import {AnalyticsService} from '../../../../../showcase/src/app/analytics.service';
 
 @Component({
   selector: 'app-accordion-docs',
@@ -21,8 +22,13 @@ import {AccordionComponent} from '../../../../../tolle/src/lib/accordion.compone
   templateUrl: './accordion-docs.component.html',
   styleUrl: './accordion-docs.component.css'
 })
-export class AccordionDocsComponent {
+export class AccordionDocsComponent implements OnInit {
   baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
+
+  ngOnInit(): void {
+    this.analytics.init();
+  }
   selectedTab = "preview";
   singleUsage = "preview";
   multiUsage = "preview";
