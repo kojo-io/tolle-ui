@@ -162,6 +162,114 @@
 
         </div>
       </section>
+
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold  mb-6 flex items-center">
+          Style Override
+        </h2>
+
+        <div class="space-y-4" id="component-style-override">
+          <h2 class="text-xl font-bold  mb-6 flex items-center">
+            Badge Component Style Override
+          </h2>
+
+          <div class="max-w-max">
+            <tolle-segment [items]="componentViewOptions" [(ngModel)]="componentExampleOverride"/>
+          </div>
+          <div *ngIf="componentExampleOverride === 'component-override'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(badgeOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="badgeOverride" language="css" />
+            </div>
+          </div>
+          <div *ngIf="componentExampleOverride === 'override-example-tailwind'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(tailwindOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="tailwindOverride" language="css" />
+            </div>
+          </div>
+          <h2 class="text-xl font-bold  mb-6 flex items-center">
+            Badge Component Style Reference
+          </h2>
+          <table class="w-full text-left text-sm"> <thead class="bg-neutral-50 dark:bg-transparent border-b border-neutral-200"> <tr> <th class="px-6 py-3 font-semibold">Component Area</th> <th class="px-6 py-3 font-semibold">Selector</th> <th class="px-6 py-3 font-semibold">What It Targets</th> </tr> </thead> <tbody class="divide-y divide-neutral-200 bg-white dark:bg-transparent"> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Host Element </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> The component host element containing the badge </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Main Container </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge > div</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Main container div with flex layout, border, and base styles </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Content Area </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge span.truncate</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Text content area with truncation for long text </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Remove Button </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge button</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Remove/X button (only shown when removable=true) </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Remove Button Icon </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge button i.ri-close-line</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Close/X icon inside the remove button </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Variant: Default </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge > div.bg-primary</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Primary variant background and text colors </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Variant: Secondary </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge > div.bg-secondary</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Secondary variant background and text colors </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Variant: Outline </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge > div.bg-transparent</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Outline variant border and background styles </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Variant: Destructive </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge > div.bg-destructive</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Destructive variant background and text colors </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Size: Extra Small </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge > div.text-\[10px\]</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Extra small size padding and font size </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Size: Small </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge > div.text-\[11px\]</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Small size padding and font size </td> </tr> <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors"> <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground"> Size: Default </td> <td class="px-6 py-4 font-mono"> <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-badge > div.text-xs</code> </td> <td class="px-6 py-4 text-neutral-600 dark:text-foreground"> Default size font size </td> </tr> </tbody> </table>
+        </div>
+      </section>
     </article>
   </div>
+
+  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
+    <div class="sticky top-0 z-10 pb-4">
+      <p class="text-sm font-semibold text-foreground">On this page</p>
+    </div>
+
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Usage Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('installation')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Installation
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('basic')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Style Override
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('component-style-override')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Component Override
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Support
+        </a>
+      </li>
+    </ul>
+  </aside>
 </div>
