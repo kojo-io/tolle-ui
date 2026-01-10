@@ -16,7 +16,7 @@ export class AnalyticsService {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        window.gtag('config', 'G-JJ0HL80R7D', {
+        window.gtag('config', 'G-BXX9QLERNW', {
           page_path: event.urlAfterRedirects
         });
       });
