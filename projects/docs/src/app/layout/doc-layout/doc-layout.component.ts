@@ -67,6 +67,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Alert", url: "/components/alert"},
         { title: "Avatar", url: "/components/avatar"},
         { title: "Badge", url: "/components/badge"},
+        { title: "Breadcrumb", url: "/components/breadcrumb"},
       ]
     }
   ];

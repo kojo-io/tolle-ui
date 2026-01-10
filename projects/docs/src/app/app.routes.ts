@@ -36,6 +36,10 @@ export const routes: Routes = [
           {
             path: 'badge',
             loadComponent: () => import('./components/badge-docs/badge-docs.component').then(m => m.BadgeDocsComponent),
+          },
+          {
+            path: 'breadcrumb',
+            loadComponent: () => import('./components/breadcrumb-docs/breadcrumb-docs.component').then(m => m.BreadcrumbDocsComponent),
           }
         ]
       },
