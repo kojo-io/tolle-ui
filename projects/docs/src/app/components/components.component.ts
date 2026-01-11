@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {ButtonComponent} from '../../../../tolle/src/lib/button.component';
 import {RouterLink} from '@angular/router';
 
 @Component({

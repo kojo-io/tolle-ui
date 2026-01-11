@@ -70,6 +70,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Breadcrumb", url: "/components/breadcrumb"},
         { title: "Button", url: "/components/button"},
         { title: "Button Group", url: "/components/button-group" },
+        { title: "Calendar", url: "/components/calendar" },
       ]
     }
   ];
