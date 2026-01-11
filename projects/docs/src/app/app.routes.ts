@@ -40,6 +40,10 @@ export const routes: Routes = [
           {
             path: 'breadcrumb',
             loadComponent: () => import('./components/breadcrumb-docs/breadcrumb-docs.component').then(m => m.BreadcrumbDocsComponent),
+          },
+          {
+            path: 'button',
+            loadComponent: () => import('./components/button-docs/button-docs.component').then(m => m.ButtonDocsComponent),
           }
         ]
       },

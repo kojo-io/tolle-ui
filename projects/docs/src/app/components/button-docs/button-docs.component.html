@@ -1,0 +1,203 @@
+<div class="flex w-full h-full">
+  <div class="flex-1 h-full overflow-auto no-scrollbar">
+    <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
+      <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
+        <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
+          Button
+        </h1>
+        <div class="space-y-4">
+          <p>
+            Shows a button or a button-styled component.
+          </p>
+
+          <div class="w-1/4">
+            <tolle-segment [items]="viewOptions" [(ngModel)]="selectedTab"/>
+          </div>
+
+          <div *ngIf="selectedTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-wrap gap-4 justify-center items-center">
+            <tolle-button>Primary (Auto)</tolle-button>
+            <tolle-button variant="link">I am button link</tolle-button>
+            <tolle-button variant="secondary">Secondary (Derived)</tolle-button>
+            <tolle-button variant="outline">Outline</tolle-button>
+            <tolle-button variant="ghost">Ghost</tolle-button>
+            <tolle-button size="lg" variant="destructive">
+             Close (Destructive)
+            </tolle-button>
+            <tolle-button variant="outline" size="lg">
+              <i class="ri-github-line mr-1"></i>
+              <span>View on GitHub</span>
+            </tolle-button>
+            <tolle-button
+              variant="outline"
+              size="icon"
+              tolleTooltip="Edit Profile"
+              placement="top">
+              <i class="ri-edit-line"></i>
+            </tolle-button>
+            <tolle-button size="icon-lg">
+              <i class="ri-more-2-fill"></i>
+            </tolle-button>
+            <tolle-button size="icon" variant="destructive">
+              <i class="ri-more-2-fill"></i>
+            </tolle-button>
+            <tolle-button size="icon-sm" variant="secondary">
+              <i class="ri-more-2-fill"></i>
+            </tolle-button>
+            <tolle-button size="icon-xs">
+              <i class="ri-more-2-fill"></i>
+            </tolle-button>
+          </div>
+          <div *ngIf="selectedTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(previewCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="previewCode" language="html" />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="mb-16">
+        <h2 class="text-2xl font-bold  mb-6 flex items-center">
+          Usage
+        </h2>
+        <div class="space-y-4">
+          <h2 class="text-xl font-bold  mb-6 flex items-center" id="installation">
+            Installation
+          </h2>
+          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(installation)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="installation" language="javascript" />
+            </div>
+          </div>
+
+          <p  id="basic">
+            Basic
+          </p>
+          <div class="w-1/4">
+            <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab"/>
+          </div>
+          <div *ngIf="basicTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-wrap gap-4 justify-center items-center">
+            <tolle-button>Primary (Auto)</tolle-button>
+            <tolle-button variant="link">I am button link</tolle-button>
+            <tolle-button variant="secondary">Secondary (Derived)</tolle-button>
+            <tolle-button variant="outline">Outline</tolle-button>
+            <tolle-button variant="ghost">Ghost</tolle-button>
+            <tolle-button size="lg" variant="destructive">
+              Close (Destructive)
+            </tolle-button>
+            <tolle-button variant="outline" size="lg">
+              <i class="ri-github-line mr-1"></i>
+              <span>View on GitHub</span>
+            </tolle-button>
+            <tolle-button
+              variant="outline"
+              size="icon"
+              tolleTooltip="Edit Profile"
+              placement="top">
+              <i class="ri-edit-line"></i>
+            </tolle-button>
+            <tolle-button size="icon-lg">
+              <i class="ri-more-2-fill"></i>
+            </tolle-button>
+            <tolle-button size="icon" variant="destructive">
+              <i class="ri-more-2-fill"></i>
+            </tolle-button>
+            <tolle-button size="icon-sm" variant="secondary">
+              <i class="ri-more-2-fill"></i>
+            </tolle-button>
+            <tolle-button size="icon-xs">
+              <i class="ri-more-2-fill"></i>
+            </tolle-button>
+          </div>
+
+          <div *ngIf="basicTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+              </div>
+
+              <!-- Copy icon -->
+              <button (click)="baseService.copyTo(previewCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                <i class="ri-file-copy-line"></i>
+              </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group rounded-md overflow-hidden h-auto">
+              <app-base-editor [code]="previewCode" language="html" />
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </article>
+  </div>
+
+  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
+    <div class="sticky top-0 z-10 pb-4">
+      <p class="text-sm font-semibold text-foreground">On this page</p>
+    </div>
+
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Usage Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('installation')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Installation
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('basic')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Support
+        </a>
+      </li>
+    </ul>
+  </aside>
+</div>
