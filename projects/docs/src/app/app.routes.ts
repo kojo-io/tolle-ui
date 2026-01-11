@@ -48,6 +48,10 @@ export const routes: Routes = [
           {
             path: 'button-group',
             loadComponent: () => import('./components/button-group-docs/button-group-docs.component').then(m => m.ButtonGroupDocsComponent),
+          },
+          {
+            path: 'calendar',
+            loadComponent: () => import('./components/calendar-docs/calendar-docs.component').then(m => m.CalendarDocsComponent),
           }
         ]
       },
