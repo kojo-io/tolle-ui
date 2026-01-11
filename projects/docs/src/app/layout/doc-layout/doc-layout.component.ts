@@ -71,6 +71,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Button", url: "/components/button"},
         { title: "Button Group", url: "/components/button-group" },
         { title: "Calendar", url: "/components/calendar" },
+        { title: "Range Calendar", url: "/components/range-calendar" },
       ]
     }
   ];
