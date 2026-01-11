@@ -44,6 +44,10 @@ export const routes: Routes = [
           {
             path: 'button',
             loadComponent: () => import('./components/button-docs/button-docs.component').then(m => m.ButtonDocsComponent),
+          },
+          {
+            path: 'button-group',
+            loadComponent: () => import('./components/button-group-docs/button-group-docs.component').then(m => m.ButtonGroupDocsComponent),
           }
         ]
       },
