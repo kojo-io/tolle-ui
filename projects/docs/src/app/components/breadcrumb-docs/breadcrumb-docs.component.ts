@@ -40,10 +40,11 @@ export class BreadcrumbDocsComponent implements OnInit {
     { label: 'Code', value: 'code' }
   ];
 
-  installation = "import {BreadcrumbComponent} from '@tolle_/tolle-ui';\n" +
-    "import {BreadcrumbItemComponent} from '@tolle_/tolle-ui';\n" +
-    "import {BreadcrumbLinkComponent} from '@tolle_/tolle-ui';\n" +
-    "import {BreadcrumbSeparatorComponent} from '@tolle_/tolle-ui';\n" +
+  installation = "import {BreadcrumbComponent,\n" +
+    " BreadcrumbItemComponent,\n" +
+    " BreadcrumbItemComponent,\n" +
+    " BreadcrumbLinkComponent,\n" +
+    " BreadcrumbSeparatorComponent} from '@tolle_/tolle-ui';\n" +
     "\n" +
     "\n" +
     "imports: [\n" +
