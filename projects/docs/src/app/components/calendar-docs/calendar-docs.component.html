@@ -14,8 +14,9 @@
             <tolle-segment [items]="viewOptions" [(ngModel)]="selectedTab"/>
           </div>
 
-          <div *ngIf="selectedTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-wrap gap-4 justify-center items-center">
-            <tolle-calendar></tolle-calendar>
+          <div *ngIf="selectedTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
+            {{date}}
+            <tolle-calendar [(ngModel)]="date"></tolle-calendar>
           </div>
           <div *ngIf="selectedTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
             <!-- Header -->
@@ -75,8 +76,9 @@
           <div class="w-1/4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab"/>
           </div>
-          <div *ngIf="basicTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-wrap gap-4 justify-center items-center">
-            <tolle-calendar></tolle-calendar>
+          <div *ngIf="basicTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
+            {{ previewDate }}
+            <tolle-calendar [(ngModel)]="previewDate"></tolle-calendar>
           </div>
 
           <div *ngIf="basicTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
