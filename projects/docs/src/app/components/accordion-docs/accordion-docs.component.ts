@@ -63,8 +63,7 @@ export class AccordionDocsComponent implements OnInit {
     "  </tolle-accordion-item>\n" +
     "</tolle-accordion>";
 
-  installation = "import {AccordionItemComponent} from '@tolle_/tolle-ui';\n" +
-    "import {AccordionComponent} from '@tolle_/tolle-ui';\n" +
+  installation = "import {AccordionItemComponent, AccordionComponent} from '@tolle_/tolle-ui';\n" +
     "\n" +
     "\n" +
     "imports: [\n" +

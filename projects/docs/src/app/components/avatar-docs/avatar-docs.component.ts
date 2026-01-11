@@ -38,11 +38,12 @@ export class AvatarDocsComponent implements OnInit {
     { label: 'Code', value: 'code' }
   ];
 
-  installation = "import {AlertComponent} from '@tolle_/tolle-ui';\n" +
+  installation = "import {AvatarComponent, AvatarFallbackComponent} from '@tolle_/tolle-ui';\n" +
     "\n" +
     "\n" +
     "imports: [\n" +
-    "    AlertComponent,\n" +
+    "    AvatarComponent,\n" +
+    "    AvatarFallbackComponent,\n" +
     "  ]";
 
   componentBase = "<div class=\"flex gap-2 max-h-max\">\n" +
