@@ -56,6 +56,10 @@ export const routes: Routes = [
           {
             path: 'range-calendar',
             loadComponent: () => import('./components/calendar-range-docs/calendar-range-docs.component').then(m => m.CalendarRangeDocsComponent),
+          },
+          {
+            path: 'card',
+            loadComponent: () => import('./components/card-docs/card-docs.component').then(m => m.CardDocsComponent),
           }
         ]
       },
