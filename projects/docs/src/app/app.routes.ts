@@ -60,6 +60,10 @@ export const routes: Routes = [
           {
             path: 'card',
             loadComponent: () => import('./components/card-docs/card-docs.component').then(m => m.CardDocsComponent),
+          },
+          {
+            path: 'checkbox',
+            loadComponent: () => import('./components/check-box-docs/check-box-docs.component').then(m => m.CheckBoxDocsComponent),
           }
         ]
       },
