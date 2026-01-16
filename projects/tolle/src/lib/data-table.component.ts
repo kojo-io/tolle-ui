@@ -5,9 +5,13 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
-import {PaginationComponent} from './pagination.component';
-import {TolleCellDirective} from './tolle-cell.directive';
-import {InputComponent} from './input.component';
+import { PaginationComponent } from './pagination.component';
+import { TolleCellDirective } from './tolle-cell.directive';
+import { InputComponent } from './input.component';
+import { PopoverComponent } from './popover.component';
+import { PopoverContentComponent } from './popover-content.component';
+import {CheckboxComponent} from './checkbox.component';
+
 export interface TableColumn {
   key: string;
   label: string;
@@ -18,93 +22,111 @@ export interface TableColumn {
 @Component({
   selector: 'tolle-data-table',
   standalone: true,
-  imports: [CommonModule, FormsModule, PaginationComponent, InputComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PaginationComponent,
+    InputComponent,
+    PopoverComponent,
+    PopoverContentComponent,
+    CheckboxComponent,
+  ],
   template: `
     <div class="space-y-4">
-      <div *ngIf="searchable" class="flex items-center py-2">
-        <tolle-input
-          [size]="size === 'lg' ? 'default' : 'sm'"
-          class="max-w-sm"
-          placeholder="Filter records..."
-          [(ngModel)]="searchTerm"
-          (ngModelChange)="onSearch()">
-          <i prefix class="ri-search-line"></i>
-        </tolle-input>
+      <div class="flex items-center justify-between py-2">
+        <div *ngIf="searchable" class="w-full max-w-sm">
+          <tolle-input
+            [size]="size === 'lg' ? 'default' : 'sm'"
+            class="w-full"
+            placeholder="Filter records..."
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearch()">
+            <i prefix class="ri-search-line"></i>
+          </tolle-input>
+        </div>
+
+        <tolle-popover *ngIf="allowColumnHiding && showSettings">
+          <button trigger
+                  [class]="cn(
+              'ml-auto flex items-center gap-2 rounded-md border border-input bg-background px-3 hover:bg-accent hover:text-accent-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
+              size === 'xs' ? 'h-7 text-xs' : 'h-9 text-sm'
+            )">
+            <i class="ri-settings-3-line"></i>
+            View
+            <i class="ri-arrow-down-s-line ml-1 opacity-50"></i>
+          </button>
+          <tolle-popover-content class="w-56 p-0 bg-background border-border">
+            <div class="p-2 border-b border-border">
+              <p class="text-xs font-medium text-muted-foreground px-2">Toggle Columns</p>
+            </div>
+            <div class="p-2 max-h-[300px] overflow-y-auto space-y-1">
+              <label *ngFor="let col of columns" class="flex items-center gap-2 px-2 py-1.5 rounded-sm hover:bg-accent cursor-pointer text-sm transition-colors">
+                <tolle-checkbox [ngModel]="columnVisibility[col.key]"
+                                (ngModelChange)="toggleColumn(col.key)"/>
+                <span>{{ col.label }}</span>
+              </label>
+            </div>
+          </tolle-popover-content>
+        </tolle-popover>
       </div>
 
-      <div class="rounded-md border border-border overflow-hidden shadow-sm">
+      <div class="rounded-md border border-border overflow-hidden shadow-sm bg-background">
         <table class="w-full text-sm">
-          <thead class="border-b bg-muted/30">
-            <tr>
-              <th *ngIf="expandable" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]')"></th>
-              <th *ngFor="let col of columns"
-                  [class]="cn(
-                  'font-medium text-muted-foreground transition-all',
-                  headerPaddingClass,
-                  fontSizeClass,
-                  col.class
-                )">
-                <div *ngIf="col.sortable; else simpleHeader" (click)="toggleSort(col.key)" class="flex items-center gap-1 cursor-pointer hover:text-foreground">
-                  {{ col.label }}
-                  <i [class]="getSortIcon(col.key)"></i>
-                </div>
-                <ng-template #simpleHeader>{{ col.label }}</ng-template>
-              </th>
-            </tr>
+          <thead class="border-b border-border bg-background">
+          <tr>
+            <th *ngIf="expandable" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]')"></th>
+            <th *ngFor="let col of activeColumns"
+                [class]="cn('font-medium text-foreground text-left transition-all', headerPaddingClass, fontSizeClass, col.class)">
+              <div *ngIf="col.sortable; else simpleHeader" (click)="toggleSort(col.key)" class="flex items-center gap-1 cursor-pointer hover:text-foreground group select-none">
+                {{ col.label }}
+                <i [class]="cn('transition-opacity', getSortIcon(col.key))"></i>
+              </div>
+              <ng-template #simpleHeader>{{ col.label }}</ng-template>
+            </th>
+          </tr>
           </thead>
           <tbody class="divide-y divide-border">
-            <ng-container *ngFor="let row of pagedData; let i = index">
-              <tr class="hover:bg-muted/50 transition-colors">
-                <td *ngIf="expandable" class="px-4">
-                  <button (click)="toggleRow(i)"
-                          [class]="cn(
-                      'flex items-center justify-center rounded-md hover:bg-accent text-muted-foreground hover:text-foreground',
-                      size === 'xs' ? 'h-6 w-6' : 'h-8 w-8'
-                    )">
-                    <i [class]="expandedRows.has(i) ? 'ri-arrow-down-s-line' : 'ri-arrow-right-s-line'"></i>
-                  </button>
-                </td>
-
-                <td *ngFor="let col of columns"
-                    [class]="cn(
-                    'align-middle transition-all',
-                    cellPaddingClass,
-                    fontSizeClass,
-                    col.class
-                  )">
-                  <ng-container *ngIf="getTemplate(col.key) as cell; else defaultValue">
-                    <ng-container *ngTemplateOutlet="cell.template; context: { $implicit: row[col.key], row: row }"></ng-container>
+          <ng-container *ngFor="let row of pagedData; let i = index">
+            <tr class="hover:bg-muted/50 transition-colors">
+              <td *ngIf="expandable" class="px-4">
+                <button (click)="toggleRow(i)"
+                        [class]="cn('flex items-center justify-center rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors', size === 'xs' ? 'h-6 w-6' : 'h-8 w-8')">
+                  <i [class]="expandedRows.has(i) ? 'ri-arrow-down-s-line' : 'ri-arrow-right-s-line'"></i>
+                </button>
+              </td>
+              <td *ngFor="let col of activeColumns" [class]="cn('align-middle transition-all', cellPaddingClass, fontSizeClass, col.class)">
+                <ng-container *ngIf="getTemplate(col.key) as cell; else defaultValue">
+                  <ng-container *ngTemplateOutlet="cell.template; context: { $implicit: row[col.key], row: row }"></ng-container>
+                </ng-container>
+                <ng-template #defaultValue><span class="text-foreground">{{ row[col.key] }}</span></ng-template>
+              </td>
+            </tr>
+            <tr *ngIf="expandedRows.has(i)" class="bg-muted/10">
+              <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)" class="p-0">
+                <div class="p-6 border-b border-dashed border-border">
+                  <ng-container *ngIf="expandedTemplate; else defaultExpanded">
+                    <ng-container *ngTemplateOutlet="expandedTemplate; context: { row: row }"></ng-container>
                   </ng-container>
-                  <ng-template #defaultValue>
-                    <span class="text-foreground">{{ row[col.key] }}</span>
-                  </ng-template>
-                </td>
-              </tr>
-
-              <tr *ngIf="expandedRows.has(i)" class="bg-muted/10">
-                <td [attr.colspan]="columns.length + (expandable ? 1 : 0)" class="p-0">
-                   <div class="p-6 border-b border-dashed border-border">
-                      <ng-container *ngIf="expandedTemplate; else defaultExpanded">
-                        <ng-container *ngTemplateOutlet="expandedTemplate; context: { row: row }"></ng-container>
-                      </ng-container>
-                      <ng-template #defaultExpanded>
-                        <div class="text-xs text-muted-foreground italic">No details available.</div>
-                      </ng-template>
-                   </div>
-                </td>
-              </tr>
-            </ng-container>
+                  <ng-template #defaultExpanded><div class="text-xs text-muted-foreground italic">No details available.</div></ng-template>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+          <tr *ngIf="pagedData.length === 0" class="h-24">
+            <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)" class="text-center text-muted-foreground">No results found.</td>
+          </tr>
           </tbody>
         </table>
       </div>
 
       <tolle-pagination
-        *ngIf="paginate"
+        *ngIf="paginate && filteredData.length > 0"
         [totalRecords]="filteredData.length"
+        [pageSizeOptions]="pageSizeOptions"
         [currentPage]="currentPage"
         [currentPageSize]="pageSize"
-        (onPageNumberChange)="updatePage()"
-        (onPageSizeChange)="updatePage()"
+        (onPageNumberChange)="handlePageChange($event)"
+        (onPageSizeChange)="handlePageSizeChange($event)"
       ></tolle-pagination>
     </div>
   `
@@ -114,30 +136,25 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() columns: TableColumn[] = [];
   @Input() searchable = true;
   @Input() paginate = true;
+  @Input() pageSizeOptions: number[] = []
   @Input() pageSize = 10;
   @Input() expandable = false;
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
 
-  // --- NEW INPUTS FOR COLUMN HIDING ---
+  // --- Column Hiding Settings ---
   @Input() allowColumnHiding = true;
-  @Input() showSettings = true; // Set to false to hide the gear icon/menu entirely
+  @Input() showSettings = true;
 
-  // Track visibility state: { 'columnKey': true/false }
+  // Track visibility state
   columnVisibility: Record<string, boolean> = {};
-  showColumnMenu = false;
 
-  // Filter columns based on visibility state
+  // Filters columns based on visibility state
   get activeColumns() {
     return this.columns.filter(col => this.columnVisibility[col.key]);
   }
 
-  // Track which rows are open
   expandedRows = new Set<number>();
-
-  // Use ContentChildren to grab the tolleCell templates from the user's HTML
   @ContentChildren(TolleCellDirective) cellTemplates!: QueryList<TolleCellDirective>;
-
-  // Keep this as an Input for the main expansion slot
   @Input() expandedTemplate?: TemplateRef<any>;
 
   filteredData: any[] = [];
@@ -147,17 +164,16 @@ export class DataTableComponent implements OnInit, OnChanges {
   sortKey = '';
   sortDir: 'asc' | 'desc' | null = null;
 
-  // 2. Map Size to Padding for Cells
+  // Style Getters
   get cellPaddingClass(): string {
     switch (this.size) {
-      case 'xs': return 'p-1 px-4';    // Ultra-compact
-      case 'sm': return 'p-2 px-4';    // Dense
-      case 'lg': return 'p-6 px-4';    // Spacious
-      default:   return 'p-4';         // Standard (16px)
+      case 'xs': return 'p-1 px-4';
+      case 'sm': return 'p-2 px-4';
+      case 'lg': return 'p-6 px-4';
+      default:   return 'p-4';
     }
   }
 
-  // 3. Map Size to Padding for Header (usually slightly shorter than cells)
   get headerPaddingClass(): string {
     switch (this.size) {
       case 'xs': return 'h-7 px-4';
@@ -167,7 +183,6 @@ export class DataTableComponent implements OnInit, OnChanges {
     }
   }
 
-  // 4. Map Size to Font Sizes
   get fontSizeClass(): string {
     switch (this.size) {
       case 'xs': return 'text-[11px]';
@@ -179,33 +194,53 @@ export class DataTableComponent implements OnInit, OnChanges {
 
   protected cn = cn;
 
-  ngOnInit() { this.refreshTable(); }
+  ngOnInit() {
+    this.initializeVisibility();
+    this.refreshTable();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['data']) { this.refreshTable(); }
-    if (changes['columns']) { this.initializeVisibility(); }
+    if (changes['data'] && !changes['data'].firstChange) {
+      this.currentPage = 1; // Reset to page 1 when data changes
+      this.refreshTable();
+    }
+    if (changes['columns']) {
+      this.initializeVisibility();
+    }
   }
 
   private initializeVisibility() {
-    // Default all columns to visible if not already set
     this.columns.forEach(col => {
+      // Only set true if undefined, preserves user selection on other data refreshes
       if (this.columnVisibility[col.key] === undefined) {
         this.columnVisibility[col.key] = true;
       }
     });
   }
 
-  // --- Search & Sort & Page Logic ---
-  // (Your existing implementation of applySearch, applySort, and updatePage goes here)
-  refreshTable() { this.applySearch(); this.applySort(); this.updatePage(); }
-  onSearch() { this.currentPage = 1; this.refreshTable(); }
+  refreshTable() {
+    this.applySearch();
+    this.applySort();
+    this.updatePage();
+  }
+  onSearch() {
+    this.currentPage = 1;
+    this.refreshTable();
+  }
 
+  // Toggle function used by the checkbox in popover
   toggleColumn(key: string) {
     this.columnVisibility[key] = !this.columnVisibility[key];
+    // No explicit refresh needed as the getter 'activeColumns' will automatically re-evaluate
+    // when change detection runs after the click event.
   }
 
   private applySearch() {
-    if (!this.searchTerm) { this.filteredData = [...this.data]; return; }
+    if (!this.searchTerm) {
+      this.filteredData =
+        [...this.data];
+      return;
+    }
     const q = this.searchTerm.toLowerCase();
     this.filteredData = this.data.filter(row =>
       Object.values(row).some(val => String(val).toLowerCase().includes(q))
@@ -222,32 +257,64 @@ export class DataTableComponent implements OnInit, OnChanges {
     });
   }
 
+  handlePageChange(newPage: number) {
+    console.log('Page Change Event Triggered:', newPage); // <--- Add this
+    this.currentPage = newPage;
+    this.updatePage();
+  }
+
+  handlePageSizeChange(newSize: number) {
+    if (newSize !== this.pageSize) {
+      this.pageSize = newSize;
+      this.currentPage = 1; // Reset to page 1 when size changes
+      this.updatePage();
+    }
+  }
+
   updatePage() {
-    if (!this.paginate) { this.pagedData = this.filteredData; return; }
+    if (!this.paginate) {
+      this.pagedData = this.filteredData;
+      return;
+    }
+
     const start = (this.currentPage - 1) * this.pageSize;
     const end = start + this.pageSize;
+
+    // Safety check if current page is out of bounds after filtering
+    if (start >= this.filteredData.length && this.currentPage > 1) {
+      this.currentPage = 1;
+      this.updatePage();
+      return;
+    }
+
     this.pagedData = this.filteredData.slice(start, end);
   }
 
-  // --- Helpers ---
   toggleSort(key: string) {
     if (this.sortKey === key) {
       this.sortDir = this.sortDir === 'asc' ? 'desc' : this.sortDir === 'desc' ? null : 'asc';
-    } else { this.sortKey = key; this.sortDir = 'asc'; }
+    } else {
+      this.sortKey = key;
+      this.sortDir = 'asc';
+    }
+    this.currentPage = 1; // Reset to page 1 when sorting
     this.refreshTable();
   }
 
   getSortIcon(key: string) {
-    if (this.sortKey !== key || !this.sortDir) return 'ri-arrow-up-down-line opacity-30';
-    return this.sortDir === 'asc' ? 'ri-arrow-up-line' : 'ri-arrow-down-line';
+    if (this.sortKey !== key || !this.sortDir) return 'ri-expand-up-down-line opacity-20'; // Changed icon for inactive state
+    return this.sortDir === 'asc' ? 'ri-arrow-up-line text-foreground' : 'ri-arrow-down-line text-foreground';
   }
 
   toggleRow(index: number) {
-    if (this.expandedRows.has(index)) this.expandedRows.delete(index);
-    else this.expandedRows.add(index);
+    if (this.expandedRows.has(index)) {
+      this.expandedRows.delete(index);
+    }
+    else {
+      this.expandedRows.add(index);
+    }
   }
 
-  // Helper to find the right cell template
   getTemplate(key: string): TolleCellDirective | undefined {
     return this.cellTemplates?.find(t => t.name === key);
   }

@@ -1,0 +1,9 @@
+<tolle-data-table [columns]="columns"
+                  [searchable]="false"
+                  [data]="users"
+                  [allowColumnHiding]="true"
+                  [paginate]="false">
+  <ng-template tolleCell="actions" let-row="row">
+    <tolle-button size="xs">Edit</tolle-button>
+  </ng-template>
+</tolle-data-table>

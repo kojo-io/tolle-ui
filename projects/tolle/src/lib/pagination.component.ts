@@ -117,6 +117,9 @@ export class PaginationComponent implements OnInit, OnChanges {
   navBtnClass = 'h-8 w-8 p-0 flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed';
 
   ngOnInit(): void {
+    if (this.pageSizeOptions.length === 0) {
+      this.pageSizeOptions = [10, 20, 30, 50];
+    }
     this.initializePagination();
   }
 
