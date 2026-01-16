@@ -74,6 +74,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Range Calendar", url: "/components/range-calendar" },
         { title: "Card", url: "/components/card" },
         { title: "Checkbox", url: "/components/checkbox" },
+        { title: "Data Table", url: "/components/data-table" },
       ]
     }
   ];
