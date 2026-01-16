@@ -64,6 +64,10 @@ export const routes: Routes = [
           {
             path: 'checkbox',
             loadComponent: () => import('./components/check-box-docs/check-box-docs.component').then(m => m.CheckBoxDocsComponent),
+          },
+          {
+            path: 'data-table',
+            loadComponent: () => import('./components/data-table-docs/data-table-docs.component').then(m => m.DataTableDocsComponent),
           }
         ]
       },

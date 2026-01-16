@@ -219,6 +219,11 @@
               {
                 "glob": "**/*",
                 "input": "projects/docs/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/docs/src/app/docs-examples",
+                "output": "/source-code"
               }
             ],
             "styles": [
