@@ -1,0 +1,54 @@
+<div class="flex w-full h-full">
+  <div class="flex-1 h-full overflow-auto no-scrollbar">
+    <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
+      <app-base-picker id="overview"/>
+
+      <app-date-pick-doc/>
+
+      <app-month-pick-doc id="month" />
+
+      <app-year-pick-doc id="year" />
+    </article>
+  </div>
+
+  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
+    <div class="sticky top-0 z-10 pb-4">
+      <p class="text-sm font-semibold text-foreground">On this page</p>
+    </div>
+
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Usage Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Date Picker
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('month')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Month Picker
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('year')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Year Picker
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Support
+        </a>
+      </li>
+    </ul>
+  </aside>
+</div>
