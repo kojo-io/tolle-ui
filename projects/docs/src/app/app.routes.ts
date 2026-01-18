@@ -68,6 +68,10 @@ export const routes: Routes = [
           {
             path: 'data-table',
             loadComponent: () => import('./components/data-table-docs/data-table-docs.component').then(m => m.DataTableDocsComponent),
+          },
+          {
+            path: 'date-picker',
+            loadComponent: () => import('./components/date-picker-docs/date-picker-docs.component').then(m => m.DatePickerDocsComponent),
           }
         ]
       },

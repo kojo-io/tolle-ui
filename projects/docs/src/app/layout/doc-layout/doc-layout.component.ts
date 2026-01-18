@@ -75,6 +75,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Card", url: "/components/card" },
         { title: "Checkbox", url: "/components/checkbox" },
         { title: "Data Table", url: "/components/data-table" },
+        { title: "Date Picker", url: "/components/date-picker" },
       ]
     }
   ];
