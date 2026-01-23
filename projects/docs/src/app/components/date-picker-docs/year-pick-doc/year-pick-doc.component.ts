@@ -1,13 +1,13 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {BaseService} from '../../../shared/base.service';
-import {SourceCodeService} from '../../../shared/source-code.service';
-import {Observable} from 'rxjs';
-import {AsyncPipe, NgIf} from '@angular/common';
-import {BaseEditorComponent} from '../../../shared/base-editor/base-editor.component';
-import {MonthPickerComponent} from '../../../docs-examples/date-picker/month-picker/month-picker.component';
-import {SegmentedComponent} from '../../../../../../tolle/src/lib/segment.component';
-import {FormsModule} from '@angular/forms';
-import {YearPickerComponent} from '../../../docs-examples/date-picker/year-picker/year-picker.component';
+import { Component, inject, OnInit } from '@angular/core';
+import { BaseService } from '../../../shared/base.service';
+import { SourceCodeService } from '../../../shared/source-code.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { MonthPickerComponent } from '../../../docs-examples/date-picker/month-picker/month-picker.component';
+import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
+import { FormsModule } from '@angular/forms';
+import { YearPickerComponent } from '../../../docs-examples/date-picker/year-picker/year-picker.component';
 
 @Component({
   selector: 'app-year-pick-doc',
@@ -15,7 +15,6 @@ import {YearPickerComponent} from '../../../docs-examples/date-picker/year-picke
   imports: [
     AsyncPipe,
     BaseEditorComponent,
-    MonthPickerComponent,
     NgIf,
     SegmentedComponent,
     FormsModule,

@@ -1,21 +1,19 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {BaseService} from '../../shared/base.service';
-import {AnalyticsService} from '../../analytics.service';
-import {BaseEditorComponent} from '../../shared/base-editor/base-editor.component';
-import { NgIf} from '@angular/common';
-import {SegmentedComponent} from '../../../../../tolle/src/lib/segment.component';
-import {FormsModule} from '@angular/forms';
-import {CalendarComponent} from '../../../../../tolle/src/lib/calendar.component';
+import { Component, inject, OnInit } from '@angular/core';
+import { AnalyticsService } from '../../analytics.service';
+import { BaseService } from '../../shared/base.service';
+import { CalendarOverviewComponent } from './calendar-overview/calendar-overview.component';
+import { CalendarInteractiveComponent } from './calendar-interactive/calendar-interactive.component';
+import { CalendarExamplesComponent } from './calendar-examples/calendar-examples.component';
+import { CalendarApiComponent } from './calendar-api/calendar-api.component';
 
 @Component({
   selector: 'app-calendar-docs',
   standalone: true,
   imports: [
-    BaseEditorComponent,
-    NgIf,
-    SegmentedComponent,
-    FormsModule,
-    CalendarComponent
+    CalendarOverviewComponent,
+    CalendarInteractiveComponent,
+    CalendarExamplesComponent,
+    CalendarApiComponent
   ],
   templateUrl: './calendar-docs.component.html',
   styleUrl: './calendar-docs.component.css'
@@ -23,26 +21,8 @@ import {CalendarComponent} from '../../../../../tolle/src/lib/calendar.component
 export class CalendarDocsComponent implements OnInit {
   baseService = inject(BaseService);
   analytics = inject(AnalyticsService);
-  date: any;
-  previewDate: any;
 
   ngOnInit(): void {
     this.analytics.init();
   }
-  selectedTab = "preview";
-  basicTab = "preview";
-  viewOptions = [
-    { label: 'Preview', value: 'preview' },
-    { label: 'Code', value: 'code' }
-  ];
-
-  installation = "import {CalendarComponent} from '@tolle_/tolle-ui';\n" +
-    "\n" +
-    "\n" +
-    "imports: [\n" +
-    "    CalendarComponent,\n" +
-    "  ]";
-
-
-  previewCode = "<tolle-calendar></tolle-calendar>";
 }

@@ -1,271 +1,78 @@
 <div class="flex w-full h-full">
-  <div class="flex-1 h-full overflow-auto no-scrollbar">
+  <div class="flex-1 h-full overflow-auto no-scrollbar pb-20">
     <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
-      <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
-        <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
-          Data Table
-        </h1>
-        <div class="space-y-4">
-          <p>
-            A component for displaying and organizing data in a tabular format.
-          </p>
 
-          <div class="w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="selectedTab"/>
-          </div>
+      <app-data-table-overview id="overview" />
 
-          <div *ngIf="selectedTab === 'preview'" class="p-4 rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
-            <div class="w-full">
-              <app-data-table-standard/>
-            </div>
-          </div>
-          <div *ngIf="selectedTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <div class="w-1/4 p-2">
-              <tolle-segment [items]="standardCodeViewOptions" [(ngModel)]="standardCode"/>
-            </div>
-            <!-- Header -->
-            <ng-container *ngIf="standardCode === 'html'">
-              <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                  <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                  <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                  <span class="w-3 h-3 rounded-full bg-red-600"></span>
-                </div>
+      <!-- <app-data-table-interactive id="playground" /> -->
 
-                <!-- Copy icon -->
-                <div *ngIf="standardHtmlCode$ | async as code">
-                  <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                    <i class="ri-file-copy-line"></i>
-                  </button>
-                </div>
-              </div>
+      <app-data-table-basic id="basic-table" />
 
-              <!-- Body -->
-              <div class="relative group rounded-md overflow-hidden h-auto">
-                <app-base-editor [code]="(standardHtmlCode$ | async) ?? ''" language="html" />
-              </div>
-            </ng-container>
-            <ng-container *ngIf="standardCode === 'typescript'">
-              <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                  <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                  <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                  <span class="w-3 h-3 rounded-full bg-red-600"></span>
-                </div>
-
-                <!-- Copy icon -->
-                <div *ngIf="standardJsCode$ | async as code">
-                  <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                    <i class="ri-file-copy-line"></i>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Body -->
-              <div class="relative group rounded-md overflow-hidden h-auto">
-                <app-base-editor [code]="(standardJsCode$ | async) ?? ''" language="javascript" />
-              </div>
-            </ng-container>
-          </div>
-        </div>
-      </header>
-
-      <section class="mb-16" id="prerequisite">
-        <h2 class="text-2xl font-bold  mb-6 flex items-center">
-          Prerequisites
-        </h2>
-        <p class="mb-6">
-          To use the data table, you’ll need to prepare your data in a structured format. Below is an example of how the data should look:
-        </p>
-
-        <div class="space-y-4">
-          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <div *ngIf="prerequisiteCode$ | async as code">
-                <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                  <i class="ri-file-copy-line"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="(prerequisiteCode$ | async) ?? ''" language="javascript" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="mb-16" id="column-def">
-        <h2 class="text-2xl font-bold  mb-6 flex items-center">
-          Column Definition
-        </h2>
-        <p class="mb-6">
-          Columns define the core structure of your table. They determine which data is displayed and how it is formatted, sorted, and filtered.
-        </p>
-
-        <div class="space-y-4">
-          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <div *ngIf="columDefCode$ | async as code">
-                <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                  <i class="ri-file-copy-line"></i>
-                </button>
-              </div>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="(columDefCode$ | async) ?? ''" language="javascript" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="mb-16" id="basic-table">
-        <h2 class="text-2xl font-bold  mb-6 flex items-center">
-          Basic Table
-        </h2>
-
-        <div class="space-y-4">
-          <div class="w-1/4">
-            <tolle-segment [items]="basicViewOptions" [(ngModel)]="basicTab"/>
-          </div>
-
-          <div *ngIf="basicTab === 'preview'" class="p-4 rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
-            <div class="w-full">
-              <app-base-table/>
-            </div>
-          </div>
-          <div *ngIf="basicTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <div class="w-1/4 p-2">
-              <tolle-segment [items]="basicCodeViewOptions" [(ngModel)]="basicCode"/>
-            </div>
-            <!-- Header -->
-            <ng-container *ngIf="basicCode === 'html'">
-              <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                  <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                  <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                  <span class="w-3 h-3 rounded-full bg-red-600"></span>
-                </div>
-
-                <!-- Copy icon -->
-                <div *ngIf="basicHtmlCode$ | async as code">
-                  <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                    <i class="ri-file-copy-line"></i>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Body -->
-              <div class="relative group rounded-md overflow-hidden h-auto">
-                <app-base-editor [code]="(basicHtmlCode$ | async) ?? ''" language="html" />
-              </div>
-            </ng-container>
-            <ng-container *ngIf="basicCode === 'typescript'">
-              <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                  <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                  <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                  <span class="w-3 h-3 rounded-full bg-red-600"></span>
-                </div>
-
-                <!-- Copy icon -->
-                <div *ngIf="basicJsCode$ | async as code">
-                  <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                    <i class="ri-file-copy-line"></i>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Body -->
-              <div class="relative group rounded-md overflow-hidden h-auto">
-                <app-base-editor [code]="(basicJsCode$ | async) ?? ''" language="javascript" />
-              </div>
-            </ng-container>
-          </div>
-        </div>
-      </section>
-
-<!--      Column hiding-->
       <app-column-hiding-docs id="column-hiding" />
 
-<!--      Pagination-->
-      <app-pagination-docs id="pagination"/>
+      <app-pagination-docs id="pagination" />
 
-<!--      searchable-->
-      <app-searchable-docs id="searchable"/>
+      <app-searchable-docs id="searchable" />
+
+      <app-data-table-api id="api-reference" />
+
     </article>
   </div>
 
-  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
+  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56 text-foreground">
     <div class="sticky top-0 z-10 pb-4">
-      <p class="text-sm font-semibold text-foreground">On this page</p>
+      <p class="text-sm font-semibold">On this page</p>
     </div>
 
     <ul class="flex flex-col gap-2 text-sm">
       <li>
-        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
           Overview
         </a>
       </li>
-      <li>
-        <a (click)="baseService.scrollTo('prerequisite')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Prerequisite
+      <!-- <li>
+        <a (click)="baseService.scrollTo('playground')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Playground
         </a>
-      </li>
-      <li>
-        <a (click)="baseService.scrollTo('column-def')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Column Definition
-        </a>
-      </li>
+      </li> -->
       <li class="flex flex-col gap-2">
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        <a (click)="baseService.scrollTo('basic-table')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
           Usage Examples
         </a>
         <ul class="flex flex-col gap-2 text-sm ml-4">
           <li>
-            <a (click)="baseService.scrollTo('basic-table')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            <a (click)="baseService.scrollTo('basic-table')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
               Basic Table
             </a>
           </li>
           <li>
-            <a (click)="baseService.scrollTo('column-hiding')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Table Column Hiding
+            <a (click)="baseService.scrollTo('column-hiding')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Column Hiding
             </a>
           </li>
           <li>
-            <a (click)="baseService.scrollTo('pagination')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Table Pagination
+            <a (click)="baseService.scrollTo('pagination')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Pagination
             </a>
           </li>
           <li>
-            <a (click)="baseService.scrollTo('searchable')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Table Search
+            <a (click)="baseService.scrollTo('searchable')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Search
             </a>
           </li>
         </ul>
       </li>
       <li>
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Support
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
         </a>
       </li>
     </ul>

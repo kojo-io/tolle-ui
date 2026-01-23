@@ -1,0 +1,31 @@
+<section class="mb-16">
+    <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
+    <app-playground [code]="playgroundCode">
+        <div preview class="w-full">
+            <tolle-accordion [type]="playgroundType">
+                <tolle-accordion-item title="Is it accessible?">
+                    Yes. It adheres to the WAI-ARIA design pattern.
+                </tolle-accordion-item>
+                <tolle-accordion-item title="Is it styled?">
+                    Yes. It comes with default styles that match the other components' aesthetic.
+                </tolle-accordion-item>
+                <tolle-accordion-item title="Is it animated?">
+                    Yes. It features smooth open/close animations.
+                </tolle-accordion-item>
+            </tolle-accordion>
+        </div>
+
+        <div controls class="space-y-4">
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Type</label>
+                <tolle-select [(ngModel)]="playgroundType" size="sm">
+                    <tolle-select-item value="single">Single</tolle-select-item>
+                    <tolle-select-item value="multiple">Multiple</tolle-select-item>
+                </tolle-select>
+                <p class="text-xs text-muted-foreground px-1">
+                    Single mode allows only one item open at a time. Multiple allows many.
+                </p>
+            </div>
+        </div>
+    </app-playground>
+</section>

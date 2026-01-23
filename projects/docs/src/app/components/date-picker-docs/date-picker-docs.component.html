@@ -1,52 +1,68 @@
 <div class="flex w-full h-full">
-  <div class="flex-1 h-full overflow-auto no-scrollbar">
+  <div class="flex-1 h-full overflow-auto no-scrollbar pb-20">
     <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
-      <app-base-picker id="overview"/>
+      <app-date-picker-overview id="overview" />
 
-      <app-date-pick-doc/>
+      <app-date-picker-interactive id="playground" />
+
+      <app-date-pick-doc id="basic" />
 
       <app-month-pick-doc id="month" />
 
       <app-year-pick-doc id="year" />
+
+      <app-date-picker-api id="api-reference" />
     </article>
   </div>
 
-  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
+  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56 text-foreground">
     <div class="sticky top-0 z-10 pb-4">
-      <p class="text-sm font-semibold text-foreground">On this page</p>
+      <p class="text-sm font-semibold">On this page</p>
     </div>
 
     <ul class="flex flex-col gap-2 text-sm">
       <li>
-        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
           Overview
         </a>
       </li>
+      <li>
+        <a (click)="baseService.scrollTo('playground')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Playground
+        </a>
+      </li>
       <li class="flex flex-col gap-2">
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        <a (click)="baseService.scrollTo('basic')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
           Usage Examples
         </a>
         <ul class="flex flex-col gap-2 text-sm ml-4">
           <li>
-            <a (click)="baseService.scrollTo('basic')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
               Date Picker
             </a>
           </li>
           <li>
-            <a (click)="baseService.scrollTo('month')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            <a (click)="baseService.scrollTo('month')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
               Month Picker
             </a>
           </li>
           <li>
-            <a (click)="baseService.scrollTo('year')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            <a (click)="baseService.scrollTo('year')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
               Year Picker
             </a>
           </li>
         </ul>
       </li>
       <li>
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Support
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
         </a>
       </li>
     </ul>

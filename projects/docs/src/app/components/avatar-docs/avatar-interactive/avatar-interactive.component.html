@@ -1,0 +1,38 @@
+<section class="mb-16" id="playground">
+    <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
+    <app-playground [code]="playgroundCode">
+        <div preview>
+            <tolle-avatar [src]="src" [size]="size" [shape]="shape">
+                <tolle-avatar-fallback>JD</tolle-avatar-fallback>
+            </tolle-avatar>
+        </div>
+
+        <div controls class="space-y-4">
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Size</label>
+                <tolle-select [(ngModel)]="size" size="sm">
+                    <tolle-select-item value="sm">Small</tolle-select-item>
+                    <tolle-select-item value="default">Default</tolle-select-item>
+                    <tolle-select-item value="lg">Large</tolle-select-item>
+                    <tolle-select-item value="xl">Extra Large</tolle-select-item>
+                </tolle-select>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Shape</label>
+                <tolle-select [(ngModel)]="shape" size="sm">
+                    <tolle-select-item value="circle">Circle</tolle-select-item>
+                    <tolle-select-item value="square">Square</tolle-select-item>
+                </tolle-select>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Source URL</label>
+                <input type="text" [(ngModel)]="src"
+                    class="w-full px-3 py-1 text-sm border border-slate-200 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-primary h-8"
+                    placeholder="Image URL" />
+                <p class="text-xs text-muted-foreground">Clear the URL to see the fallback state.</p>
+            </div>
+        </div>
+    </app-playground>
+</section>

@@ -1,523 +1,19 @@
 <div class="flex w-full h-full">
-  <div class="flex-1 h-full overflow-auto no-scrollbar">
+  <div class="flex-1 h-full overflow-auto no-scrollbar pb-20">
     <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
-      <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
-        <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
-          Avatar
-        </h1>
-        <div class="space-y-4">
-          <p>
-            An image component with a fallback used to represent a user.
-          </p>
 
-          <div class="w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="selectedTab"/>
-          </div>
-          <div *ngIf="selectedTab === 'preview'" class="p-20 rounded-lg bg-background flex justify-center">
-            <div class="flex gap-2 max-h-max">
-              <tolle-avatar src="https://github.com/nutlope.png" alt="User Name">
-                <tolle-avatar-fallback>JD</tolle-avatar-fallback>
-              </tolle-avatar>
+      <app-avatar-overview id="overview" />
 
-              <tolle-avatar size="lg">
-                <tolle-avatar-fallback>
-                  <i class="ri-user-line text-2xl"></i>
-                </tolle-avatar-fallback>
-              </tolle-avatar>
+      <app-avatar-interactive id="playground" />
 
-              <div class="flex -space-x-4">
-                <tolle-avatar src="https://github.com/nutlope.png" class="ring-2 ring-primary-500 bg-popover"></tolle-avatar>
-                <tolle-avatar src="https://github.com/nutlope.png" class="ring-2 ring-primary-500 bg-popover"></tolle-avatar>
-                <tolle-avatar src="https://github.com/nutlope.png" class="ring-2 ring-primary-500 bg-popover"></tolle-avatar>
-                <tolle-avatar class="ring-2 ring-primary-500 bg-popover">
-                  <tolle-avatar-fallback>+5</tolle-avatar-fallback>
-                </tolle-avatar>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="selectedTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
+      <app-avatar-examples id="examples" />
 
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(componentBase)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
+      <app-avatar-api id="api-reference" />
 
-            <!-- Body -->
-            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="componentBase" language="html" />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold  mb-6 flex items-center">
-          Usage
-        </h2>
-
-        <div class="space-y-4">
-          <h2 class="text-xl font-bold  mb-6 flex items-center" id="installation">
-            Installation
-          </h2>
-
-          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(installation)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="installation" language="javascript" />
-            </div>
-          </div>
-          <p id="basic">
-            Basic
-          </p>
-          <div class="w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="singleUsage"/>
-          </div>
-          <div *ngIf="singleUsage === 'preview'" class="p-20 rounded-lg bg-background flex justify-center">
-            <div class="flex gap-2 max-h-max">
-              <tolle-avatar src="https://github.com/nutlope.png" alt="User Name">
-                <tolle-avatar-fallback>JD</tolle-avatar-fallback>
-              </tolle-avatar>
-
-              <tolle-avatar size="lg">
-                <tolle-avatar-fallback>
-                  <i class="ri-user-line text-2xl"></i>
-                </tolle-avatar-fallback>
-              </tolle-avatar>
-
-              <div class="flex -space-x-4">
-                <tolle-avatar src="https://github.com/nutlope.png" class="ring-2 ring-primary-500 bg-popover"></tolle-avatar>
-                <tolle-avatar src="https://github.com/nutlope.png" class="ring-2 ring-primary-500 bg-popover"></tolle-avatar>
-                <tolle-avatar src="https://github.com/nutlope.png" class="ring-2 ring-primary-500 bg-popover"></tolle-avatar>
-                <tolle-avatar class="ring-2 ring-primary-500 bg-popover">
-                  <tolle-avatar-fallback>+5</tolle-avatar-fallback>
-                </tolle-avatar>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="singleUsage === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(componentBase)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="componentBase" language="html" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold  mb-6 flex items-center">
-          Style Override
-        </h2>
-
-        <div class="space-y-4" id="component-style-override">
-          <h2 class="text-xl font-bold  mb-6 flex items-center">
-            Avatar Component Style Override
-          </h2>
-
-          <div class="max-w-max">
-            <tolle-segment [items]="componentViewOptions" [(ngModel)]="componentExampleOverride"/>
-          </div>
-          <div *ngIf="componentExampleOverride === 'avatar-component-override'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(avatarOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="avatarOverride" language="css" />
-            </div>
-          </div>
-          <div *ngIf="componentExampleOverride === 'override-example-tailwind'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(exampleOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="exampleOverride" language="css" />
-            </div>
-          </div>
-
-          <h2 class="text-xl font-bold  mb-6 flex items-center">
-            Avatar Component Style Reference
-          </h2>
-          <table class="w-full text-left text-sm">
-            <thead class="bg-neutral-50 dark:bg-transparent border-b border-neutral-200">
-            <tr>
-              <th class="px-6 py-3 font-semibold">Component Area</th>
-              <th class="px-6 py-3 font-semibold">Selector</th>
-              <th class="px-6 py-3 font-semibold">What It Targets</th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-neutral-200 bg-white dark:bg-transparent">
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Host Element
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                The component host element with size, shape, and layout styles
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Small Size
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar[size="sm"]</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                8×8 pixels with extra-small text
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Default Size
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar[size="default"]</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                10×10 pixels (default size)
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Large Size
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar[size="lg"]</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                16×16 pixels with large text
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Extra Large Size
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar[size="xl"]</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                24×24 pixels with extra-large text
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Circle Shape
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar[shape="circle"]</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Circular avatar with rounded-full
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Square Shape
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar[shape="square"]</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Square avatar with rounded-md corners
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Avatar Image
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar img</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Image element when src is provided and loads successfully
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Loading Image
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar img.opacity-0</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Image during loading state (hidden)
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Fallback Container
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar > div</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Container shown when image fails to load or no src provided
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Fallback Content
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar > div > ng-content</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Projected content (initials, icons, etc.) inside fallback
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Muted Background
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar .bg-muted</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Background color for error/fallback states
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Object Cover
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar .object-cover</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Image object-fit: cover styling
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Transition Opacity
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar .transition-opacity</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Opacity transition for image loading
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="space-y-4 mt-14" id="fallback-style-override">
-          <h2 class="text-xl font-bold  mb-6 flex items-center">
-            Avatar Fallback Style Override
-          </h2>
-          <div class="max-w-max">
-            <tolle-segment [items]="componentFallbackViewOptions" [(ngModel)]="componentFallbackExampleOverride"/>
-          </div>
-          <div *ngIf="componentFallbackExampleOverride === 'avatar-fallback-component-override'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(fallbackOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="fallbackOverride" language="css" />
-            </div>
-          </div>
-
-          <div *ngIf="componentFallbackExampleOverride === 'override-example-tailwind'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(fallbackTailwindOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="fallbackTailwindOverride" language="css" />
-            </div>
-          </div>
-          <h2 class="text-xl font-bold  mb-6 flex items-center">
-            Avatar Fallback Component Style Reference
-          </h2>
-          <table class="w-full text-left text-sm">
-            <thead class="bg-neutral-50 dark:bg-transparent border-b border-neutral-200">
-            <tr>
-              <th class="px-6 py-3 font-semibold">Component Area</th>
-              <th class="px-6 py-3 font-semibold">Selector</th>
-              <th class="px-6 py-3 font-semibold">What It Targets</th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-neutral-200 bg-white dark:bg-transparent">
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Host Element
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar-fallback</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                The component host element containing the fallback content
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Container Div
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar-fallback > div</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Main container div with flex layout and background
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Flex Container
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar-fallback .flex</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Flex layout utilities for centering content
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Background Color
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar-fallback .bg-muted</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Background color for fallback state
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Text Color
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar-fallback .text-muted-foreground</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Text color for fallback content
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Font Weight
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar-fallback .font-medium</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Medium font weight for fallback text
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Text Transform
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar-fallback .uppercase</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Uppercase text transformation (for initials)
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">
-                Projected Content
-              </td>
-              <td class="px-6 py-4 font-mono">
-                <code class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-avatar-fallback ng-content</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">
-                Content projected into the fallback (initials, icons, etc.)
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
     </article>
   </div>
 
+  <!-- On This Page Nav -->
   <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
     <div class="sticky top-0 z-10 pb-4">
       <p class="text-sm font-semibold text-foreground">On this page</p>
@@ -525,47 +21,53 @@
 
     <ul class="flex flex-col gap-2 text-sm">
       <li>
-        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
           Overview
         </a>
       </li>
+      <li>
+        <a (click)="baseService.scrollTo('playground')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Playground
+        </a>
+      </li>
       <li class="flex flex-col gap-2">
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Usage Examples
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
         </a>
         <ul class="flex flex-col gap-2 text-sm ml-4">
           <li>
-            <a (click)="baseService.scrollTo('installation')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Installation
-            </a>
-          </li>
-          <li>
-            <a (click)="baseService.scrollTo('basic')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
               Basic
             </a>
           </li>
-        </ul>
-      </li>
-      <li>
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Style Override
-        </a>
-        <ul class="flex flex-col gap-2 text-sm ml-4">
           <li>
-            <a (click)="baseService.scrollTo('component-style-override')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Component Override
+            <a (click)="baseService.scrollTo('sizes')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Sizes
             </a>
           </li>
           <li>
-            <a (click)="baseService.scrollTo('fallback-style-override')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Fallback Override
+            <a (click)="baseService.scrollTo('shapes')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Shapes
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('fallback')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Fallback
             </a>
           </li>
         </ul>
       </li>
       <li>
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Support
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
         </a>
       </li>
     </ul>

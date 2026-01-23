@@ -10,7 +10,7 @@ import { TolleCellDirective } from './tolle-cell.directive';
 import { InputComponent } from './input.component';
 import { PopoverComponent } from './popover.component';
 import { PopoverContentComponent } from './popover-content.component';
-import {CheckboxComponent} from './checkbox.component';
+import { CheckboxComponent } from './checkbox.component';
 
 export interface TableColumn {
   key: string;
@@ -70,7 +70,7 @@ export interface TableColumn {
         </tolle-popover>
       </div>
 
-      <div class="rounded-md border border-border overflow-hidden shadow-sm bg-background">
+      <div class="rounded-md border border-border overflow-auto shadow-sm bg-background">
         <table class="w-full text-sm">
           <thead class="border-b border-border bg-background">
           <tr>
@@ -170,7 +170,7 @@ export class DataTableComponent implements OnInit, OnChanges {
       case 'xs': return 'p-1 px-4';
       case 'sm': return 'p-2 px-4';
       case 'lg': return 'p-6 px-4';
-      default:   return 'p-4';
+      default: return 'p-4';
     }
   }
 
@@ -179,7 +179,7 @@ export class DataTableComponent implements OnInit, OnChanges {
       case 'xs': return 'h-7 px-4';
       case 'sm': return 'h-9 px-4';
       case 'lg': return 'h-14 px-4';
-      default:   return 'h-12 px-4';
+      default: return 'h-12 px-4';
     }
   }
 
@@ -188,7 +188,7 @@ export class DataTableComponent implements OnInit, OnChanges {
       case 'xs': return 'text-[11px]';
       case 'sm': return 'text-xs';
       case 'lg': return 'text-base';
-      default:   return 'text-sm';
+      default: return 'text-sm';
     }
   }
 
