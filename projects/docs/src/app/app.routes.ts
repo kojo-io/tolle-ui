@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {DocLayoutComponent} from './layout/doc-layout/doc-layout.component';
+import { DocLayoutComponent } from './layout/doc-layout/doc-layout.component';
 
 export const routes: Routes = [
   {
@@ -72,6 +72,14 @@ export const routes: Routes = [
           {
             path: 'date-picker',
             loadComponent: () => import('./components/date-picker-docs/date-picker-docs.component').then(m => m.DatePickerDocsComponent),
+          },
+          {
+            path: 'input',
+            loadComponent: () => import('./components/input-docs/input-docs.component').then(m => m.InputDocsComponent),
+          },
+          {
+            path: 'textarea',
+            loadComponent: () => import('./components/textarea-docs/textarea-docs.component').then(m => m.TextareaDocsComponent),
           }
         ]
       },

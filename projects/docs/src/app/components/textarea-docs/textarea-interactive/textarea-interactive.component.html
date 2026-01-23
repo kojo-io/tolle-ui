@@ -1,0 +1,65 @@
+<app-playground [code]="playgroundCode">
+    <div class="w-full max-w-sm" preview>
+        <tolle-textarea [label]="label" [placeholder]="placeholder" [hint]="hint" [errorMessage]="errorMessage"
+            [disabled]="disabled" [readonly]="readonly" [rows]="rows" [autoGrow]="autoGrow"
+            [showCharacterCount]="showCharacterCount" [maxLength]="maxLength" [hideHintOnFocus]="hideHintOnFocus"
+            [hideCharacterCountOnFocus]="hideCharacterCountOnFocus"></tolle-textarea>
+    </div>
+
+    <div class="space-y-6" controls>
+        <div class="space-y-4">
+            <h3 class="text-sm font-medium leading-none mb-4">Properties</h3>
+
+            <div class="grid gap-4">
+                <div class="grid gap-2">
+                    <label class="text-sm font-medium">Label</label>
+                    <tolle-input [(ngModel)]="label" placeholder="Label text"></tolle-input>
+                </div>
+
+                <div class="grid gap-2">
+                    <label class="text-sm font-medium">Placeholder</label>
+                    <tolle-input [(ngModel)]="placeholder" placeholder="Placeholder text"></tolle-input>
+                </div>
+
+                <div class="grid gap-2">
+                    <label class="text-sm font-medium">Hint</label>
+                    <tolle-input [(ngModel)]="hint" placeholder="Helper text"></tolle-input>
+                </div>
+
+                <div class="grid gap-2">
+                    <label class="text-sm font-medium">Error Message</label>
+                    <tolle-input [(ngModel)]="errorMessage" placeholder="Error message"></tolle-input>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="grid gap-2">
+                        <label class="text-sm font-medium">Rows</label>
+                        <tolle-input type="number" [(ngModel)]="rows"></tolle-input>
+                    </div>
+                    <div class="grid gap-2">
+                        <label class="text-sm font-medium">Max Length</label>
+                        <tolle-input type="number" [(ngModel)]="maxLength"></tolle-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-sm font-medium leading-none mb-4">Options</h3>
+
+            <div class="flex flex-col gap-4">
+                <tolle-checkbox [(ngModel)]="disabled" label="Disabled"></tolle-checkbox>
+
+                <tolle-checkbox [(ngModel)]="readonly" label="Readonly"></tolle-checkbox>
+
+                <tolle-checkbox [(ngModel)]="autoGrow" label="Auto Grow"></tolle-checkbox>
+
+                <tolle-checkbox [(ngModel)]="showCharacterCount" label="Show Character Count"></tolle-checkbox>
+
+                <tolle-checkbox [(ngModel)]="hideHintOnFocus" label="Hide Hint on Focus"></tolle-checkbox>
+
+                <tolle-checkbox [(ngModel)]="hideCharacterCountOnFocus" label="Hide Count on Focus"></tolle-checkbox>
+            </div>
+        </div>
+    </div>
+</app-playground>

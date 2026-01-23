@@ -1,0 +1,20 @@
+<header class="mb-12 border-b border-slate-200 pb-8">
+    <h1 class="text-4xl font-extrabold tracking-tight mb-4">
+        Textarea
+    </h1>
+    <p class="mb-6">
+        Displays a form textarea or a component that looks like a textarea.
+    </p>
+</header>
+
+<section class="mb-16">
+    <div
+        class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden">
+        <div class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[300px]">
+            <app-basic-textarea-example />
+        </div>
+        <div class="border-t border-neutral-200 dark:border-neutral-800">
+            <app-base-editor [code]="(tsCode$ | async) ?? ''" language="typescript" />
+        </div>
+    </div>
+</section>
