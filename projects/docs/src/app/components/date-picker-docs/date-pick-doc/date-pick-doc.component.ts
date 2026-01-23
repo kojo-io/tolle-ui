@@ -1,12 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {BaseService} from '../../../shared/base.service';
-import {SourceCodeService} from '../../../shared/source-code.service';
-import {Observable} from 'rxjs';
-import {AsyncPipe, NgIf} from '@angular/common';
-import {BaseDatePickerComponent} from '../../../docs-examples/date-picker/base-date-picker/base-date-picker.component';
-import {BaseEditorComponent} from '../../../shared/base-editor/base-editor.component';
-import {SegmentedComponent} from '../../../../../../tolle/src/lib/segment.component';
-import {FormsModule} from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { BaseService } from '../../../shared/base.service';
+import { SourceCodeService } from '../../../shared/source-code.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { BaseDatePickerComponent } from '../../../docs-examples/date-picker/base-date-picker/base-date-picker.component';
+import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-date-pick-doc',

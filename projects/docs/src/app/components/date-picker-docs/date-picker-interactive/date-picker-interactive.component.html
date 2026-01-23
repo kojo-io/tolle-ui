@@ -1,0 +1,45 @@
+<section class="mb-16" id="playground">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+    <app-playground [code]="playgroundCode" language="angular">
+        <div preview class="w-full flex justify-center h-[350px]">
+            <div class="w-72 mt-10">
+                <tolle-date-picker [(ngModel)]="date" [mode]="mode" [disabled]="disabled" [showClear]="showClear"
+                    [disablePastDates]="disablePastDates" [showQuickActions]="showQuickActions"></tolle-date-picker>
+            </div>
+        </div>
+
+        <div controls class="space-y-4">
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Mode</label>
+                <tolle-select [(ngModel)]="mode" placeholder="Select mode">
+                    <tolle-select-item value="date">Date</tolle-select-item>
+                    <tolle-select-item value="month">Month</tolle-select-item>
+                    <tolle-select-item value="year">Year</tolle-select-item>
+                </tolle-select>
+            </div>
+
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="disabled" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium cursor-pointer" (click)="disabled = !disabled">Disabled</label>
+            </div>
+
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="showClear" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium cursor-pointer" (click)="showClear = !showClear">Show Clear
+                    Button</label>
+            </div>
+
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="disablePastDates" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium cursor-pointer" (click)="disablePastDates = !disablePastDates">Disable
+                    Past Dates</label>
+            </div>
+
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="showQuickActions" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium cursor-pointer" (click)="showQuickActions = !showQuickActions">Show
+                    Quick Actions</label>
+            </div>
+        </div>
+    </app-playground>
+</section>

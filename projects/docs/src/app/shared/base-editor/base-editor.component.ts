@@ -19,7 +19,7 @@ import { StreamLanguage } from '@codemirror/language'; // Required for Bash
 import { shell } from '@codemirror/legacy-modes/mode/shell';
 
 // Define a type for the supported languages
-export type EditorLanguage = 'javascript' | 'html' | 'css' | 'bash' | 'json';
+export type EditorLanguage = 'javascript' | 'typescript' | 'html' | 'css' | 'bash' | 'json' | 'angular';
 
 @Component({
   selector: 'app-base-editor',
@@ -133,7 +133,10 @@ export class BaseEditorComponent implements AfterViewInit, OnChanges {
   // Helper to switch extensions based on the input string
   private getLanguageExtension() {
     switch (this.language) {
+      case 'typescript':
+        return javascript({ typescript: true });
       case 'html':
+      case 'angular':
         return html();
       case 'css':
         return css();

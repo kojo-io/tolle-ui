@@ -1,24 +1,22 @@
-import {Component, inject} from '@angular/core';
-import {AsyncPipe, NgIf} from '@angular/common';
-import {BaseEditorComponent} from '../../shared/base-editor/base-editor.component';
-import {
-  DataTableStandardComponent
-} from '../../docs-examples/data-table/data-table-standard/data-table-standard.component';
-import {SegmentedComponent} from '../../../../../tolle/src/lib/segment.component';
-import {BasePickerComponent} from './base-picker/base-picker.component';
-import {BaseService} from '../../shared/base.service';
-import {DatePickDocComponent} from './date-pick-doc/date-pick-doc.component';
-import {MonthPickDocComponent} from './month-pick-doc/month-pick-doc.component';
-import {YearPickDocComponent} from './year-pick-doc/year-pick-doc.component';
+import { Component, inject } from '@angular/core';
+import { BaseService } from '../../shared/base.service';
+import { DatePickerOverviewComponent } from './date-picker-overview/date-picker-overview.component';
+import { DatePickerInteractiveComponent } from './date-picker-interactive/date-picker-interactive.component';
+import { DatePickDocComponent } from './date-pick-doc/date-pick-doc.component';
+import { MonthPickDocComponent } from './month-pick-doc/month-pick-doc.component';
+import { YearPickDocComponent } from './year-pick-doc/year-pick-doc.component';
+import { DatePickerApiComponent } from './date-picker-api/date-picker-api.component';
 
 @Component({
   selector: 'app-date-picker-docs',
   standalone: true,
   imports: [
-    BasePickerComponent,
+    DatePickerOverviewComponent,
+    DatePickerInteractiveComponent,
     DatePickDocComponent,
     MonthPickDocComponent,
-    YearPickDocComponent
+    YearPickDocComponent,
+    DatePickerApiComponent
   ],
   templateUrl: './date-picker-docs.component.html',
   styleUrl: './date-picker-docs.component.css'
