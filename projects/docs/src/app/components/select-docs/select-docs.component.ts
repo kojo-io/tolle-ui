@@ -1,0 +1,20 @@
+import { Component, inject } from '@angular/core';
+import { BaseService } from '../../shared/base.service';
+import { SelectOverviewComponent } from './select-overview/select-overview.component';
+import { SelectInteractiveComponent } from './select-interactive/select-interactive.component';
+import { SelectApiComponent } from './select-api/select-api.component';
+
+@Component({
+    selector: 'app-select-docs',
+    standalone: true,
+    imports: [
+        SelectOverviewComponent,
+        SelectInteractiveComponent,
+        SelectApiComponent
+    ],
+    templateUrl: './select-docs.component.html',
+    styleUrl: './select-docs.component.css'
+})
+export class SelectDocsComponent {
+    baseService = inject(BaseService);
+}

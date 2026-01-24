@@ -1,0 +1,40 @@
+<section class="mb-16" id="playground">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+    <app-playground [code]="playgroundCode">
+        <div class="flex items-center space-x-2" preview>
+            <tolle-switch [(ngModel)]="checked" [disabled]="disabled" [size]="size" id="switch-demo"></tolle-switch>
+            <label for="switch-demo"
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                Airplane Mode
+            </label>
+        </div>
+
+        <div class="space-y-6" controls>
+            <div class="space-y-4">
+                <h3 class="text-sm font-medium leading-none mb-4">Properties</h3>
+
+                <div class="space-y-2">
+                    <label class="text-sm font-medium">Size</label>
+                    <tolle-select [(ngModel)]="size" placeholder="Select size">
+                        <tolle-select-item value="xs">Extra Small</tolle-select-item>
+                        <tolle-select-item value="sm">Small</tolle-select-item>
+                        <tolle-select-item value="default">Default</tolle-select-item>
+                        <tolle-select-item value="lg">Large</tolle-select-item>
+                    </tolle-select>
+                </div>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-sm font-medium leading-none mb-4">Options</h3>
+
+                <div class="flex flex-col space-y-2">
+                    <div class="flex items-center gap-2">
+                        <tolle-checkbox [(ngModel)]="disabled" size="sm"></tolle-checkbox>
+                        <label class="text-sm font-medium cursor-pointer"
+                            (click)="disabled = !disabled">Disabled</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </app-playground>
+</section>

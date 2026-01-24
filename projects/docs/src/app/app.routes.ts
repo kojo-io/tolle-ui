@@ -80,6 +80,26 @@ export const routes: Routes = [
           {
             path: 'textarea',
             loadComponent: () => import('./components/textarea-docs/textarea-docs.component').then(m => m.TextareaDocsComponent),
+          },
+          {
+            path: 'switch',
+            loadComponent: () => import('./components/switch-docs/switch-docs.component').then(m => m.SwitchDocsComponent),
+          },
+          {
+            path: 'radio-group',
+            loadComponent: () => import('./components/radio-group-docs/radio-group-docs.component').then(m => m.RadioGroupDocsComponent),
+          },
+          {
+            path: 'multi-select',
+            loadComponent: () => import('./components/multi-select-docs/multi-select-docs.component').then(m => m.MultiSelectDocsComponent),
+          },
+          {
+            path: 'select',
+            loadComponent: () => import('./components/select-docs/select-docs.component').then(m => m.SelectDocsComponent),
+          },
+          {
+            path: 'masked-input',
+            loadComponent: () => import('./components/masked-input-docs/masked-input-docs.component').then(m => m.MaskedInputDocsComponent),
           }
         ]
       },
