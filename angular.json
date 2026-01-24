@@ -240,6 +240,11 @@
                 "glob": "**/*",
                 "input": "projects/docs/src/content",
                 "output": "assets/content"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/docs/src/app/docs-examples",
+                "output": "/source-code/docs-examples"
               }
             ],
             "styles": [

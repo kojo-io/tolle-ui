@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {DocLayoutComponent} from './layout/doc-layout/doc-layout.component';
+import { DocLayoutComponent } from './layout/doc-layout/doc-layout.component';
 
 export const routes: Routes = [
   {
@@ -72,6 +72,62 @@ export const routes: Routes = [
           {
             path: 'date-picker',
             loadComponent: () => import('./components/date-picker-docs/date-picker-docs.component').then(m => m.DatePickerDocsComponent),
+          },
+          {
+            path: 'input',
+            loadComponent: () => import('./components/input-docs/input-docs.component').then(m => m.InputDocsComponent),
+          },
+          {
+            path: 'textarea',
+            loadComponent: () => import('./components/textarea-docs/textarea-docs.component').then(m => m.TextareaDocsComponent),
+          },
+          {
+            path: 'switch',
+            loadComponent: () => import('./components/switch-docs/switch-docs.component').then(m => m.SwitchDocsComponent),
+          },
+          {
+            path: 'radio-group',
+            loadComponent: () => import('./components/radio-group-docs/radio-group-docs.component').then(m => m.RadioGroupDocsComponent),
+          },
+          {
+            path: 'multi-select',
+            loadComponent: () => import('./components/multi-select-docs/multi-select-docs.component').then(m => m.MultiSelectDocsComponent),
+          },
+          {
+            path: 'select',
+            loadComponent: () => import('./components/select-docs/select-docs.component').then(m => m.SelectDocsComponent),
+          },
+          {
+            path: 'masked-input',
+            loadComponent: () => import('./components/masked-input-docs/masked-input-docs.component').then(m => m.MaskedInputDocsComponent),
+          },
+          {
+            path: 'otp',
+            loadComponent: () => import('./components/otp-docs/otp-docs.component').then(m => m.OtpDocsComponent),
+          },
+          {
+            path: 'pagination',
+            loadComponent: () => import('./components/pagination-docs/pagination-docs.component').then(m => m.PaginationDocsComponent),
+          },
+          {
+            path: 'popover',
+            loadComponent: () => import('./components/popover-docs/popover-docs.component').then(m => m.PopoverDocsComponent),
+          },
+          {
+            path: 'resizable',
+            loadComponent: () => import('./components/resizable-docs/resizable-docs.component').then(m => m.ResizableDocsComponent),
+          },
+          {
+            path: 'segment',
+            loadComponent: () => import('./components/segment-docs/segment-docs.component').then(m => m.SegmentDocsComponent),
+          },
+          {
+            path: 'sidebar',
+            loadComponent: () => import('./components/sidebar-docs/sidebar-docs.component').then(m => m.SidebarDocsComponent),
+          },
+          {
+            path: 'skeleton',
+            loadComponent: () => import('./components/skeleton-docs/skeleton-docs.component').then(m => m.SkeletonDocsComponent),
           }
         ]
       },

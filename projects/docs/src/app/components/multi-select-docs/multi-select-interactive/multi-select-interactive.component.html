@@ -1,0 +1,66 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full max-w-sm flex justify-center p-10">
+        <tolle-multi-select [(ngModel)]="selectedValues" [placeholder]="placeholder" [size]="size"
+            [searchable]="searchable" [disabled]="disabled" [maxSelections]="maxSelections"
+            [maxDisplayItems]="maxDisplayItems" [error]="error">
+            <tolle-select-item value="apple">Apple</tolle-select-item>
+            <tolle-select-item value="banana">Banana</tolle-select-item>
+            <tolle-select-item value="blueberry">Blueberry</tolle-select-item>
+            <tolle-select-item value="grapes">Grapes</tolle-select-item>
+            <tolle-select-item value="pineapple">Pineapple</tolle-select-item>
+        </tolle-multi-select>
+    </div>
+
+    <div controls class="grid gap-4">
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Placeholder</h3>
+            <tolle-input [(ngModel)]="placeholder"></tolle-input>
+        </div>
+
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Size</h3>
+            <tolle-select [(ngModel)]="size">
+                <tolle-select-item value="xs">xs</tolle-select-item>
+                <tolle-select-item value="sm">sm</tolle-select-item>
+                <tolle-select-item value="default">default</tolle-select-item>
+                <tolle-select-item value="lg">lg</tolle-select-item>
+            </tolle-select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+                <h3 class="text-sm font-medium leading-none">Max Selections</h3>
+                <tolle-input type="number" [(ngModel)]="maxSelections"></tolle-input>
+            </div>
+            <div class="space-y-2">
+                <h3 class="text-sm font-medium leading-none">Max Display Items</h3>
+                <tolle-input type="number" [(ngModel)]="maxDisplayItems"></tolle-input>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <div class="flex items-center space-x-2">
+                <tolle-checkbox id="searchable" [(ngModel)]="searchable"></tolle-checkbox>
+                <label for="searchable"
+                    class="text-sm font-medium leading-none cursor-pointer select-none">Searchable</label>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <tolle-checkbox id="disabled" [(ngModel)]="disabled"></tolle-checkbox>
+                <label for="disabled"
+                    class="text-sm font-medium leading-none cursor-pointer select-none">Disabled</label>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <tolle-checkbox id="error" [(ngModel)]="error"></tolle-checkbox>
+                <label for="error" class="text-sm font-medium leading-none cursor-pointer select-none">Error</label>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t">
+            <p class="text-sm text-muted-foreground">
+                Selected: <span class="font-mono text-foreground">{{ selectedValues | json }}</span>
+            </p>
+        </div>
+    </div>
+</app-playground>

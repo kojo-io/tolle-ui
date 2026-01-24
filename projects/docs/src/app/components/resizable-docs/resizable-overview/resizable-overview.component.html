@@ -1,0 +1,36 @@
+<header class="mb-12 border-b border-slate-200 pb-8">
+    <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-foreground">
+        Resizable
+    </h1>
+    <p class="text-lg text-muted-foreground">
+        Components for creating resizable layouts, allowing users to adjust the size of panels and elements.
+    </p>
+</header>
+
+<section class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Basic Usage</h2>
+    <p class="mb-6">
+        The <code>tolle-resizable-panel</code> component provides a container for multiple
+        <code>tolle-resizable-panel-item</code> elements that can be resized by dragging the handles between them.
+    </p>
+    <div
+        class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden">
+        <div class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[400px]">
+            <app-basic-resizable-example class="w-full"></app-basic-resizable-example>
+        </div>
+        <div class="border-t border-neutral-200 dark:border-neutral-800">
+            <app-base-editor [code]="(basicCode$ | async) || ''" language="typescript"></app-base-editor>
+        </div>
+    </div>
+</section>
+
+<section id="installation" class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">
+        Import
+    </h2>
+    <div class="rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
+        <app-base-editor
+            code="import { ResizablePanelComponent, ResizablePanelItemComponent, ResizableComponent } from 'tolle-ui';"
+            language="typescript"></app-base-editor>
+    </div>
+</section>

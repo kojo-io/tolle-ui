@@ -1,0 +1,50 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full flex justify-center p-10">
+        <tolle-otp #otp [(ngModel)]="otpValue" [length]="length" [disabled]="disabled" [auto]="auto">
+            <ng-container *ngIf="!auto">
+                <div class="flex items-center gap-2">
+                    <tolle-otp-group>
+                        <tolle-otp-slot *ngFor="let _ of [0,1,2]; let i = index" [char]="otpValue[i]"
+                            [isActive]="otp.isFocused && otpValue.length === i" [isFirst]="i === 0"
+                            [isLast]="i === 2"></tolle-otp-slot>
+                    </tolle-otp-group>
+                    <div class="px-2 text-muted-foreground">-</div>
+                    <tolle-otp-group>
+                        <tolle-otp-slot *ngFor="let _ of [0,1,2]; let i = index" [char]="otpValue[i + 3]"
+                            [isActive]="otp.isFocused && otpValue.length === i + 3" [isFirst]="i === 0"
+                            [isLast]="i === 2"></tolle-otp-slot>
+                    </tolle-otp-group>
+                </div>
+            </ng-container>
+        </tolle-otp>
+    </div>
+
+    <div controls class="grid gap-4">
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Length</h3>
+            <tolle-input type="number" [(ngModel)]="length"></tolle-input>
+        </div>
+
+        <div class="space-y-4">
+            <div class="flex items-center space-x-2">
+                <tolle-checkbox id="auto" [(ngModel)]="auto"></tolle-checkbox>
+                <label for="auto" class="text-sm font-medium leading-none cursor-pointer select-none">
+                    Auto Mode
+                    <span class="text-muted-foreground ml-1 font-normal">(Generates slots automatically)</span>
+                </label>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <tolle-checkbox id="disabled" [(ngModel)]="disabled"></tolle-checkbox>
+                <label for="disabled"
+                    class="text-sm font-medium leading-none cursor-pointer select-none">Disabled</label>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t">
+            <p class="text-sm text-muted-foreground">
+                Value: <span class="font-mono text-foreground">{{ otpValue }}</span>
+            </p>
+        </div>
+    </div>
+</app-playground>

@@ -19,11 +19,11 @@ import { SegmentedComponent } from '../../../../../tolle/src/lib/segment.compone
 
       <div class="flex flex-col lg:flex-row min-h-[400px]">
         <!-- Main Area (Preview or Code) -->
-        <div class="flex-1 min-h-[300px] relative bg-white dark:bg-neutral-950">
+        <div class="flex-1 relative bg-white dark:bg-neutral-950 overflow-hidden">
           
           <!-- Preview Area -->
-          <div *ngIf="activeTab === 'preview'" class="absolute inset-0 p-8 flex items-center justify-center">
-            <div class="w-full h-full flex items-center justify-center">
+          <div *ngIf="activeTab === 'preview'" class="w-full h-full p-4 md:p-8 overflow-auto flex items-center justify-center">
+            <div class="w-full h-fit min-h-full">
                <ng-content select="[preview]"></ng-content>
             </div>
           </div>
