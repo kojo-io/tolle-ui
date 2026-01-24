@@ -1,0 +1,28 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full h-[500px] border border-input rounded-md overflow-hidden flex bg-background">
+        <tolle-sidebar [items]="items" [collapsed]="collapsed" [variant]="variant" class="h-full">
+            <div header class="px-3 font-semibold text-lg text-primary">Preview</div>
+            <div footer class="p-3 text-xs text-muted-foreground border-t border-border">v1.2.4</div>
+        </tolle-sidebar>
+        <div class="flex-1 bg-muted/5 p-6 flex items-center justify-center">
+            <p class="text-muted-foreground italic">Content Area</p>
+        </div>
+    </div>
+
+    <div controls class="grid gap-4">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium leading-none">Collapsed</span>
+            <tolle-switch [(ngModel)]="collapsed"></tolle-switch>
+        </div>
+
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Variant</h3>
+            <tolle-select [(ngModel)]="variant">
+                <tolle-select-item value="default">Default (Solid)</tolle-select-item>
+                <tolle-select-item value="secondary">Secondary</tolle-select-item>
+                <tolle-select-item value="ghost">Ghost (Standard)</tolle-select-item>
+                <tolle-select-item value="outline">Outline</tolle-select-item>
+            </tolle-select>
+        </div>
+    </div>
+</app-playground>

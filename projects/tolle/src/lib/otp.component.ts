@@ -30,7 +30,7 @@ import { cn } from './utils/cn';
 
       <div *ngIf="auto" class="flex items-center gap-2 pointer-events-none">
         <div class="flex items-center">
-          <div *ngFor="let _ of [].constructor(length); let i = index"
+          <div *ngFor="let _ of slots; let i = index"
                [class]="getSlotClass(i)"
           >
             {{ value[i] || '' }}
@@ -48,17 +48,27 @@ import { cn } from './utils/cn';
   `
 })
 export class OtpComponent implements ControlValueAccessor {
-  @Input() length = 6;
+  @Input()
+  set length(val: number) {
+    const numericVal = Number(val);
+    this._length = numericVal;
+    this.slots = Array(numericVal).fill(0);
+  }
+  get length() { return this._length; }
+  private _length = 6;
+
   @Input() disabled = false;
-  @Input() auto = false; // The toggle for automatic slot generation
+  @Input() auto = false;
+
+  protected slots: number[] = Array(6).fill(0);
 
   value: string = '';
   isFocused = false;
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   onInputChange(event: any) {
     const val = event.target.value.replace(/\D/g, '');

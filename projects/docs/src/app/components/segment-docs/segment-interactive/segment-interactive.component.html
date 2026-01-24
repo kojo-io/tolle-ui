@@ -1,0 +1,26 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full flex flex-col items-center justify-center p-12 gap-6">
+        <div class="w-full max-w-sm">
+            <tolle-segment [items]="items" [(ngModel)]="currentValue" (ngModelChange)="onValueChange($event)"
+                [disabled]="disabled"></tolle-segment>
+        </div>
+        <p class="text-sm text-muted-foreground">
+            Selected Value: <span class="font-mono font-bold">{{ currentValue || 'null' }}</span>
+        </p>
+    </div>
+
+    <div controls class="grid gap-4">
+        <div class="flex items-center justify-between">
+            <span class="text-sm font-medium">Disabled</span>
+            <tolle-switch [(ngModel)]="disabled"></tolle-switch>
+        </div>
+
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Content Type</h3>
+            <tolle-select [(ngModel)]="dataSet" (ngModelChange)="currentValue = items[0].value">
+                <tolle-select-item value="text">Text Only</tolle-select-item>
+                <tolle-select-item value="icons">With Icons</tolle-select-item>
+            </tolle-select>
+        </div>
+    </div>
+</app-playground>

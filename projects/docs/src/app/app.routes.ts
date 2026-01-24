@@ -100,6 +100,34 @@ export const routes: Routes = [
           {
             path: 'masked-input',
             loadComponent: () => import('./components/masked-input-docs/masked-input-docs.component').then(m => m.MaskedInputDocsComponent),
+          },
+          {
+            path: 'otp',
+            loadComponent: () => import('./components/otp-docs/otp-docs.component').then(m => m.OtpDocsComponent),
+          },
+          {
+            path: 'pagination',
+            loadComponent: () => import('./components/pagination-docs/pagination-docs.component').then(m => m.PaginationDocsComponent),
+          },
+          {
+            path: 'popover',
+            loadComponent: () => import('./components/popover-docs/popover-docs.component').then(m => m.PopoverDocsComponent),
+          },
+          {
+            path: 'resizable',
+            loadComponent: () => import('./components/resizable-docs/resizable-docs.component').then(m => m.ResizableDocsComponent),
+          },
+          {
+            path: 'segment',
+            loadComponent: () => import('./components/segment-docs/segment-docs.component').then(m => m.SegmentDocsComponent),
+          },
+          {
+            path: 'sidebar',
+            loadComponent: () => import('./components/sidebar-docs/sidebar-docs.component').then(m => m.SidebarDocsComponent),
+          },
+          {
+            path: 'skeleton',
+            loadComponent: () => import('./components/skeleton-docs/skeleton-docs.component').then(m => m.SkeletonDocsComponent),
           }
         ]
       },
