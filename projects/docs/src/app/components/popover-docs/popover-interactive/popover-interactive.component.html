@@ -1,0 +1,26 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full flex justify-center p-20">
+        <tolle-popover [placement]="placement">
+            <tolle-button trigger variant="outline">Open Popover</tolle-button>
+            <tolle-popover-content>
+                <div class="space-y-2">
+                    <p class="text-sm font-medium">Position: {{ placement | titlecase }}</p>
+                    <p class="text-xs text-muted-foreground">The popover automatically adjusts its position using
+                        Floating UI.</p>
+                </div>
+            </tolle-popover-content>
+        </tolle-popover>
+    </div>
+
+    <div controls class="grid gap-4">
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Placement</h3>
+            <tolle-select [(ngModel)]="placement">
+                <tolle-select-item value="top">Top</tolle-select-item>
+                <tolle-select-item value="bottom">Bottom</tolle-select-item>
+                <tolle-select-item value="left">Left</tolle-select-item>
+                <tolle-select-item value="right">Right</tolle-select-item>
+            </tolle-select>
+        </div>
+    </div>
+</app-playground>

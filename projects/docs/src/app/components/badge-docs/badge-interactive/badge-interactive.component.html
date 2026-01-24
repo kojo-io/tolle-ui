@@ -1,0 +1,41 @@
+<section class="mb-16" id="playground">
+    <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
+    <app-playground [code]="playgroundCode">
+        <div preview>
+            <tolle-badge [variant]="variant" [size]="size" [removable]="removable">
+                {{ label }}
+            </tolle-badge>
+        </div>
+
+        <div controls class="space-y-4">
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Variant</label>
+                <tolle-select [(ngModel)]="variant" size="sm">
+                    <tolle-select-item value="default">Default</tolle-select-item>
+                    <tolle-select-item value="secondary">Secondary</tolle-select-item>
+                    <tolle-select-item value="outline">Outline</tolle-select-item>
+                    <tolle-select-item value="destructive">Destructive</tolle-select-item>
+                </tolle-select>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Size</label>
+                <tolle-select [(ngModel)]="size" size="sm">
+                    <tolle-select-item value="xs">Extra Small</tolle-select-item>
+                    <tolle-select-item value="sm">Small</tolle-select-item>
+                    <tolle-select-item value="default">Default</tolle-select-item>
+                </tolle-select>
+            </div>
+
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="removable" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium">Removable</label>
+            </div>
+
+            <div class="space-y-2">
+                <tolle-input label="Label" [(ngModel)]="label" size="sm" placeholder="Badge label">
+                </tolle-input>
+            </div>
+        </div>
+    </app-playground>
+</section>

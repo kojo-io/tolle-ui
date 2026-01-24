@@ -1,0 +1,20 @@
+import { Component, inject } from '@angular/core';
+import { BaseService } from '../../shared/base.service';
+import { PopoverOverviewComponent } from './popover-overview/popover-overview.component';
+import { PopoverInteractiveComponent } from './popover-interactive/popover-interactive.component';
+import { PopoverApiComponent } from './popover-api/popover-api.component';
+
+@Component({
+    selector: 'app-popover-docs',
+    standalone: true,
+    imports: [
+        PopoverOverviewComponent,
+        PopoverInteractiveComponent,
+        PopoverApiComponent
+    ],
+    templateUrl: './popover-docs.component.html',
+    styleUrl: './popover-docs.component.css'
+})
+export class PopoverDocsComponent {
+    baseService = inject(BaseService);
+}

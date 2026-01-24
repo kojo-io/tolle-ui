@@ -1,27 +1,24 @@
-import {Component, Input} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ResizablePanelComponent} from './resizable-panel.component';
-import {cn} from './utils/cn';
+import { Component, Input, inject, HostBinding } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ResizablePanelComponent } from './resizable-panel.component';
+import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-resizable-panel-item',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div
-      [class]="computedContainerClass"
-      [style.flex]="size"
-    >
+    <div [class]="computedContainerClass">
       <ng-content></ng-content>
+    </div>
 
-      <div
-        *ngIf="resizable && !isLast"
-        [class]="computedHandleClass"
-        (mousedown)="onHandleMouseDown($event)"
-      >
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div [class]="computedHandleIndicatorClass"></div>
-        </div>
+    <div
+      *ngIf="resizable && !isLast"
+      [class]="computedHandleClass"
+      (mousedown)="onHandleMouseDown($event)"
+    >
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div [class]="computedHandleIndicatorClass"></div>
       </div>
     </div>
   `,
@@ -29,22 +26,23 @@ import {cn} from './utils/cn';
     :host {
       display: block;
       position: relative;
+      overflow: visible;
     }
   `]
 })
 export class ResizablePanelItemComponent {
-  @Input() size: number = 1;
+  @Input() @HostBinding('style.flex') size: number = 1;
   @Input() minSize: number = 10; // percentage or pixels
   @Input() maxSize?: number;
   @Input() resizable: boolean = true;
   @Input() class: string = '';
 
   isLast: boolean = false;
-  private container?: ResizablePanelComponent;
+  private container = inject(ResizablePanelComponent);
 
   get computedContainerClass() {
     return cn(
-      'relative flex-1 overflow-hidden',
+      'relative h-full w-full overflow-hidden',
       this.class
     );
   }
@@ -69,8 +67,6 @@ export class ResizablePanelItemComponent {
   }
 
   onHandleMouseDown(event: MouseEvent) {
-    // Handle resize logic here
-    event.preventDefault();
-    event.stopPropagation();
+    this.container.startResize(this, event);
   }
 }

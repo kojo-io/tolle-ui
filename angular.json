@@ -39,7 +39,10 @@
           "options": {
             "configDir": "projects/tolle/.storybook",
             "browserTarget": "tolle:build",
-            "styles": ["projects/tolle/theme.css", "node_modules/remixicon/fonts/remixicon.css"],
+            "styles": [
+              "projects/tolle/theme.css",
+              "node_modules/remixicon/fonts/remixicon.css"
+            ],
             "compodoc": true,
             "compodocArgs": [
               "-e",
@@ -55,7 +58,10 @@
           "options": {
             "configDir": "projects/tolle/.storybook",
             "browserTarget": "tolle:build",
-            "styles": ["projects/tolle/theme.css", "node_modules/remixicon/fonts/remixicon.css"],
+            "styles": [
+              "projects/tolle/theme.css",
+              "node_modules/remixicon/fonts/remixicon.css"
+            ],
             "docs": true,
             "compodocArgs": [
               "-e",
@@ -224,6 +230,21 @@
                 "glob": "**/*",
                 "input": "projects/docs/src/app/docs-examples",
                 "output": "/source-code"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/tolle/src/lib",
+                "output": "/source-code"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/docs/src/content",
+                "output": "assets/content"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/docs/src/app/docs-examples",
+                "output": "/source-code/docs-examples"
               }
             ],
             "styles": [

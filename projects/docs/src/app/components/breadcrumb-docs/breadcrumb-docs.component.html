@@ -1,337 +1,64 @@
 <div class="flex w-full h-full">
-  <div class="flex-1 h-full overflow-auto no-scrollbar">
+  <div class="flex-1 h-full overflow-auto no-scrollbar scroll-smooth">
     <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
-      <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
-        <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
-          Breadcrumb
-        </h1>
-        <div class="space-y-4">
-          <p>
-            Shows the path to the current resource using a hierarchy of links.
-          </p>
-
-          <div class="w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="selectedTab"/>
-          </div>
-
-          <div *ngIf="selectedTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-col space-y-4 justify-center items-center">
-            <tolle-breadcrumb>
-              <tolle-breadcrumb-item>
-                <tolle-breadcrumb-link>Home</tolle-breadcrumb-link>
-              </tolle-breadcrumb-item>
-              <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
-              <tolle-breadcrumb-item>
-                <tolle-breadcrumb-link>Documents</tolle-breadcrumb-link>
-              </tolle-breadcrumb-item>
-              <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
-              <tolle-breadcrumb-item>
-                <tolle-breadcrumb-link [active]="true">Current Page</tolle-breadcrumb-link>
-              </tolle-breadcrumb-item>
-            </tolle-breadcrumb>
-          </div>
-          <div *ngIf="selectedTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(previewCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="previewCode" language="html" />
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold  mb-6 flex items-center">
-          Usage
-        </h2>
-        <div class="space-y-4">
-          <h2 class="text-xl font-bold  mb-6 flex items-center" id="installation">
-            Installation
-          </h2>
-          <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(installation)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="installation" language="javascript" />
-            </div>
-          </div>
-
-          <p  id="basic">
-            Basic
-          </p>
-          <div class="w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab"/>
-          </div>
-          <div *ngIf="basicTab === 'preview'" class="p-20 rounded-lg bg-background flex flex-col space-y-4 justify-center items-center">
-            <tolle-breadcrumb>
-              <tolle-breadcrumb-item>
-                <tolle-breadcrumb-link>Home</tolle-breadcrumb-link>
-              </tolle-breadcrumb-item>
-              <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
-              <tolle-breadcrumb-item>
-                <tolle-breadcrumb-link>Documents</tolle-breadcrumb-link>
-              </tolle-breadcrumb-item>
-              <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
-              <tolle-breadcrumb-item>
-                <tolle-breadcrumb-link [active]="true">Current Page</tolle-breadcrumb-link>
-              </tolle-breadcrumb-item>
-            </tolle-breadcrumb>
-          </div>
-
-          <div *ngIf="basicTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(previewCode)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="previewCode" language="html" />
-            </div>
-          </div>
-
-        </div>
-
-      </section>
-
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold  mb-6 flex items-center">
-          Style Override
-        </h2>
-
-        <div class="space-y-4" id="component-style-override">
-          <h2 class="text-xl font-bold  mb-6 flex items-center">
-            Badge Component Style Override
-          </h2>
-
-          <div class="max-w-max">
-            <tolle-segment [items]="componentViewOptions" [(ngModel)]="componentExampleOverride"/>
-          </div>
-
-          <div *ngIf="componentExampleOverride === 'component-override'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(componentOverride)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="componentOverride" language="css" />
-            </div>
-          </div>
-          <div *ngIf="componentExampleOverride === 'override-example-tailwind'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <!-- Header -->
-            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-              <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-                <span class="w-3 h-3 rounded-full bg-green-600"></span>
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-                <span class="w-3 h-3 rounded-full bg-red-600"></span>
-              </div>
-
-              <!-- Copy icon -->
-              <button (click)="baseService.copyTo(tailwindcss)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
-                <i class="ri-file-copy-line"></i>
-              </button>
-            </div>
-
-            <!-- Body -->
-            <div class="relative group rounded-md overflow-hidden h-auto">
-              <app-base-editor [code]="tailwindcss" language="css" />
-            </div>
-          </div>
-          <h2 class="text-xl font-bold  mb-6 flex items-center">
-            Breadcrumb Component Style Reference
-          </h2>
-          <table class="w-full text-left text-sm">
-            <thead class="bg-neutral-50 dark:bg-transparent border-b border-neutral-200">
-            <tr>
-              <th class="px-6 py-3 font-semibold">Component Area</th>
-              <th class="px-6 py-3 font-semibold">Selector</th>
-              <th class="px-6 py-3 font-semibold">What It Targets</th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-neutral-200 bg-white dark:bg-transparent">
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Breadcrumb Host </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">The main breadcrumb component host element </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Navigation Container </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb nav</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">The navigation element with breadcrumb role and
-                base styles </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Breadcrumb List </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb ol</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">Ordered list containing all breadcrumb items and
-                separators </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Breadcrumb Item Host </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb-item</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">Individual breadcrumb item component host </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Item Container </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb-item li</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">List item container for each breadcrumb element
-              </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Breadcrumb Link Host </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb-link</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">Breadcrumb link component host with
-                active/inactive states </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Active Link </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb-link span[aria-current="page"]</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">Current/active page breadcrumb link
-                (non-clickable) </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Inactive Link </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb-link div</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">Clickable/inactive breadcrumb link wrapper </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Breadcrumb Separator Host </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb-separator</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">Separator component host between breadcrumb
-                items </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Separator Item </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb-separator li</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">Separator list item containing the separator
-                icon </td>
-            </tr>
-            <tr class="hover:bg-neutral-50 dark:hover:bg-transparent transition-colors">
-              <td class="px-6 py-4 font-semibold text-neutral-600 dark:text-foreground">Default Separator Icon </td>
-              <td class="px-6 py-4 font-mono"><code
-                class="bg-neutral-100 dark:bg-neutral-600 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">tolle-breadcrumb-separator i.ri-arrow-right-s-line</code>
-              </td>
-              <td class="px-6 py-4 text-neutral-600 dark:text-foreground">Default arrow icon used as breadcrumb separator
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+      <app-breadcrumb-overview />
+      <app-breadcrumb-interactive />
+      <app-breadcrumb-examples />
+      <app-breadcrumb-api />
     </article>
   </div>
 
-  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
+  <aside
+    class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56 border-l border-neutral-100 dark:border-neutral-800">
     <div class="sticky top-0 z-10 pb-4">
       <p class="text-sm font-semibold text-foreground">On this page</p>
     </div>
 
     <ul class="flex flex-col gap-2 text-sm">
       <li>
-        <a (click)="baseService.scrollTo('overview')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
           Overview
         </a>
       </li>
+      <li>
+        <a (click)="baseService.scrollTo('installation')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Installation
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('playground')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Playground
+        </a>
+      </li>
       <li class="flex flex-col gap-2">
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Usage Examples
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
         </a>
         <ul class="flex flex-col gap-2 text-sm ml-4">
           <li>
-            <a (click)="baseService.scrollTo('installation')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Installation
-            </a>
-          </li>
-          <li>
-            <a (click)="baseService.scrollTo('basic')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
               Basic
             </a>
           </li>
-        </ul>
-      </li>
-      <li class="flex flex-col gap-2">
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Style Override
-        </a>
-        <ul class="flex flex-col gap-2 text-sm ml-4">
           <li>
-            <a (click)="baseService.scrollTo('component-style-override')" class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Component Override
+            <a (click)="baseService.scrollTo('custom-separator')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
+              Custom Separator
             </a>
           </li>
         </ul>
       </li>
       <li>
-        <a class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Support
+        <a (click)="baseService.scrollTo('api')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
         </a>
       </li>
     </ul>
   </aside>
 </div>
-

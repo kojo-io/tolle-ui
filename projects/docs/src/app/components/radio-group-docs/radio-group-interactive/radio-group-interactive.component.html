@@ -1,0 +1,29 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full flex justify-center p-10">
+        <tolle-radio-group [(ngModel)]="selectedValue" [disabled]="disabled" [name]="name">
+            <tolle-radio-item value="default">Default</tolle-radio-item>
+            <tolle-radio-item value="comfortable">Comfortable</tolle-radio-item>
+            <tolle-radio-item value="compact">Compact</tolle-radio-item>
+        </tolle-radio-group>
+    </div>
+
+    <div controls class="grid gap-4">
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Name</h3>
+            <tolle-input [(ngModel)]="name" placeholder="Radio group name"></tolle-input>
+        </div>
+
+        <div class="flex items-center space-x-2">
+            <tolle-checkbox id="disabled" [(ngModel)]="disabled"></tolle-checkbox>
+            <label for="disabled" class="text-sm font-medium leading-none cursor-pointer select-none">
+                Disabled
+            </label>
+        </div>
+
+        <div class="pt-4 border-t">
+            <p class="text-sm text-muted-foreground">
+                Selected Value: <span class="font-mono text-foreground">{{ selectedValue }}</span>
+            </p>
+        </div>
+    </div>
+</app-playground>

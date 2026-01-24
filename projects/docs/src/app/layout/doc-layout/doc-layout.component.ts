@@ -1,12 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {ButtonComponent} from '../../../../../tolle/src/lib/button.component';
-import {SidebarComponent} from '../../../../../tolle/src/lib/sidebar.component';
-import {ThemeService} from '../../../../../tolle/src/lib/theme.service';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {AsyncPipe, NgStyle} from '@angular/common';
-import {coloris, init} from '@melloware/coloris';
-import {TooltipDirective} from '../../../../../tolle/src/lib/tooltip.directive';
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+import { SidebarComponent } from '../../../../../tolle/src/lib/sidebar.component';
+import { ThemeService } from '../../../../../tolle/src/lib/theme.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AsyncPipe, NgStyle } from '@angular/common';
+import { coloris, init } from '@melloware/coloris';
+import { TooltipDirective } from '../../../../../tolle/src/lib/tooltip.directive';
 
 @Component({
   selector: 'app-doc-layout',
@@ -63,12 +63,12 @@ export class DocLayoutComponent implements OnInit {
     {
       title: "Components",
       items: [
-        { title: "Accordion", url: "/components/accordion"},
-        { title: "Alert", url: "/components/alert"},
-        { title: "Avatar", url: "/components/avatar"},
-        { title: "Badge", url: "/components/badge"},
-        { title: "Breadcrumb", url: "/components/breadcrumb"},
-        { title: "Button", url: "/components/button"},
+        { title: "Accordion", url: "/components/accordion" },
+        { title: "Alert", url: "/components/alert" },
+        { title: "Avatar", url: "/components/avatar" },
+        { title: "Badge", url: "/components/badge" },
+        { title: "Breadcrumb", url: "/components/breadcrumb" },
+        { title: "Button", url: "/components/button" },
         { title: "Button Group", url: "/components/button-group" },
         { title: "Calendar", url: "/components/calendar" },
         { title: "Range Calendar", url: "/components/range-calendar" },
@@ -76,6 +76,19 @@ export class DocLayoutComponent implements OnInit {
         { title: "Checkbox", url: "/components/checkbox" },
         { title: "Data Table", url: "/components/data-table" },
         { title: "Date Picker", url: "/components/date-picker" },
+        { title: "Input", url: "/components/input" },
+        { title: "Masked Input", url: "/components/masked-input" },
+        { title: "Multi Select", url: "/components/multi-select" },
+        { title: "OTP", url: "/components/otp" },
+        { title: "Pagination", url: "/components/pagination" },
+        { title: "Popover", url: "/components/popover" },
+        { title: "Radio Group", url: "/components/radio-group" },
+        { title: "Resizable", url: "/components/resizable" },
+        { title: "Segment", url: "/components/segment" },
+        { title: "Sidebar", url: "/components/sidebar" },
+        { title: "Skeleton", url: "/components/skeleton" },
+        { title: "Switch", url: "/components/switch" },
+        { title: "Textarea", url: "/components/textarea" },
       ]
     }
   ];

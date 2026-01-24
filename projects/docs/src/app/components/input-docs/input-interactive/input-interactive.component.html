@@ -1,0 +1,56 @@
+<section class="mb-16" id="playground">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+    <app-playground [code]="playgroundCode" language="angular">
+        <div preview class="w-full flex justify-center py-10">
+            <div class="w-full max-w-sm">
+                <tolle-input [label]="label" [placeholder]="placeholder" [hint]="hint" [errorMessage]="errorMessage"
+                    [type]="type" [size]="size" [disabled]="disabled" [readonly]="readonly" [error]="error"
+                    [(ngModel)]="value"></tolle-input>
+            </div>
+        </div>
+
+        <div controls class="space-y-4">
+            <div class="space-y-2">
+                <tolle-input label="Label" [(ngModel)]="label" size="sm"></tolle-input>
+            </div>
+
+            <div class="space-y-2">
+                <tolle-input label="Placeholder" [(ngModel)]="placeholder" size="sm"></tolle-input>
+            </div>
+
+            <div class="space-y-2">
+                <tolle-input label="Hint" [(ngModel)]="hint" size="sm" [disabled]="error"></tolle-input>
+            </div>
+
+            <div class="space-y-2">
+                <tolle-input label="Error Message" [(ngModel)]="errorMessage" size="sm"
+                    [disabled]="!error"></tolle-input>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-sm font-medium">Size</label>
+                <tolle-select [(ngModel)]="size" placeholder="Select size">
+                    <tolle-select-item value="xs">Extra Small</tolle-select-item>
+                    <tolle-select-item value="sm">Small</tolle-select-item>
+                    <tolle-select-item value="default">Default</tolle-select-item>
+                    <tolle-select-item value="lg">Large</tolle-select-item>
+                </tolle-select>
+            </div>
+
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="error" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium cursor-pointer" (click)="error = !error">Error State</label>
+            </div>
+
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="disabled" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium cursor-pointer" (click)="disabled = !disabled">Disabled</label>
+            </div>
+
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="readonly" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium cursor-pointer" (click)="readonly = !readonly">Readonly</label>
+            </div>
+        </div>
+    </app-playground>
+</section>

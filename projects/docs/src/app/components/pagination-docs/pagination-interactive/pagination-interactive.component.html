@@ -1,0 +1,51 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full flex justify-center p-10">
+        <tolle-pagination class="w-full" [totalRecords]="totalRecords" [currentPage]="currentPage"
+            [currentPageSize]="currentPageSize" [showPageLinks]="showPageLinks" [showPageOptions]="showPageOptions"
+            [showCurrentPageInfo]="showCurrentPageInfo" (onPageNumberChange)="onPageChange($event)"
+            (onPageSizeChange)="onSizeChange($event)"></tolle-pagination>
+    </div>
+
+    <div controls class="grid gap-4">
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Total Records</h3>
+            <tolle-input type="number" [(ngModel)]="totalRecords"></tolle-input>
+        </div>
+
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Current Page</h3>
+            <tolle-input type="number" [(ngModel)]="currentPage"></tolle-input>
+        </div>
+
+        <div class="space-y-4 pt-2">
+            <div class="flex items-center space-x-2">
+                <tolle-checkbox id="links" [(ngModel)]="showPageLinks"></tolle-checkbox>
+                <label for="links" class="text-sm font-medium leading-none cursor-pointer select-none">Show Page
+                    Links</label>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <tolle-checkbox id="options" [(ngModel)]="showPageOptions"></tolle-checkbox>
+                <label for="options" class="text-sm font-medium leading-none cursor-pointer select-none">Show Page
+                    Options</label>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <tolle-checkbox id="info" [(ngModel)]="showCurrentPageInfo"></tolle-checkbox>
+                <label for="info" class="text-sm font-medium leading-none cursor-pointer select-none">Show Page
+                    Info</label>
+            </div>
+        </div>
+
+        <div class="pt-4 border-t">
+            <div class="flex justify-between text-xs text-muted-foreground uppercase font-bold tracking-wider">
+                <span>Page</span>
+                <span class="text-foreground">{{ currentPage }}</span>
+            </div>
+            <div class="flex justify-between text-xs text-muted-foreground uppercase font-bold tracking-wider mt-2">
+                <span>Size</span>
+                <span class="text-foreground">{{ currentPageSize }}</span>
+            </div>
+        </div>
+    </div>
+</app-playground>
