@@ -1,80 +1,64 @@
-<div class="flex w-full h-full">
-  <div class="flex-1 h-full overflow-auto no-scrollbar pb-20">
-    <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
-
-      <app-data-table-overview id="overview" />
-
-      <app-data-table-interactive id="playground" />
-
-      <app-data-table-basic id="basic-table" />
-
-      <app-column-hiding-docs id="column-hiding" />
-
-      <app-pagination-docs id="pagination" />
-
-      <app-searchable-docs id="searchable" />
-
-      <app-data-table-api id="api-reference" />
-
-    </article>
+<app-docs-wrapper>
+  <div content>
+    <app-data-table-overview id="overview" />
+    <app-data-table-interactive id="playground" />
+    <app-data-table-basic id="basic-table" />
+    <app-column-hiding-docs id="column-hiding" />
+    <app-pagination-docs id="pagination" />
+    <app-searchable-docs id="searchable" />
+    <app-data-table-api id="api-reference" />
   </div>
 
-  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56 text-foreground">
-    <div class="sticky top-0 z-10 pb-4">
-      <p class="text-sm font-semibold">On this page</p>
-    </div>
-
-    <ul class="flex flex-col gap-2 text-sm">
-      <li>
-        <a (click)="baseService.scrollTo('overview')"
-          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Overview
-        </a>
-      </li>
-      <li>
-        <a (click)="baseService.scrollTo('playground')"
-          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Playground
-        </a>
-      </li>
-      <li class="flex flex-col gap-2">
-        <a (click)="baseService.scrollTo('basic-table')"
-          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Usage Examples
-        </a>
-        <ul class="flex flex-col gap-2 text-sm ml-4">
-          <li>
-            <a (click)="baseService.scrollTo('basic-table')"
-              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Basic Table
-            </a>
-          </li>
-          <li>
-            <a (click)="baseService.scrollTo('column-hiding')"
-              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Column Hiding
-            </a>
-          </li>
-          <li>
-            <a (click)="baseService.scrollTo('pagination')"
-              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Pagination
-            </a>
-          </li>
-          <li>
-            <a (click)="baseService.scrollTo('searchable')"
-              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Search
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a (click)="baseService.scrollTo('api-reference')"
-          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          API Reference
-        </a>
-      </li>
-    </ul>
-  </aside>
-</div>
+  <ul toc class="flex flex-col gap-2 text-sm">
+    <li>
+      <a (click)="baseService.scrollTo('overview')"
+        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        Overview
+      </a>
+    </li>
+    <li>
+      <a (click)="baseService.scrollTo('playground')"
+        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        Playground
+      </a>
+    </li>
+    <li class="flex flex-col gap-2">
+      <a (click)="baseService.scrollTo('basic-table')"
+        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        Usage Examples
+      </a>
+      <ul class="flex flex-col gap-2 text-sm ml-4">
+        <li>
+          <a (click)="baseService.scrollTo('basic-table')"
+            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            Basic Table
+          </a>
+        </li>
+        <li>
+          <a (click)="baseService.scrollTo('column-hiding')"
+            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            Column Hiding
+          </a>
+        </li>
+        <li>
+          <a (click)="baseService.scrollTo('pagination')"
+            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            Pagination
+          </a>
+        </li>
+        <li>
+          <a (click)="baseService.scrollTo('searchable')"
+            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            Search
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a (click)="baseService.scrollTo('api-reference')"
+        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        API Reference
+      </a>
+    </li>
+  </ul>
+</app-docs-wrapper>

@@ -4,18 +4,20 @@
   </h2>
 
   <div class="space-y-4">
-    <div class="w-1/4">
-      <tolle-segment [items]="columnViewOptions" [(ngModel)]="columnTab"/>
+    <div class="w-full md:w-1/4">
+      <tolle-segment [items]="columnViewOptions" [(ngModel)]="columnTab" />
     </div>
 
-    <div *ngIf="columnTab === 'preview'" class="p-4 rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
+    <div *ngIf="columnTab === 'preview'"
+      class="p-4 rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
       <div class="w-full">
-        <app-column-hiding/>
+        <app-column-hiding />
       </div>
     </div>
-    <div *ngIf="columnTab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-      <div class="w-1/4 p-2">
-        <tolle-segment [items]="columnCodeViewOptions" [(ngModel)]="columnCode"/>
+    <div *ngIf="columnTab === 'code'"
+      class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+      <div class="w-full md:w-1/4 p-2">
+        <tolle-segment [items]="columnCodeViewOptions" [(ngModel)]="columnCode" />
       </div>
       <!-- Header -->
       <ng-container *ngIf="columnCode === 'html'">
@@ -28,7 +30,8 @@
 
           <!-- Copy icon -->
           <div *ngIf="hidingHtmlCode$ | async as code">
-            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition"
+              aria-label="Copy">
               <i class="ri-file-copy-line"></i>
             </button>
           </div>
@@ -49,7 +52,8 @@
 
           <!-- Copy icon -->
           <div *ngIf="hidingJsCode$ | async as code">
-            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition"
+              aria-label="Copy">
               <i class="ri-file-copy-line"></i>
             </button>
           </div>

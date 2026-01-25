@@ -7,7 +7,7 @@
         <p class="text-muted-foreground">
             The default accordion allows only one item to be open at a time.
         </p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
         </div>
 
@@ -27,7 +27,7 @@
         <p class="text-muted-foreground">
             Set the <code>type</code> prop to <code>multiple</code> to allow multiple items to be open at once.
         </p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="multiTab" />
         </div>
 

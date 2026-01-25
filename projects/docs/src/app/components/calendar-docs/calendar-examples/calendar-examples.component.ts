@@ -28,7 +28,7 @@ import { DisabledCalendarComponent } from '../../../docs-examples/calendar/disab
         <div id="basic">
           <h3 class="text-xl font-semibold mb-4">Basic</h3>
           <p class="text-muted-foreground mb-4">The default single-date selection calendar.</p>
-          <div class="w-1/4 mb-4">
+          <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="basicView" />
           </div>
           <div *ngIf="basicView === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
@@ -42,7 +42,7 @@ import { DisabledCalendarComponent } from '../../../docs-examples/calendar/disab
         <div id="modes">
           <h3 class="text-xl font-semibold mb-4">Different Modes</h3>
           <p class="text-muted-foreground mb-4">Switch between date, month, and year selection modes.</p>
-          <div class="w-1/4 mb-4">
+          <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="modeView" />
           </div>
           <div *ngIf="modeView === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
@@ -56,7 +56,7 @@ import { DisabledCalendarComponent } from '../../../docs-examples/calendar/disab
         <div id="disabled">
           <h3 class="text-xl font-semibold mb-4">Disabled & Restrictions</h3>
           <p class="text-muted-foreground mb-4">Restrict date selection using past date disabling or min/max bounds.</p>
-          <div class="w-1/4 mb-4">
+          <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="disabledView" />
           </div>
           <div *ngIf="disabledView === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">

@@ -17,6 +17,8 @@ import { SelectGroupComponent } from '../../../../../tolle/src/lib/select-group.
 import { SelectSeparatorComponent } from '../../../../../tolle/src/lib/select-separator.component';
 import { InputComponent } from '../../../../../tolle/src/lib/input.component';
 import { CheckboxComponent } from '../../../../../tolle/src/lib/checkbox.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-alert-docs',
@@ -30,7 +32,9 @@ import { CheckboxComponent } from '../../../../../tolle/src/lib/checkbox.compone
     SelectComponent,
     SelectItemComponent,
     InputComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './alert-docs.component.html',
   styleUrl: './alert-docs.component.css'

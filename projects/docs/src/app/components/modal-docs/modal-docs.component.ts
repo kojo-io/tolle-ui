@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ModalOverviewComponent } from './modal-overview/modal-overview.component';
 import { ModalInteractiveComponent } from './modal-interactive/modal-interactive.component';
 import { ModalApiComponent } from './modal-api/modal-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 import { BaseService } from '../../shared/base.service';
 
 @Component({
@@ -12,7 +14,9 @@ import { BaseService } from '../../shared/base.service';
         CommonModule,
         ModalOverviewComponent,
         ModalInteractiveComponent,
-        ModalApiComponent
+        ModalApiComponent,
+        DocsWrapperComponent
+
     ],
     templateUrl: './modal-docs.component.html'
 })

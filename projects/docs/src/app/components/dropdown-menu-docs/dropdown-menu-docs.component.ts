@@ -4,6 +4,8 @@ import { DropdownMenuOverviewComponent } from './dropdown-menu-overview/dropdown
 import { DropdownMenuInteractiveComponent } from './dropdown-menu-interactive/dropdown-menu-interactive.component';
 import { BaseService } from '../../shared/base.service';
 import { DropdownMenuApiComponent } from './dropdown-menu-api/dropdown-menu-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-dropdown-menu-docs',
@@ -12,7 +14,9 @@ import { DropdownMenuApiComponent } from './dropdown-menu-api/dropdown-menu-api.
     CommonModule,
     DropdownMenuOverviewComponent,
     DropdownMenuInteractiveComponent,
-    DropdownMenuApiComponent
+    DropdownMenuApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './dropdown-menu-docs.component.html'
 })

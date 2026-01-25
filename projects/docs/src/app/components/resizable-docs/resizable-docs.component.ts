@@ -3,6 +3,8 @@ import { BaseService } from '../../shared/base.service';
 import { ResizableOverviewComponent } from './resizable-overview/resizable-overview.component';
 import { ResizableInteractiveComponent } from './resizable-interactive/resizable-interactive.component';
 import { ResizableApiComponent } from './resizable-api/resizable-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
     selector: 'app-resizable-docs',
@@ -10,7 +12,9 @@ import { ResizableApiComponent } from './resizable-api/resizable-api.component';
     imports: [
         ResizableOverviewComponent,
         ResizableInteractiveComponent,
-        ResizableApiComponent
+        ResizableApiComponent,
+        DocsWrapperComponent
+
     ],
     templateUrl: './resizable-docs.component.html',
     styleUrl: './resizable-docs.component.css'

@@ -1,63 +1,49 @@
-<div class="flex w-full h-full">
-  <div class="flex-1 h-full overflow-auto no-scrollbar pb-20">
-    <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
-
-      <app-accordion-overview id="overview" />
-
-      <app-accordion-interactive id="playground" />
-
-      <app-accordion-examples id="examples" />
-
-      <app-accordion-api id="api-reference" />
-
-    </article>
+<app-docs-wrapper>
+  <div content>
+    <app-accordion-overview id="overview" />
+    <app-accordion-interactive id="playground" />
+    <app-accordion-examples id="examples" />
+    <app-accordion-api id="api-reference" />
   </div>
 
-  <!-- On This Page Nav -->
-  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
-    <div class="sticky top-0 z-10 pb-4">
-      <p class="text-sm font-semibold text-foreground">On this page</p>
-    </div>
-
-    <ul class="flex flex-col gap-2 text-sm">
-      <li>
-        <a (click)="baseService.scrollTo('overview')"
-          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Overview
-        </a>
-      </li>
-      <li>
-        <a (click)="baseService.scrollTo('playground')"
-          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Playground
-        </a>
-      </li>
-      <li class="flex flex-col gap-2">
-        <a (click)="baseService.scrollTo('examples')"
-          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          Examples
-        </a>
-        <ul class="flex flex-col gap-2 text-sm ml-4">
-          <li>
-            <a (click)="baseService.scrollTo('basic')"
-              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Basic
-            </a>
-          </li>
-          <li>
-            <a (click)="baseService.scrollTo('multiple')"
-              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-              Multiple
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a (click)="baseService.scrollTo('api-reference')"
-          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-          API Reference
-        </a>
-      </li>
-    </ul>
-  </aside>
-</div>
+  <ul toc class="flex flex-col gap-2 text-sm">
+    <li>
+      <a (click)="baseService.scrollTo('overview')"
+        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        Overview
+      </a>
+    </li>
+    <li>
+      <a (click)="baseService.scrollTo('playground')"
+        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        Playground
+      </a>
+    </li>
+    <li class="flex flex-col gap-2">
+      <a (click)="baseService.scrollTo('examples')"
+        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        Examples
+      </a>
+      <ul class="flex flex-col gap-2 text-sm ml-4">
+        <li>
+          <a (click)="baseService.scrollTo('basic')"
+            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            Basic
+          </a>
+        </li>
+        <li>
+          <a (click)="baseService.scrollTo('multiple')"
+            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+            Multiple
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a (click)="baseService.scrollTo('api-reference')"
+        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+        API Reference
+      </a>
+    </li>
+  </ul>
+</app-docs-wrapper>

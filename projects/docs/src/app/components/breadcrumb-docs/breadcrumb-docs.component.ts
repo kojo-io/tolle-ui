@@ -3,6 +3,8 @@ import { BreadcrumbOverviewComponent } from './breadcrumb-overview/breadcrumb-ov
 import { BreadcrumbInteractiveComponent } from './breadcrumb-interactive/breadcrumb-interactive.component';
 import { BreadcrumbExamplesComponent } from './breadcrumb-examples/breadcrumb-examples.component';
 import { BreadcrumbApiComponent } from './breadcrumb-api/breadcrumb-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 import { BaseService } from '../../shared/base.service';
 
 @Component({
@@ -12,7 +14,9 @@ import { BaseService } from '../../shared/base.service';
     BreadcrumbOverviewComponent,
     BreadcrumbInteractiveComponent,
     BreadcrumbExamplesComponent,
-    BreadcrumbApiComponent
+    BreadcrumbApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './breadcrumb-docs.component.html'
 })
