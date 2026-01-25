@@ -1,96 +1,87 @@
-<div class="flex w-full h-full">
-  <div class="flex-1 h-full overflow-auto no-scrollbar pb-20">
-    <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
-
-      <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
-        <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
-          Alert
-        </h1>
-        <div class="space-y-4">
-          <p class="text-lg text-muted-foreground">
-            Highlights important information to draw the user’s attention.
-          </p>
-        </div>
-      </header>
-
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold mb-6">Usage</h2>
-        <p class="mb-6 text-muted-foreground">
-          Alerts are used to display a brief, important message in a way that attracts the user's attention without
-          interrupting their task.
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
+      <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
+        Alert
+      </h1>
+      <div class="space-y-4">
+        <p class="text-lg text-muted-foreground">
+          Highlights important information to draw the user’s attention.
         </p>
+      </div>
+    </header>
 
-        <h3 class="text-xl font-semibold mb-4">Installation</h3>
-        <p class="mb-4 text-muted-foreground">
-          Import the <code>AlertComponent</code> into your standalone component's <code>imports</code> array.
-        </p>
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Usage</h2>
+      <p class="mb-6 text-muted-foreground">
+        Alerts are used to display a brief, important message in a way that attracts the user's attention without
+        interrupting their task.
+      </p>
 
-        <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden mb-8">
-          <app-base-editor [code]="installation" language="javascript" />
+      <h3 class="text-xl font-semibold mb-4">Installation</h3>
+      <p class="mb-4 text-muted-foreground">
+        Import the <code>AlertComponent</code> into your standalone component's <code>imports</code> array.
+      </p>
+
+      <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden mb-8">
+        <app-base-editor [code]="installation" language="javascript" />
+      </div>
+    </section>
+
+    <!-- Playground Section -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
+      <app-playground [code]="playgroundCode">
+        <div preview class="w-full">
+          <tolle-alert [variant]="playgroundVariant" [title]="playgroundTitle" [dismissible]="playgroundDismissible">
+            <i icon class="ri-information-line"></i>
+            You can add components to your app using the cli.
+          </tolle-alert>
         </div>
-      </section>
 
-      <!-- Playground Section -->
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
-        <app-playground [code]="playgroundCode">
-          <div preview class="w-full">
-            <tolle-alert [variant]="playgroundVariant" [title]="playgroundTitle" [dismissible]="playgroundDismissible">
-              <i icon class="ri-information-line"></i>
-              You can add components to your app using the cli.
-            </tolle-alert>
+        <div controls class="space-y-4">
+          <div class="space-y-2">
+            <label class="text-sm font-medium">Variant</label>
+            <tolle-select [(ngModel)]="playgroundVariant" size="sm">
+              <tolle-select-item value="default">Default</tolle-select-item>
+              <tolle-select-item value="destructive">Destructive</tolle-select-item>
+              <tolle-select-item value="success">Success</tolle-select-item>
+              <tolle-select-item value="warning">Warning</tolle-select-item>
+              <tolle-select-item value="info">Info</tolle-select-item>
+            </tolle-select>
           </div>
 
-          <div controls class="space-y-4">
-            <div class="space-y-2">
-              <label class="text-sm font-medium">Variant</label>
-              <tolle-select [(ngModel)]="playgroundVariant" size="sm">
-                <tolle-select-item value="default">Default</tolle-select-item>
-                <tolle-select-item value="destructive">Destructive</tolle-select-item>
-                <tolle-select-item value="success">Success</tolle-select-item>
-                <tolle-select-item value="warning">Warning</tolle-select-item>
-                <tolle-select-item value="info">Info</tolle-select-item>
-              </tolle-select>
-            </div>
-
-            <div class="space-y-2">
-              <label class="text-sm font-medium">Title</label>
-              <tolle-input [(ngModel)]="playgroundTitle" size="sm" placeholder="Enter alert title..." />
-            </div>
-
-            <div class="flex items-center gap-3 pt-2">
-              <tolle-checkbox [(ngModel)]="playgroundDismissible" id="dismissible" size="sm" />
-              <label for="dismissible" class="text-sm font-medium cursor-pointer">Dismissible</label>
-            </div>
+          <div class="space-y-2">
+            <label class="text-sm font-medium">Title</label>
+            <tolle-input [(ngModel)]="playgroundTitle" size="sm" placeholder="Enter alert title..." />
           </div>
-        </app-playground>
-      </section>
 
-      <!-- API Reference -->
-      <section class="mb-16">
-        <h2 class="text-2xl font-bold mb-6" id="api-reference">API Reference</h2>
+          <div class="flex items-center gap-3 pt-2">
+            <tolle-checkbox [(ngModel)]="playgroundDismissible" id="dismissible" size="sm" />
+            <label for="dismissible" class="text-sm font-medium cursor-pointer">Dismissible</label>
+          </div>
+        </div>
+      </app-playground>
+    </section>
 
-        <h3 class="text-lg font-semibold mb-4">Inputs</h3>
-        <app-prop-table [props]="alertProps"></app-prop-table>
+    <!-- API Reference -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-6" id="api-reference">API Reference</h2>
 
-        <h3 class="text-lg font-semibold mb-4">Outputs</h3>
-        <app-prop-table [props]="alertOutputs"></app-prop-table>
-      </section>
+      <h3 class="text-lg font-semibold mb-4">Inputs</h3>
+      <app-prop-table [props]="alertProps"></app-prop-table>
 
-
-    </article>
+      <h3 class="text-lg font-semibold mb-4">Outputs</h3>
+      <app-prop-table [props]="alertOutputs"></app-prop-table>
+    </section>
   </div>
 
-  <!-- On This Page Nav -->
-  <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56">
-    <div class="sticky top-0 z-10 pb-4">
-      <p class="text-sm font-semibold text-foreground">On this page</p>
-    </div>
+  <ng-template #toc>
     <ul class="flex flex-col gap-2 text-sm">
       <li><a (click)="baseService.scrollTo('overview')"
           class="cursor-pointer text-muted-foreground hover:text-foreground">Overview</a></li>
       <li><a (click)="baseService.scrollTo('api-reference')"
           class="cursor-pointer text-muted-foreground hover:text-foreground">API Reference</a></li>
     </ul>
-  </aside>
-</div>
+  </ng-template>
+</app-docs-wrapper>

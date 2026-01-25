@@ -1,0 +1,77 @@
+<section class="mb-16" id="theme-provider">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Global Theme Configuration
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            Tolle UI provides a <strong class="font-semibold text-foreground">theme provider</strong> that controls your
+            application’s core design tokens.
+        </p>
+        <p class="text-muted-foreground">
+            Add this to your <code
+                class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">app.config.ts</code>
+        </p>
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="text-neutral-400">&gt;_</span>
+                    <span>app.config.ts</span>
+                </div>
+
+                <!-- Copy icon -->
+                <button (click)="baseService.copyTo(appConfigCode)"
+                    class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                    <i class="ri-file-copy-line"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="appConfigCode" language="javascript" />
+            </div>
+        </div>
+        <h2 class="text-xl font-bold mb-6 flex items-center text-foreground">
+            Configuration Options
+        </h2>
+        <div class="overflow-hidden rounded-md border border-neutral-200 dark:border-neutral-800">
+            <table class="w-full text-left text-sm">
+                <thead class="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+                    <tr>
+                        <th class="px-6 py-3 font-semibold text-foreground">Option</th>
+                        <th class="px-6 py-3 font-semibold text-foreground">Description</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800 bg-white dark:bg-neutral-950">
+                    <tr class="hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors">
+                        <td class="px-6 py-4 font-mono">
+                            <code
+                                class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">primaryColor</code>
+                        </td>
+                        <td class="px-6 py-4 text-muted-foreground">
+                            Base brand color used to generate all theme shades
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors">
+                        <td class="px-6 py-4 font-mono">
+                            <code
+                                class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">radius</code>
+                        </td>
+                        <td class="px-6 py-4 text-muted-foreground">
+                            Global border radius for components
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-neutral-50 dark:hover:bg-neutral-900 transition-colors">
+                        <td class="px-6 py-4 font-mono">
+                            <code
+                                class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">darkByDefault</code>
+                        </td>
+                        <td class="px-6 py-4 text-muted-foreground">
+                            Enables dark mode on initial load
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

@@ -5,6 +5,8 @@ import { ButtonOverviewComponent } from './button-overview/button-overview.compo
 import { ButtonInteractiveComponent } from './button-interactive/button-interactive.component';
 import { ButtonExamplesComponent } from './button-examples/button-examples.component';
 import { ButtonApiComponent } from './button-api/button-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-button-docs',
@@ -13,7 +15,8 @@ import { ButtonApiComponent } from './button-api/button-api.component';
     ButtonOverviewComponent,
     ButtonInteractiveComponent,
     ButtonExamplesComponent,
-    ButtonApiComponent
+    ButtonApiComponent,
+    DocsWrapperComponent
   ],
   templateUrl: './button-docs.component.html'
 })

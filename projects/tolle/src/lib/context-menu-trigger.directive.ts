@@ -14,6 +14,7 @@ export class ContextMenuTriggerDirective {
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(event: MouseEvent) {
+    event.stopPropagation();
     this.contextMenuService.open({
       event,
       items: this.items,

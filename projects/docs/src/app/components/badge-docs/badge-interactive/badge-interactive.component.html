@@ -1,7 +1,7 @@
 <section class="mb-16" id="playground">
     <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
     <app-playground [code]="playgroundCode">
-        <div preview>
+        <div preview class="flex items-center justify-center w-full min-h-[150px]">
             <tolle-badge [variant]="variant" [size]="size" [removable]="removable">
                 {{ label }}
             </tolle-badge>
@@ -27,9 +27,9 @@
                 </tolle-select>
             </div>
 
-            <div class="flex items-center gap-2 py-2">
-                <tolle-checkbox [(ngModel)]="removable" size="sm"></tolle-checkbox>
-                <label class="text-sm font-medium">Removable</label>
+            <div class="flex items-center gap-3 py-2">
+                <tolle-switch [(ngModel)]="removable" size="sm"></tolle-switch>
+                <label class="text-sm font-medium cursor-pointer" (click)="removable = !removable">Removable</label>
             </div>
 
             <div class="space-y-2">

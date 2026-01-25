@@ -1,0 +1,27 @@
+<section id="api-reference" class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">API Reference</h2>
+
+    <div class="space-y-12">
+        <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-foreground">EmptyStateComponent</h3>
+            <p class="text-muted-foreground text-sm">Selector: <code class="text-primary">tolle-empty-state</code></p>
+            <app-prop-table [props]="componentProps"></app-prop-table>
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-foreground">Slots</h3>
+            <div class="rounded-lg border border-border p-4 bg-muted/5">
+                <ul class="space-y-4 text-sm">
+                    <li>
+                        <code class="text-primary font-bold">[icon]</code>: Center graphic/icon. Replaces the default
+                        inbox icon.
+                    </li>
+                    <li>
+                        <code class="text-primary font-bold">[actions]</code>: Container for CTA buttons. Only rendered
+                        in "default" variant.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>

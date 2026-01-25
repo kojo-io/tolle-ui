@@ -6,13 +6,13 @@
   <div class="space-y-4">
 
     <div class="p-4 h-[200px] rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
-      <div class="w-72">
-        <app-month-picker/>
+      <div class="min-w-72">
+        <app-month-picker />
       </div>
     </div>
     <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-      <div class="w-1/4 p-2">
-        <tolle-segment [items]="codeViewOptions" [(ngModel)]="codeTab"/>
+      <div class="w-full md:w-1/4 p-2">
+        <tolle-segment [items]="codeViewOptions" [(ngModel)]="codeTab" />
       </div>
       <!-- Header -->
       <ng-container *ngIf="codeTab === 'html'">
@@ -25,7 +25,8 @@
 
           <!-- Copy icon -->
           <div *ngIf="htmlCode$ | async as code">
-            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition"
+              aria-label="Copy">
               <i class="ri-file-copy-line"></i>
             </button>
           </div>
@@ -46,7 +47,8 @@
 
           <!-- Copy icon -->
           <div *ngIf="jsCode$ | async as code">
-            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition"
+              aria-label="Copy">
               <i class="ri-file-copy-line"></i>
             </button>
           </div>

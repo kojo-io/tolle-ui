@@ -24,7 +24,7 @@ import { BasicRangeCalendarComponent } from '../../../docs-examples/calendar-ran
         <div id="basic">
           <h3 class="text-xl font-semibold mb-4">Basic Range</h3>
           <p class="text-muted-foreground mb-4">Select a start and end date to define a range.</p>
-          <div class="w-1/4 mb-4">
+          <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="basicView" />
           </div>
           <div *ngIf="basicView === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">

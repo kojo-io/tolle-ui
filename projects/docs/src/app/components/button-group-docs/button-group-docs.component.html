@@ -1,19 +1,12 @@
-<div class="flex w-full h-full">
-    <div class="flex-1 h-full overflow-auto no-scrollbar scroll-smooth">
-        <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
-            <app-button-group-overview />
-            <app-button-group-interactive />
-            <app-button-group-examples />
-            <app-button-group-api />
-        </article>
+<app-docs-wrapper [tocTemplate]="toc">
+    <div content>
+        <app-button-group-overview />
+        <app-button-group-interactive />
+        <app-button-group-examples />
+        <app-button-group-api />
     </div>
 
-    <aside
-        class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56 border-l border-neutral-100 dark:border-neutral-800">
-        <div class="sticky top-0 z-10 pb-4">
-            <p class="text-sm font-semibold text-foreground">On this page</p>
-        </div>
-
+    <ng-template #toc>
         <ul class="flex flex-col gap-2 text-sm">
             <li>
                 <a (click)="baseService.scrollTo('overview')"
@@ -60,5 +53,5 @@
                 </a>
             </li>
         </ul>
-    </aside>
-</div>
+    </ng-template>
+</app-docs-wrapper>

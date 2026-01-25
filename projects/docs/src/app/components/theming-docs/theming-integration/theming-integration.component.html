@@ -1,0 +1,126 @@
+<section class="mb-16" id="theme-stylesheet">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Adding the Tolle UI Theme File
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            Tolle UI ships with a global theme stylesheet that must be included in your project.
+        </p>
+        <p class="text-muted-foreground">
+            Update your Angular <code
+                class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">angular.json</code>
+            styles array:
+        </p>
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="text-neutral-400">&gt;_</span>
+                    <span>angular.json</span>
+                </div>
+
+                <!-- Copy icon -->
+                <button (click)="baseService.copyTo(globalStyles)"
+                    class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                    <i class="ri-file-copy-line"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="globalStyles" language="json" />
+            </div>
+        </div>
+        <p class="text-muted-foreground">
+            This file:
+        </p>
+        <ul class="list-disc ml-8 text-muted-foreground">
+            <li>Defines CSS variables</li>
+            <li>Registers background/foreground tokens</li>
+            <li>Enables dark mode support</li>
+        </ul>
+    </div>
+</section>
+
+<section class="mb-16" id="tailwind-integration">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Tailwind Integration
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            Tolle UI integrates directly with Tailwind using a preset.
+        </p>
+        <h2 class="text-xl font-bold mb-6 flex items-center text-foreground">
+            Tailwind Configuration
+        </h2>
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="text-neutral-400">&gt;_</span>
+                    <span>tailwind.config.js</span>
+                </div>
+
+                <!-- Copy icon -->
+                <button (click)="baseService.copyTo(tailwindConfigCode)"
+                    class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                    <i class="ri-file-copy-line"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="tailwindConfigCode" language="javascript" />
+            </div>
+        </div>
+        <p class="text-muted-foreground">
+            What This Gives You
+        </p>
+        <ul class="list-disc ml-8 text-muted-foreground">
+            <li>Access to <code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">primary-*</code>
+                color scale</li>
+            <li>Semantic utilities like <code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">bg-background</code>
+            </li>
+            <li>Dark mode compatibility</li>
+            <li>Component-aware Tailwind scanning</li>
+        </ul>
+    </div>
+</section>
+
+<section class="mb-16" id="using-utilities">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Using Tailwind Utilities Alongside Tolle UI
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            Tolle UI <strong class="font-semibold text-foreground">does not block Tailwind usage</strong>. You can
+            freely layer Tailwind utilities on top of components.
+        </p>
+        <p class="text-muted-foreground">
+            Example:
+        </p>
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="text-neutral-400">&gt;_</span>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="tailAlongside" language="html" />
+            </div>
+        </div>
+        <p class="text-muted-foreground">
+            This allows:
+        </p>
+        <ul class="list-disc ml-8 text-muted-foreground">
+            <li>Rapid layout adjustments</li>
+            <li>Context-specific styling</li>
+            <li>Utility-first overrides without breaking the theme</li>
+        </ul>
+    </div>
+</section>

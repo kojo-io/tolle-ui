@@ -6,7 +6,7 @@ import { SelectComponent } from '../../../../../../tolle/src/lib/select.componen
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 
 @Component({
     selector: 'app-badge-interactive',
@@ -18,6 +18,7 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
         PlaygroundComponent,
         SelectComponent,
         SelectItemComponent,
+        SwitchComponent
     ],
     templateUrl: './badge-interactive.component.html'
 })

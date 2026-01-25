@@ -1,0 +1,37 @@
+<section class="mb-16" id="primary-colors">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Primary Color Generation
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            When you set a <strong class="font-semibold text-foreground">primary/base color</strong>, Tolle UI
+            automatically generates a full Tailwind-compatible color scale:
+        </p>
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="text-neutral-400">&gt;_</span>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="primaryGen" language="javascript" />
+            </div>
+        </div>
+        <p class="text-muted-foreground">
+            This means:
+        </p>
+        <ul class="list-disc ml-8 text-muted-foreground">
+            <li>You define one brand color</li>
+            <li>Tolle UI derives all shades</li>
+            <li>Utilities like <code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">bg-primary-600</code>
+                work out of the box</li>
+        </ul>
+        <p class="text-muted-foreground">
+            No manual palette creation required.
+        </p>
+    </div>
+</section>

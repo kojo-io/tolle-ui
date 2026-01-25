@@ -1,0 +1,129 @@
+<app-docs-wrapper [tocTemplate]="toc">
+    <div content>
+        <app-carousel-overview id="overview" />
+        <app-carousel-examples />
+        <app-carousel-api id="api-reference" />
+    </div>
+
+    <ng-template #toc>
+        <ul class="flex flex-col gap-2 text-sm">
+            <li>
+                <a (click)="baseService.scrollTo('overview')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Overview
+                </a>
+            </li>
+            <li>
+                <p class="font-medium text-xs text-foreground/50 mt-4 mb-2 uppercase tracking-wider">Examples</p>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('basic')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Basic
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('multiple')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Multiple Slides
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('alignment')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Alignment
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('variable-width')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Variable Widths
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('rtl')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Right To Left
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('autoplay')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Autoplay Plugin
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('auto-scroll')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Auto Scroll Plugin
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('fade')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Fade Effect
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('class-names')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Class Names
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('loop')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Loop & Drag Free
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('parallax')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Parallax Effect
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('scale')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Scale Transformation
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('opacity')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Opacity Transition
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('thumbnails')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Thumbnail Navigation
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('progress')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Scroll Progress
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('lazy-load')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Lazy Loading
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('infinite-scroll')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Infinite Scrolling
+                </a>
+            </li>
+            <li class="mt-4 border-t border-neutral-100 dark:border-neutral-800 pt-4">
+                <a (click)="baseService.scrollTo('api-reference')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground font-semibold">
+                    API Reference
+                </a>
+            </li>
+        </ul>
+    </ng-template>
+</app-docs-wrapper>

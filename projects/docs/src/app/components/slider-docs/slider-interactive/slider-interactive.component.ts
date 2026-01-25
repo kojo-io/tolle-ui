@@ -1,0 +1,76 @@
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { SliderComponent } from '../../../../../../tolle/src/lib/slider.component';
+import { PlaygroundComponent } from '../../../shared/playground/playground.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
+import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+
+@Component({
+    selector: 'app-slider-interactive',
+    standalone: true,
+    imports: [
+        CommonModule,
+        FormsModule,
+        SliderComponent,
+        PlaygroundComponent,
+        LabelComponent,
+        InputComponent
+    ],
+    template: `
+    <section class="mb-16" id="playground">
+      <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+      <app-playground [code]="playgroundCode" language="angular">
+        <div preview>
+          <div class="w-full max-w-sm">
+             <div class="flex items-center justify-between mb-4">
+                <tolle-label>Value: {{ value }}</tolle-label>
+             </div>
+             <tolle-slider 
+               [(ngModel)]="value" 
+               [min]="min" 
+               [max]="max" 
+               [step]="step"
+               [disabled]="isDisabled"
+             ></tolle-slider>
+          </div>
+        </div>
+
+        <div controls class="space-y-4">
+          <div class="space-y-2">
+            <tolle-label>Min</tolle-label>
+            <tolle-input type="number" [(ngModel)]="min" />
+          </div>
+          <div class="space-y-2">
+            <tolle-label>Max</tolle-label>
+            <tolle-input type="number" [(ngModel)]="max" />
+          </div>
+          <div class="space-y-2">
+            <tolle-label>Step</tolle-label>
+            <tolle-input type="number" [(ngModel)]="step" />
+          </div>
+          <div class="flex items-center gap-2">
+             <input type="checkbox" [(ngModel)]="isDisabled" id="disable-slider" />
+             <label for="disable-slider" class="text-sm font-medium">Disabled</label>
+          </div>
+        </div>
+      </app-playground>
+    </section>
+  `
+})
+export class SliderInteractiveComponent {
+    value = 50;
+    min = 0;
+    max = 100;
+    step = 1;
+    isDisabled = false;
+
+    get playgroundCode() {
+        const minAttr = this.min !== 0 ? ` [min]="${this.min}"` : '';
+        const maxAttr = this.max !== 100 ? ` [max]="${this.max}"` : '';
+        const stepAttr = this.step !== 1 ? ` [step]="${this.step}"` : '';
+        const disabledAttr = this.isDisabled ? ` [disabled]="true"` : '';
+
+        return `<tolle-slider [(ngModel)]="value"${minAttr}${maxAttr}${stepAttr}${disabledAttr}></tolle-slider>`;
+    }
+}

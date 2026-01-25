@@ -1,0 +1,52 @@
+<app-docs-wrapper [tocTemplate]="toc">
+    <div content>
+        <app-sheet-overview id="overview"></app-sheet-overview>
+        <app-sheet-interactive id="playground"></app-sheet-interactive>
+        <app-sheet-api id="api-reference"></app-sheet-api>
+    </div>
+
+    <ng-template #toc>
+        <ul class="flex flex-col gap-2 text-sm">
+            <li>
+                <a (click)="baseService.scrollTo('overview')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Overview
+                </a>
+            </li>
+            <li>
+                <ul class="ml-4 flex flex-col gap-2 mt-2 border-l border-slate-200 pl-4">
+                    <li>
+                        <a (click)="baseService.scrollTo('import')"
+                            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:text-foreground">
+                            Import
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="baseService.scrollTo('usage')"
+                            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:text-foreground">
+                            Usage
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="baseService.scrollTo('service')"
+                            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:text-foreground">
+                            Programmatic Usage
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('playground')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Playground
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('api-reference')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    API Reference
+                </a>
+            </li>
+        </ul>
+    </ng-template>
+</app-docs-wrapper>

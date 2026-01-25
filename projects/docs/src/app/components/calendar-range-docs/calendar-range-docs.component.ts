@@ -5,6 +5,8 @@ import { CalendarRangeOverviewComponent } from './calendar-range-overview/calend
 import { CalendarRangeInteractiveComponent } from './calendar-range-interactive/calendar-range-interactive.component';
 import { CalendarRangeExamplesComponent } from './calendar-range-examples/calendar-range-examples.component';
 import { CalendarRangeApiComponent } from './calendar-range-api/calendar-range-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-calendar-range-docs',
@@ -13,7 +15,9 @@ import { CalendarRangeApiComponent } from './calendar-range-api/calendar-range-a
     CalendarRangeOverviewComponent,
     CalendarRangeInteractiveComponent,
     CalendarRangeExamplesComponent,
-    CalendarRangeApiComponent
+    CalendarRangeApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './calendar-range-docs.component.html',
   styleUrl: './calendar-range-docs.component.css'

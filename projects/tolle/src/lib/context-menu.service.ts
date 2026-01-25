@@ -2,13 +2,16 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { computePosition, offset, shift, flip, size } from '@floating-ui/dom';
 
 export type ContextMenuItem = {
-  id: string;
-  label: string;
+  id?: string;
+  label?: string;
   icon?: string;
   disabled?: boolean;
   destructive?: boolean;
   separator?: boolean;
   submenu?: ContextMenuItem[];
+  shortcut?: string;
+  checked?: boolean;
+  type?: 'default' | 'checkbox' | 'radio';
 }
 
 export type ContextMenuState = {
@@ -65,7 +68,7 @@ export class ContextMenuService {
     const state = this._state;
     if (!state.isOpen || !menuElement) return;
 
-    // We use a virtual element based on the mouse coordinates
+    // Create a precise virtual element for the mouse coordinates
     const virtualEl = {
       getBoundingClientRect() {
         return {
@@ -78,20 +81,25 @@ export class ContextMenuService {
           right: state.x,
           bottom: state.y,
         };
-      },
+      }
     };
 
     const { x, y } = await computePosition(virtualEl as any, menuElement, {
-      placement: 'bottom-start',
+      placement: 'bottom-start', // Standard: Menu top-left aligns with mouse
       strategy: 'fixed',
       middleware: [
-        offset(4),
-        flip({ padding: 10 }),
+        offset(2), // Slight offset so mouse isn't covering the first pixel
+        flip({
+          padding: 10,
+          fallbackPlacements: ['bottom-end', 'top-start', 'top-end']
+        }),
         shift({ padding: 10 }),
         size({
-          apply({ availableHeight, elements }) {
+          apply({ availableHeight, availableWidth, elements }) {
             Object.assign(elements.floating.style, {
-              maxHeight: `${availableHeight - 16}px`
+              maxHeight: `${Math.max(100, availableHeight - 16)}px`,
+              maxWidth: `${Math.max(200, availableWidth - 16)}px`,
+              overflowY: 'auto'
             });
           }
         })
@@ -99,9 +107,43 @@ export class ContextMenuService {
     });
 
     Object.assign(menuElement.style, {
-      left: `${x}px`,
-      top: `${y}px`,
-      position: 'fixed'
+      position: 'fixed',
+      left: '0',
+      top: '0',
+      transform: `translate(${Math.round(x)}px, ${Math.round(y)}px)`
+    });
+  }
+
+  async positionSubmenu(triggerElement: HTMLElement, submenuElement: HTMLElement) {
+    if (!triggerElement || !submenuElement) return;
+
+    const { x, y } = await computePosition(triggerElement, submenuElement, {
+      placement: 'right-start', // Standard: Submenu opens to the right
+      strategy: 'fixed',
+      middleware: [
+        offset(-4), // Overlap slightly with parent menu
+        flip({
+          padding: 10,
+          fallbackPlacements: ['left-start', 'bottom-start']
+        }),
+        shift({ padding: 10 }),
+        size({
+          apply({ availableHeight, availableWidth, elements }) {
+            Object.assign(elements.floating.style, {
+              maxHeight: `${Math.max(100, availableHeight - 16)}px`,
+              maxWidth: `${Math.max(200, availableWidth - 16)}px`,
+              overflowY: 'auto'
+            });
+          }
+        })
+      ]
+    });
+
+    Object.assign(submenuElement.style, {
+      position: 'fixed',
+      left: '0',
+      top: '0',
+      transform: `translate(${Math.round(x)}px, ${Math.round(y)}px)`
     });
   }
 

@@ -5,6 +5,8 @@ import { ButtonGroupOverviewComponent } from './button-group-overview/button-gro
 import { ButtonGroupInteractiveComponent } from './button-group-interactive/button-group-interactive.component';
 import { ButtonGroupExamplesComponent } from './button-group-examples/button-group-examples.component';
 import { ButtonGroupApiComponent } from './button-group-api/button-group-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-button-group-docs',
@@ -13,7 +15,9 @@ import { ButtonGroupApiComponent } from './button-group-api/button-group-api.com
     ButtonGroupOverviewComponent,
     ButtonGroupInteractiveComponent,
     ButtonGroupExamplesComponent,
-    ButtonGroupApiComponent
+    ButtonGroupApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './button-group-docs.component.html'
 })

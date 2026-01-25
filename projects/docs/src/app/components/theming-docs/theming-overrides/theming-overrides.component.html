@@ -1,0 +1,126 @@
+<section class="mb-16" id="component-overrides">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Component-Level Overrides
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            Every Tolle UI component can be <strong class="font-semibold text-foreground">fully overridden using CSS or
+                Tailwind utilities</strong>.
+        </p>
+        <p class="text-muted-foreground">
+            Below is an example overriding the <strong class="font-semibold text-foreground">Segmented</strong>
+            component.
+        </p>
+        <h2 class="text-xl font-bold mb-6 flex items-center text-foreground">
+            Base Overrides
+        </h2>
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="text-neutral-400">&gt;_</span>
+                    <span>segmented component override</span>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="baseOverride" language="css" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-16" id="dark-mode">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Dark Mode Overrides
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            Dark mode overrides are scoped using the <code
+                class="bg-neutral-200 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">.dark</code>
+            class.
+        </p>
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="text-neutral-400">&gt;_</span>
+                    <span>segmented component override</span>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="baseDarkOverride" language="css" />
+            </div>
+        </div>
+
+        <p class="text-muted-foreground">
+            This ensures:
+        </p>
+        <ul class="list-disc ml-8 text-muted-foreground">
+            <li>Light and dark themes stay isolated</li>
+            <li>No duplicated components</li>
+            <li>Predictable styling behavior</li>
+        </ul>
+    </div>
+    <h2 class="text-2xl font-bold mt-16 mb-6 flex items-center text-foreground">
+        Fine-Grained Control
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            You can target:
+        </p>
+        <ul class="list-disc ml-8 text-muted-foreground">
+            <li>Individual buttons (<code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">nth-child</code>)
+            </li>
+            <li>States (<code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">hover</code>,
+                <code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">focus</code>,
+                <code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">disabled</code>)
+            </li>
+            <li>Icons and text independently</li>
+        </ul>
+        <p class="text-muted-foreground">
+            Example:
+        </p>
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="text-neutral-400">&gt;_</span>
+                    <span>segmented component override</span>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="relative group mb-6 rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="baseDarkOverride2" language="css" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mb-16" id="theming-flexibility">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Theme Flexibility Across All Components
+    </h2>
+    <div class="space-y-4">
+        <p class="text-muted-foreground">
+            This override pattern is <strong class="font-semibold text-foreground">available for every Tolle UI
+                components</strong> not just segmented controls.
+        </p>
+        <p class="text-muted-foreground">
+            This gives you:
+        </p>
+        <ul class="list-disc ml-8 text-muted-foreground">
+            <li>Full design-system freedom</li>
+            <li>Zero lock-in</li>
+            <li>Scalable theming for large applications</li>
+        </ul>
+    </div>
+</section>

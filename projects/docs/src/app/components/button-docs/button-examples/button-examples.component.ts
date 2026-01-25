@@ -30,7 +30,7 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
       <div class="space-y-4 mb-12" id="basic">
         <h3 class="text-xl font-semibold text-foreground">Basic</h3>
         <p class="text-muted-foreground">Standard variants and sizes for common use cases.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
         </div>
         <div *ngIf="basicTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
@@ -45,7 +45,7 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
       <div class="space-y-4 mb-12" id="destructive">
         <h3 class="text-xl font-semibold text-foreground">Destructive</h3>
         <p class="text-muted-foreground">Use for actions that result in data loss or other high-risk operations.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="destructiveTab" />
         </div>
         <div *ngIf="destructiveTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
@@ -60,7 +60,7 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
       <div class="space-y-4 mb-12" id="icon">
         <h3 class="text-xl font-semibold text-foreground">Icons</h3>
         <p class="text-muted-foreground">Buttons can contain icons alongside text or as standalone icon buttons.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="iconTab" />
         </div>
         <div *ngIf="iconTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
@@ -75,7 +75,7 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
       <div class="space-y-4 mb-12" id="busy">
         <h3 class="text-xl font-semibold text-foreground">Busy State</h3>
         <p class="text-muted-foreground">Indicate an ongoing process by setting the <code>busy</code> prop.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="busyTab" />
         </div>
         <div *ngIf="busyTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">

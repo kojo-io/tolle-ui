@@ -4,6 +4,8 @@ import { AccordionOverviewComponent } from './accordion-overview/accordion-overv
 import { AccordionInteractiveComponent } from './accordion-interactive/accordion-interactive.component';
 import { AccordionExamplesComponent } from './accordion-examples/accordion-examples.component';
 import { AccordionApiComponent } from './accordion-api/accordion-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-accordion-docs',
@@ -12,7 +14,9 @@ import { AccordionApiComponent } from './accordion-api/accordion-api.component';
     AccordionOverviewComponent,
     AccordionInteractiveComponent,
     AccordionExamplesComponent,
-    AccordionApiComponent
+    AccordionApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './accordion-docs.component.html',
   styleUrl: './accordion-docs.component.css'

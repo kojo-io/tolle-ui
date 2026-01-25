@@ -8,8 +8,10 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   OnChanges,
+  OnDestroy,
   SimpleChanges,
-  TemplateRef
+  TemplateRef,
+  ViewChild,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -87,7 +89,7 @@ export type SegmentItem = {
     }
   `]
 })
-export class SegmentedComponent implements ControlValueAccessor, AfterViewInit, OnChanges {
+export class SegmentedComponent implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy {
   @Input() items: SegmentItem[] = [];
   @Input() class = '';
   @Input() disabled = false;
@@ -98,15 +100,31 @@ export class SegmentedComponent implements ControlValueAccessor, AfterViewInit, 
   gliderWidth = 0;
   hasValue = false;
 
+  @ViewChild('container') containerEl!: ElementRef<HTMLElement>;
   @ViewChildren('itemEls') itemElements!: QueryList<ElementRef<HTMLElement>>;
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  private resizeObserver?: ResizeObserver;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  onChange: any = () => { };
+  onTouched: any = () => { };
+
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
     setTimeout(() => this.updateGlider());
+
+    if (typeof ResizeObserver !== 'undefined' && this.containerEl) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.updateGlider();
+      });
+      this.resizeObserver.observe(this.containerEl.nativeElement);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
   }
 
   ngOnChanges(changes: SimpleChanges) {

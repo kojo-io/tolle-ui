@@ -1,0 +1,76 @@
+<app-docs-wrapper [tocTemplate]="toc">
+    <div content>
+        <app-theming-overview id="overview" />
+        <app-theming-colors id="primary-colors" />
+        <app-theming-config id="theme-provider" />
+        <app-theming-integration id="theme-stylesheet" />
+        <app-theming-overrides id="component-overrides" />
+    </div>
+
+    <ng-template #toc>
+        <ul class="flex flex-col gap-2 text-sm">
+            <li>
+                <a (click)="baseService.scrollTo('overview')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Design Philosophy
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('primary-colors')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Primary Color System
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('theme-provider')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Theme Provider
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('theme-stylesheet')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Theme Stylesheet
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('tailwind-integration')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Tailwind Integration
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('using-utilities')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Using Tailwind Utilities
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('component-overrides')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Component Overrides
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('dark-mode')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Dark Mode Overrides
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('theming-flexibility')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Theming Flexibility
+                </a>
+            </li>
+        </ul>
+    </ng-template>
+</app-docs-wrapper>
