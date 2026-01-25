@@ -1,0 +1,42 @@
+<app-docs-wrapper [tocTemplate]="toc">
+    <div content>
+        <app-hover-card-overview id="overview" />
+        <app-hover-card-interactive id="playground" />
+        <app-hover-card-api id="api-reference" />
+    </div>
+
+    <ng-template #toc>
+        <ul class="flex flex-col gap-2 text-sm">
+            <li>
+                <a (click)="baseService.scrollTo('overview')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Overview
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('installation')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 ml-4 hover:ml-6 hover:text-foreground border-l border-neutral-200 dark:border-neutral-800 pl-4">
+                    Installation
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('usage')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 ml-4 hover:ml-6 hover:text-foreground border-l border-neutral-200 dark:border-neutral-800 pl-4">
+                    Usage
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('playground')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Playground
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('api-reference')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    API Reference
+                </a>
+            </li>
+        </ul>
+    </ng-template>
+</app-docs-wrapper>

@@ -102,6 +102,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Date Picker", url: "/components/date-picker" },
         { title: "Date Range Picker", url: "/components/date-range-picker" },
         { title: "Dropdown Menu", url: "/components/dropdown-menu" },
+        { title: "Hover Card", url: "/components/hover-card" },
         { title: "Empty State", url: "/components/empty-state" },
         { title: "Input", url: "/components/input" },
         { title: "Label", url: "/components/label" },
@@ -127,6 +128,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Textarea", url: "/components/textarea" },
         { title: "Toaster", url: "/components/toaster" },
         { title: "Toggle", url: "/components/toggle" },
+        { title: "Toggle Group", url: "/components/toggle-group" },
         { title: "Tooltip", url: "/components/tooltip" }
       ]
     }

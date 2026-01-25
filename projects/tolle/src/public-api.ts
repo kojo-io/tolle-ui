@@ -65,6 +65,8 @@ export * from './lib/separator.component';
 export * from './lib/progress.component';
 export * from './lib/slider.component';
 export * from './lib/toggle.component';
+export * from './lib/toggle-group.component';
+export * from './lib/hover-card.component';
 export * from './lib/tabs.component';
 export * from './lib/collapsible.component';
 export * from './lib/scroll-area.component';

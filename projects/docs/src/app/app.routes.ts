@@ -164,6 +164,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/toggle-docs/toggle-docs.component').then(m => m.ToggleDocsComponent),
           },
           {
+            path: 'toggle-group',
+            loadComponent: () => import('./components/toggle-group-docs/toggle-group-docs.component').then(m => m.ToggleGroupDocsComponent)
+          },
+          {
             path: 'tooltip',
             loadComponent: () => import('./components/tooltip-docs/tooltip-docs.component').then(m => m.TooltipDocsComponent),
           },
@@ -186,6 +190,10 @@ export const routes: Routes = [
           {
             path: 'dropdown-menu',
             loadComponent: () => import('./components/dropdown-menu-docs/dropdown-menu-docs.component').then(m => m.DropdownMenuDocsComponent),
+          },
+          {
+            path: 'hover-card',
+            loadComponent: () => import('./components/hover-card-docs/hover-card-docs.component').then(m => m.HoverCardDocsComponent),
           },
           {
             path: 'empty-state',
