@@ -1,0 +1,63 @@
+<app-playground [code]="generatedCode">
+    <div preview
+        class="flex flex-col items-center justify-center p-8 bg-muted/20 rounded-lg border border-dashed border-border min-h-[200px]">
+        <tolle-button (click)="triggerToast()" size="lg" class="shadow-lg hover:shadow-xl transition-shadow">
+            <i class="ri-notification-3-line mr-2"></i> Trigger Notification
+        </tolle-button>
+        <p class="mt-4 text-xs text-muted-foreground text-center">
+            Monitoring position: <span class="font-mono text-primary">{{ position }}</span>
+        </p>
+    </div>
+
+    <div controls class="space-y-6">
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Title</label>
+            <input type="text" [(ngModel)]="title"
+                class="w-full px-3 py-2 rounded-md border border-input bg-background text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                placeholder="e.g., Action Required">
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Message</label>
+            <textarea [(ngModel)]="description"
+                class="w-full px-3 py-2 rounded-md border border-input bg-background text-sm min-h-[80px] focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                placeholder="Describe what happened..."></textarea>
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Style Variant</label>
+            <tolle-select [(ngModel)]="variant">
+                <tolle-select-item value="default">Default (Muted)</tolle-select-item>
+                <tolle-select-item value="success">Success (Green)</tolle-select-item>
+                <tolle-select-item value="destructive">Destructive (Red)</tolle-select-item>
+            </tolle-select>
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Screen Position</label>
+            <tolle-select [(ngModel)]="position">
+                <tolle-select-item value="top-right">Top Right</tolle-select-item>
+                <tolle-select-item value="top-left">Top Left</tolle-select-item>
+                <tolle-select-item value="bottom-right">Bottom Right</tolle-select-item>
+                <tolle-select-item value="bottom-left">Bottom Left</tolle-select-item>
+                <tolle-select-item value="top-center">Top Center</tolle-select-item>
+                <tolle-select-item value="bottom-center">Bottom Center</tolle-select-item>
+            </tolle-select>
+            <p class="text-[10px] text-muted-foreground italic leading-tight mt-1">
+                Changing position updates the &lt;tolle-toaster&gt; host.
+            </p>
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-xs font-bold uppercase tracking-wider text-muted-foreground">Duration (ms)</label>
+            <div class="flex items-center gap-4">
+                <input type="range" [(ngModel)]="duration" min="1000" max="10000" step="500"
+                    class="flex-1 accent-primary">
+                <span class="text-sm font-mono w-12">{{ duration }}</span>
+            </div>
+        </div>
+    </div>
+</app-playground>
+
+<!-- This is the actual toaster instance used for the playground demo -->
+<tolle-toaster [position]="position"></tolle-toaster>

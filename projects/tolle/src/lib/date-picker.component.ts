@@ -29,8 +29,7 @@ import { CalendarComponent, CalendarMode } from './calendar.component';
         [disabled]="disabled"
         [(ngModel)]="inputValue"
         (ngModelChange)="onInputChange($event)"
-        [class]="cn(class)"
-      >
+        [class]="cn(class)">
         <div suffix class="flex items-center gap-1.5 cursor-pointer">
           <i
             *ngIf="value && !disabled && showClear"

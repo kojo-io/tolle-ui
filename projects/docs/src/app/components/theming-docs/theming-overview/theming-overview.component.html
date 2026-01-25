@@ -1,0 +1,53 @@
+<header class="mb-12 border-b border-neutral-200 dark:border-neutral-800 pb-8" id="overview">
+    <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-foreground">
+        Theming in Tolle UI
+    </h1>
+    <div class="space-y-4">
+        <p class="text-lg text-muted-foreground">
+            Tolle UI is built with <strong class="font-semibold text-foreground">theme-first principles</strong>.
+            Instead of hard-coding colors into components, everything is driven by <strong
+                class="font-semibold text-foreground">semantic tokens</strong>,
+            <strong class="font-semibold text-foreground">CSS variables</strong>, and <strong
+                class="font-semibold text-foreground">Tailwind utilities</strong>,
+            giving you full control over branding and appearance.
+        </p>
+    </div>
+</header>
+
+<section class="mb-16" id="design-philosophy">
+    <h2 class="text-2xl font-bold mb-6 flex items-center text-foreground">
+        Design Philosophy
+    </h2>
+    <div class="space-y-4 text-muted-foreground">
+        <p>
+            Tolle UI uses foreground and background tokens instead of direct colors.
+        </p>
+        <p>
+            Example
+        </p>
+        <ul class="list-disc ml-8">
+            <li><code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">bg-background</code>
+            </li>
+            <li><code
+                    class="bg-neutral-100 dark:bg-neutral-800 text-foreground px-1.5 py-0.5 rounded text-sm font-mono font-medium">text-background</code>
+            </li>
+        </ul>
+        <p>
+            This abstraction ensures:
+        </p>
+        <ul class="list-disc ml-8">
+            <li>Consistent theming across components</li>
+            <li>Easy dark mode support</li>
+            <li>Seamless brand customization</li>
+        </ul>
+        <p>
+            You <strong class="font-semibold text-foreground">never theme components directly first</strong> — you theme
+            the system, and components inherit automatically.
+        </p>
+        <p>
+            Tolle UI is not about chasing trends. It’s about making day-to-day Angular development calmer, clearer, and
+            more predictable.
+        </p>
+    </div>
+</section>

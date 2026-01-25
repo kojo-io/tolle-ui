@@ -1,0 +1,27 @@
+<h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+
+<app-playground [code]="playgroundCode">
+    <div preview class="flex items-center justify-center min-h-[200px] w-full bg-dots">
+        <tolle-button [tolleTooltip]="content" [placement]="placement" variant="default">
+            Hover over me
+        </tolle-button>
+    </div>
+
+    <div controls class="space-y-6">
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-foreground">Tooltip Content</label>
+            <input type="text" [(ngModel)]="content"
+                class="w-full h-10 px-3 rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-sm font-medium text-foreground">Placement</label>
+            <tolle-select [(ngModel)]="placement">
+                <tolle-select-item value="top">Top</tolle-select-item>
+                <tolle-select-item value="bottom">Bottom</tolle-select-item>
+                <tolle-select-item value="left">Left</tolle-select-item>
+                <tolle-select-item value="right">Right</tolle-select-item>
+            </tolle-select>
+        </div>
+    </div>
+</app-playground>

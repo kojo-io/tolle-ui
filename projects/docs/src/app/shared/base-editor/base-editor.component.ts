@@ -2,9 +2,10 @@ import {
   AfterViewInit,
   Component, ElementRef,
   EventEmitter,
-  Input, OnChanges,
+  Input, OnChanges, inject,
   Output, SimpleChanges, ViewChild,
 } from '@angular/core';
+import { BaseService } from '../base.service';
 import { FormsModule } from '@angular/forms';
 import { EditorState, Compartment } from '@codemirror/state'; // Import Compartment
 import { basicSetup, EditorView } from 'codemirror';
@@ -43,6 +44,7 @@ export class BaseEditorComponent implements AfterViewInit, OnChanges {
   @Input() language: EditorLanguage = 'javascript'; // New Input
   @Output() codeChange = new EventEmitter<string>();
 
+  private baseService = inject(BaseService);
   private view?: EditorView;
 
   // A Compartment allows us to dynamically reconfigure a specific part of the editor (the language)
@@ -148,5 +150,9 @@ export class BaseEditorComponent implements AfterViewInit, OnChanges {
       default:
         return javascript();
     }
+  }
+
+  copyCode() {
+    this.baseService.copyTo(this.code);
   }
 }
