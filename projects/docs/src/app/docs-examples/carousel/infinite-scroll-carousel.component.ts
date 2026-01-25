@@ -38,8 +38,11 @@ import {
             <!-- Loading Indicator -->
             <div *ngIf="loading" tolleCarouselItem class="basis-[80%] md:basis-[48%]">
               <div class="p-2">
-                <div class="flex aspect-video items-center justify-center rounded-2xl border border-dashed border-neutral-300 p-4 dark:border-neutral-700">
-                  <i class="ri-loader-4-line animate-spin text-4xl text-neutral-300 dark:text-neutral-700"></i>
+                <div class="flex aspect-video items-center justify-center rounded-2xl border border-dashed border-primary/30 p-4 bg-primary/5 dark:bg-primary/5 transition-all duration-300">
+                  <div class="flex flex-col items-center gap-3">
+                    <i class="ri-loader-4-line animate-spin text-4xl text-primary/60"></i>
+                    <span class="text-xs font-semibold text-primary/40 uppercase tracking-widest">Fetching data</span>
+                  </div>
                 </div>
               </div>
             </div>

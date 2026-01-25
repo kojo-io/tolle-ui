@@ -30,6 +30,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/alert-docs/alert-docs.component').then(m => m.AlertDocsComponent),
           },
           {
+            path: 'alert-dialog',
+            loadComponent: () => import('./components/alert-dialog-docs/alert-dialog-docs.component').then(m => m.AlertDialogDocsComponent),
+          },
+          {
             path: 'avatar',
             loadComponent: () => import('./components/avatar-docs/avatar-docs.component').then(m => m.AvatarDocsComponent),
           },
@@ -40,6 +44,10 @@ export const routes: Routes = [
           {
             path: 'breadcrumb',
             loadComponent: () => import('./components/breadcrumb-docs/breadcrumb-docs.component').then(m => m.BreadcrumbDocsComponent),
+          },
+          {
+            path: 'collapsible',
+            loadComponent: () => import('./components/collapsible-docs/collapsible-docs.component').then(m => m.CollapsibleDocsComponent),
           },
           {
             path: 'button',
@@ -88,6 +96,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/switch-docs/switch-docs.component').then(m => m.SwitchDocsComponent),
           },
           {
+            path: 'tabs',
+            loadComponent: () => import('./components/tabs-docs/tabs-docs.component').then(m => m.TabsDocsComponent),
+          },
+          {
             path: 'radio-group',
             loadComponent: () => import('./components/radio-group-docs/radio-group-docs.component').then(m => m.RadioGroupDocsComponent),
           },
@@ -116,8 +128,16 @@ export const routes: Routes = [
             loadComponent: () => import('./components/popover-docs/popover-docs.component').then(m => m.PopoverDocsComponent),
           },
           {
+            path: 'progress',
+            loadComponent: () => import('./components/progress-docs/progress-docs.component').then(m => m.ProgressDocsComponent),
+          },
+          {
             path: 'resizable',
             loadComponent: () => import('./components/resizable-docs/resizable-docs.component').then(m => m.ResizableDocsComponent),
+          },
+          {
+            path: 'scroll-area',
+            loadComponent: () => import('./components/scroll-area-docs/scroll-area-docs.component').then(m => m.ScrollAreaDocsComponent),
           },
           {
             path: 'segment',
@@ -132,12 +152,28 @@ export const routes: Routes = [
             loadComponent: () => import('./components/skeleton-docs/skeleton-docs.component').then(m => m.SkeletonDocsComponent),
           },
           {
+            path: 'slider',
+            loadComponent: () => import('./components/slider-docs/slider-docs.component').then(m => m.SliderDocsComponent),
+          },
+          {
             path: 'toaster',
             loadComponent: () => import('./components/toaster-docs/toaster-docs.component').then(m => m.ToasterDocsComponent),
           },
           {
+            path: 'toggle',
+            loadComponent: () => import('./components/toggle-docs/toggle-docs.component').then(m => m.ToggleDocsComponent),
+          },
+          {
             path: 'tooltip',
             loadComponent: () => import('./components/tooltip-docs/tooltip-docs.component').then(m => m.TooltipDocsComponent),
+          },
+          {
+            path: 'label',
+            loadComponent: () => import('./components/label-docs/label-docs.component').then(m => m.LabelDocsComponent),
+          },
+          {
+            path: 'separator',
+            loadComponent: () => import('./components/separator-docs/separator-docs.component').then(m => m.SeparatorDocsComponent),
           },
           {
             path: 'aspect-ratio',

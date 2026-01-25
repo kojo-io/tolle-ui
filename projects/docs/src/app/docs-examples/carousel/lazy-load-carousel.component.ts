@@ -29,15 +29,20 @@ import {
           <div tolleCarouselContainer>
             <div *ngFor="let item of slides; let i = index" tolleCarouselItem class="basis-[80%] md:basis-[70%]">
               <div class="p-2">
-                <div class="relative flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-900 overflow-hidden shadow-sm transition-all duration-300">
+                <div class="relative flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 overflow-hidden shadow-sm transition-all duration-300">
                   <img *ngIf="loadedSlides.has(i)" 
-                       [src]="'https://picsum.photos/seed/' + (i + 10) + '/800/450'" 
-                       class="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+                       [src]="'https://images.unsplash.com/photo-' + (seeds[i]) + '?auto=format&fit=crop&q=80&w=800'" 
+                       class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
                        (load)="onImageLoad(i)"
-                       [class.opacity-0]="!imagesReady.has(i)">
+                       [class.opacity-0]="!imagesReady.has(i)"
+                       [class.scale-110]="!imagesReady.has(i)"
+                       [class.scale-100]="imagesReady.has(i)">
                   
-                  <div *ngIf="!imagesReady.has(i)" class="absolute inset-0 flex items-center justify-center">
-                    <i class="ri-loader-4-line animate-spin text-4xl text-neutral-300 dark:text-neutral-700"></i>
+                  <div *ngIf="!imagesReady.has(i)" class="absolute inset-0 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900">
+                    <div class="flex flex-col items-center gap-2">
+                      <i class="ri-loader-4-line animate-spin text-3xl text-primary/40"></i>
+                      <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">Loading asset</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -70,6 +75,18 @@ export class LazyLoadCarouselComponent {
   slides = Array.from({ length: 10 });
   loadedSlides = new Set<number>();
   imagesReady = new Set<number>();
+  seeds = [
+    '1464822759023-fed622ff2c3b',
+    '1501785888041-af3ef285b470',
+    '1506744038136-46273834b3fb',
+    '1511884642898-4c92249e20b6',
+    '1434725039720-abb26e22ebe8',
+    '1469474968028-56623f02e42e',
+    '1441974231531-c6227db76b6e',
+    '1500382017468-9049fee7c9cd',
+    '1470071459604-3b5ec3a7fe05',
+    '1447752875215-b2761acb3c5d'
+  ];
 
   constructor(private cdr: ChangeDetectorRef) { }
 
