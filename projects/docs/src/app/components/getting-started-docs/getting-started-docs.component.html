@@ -1,46 +1,48 @@
-<app-docs-wrapper>
+<app-docs-wrapper [tocTemplate]="toc">
     <div content>
         <app-gs-introduction id="overview" />
         <app-gs-installation id="installation" />
         <app-gs-setup id="provider" />
     </div>
 
-    <ul toc class="flex flex-col gap-2 text-sm">
-        <li>
-            <a (click)="baseService.scrollTo('overview')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Overview
-            </a>
-        </li>
-        <li>
-            <a (click)="baseService.scrollTo('why')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Why Tolle UI
-            </a>
-        </li>
-        <li>
-            <a (click)="baseService.scrollTo('installation')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Installation
-            </a>
-        </li>
-        <li>
-            <a (click)="baseService.scrollTo('provider')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Tolle Provider
-            </a>
-        </li>
-        <li>
-            <a (click)="baseService.scrollTo('tailwind')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Tailwind Integration
-            </a>
-        </li>
-        <li>
-            <a (click)="baseService.scrollTo('global')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Global Styles
-            </a>
-        </li>
-    </ul>
+    <ng-template #toc>
+        <ul class="flex flex-col gap-2 text-sm">
+            <li>
+                <a (click)="baseService.scrollTo('overview')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Overview
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('why')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Why Tolle UI
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('installation')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Installation
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('provider')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Tolle Provider
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('tailwind')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Tailwind Integration
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('global')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Global Styles
+                </a>
+            </li>
+        </ul>
+    </ng-template>
 </app-docs-wrapper>

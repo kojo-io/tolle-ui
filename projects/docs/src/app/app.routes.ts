@@ -160,6 +160,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/modal-docs/modal-docs.component').then(m => m.ModalDocsComponent),
           },
           {
+            path: 'carousel',
+            loadComponent: () => import('./components/carousel-docs/carousel-docs.component').then(m => m.CarouselDocsComponent),
+          },
+          {
             path: 'date-range-picker',
             loadComponent: () => import('./components/date-range-picker-docs/date-range-picker-docs.component').then(m => m.DateRangePickerDocsComponent),
           },

@@ -1,4 +1,4 @@
-<app-docs-wrapper>
+<app-docs-wrapper [tocTemplate]="toc">
     <div content>
         <app-button-overview />
         <app-button-interactive />
@@ -6,62 +6,64 @@
         <app-button-api />
     </div>
 
-    <ul toc class="flex flex-col gap-2 text-sm">
-        <li>
-            <a (click)="baseService.scrollTo('overview')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Overview
-            </a>
-        </li>
-        <li>
-            <a (click)="baseService.scrollTo('installation')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Installation
-            </a>
-        </li>
-        <li>
-            <a (click)="baseService.scrollTo('playground')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Playground
-            </a>
-        </li>
-        <li class="flex flex-col gap-2">
-            <a (click)="baseService.scrollTo('examples')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                Examples
-            </a>
-            <ul class="flex flex-col gap-2 text-sm ml-4">
-                <li>
-                    <a (click)="baseService.scrollTo('basic')"
-                        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
-                        Basic
-                    </a>
-                </li>
-                <li>
-                    <a (click)="baseService.scrollTo('destructive')"
-                        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
-                        Destructive
-                    </a>
-                </li>
-                <li>
-                    <a (click)="baseService.scrollTo('icon')"
-                        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
-                        Icons
-                    </a>
-                </li>
-                <li>
-                    <a (click)="baseService.scrollTo('busy')"
-                        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
-                        Busy State
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a (click)="baseService.scrollTo('api')"
-                class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-                API Reference
-            </a>
-        </li>
-    </ul>
+    <ng-template #toc>
+        <ul class="flex flex-col gap-2 text-sm">
+            <li>
+                <a (click)="baseService.scrollTo('overview')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Overview
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('installation')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Installation
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('playground')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Playground
+                </a>
+            </li>
+            <li class="flex flex-col gap-2">
+                <a (click)="baseService.scrollTo('examples')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Examples
+                </a>
+                <ul class="flex flex-col gap-2 text-sm ml-4">
+                    <li>
+                        <a (click)="baseService.scrollTo('basic')"
+                            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
+                            Basic
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="baseService.scrollTo('destructive')"
+                            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
+                            Destructive
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="baseService.scrollTo('icon')"
+                            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
+                            Icons
+                        </a>
+                    </li>
+                    <li>
+                        <a (click)="baseService.scrollTo('busy')"
+                            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground hover:border-l hover:border-primary pl-2">
+                            Busy State
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('api')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    API Reference
+                </a>
+            </li>
+        </ul>
+    </ng-template>
 </app-docs-wrapper>

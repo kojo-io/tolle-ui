@@ -93,6 +93,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Button Group", url: "/components/button-group" },
         { title: "Calendar", url: "/components/calendar" },
         { title: "Card", url: "/components/card" },
+        { title: "Carousel", url: "/components/carousel" },
         { title: "Checkbox", url: "/components/checkbox" },
         { title: "Context Menu", url: "/components/context-menu" },
         { title: "Data Table", url: "/components/data-table" },

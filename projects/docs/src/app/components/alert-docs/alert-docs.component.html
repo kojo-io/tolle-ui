@@ -1,4 +1,4 @@
-<app-docs-wrapper>
+<app-docs-wrapper [tocTemplate]="toc">
   <div content>
     <header class="mb-12 border-b border-slate-200 pb-8" id="overview">
       <h1 class="text-4xl font-extrabold tracking-tight  mb-4">
@@ -76,10 +76,12 @@
     </section>
   </div>
 
-  <ul toc class="flex flex-col gap-2 text-sm">
-    <li><a (click)="baseService.scrollTo('overview')"
-        class="cursor-pointer text-muted-foreground hover:text-foreground">Overview</a></li>
-    <li><a (click)="baseService.scrollTo('api-reference')"
-        class="cursor-pointer text-muted-foreground hover:text-foreground">API Reference</a></li>
-  </ul>
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li><a (click)="baseService.scrollTo('overview')"
+          class="cursor-pointer text-muted-foreground hover:text-foreground">Overview</a></li>
+      <li><a (click)="baseService.scrollTo('api-reference')"
+          class="cursor-pointer text-muted-foreground hover:text-foreground">API Reference</a></li>
+    </ul>
+  </ng-template>
 </app-docs-wrapper>

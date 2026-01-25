@@ -1,4 +1,4 @@
-<app-docs-wrapper>
+<app-docs-wrapper [tocTemplate]="toc">
   <div content>
     <app-date-picker-overview id="overview" />
     <app-date-picker-interactive id="playground" />
@@ -8,50 +8,52 @@
     <app-date-picker-api id="api-reference" />
   </div>
 
-  <ul toc class="flex flex-col gap-2 text-sm">
-    <li>
-      <a (click)="baseService.scrollTo('overview')"
-        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-        Overview
-      </a>
-    </li>
-    <li>
-      <a (click)="baseService.scrollTo('playground')"
-        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-        Playground
-      </a>
-    </li>
-    <li class="flex flex-col gap-2">
-      <a (click)="baseService.scrollTo('basic')"
-        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-        Usage Examples
-      </a>
-      <ul class="flex flex-col gap-2 text-sm ml-4">
-        <li>
-          <a (click)="baseService.scrollTo('basic')"
-            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-            Date Picker
-          </a>
-        </li>
-        <li>
-          <a (click)="baseService.scrollTo('month')"
-            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-            Month Picker
-          </a>
-        </li>
-        <li>
-          <a (click)="baseService.scrollTo('year')"
-            class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-            Year Picker
-          </a>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <a (click)="baseService.scrollTo('api-reference')"
-        class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
-        API Reference
-      </a>
-    </li>
-  </ul>
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('playground')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Playground
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('basic')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Usage Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Date Picker
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('month')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Month Picker
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('year')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Year Picker
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
 </app-docs-wrapper>

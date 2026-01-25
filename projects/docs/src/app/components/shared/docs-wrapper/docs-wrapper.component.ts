@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input, TemplateRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, shareReplay } from 'rxjs/operators';
@@ -19,6 +19,8 @@ export class DocsWrapperComponent {
             map(result => result.matches),
             shareReplay()
         );
+
+    @Input() tocTemplate?: TemplateRef<any>;
 
     tocOpen = false;
 
