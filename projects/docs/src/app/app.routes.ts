@@ -34,6 +34,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/alert-dialog-docs/alert-dialog-docs.component').then(m => m.AlertDialogDocsComponent),
           },
           {
+            path: 'aspect-ratio',
+            loadComponent: () => import('./components/aspect-ratio-docs/aspect-ratio-docs.component').then(m => m.AspectRatioDocsComponent),
+          },
+          {
             path: 'avatar',
             loadComponent: () => import('./components/avatar-docs/avatar-docs.component').then(m => m.AvatarDocsComponent),
           },
@@ -44,10 +48,6 @@ export const routes: Routes = [
           {
             path: 'breadcrumb',
             loadComponent: () => import('./components/breadcrumb-docs/breadcrumb-docs.component').then(m => m.BreadcrumbDocsComponent),
-          },
-          {
-            path: 'collapsible',
-            loadComponent: () => import('./components/collapsible-docs/collapsible-docs.component').then(m => m.CollapsibleDocsComponent),
           },
           {
             path: 'button',
@@ -62,16 +62,24 @@ export const routes: Routes = [
             loadComponent: () => import('./components/calendar-docs/calendar-docs.component').then(m => m.CalendarDocsComponent),
           },
           {
-            path: 'range-calendar',
-            loadComponent: () => import('./components/calendar-range-docs/calendar-range-docs.component').then(m => m.CalendarRangeDocsComponent),
-          },
-          {
             path: 'card',
             loadComponent: () => import('./components/card-docs/card-docs.component').then(m => m.CardDocsComponent),
           },
           {
+            path: 'carousel',
+            loadComponent: () => import('./components/carousel-docs/carousel-docs.component').then(m => m.CarouselDocsComponent),
+          },
+          {
             path: 'checkbox',
             loadComponent: () => import('./components/check-box-docs/check-box-docs.component').then(m => m.CheckBoxDocsComponent),
+          },
+          {
+            path: 'collapsible',
+            loadComponent: () => import('./components/collapsible-docs/collapsible-docs.component').then(m => m.CollapsibleDocsComponent),
+          },
+          {
+            path: 'context-menu',
+            loadComponent: () => import('./components/context-menu-docs/context-menu-docs.component').then(m => m.ContextMenuDocsComponent),
           },
           {
             path: 'data-table',
@@ -81,39 +89,41 @@ export const routes: Routes = [
             path: 'date-picker',
             loadComponent: () => import('./components/date-picker-docs/date-picker-docs.component').then(m => m.DatePickerDocsComponent),
           },
-
-
+          {
+            path: 'date-range-picker',
+            loadComponent: () => import('./components/date-range-picker-docs/date-range-picker-docs.component').then(m => m.DateRangePickerDocsComponent),
+          },
+          {
+            path: 'dropdown-menu',
+            loadComponent: () => import('./components/dropdown-menu-docs/dropdown-menu-docs.component').then(m => m.DropdownMenuDocsComponent),
+          },
+          {
+            path: 'empty-state',
+            loadComponent: () => import('./components/empty-state-docs/empty-state-docs.component').then(m => m.EmptyStateDocsComponent),
+          },
+          {
+            path: 'hover-card',
+            loadComponent: () => import('./components/hover-card-docs/hover-card-docs.component').then(m => m.HoverCardDocsComponent),
+          },
           {
             path: 'input',
             loadComponent: () => import('./components/input-docs/input-docs.component').then(m => m.InputDocsComponent),
           },
           {
-            path: 'textarea',
-            loadComponent: () => import('./components/textarea-docs/textarea-docs.component').then(m => m.TextareaDocsComponent),
-          },
-          {
-            path: 'switch',
-            loadComponent: () => import('./components/switch-docs/switch-docs.component').then(m => m.SwitchDocsComponent),
-          },
-          {
-            path: 'tabs',
-            loadComponent: () => import('./components/tabs-docs/tabs-docs.component').then(m => m.TabsDocsComponent),
-          },
-          {
-            path: 'radio-group',
-            loadComponent: () => import('./components/radio-group-docs/radio-group-docs.component').then(m => m.RadioGroupDocsComponent),
-          },
-          {
-            path: 'multi-select',
-            loadComponent: () => import('./components/multi-select-docs/multi-select-docs.component').then(m => m.MultiSelectDocsComponent),
-          },
-          {
-            path: 'select',
-            loadComponent: () => import('./components/select-docs/select-docs.component').then(m => m.SelectDocsComponent),
+            path: 'label',
+            loadComponent: () => import('./components/label-docs/label-docs.component').then(m => m.LabelDocsComponent),
           },
           {
             path: 'masked-input',
             loadComponent: () => import('./components/masked-input-docs/masked-input-docs.component').then(m => m.MaskedInputDocsComponent),
+          },
+          {
+            path: 'modal',
+            loadComponent: () => import('./components/modal-docs/modal-docs.component').then(m => m.ModalDocsComponent),
+          },
+          {
+            path: 'multi-select',
+            loadComponent: () => import('./components/multi-select-docs/multi-select-docs.component').then(m => m.MultiSelectDocsComponent),
           },
           {
             path: 'otp',
@@ -132,6 +142,14 @@ export const routes: Routes = [
             loadComponent: () => import('./components/progress-docs/progress-docs.component').then(m => m.ProgressDocsComponent),
           },
           {
+            path: 'radio-group',
+            loadComponent: () => import('./components/radio-group-docs/radio-group-docs.component').then(m => m.RadioGroupDocsComponent),
+          },
+          {
+            path: 'range-calendar',
+            loadComponent: () => import('./components/calendar-range-docs/calendar-range-docs.component').then(m => m.CalendarRangeDocsComponent),
+          },
+          {
             path: 'resizable',
             loadComponent: () => import('./components/resizable-docs/resizable-docs.component').then(m => m.ResizableDocsComponent),
           },
@@ -144,6 +162,14 @@ export const routes: Routes = [
             loadComponent: () => import('./components/segment-docs/segment-docs.component').then(m => m.SegmentDocsComponent),
           },
           {
+            path: 'separator',
+            loadComponent: () => import('./components/separator-docs/separator-docs.component').then(m => m.SeparatorDocsComponent),
+          },
+          {
+            path: 'sheet',
+            loadComponent: () => import('./components/sheet-docs/sheet-docs.component').then(m => m.SheetDocsComponent),
+          },
+          {
             path: 'sidebar',
             loadComponent: () => import('./components/sidebar-docs/sidebar-docs.component').then(m => m.SidebarDocsComponent),
           },
@@ -154,6 +180,18 @@ export const routes: Routes = [
           {
             path: 'slider',
             loadComponent: () => import('./components/slider-docs/slider-docs.component').then(m => m.SliderDocsComponent),
+          },
+          {
+            path: 'switch',
+            loadComponent: () => import('./components/switch-docs/switch-docs.component').then(m => m.SwitchDocsComponent),
+          },
+          {
+            path: 'tabs',
+            loadComponent: () => import('./components/tabs-docs/tabs-docs.component').then(m => m.TabsDocsComponent),
+          },
+          {
+            path: 'textarea',
+            loadComponent: () => import('./components/textarea-docs/textarea-docs.component').then(m => m.TextareaDocsComponent),
           },
           {
             path: 'toaster',
@@ -171,48 +209,6 @@ export const routes: Routes = [
             path: 'tooltip',
             loadComponent: () => import('./components/tooltip-docs/tooltip-docs.component').then(m => m.TooltipDocsComponent),
           },
-          {
-            path: 'label',
-            loadComponent: () => import('./components/label-docs/label-docs.component').then(m => m.LabelDocsComponent),
-          },
-          {
-            path: 'separator',
-            loadComponent: () => import('./components/separator-docs/separator-docs.component').then(m => m.SeparatorDocsComponent),
-          },
-          {
-            path: 'aspect-ratio',
-            loadComponent: () => import('./components/aspect-ratio-docs/aspect-ratio-docs.component').then(m => m.AspectRatioDocsComponent),
-          },
-          {
-            path: 'context-menu',
-            loadComponent: () => import('./components/context-menu-docs/context-menu-docs.component').then(m => m.ContextMenuDocsComponent),
-          },
-          {
-            path: 'dropdown-menu',
-            loadComponent: () => import('./components/dropdown-menu-docs/dropdown-menu-docs.component').then(m => m.DropdownMenuDocsComponent),
-          },
-          {
-            path: 'hover-card',
-            loadComponent: () => import('./components/hover-card-docs/hover-card-docs.component').then(m => m.HoverCardDocsComponent),
-          },
-          {
-            path: 'empty-state',
-            loadComponent: () => import('./components/empty-state-docs/empty-state-docs.component').then(m => m.EmptyStateDocsComponent),
-          },
-          {
-            path: 'modal',
-            loadComponent: () => import('./components/modal-docs/modal-docs.component').then(m => m.ModalDocsComponent),
-          },
-          {
-            path: 'carousel',
-            loadComponent: () => import('./components/carousel-docs/carousel-docs.component').then(m => m.CarouselDocsComponent),
-          },
-          {
-            path: 'date-range-picker',
-            loadComponent: () => import('./components/date-range-picker-docs/date-range-picker-docs.component').then(m => m.DateRangePickerDocsComponent),
-          },
-
-
         ]
       },
       {

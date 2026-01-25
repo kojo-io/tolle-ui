@@ -74,3 +74,8 @@ export * from './lib/alert-dialog.component';
 export * from './lib/alert-dialog.service';
 export * from './lib/alert-dialog.types';
 export * from './lib/alert-dialog-dynamic.component';
+export * from './lib/sheet.component';
+export * from './lib/sheet.service';
+export * from './lib/sheet-ref';
+export * from './lib/sheet.types';
+export * from './lib/sheet-wrapper.component';

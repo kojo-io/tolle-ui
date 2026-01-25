@@ -120,6 +120,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Segment", url: "/components/segment" },
         { title: "Select", url: "/components/select" },
         { title: "Separator", url: "/components/separator" },
+        { title: "Sheet", url: "/components/sheet" },
         { title: "Sidebar", url: "/components/sidebar" },
         { title: "Skeleton", url: "/components/skeleton" },
         { title: "Slider", url: "/components/slider" },
