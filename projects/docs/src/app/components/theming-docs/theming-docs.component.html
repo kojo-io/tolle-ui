@@ -1,0 +1,88 @@
+<div class="flex w-full h-full grow">
+    <div class="flex-1 h-full overflow-auto no-scrollbar pb-20">
+        <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
+
+            <app-theming-overview id="overview" />
+
+            <app-theming-colors id="primary-colors" />
+
+            <app-theming-config id="theme-provider" />
+
+            <app-theming-integration id="theme-stylesheet" />
+
+            <app-theming-overrides id="component-overrides" />
+
+        </article>
+    </div>
+
+    <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56 text-foreground">
+        <div class="sticky top-0 z-10 pb-4">
+            <p class="text-sm font-semibold">On this page</p>
+        </div>
+
+        <ul class="flex flex-col gap-2 text-sm">
+            <li>
+                <a (click)="baseService.scrollTo('overview')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Design Philosophy
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('primary-colors')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Primary Color System
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('theme-provider')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Theme Provider
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('theme-stylesheet')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Theme Stylesheet
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('tailwind-integration')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Tailwind Integration
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('using-utilities')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Using Tailwind Utilities
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('component-overrides')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Component Overrides
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('dark-mode')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Dark Mode Overrides
+                </a>
+            </li>
+
+            <li>
+                <a (click)="baseService.scrollTo('theming-flexibility')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Theming Flexibility
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>

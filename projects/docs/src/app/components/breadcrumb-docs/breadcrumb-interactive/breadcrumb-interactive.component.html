@@ -1,0 +1,29 @@
+<section id="playground" class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+
+    <app-playground [code]="playgroundCode" language="angular">
+        <div preview class="flex items-center justify-center min-h-[200px] w-full bg-dots p-8">
+            <tolle-breadcrumb>
+                <tolle-breadcrumb-item>
+                    <tolle-breadcrumb-link>Home</tolle-breadcrumb-link>
+                </tolle-breadcrumb-item>
+                <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
+                <tolle-breadcrumb-item>
+                    <tolle-breadcrumb-link [active]="isActive">
+                        {{ label }}
+                    </tolle-breadcrumb-link>
+                </tolle-breadcrumb-item>
+            </tolle-breadcrumb>
+        </div>
+
+        <div controls class="space-y-6">
+            <div class="space-y-2">
+                <tolle-input label="Label" [(ngModel)]="label" size="sm"></tolle-input>
+            </div>
+            <div class="flex items-center gap-2 py-2">
+                <tolle-checkbox [(ngModel)]="isActive" size="sm"></tolle-checkbox>
+                <label class="text-sm font-medium text-foreground">Active (Current Page)</label>
+            </div>
+        </div>
+    </app-playground>
+</section>

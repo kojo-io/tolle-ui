@@ -18,41 +18,7 @@ import { CustomSeparatorBreadcrumbComponent } from '../../../docs-examples/bread
     BasicBreadcrumbComponent,
     CustomSeparatorBreadcrumbComponent
   ],
-  template: `
-    <section class="mb-16" id="examples">
-      <h2 class="text-2xl font-bold mb-6 text-foreground">Examples</h2>
-
-      <!-- Basic -->
-      <div class="space-y-4 mb-12" id="basic">
-        <h3 class="text-xl font-semibold text-foreground">Basic</h3>
-        <p class="text-muted-foreground">Standard breadcrumb hierarchy.</p>
-        <div class="w-1/4">
-          <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
-        </div>
-        <div *ngIf="basicTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-          <app-basic-breadcrumb />
-        </div>
-        <div *ngIf="basicTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-          <app-base-editor [code]="basicCode" language="typescript" />
-        </div>
-      </div>
-
-      <!-- Custom Separator -->
-      <div class="space-y-4 mb-12" id="custom-separator">
-        <h3 class="text-xl font-semibold text-foreground">Custom Separator</h3>
-        <p class="text-muted-foreground">Use any icon or character as a separator using the <code>tolle-breadcrumb-separator</code> component.</p>
-        <div class="w-1/4">
-          <tolle-segment [items]="viewOptions" [(ngModel)]="separatorTab" />
-        </div>
-        <div *ngIf="separatorTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-          <app-custom-separator-breadcrumb />
-        </div>
-        <div *ngIf="separatorTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-          <app-base-editor [code]="separatorCode" language="typescript" />
-        </div>
-      </div>
-    </section>
-  `
+  templateUrl: './breadcrumb-examples.component.html'
 })
 export class BreadcrumbExamplesComponent {
   sourceService = inject(SourceCodeService);

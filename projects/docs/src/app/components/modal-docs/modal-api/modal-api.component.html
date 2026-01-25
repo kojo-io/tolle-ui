@@ -1,0 +1,32 @@
+<section id="api-reference" class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">API Reference</h2>
+
+    <div class="space-y-12">
+        <!-- ModalService -->
+        <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-foreground">ModalService</h3>
+            <p class="text-muted-foreground text-sm">
+                The primary service used to manage modals.
+            </p>
+            <app-prop-table [props]="serviceMethods"></app-prop-table>
+        </div>
+
+        <!-- Modal Config -->
+        <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-foreground">Modal Configuration</h3>
+            <p class="text-muted-foreground text-sm">
+                Options passed to <code>modalService.open(config)</code>.
+            </p>
+            <app-prop-table [props]="configParams"></app-prop-table>
+        </div>
+
+        <!-- ModalRef -->
+        <div class="space-y-4">
+            <h3 class="text-xl font-semibold text-foreground">ModalRef</h3>
+            <p class="text-muted-foreground text-sm">
+                A handle to the opened modal, used to close it or listen for closure.
+            </p>
+            <app-prop-table [props]="refMethods"></app-prop-table>
+        </div>
+    </div>
+</section>

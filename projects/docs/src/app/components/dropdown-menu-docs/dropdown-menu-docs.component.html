@@ -1,0 +1,38 @@
+<div class="flex w-full h-full">
+    <!-- Main Scrollable Area -->
+    <div class="flex-1 h-full overflow-auto no-scrollbar pb-20">
+        <article class="max-w-4xl mx-auto px-6 py-12 font-sans leading-relaxed">
+            <app-dropdown-menu-overview id="overview"></app-dropdown-menu-overview>
+            <app-dropdown-menu-interactive id="playground"></app-dropdown-menu-interactive>
+            <app-dropdown-menu-api id="api-reference"></app-dropdown-menu-api>
+        </article>
+    </div>
+
+    <!-- Sticky Table of Contents -->
+    <aside class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56 text-foreground">
+        <div class="sticky top-0 z-10 pb-4">
+            <p class="text-sm font-semibold">On this page</p>
+        </div>
+
+        <ul class="flex flex-col gap-2 text-sm">
+            <li>
+                <a (click)="baseService.scrollTo('overview')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Overview
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('playground')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    Playground
+                </a>
+            </li>
+            <li>
+                <a (click)="baseService.scrollTo('api-reference')"
+                    class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+                    API Reference
+                </a>
+            </li>
+        </ul>
+    </aside>
+</div>

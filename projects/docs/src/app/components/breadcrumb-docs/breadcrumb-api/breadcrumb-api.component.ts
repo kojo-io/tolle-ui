@@ -6,23 +6,7 @@ import { PropEntry } from '../../../shared/types';
   selector: 'app-breadcrumb-api',
   standalone: true,
   imports: [PropTableComponent],
-  template: `
-    <section class="mb-16" id="api">
-      <h2 class="text-3xl font-bold mb-6 text-foreground">API Reference</h2>
-
-      <div class="space-y-12">
-        <div id="breadcrumb-api">
-          <h3 class="text-xl font-semibold mb-4 text-foreground">Breadcrumb</h3>
-          <app-prop-table [props]="breadcrumbProps" />
-        </div>
-
-        <div id="breadcrumb-link-api">
-          <h3 class="text-xl font-semibold mb-4 text-foreground">Breadcrumb Link</h3>
-          <app-prop-table [props]="linkProps" />
-        </div>
-      </div>
-    </section>
-  `
+  templateUrl: './breadcrumb-api.component.html'
 })
 export class BreadcrumbApiComponent {
   breadcrumbProps: PropEntry[] = [

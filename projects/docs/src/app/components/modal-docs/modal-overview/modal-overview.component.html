@@ -1,0 +1,82 @@
+<header class="mb-12 border-b border-slate-200 dark:border-slate-800 pb-8">
+    <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-foreground">
+        Modal
+    </h1>
+    <p class="text-lg text-muted-foreground">
+        A service-driven dialog component that appears on top of the main content.
+    </p>
+</header>
+
+<section class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Overview</h2>
+    <p class="mb-6 text-muted-foreground">
+        Unlike most components in this library, the Modal is managed through the <code>ModalService</code>.
+        This imperative approach allows you to launch dialogs from anywhere in your application logic without
+        needing to manage visibility state in your templates.
+    </p>
+
+    <div class="space-y-12">
+        <!-- Basic Usage -->
+        <div>
+            <h3 class="text-xl font-semibold mb-4 text-foreground text-sm">Basic Usage (String Content)</h3>
+            <p class="mb-4 text-muted-foreground text-sm">
+                Pass a simple string to the <code>content</code> property for text-only messages.
+            </p>
+            <div
+                class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden">
+                <div class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950">
+                    <app-basic-modal></app-basic-modal>
+                </div>
+                <div class="border-t border-neutral-200 dark:border-neutral-800">
+                    <app-base-editor [code]="(basicCode$ | async) || ''" language="typescript"></app-base-editor>
+                </div>
+            </div>
+        </div>
+
+        <!-- content variants -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-foreground text-sm">Template Content</h3>
+                <p class="mb-4 text-muted-foreground text-sm">
+                    Use <code>TemplateRef</code> for richer HTML content defined in your component and pass
+                    <code>context</code> data.
+                </p>
+                <div
+                    class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden">
+                    <div class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950">
+                        <app-template-modal></app-template-modal>
+                    </div>
+                    <div class="border-t border-neutral-200 dark:border-neutral-800">
+                        <app-base-editor [code]="(templateCode$ | async) || ''" language="typescript"></app-base-editor>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 class="text-xl font-semibold mb-4 text-foreground text-sm">Component Content</h3>
+                <p class="mb-4 text-muted-foreground text-sm">
+                    Inject standalone components for complex logic. Access the modal handle via <code>ModalRef</code>.
+                </p>
+                <div
+                    class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden">
+                    <div class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950">
+                        <app-component-modal></app-component-modal>
+                    </div>
+                    <div class="border-t border-neutral-200 dark:border-neutral-800">
+                        <app-base-editor [code]="(componentCode$ | async) || ''"
+                            language="typescript"></app-base-editor>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="installation" class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground text-sm">
+        Import
+    </h2>
+    <div class="rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
+        <app-base-editor code="import { ModalService, ModalComponent } from '@tolle_/tolle-ui';"
+            language="typescript"></app-base-editor>
+    </div>
+</section>

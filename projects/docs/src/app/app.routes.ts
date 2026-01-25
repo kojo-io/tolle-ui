@@ -8,11 +8,11 @@ export const routes: Routes = [
     children: [
       {
         path: 'getting-started',
-        loadComponent: () => import('./getting-started/getting-started.component').then(m => m.GettingStartedComponent),
+        loadComponent: () => import('./components/getting-started-docs/getting-started-docs.component').then(m => m.GettingStartedDocsComponent),
       },
       {
         path: 'theming',
-        loadComponent: () => import('./theming/theming.component').then(m => m.ThemingComponent),
+        loadComponent: () => import('./components/theming-docs/theming-docs.component').then(m => m.ThemingDocsComponent),
       },
       {
         path: 'components',
@@ -73,6 +73,8 @@ export const routes: Routes = [
             path: 'date-picker',
             loadComponent: () => import('./components/date-picker-docs/date-picker-docs.component').then(m => m.DatePickerDocsComponent),
           },
+
+
           {
             path: 'input',
             loadComponent: () => import('./components/input-docs/input-docs.component').then(m => m.InputDocsComponent),
@@ -128,7 +130,41 @@ export const routes: Routes = [
           {
             path: 'skeleton',
             loadComponent: () => import('./components/skeleton-docs/skeleton-docs.component').then(m => m.SkeletonDocsComponent),
-          }
+          },
+          {
+            path: 'toaster',
+            loadComponent: () => import('./components/toaster-docs/toaster-docs.component').then(m => m.ToasterDocsComponent),
+          },
+          {
+            path: 'tooltip',
+            loadComponent: () => import('./components/tooltip-docs/tooltip-docs.component').then(m => m.TooltipDocsComponent),
+          },
+          {
+            path: 'aspect-ratio',
+            loadComponent: () => import('./components/aspect-ratio-docs/aspect-ratio-docs.component').then(m => m.AspectRatioDocsComponent),
+          },
+          {
+            path: 'context-menu',
+            loadComponent: () => import('./components/context-menu-docs/context-menu-docs.component').then(m => m.ContextMenuDocsComponent),
+          },
+          {
+            path: 'dropdown-menu',
+            loadComponent: () => import('./components/dropdown-menu-docs/dropdown-menu-docs.component').then(m => m.DropdownMenuDocsComponent),
+          },
+          {
+            path: 'empty-state',
+            loadComponent: () => import('./components/empty-state-docs/empty-state-docs.component').then(m => m.EmptyStateDocsComponent),
+          },
+          {
+            path: 'modal',
+            loadComponent: () => import('./components/modal-docs/modal-docs.component').then(m => m.ModalDocsComponent),
+          },
+          {
+            path: 'date-range-picker',
+            loadComponent: () => import('./components/date-range-picker-docs/date-range-picker-docs.component').then(m => m.DateRangePickerDocsComponent),
+          },
+
+
         ]
       },
       {

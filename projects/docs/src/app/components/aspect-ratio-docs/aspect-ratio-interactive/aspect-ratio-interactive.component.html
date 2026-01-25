@@ -1,0 +1,49 @@
+<section id="playground" class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+
+    <app-playground [code]="playgroundCode">
+        <div preview class="flex items-center justify-center min-h-[400px] w-full bg-dots p-8">
+            <div class="w-full max-w-[500px]">
+                <tolle-aspect-ratio [ratio]="ratio"
+                    class="rounded-xl shadow-2xl border border-white/10 overflow-hidden bg-background">
+                    <img [src]="imageUrl" alt="Playground image"
+                        class="w-full h-full object-cover transition-all duration-500" />
+                </tolle-aspect-ratio>
+            </div>
+        </div>
+
+        <div controls class="space-y-6">
+            <div class="space-y-2">
+                <label class="text-sm font-medium text-foreground">Aspect Ratio</label>
+                <input type="text" [(ngModel)]="ratio" placeholder="e.g. 16 / 9, 1, 4 / 3"
+                    class="w-full h-10 px-3 rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
+                <p class="text-[11px] text-muted-foreground">Accepts string (e.g. "16 / 9") or number (e.g. 1.7777).</p>
+            </div>
+
+            <div class="flex gap-2 flex-wrap">
+                <button (click)="ratio = '16 / 9'"
+                    class="px-3 py-1 text-xs rounded-full border border-border hover:bg-muted transition-colors">16 /
+                    9</button>
+                <button (click)="ratio = '4 / 3'"
+                    class="px-3 py-1 text-xs rounded-full border border-border hover:bg-muted transition-colors">4 /
+                    3</button>
+                <button (click)="ratio = '1 / 1'"
+                    class="px-3 py-1 text-xs rounded-full border border-border hover:bg-muted transition-colors">1 /
+                    1</button>
+                <button (click)="ratio = '21 / 9'"
+                    class="px-3 py-1 text-xs rounded-full border border-border hover:bg-muted transition-colors">21 /
+                    9</button>
+            </div>
+
+            <div class="space-y-2 pt-4 border-t border-border">
+                <label class="text-sm font-medium text-foreground">Image Source</label>
+                <div class="flex gap-2">
+                    <button (click)="refreshImage()"
+                        class="w-full h-9 text-xs rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center justify-center gap-2 transition-colors">
+                        <i class="ri-refresh-line"></i> Refresh Random Image
+                    </button>
+                </div>
+            </div>
+        </div>
+    </app-playground>
+</section>
