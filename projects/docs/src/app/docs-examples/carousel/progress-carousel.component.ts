@@ -9,6 +9,7 @@ import {
   CarouselPreviousDirective,
   CarouselNextDirective
 } from '../../../../../tolle/src/lib/carousel';
+import { ProgressComponent } from '../../../../../tolle/src/lib/progress.component';
 
 @Component({
   selector: 'app-progress-carousel',
@@ -20,7 +21,8 @@ import {
     CarouselContainerDirective,
     CarouselItemDirective,
     CarouselPreviousDirective,
-    CarouselNextDirective
+    CarouselNextDirective,
+    ProgressComponent
   ],
   template: `
     <div class="space-y-6 max-w-2xl mx-auto group">
@@ -49,10 +51,7 @@ import {
 
       <div class="space-y-4">
         <!-- Progress Bar -->
-        <div class="relative h-1.5 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800">
-          <div class="h-full w-full flex-1 bg-primary/80 transition-all duration-300" 
-               [style.transform]="'translateX(-' + (100 - progress) + '%)'"></div>
-        </div>
+        <tolle-progress [value]="progress" class="bg-neutral-100 dark:bg-neutral-800"></tolle-progress>
 
         <!-- Dots -->
         <div class="flex justify-center gap-2">
