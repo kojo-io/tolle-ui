@@ -5,6 +5,8 @@ import { CardOverviewComponent } from './card-overview/card-overview.component';
 import { CardInteractiveComponent } from './card-interactive/card-interactive.component';
 import { CardExamplesComponent } from './card-examples/card-examples.component';
 import { CardApiComponent } from './card-api/card-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-card-docs',
@@ -13,7 +15,9 @@ import { CardApiComponent } from './card-api/card-api.component';
     CardOverviewComponent,
     CardInteractiveComponent,
     CardExamplesComponent,
-    CardApiComponent
+    CardApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './card-docs.component.html',
   styleUrl: './card-docs.component.css'

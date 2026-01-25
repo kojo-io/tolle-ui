@@ -6,6 +6,8 @@ import { ThemingColorsComponent } from './theming-colors/theming-colors.componen
 import { ThemingConfigComponent } from './theming-config/theming-config.component';
 import { ThemingIntegrationComponent } from './theming-integration/theming-integration.component';
 import { ThemingOverridesComponent } from './theming-overrides/theming-overrides.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
     selector: 'app-theming-docs',
@@ -16,7 +18,9 @@ import { ThemingOverridesComponent } from './theming-overrides/theming-overrides
         ThemingColorsComponent,
         ThemingConfigComponent,
         ThemingIntegrationComponent,
-        ThemingOverridesComponent
+        ThemingOverridesComponent,
+        DocsWrapperComponent
+
     ],
     templateUrl: './theming-docs.component.html'
 })

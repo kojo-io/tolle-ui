@@ -5,6 +5,8 @@ import { CalendarOverviewComponent } from './calendar-overview/calendar-overview
 import { CalendarInteractiveComponent } from './calendar-interactive/calendar-interactive.component';
 import { CalendarExamplesComponent } from './calendar-examples/calendar-examples.component';
 import { CalendarApiComponent } from './calendar-api/calendar-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-calendar-docs',
@@ -13,7 +15,9 @@ import { CalendarApiComponent } from './calendar-api/calendar-api.component';
     CalendarOverviewComponent,
     CalendarInteractiveComponent,
     CalendarExamplesComponent,
-    CalendarApiComponent
+    CalendarApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './calendar-docs.component.html',
   styleUrl: './calendar-docs.component.css'

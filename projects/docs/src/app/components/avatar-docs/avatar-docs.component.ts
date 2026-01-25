@@ -4,6 +4,8 @@ import { AvatarOverviewComponent } from './avatar-overview/avatar-overview.compo
 import { AvatarInteractiveComponent } from './avatar-interactive/avatar-interactive.component';
 import { AvatarExamplesComponent } from './avatar-examples/avatar-examples.component';
 import { AvatarApiComponent } from './avatar-api/avatar-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-avatar-docs',
@@ -12,7 +14,9 @@ import { AvatarApiComponent } from './avatar-api/avatar-api.component';
     AvatarOverviewComponent,
     AvatarInteractiveComponent,
     AvatarExamplesComponent,
-    AvatarApiComponent
+    AvatarApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './avatar-docs.component.html',
   styleUrl: './avatar-docs.component.css'

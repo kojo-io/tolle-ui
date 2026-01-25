@@ -1,0 +1,47 @@
+<div class="flex w-full h-full relative">
+    <!-- Main Content -->
+    <div class="flex-1 h-full overflow-auto no-scrollbar scroll-smooth">
+        <article class="max-w-4xl mx-auto px-4 md:px-6 py-8 md:py-12 font-sans leading-relaxed">
+
+            <!-- Mobile TOC Toggle -->
+            @if (isMobile$ | async) {
+            <div class="mb-8 p-4 border rounded-lg bg-muted/30 lg:hidden">
+                <tolle-button (click)="toggleToc()" variant="ghost" size="sm"
+                    class="flex items-center justify-between w-full font-semibold text-sm">
+                    <span>On this page</span>
+                    <i [class]="tocOpen ? 'ri-arrow-up-s-line' : 'ri-arrow-down-s-line'"></i>
+                </tolle-button>
+
+                @if (tocOpen) {
+                <div class="mt-4 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <ng-container *ngIf="tocTemplate; else projection">
+                        <ng-container *ngTemplateOutlet="tocTemplate"></ng-container>
+                    </ng-container>
+                    <ng-template #projection>
+                        <ng-content select="[toc]"></ng-content>
+                    </ng-template>
+                </div>
+                }
+            </div>
+            }
+
+            <ng-content select="[content]"></ng-content>
+        </article>
+    </div>
+
+    <!-- Desktop TOC -->
+    @if (!(isMobile$ | async)) {
+    <aside
+        class="no-scrollbar overflow-y-auto px-8 xl:block sticky top-0 max-h-screen py-6 min-w-56 border-l border-neutral-100 dark:border-neutral-800">
+        <div class="sticky top-0 z-10 pb-4">
+            <p class="text-sm font-semibold text-foreground">On this page</p>
+        </div>
+        <ng-container *ngIf="tocTemplate; else desktopProjection">
+            <ng-container *ngTemplateOutlet="tocTemplate"></ng-container>
+        </ng-container>
+        <ng-template #desktopProjection>
+            <ng-content select="[toc]"></ng-content>
+        </ng-template>
+    </aside>
+    }
+</div>

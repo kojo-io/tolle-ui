@@ -5,7 +5,7 @@
     <div class="space-y-4 mb-12" id="basic">
         <h3 class="text-xl font-semibold">Basic</h3>
         <p class="text-muted-foreground">Badges come in several semantic variants.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
         </div>
         <div *ngIf="basicTab === 'preview'"
@@ -21,7 +21,7 @@
     <div class="space-y-4 mb-12" id="sizes">
         <h3 class="text-xl font-semibold">Sizes</h3>
         <p class="text-muted-foreground">Standardized sizes for different layout needs.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="sizesTab" />
         </div>
         <div *ngIf="sizesTab === 'preview'"
@@ -38,7 +38,7 @@
         <h3 class="text-xl font-semibold">Removable</h3>
         <p class="text-muted-foreground">Badges can be removable (closable), making them perfect for tags or filters.
         </p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="removableTab" />
         </div>
         <div *ngIf="removableTab === 'preview'"
@@ -55,7 +55,7 @@
     <div class="space-y-4" id="icons">
         <h3 class="text-xl font-semibold">With Icons</h3>
         <p class="text-muted-foreground">You can project icons using the <code>prefix</code> slot.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="iconsTab" />
         </div>
         <div *ngIf="iconsTab === 'preview'"

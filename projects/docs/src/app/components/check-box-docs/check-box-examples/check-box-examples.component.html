@@ -6,7 +6,7 @@
         <div id="basic">
             <h3 class="text-xl font-semibold mb-4 text-foreground/80">Basic</h3>
             <p class="text-muted-foreground mb-4">A simple checkbox with a label.</p>
-            <div class="w-1/4 mb-4">
+            <div class="w-full md:w-1/4 mb-4">
                 <tolle-segment [items]="viewOptions" [(ngModel)]="basicView" />
             </div>
             <div *ngIf="basicView === 'preview'"
@@ -23,7 +23,7 @@
         <div id="with-description">
             <h3 class="text-xl font-semibold mb-4 text-foreground/80">With Description</h3>
             <p class="text-muted-foreground mb-4">Checkbox with a label and a supporting description.</p>
-            <div class="w-1/4 mb-4">
+            <div class="w-full md:w-1/4 mb-4">
                 <tolle-segment [items]="viewOptions" [(ngModel)]="descriptionView" />
             </div>
             <div *ngIf="descriptionView === 'preview'"
@@ -40,7 +40,7 @@
         <div id="disabled">
             <h3 class="text-xl font-semibold mb-4 text-foreground/80">Disabled</h3>
             <p class="text-muted-foreground mb-4">A checkbox in a disabled state.</p>
-            <div class="w-1/4 mb-4">
+            <div class="w-full md:w-1/4 mb-4">
                 <tolle-segment [items]="viewOptions" [(ngModel)]="disabledView" />
             </div>
             <div *ngIf="disabledView === 'preview'"

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DateRangePickerOverviewComponent } from './date-range-picker-overview/date-range-picker-overview.component';
 import { DateRangePickerInteractiveComponent } from './date-range-picker-interactive/date-range-picker-interactive.component';
 import { DateRangePickerApiComponent } from './date-range-picker-api/date-range-picker-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 import { BaseService } from '../../shared/base.service';
 
 @Component({
@@ -12,7 +14,9 @@ import { BaseService } from '../../shared/base.service';
         CommonModule,
         DateRangePickerOverviewComponent,
         DateRangePickerInteractiveComponent,
-        DateRangePickerApiComponent
+        DateRangePickerApiComponent,
+        DocsWrapperComponent
+
     ],
     templateUrl: './date-range-picker-docs.component.html'
 })

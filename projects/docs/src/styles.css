@@ -8,8 +8,21 @@
 @tailwind utilities;
 
 
-input, textarea, select {
+input,
+textarea,
+select {
   font-size: 16px !important;
 }
 
+pre,
+code {
+  max-width: 100%;
+  overflow-x: auto;
+}
 
+table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}

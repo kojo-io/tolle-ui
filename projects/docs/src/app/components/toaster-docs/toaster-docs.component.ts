@@ -4,6 +4,8 @@ import { BaseService } from '../../shared/base.service';
 import { ToasterOverviewComponent } from './toaster-overview/toaster-overview.component';
 import { ToasterInteractiveComponent } from './toaster-interactive/toaster-interactive.component';
 import { ToasterApiComponent } from './toaster-api/toaster-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
     selector: 'app-toaster-docs',
@@ -12,7 +14,9 @@ import { ToasterApiComponent } from './toaster-api/toaster-api.component';
         CommonModule,
         ToasterOverviewComponent,
         ToasterInteractiveComponent,
-        ToasterApiComponent
+        ToasterApiComponent,
+        DocsWrapperComponent
+
     ],
     templateUrl: './toaster-docs.component.html',
     styleUrl: './toaster-docs.component.css'

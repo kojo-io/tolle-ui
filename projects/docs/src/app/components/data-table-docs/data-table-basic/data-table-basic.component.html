@@ -4,7 +4,7 @@
     </h2>
 
     <div class="space-y-4">
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="tab" />
         </div>
 
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div *ngIf="tab === 'code'" class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <div class="w-1/4 p-2">
+            <div class="w-full md:w-1/4 p-2">
                 <tolle-segment [items]="codeViewOptions" [(ngModel)]="codeTab" />
             </div>
             <!-- Header -->

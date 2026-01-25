@@ -7,6 +7,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, NgStyle } from '@angular/common';
 import { coloris, init } from '@melloware/coloris';
 import { TooltipDirective } from '../../../../../tolle/src/lib/tooltip.directive';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map, shareReplay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-doc-layout',
@@ -41,7 +45,15 @@ export class DocLayoutComponent implements OnInit {
     }
   }
   isCollapsed = false;
+  mobileMenuOpen = false;
   theme = inject(ThemeService);
+  private breakpointObserver = inject(BreakpointObserver);
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(['(max-width: 1024px)'])
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
 
   changeBrand(value: string) {
     this.theme.setPrimaryColor(value, true); // purple
@@ -49,6 +61,14 @@ export class DocLayoutComponent implements OnInit {
 
   toggle() {
     this.theme.toggleTheme();
+  }
+
+  toggleMobileMenu() {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  closeMobileMenu() {
+    this.mobileMenuOpen = false;
   }
   // Demonstrated Grouped, Remix Icon-based, and Nested Expanding Items
   navGroups = [
@@ -73,6 +93,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Button Group", url: "/components/button-group" },
         { title: "Calendar", url: "/components/calendar" },
         { title: "Card", url: "/components/card" },
+        { title: "Carousel", url: "/components/carousel" },
         { title: "Checkbox", url: "/components/checkbox" },
         { title: "Context Menu", url: "/components/context-menu" },
         { title: "Data Table", url: "/components/data-table" },

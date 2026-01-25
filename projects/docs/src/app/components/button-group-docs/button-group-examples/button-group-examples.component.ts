@@ -26,7 +26,7 @@ import { MixedButtonGroupComponent } from '../../../docs-examples/button-group/m
       <div class="space-y-4 mb-12" id="basic">
         <h3 class="text-xl font-semibold text-foreground">Basic</h3>
         <p class="text-muted-foreground">Standard button grouping with various variants.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
         </div>
         <div *ngIf="basicTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
@@ -41,7 +41,7 @@ import { MixedButtonGroupComponent } from '../../../docs-examples/button-group/m
       <div class="space-y-4 mb-12" id="mixed">
         <h3 class="text-xl font-semibold text-foreground">Mixed Content</h3>
         <p class="text-muted-foreground">Combining text, icons, and different sizes within a group.</p>
-        <div class="w-1/4">
+        <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="mixedTab" />
         </div>
         <div *ngIf="mixedTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">

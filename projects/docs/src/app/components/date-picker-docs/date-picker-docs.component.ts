@@ -6,6 +6,8 @@ import { DatePickDocComponent } from './date-pick-doc/date-pick-doc.component';
 import { MonthPickDocComponent } from './month-pick-doc/month-pick-doc.component';
 import { YearPickDocComponent } from './year-pick-doc/year-pick-doc.component';
 import { DatePickerApiComponent } from './date-picker-api/date-picker-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-date-picker-docs',
@@ -16,7 +18,9 @@ import { DatePickerApiComponent } from './date-picker-api/date-picker-api.compon
     DatePickDocComponent,
     MonthPickDocComponent,
     YearPickDocComponent,
-    DatePickerApiComponent
+    DatePickerApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './date-picker-docs.component.html',
   styleUrl: './date-picker-docs.component.css'

@@ -4,6 +4,8 @@ import { BaseService } from '../../shared/base.service';
 import { ContextMenuOverviewComponent } from './context-menu-overview/context-menu-overview.component';
 import { ContextMenuInteractiveComponent } from './context-menu-interactive/context-menu-interactive.component';
 import { ContextMenuApiComponent } from './context-menu-api/context-menu-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
     selector: 'app-context-menu-docs',
@@ -12,7 +14,9 @@ import { ContextMenuApiComponent } from './context-menu-api/context-menu-api.com
         CommonModule,
         ContextMenuOverviewComponent,
         ContextMenuInteractiveComponent,
-        ContextMenuApiComponent
+        ContextMenuApiComponent,
+        DocsWrapperComponent
+
     ],
     templateUrl: './context-menu-docs.component.html'
 })

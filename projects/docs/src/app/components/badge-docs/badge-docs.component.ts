@@ -4,6 +4,8 @@ import { BadgeOverviewComponent } from './badge-overview/badge-overview.componen
 import { BadgeInteractiveComponent } from './badge-interactive/badge-interactive.component';
 import { BadgeExamplesComponent } from './badge-examples/badge-examples.component';
 import { BadgeApiComponent } from './badge-api/badge-api.component';
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+
 
 @Component({
   selector: 'app-badge-docs',
@@ -12,7 +14,9 @@ import { BadgeApiComponent } from './badge-api/badge-api.component';
     BadgeOverviewComponent,
     BadgeInteractiveComponent,
     BadgeExamplesComponent,
-    BadgeApiComponent
+    BadgeApiComponent,
+    DocsWrapperComponent
+
   ],
   templateUrl: './badge-docs.component.html',
   styleUrl: './badge-docs.component.css'
