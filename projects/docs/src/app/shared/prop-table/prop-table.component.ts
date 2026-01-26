@@ -7,31 +7,31 @@ import { PropEntry } from '../types';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-800 my-6">
+    <div class="overflow-x-auto rounded-lg border border-border mt-6 mb-10">
       <table class="w-full text-left text-sm">
-        <thead class="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+        <thead class="bg-muted/50 border-b border-border">
           <tr>
-            <th class="px-6 py-3 font-semibold">Name</th>
-            <th class="px-6 py-3 font-semibold">Type</th>
-            <th class="px-6 py-3 font-semibold">Default</th>
-            <th class="px-6 py-3 font-semibold">Description</th>
+            <th class="px-6 py-3 font-semibold text-foreground">Name</th>
+            <th class="px-6 py-3 font-semibold text-foreground">Type</th>
+            <th class="px-6 py-3 font-semibold text-foreground">Default</th>
+            <th class="px-6 py-3 font-semibold text-foreground">Description</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800 bg-white dark:bg-transparent">
+        <tbody class="divide-y divide-border bg-transparent">
           @for (prop of props; track prop.name) {
-            <tr class="hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors">
+            <tr class="hover:bg-muted/30 transition-colors">
               <td class="px-6 py-4 font-mono font-medium text-foreground">
                 {{ prop.name }}
               </td>
               <td class="px-6 py-4">
-                <code class="text-xs bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-foreground">
+                <code class="text-xs bg-muted border border-border px-1.5 py-0.5 rounded text-foreground">
                   {{ prop.type }}
                 </code>
               </td>
               <td class="px-6 py-4 font-mono text-xs text-muted-foreground">
                 {{ prop.default || '-' }}
               </td>
-              <td class="px-6 py-4 text-muted-foreground">
+              <td class="px-6 py-4 text-sm text-muted-foreground leading-relaxed">
                 {{ prop.description }}
               </td>
             </tr>

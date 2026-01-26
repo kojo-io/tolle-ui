@@ -9,7 +9,8 @@
     "test": "ng test",
     "build:web": "ng build showcase --configuration production",
     "build:lib": "ng build tolle --configuration production",
-    "build:docs": "ng build docs --configuration production",
+    "build:docs": "npm run generate:llms && ng build docs --configuration production",
+    "generate:llms": "npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/extract-docs.ts && npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/generate-llms.ts",
     "docs:json": "npx compodoc -p projects/tolle/tsconfig.lib.json -e json -d projects/tolle/.storybook",
     "build:storybook": "npm run docs:json && ng run tolle:build-storybook"
   },
@@ -68,6 +69,7 @@
     "@storybook/addon-themes": "^10.1.11",
     "@storybook/angular": "^10.1.10",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^25.0.10",
     "autoprefixer": "^10.4.23",
     "css-loader": "^7.1.2",
     "jasmine-core": "~5.2.0",
@@ -84,6 +86,8 @@
     "storybook": "^10.1.10",
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.19",
+    "ts-morph": "^27.0.2",
+    "ts-node": "^10.9.2",
     "typescript": "~5.5.2"
   }
 }

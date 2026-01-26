@@ -12,6 +12,7 @@ export type SidebarItem = {
   items?: SidebarItem[];
   id?: string;
   expanded?: boolean;
+  external?: boolean;
 }
 
 export type SidebarGroup = {
@@ -40,11 +41,12 @@ export type SidebarGroup = {
           <div class="mb-6">
 
             <div [class]="cn(
-              'mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70 transition-all duration-200 overflow-hidden',
-              collapsed ? 'opacity-0 h-0 mb-0 px-0' : 'opacity-100 h-auto'
+               'px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 transition-all duration-200 overflow-hidden',
+               collapsed ? 'opacity-0 h-0 mb-0 px-0' : 'opacity-100 h-auto'
             )">
               {{ group.title }}
             </div>
+            <div [class]="cn('h-px w-full bg-border/20 mb-2', collapsed && 'hidden')"></div>
 
             <div class="flex flex-col gap-1">
               @for (item of group.items; track item.id || item.title || $index; let i = $index) {
@@ -121,15 +123,27 @@ export type SidebarGroup = {
                                   <div class="overflow-hidden">
                                     <div class="flex flex-col gap-1 mt-1 ml-4 border-l border-border/30 pl-2">
                                       @for (grandChild of subItem.items; track grandChild.title) {
-                                        <a
-                                          [routerLink]="grandChild.url"
-                                          [routerLinkActive]="activeClasses"
-                                          [routerLinkActiveOptions]="{ exact: true }"
-                                          class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
-                                        >
-                                          <span class="w-1.5 h-1.5 rounded-full bg-border/70 shrink-0"></span>
-                                          <span class="truncate">{{ grandChild.title }}</span>
-                                        </a>
+                                          @if (grandChild.external) {
+                                            <a
+                                              [href]="grandChild.url"
+                                              target="_blank"
+                                              class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
+                                            >
+                                              <span class="w-1.5 h-1.5 rounded-full bg-border/70 shrink-0"></span>
+                                              <span class="truncate">{{ grandChild.title }}</span>
+                                              <i class="ri-external-link-line ml-auto text-[10px] opacity-50"></i>
+                                            </a>
+                                          } @else {
+                                            <a
+                                              [routerLink]="grandChild.url"
+                                              [routerLinkActive]="activeClasses"
+                                              [routerLinkActiveOptions]="{ exact: true }"
+                                              class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
+                                            >
+                                              <span class="w-1.5 h-1.5 rounded-full bg-border/70 shrink-0"></span>
+                                              <span class="truncate">{{ grandChild.title }}</span>
+                                            </a>
+                                          }
                                       }
                                     </div>
                                   </div>
@@ -138,15 +152,27 @@ export type SidebarGroup = {
                             }
                             @else {
                               <!-- Standard Sub Item -->
-                              <a
-                                [routerLink]="subItem.url"
-                                [routerLinkActive]="activeClasses"
-                                [routerLinkActiveOptions]="{ exact: true }"
-                                class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
-                              >
-                                <span class="w-1.5 h-1.5 rounded-full bg-border shrink-0"></span>
-                                <span class="truncate">{{ subItem.title }}</span>
-                              </a>
+                                @if (subItem.external) {
+                                  <a
+                                    [href]="subItem.url"
+                                    target="_blank"
+                                    class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
+                                  >
+                                    <span class="w-1.5 h-1.5 rounded-full bg-border shrink-0"></span>
+                                    <span class="truncate">{{ subItem.title }}</span>
+                                    <i class="ri-external-link-line ml-auto text-[10px] opacity-50"></i>
+                                  </a>
+                                } @else {
+                                  <a
+                                    [routerLink]="subItem.url"
+                                    [routerLinkActive]="activeClasses"
+                                    [routerLinkActiveOptions]="{ exact: true }"
+                                    class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
+                                  >
+                                    <span class="w-1.5 h-1.5 rounded-full bg-border shrink-0"></span>
+                                    <span class="truncate">{{ subItem.title }}</span>
+                                  </a>
+                                }
                             }
                           }
                         </div>
@@ -156,28 +182,55 @@ export type SidebarGroup = {
                 }
                 @else {
                   <!-- Standard Top-Level Item -->
-                  <a
-                    [routerLink]="item.url"
-                    [routerLinkActive]="activeClasses"
-                    [routerLinkActiveOptions]="{ exact: true }"
-                    [class]="cn(
-                      'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
-                      'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
-                      collapsed ? 'justify-center' : 'justify-start'
-                    )"
-                  >
-                    <i [class]="cn(
-                        item.icon || 'ri-circle-fill',
-                        'h-4 w-4 text-lg shrink-0 transition-transform',
-                        !collapsed && 'group-hover:scale-110'
-                      )"></i>
-                    <span [class]="cn(
-                      'truncate transition-all duration-300',
-                      collapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'
-                    )">
-                      {{ item.title }}
-                    </span>
-                  </a>
+                  @if (item.external) {
+                    <a
+                      [href]="item.url"
+                      target="_blank"
+                      [class]="cn(
+                        'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                        'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
+                        collapsed ? 'justify-center' : 'justify-start'
+                      )"
+                    >
+                      <i [class]="cn(
+                          item.icon || 'ri-circle-fill',
+                          'h-4 w-4 text-lg shrink-0 transition-transform',
+                          !collapsed && 'group-hover:scale-110'
+                        )"></i>
+                      <span [class]="cn(
+                        'truncate transition-all duration-300',
+                        collapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'
+                      )">
+                        {{ item.title }}
+                      </span>
+                      @if (!collapsed) {
+                        <i class="ri-external-link-line ml-auto text-xs opacity-50"></i>
+                      }
+                    </a>
+                  } @else {
+                    <a
+                      [routerLink]="item.url"
+                      [routerLinkActive]="activeClasses"
+                      [routerLinkActiveOptions]="{ exact: true }"
+                      [class]="cn(
+                        'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                        'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
+                        collapsed ? 'justify-center' : 'justify-start'
+                      )"
+                    >
+                      <i [class]="cn(
+                          item.icon || 'ri-circle-fill',
+                          'h-4 w-4 text-lg shrink-0 transition-transform',
+                          !collapsed && 'group-hover:scale-110'
+                        )"></i>
+                      <span [class]="cn(
+                        'truncate transition-all duration-300',
+                        collapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'
+                      )">
+                        {{ item.title }}
+                      </span>
+                    </a>
+                  }
                 }
               }
             </div>
@@ -221,17 +274,10 @@ export class SidebarComponent implements OnChanges {
 
   get activeClasses(): string {
     return cn(
-      'transition-colors',
-      // Default: Solid Primary (Badge-like) with lighter opacity (80% instead of 90%)
-      this.variant === 'default' && 'bg-primary/80 text-primary-foreground hover:bg-primary hover:text-primary-foreground',
-
-      // Secondary: Solid Secondary
+      'transition-all duration-200',
+      this.variant === 'default' && 'bg-primary text-primary-foreground shadow-sm shadow-primary/20 hover:bg-primary/90',
       this.variant === 'secondary' && 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-
-      // Ghost: Subtle background (Sidebar standard)
       this.variant === 'ghost' && 'bg-accent text-accent-foreground',
-
-      // Outline: Bordered
       this.variant === 'outline' && 'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground'
     );
   }
