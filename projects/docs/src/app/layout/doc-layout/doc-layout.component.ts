@@ -81,13 +81,6 @@ export class DocLayoutComponent implements OnInit {
       ]
     },
     {
-      title: "AI Native",
-      items: [
-        { title: "LLM Index (txt)", url: "/llms.txt", icon: "ri-robot-line", external: true },
-        { title: "Full Context (txt)", url: "/llms-ctx.txt", icon: "ri-file-list-3-line", external: true }
-      ]
-    },
-    {
       title: "Components",
       items: [
         { title: "Accordion", url: "/components/accordion" },
@@ -138,6 +131,13 @@ export class DocLayoutComponent implements OnInit {
         { title: "Toggle", url: "/components/toggle" },
         { title: "Toggle Group", url: "/components/toggle-group" },
         { title: "Tooltip", url: "/components/tooltip" }
+      ]
+    },
+    {
+      title: "AI Native",
+      items: [
+        { title: "LLM Index (txt)", url: "/llms.txt", icon: "ri-robot-line", external: true },
+        { title: "Full Context (txt)", url: "/llms-ctx.txt", icon: "ri-file-list-3-line", external: true }
       ]
     }
   ];
