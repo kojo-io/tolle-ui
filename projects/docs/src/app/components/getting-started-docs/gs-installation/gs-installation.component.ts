@@ -8,5 +8,5 @@ import { BaseService } from '../../../shared/base.service';
 })
 export class GSInstallationComponent {
     baseService = inject(BaseService);
-    install = 'npm install @tolle_/tolle-ui lucide-angular remixicon @melloware/coloris';
+    install = 'npm install @tolle_/tolle-ui date-fns remixicon @melloware/coloris embla-carousel clsx tailwind-merge class-variance-authority @floating-ui/dom';
 }

@@ -1,0 +1,199 @@
+# Tolle UI - Angular Component Library
+
+Tolle UI is a modern UI component library for Angular built with Tailwind CSS and the Angular CDK. It emphasizes accessibility, customizability, and a premium aesthetic similar to shadcn/ui.
+
+## Installation & Getting Started
+
+### 1. Install Dependencies
+```bash
+npm install @tolle_/tolle-ui date-fns remixicon @melloware/coloris embla-carousel clsx tailwind-merge class-variance-authority @floating-ui/dom
+```
+
+### 2. Configure Tailwind CSS
+In your `tailwind.config.js`:
+```javascript
+const { tolleUi } = require('@tolle_/tolle-ui/tailwind');
+
+module.exports = {
+  darkMode: 'class',
+  presets: [
+    require('@tolle_/tolle-ui/preset') // Point to your library preset
+  ],
+  content: [
+    "./src/**/*.{html,ts}",
+    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs,html}"
+  ],
+  plugins: [],
+};
+```
+
+### 3. Setup Global Styles
+In your `angular.json`:
+```json
+{
+  "styles": [
+    "src/styles.css",
+    "node_modules/@tolle_/tolle-ui/theme.css"
+  ]
+}
+```
+
+### 4. Provide Configuration
+In your `app.config.ts`:
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { provideTolleConfig } from '@tolle_/tolle-ui';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideTolleConfig({
+      primaryColor: '#8b5cf6',
+      radius: '0.5rem',
+      darkByDefault: false
+    })
+  ]
+};
+```
+
+## Theming
+
+Tolle UI uses CSS variables for theming, which are managed by `ThemeService` and `provideTolleConfig`.
+
+### Config Options:
+- `primaryColor`: Hex code for the brand color.
+- `radius`: CSS border-radius value (e.g., '0.5rem').
+- `darkByDefault`: Boolean to start in dark mode.
+
+### Overriding at Runtime:
+Use `ThemeService.updateConfig(partialConfig)` to change colors or radius dynamically.
+
+## Components Reference
+
+### Button
+Selector: `tolle-button`
+Import: `import { ButtonComponent } from '@tolle_/tolle-ui';`
+Usage: `<button tolle-button variant="outline" size="sm">Click</button>`
+Inputs:
+- `variant`: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
+- `size`: 'default' | 'xs' | 'sm' | 'lg' | 'icon' | 'icon-xs' | 'icon-sm' | 'icon-lg'
+- `busy`: boolean
+- `disabled`: boolean
+
+### Input
+Selector: `tolle-input`
+Import: `import { InputComponent } from '@tolle_/tolle-ui';`
+Usage: `<tolle-input label="Name" [(ngModel)]="name"></tolle-input>`
+Inputs:
+- `label`, `hint`, `errorMessage`: string
+- `type`: 'text' | 'password' | 'email' | etc.
+- `size`: 'xs' | 'sm' | 'default' | 'lg'
+- `error`: boolean
+- `disabled`: boolean
+
+### Textarea
+Selector: `tolle-textarea`
+Import: `import { TextareaComponent } from '@tolle_/tolle-ui';`
+Inputs: `label`, `rows`, `autoGrow`, `maxLength`, `showCharacterCount`, `error`, `disabled`.
+
+### Slider
+Selector: `tolle-slider`
+Import: `import { SliderComponent } from '@tolle_/tolle-ui';`
+Usage: `<tolle-slider [(ngModel)]="val" [min]="0" [max]="100"></tolle-slider>`
+Range: `[(ngModel)]="[min, max]"`
+Inputs: `min`, `max`, `step`, `disabled`.
+
+### Select
+Selector: `tolle-select`, `tolle-select-item`
+Import: `import { SelectComponent, SelectItemComponent } from '@tolle_/tolle-ui';`
+Usage: `<tolle-select><tolle-select-item value="1">One</tolle-select-item></tolle-select>`
+Inputs: `placeholder`, `searchable`, `size`, `disabled`.
+
+### Switch
+Selector: `tolle-switch`
+Import: `import { SwitchComponent } from '@tolle_/tolle-ui';`
+Usage: `<tolle-switch [(ngModel)]="enabled"></tolle-switch>`
+Inputs: `size`, `disabled`.
+
+### Checkbox
+Selector: `tolle-checkbox`
+Import: `import { CheckboxComponent } from '@tolle_/tolle-ui';`
+Inputs: `size`, `disabled`.
+
+### Sheet (Off-canvas)
+Selector: `tolle-sheet`, `tolle-sheet-content`
+Import: `import { SheetComponent, SheetContentComponent, SheetTriggerComponent } from '@tolle_/tolle-ui';`
+Inputs: `side` ('top'|'bottom'|'left'|'right'), `rounded` (boolean).
+Service: `SheetService` for programmatic control.
+
+### Modal / Alert Dialog
+Service: `ModalService`, `AlertDialogService`.
+Import: `import { ModalService, AlertDialogService } from '@tolle_/tolle-ui';`
+Usage: `this.modalService.open({ title: 'Title', content: MyComponent })`.
+
+### Accordion
+Selector: `tolle-accordion`, `tolle-accordion-item`
+Import: `import { AccordionComponent, AccordionItemComponent } from '@tolle_/tolle-ui';`
+Inputs: `type` ('single' | 'multiple').
+
+### Tabs
+Selector: `tolle-tabs`, `tolle-tabs-list`, `tolle-tabs-trigger`, `tolle-tabs-content`.
+Import: `import { TabsComponent, TabsListComponent, TabsTriggerComponent, TabsContentComponent } from '@tolle_/tolle-ui';`
+Inputs: `defaultValue`, `class`.
+
+### Card
+Selector: `tolle-card`, `tolle-card-header`, `tolle-card-title`, `tolle-card-content`, `tolle-card-footer`.
+Import: `import { CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent } from '@tolle_/tolle-ui';`
+
+### Avatar
+Selector: `tolle-avatar`, `tolle-avatar-fallback`.
+Import: `import { AvatarComponent, AvatarFallbackComponent } from '@tolle_/tolle-ui';`
+Inputs: `src`, `alt`, `size`, `shape`.
+
+### Badge
+Selector: `tolle-badge`.
+Import: `import { BadgeComponent } from '@tolle_/tolle-ui';`
+Inputs: `variant`, `size`, `removable`.
+
+### Progress
+Selector: `tolle-progress`.
+Import: `import { ProgressComponent } from '@tolle_/tolle-ui';`
+Inputs: `value` (0-100).
+
+### Skeleton
+Selector: `tolle-skeleton`.
+Import: `import { SkeletonComponent } from '@tolle_/tolle-ui';`
+Inputs: `variant` ('rect' | 'circle' | 'pill').
+
+### Carousel
+Selector: `tolle-carousel`, `tolle-carousel-content`, `tolle-carousel-item`.
+Import: `import { CarouselComponent, CarouselContentDirective, CarouselItemDirective } from '@tolle_/tolle-ui';`
+Inputs: `opts`, `plugins`, `orientation`.
+
+### Breadcrumb
+Selector: `tolle-breadcrumb`, `tolle-breadcrumb-item`, `tolle-breadcrumb-link`, `tolle-breadcrumb-separator`.
+Import: `import { BreadcrumbComponent, BreadcrumbItemComponent, BreadcrumbLinkComponent, BreadcrumbSeparatorComponent } from '@tolle_/tolle-ui';`
+
+### Table
+Selector: `tolle-data-table`.
+Import: `import { DataTableComponent } from '@tolle_/tolle-ui';`
+Inputs: `data`, `columns`, `searchable`, `paginate`, `pageSize`.
+
+### Pagination
+Selector: `tolle-pagination`.
+Import: `import { PaginationComponent } from '@tolle_/tolle-ui';`
+Inputs: `totalRecords`, `currentPageSize`, `currentPage`.
+
+### OTP Input
+Selector: `tolle-otp`, `tolle-otp-group`, `tolle-otp-slot`.
+Import: `import { OtpComponent, OtpGroupComponent, OtpSlotComponent } from '@tolle_/tolle-ui';`
+
+### Resizable
+Selector: `tolle-resizable`, `tolle-resizable-panel`, `tolle-resizable-panel-item`.
+Import: `import { ResizableComponent, ResizablePanelComponent, ResizablePanelItemComponent } from '@tolle_/tolle-ui';`
+
+### Hover Card / Popover / Tooltip
+Directives/Components: `tolle-hover-card`, `tolle-popover`, `[tolleTooltip]`.
+Import: `import { HoverCardComponent, PopoverComponent, TooltipDirective } from '@tolle_/tolle-ui';`
+
+## Utilities
+- `cn(...classes)`: Combines Tailwind classes.

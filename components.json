@@ -1,0 +1,932 @@
+[
+  {
+    "file": "projects/tolle/src/lib/segment.component.ts",
+    "selector": "tolle-segment",
+    "inputs": [
+      "items",
+      "class",
+      "disabled",
+      "itemTemplate"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog",
+    "inputs": [
+      "open"
+    ],
+    "outputs": [
+      "openChange"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog-trigger",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog-portal",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog-content",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog-header",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog-footer",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog-title",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog-description",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "tolle-alert-dialog-action",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog.component.ts",
+    "selector": "[tolleContextMenuTrigger]",
+    "inputs": [
+      "items"
+    ],
+    "outputs": [
+      "action"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/resizable-panel.component.ts",
+    "selector": "tolle-resizable-panel",
+    "inputs": [
+      "direction",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/empty-state.component.ts",
+    "selector": "tolle-empty-state",
+    "inputs": [
+      "variant",
+      "title",
+      "description",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/toggle-group.component.ts",
+    "selector": "tolle-toggle-group",
+    "inputs": [
+      "type",
+      "variant",
+      "size",
+      "class",
+      "disabled"
+    ],
+    "outputs": [
+      "valueChange"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/toggle-group.component.ts",
+    "selector": "tolle-toggle-group-item",
+    "inputs": [
+      "value",
+      "class",
+      "disabled"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/otp-group.component.ts",
+    "selector": "tolle-otp-group",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/date-picker.component.ts",
+    "selector": "tolle-date-picker",
+    "inputs": [
+      "placeholder",
+      "disabled",
+      "class",
+      "disablePastDates",
+      "showClear",
+      "showQuickActions",
+      "minDate",
+      "maxDate",
+      "mode",
+      "formatMonthFn",
+      "formatYearFn",
+      "displayFormat"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/tabs.component.ts",
+    "selector": "tolle-tabs",
+    "inputs": [
+      "defaultValue",
+      "value",
+      "class"
+    ],
+    "outputs": [
+      "valueChange"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/tabs.component.ts",
+    "selector": "tolle-tabs-list",
+    "inputs": [
+      "class",
+      "variant"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/tabs.component.ts",
+    "selector": "tolle-tabs-trigger",
+    "inputs": [
+      "value",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/tabs.component.ts",
+    "selector": "tolle-tabs-content",
+    "inputs": [
+      "value",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/input.component.ts",
+    "selector": "tolle-input",
+    "inputs": [
+      "id",
+      "label",
+      "hint",
+      "errorMessage",
+      "type",
+      "placeholder",
+      "size",
+      "containerClass",
+      "class",
+      "disabled",
+      "readonly",
+      "error",
+      "hideHintOnFocus"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/dropdown-label.component.ts",
+    "selector": "[tolleCell]",
+    "inputs": [
+      "name"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/modal.component.ts",
+    "selector": "tolle-modal",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert.component.ts",
+    "selector": "tolle-alert",
+    "inputs": [
+      "variant",
+      "title",
+      "class",
+      "dismissible"
+    ],
+    "outputs": [
+      "onClose"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/sidebar.component.ts",
+    "selector": "tolle-sidebar",
+    "inputs": [
+      "items",
+      "collapsed",
+      "class",
+      "variant"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/badge.component.ts",
+    "selector": "tolle-badge",
+    "inputs": [
+      "variant",
+      "size",
+      "removable",
+      "class"
+    ],
+    "outputs": [
+      "onRemove"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/accordion-item.component.ts",
+    "selector": "tolle-accordion-item",
+    "inputs": [
+      "title",
+      "class",
+      "id"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/breadcrumb-separator.component.ts",
+    "selector": "tolle-breadcrumb-separator",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/card.component.ts",
+    "selector": "tolle-card",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/card.component.ts",
+    "selector": "tolle-card-header",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/card.component.ts",
+    "selector": "tolle-card-title",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/card.component.ts",
+    "selector": "tolle-card-content",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/card.component.ts",
+    "selector": "tolle-card-footer",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/multi-select.component.ts",
+    "selector": "tolle-multi-select",
+    "inputs": [
+      "placeholder",
+      "size",
+      "searchable",
+      "disabled",
+      "class",
+      "maxSelections",
+      "maxDisplayItems",
+      "error"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/label.component.ts",
+    "selector": "tolle-label",
+    "inputs": [
+      "for",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/toggle.component.ts",
+    "selector": "tolle-toggle",
+    "inputs": [
+      "variant",
+      "size",
+      "disabled",
+      "class",
+      "pressed"
+    ],
+    "outputs": [
+      "pressedChange"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/checkbox.component.ts",
+    "selector": "tolle-checkbox",
+    "inputs": [
+      "class",
+      "disabled",
+      "size"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/dropdown-item.component.ts",
+    "selector": "tolle-dropdown-item",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/toaster.component.ts",
+    "selector": "tolle-toaster",
+    "inputs": [
+      "position"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/otp-slot.component.ts",
+    "selector": "tolle-otp-slot",
+    "inputs": [
+      "char",
+      "isActive",
+      "isFirst",
+      "isLast",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/breadcrumb.component.ts",
+    "selector": "tolle-breadcrumb",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/select-separator.component.ts",
+    "selector": "tolle-select-separator",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/dropdown-separator.component.ts",
+    "selector": "tolle-dropdown-separator",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/separator.component.ts",
+    "selector": "tolle-separator",
+    "inputs": [
+      "orientation",
+      "decorative",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/hover-card.component.ts",
+    "selector": "tolle-hover-card",
+    "inputs": [
+      "openDelay",
+      "closeDelay",
+      "placement"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/hover-card.component.ts",
+    "selector": "tolle-hover-card-trigger",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/hover-card.component.ts",
+    "selector": "tolle-hover-card-content",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/sheet.component.ts",
+    "selector": "tolle-sheet",
+    "inputs": [
+      "isOpen",
+      "hasBackdrop"
+    ],
+    "outputs": [
+      "isOpenChange"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/sheet.component.ts",
+    "selector": "tolle-sheet-trigger",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/sheet.component.ts",
+    "selector": "tolle-sheet-content",
+    "inputs": [
+      "side",
+      "rounded",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/sheet.component.ts",
+    "selector": "tolle-sheet-header",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/sheet.component.ts",
+    "selector": "tolle-sheet-footer",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/sheet.component.ts",
+    "selector": "tolle-sheet-title",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/sheet.component.ts",
+    "selector": "tolle-sheet-description",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/radio-group.component.ts",
+    "selector": "tolle-radio-group",
+    "inputs": [
+      "class",
+      "disabled",
+      "name"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/masked-input.component.ts",
+    "selector": "tolle-masked-input",
+    "inputs": [
+      "id",
+      "label",
+      "hint",
+      "errorMessage",
+      "mask",
+      "placeholder",
+      "type",
+      "disabled",
+      "readonly",
+      "class",
+      "containerClass",
+      "error",
+      "size",
+      "returnRaw",
+      "hideHintOnFocus"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/skeleton.component.ts",
+    "selector": "tolle-skeleton",
+    "inputs": [
+      "variant",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/progress.component.ts",
+    "selector": "tolle-progress",
+    "inputs": [
+      "value",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/range-calendar.component.ts",
+    "selector": "tolle-range-calendar",
+    "inputs": [
+      "class",
+      "disablePastDates"
+    ],
+    "outputs": [
+      "rangeSelect"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/data-table.component.ts",
+    "selector": "tolle-data-table",
+    "inputs": [
+      "data",
+      "columns",
+      "searchable",
+      "paginate",
+      "pageSizeOptions",
+      "pageSize",
+      "expandable",
+      "size",
+      "allowColumnHiding",
+      "showSettings",
+      "expandedTemplate"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/select-group.component.ts",
+    "selector": "tolle-select-group",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/resizable.component.ts",
+    "selector": "tolle-resizable",
+    "inputs": [
+      "width",
+      "height",
+      "minWidth",
+      "minHeight",
+      "maxWidth",
+      "maxHeight",
+      "resizable",
+      "directions",
+      "class",
+      "containerClass"
+    ],
+    "outputs": [
+      "resizeStart",
+      "resize",
+      "resizeEnd"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/accordion.component.ts",
+    "selector": "tolle-accordion",
+    "inputs": [
+      "type",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/avatar.component.ts",
+    "selector": "tolle-avatar",
+    "inputs": [
+      "src",
+      "alt",
+      "size",
+      "shape",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/otp.component.ts",
+    "selector": "tolle-otp",
+    "inputs": [
+      "disabled",
+      "auto"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/breadcrumb-item.component.ts",
+    "selector": "tolle-breadcrumb-item",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/button.component.ts",
+    "selector": "tolle-button",
+    "inputs": [
+      "class",
+      "variant",
+      "size",
+      "disabled",
+      "busy"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/breadcrumb-link.component.ts",
+    "selector": "tolle-breadcrumb-link",
+    "inputs": [
+      "active"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/radio-item.component.ts",
+    "selector": "tolle-radio-item",
+    "inputs": [
+      "value",
+      "disabled",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/slider.component.ts",
+    "selector": "tolle-slider",
+    "inputs": [
+      "min",
+      "max",
+      "step",
+      "disabled",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/aspect-ratio.component.ts",
+    "selector": "tolle-aspect-ratio",
+    "inputs": [
+      "ratio",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/pagination.component.ts",
+    "selector": "tolle-pagination",
+    "inputs": [
+      "class",
+      "showPageLinks",
+      "showPageOptions",
+      "showCurrentPageInfo",
+      "currentPageInfoTemplate",
+      "totalRecords",
+      "currentPageSize",
+      "currentPage",
+      "pageSizeOptions"
+    ],
+    "outputs": [
+      "onPageNumberChange",
+      "onPageSizeChange"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/textarea.component.ts",
+    "selector": "[tolleTooltip]",
+    "inputs": [
+      "id",
+      "label",
+      "placeholder",
+      "hint",
+      "errorMessage",
+      "rows",
+      "maxLength",
+      "showCharacterCount",
+      "autoGrow",
+      "error",
+      "className",
+      "hideHintOnFocus",
+      "hideCharacterCountOnFocus",
+      "disabled",
+      "readonly",
+      "content",
+      "placement"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/carousel/carousel.component.ts",
+    "selector": "[tolleCarouselNext]",
+    "inputs": [
+      "opts",
+      "plugins",
+      "orientation"
+    ],
+    "outputs": [
+      "api"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/dropdown-menu.component.ts",
+    "selector": "tolle-dropdown-menu",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/button-group.component.ts",
+    "selector": "tolle-button-group",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/date-range-picker.component.ts",
+    "selector": "tolle-date-range-picker",
+    "inputs": [
+      "disabled",
+      "placeholder",
+      "class",
+      "disablePastDates",
+      "size"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/popover-content.component.ts",
+    "selector": "tolle-popover-content",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/resizable-panel-item.component.ts",
+    "selector": "tolle-resizable-panel-item",
+    "inputs": [
+      "minSize",
+      "maxSize",
+      "resizable",
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/select.component.ts",
+    "selector": "tolle-select",
+    "inputs": [
+      "placeholder",
+      "class",
+      "disabled",
+      "searchable",
+      "size",
+      "readonly",
+      "in"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/alert-dialog-dynamic.component.ts",
+    "selector": "[tolleDropdownTrigger]",
+    "inputs": [
+      "menu"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/context-menu.component.ts",
+    "selector": "tolle-context-menu",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/calendar.component.ts",
+    "selector": "tolle-calendar",
+    "inputs": [
+      "class",
+      "mode",
+      "disablePastDates",
+      "showQuickActions",
+      "minDate",
+      "maxDate",
+      "formatMonthFn",
+      "formatYearFn",
+      "formatDateFn"
+    ],
+    "outputs": [
+      "dateSelect"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/scroll-area.component.ts",
+    "selector": "tolle-scroll-area",
+    "inputs": [
+      "class",
+      "height",
+      "orientation"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/sheet-wrapper.component.ts",
+    "selector": "tolle-sheet-wrapper",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/select-item.component.ts",
+    "selector": "tolle-select-item",
+    "inputs": [
+      "value",
+      "class",
+      "selected",
+      "disabled",
+      "multiSelect"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/switch.component.ts",
+    "selector": "tolle-switch",
+    "inputs": [
+      "class",
+      "disabled",
+      "size"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/avatar-fallback.component.ts",
+    "selector": "tolle-avatar-fallback",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/popover.component.ts",
+    "selector": "tolle-popover",
+    "inputs": [
+      "placement"
+    ],
+    "outputs": [
+      "onOpen",
+      "onClose"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/collapsible.component.ts",
+    "selector": "tolle-collapsible",
+    "inputs": [
+      "open",
+      "class"
+    ],
+    "outputs": [
+      "openChange"
+    ]
+  },
+  {
+    "file": "projects/tolle/src/lib/collapsible.component.ts",
+    "selector": "tolle-collapsible-trigger",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  },
+  {
+    "file": "projects/tolle/src/lib/collapsible.component.ts",
+    "selector": "tolle-collapsible-content",
+    "inputs": [
+      "class"
+    ],
+    "outputs": []
+  }
+]
