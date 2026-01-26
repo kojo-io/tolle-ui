@@ -41,12 +41,11 @@ export type SidebarGroup = {
           <div class="mb-6">
 
             <div [class]="cn(
-               'px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground/50 transition-all duration-200 overflow-hidden',
-               collapsed ? 'opacity-0 h-0 mb-0 px-0' : 'opacity-100 h-auto'
+              'mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70 transition-all duration-200 overflow-hidden',
+              collapsed ? 'opacity-0 h-0 mb-0 px-0' : 'opacity-100 h-auto'
             )">
               {{ group.title }}
             </div>
-            <div [class]="cn('h-px w-full bg-border/20 mb-2', collapsed && 'hidden')"></div>
 
             <div class="flex flex-col gap-1">
               @for (item of group.items; track item.id || item.title || $index; let i = $index) {
@@ -274,10 +273,17 @@ export class SidebarComponent implements OnChanges {
 
   get activeClasses(): string {
     return cn(
-      'transition-all duration-200',
-      this.variant === 'default' && 'bg-primary text-primary-foreground shadow-sm shadow-primary/20 hover:bg-primary/90',
+      'transition-colors',
+      // Default: Solid Primary (Badge-like) with lighter opacity (80% instead of 90%)
+      this.variant === 'default' && 'bg-primary/80 text-primary-foreground hover:bg-primary hover:text-primary-foreground',
+
+      // Secondary: Solid Secondary
       this.variant === 'secondary' && 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+
+      // Ghost: Subtle background (Sidebar standard)
       this.variant === 'ghost' && 'bg-accent text-accent-foreground',
+
+      // Outline: Bordered
       this.variant === 'outline' && 'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground'
     );
   }
