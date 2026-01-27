@@ -1,5 +1,5 @@
-import { Injectable, Inject, PLATFORM_ID, Optional, Renderer2, RendererFactory2 } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Injectable, Inject, PLATFORM_ID, Optional, Renderer2, RendererFactory2, DOCUMENT } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { TOLLE_CONFIG, TolleConfig } from './tolle-config';
 
