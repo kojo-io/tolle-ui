@@ -81,6 +81,13 @@ export class DocLayoutComponent implements OnInit {
       ]
     },
     {
+      title: "AI Native",
+      items: [
+        { title: "LLM Index (txt)", url: "/llm.txt", icon: "ri-robot-line", external: true },
+        { title: "Full Context (txt)", url: "/llm-ctx.txt", icon: "ri-file-list-3-line", external: true }
+      ]
+    },
+    {
       title: "Components",
       items: [
         { title: "Accordion", url: "/components/accordion" },

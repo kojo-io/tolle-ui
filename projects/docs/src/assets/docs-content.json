@@ -1,0 +1,2652 @@
+{
+  "accordion-docs": {
+    "category": "accordion-docs",
+    "components": [
+      {
+        "name": "AccordionApiComponent",
+        "examples": {},
+        "props": {
+          "accordionProps": [
+            {
+              "name": "type",
+              "type": "'single' | 'multiple'",
+              "default": "'single'",
+              "description": "Determines whether one or multiple items can be opened at the same time."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "description": "Additional CSS classes for the accordion container."
+            }
+          ],
+          "accordionItemProps": [
+            {
+              "name": "title",
+              "type": "string",
+              "description": "The text displayed in the accordion item header."
+            },
+            {
+              "name": "id",
+              "type": "string | number",
+              "description": "Unique identifier for the item. Auto-generated if not provided."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "description": "Additional CSS classes for the accordion item."
+            }
+          ]
+        },
+        "selector": "app-accordion-api"
+      },
+      {
+        "name": "AccordionExamplesComponent",
+        "examples": {
+          "basicCode": "<tolle-accordion>\n  <tolle-accordion-item title=\"Can I open many at once?\">\n    Yes, because the type is set to multiple by default or explicitly.\n  </tolle-accordion-item>\n  <tolle-accordion-item title=\"Is it animated?\">\n    No, it uses static rendering for a snappy, high-performance feel.\n  </tolle-accordion-item>\n</tolle-accordion>",
+          "multiCode": "<tolle-accordion type=\"multiple\">\n  <tolle-accordion-item title=\"Can I open many at once?\">\n    Yes, because the type is set to multiple.\n  </tolle-accordion-item>\n  <tolle-accordion-item title=\"Is it animated?\">\n    No, it uses static rendering for a snappy, high-performance feel.\n  </tolle-accordion-item>\n</tolle-accordion>"
+        },
+        "props": {},
+        "selector": "app-accordion-examples"
+      },
+      {
+        "name": "AccordionInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-accordion type=\"${this.playgroundType}\">\n  <tolle-accordion-item title=\"Is it accessible?\">\n    Yes. It adheres to the WAI-ARIA design pattern.\n  </tolle-accordion-item>\n  <tolle-accordion-item title=\"Is it styled?\">\n    Yes. It comes with default styles that match the other components' aesthetic.\n  </tolle-accordion-item>\n  <tolle-accordion-item title=\"Is it animated?\">\n    Yes. It features smooth open/close animations.\n  </tolle-accordion-item>\n</tolle-accordion>"
+        },
+        "props": {},
+        "selector": "app-accordion-interactive"
+      },
+      {
+        "name": "AccordionOverviewComponent",
+        "examples": {
+          "installation": "import { AccordionComponent, AccordionItemComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [AccordionComponent, AccordionItemComponent]\n})"
+        },
+        "props": {},
+        "selector": "app-accordion-overview",
+        "installation": "import { AccordionComponent, AccordionItemComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [AccordionComponent, AccordionItemComponent]\n})"
+      }
+    ]
+  },
+  "alert-dialog-docs": {
+    "category": "alert-dialog-docs",
+    "components": [
+      {
+        "name": "AlertDialogApiComponent",
+        "examples": {},
+        "props": {
+          "alertDialogProps": [
+            {
+              "name": "open",
+              "type": "boolean",
+              "default": "false",
+              "description": "The controlled open state of the dialog."
+            },
+            {
+              "name": "openChange",
+              "type": "EventEmitter<boolean>",
+              "default": "-",
+              "description": "Event emitted when the open state changes."
+            }
+          ],
+          "contentProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the content panel."
+            }
+          ]
+        },
+        "selector": "app-alert-dialog-api"
+      },
+      {
+        "name": "AlertDialogInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<!-- Template-driven -->\n<tolle-alert-dialog>\n  <tolle-alert-dialog-trigger>\n    <tolle-button variant=\"outline\">Open Dialog</tolle-button>\n  </tolle-alert-dialog-trigger>\n  ...\n</tolle-alert-dialog>\n\n<!-- Service-based (in your component.ts) -->\nopen() {\n  this.alertDialog.open({\n    title: \"Are you sure?\",\n    description: \"This is irreversible.\",\n    variant: \"destructive\"\n  });\n}"
+        },
+        "props": {},
+        "selector": "app-alert-dialog-interactive"
+      },
+      {
+        "name": "AlertDialogOverviewComponent",
+        "examples": {
+          "installationCode": "import { \n  AlertDialogComponent, \n  ...\n  AlertDialogService\n} from '@tolle_/tolle-ui';\n\nimports: [\n  AlertDialogComponent,\n  ...\n]",
+          "usageCode": "<tolle-alert-dialog>\n  <tolle-alert-dialog-trigger>\n    <button>Open Dialog</button>\n  </tolle-alert-dialog-trigger>\n  ...\n</tolle-alert-dialog>",
+          "serviceUsageCode": "import { AlertDialogService } from '@tolle_/tolle-ui';\n\nexport class MyComponent {\n  private alertDialog = inject(AlertDialogService);\n\n  openDialog() {\n    const dialogRef = this.alertDialog.open({\n      title: \"Are you absolutely sure?\",\n      description: \"This action cannot be undone.\",\n      actionText: \"Delete Account\",\n      variant: \"destructive\"\n    });\n\n    dialogRef.afterClosed$.subscribe(confirmed => {\n      if (confirmed) {\n        // Handle confirmation\n      }\n    });\n  }\n}"
+        },
+        "props": {},
+        "selector": "app-alert-dialog-overview"
+      }
+    ]
+  },
+  "alert-docs": {
+    "category": "alert-docs",
+    "components": [
+      {
+        "name": "AlertDocsComponent",
+        "examples": {
+          "previewCode": "<div class=\"p-20 rounded-lg bg-background flex flex-col space-y-4\">\n  <tolle-alert title=\"Heads up!\">\n    <i icon class=\"ri-information-line\"></i>\n    You can add components to your app using the cli.\n  </tolle-alert>\n\n  <tolle-alert variant=\"destructive\" title=\"Error\">\n    <i icon class=\"ri-error-warning-line\"></i>\n    Your session has expired. Please log in again.\n  </tolle-alert>\n\n  <tolle-alert variant=\"success\" title=\"Success!\">\n    <i icon class=\"ri-checkbox-circle-line\"></i>\n    Your profile has been updated successfully.\n  </tolle-alert>\n\n  <tolle-alert\n    variant=\"warning\"\n    title=\"System Maintenance\"\n    [dismissible]=\"true\">\n    <i icon class=\"ri-error-warning-line\"></i>\n    The server will be down for 5 minutes at midnight.\n  </tolle-alert>\n</div>",
+          "installation": "import { AlertComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [AlertComponent]\n})",
+          "previewNoDismissCode": "<div class=\"p-20 rounded-lg bg-background flex flex-col space-y-4\">\n  <tolle-alert title=\"Heads up!\">\n    <i icon class=\"ri-information-line\"></i>\n    You can add components to your app using the cli.\n  </tolle-alert>\n\n  <tolle-alert variant=\"destructive\" title=\"Error\">\n    <i icon class=\"ri-error-warning-line\"></i>\n    Your session has expired. Please log in again.\n  </tolle-alert>\n\n  <tolle-alert variant=\"success\" title=\"Success!\">\n    <i icon class=\"ri-checkbox-circle-line\"></i>\n    Your profile has been updated successfully.\n  </tolle-alert>\n</div>",
+          "previewDismissCode": "<tolle-alert\n  variant=\"warning\"\n  title=\"System Maintenance\"\n  [dismissible]=\"true\">\n  <i icon class=\"ri-error-warning-line\"></i>\n  The server will be down for 5 minutes at midnight.\n</tolle-alert>",
+          "playgroundCode": "<tolle-alert \n  variant=\"${this.playgroundVariant}\" \n  title=\"${this.playgroundTitle}\" \n  [dismissible]=\"${this.playgroundDismissible}\">\n  <i icon class=\"ri-information-line\"></i>\n  You can add components to your app using the cli.\n</tolle-alert>"
+        },
+        "props": {
+          "alertProps": [
+            {
+              "name": "variant",
+              "type": "'default' | 'destructive' | 'success' | 'warning' | 'info'",
+              "default": "'default'",
+              "description": "The visual style of the alert."
+            },
+            {
+              "name": "title",
+              "type": "string",
+              "description": "The title displayed at the top of the alert."
+            },
+            {
+              "name": "dismissible",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the alert can be dismissed by the user."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "description": "Additional CSS classes for the container."
+            }
+          ]
+        },
+        "selector": "app-alert-docs",
+        "installation": "import { AlertComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [AlertComponent]\n})"
+      }
+    ]
+  },
+  "aspect-ratio-docs": {
+    "category": "aspect-ratio-docs",
+    "components": [
+      {
+        "name": "AspectRatioApiComponent",
+        "examples": {},
+        "props": {
+          "aspectRatioProps": [
+            {
+              "name": "ratio",
+              "type": "string | number",
+              "default": "'16 / 9'",
+              "description": "The preferred aspect ratio for the container. Can be a string (e.g., \"16 / 9\") or a decimal number (e.g., 1.777)."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes for styling the container."
+            }
+          ]
+        },
+        "selector": "app-aspect-ratio-api"
+      },
+      {
+        "name": "AspectRatioInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-aspect-ratio ratio=\"${this.ratio}\">\n  <img src=\"${this.imageUrl}\" alt=\"...\" />\n</tolle-aspect-ratio>"
+        },
+        "props": {},
+        "selector": "app-aspect-ratio-interactive"
+      }
+    ]
+  },
+  "avatar-docs": {
+    "category": "avatar-docs",
+    "components": [
+      {
+        "name": "AvatarApiComponent",
+        "examples": {},
+        "props": {
+          "avatarProps": [
+            {
+              "name": "src",
+              "type": "string",
+              "description": "The source URL of the avatar image."
+            },
+            {
+              "name": "alt",
+              "type": "string",
+              "default": "''",
+              "description": "Alternative text for the avatar image."
+            },
+            {
+              "name": "size",
+              "type": "'sm' | 'default' | 'lg' | 'xl'",
+              "default": "'default'",
+              "description": "The size of the avatar."
+            },
+            {
+              "name": "shape",
+              "type": "'circle' | 'square'",
+              "default": "'circle'",
+              "description": "The shape of the avatar."
+            }
+          ],
+          "fallbackProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "description": "Additional CSS classes for the fallback container."
+            }
+          ]
+        },
+        "selector": "app-avatar-api"
+      },
+      {
+        "name": "AvatarExamplesComponent",
+        "examples": {
+          "basicCode": "<tolle-avatar src=\"https://github.com/nutlope.png\">\n  <tolle-avatar-fallback>JD</tolle-avatar-fallback>\n</tolle-avatar>",
+          "sizesCode": "<tolle-avatar size=\"sm\" src=\"...\">...</tolle-avatar>\n<tolle-avatar size=\"default\" src=\"...\">...</tolle-avatar>\n<tolle-avatar size=\"lg\" src=\"...\">...</tolle-avatar>\n<tolle-avatar size=\"xl\" src=\"...\">...</tolle-avatar>",
+          "shapesCode": "<tolle-avatar shape=\"circle\" src=\"...\">...</tolle-avatar>\n<tolle-avatar shape=\"square\" src=\"...\">...</tolle-avatar>",
+          "fallbackCode": "<tolle-avatar src=\"invalid.png\">\n  <tolle-avatar-fallback>JD</tolle-avatar-fallback>\n</tolle-avatar>\n\n<tolle-avatar>\n  <tolle-avatar-fallback>\n    <i class=\"ri-user-line\"></i>\n  </tolle-avatar-fallback>\n</tolle-avatar>"
+        },
+        "props": {},
+        "selector": "app-avatar-examples"
+      },
+      {
+        "name": "AvatarInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-avatar src=\"${this.src}\" size=\"${this.size}\" shape=\"${this.shape}\">\n  <tolle-avatar-fallback>${this.fallbackText}</tolle-avatar-fallback>\n</tolle-avatar>"
+        },
+        "props": {},
+        "selector": "app-avatar-interactive"
+      },
+      {
+        "name": "AvatarOverviewComponent",
+        "examples": {
+          "installation": "import { AvatarComponent, AvatarFallbackComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [AvatarComponent, AvatarFallbackComponent]\n})"
+        },
+        "props": {},
+        "selector": "app-avatar-overview",
+        "installation": "import { AvatarComponent, AvatarFallbackComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [AvatarComponent, AvatarFallbackComponent]\n})"
+      }
+    ]
+  },
+  "badge-docs": {
+    "category": "badge-docs",
+    "components": [
+      {
+        "name": "BadgeApiComponent",
+        "examples": {},
+        "props": {
+          "badgeProps": [
+            {
+              "name": "variant",
+              "type": "'default' | 'secondary' | 'outline' | 'destructive'",
+              "default": "'default'",
+              "description": "The visual variant of the badge."
+            },
+            {
+              "name": "size",
+              "type": "'xs' | 'sm' | 'default'",
+              "default": "'default'",
+              "description": "The size of the badge."
+            },
+            {
+              "name": "removable",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the badge shows a remove button."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "description": "Additional CSS classes for the badge container."
+            }
+          ]
+        },
+        "selector": "app-badge-api"
+      },
+      {
+        "name": "BadgeExamplesComponent",
+        "examples": {
+          "basicCode": "<tolle-badge>Active</tolle-badge>\n<tolle-badge variant=\"secondary\">Draft</tolle-badge>\n<tolle-badge variant=\"outline\">Archived</tolle-badge>\n<tolle-badge variant=\"destructive\">Error</tolle-badge>",
+          "sizesCode": "<tolle-badge size=\"xs\">XS Tag</tolle-badge>\n<tolle-badge size=\"sm\">SM Tag</tolle-badge>\n<tolle-badge size=\"default\">Default Tag</tolle-badge>",
+          "removableCode": "<tolle-badge [removable]=\"true\" (onRemove)=\"remove(id)\">\n  Design\n</tolle-badge>",
+          "iconsCode": "<tolle-badge variant=\"secondary\">\n  <i prefix class=\"ri-price-tag-3-line\"></i>\n  Ecommerce\n</tolle-badge>"
+        },
+        "props": {},
+        "selector": "app-badge-examples"
+      },
+      {
+        "name": "BadgeInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-badge variant=\"${this.variant}\" size=\"${this.size}\"[removable]=\"${this.removable}\">\n  ${this.label}\n</tolle-badge>"
+        },
+        "props": {},
+        "selector": "app-badge-interactive"
+      },
+      {
+        "name": "BadgeOverviewComponent",
+        "examples": {
+          "installation": "import { BadgeComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [BadgeComponent]\n})"
+        },
+        "props": {},
+        "selector": "app-badge-overview",
+        "installation": "import { BadgeComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [BadgeComponent]\n})"
+      }
+    ]
+  },
+  "breadcrumb-docs": {
+    "category": "breadcrumb-docs",
+    "components": [
+      {
+        "name": "BreadcrumbApiComponent",
+        "examples": {},
+        "props": {
+          "breadcrumbProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "description": "Additional CSS classes for the nav container."
+            }
+          ],
+          "linkProps": [
+            {
+              "name": "active",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the link is the current page (disables clicking)."
+            }
+          ]
+        },
+        "selector": "app-breadcrumb-api"
+      },
+      {
+        "name": "BreadcrumbExamplesComponent",
+        "examples": {
+          "basicCode": "",
+          "separatorCode": ""
+        },
+        "props": {},
+        "selector": "app-breadcrumb-examples"
+      },
+      {
+        "name": "BreadcrumbInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-breadcrumb>\n  <tolle-breadcrumb-item>\n    <tolle-breadcrumb-link>Home</tolle-breadcrumb-link>\n  </tolle-breadcrumb-item>\n  <tolle-breadcrumb-separator></tolle-breadcrumb-separator>\n  <tolle-breadcrumb-item>\n    <tolle-breadcrumb-link [active]=\"${this.isActive}\">\n      ${this.label}\n    </tolle-breadcrumb-link>\n  </tolle-breadcrumb-item>\n</tolle-breadcrumb>"
+        },
+        "props": {},
+        "selector": "app-breadcrumb-interactive"
+      },
+      {
+        "name": "BreadcrumbOverviewComponent",
+        "examples": {
+          "installationCode": "import { \n  BreadcrumbComponent, \n  BreadcrumbItemComponent, \n  BreadcrumbLinkComponent, \n  BreadcrumbSeparatorComponent \n} from 'tolle-ui';\n\nimports: [\n  BreadcrumbComponent,\n  BreadcrumbItemComponent,\n  BreadcrumbLinkComponent,\n  BreadcrumbSeparatorComponent\n]"
+        },
+        "props": {},
+        "selector": "app-breadcrumb-overview"
+      }
+    ]
+  },
+  "button-docs": {
+    "category": "button-docs",
+    "components": [
+      {
+        "name": "ButtonApiComponent",
+        "examples": {},
+        "props": {
+          "buttonProps": [
+            {
+              "name": "variant",
+              "type": "'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'",
+              "default": "'default'",
+              "description": "The visual style of the button."
+            },
+            {
+              "name": "size",
+              "type": "'default' | 'xs' | 'sm' | 'lg' | 'icon-xs' | 'icon-sm' | 'icon' | 'icon-lg'",
+              "default": "'default'",
+              "description": "The size of the button."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the button is disabled."
+            },
+            {
+              "name": "busy",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the button is in a loading state. Disables interaction and shows a spinner."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the button."
+            }
+          ]
+        },
+        "selector": "app-button-api"
+      },
+      {
+        "name": "ButtonExamplesComponent",
+        "examples": {
+          "basicCode": "",
+          "destructiveCode": "",
+          "iconCode": "",
+          "busyCode": ""
+        },
+        "props": {},
+        "selector": "app-button-examples"
+      },
+      {
+        "name": "ButtonInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-button${variantAttr}${sizeAttr}${busyAttr}${disabledAttr}>\n  ${this.label}\n</tolle-button>"
+        },
+        "props": {},
+        "selector": "app-button-interactive"
+      },
+      {
+        "name": "ButtonOverviewComponent",
+        "examples": {
+          "installationCode": "import { ButtonComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  ButtonComponent\n]"
+        },
+        "props": {},
+        "selector": "app-button-overview"
+      }
+    ]
+  },
+  "button-group-docs": {
+    "category": "button-group-docs",
+    "components": [
+      {
+        "name": "ButtonGroupApiComponent",
+        "examples": {},
+        "props": {
+          "buttonGroupProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the button group container."
+            }
+          ]
+        },
+        "selector": "app-button-group-api"
+      },
+      {
+        "name": "ButtonGroupExamplesComponent",
+        "examples": {
+          "basicCode": "",
+          "mixedCode": ""
+        },
+        "props": {},
+        "selector": "app-button-group-examples"
+      },
+      {
+        "name": "ButtonGroupInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-button-group>\n  <tolle-button${variantAttr}${sizeAttr}>One</tolle-button>\n  <tolle-button${variantAttr}${sizeAttr}>Two</tolle-button>\n  <tolle-button${variantAttr}${sizeAttr}>Three</tolle-button>\n</tolle-button-group>"
+        },
+        "props": {},
+        "selector": "app-button-group-interactive"
+      },
+      {
+        "name": "ButtonGroupOverviewComponent",
+        "examples": {
+          "installationCode": "import { ButtonGroupComponent, ButtonComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  ButtonGroupComponent,\n  ButtonComponent\n]"
+        },
+        "props": {},
+        "selector": "app-button-group-overview"
+      }
+    ]
+  },
+  "calendar-docs": {
+    "category": "calendar-docs",
+    "components": [
+      {
+        "name": "CalendarApiComponent",
+        "examples": {},
+        "props": {
+          "calendarProps": [
+            {
+              "name": "mode",
+              "type": "'date' | 'month' | 'year'",
+              "default": "'date'",
+              "description": "The selection mode of the calendar."
+            },
+            {
+              "name": "disablePastDates",
+              "type": "boolean",
+              "default": "false",
+              "description": "Prevents selection of dates before today."
+            },
+            {
+              "name": "showQuickActions",
+              "type": "boolean",
+              "default": "true",
+              "description": "Shows/hides \"Today\" and \"Clear\" buttons."
+            },
+            {
+              "name": "minDate",
+              "type": "Date",
+              "default": "undefined",
+              "description": "Minimum selectable date."
+            },
+            {
+              "name": "maxDate",
+              "type": "Date",
+              "default": "undefined",
+              "description": "Maximum selectable date."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes for the container."
+            }
+          ]
+        },
+        "selector": "app-calendar-api"
+      },
+      {
+        "name": "CalendarExamplesComponent",
+        "examples": {
+          "basicCode": "",
+          "modeCode": "",
+          "disabledCode": ""
+        },
+        "props": {},
+        "selector": "app-calendar-examples"
+      },
+      {
+        "name": "CalendarInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-calendar [(ngModel)]=\"selectedDate\"${modeAttr}${disablePastAttr}${quickActionsAttr}></tolle-calendar>"
+        },
+        "props": {},
+        "selector": "app-calendar-interactive"
+      }
+    ]
+  },
+  "calendar-range-docs": {
+    "category": "calendar-range-docs",
+    "components": [
+      {
+        "name": "CalendarRangeApiComponent",
+        "examples": {},
+        "props": {
+          "rangeProps": [
+            {
+              "name": "disablePastDates",
+              "type": "boolean",
+              "default": "false",
+              "description": "Prevents selection of dates before today."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes for the container."
+            }
+          ]
+        },
+        "selector": "app-calendar-range-api"
+      },
+      {
+        "name": "CalendarRangeExamplesComponent",
+        "examples": {
+          "basicCode": ""
+        },
+        "props": {},
+        "selector": "app-calendar-range-examples"
+      },
+      {
+        "name": "CalendarRangeInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-range-calendar [(ngModel)]=\"dateRange\"${disablePastAttr}></tolle-range-calendar>"
+        },
+        "props": {},
+        "selector": "app-calendar-range-interactive"
+      }
+    ]
+  },
+  "card-docs": {
+    "category": "card-docs",
+    "components": [
+      {
+        "name": "CardApiComponent",
+        "examples": {},
+        "props": {
+          "cardProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes for the card container."
+            }
+          ],
+          "subComponentProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes for the sub-component container."
+            }
+          ]
+        },
+        "selector": "app-card-api"
+      },
+      {
+        "name": "CardExamplesComponent",
+        "examples": {
+          "basicCode": "",
+          "fullCode": "",
+          "formCode": ""
+        },
+        "props": {},
+        "selector": "app-card-examples"
+      },
+      {
+        "name": "CardInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-card class=\"${this.customClass}\">${header}\n  <tolle-card-content>\n    <p class=\"text-sm\">Card content goes here...</p>\n  </tolle-card-content>${footer}\n</tolle-card>"
+        },
+        "props": {},
+        "selector": "app-card-interactive"
+      },
+      {
+        "name": "CardOverviewComponent",
+        "examples": {
+          "installationCode": "import {\n  CardComponent,\n  CardHeaderComponent,\n  CardTitleComponent,\n  CardContentComponent,\n  CardFooterComponent\n} from '@tolle-ui';"
+        },
+        "props": {},
+        "selector": "app-card-overview"
+      }
+    ]
+  },
+  "carousel-docs": {
+    "category": "carousel-docs",
+    "components": [
+      {
+        "name": "CarouselExamplesComponent",
+        "examples": {
+          "basicCode": "",
+          "multipleCode": "",
+          "verticalCode": "",
+          "autoplayCode": "",
+          "loopCode": "",
+          "thumbnailsCode": "",
+          "alignmentCode": "",
+          "variableWidthCode": "",
+          "rtlCode": "",
+          "autoScrollCode": "",
+          "fadeCode": "",
+          "classNamesCode": "",
+          "parallaxCode": "",
+          "scaleCode": "",
+          "opacityCode": "",
+          "progressCode": "",
+          "lazyLoadCode": "",
+          "infiniteScrollCode": ""
+        },
+        "props": {},
+        "selector": "app-carousel-examples"
+      }
+    ]
+  },
+  "check-box-docs": {
+    "category": "check-box-docs",
+    "components": [
+      {
+        "name": "CheckBoxApiComponent",
+        "examples": {},
+        "props": {
+          "checkboxProps": [
+            {
+              "name": "checked",
+              "type": "boolean",
+              "default": "false",
+              "description": "The controlled checked state of the checkbox."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "When true, prevents the user from interacting with the checkbox."
+            },
+            {
+              "name": "size",
+              "type": "'xs' | 'sm' | 'default' | 'lg'",
+              "default": "'default'",
+              "description": "The size of the checkbox."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes for the checkbox."
+            }
+          ]
+        },
+        "selector": "app-check-box-api"
+      },
+      {
+        "name": "CheckBoxExamplesComponent",
+        "examples": {
+          "basicCode": "",
+          "descriptionCode": "",
+          "disabledCode": ""
+        },
+        "props": {},
+        "selector": "app-check-box-examples"
+      },
+      {
+        "name": "CheckBoxInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<div class=\"flex items-start space-x-2\">\n  <tolle-checkbox\n    [(ngModel)]=\"checked\"\n    size=\"${this.playgroundSize}\"\n    ${this.playgroundDisabled ? '[disabled]=\"true\"' : ''}\n  />\n  <div class=\"grid gap-1.5 leading-none\">\n    <label class=\"text-sm font-medium leading-none\">\n      ${this.playgroundLabel}\n    </label>\n    ${this.playgroundDescription ? `<p class=\"text-xs text-muted-foreground\">${this.playgroundDescription}</p>` : ''}\n  </div>\n</div>"
+        },
+        "props": {},
+        "selector": "app-check-box-interactive"
+      },
+      {
+        "name": "CheckBoxOverviewComponent",
+        "examples": {
+          "installation": "import { CheckBoxComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [CheckBoxComponent]\n})"
+        },
+        "props": {},
+        "selector": "app-check-box-overview",
+        "installation": "import { CheckBoxComponent } from '@tolle_/tolle-ui';\n\n@Component({\n  // ...\n  imports: [CheckBoxComponent]\n})"
+      }
+    ]
+  },
+  "collapsible-docs": {
+    "category": "collapsible-docs",
+    "components": [
+      {
+        "name": "CollapsibleApiComponent",
+        "examples": {},
+        "props": {
+          "collapsibleProps": [
+            {
+              "name": "open",
+              "type": "boolean",
+              "default": "false",
+              "description": "The controlled open state of the collapsible."
+            },
+            {
+              "name": "openChange",
+              "type": "EventEmitter<boolean>",
+              "default": "-",
+              "description": "Event emitted when the open state changes."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the container."
+            }
+          ],
+          "triggerProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the trigger."
+            }
+          ],
+          "contentProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the content panel."
+            }
+          ]
+        },
+        "selector": "app-collapsible-api"
+      },
+      {
+        "name": "CollapsibleInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-collapsible [(open)]=\"isOpen\" class=\"w-[350px] space-y-2 flex flex-col\">\n  <div class=\"flex items-center justify-between space-x-4 px-4\">\n    <h4 class=\"text-sm font-semibold\">@peduarte starred 3 repositories</h4>\n    <tolle-collapsible-trigger>\n      <tolle-button variant=\"ghost\" size=\"sm\" class=\"w-9 p-0\">\n        <i class=\"ri-expand-up-down-line h-4 w-4\"></i>\n      </tolle-button>\n    </tolle-collapsible-trigger>\n  </div>\n  <div class=\"rounded-md border px-4 py-3 font-mono text-sm\">\n    @tolle-ui/primitives\n  </div>\n  <tolle-collapsible-content class=\"space-y-2 flex flex-col\">\n    <div class=\"rounded-md border px-4 py-3 font-mono text-sm\">\n      @tolle-ui/colors\n    </div>\n    <div class=\"rounded-md border px-4 py-3 font-mono text-sm\">\n      @stitches/react\n    </div>\n  </tolle-collapsible-content>\n</tolle-collapsible>"
+        },
+        "props": {},
+        "selector": "app-collapsible-interactive"
+      },
+      {
+        "name": "CollapsibleOverviewComponent",
+        "examples": {
+          "installationCode": "import { CollapsibleComponent, CollapsibleTriggerComponent, CollapsibleContentComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  CollapsibleComponent,\n  CollapsibleTriggerComponent,\n  CollapsibleContentComponent\n]"
+        },
+        "props": {},
+        "selector": "app-collapsible-overview"
+      }
+    ]
+  },
+  "context-menu-docs": {
+    "category": "context-menu-docs",
+    "components": [
+      {
+        "name": "ContextMenuApiComponent",
+        "examples": {},
+        "props": {
+          "triggerProps": [
+            {
+              "name": "tolleContextMenuTrigger",
+              "type": "ContextMenuItem[]",
+              "required": true,
+              "description": "The array of menu items to display."
+            },
+            {
+              "name": "(action)",
+              "type": "EventEmitter<string>",
+              "description": "Emitted when a menu item is clicked. The payload is the item ID."
+            }
+          ],
+          "itemProps": [
+            {
+              "name": "id",
+              "type": "string",
+              "description": "Unique identifier for the item. Optional if separator is true."
+            },
+            {
+              "name": "label",
+              "type": "string",
+              "description": "The text to display. Optional if separator is true."
+            },
+            {
+              "name": "icon",
+              "type": "string",
+              "description": "Optional icon class (e.g., \"ri-home-line\")."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the item is interactable."
+            },
+            {
+              "name": "destructive",
+              "type": "boolean",
+              "default": "false",
+              "description": "Styles the item with a destructive color (red)."
+            },
+            {
+              "name": "separator",
+              "type": "boolean",
+              "default": "false",
+              "description": "If true, renders a separator line instead of an item."
+            },
+            {
+              "name": "submenu",
+              "type": "ContextMenuItem[]",
+              "description": "Nested array of items to display in a submenu."
+            }
+          ]
+        },
+        "selector": "app-context-menu-api"
+      },
+      {
+        "name": "ContextMenuInteractiveComponent",
+        "examples": {
+          "playgroundCode": "\nconst menuItems: ContextMenuItem[] = [\n  { id: 'edit', label: 'Edit', icon: ${this.showIcons ? \"'ri-edit-line'\" : 'undefined'} },\n  { id: 'copy', label: 'Copy', icon: ${this.showIcons ? \"'ri-file-copy-line'\" : 'undefined'} },\n  ${this.includeSubmenu ? `{ \n    id: 'share', \n    label: 'Share', \n    submenu: [\n      { id: 'email', label: 'Email' },\n      { id: 'message', label: 'Message' }\n    ] \n  },` : ''}\n  { separator: true },\n  { id: 'delete', label: 'Delete', destructive: true, disabled: ${this.disableDelete} }\n];\n\n// In template\n<div [tolleContextMenuTrigger]=\"menuItems\">\n  Right click here\n</div>"
+        },
+        "props": {},
+        "selector": "app-context-menu-interactive"
+      }
+    ]
+  },
+  "data-table-docs": {
+    "category": "data-table-docs",
+    "components": [
+      {
+        "name": "ColumnHidingDocsComponent",
+        "examples": {
+          "columnCode": "html"
+        },
+        "props": {},
+        "selector": "app-column-hiding-docs"
+      },
+      {
+        "name": "DataTableApiComponent",
+        "examples": {},
+        "props": {
+          "dataTableProps": [
+            {
+              "name": "data",
+              "description": "The dataset to display in the table.",
+              "type": "any[]",
+              "default": "[]"
+            },
+            {
+              "name": "columns",
+              "description": "Configuration for table columns.",
+              "type": "TableColumn[]",
+              "default": "[]"
+            },
+            {
+              "name": "searchable",
+              "description": "If true, shows a search input for filtering data.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "paginate",
+              "description": "If true, enables pagination for the table.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "pageSize",
+              "description": "The number of rows per page.",
+              "type": "number",
+              "default": "10"
+            },
+            {
+              "name": "pageSizeOptions",
+              "description": "Options for the user to select page size.",
+              "type": "number[]",
+              "default": "[]"
+            },
+            {
+              "name": "size",
+              "description": "The size of the table (density).",
+              "type": "'xs' | 'sm' | 'default' | 'lg'",
+              "default": "'default'"
+            },
+            {
+              "name": "allowColumnHiding",
+              "description": "If true, allows users to toggle column visibility.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "showSettings",
+              "description": "If true, shows the settings button (e.g., for column hiding).",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "expandable",
+              "description": "If true, allows rows to be expanded to show more details.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "expandedTemplate",
+              "description": "The template to render when a row is expanded.",
+              "type": "TemplateRef<any>",
+              "default": "undefined"
+            }
+          ]
+        },
+        "selector": "app-data-table-api"
+      },
+      {
+        "name": "DataTableInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-data-table\n  [data]=\"data\"\n  [columns]=\"columns\"\n  [searchable]=\"${this.searchable}\"\n  [paginate]=\"${this.paginate}\"\n  [allowColumnHiding]=\"${this.allowColumnHiding}\"\n  [expandable]=\"${this.expandable}\"\n  size=\"${this.size}\">\n\n  ${this.expandable ? `<ng-template #expandedTemplate let-row=\"row\">\n    <div class=\"grid grid-cols-2 gap-4 text-sm\">\n      <div>\n        <span class=\"font-medium text-muted-foreground\">ID:</span>\n        <span class=\"ml-2\">{{ row.id }}</span>\n      </div>\n      <div>\n        <span class=\"font-medium text-muted-foreground\">Role:</span>\n        <span class=\"ml-2\">{{ row.role }}</span>\n      </div>\n    </div>\n  </ng-template>` : ''}\n</tolle-data-table>"
+        },
+        "props": {},
+        "selector": "app-data-table-interactive"
+      },
+      {
+        "name": "PaginationDocsComponent",
+        "examples": {
+          "columnCode": "html"
+        },
+        "props": {},
+        "selector": "app-pagination-docs"
+      },
+      {
+        "name": "SearchableDocsComponent",
+        "examples": {
+          "columnCode": "html"
+        },
+        "props": {},
+        "selector": "app-searchable-docs"
+      }
+    ]
+  },
+  "date-picker-docs": {
+    "category": "date-picker-docs",
+    "components": [
+      {
+        "name": "DatePickerApiComponent",
+        "examples": {},
+        "props": {
+          "datePickerProps": [
+            {
+              "name": "ngModel",
+              "description": "The selected date value. Supports two-way binding.",
+              "type": "Date | null",
+              "default": "null"
+            },
+            {
+              "name": "placeholder",
+              "description": "Placeholder text for the input.",
+              "type": "string",
+              "default": "'MM/DD/YYYY' (varies by mode)"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables the input and prevents popup opening.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "disablePastDates",
+              "description": "Prevents selection of dates before today.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "showClear",
+              "description": "Shows a clear button when a value is selected.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "showQuickActions",
+              "description": "Shows quick action buttons (Today, Yesterday, etc.) in the calendar.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "minDate",
+              "description": "The minimum allowable date.",
+              "type": "Date",
+              "default": "undefined"
+            },
+            {
+              "name": "maxDate",
+              "description": "The maximum allowable date.",
+              "type": "Date",
+              "default": "undefined"
+            },
+            {
+              "name": "mode",
+              "description": "The selection mode of the picker.",
+              "type": "'date' | 'month' | 'year'",
+              "default": "'date'"
+            },
+            {
+              "name": "formatMonthFn",
+              "description": "Custom function to format month display in header.",
+              "type": "(date: Date) => string",
+              "default": "undefined"
+            },
+            {
+              "name": "formatYearFn",
+              "description": "Custom function to format year display in header.",
+              "type": "(date: Date) => string",
+              "default": "undefined"
+            },
+            {
+              "name": "displayFormat",
+              "description": "Custom function to format the displayed value in the input.",
+              "type": "(date: Date, mode: CalendarMode) => string",
+              "default": "undefined"
+            }
+          ]
+        },
+        "selector": "app-date-picker-api"
+      },
+      {
+        "name": "DatePickerInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-date-picker\n  [(ngModel)]=\"date\"\n  mode=\"${this.mode}\"\n  [disabled]=\"${this.disabled}\"\n  [showClear]=\"${this.showClear}\"\n  [disablePastDates]=\"${this.disablePastDates}\"\n  [showQuickActions]=\"${this.showQuickActions}\"\n></tolle-date-picker>"
+        },
+        "props": {},
+        "selector": "app-date-picker-interactive"
+      }
+    ]
+  },
+  "date-range-picker-docs": {
+    "category": "date-range-picker-docs",
+    "components": [
+      {
+        "name": "DateRangePickerApiComponent",
+        "examples": {},
+        "props": {
+          "componentProps": [
+            {
+              "name": "placeholder",
+              "description": "The text to display when no date is selected.",
+              "type": "string",
+              "default": "'Pick a date range'"
+            },
+            {
+              "name": "disabled",
+              "description": "Whether the input is disabled.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "disablePastDates",
+              "description": "Whether to visually disable and prevent selection of past dates.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "size",
+              "description": "The size of the input.",
+              "type": "'xs' | 'sm' | 'default' | 'lg'",
+              "default": "'default'"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the input.",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-date-range-picker-api"
+      }
+    ]
+  },
+  "dropdown-menu-docs": {
+    "category": "dropdown-menu-docs",
+    "components": [
+      {
+        "name": "DropdownMenuApiComponent",
+        "examples": {},
+        "props": {
+          "directiveProps": [
+            {
+              "name": "tolleDropdownTrigger",
+              "description": "The dropdown menu instance to trigger.",
+              "type": "DropdownMenuComponent",
+              "default": "-"
+            }
+          ],
+          "componentProps": [
+            {
+              "name": "templateRef",
+              "description": "Internal reference to the menu template.",
+              "type": "TemplateRef<any>",
+              "default": "-"
+            }
+          ]
+        },
+        "selector": "app-dropdown-menu-api"
+      }
+    ]
+  },
+  "empty-state-docs": {
+    "category": "empty-state-docs",
+    "components": [
+      {
+        "name": "EmptyStateApiComponent",
+        "examples": {},
+        "props": {
+          "componentProps": [
+            {
+              "name": "title",
+              "description": "The main heading text.",
+              "type": "string",
+              "default": "'No items found'"
+            },
+            {
+              "name": "description",
+              "description": "Optional helper text to provide context.",
+              "type": "string",
+              "default": "-"
+            },
+            {
+              "name": "variant",
+              "description": "The visual style of the container.",
+              "type": "'default' | 'minimal'",
+              "default": "'default'"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes.",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-empty-state-api"
+      }
+    ]
+  },
+  "getting-started-docs": {
+    "category": "getting-started-docs",
+    "components": [
+      {
+        "name": "GSSetupComponent",
+        "examples": {
+          "appConfigCode": "import { ApplicationConfig } from '@angular/core';\nimport { provideTolleConfig } from '@tolle_/tolle-ui';\n\nexport const appConfig: ApplicationConfig = {\n  providers: [\n    provideTolleConfig({\n      primaryColor: '#8b5cf6', // Indigo\n      radius: '0.5rem',\n      darkByDefault: false\n    })\n  ]\n};",
+          "tailwindConfigCode": "const { tolleUi } = require('@tolle_/tolle-ui/tailwind');\n\nmodule.exports = {\n  content: [\n    \"./src/**/*.{html,ts}\",\n    \"./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs}\"\n  ],\n  plugins: [tolleUi()],\n};",
+          "globalStyles": "{\n  \"styles\": [\n    \"src/styles.css\",\n    \"node_modules/@tolle_/tolle-ui/styles/theme.css\"\n  ]\n}"
+        },
+        "props": {},
+        "selector": "app-gs-setup"
+      }
+    ]
+  },
+  "hover-card-docs": {
+    "category": "hover-card-docs",
+    "components": [
+      {
+        "name": "HoverCardInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-hover-card [openDelay]=\"${this.openDelay}\" [closeDelay]=\"${this.closeDelay}\">\n  <tolle-hover-card-trigger>\n    <button>@angular</button>\n  </tolle-hover-card-trigger>\n  <tolle-hover-card-content>\n    <div class=\"flex justify-between space-x-4\">\n      <tolle-avatar>\n        <tolle-avatar-fallback>NG</tolle-avatar-fallback>\n      </tolle-avatar>\n      <div class=\"space-y-1\">\n        <h4 class=\"text-sm font-semibold\">@angular</h4>\n        <p class=\"text-sm\">\n          The web framework for modern web applications.\n        </p>\n        <div class=\"flex items-center pt-2\">\n          <span>Joined December 2021</span>\n        </div>\n      </div>\n    </div>\n  </tolle-hover-card-content>\n</tolle-hover-card>"
+        },
+        "props": {},
+        "selector": "app-hover-card-interactive"
+      },
+      {
+        "name": "HoverCardOverviewComponent",
+        "examples": {
+          "installationCode": "import { HoverCardComponent, HoverCardTriggerComponent, HoverCardContentComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  HoverCardComponent,\n  HoverCardTriggerComponent,\n  HoverCardContentComponent,\n  ...\n]",
+          "usageCode": "<tolle-hover-card>\n  <tolle-hover-card-trigger>\n    <a href=\"https://github.com/angular\" class=\"text-primary hover:underline\">&#64;angular</a>\n  </tolle-hover-card-trigger>\n  <tolle-hover-card-content>\n    <div class=\"flex justify-between space-x-4\">\n      <div class=\"space-y-1\">\n        <h4 class=\"text-sm font-semibold\">&#64;angular</h4>\n        <p class=\"text-sm\">\n          The web framework for modern web applications.\n        </p>\n        <div class=\"flex items-center pt-2\">\n          <span class=\"text-xs text-muted-foreground\">\n            Joined December 2021\n          </span>\n        </div>\n      </div>\n    </div>\n  </tolle-hover-card-content>\n</tolle-hover-card>"
+        },
+        "props": {},
+        "selector": "app-hover-card-overview"
+      }
+    ]
+  },
+  "input-docs": {
+    "category": "input-docs",
+    "components": [
+      {
+        "name": "InputApiComponent",
+        "examples": {},
+        "props": {
+          "inputProps": [
+            {
+              "name": "id",
+              "description": "Unique identifier for the input element. Auto-generated if not provided.",
+              "type": "string",
+              "default": "auto-generated"
+            },
+            {
+              "name": "label",
+              "description": "Text label displayed above the input.",
+              "type": "string",
+              "default": "''"
+            },
+            {
+              "name": "placeholder",
+              "description": "Placeholder text displayed when input is empty.",
+              "type": "string",
+              "default": "''"
+            },
+            {
+              "name": "type",
+              "description": "HTML Input type (text, email, password, etc.).",
+              "type": "string",
+              "default": "'text'"
+            },
+            {
+              "name": "value",
+              "description": "Current value of the input. Supports bidirectional binding (ngModel).",
+              "type": "any",
+              "default": "''"
+            },
+            {
+              "name": "hint",
+              "description": "Helper text displayed below the input.",
+              "type": "string",
+              "default": "''"
+            },
+            {
+              "name": "errorMessage",
+              "description": "Error message displayed when [error] is true.",
+              "type": "string",
+              "default": "''"
+            },
+            {
+              "name": "size",
+              "description": "Size of the input component.",
+              "type": "'xs' | 'sm' | 'default' | 'lg'",
+              "default": "'default'"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables the input.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "readonly",
+              "description": "Makes the input read-only.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "error",
+              "description": "Sets the input state to error, changing border color and showing errorMessage if present.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "hideHintOnFocus",
+              "description": "If true, hides the hint text when the input is focused.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "containerClass",
+              "description": "CSS class applied to the input container.",
+              "type": "string",
+              "default": "''"
+            },
+            {
+              "name": "class",
+              "description": "CSS class applied to the inner input element.",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-input-api"
+      },
+      {
+        "name": "InputInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-input\n  label=\"${this.label}\"\n  placeholder=\"${this.placeholder}\"\n  type=\"${this.type}\"\n  ${this.value ? `value=\"${this.value}\"\\n` : ''}  ${this.hint && !this.error ? `hint=\"${this.hint}\"\\n` : ''}  ${this.error ? `[error]=\"true\"\\n  errorMessage=\"${this.errorMessage}\"\\n` : ''}  ${this.disabled ? `[disabled]=\"true\"\\n` : ''}  ${this.readonly ? `[readonly]=\"true\"\\n` : ''}  ${this.size !== 'default' ? `size=\"${this.size}\"` : ''}\n></tolle-input>"
+        },
+        "props": {},
+        "selector": "app-input-interactive"
+      }
+    ]
+  },
+  "label-docs": {
+    "category": "label-docs",
+    "components": [
+      {
+        "name": "LabelApiComponent",
+        "examples": {},
+        "props": {
+          "labelProps": [
+            {
+              "name": "for",
+              "type": "string",
+              "default": "undefined",
+              "description": "The id of the form element the label is associated with."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the label."
+            }
+          ]
+        },
+        "selector": "app-label-api"
+      },
+      {
+        "name": "LabelInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<div class=\"grid w-full max-w-sm items-center gap-1.5\">\n  <tolle-label for=\"email\">${this.label}</tolle-label>\n  <tolle-input type=\"email\" id=\"email\" placeholder=\"Email\" />\n</div>"
+        },
+        "props": {},
+        "selector": "app-label-interactive"
+      },
+      {
+        "name": "LabelOverviewComponent",
+        "examples": {
+          "installationCode": "import { LabelComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  LabelComponent\n]"
+        },
+        "props": {},
+        "selector": "app-label-overview"
+      }
+    ]
+  },
+  "masked-input-docs": {
+    "category": "masked-input-docs",
+    "components": [
+      {
+        "name": "MaskedInputInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-masked-input\n  [(ngModel)]=\"inputValue\"${inputs ? '\\n  ' + inputs : ''}\n>${this.showPrefix ? '\\n  <i prefix class=\"ri-phone-line\"></i>' : ''}${this.showSuffix ? '\\n  <i suffix class=\"ri-check-line\"></i>' : ''}\n</tolle-masked-input>\n\n<!-- Value: {{ inputValue }} -->"
+        },
+        "props": {},
+        "selector": "app-masked-input-interactive"
+      }
+    ]
+  },
+  "multi-select-docs": {
+    "category": "multi-select-docs",
+    "components": [
+      {
+        "name": "MultiSelectInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-multi-select\n  [(ngModel)]=\"selectedValues\"${inputs ? '\\n  ' + inputs : ''}\n>\n  <tolle-select-item value=\"apple\">Apple</tolle-select-item>\n  <tolle-select-item value=\"banana\">Banana</tolle-select-item>\n  <tolle-select-item value=\"blueberry\">Blueberry</tolle-select-item>\n  <tolle-select-item value=\"grapes\">Grapes</tolle-select-item>\n  <tolle-select-item value=\"pineapple\">Pineapple</tolle-select-item>\n</tolle-multi-select>\n\n<!-- Selected: {{ selectedValues | json }} -->"
+        },
+        "props": {},
+        "selector": "app-multi-select-interactive"
+      }
+    ]
+  },
+  "otp-docs": {
+    "category": "otp-docs",
+    "components": [
+      {
+        "name": "OtpApiComponent",
+        "examples": {},
+        "props": {
+          "otpProps": [
+            {
+              "name": "length",
+              "description": "Total number of characters.",
+              "type": "number",
+              "default": "6"
+            },
+            {
+              "name": "auto",
+              "description": "Automated slot generation mode.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables all inputs.",
+              "type": "boolean",
+              "default": "false"
+            }
+          ],
+          "slotProps": [
+            {
+              "name": "char",
+              "description": "The character to display.",
+              "type": "string",
+              "default": "''"
+            },
+            {
+              "name": "isActive",
+              "description": "Whether the slot is currently focused/active.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "isFirst",
+              "description": "Applies left-rounded corners.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "isLast",
+              "description": "Applies right-rounded corners.",
+              "type": "boolean",
+              "default": "false"
+            }
+          ]
+        },
+        "selector": "app-otp-api"
+      },
+      {
+        "name": "OtpInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-otp\n  [(ngModel)]=\"otpValue\"${inputs ? '\\n  ' + inputs : ''}\n></tolle-otp>"
+        },
+        "props": {},
+        "selector": "app-otp-interactive"
+      }
+    ]
+  },
+  "pagination-docs": {
+    "category": "pagination-docs",
+    "components": [
+      {
+        "name": "PaginationApiComponent",
+        "examples": {},
+        "props": {
+          "paginationProps": [
+            {
+              "name": "totalRecords",
+              "description": "Total number of records in the dataset.",
+              "type": "number",
+              "default": "0"
+            },
+            {
+              "name": "currentPage",
+              "description": "The current active page index (1-based).",
+              "type": "number",
+              "default": "1"
+            },
+            {
+              "name": "currentPageSize",
+              "description": "Number of items per page.",
+              "type": "number",
+              "default": "10"
+            },
+            {
+              "name": "pageSizeOptions",
+              "description": "Available options for page size selection.",
+              "type": "number[]",
+              "default": "[10, 20, 30, 50]"
+            },
+            {
+              "name": "showPageLinks",
+              "description": "Whether to show the individual page number buttons.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "showPageOptions",
+              "description": "Whether to show the page size selector.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "showCurrentPageInfo",
+              "description": "Whether to show the entry count report (e.g. \"Showing 1 to 10\").",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "currentPageInfoTemplate",
+              "description": "Custom template string for the report. Tokens: {first}, {last}, {totalRecords}, {totalPages}, {currentPage}, {currentPageSize}.",
+              "type": "string",
+              "default": "undefined"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the container.",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-pagination-api"
+      },
+      {
+        "name": "PaginationInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-pagination${inputs ? '\\n  ' + inputs : ''}\n></tolle-pagination>"
+        },
+        "props": {},
+        "selector": "app-pagination-interactive"
+      }
+    ]
+  },
+  "popover-docs": {
+    "category": "popover-docs",
+    "components": [
+      {
+        "name": "PopoverApiComponent",
+        "examples": {},
+        "props": {
+          "popoverProps": [
+            {
+              "name": "placement",
+              "description": "Desired placement of the popover relative to the trigger.",
+              "type": "'top' | 'bottom' | 'left' | 'right'",
+              "default": "'bottom'"
+            }
+          ],
+          "contentProps": [
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the content container.",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-popover-api"
+      },
+      {
+        "name": "PopoverInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-popover placement=\"${this.placement}\">\n  <button tolle-button trigger variant=\"outline\">Open Popover</button>\n  <tolle-popover-content>\n    <div>Rich Content Here</div>\n  </tolle-popover-content>\n</tolle-popover>"
+        },
+        "props": {},
+        "selector": "app-popover-interactive"
+      }
+    ]
+  },
+  "progress-docs": {
+    "category": "progress-docs",
+    "components": [
+      {
+        "name": "ProgressApiComponent",
+        "examples": {},
+        "props": {
+          "progressProps": [
+            {
+              "name": "value",
+              "type": "number",
+              "default": "0",
+              "description": "The progress value."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the progress bar container."
+            }
+          ]
+        },
+        "selector": "app-progress-api"
+      },
+      {
+        "name": "ProgressInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-progress [value]=\"${this.value}\"></tolle-progress>"
+        },
+        "props": {},
+        "selector": "app-progress-interactive"
+      },
+      {
+        "name": "ProgressOverviewComponent",
+        "examples": {
+          "installationCode": "import { ProgressComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  ProgressComponent\n]"
+        },
+        "props": {},
+        "selector": "app-progress-overview"
+      }
+    ]
+  },
+  "radio-group-docs": {
+    "category": "radio-group-docs",
+    "components": [
+      {
+        "name": "RadioGroupApiComponent",
+        "examples": {},
+        "props": {
+          "radioGroupProps": [
+            {
+              "name": "name",
+              "description": "The name of the radio group. Submitted with its owning form as part of a name/value pair.",
+              "type": "string",
+              "default": "Generated ID"
+            },
+            {
+              "name": "disabled",
+              "description": "When true, prevents the user from interacting with the radio group.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "class",
+              "description": "Optional CSS class to add to the container.",
+              "type": "string",
+              "default": "''"
+            }
+          ],
+          "radioItemProps": [
+            {
+              "name": "value",
+              "description": "The value to be emitted when this item is selected.",
+              "type": "any",
+              "default": "-"
+            },
+            {
+              "name": "disabled",
+              "description": "When true, prevents the user from interacting with this specific radio item.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "class",
+              "description": "Optional CSS class to add to the item container.",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-radio-group-api"
+      },
+      {
+        "name": "RadioGroupInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-radio-group\n  [(ngModel)]=\"selectedValue\"${inputs ? '\\n  ' + inputs : ''}\n>\n  <tolle-radio-item value=\"default\">Default</tolle-radio-item>\n  <tolle-radio-item value=\"comfortable\">Comfortable</tolle-radio-item>\n  <tolle-radio-item value=\"compact\">Compact</tolle-radio-item>\n</tolle-radio-group>\n\n<!-- Selected: {{ selectedValue }} -->"
+        },
+        "props": {},
+        "selector": "app-radio-group-interactive"
+      }
+    ]
+  },
+  "resizable-docs": {
+    "category": "resizable-docs",
+    "components": [
+      {
+        "name": "ResizableApiComponent",
+        "examples": {},
+        "props": {
+          "panelProps": [
+            {
+              "name": "direction",
+              "description": "The direction of the layout.",
+              "type": "'horizontal' | 'vertical'",
+              "default": "'horizontal'"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the container.",
+              "type": "string",
+              "default": "''"
+            }
+          ],
+          "itemProps": [
+            {
+              "name": "size",
+              "description": "The relative size of the panel (flex value).",
+              "type": "number",
+              "default": "1"
+            },
+            {
+              "name": "minSize",
+              "description": "The minimum size constraint.",
+              "type": "number",
+              "default": "10"
+            },
+            {
+              "name": "maxSize",
+              "description": "The maximum size constraint.",
+              "type": "number",
+              "default": "undefined"
+            },
+            {
+              "name": "resizable",
+              "description": "Whether the panel is resizable.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the panel item.",
+              "type": "string",
+              "default": "''"
+            }
+          ],
+          "boxProps": [
+            {
+              "name": "width",
+              "description": "Current width in pixels.",
+              "type": "number",
+              "default": "300"
+            },
+            {
+              "name": "height",
+              "description": "Current height in pixels.",
+              "type": "number",
+              "default": "200"
+            },
+            {
+              "name": "minWidth",
+              "description": "Minimum width in pixels.",
+              "type": "number",
+              "default": "50"
+            },
+            {
+              "name": "minHeight",
+              "description": "Minimum height in pixels.",
+              "type": "number",
+              "default": "50"
+            },
+            {
+              "name": "maxWidth",
+              "description": "Maximum width in pixels.",
+              "type": "number",
+              "default": "undefined"
+            },
+            {
+              "name": "maxHeight",
+              "description": "Maximum height in pixels.",
+              "type": "number",
+              "default": "undefined"
+            },
+            {
+              "name": "resizable",
+              "description": "Whether the element is resizable.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "directions",
+              "description": "Active resize handles.",
+              "type": "('right' | 'bottom' | 'both')[]",
+              "default": "['right', 'bottom', 'both']"
+            }
+          ]
+        },
+        "selector": "app-resizable-api"
+      },
+      {
+        "name": "ResizableInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-resizable-panel direction=\"${this.direction}\" class=\"h-[400px]\">\n  <tolle-resizable-panel-item [size]=\"25\">\n    <div>Panel 1</div>\n  </tolle-resizable-panel-item>\n  \n  <tolle-resizable-panel-item [size]=\"50\">\n    <div>Panel 2</div>\n  </tolle-resizable-panel-item>\n  \n  <tolle-resizable-panel-item [size]=\"25\">\n    <div>Panel 3</div>\n  </tolle-resizable-panel-item>\n</tolle-resizable-panel>"
+        },
+        "props": {},
+        "selector": "app-resizable-interactive"
+      }
+    ]
+  },
+  "scroll-area-docs": {
+    "category": "scroll-area-docs",
+    "components": [
+      {
+        "name": "ScrollAreaApiComponent",
+        "examples": {},
+        "props": {
+          "scrollAreaProps": [
+            {
+              "name": "height",
+              "type": "string",
+              "default": "'100%'",
+              "description": "The height of the scrollable area."
+            },
+            {
+              "name": "orientation",
+              "type": "'vertical' | 'horizontal' | 'both'",
+              "default": "'both'",
+              "description": "The scroll orientation allowed."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the container."
+            }
+          ]
+        },
+        "selector": "app-scroll-area-api"
+      },
+      {
+        "name": "ScrollAreaInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-scroll-area class=\"h-72 w-48 rounded-md border\">\n  <div class=\"p-4\">\n    <h4 class=\"mb-4 text-sm font-medium leading-none\">Tags</h4>\n    <div *ngFor=\"let tag of tags; let last = last\">\n      <div class=\"text-sm\">{{ tag }}</div>\n      <tolle-separator *ngIf=\"!last\" class=\"my-2\"></tolle-separator>\n    </div>\n  </div>\n</tolle-scroll-area>"
+        },
+        "props": {},
+        "selector": "app-scroll-area-interactive"
+      },
+      {
+        "name": "ScrollAreaOverviewComponent",
+        "examples": {
+          "installationCode": "import { ScrollAreaComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  ScrollAreaComponent\n]"
+        },
+        "props": {},
+        "selector": "app-scroll-area-overview"
+      }
+    ]
+  },
+  "segment-docs": {
+    "category": "segment-docs",
+    "components": [
+      {
+        "name": "SegmentApiComponent",
+        "examples": {},
+        "props": {
+          "componentProps": [
+            {
+              "name": "items",
+              "description": "Array of segment options.",
+              "type": "SegmentItem[]",
+              "default": "[]"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables the entire control.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the container.",
+              "type": "string",
+              "default": "''"
+            },
+            {
+              "name": "itemTemplate",
+              "description": "Custom template for rendering items.",
+              "type": "TemplateRef<any>",
+              "default": "undefined"
+            }
+          ],
+          "typeProps": [
+            {
+              "name": "label",
+              "description": "Display text for the segment.",
+              "type": "string",
+              "default": "-"
+            },
+            {
+              "name": "value",
+              "description": "Unique value associated with the segment.",
+              "type": "any",
+              "default": "-"
+            },
+            {
+              "name": "disabled",
+              "description": "Disables specific segment item.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "icon",
+              "description": "Icon class string (e.g. Remix Icon).",
+              "type": "string",
+              "default": "undefined"
+            },
+            {
+              "name": "class",
+              "description": "Custom class for the item wrapper.",
+              "type": "string",
+              "default": "undefined"
+            },
+            {
+              "name": "data",
+              "description": "Arbitrary data payload.",
+              "type": "any",
+              "default": "undefined"
+            }
+          ]
+        },
+        "selector": "app-segment-api"
+      },
+      {
+        "name": "SegmentInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-segment\n  [items]=\"${this.dataSet === 'text' ? \"[{...}]\" : \"items\"}\"\n  [(ngModel)]=\"value\"${this.disabled ? '\\n  [disabled]=\"true\"' : ''}\n></tolle-segment>"
+        },
+        "props": {},
+        "selector": "app-segment-interactive"
+      }
+    ]
+  },
+  "separator-docs": {
+    "category": "separator-docs",
+    "components": [
+      {
+        "name": "SeparatorApiComponent",
+        "examples": {},
+        "props": {
+          "separatorProps": [
+            {
+              "name": "orientation",
+              "type": "'horizontal' | 'vertical'",
+              "default": "'horizontal'",
+              "description": "The orientation of the separator."
+            },
+            {
+              "name": "decorative",
+              "type": "boolean",
+              "default": "true",
+              "description": "Whether the element is purely decorative and should be hidden from assistive technology."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the separator."
+            }
+          ]
+        },
+        "selector": "app-separator-api"
+      },
+      {
+        "name": "SeparatorInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-separator orientation=\"${this.orientation}\"></tolle-separator>"
+        },
+        "props": {},
+        "selector": "app-separator-interactive"
+      },
+      {
+        "name": "SeparatorOverviewComponent",
+        "examples": {
+          "installationCode": "import { SeparatorComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  SeparatorComponent\n]"
+        },
+        "props": {},
+        "selector": "app-separator-overview"
+      }
+    ]
+  },
+  "sheet-docs": {
+    "category": "sheet-docs",
+    "components": [
+      {
+        "name": "SheetApiComponent",
+        "examples": {},
+        "props": {
+          "sheetProps": [
+            {
+              "name": "isOpen",
+              "description": "The controlled open state of the sheet.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "hasBackdrop",
+              "description": "Whether the sheet has a backdrop.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "isOpenChange",
+              "description": "Event emitted when the open state changes.",
+              "type": "EventEmitter<boolean>",
+              "default": "-"
+            }
+          ],
+          "contentProps": [
+            {
+              "name": "side",
+              "description": "The edge of the screen where the component will appear.",
+              "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+              "default": "\"right\""
+            },
+            {
+              "name": "rounded",
+              "description": "Whether the sheet content has rounded corners on its inner side.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for styling.",
+              "type": "string",
+              "default": "''"
+            }
+          ],
+          "serviceProps": [
+            {
+              "name": "open(config)",
+              "description": "Opens a sheet with the provided configuration.",
+              "type": "(config: SheetConfig) => SheetRef",
+              "default": "-"
+            }
+          ],
+          "configProps": [
+            {
+              "name": "content",
+              "description": "The content to display (String, Component, or Template).",
+              "type": "string | Type<any> | TemplateRef<any>",
+              "default": "-"
+            },
+            {
+              "name": "title",
+              "description": "Optional title for the standard header.",
+              "type": "string",
+              "default": "-"
+            },
+            {
+              "name": "description",
+              "description": "Optional description for the standard header.",
+              "type": "string",
+              "default": "-"
+            },
+            {
+              "name": "side",
+              "description": "The edge of the screen where the component will appear.",
+              "type": "\"top\" | \"bottom\" | \"left\" | \"right\"",
+              "default": "\"right\""
+            },
+            {
+              "name": "hasBackdrop",
+              "description": "Whether the sheet has a backdrop.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "backdropClose",
+              "description": "If true, clicking the backdrop closes the sheet.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "showCloseButton",
+              "description": "Whether to show the close button.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "rounded",
+              "description": "Whether the sheet content has rounded corners on its inner side.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "data",
+              "description": "Data to pass to a Component content.",
+              "type": "{ [key: string]: any }",
+              "default": "-"
+            },
+            {
+              "name": "context",
+              "description": "Context to pass to a TemplateRef content.",
+              "type": "any",
+              "default": "-"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the sheet content.",
+              "type": "string",
+              "default": "-"
+            }
+          ]
+        },
+        "selector": "app-sheet-api"
+      },
+      {
+        "name": "SheetOverviewComponent",
+        "examples": {
+          "usageCode": "<tolle-sheet>\n  <tolle-sheet-trigger>Open</tolle-sheet-trigger>\n  <tolle-sheet-content>\n    <tolle-sheet-header>\n      <tolle-sheet-title>Edit profile</tolle-sheet-title>\n      <tolle-sheet-description>\n        Make changes to your profile here. Click save when you're done.\n      </tolle-sheet-description>\n    </tolle-sheet-header>\n  </tolle-sheet-content>\n</tolle-sheet>",
+          "serviceCode": "import { SheetService } from 'tolle-ui';\n\nconstructor(private sheetService: SheetService) {}\n\nopenSheet() {\n  this.sheetService.open({\n    title: 'Programmatic Sheet',\n    description: 'This sheet was opened via service.',\n    content: 'Hello World', // Can be a string, TemplateRef, or Component\n    side: 'right',\n    rounded: true\n  });\n}",
+          "resultCode": "const sheetRef = this.sheetService.open({\n  content: MyComponent,\n  data: { id: 123 }\n});\n\nsheetRef.afterClosed$.subscribe(result => {\n  console.log('Sheet closed with result:', result);\n});"
+        },
+        "props": {},
+        "selector": "app-sheet-overview"
+      }
+    ]
+  },
+  "sidebar-docs": {
+    "category": "sidebar-docs",
+    "components": [
+      {
+        "name": "SidebarApiComponent",
+        "examples": {},
+        "props": {
+          "componentProps": [
+            {
+              "name": "items",
+              "description": "Array of sidebar groups and items.",
+              "type": "SidebarGroup[]",
+              "default": "[]"
+            },
+            {
+              "name": "collapsed",
+              "description": "Whether the sidebar is in collapsed (mini) mode.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "variant",
+              "description": "Visual style for active and hover states.",
+              "type": "'default' | 'secondary' | 'ghost' | 'outline'",
+              "default": "'default'"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the container.",
+              "type": "string",
+              "default": "''"
+            }
+          ],
+          "groupProps": [
+            {
+              "name": "title",
+              "description": "Display label for the group section.",
+              "type": "string",
+              "default": "-"
+            },
+            {
+              "name": "items",
+              "description": "List of individual items within the group.",
+              "type": "SidebarItem[]",
+              "default": "-"
+            },
+            {
+              "name": "id",
+              "description": "Optional unique identifier.",
+              "type": "string",
+              "default": "undefined"
+            }
+          ],
+          "itemProps": [
+            {
+              "name": "title",
+              "description": "Display text for the item.",
+              "type": "string",
+              "default": "-"
+            },
+            {
+              "name": "url",
+              "description": "Router link path.",
+              "type": "string",
+              "default": "undefined"
+            },
+            {
+              "name": "icon",
+              "description": "Icon class string (Remix Icon).",
+              "type": "string",
+              "default": "'ri-circle-fill'"
+            },
+            {
+              "name": "expanded",
+              "description": "Initial expansion state for submenus.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "items",
+              "description": "Nested children items for submenus.",
+              "type": "SidebarItem[]",
+              "default": "undefined"
+            },
+            {
+              "name": "id",
+              "description": "Optional unique identifier.",
+              "type": "string",
+              "default": "undefined"
+            }
+          ]
+        },
+        "selector": "app-sidebar-api"
+      },
+      {
+        "name": "SidebarInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-sidebar\n  [items]=\"items\"\n  [collapsed]=\"${this.collapsed}\"\n  variant=\"${this.variant}\"\n>\n  <div header>My App</div>\n</tolle-sidebar>"
+        },
+        "props": {},
+        "selector": "app-sidebar-interactive"
+      }
+    ]
+  },
+  "skeleton-docs": {
+    "category": "skeleton-docs",
+    "components": [
+      {
+        "name": "SkeletonApiComponent",
+        "examples": {},
+        "props": {
+          "componentProps": [
+            {
+              "name": "variant",
+              "description": "The visual shape of the skeleton.",
+              "type": "'rect' | 'circle' | 'pill'",
+              "default": "'rect'"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes to apply (used for sizing).",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-skeleton-api"
+      },
+      {
+        "name": "SkeletonInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-skeleton variant=\"${this.variant}\" class=\"${this.variant === 'circle' ? 'h-12 w-12' : 'h-4 w-[250px]'}\" />"
+        },
+        "props": {},
+        "selector": "app-skeleton-interactive"
+      }
+    ]
+  },
+  "slider-docs": {
+    "category": "slider-docs",
+    "components": [
+      {
+        "name": "SliderApiComponent",
+        "examples": {},
+        "props": {
+          "sliderProps": [
+            {
+              "name": "ngModel / value",
+              "type": "number",
+              "default": "0",
+              "description": "The current value of the slider."
+            },
+            {
+              "name": "min",
+              "type": "number",
+              "default": "0",
+              "description": "The minimum value of the slider."
+            },
+            {
+              "name": "max",
+              "type": "number",
+              "default": "100",
+              "description": "The maximum value of the slider."
+            },
+            {
+              "name": "step",
+              "type": "number",
+              "default": "1",
+              "description": "The step increment of the slider."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the slider is disabled."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the slider container."
+            }
+          ]
+        },
+        "selector": "app-slider-api"
+      },
+      {
+        "name": "SliderInteractiveComponent",
+        "examples": {
+          "playgroundCode": "// In component:\nvalue = ${valueStr};\n\n// In template:\n<tolle-slider [(ngModel)]=\"value\"${minAttr}${maxAttr}${stepAttr}${disabledAttr}></tolle-slider>"
+        },
+        "props": {},
+        "selector": "app-slider-interactive"
+      },
+      {
+        "name": "SliderOverviewComponent",
+        "examples": {
+          "installationCode": "import { SliderComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  SliderComponent\n]"
+        },
+        "props": {},
+        "selector": "app-slider-overview"
+      }
+    ]
+  },
+  "switch-docs": {
+    "category": "switch-docs",
+    "components": [
+      {
+        "name": "SwitchInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-switch\n  [(ngModel)]=\"checked\"${inputs ? '\\n  ' + inputs : ''}\n></tolle-switch>"
+        },
+        "props": {},
+        "selector": "app-switch-interactive"
+      }
+    ]
+  },
+  "tabs-docs": {
+    "category": "tabs-docs",
+    "components": [
+      {
+        "name": "TabsApiComponent",
+        "examples": {},
+        "props": {
+          "tabsProps": [
+            {
+              "name": "defaultValue",
+              "type": "string",
+              "default": "undefined",
+              "description": "The value of the tab that should be active by default."
+            },
+            {
+              "name": "value",
+              "type": "string",
+              "default": "undefined",
+              "description": "The controlled value of the active tab."
+            },
+            {
+              "name": "valueChange",
+              "type": "EventEmitter<string>",
+              "default": "-",
+              "description": "Event emitted when the active tab changes."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the container."
+            }
+          ],
+          "tabsListProps": [
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the list."
+            }
+          ],
+          "tabsTriggerProps": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "undefined",
+              "description": "A unique value for the tab."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the trigger."
+            }
+          ],
+          "tabsContentProps": [
+            {
+              "name": "value",
+              "type": "string",
+              "default": "undefined",
+              "description": "A unique value that associates the content with a trigger."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the content panel."
+            }
+          ]
+        },
+        "selector": "app-tabs-api"
+      },
+      {
+        "name": "TabsInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-tabs defaultValue=\"account\" class=\"w-[400px]\">\n  <tolle-tabs-list${variantAttr} class=\"grid w-full${gridColsClass}\">\n    <tolle-tabs-trigger value=\"account\">Account</tolle-tabs-trigger>\n    <tolle-tabs-trigger value=\"password\">Password</tolle-tabs-trigger>\n  </tolle-tabs-list>\n  <tolle-tabs-content value=\"account\">\n    <tolle-card class=\"p-6\">\n      <div class=\"space-y-4\">\n        <div class=\"space-y-2\">\n          <h3 class=\"text-lg font-semibold leading-none tracking-tight\">Account</h3>\n          <p class=\"text-sm text-muted-foreground\">Make changes to your account here.</p>\n        </div>\n        <div class=\"space-y-2\">\n          <tolle-label for=\"name\">Name</tolle-label>\n          <tolle-input id=\"name\" defaultValue=\"Pedro Duarte\" />\n        </div>\n        <div class=\"pt-2\">\n          <tolle-button class=\"w-full\">Save changes</tolle-button>\n        </div>\n      </div>\n    </tolle-card>\n  </tolle-tabs-content>\n  <tolle-tabs-content value=\"password\">\n    <tolle-card class=\"p-6\">\n      <div class=\"space-y-4\">\n        <div class=\"space-y-2\">\n          <h3 class=\"text-lg font-semibold leading-none tracking-tight\">Password</h3>\n          <p class=\"text-sm text-muted-foreground\">Change your password here.</p>\n        </div>\n        <div class=\"space-y-2\">\n          <tolle-label for=\"new\">New password</tolle-label>\n          <tolle-input id=\"new\" type=\"password\" />\n        </div>\n        <div class=\"pt-2\">\n          <tolle-button class=\"w-full\">Save password</tolle-button>\n        </div>\n      </div>\n    </tolle-card>\n  </tolle-tabs-content>\n</tolle-tabs>"
+        },
+        "props": {},
+        "selector": "app-tabs-interactive"
+      },
+      {
+        "name": "TabsOverviewComponent",
+        "examples": {
+          "installationCode": "import { TabsComponent, TabsListComponent, TabsTriggerComponent, TabsContentComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  TabsComponent,\n  TabsListComponent,\n  TabsTriggerComponent,\n  TabsContentComponent\n]"
+        },
+        "props": {},
+        "selector": "app-tabs-overview"
+      }
+    ]
+  },
+  "textarea-docs": {
+    "category": "textarea-docs",
+    "components": [
+      {
+        "name": "TextareaInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-textarea\n  ${inputs}\n></tolle-textarea>"
+        },
+        "props": {},
+        "selector": "app-textarea-interactive"
+      }
+    ]
+  },
+  "theming-docs": {
+    "category": "theming-docs",
+    "components": [
+      {
+        "name": "ThemingConfigComponent",
+        "examples": {
+          "appConfigCode": "import { ApplicationConfig } from '@angular/core';\nimport { provideRouter } from '@angular/router';\nimport { provideTolleConfig } from '@tolle_/tolle-ui'; // Import\n\nimport { routes } from './app.routes';\n\nexport const appConfig: ApplicationConfig = {\n  providers: [\n    provideRouter(routes),\n    \n    // Provide Tolle UI Configuration\n    provideTolleConfig({\n      primaryColor: '#8b5cf6', // Your brand color\n      radius: '0.5rem',        // Default border radius\n      darkByDefault: false     // Toggle initial dark mode\n    })\n  ]\n};"
+        },
+        "props": {},
+        "selector": "app-theming-config"
+      },
+      {
+        "name": "ThemingIntegrationComponent",
+        "examples": {
+          "globalStyles": "{\n  \"styles\": [\n    \"src/styles.css\",\n    \"node_modules/@tolle_/tolle-ui/styles/theme.css\" \n  ]\n}",
+          "tailwindConfigCode": "const { tolleUi } = require('@tolle_/tolle-ui/tailwind');\n\n/** @type {import('tailwindcss').Config} */\nmodule.exports = {\n  content: [\n    \"./src/**/*.{html,ts}\",\n    // Include Tolle UI sources\n    \"./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs}\"\n  ],\n  theme: {\n    extend: {},\n  },\n  plugins: [\n    tolleUi({\n       // Optional: override prefix\n       // prefix: 'tolle-'\n    })\n  ],\n}"
+        },
+        "props": {},
+        "selector": "app-theming-integration"
+      }
+    ]
+  },
+  "toaster-docs": {
+    "category": "toaster-docs",
+    "components": [
+      {
+        "name": "ToasterApiComponent",
+        "examples": {},
+        "props": {
+          "serviceProps": [
+            {
+              "name": "title",
+              "type": "string",
+              "description": "The title displayed at the top of the toast."
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "required": true,
+              "description": "The main message content."
+            },
+            {
+              "name": "variant",
+              "type": "'default' | 'success' | 'destructive'",
+              "default": "'default'",
+              "description": "Determines the color scheme and icon theme."
+            },
+            {
+              "name": "duration",
+              "type": "number",
+              "default": "3000",
+              "description": "Display time in milliseconds before auto-dismissal."
+            }
+          ],
+          "componentProps": [
+            {
+              "name": "position",
+              "type": "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center'",
+              "default": "'bottom-right'",
+              "description": "The fixed quadrant where notifications will accumulate."
+            }
+          ]
+        },
+        "selector": "app-toaster-api"
+      },
+      {
+        "name": "ToasterInteractiveComponent",
+        "examples": {
+          "generatedCode": "// 1. Call the service in your component\nthis.toastService.show({\n  title: '${this.title}',\n  description: '${this.description}',\n  variant: '${this.variant}',\n  duration: ${this.duration}\n});\n\n// 2. Pair with a button in your template\n<tolle-button (click)=\"trigger()\">\n  Show Notification\n</tolle-button>\n\n<!-- 3. Ensure the container is in your root template -->\n<tolle-toaster position=\"${this.position}\"></tolle-toaster>"
+        },
+        "props": {},
+        "selector": "app-toaster-interactive"
+      }
+    ]
+  },
+  "toggle-docs": {
+    "category": "toggle-docs",
+    "components": [
+      {
+        "name": "ToggleApiComponent",
+        "examples": {},
+        "props": {
+          "toggleProps": [
+            {
+              "name": "pressed",
+              "type": "boolean",
+              "default": "false",
+              "description": "The pressed state of the toggle."
+            },
+            {
+              "name": "variant",
+              "type": "'default' | 'outline'",
+              "default": "'default'",
+              "description": "The visual style of the toggle."
+            },
+            {
+              "name": "size",
+              "type": "'default' | 'sm' | 'lg'",
+              "default": "'default'",
+              "description": "The size of the toggle."
+            },
+            {
+              "name": "disabled",
+              "type": "boolean",
+              "default": "false",
+              "description": "Whether the toggle is disabled."
+            },
+            {
+              "name": "class",
+              "type": "string",
+              "default": "''",
+              "description": "Additional CSS classes to apply to the toggle container."
+            }
+          ]
+        },
+        "selector": "app-toggle-api"
+      },
+      {
+        "name": "ToggleInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-toggle[(pressed)]=\"isPressed\"${variantAttr}${sizeAttr}>\n  <icon-bold class=\"h-4 w-4\" />\n</tolle-toggle>"
+        },
+        "props": {},
+        "selector": "app-toggle-interactive"
+      },
+      {
+        "name": "ToggleOverviewComponent",
+        "examples": {
+          "installationCode": "import { ToggleComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  ToggleComponent\n]"
+        },
+        "props": {},
+        "selector": "app-toggle-overview"
+      }
+    ]
+  },
+  "toggle-group-docs": {
+    "category": "toggle-group-docs",
+    "components": [
+      {
+        "name": "ToggleGroupInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-toggle-group${typeAttr}${variantAttr}${sizeAttr}>\n  <tolle-toggle-group-item value=\"bold\">B</tolle-toggle-group-item>\n  <tolle-toggle-group-item value=\"italic\">I</tolle-toggle-group-item>\n  <tolle-toggle-group-item value=\"underline\">U</tolle-toggle-group-item>\n</tolle-toggle-group>"
+        },
+        "props": {},
+        "selector": "app-toggle-group-interactive"
+      },
+      {
+        "name": "ToggleGroupOverviewComponent",
+        "examples": {
+          "installationCode": "import { ToggleGroupComponent, ToggleGroupItemComponent } from '@tolle_/tolle-ui';\n\nimports: [\n  ToggleGroupComponent,\n  ToggleGroupItemComponent,\n  ...\n]",
+          "usageCode": "<tolle-toggle-group type=\"single\">\n  <tolle-toggle-group-item value=\"bold\" aria-label=\"Toggle bold\">\n    <lucide-icon name=\"bold\" class=\"h-4 w-4\" />\n  </tolle-toggle-group-item>\n  <tolle-toggle-group-item value=\"italic\" aria-label=\"Toggle italic\">\n    <lucide-icon name=\"italic\" class=\"h-4 w-4\" />\n  </tolle-toggle-group-item>\n  <tolle-toggle-group-item value=\"underline\" aria-label=\"Toggle underline\">\n    <lucide-icon name=\"underline\" class=\"h-4 w-4\" />\n  </tolle-toggle-group-item>\n</tolle-toggle-group>"
+        },
+        "props": {},
+        "selector": "app-toggle-group-overview"
+      }
+    ]
+  },
+  "tooltip-docs": {
+    "category": "tooltip-docs",
+    "components": [
+      {
+        "name": "TooltipApiComponent",
+        "examples": {},
+        "props": {
+          "tooltipProps": [
+            {
+              "name": "tolleTooltip",
+              "type": "string",
+              "required": true,
+              "description": "The content to be displayed within the tooltip."
+            },
+            {
+              "name": "placement",
+              "type": "'top' | 'bottom' | 'left' | 'right'",
+              "default": "'top'",
+              "description": "The preferred placement of the tooltip relative to its trigger."
+            }
+          ]
+        },
+        "selector": "app-tooltip-api"
+      },
+      {
+        "name": "TooltipInteractiveComponent",
+        "examples": {
+          "playgroundCode": "\n<button \n  tolleTooltip=\"${this.content}\" \n  placement=\"${this.placement}\"\n  class=\"...\">\n  Hover over me\n</button>\n    `.trim()"
+        },
+        "props": {},
+        "selector": "app-tooltip-interactive"
+      }
+    ]
+  }
+}
