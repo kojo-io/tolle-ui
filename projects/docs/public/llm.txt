@@ -1,0 +1,57 @@
+# Tolle UI Documentation
+
+Modern UI component library for Angular built with Tailwind CSS and the Angular CDK.
+
+- [Full Context Documentation](llm-ctx.txt): For AI agents to ingest the entire library.
+- [GitHub](https://github.com/kojo-io/tolle-ui)
+- [Official Docs](https://tolle-ui.example.com)
+
+## Components
+- accordion-docs
+- alert-dialog-docs
+- alert-docs
+- aspect-ratio-docs
+- avatar-docs
+- badge-docs
+- breadcrumb-docs
+- button-docs
+- button-group-docs
+- calendar-docs
+- calendar-range-docs
+- card-docs
+- carousel-docs
+- check-box-docs
+- collapsible-docs
+- context-menu-docs
+- data-table-docs
+- date-picker-docs
+- date-range-picker-docs
+- dropdown-menu-docs
+- empty-state-docs
+- getting-started-docs
+- hover-card-docs
+- input-docs
+- label-docs
+- masked-input-docs
+- multi-select-docs
+- otp-docs
+- pagination-docs
+- popover-docs
+- progress-docs
+- radio-group-docs
+- resizable-docs
+- scroll-area-docs
+- segment-docs
+- separator-docs
+- sheet-docs
+- sidebar-docs
+- skeleton-docs
+- slider-docs
+- switch-docs
+- tabs-docs
+- textarea-docs
+- theming-docs
+- toaster-docs
+- toggle-docs
+- toggle-group-docs
+- tooltip-docs

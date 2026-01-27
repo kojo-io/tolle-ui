@@ -9,7 +9,8 @@
     "test": "ng test",
     "build:web": "ng build showcase --configuration production",
     "build:lib": "ng build tolle --configuration production",
-    "build:docs": "ng build docs --configuration production",
+    "build:docs": "npm run generate:llms && ng build docs --configuration production",
+    "generate:llms": "npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/extract-docs.ts && npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/generate-llms.ts",
     "docs:json": "npx compodoc -p projects/tolle/tsconfig.lib.json -e json -d projects/tolle/.storybook",
     "build:storybook": "npm run docs:json && ng run tolle:build-storybook"
   },
