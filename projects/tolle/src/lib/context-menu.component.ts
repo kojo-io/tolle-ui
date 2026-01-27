@@ -4,10 +4,9 @@ import { ContextMenuItem, ContextMenuService, ContextMenuState } from './context
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-context-menu',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-context-menu',
+    imports: [CommonModule],
+    template: `
     @if (isOpen) {
       <div
         #menu
@@ -121,7 +120,7 @@ import { cn } from './utils/cn';
       }
     }
   `,
-  styles: [`
+    styles: [`
     :host { display: contents; }
   `]
 })

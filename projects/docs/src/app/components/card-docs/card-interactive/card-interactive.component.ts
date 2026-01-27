@@ -7,21 +7,20 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
 
 @Component({
-  selector: 'app-card-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CardComponent,
-    CardHeaderComponent,
-    CardTitleComponent,
-    CardContentComponent,
-    CardFooterComponent,
-    PlaygroundComponent,
-    InputComponent,
-    CheckboxComponent
-  ],
-  template: `
+    selector: 'app-card-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CardComponent,
+        CardHeaderComponent,
+        CardTitleComponent,
+        CardContentComponent,
+        CardFooterComponent,
+        PlaygroundComponent,
+        InputComponent,
+        CheckboxComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

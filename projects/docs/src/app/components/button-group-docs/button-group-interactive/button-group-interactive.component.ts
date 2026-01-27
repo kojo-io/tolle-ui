@@ -8,18 +8,17 @@ import { SelectComponent } from '../../../../../../tolle/src/lib/select.componen
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 
 @Component({
-  selector: 'app-button-group-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ButtonComponent,
-    ButtonGroupComponent,
-    PlaygroundComponent,
-    SelectComponent,
-    SelectItemComponent
-  ],
-  template: `
+    selector: 'app-button-group-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ButtonComponent,
+        ButtonGroupComponent,
+        PlaygroundComponent,
+        SelectComponent,
+        SelectItemComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

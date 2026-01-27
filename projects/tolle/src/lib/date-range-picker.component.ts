@@ -11,17 +11,16 @@ import { InputComponent } from './input.component';
 import { DateRange } from './types/date-range';
 
 @Component({
-  selector: 'tolle-date-range-picker',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RangeCalendarComponent, InputComponent],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DateRangePickerComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-date-range-picker',
+    imports: [CommonModule, FormsModule, RangeCalendarComponent, InputComponent],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DateRangePickerComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div class="relative w-full" #triggerContainer>
       <tolle-input
         [placeholder]="placeholder"

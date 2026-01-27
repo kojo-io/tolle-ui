@@ -8,7 +8,6 @@ import { MultipleAccordionComponent } from '../../../docs-examples/accordion/mul
 
 @Component({
     selector: 'app-accordion-examples',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

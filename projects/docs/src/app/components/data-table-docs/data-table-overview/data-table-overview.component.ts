@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-data-table-overview',
-    standalone: true,
     imports: [
         BaseEditorComponent,
         NgIf,

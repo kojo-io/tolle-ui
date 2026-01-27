@@ -5,7 +5,6 @@ import { MaskedInputComponent } from '../../../../../../tolle/src/lib/masked-inp
 
 @Component({
     selector: 'app-basic-masked-input-example',
-    standalone: true,
     imports: [CommonModule, FormsModule, MaskedInputComponent],
     template: `
     <div class="w-full max-w-sm space-y-4">

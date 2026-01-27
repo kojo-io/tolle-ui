@@ -7,16 +7,15 @@ import { SourceCodeService } from '../../../shared/source-code.service';
 import { BasicRangeCalendarComponent } from '../../../docs-examples/calendar-range/basic-range-calendar.component';
 
 @Component({
-  selector: 'app-calendar-range-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
-    SegmentedComponent,
-    FormsModule,
-    BaseEditorComponent,
-    BasicRangeCalendarComponent
-  ],
-  template: `
+    selector: 'app-calendar-range-examples',
+    imports: [
+        CommonModule,
+        SegmentedComponent,
+        FormsModule,
+        BaseEditorComponent,
+        BasicRangeCalendarComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
 

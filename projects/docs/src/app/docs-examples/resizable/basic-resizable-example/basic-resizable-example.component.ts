@@ -5,7 +5,6 @@ import { ResizablePanelItemComponent } from '../../../../../../tolle/src/lib/res
 
 @Component({
     selector: 'app-basic-resizable-example',
-    standalone: true,
     imports: [CommonModule, ResizablePanelComponent, ResizablePanelItemComponent],
     template: `
     <div class="w-full h-[300px] rounded-lg border border-input overflow-hidden">

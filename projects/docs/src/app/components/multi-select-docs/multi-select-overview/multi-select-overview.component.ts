@@ -6,7 +6,6 @@ import { BasicMultiSelectExampleComponent } from '../../../docs-examples/multi-s
 
 @Component({
     selector: 'app-multi-select-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, BasicMultiSelectExampleComponent],
     templateUrl: './multi-select-overview.component.html'
 })

@@ -18,25 +18,24 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
-  selector: 'app-alert-dialog-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    AlertDialogComponent,
-    AlertDialogTriggerComponent,
-    AlertDialogPortalComponent,
-    AlertDialogContentComponent,
-    AlertDialogHeaderComponent,
-    AlertDialogFooterComponent,
-    AlertDialogTitleComponent,
-    AlertDialogDescriptionComponent,
-    AlertDialogActionComponent,
-    AlertDialogCancelComponent,
-    PlaygroundComponent,
-    ButtonComponent
-  ],
-  template: `
+    selector: 'app-alert-dialog-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        AlertDialogComponent,
+        AlertDialogTriggerComponent,
+        AlertDialogPortalComponent,
+        AlertDialogContentComponent,
+        AlertDialogHeaderComponent,
+        AlertDialogFooterComponent,
+        AlertDialogTitleComponent,
+        AlertDialogDescriptionComponent,
+        AlertDialogActionComponent,
+        AlertDialogCancelComponent,
+        PlaygroundComponent,
+        ButtonComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

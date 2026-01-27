@@ -13,20 +13,19 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: 'app-doc-layout',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    ButtonComponent,
-    SidebarComponent,
-    TooltipDirective,
-    ReactiveFormsModule,
-    NgStyle,
-    FormsModule,
-    AsyncPipe
-  ],
-  templateUrl: './doc-layout.component.html',
-  styleUrl: './doc-layout.component.css'
+    selector: 'app-doc-layout',
+    imports: [
+        RouterOutlet,
+        ButtonComponent,
+        SidebarComponent,
+        TooltipDirective,
+        ReactiveFormsModule,
+        NgStyle,
+        FormsModule,
+        AsyncPipe
+    ],
+    templateUrl: './doc-layout.component.html',
+    styleUrl: './doc-layout.component.css'
 })
 export class DocLayoutComponent implements OnInit {
   ngOnInit(): void {

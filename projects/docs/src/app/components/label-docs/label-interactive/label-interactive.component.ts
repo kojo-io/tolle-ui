@@ -7,7 +7,6 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 
 @Component({
     selector: 'app-label-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

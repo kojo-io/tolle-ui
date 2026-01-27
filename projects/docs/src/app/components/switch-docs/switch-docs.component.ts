@@ -9,14 +9,12 @@ import { BaseService } from '../../shared/base.service';
 
 @Component({
     selector: 'app-switch-docs',
-    standalone: true,
     imports: [
         CommonModule,
         SwitchOverviewComponent,
         SwitchInteractiveComponent,
         SwitchApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './switch-docs.component.html',
     styleUrls: ['./switch-docs.component.css']

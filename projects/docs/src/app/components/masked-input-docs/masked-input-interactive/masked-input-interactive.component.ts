@@ -10,7 +10,6 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-masked-input-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

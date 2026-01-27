@@ -35,10 +35,9 @@ const HTML_CODE = `
 
 // 2. Create a dummy component to actually run in the canvas
 @Component({
-  selector: 'modal-story-host',
-  standalone: true,
-  imports: [ButtonComponent, CommonModule], // Add CommonModule
-  template: `
+    selector: 'modal-story-host',
+    imports: [ButtonComponent, CommonModule], // Add CommonModule
+    template: `
     <div class="p-4 flex flex-col gap-4 items-start">
       <tolle-button (click)="open()">Open Modal</tolle-button>
       <div *ngIf="lastEvent" class="text-sm text-muted-foreground">

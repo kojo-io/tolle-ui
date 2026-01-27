@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-segment-docs',
-    standalone: true,
     imports: [
         SegmentOverviewComponent,
         SegmentInteractiveComponent,
         SegmentApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './segment-docs.component.html',
     styleUrl: './segment-docs.component.css'

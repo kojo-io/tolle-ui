@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-skeleton-docs',
-    standalone: true,
     imports: [
         SkeletonOverviewComponent,
         SkeletonInteractiveComponent,
         SkeletonApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './skeleton-docs.component.html',
     styleUrl: './skeleton-docs.component.css'

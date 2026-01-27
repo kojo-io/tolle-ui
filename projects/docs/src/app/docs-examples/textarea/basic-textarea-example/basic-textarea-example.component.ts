@@ -5,7 +5,6 @@ import { TextareaComponent } from '../../../../../../tolle/src/lib/textarea.comp
 
 @Component({
     selector: 'app-basic-textarea-example',
-    standalone: true,
     imports: [CommonModule, FormsModule, TextareaComponent],
     template: `
     <div class="w-full max-w-sm space-y-4">

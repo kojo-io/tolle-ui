@@ -4,10 +4,9 @@ import { ModalRef } from './modal-ref';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-modal',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-modal',
+    imports: [CommonModule],
+    template: `
     <div [class]="modalClasses" class="pointer-events-auto" (mousedown)="$event.stopPropagation()">
 
       <div *ngIf="ref.modal.showCloseButton || ref.modal.title" class="flex items-center justify-between px-6 pt-6">
@@ -34,7 +33,7 @@ import { cn } from './utils/cn';
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: contents; /* This makes the host "disappear" so the div targets the overlay pane directly */
     }

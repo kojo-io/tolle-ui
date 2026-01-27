@@ -5,7 +5,6 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 
 @Component({
     selector: 'app-basic-switch-example',
-    standalone: true,
     imports: [CommonModule, FormsModule, SwitchComponent],
     template: `
     <div class="flex items-center space-x-2">

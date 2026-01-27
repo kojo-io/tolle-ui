@@ -37,10 +37,9 @@ const buttonVariants = cva(
 export type ButtonProps = VariantProps<typeof buttonVariants>;
 
 @Component({
-  selector: 'tolle-button',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-button',
+    imports: [CommonModule],
+    template: `
     <button
       [class]="computedClass"
       [disabled]="disabled || busy"
@@ -58,9 +57,9 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
       </span>
     </button>
   `,
-  host: {
-    'class': 'tolle-button-wrapper inline-block align-middle'
-  }
+    host: {
+        'class': 'tolle-button-wrapper inline-block align-middle'
+    }
 })
 export class ButtonComponent {
   @Input() class: string = '';

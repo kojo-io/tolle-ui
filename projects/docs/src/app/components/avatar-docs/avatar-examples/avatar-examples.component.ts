@@ -10,7 +10,6 @@ import { AvatarFallbackExampleComponent } from '../../../docs-examples/avatar/av
 
 @Component({
     selector: 'app-avatar-examples',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

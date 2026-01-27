@@ -10,7 +10,6 @@ import { CalendarMode } from '../../../../../../tolle/src/lib/calendar.component
 
 @Component({
     selector: 'app-date-picker-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

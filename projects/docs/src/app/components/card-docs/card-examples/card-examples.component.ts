@@ -9,18 +9,17 @@ import { FullCardComponent } from '../../../docs-examples/card/full-card.compone
 import { FormCardComponent } from '../../../docs-examples/card/form-card.component';
 
 @Component({
-  selector: 'app-card-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SegmentedComponent,
-    BaseEditorComponent,
-    BasicCardComponent,
-    FullCardComponent,
-    FormCardComponent
-  ],
-  template: `
+    selector: 'app-card-examples',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SegmentedComponent,
+        BaseEditorComponent,
+        BasicCardComponent,
+        FullCardComponent,
+        FormCardComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
 

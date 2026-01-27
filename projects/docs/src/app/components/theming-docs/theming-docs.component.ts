@@ -11,7 +11,6 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-theming-docs',
-    standalone: true,
     imports: [
         CommonModule,
         ThemingOverviewComponent,
@@ -20,7 +19,6 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
         ThemingIntegrationComponent,
         ThemingOverridesComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './theming-docs.component.html'
 })

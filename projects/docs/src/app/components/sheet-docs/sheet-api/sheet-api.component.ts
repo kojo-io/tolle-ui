@@ -3,10 +3,9 @@ import { PropEntry } from '../../../shared/types';
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 
 @Component({
-  selector: 'app-sheet-api',
-  standalone: true,
-  imports: [PropTableComponent],
-  template: `
+    selector: 'app-sheet-api',
+    imports: [PropTableComponent],
+    template: `
     <section id="api-reference" class="mb-16">
       <h2 class="text-2xl font-bold mb-6 text-foreground">API Reference</h2>
 

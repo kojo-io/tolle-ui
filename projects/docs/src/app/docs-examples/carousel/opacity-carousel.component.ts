@@ -11,18 +11,17 @@ import {
 } from '../../../../../tolle/src/lib/carousel';
 
 @Component({
-  selector: 'app-opacity-carousel',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CarouselComponent,
-    CarouselContentDirective,
-    CarouselContainerDirective,
-    CarouselItemDirective,
-    CarouselPreviousDirective,
-    CarouselNextDirective
-  ],
-  template: `
+    selector: 'app-opacity-carousel',
+    imports: [
+        CommonModule,
+        CarouselComponent,
+        CarouselContentDirective,
+        CarouselContainerDirective,
+        CarouselItemDirective,
+        CarouselPreviousDirective,
+        CarouselNextDirective
+    ],
+    template: `
     <div class="relative max-w-2xl mx-auto group">
       <tolle-carousel (api)="onApi($event)" [opts]="{ loop: true }" class="w-full">
         <div tolleCarouselContent>

@@ -5,18 +5,17 @@ import { cn } from './utils/cn';
 import {RadioService} from './radio-service';
 
 @Component({
-  selector: 'tolle-radio-group',
-  standalone: true,
-  imports: [CommonModule],
-  providers: [
-    RadioService,
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => RadioGroupComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-radio-group',
+    imports: [CommonModule],
+    providers: [
+        RadioService,
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => RadioGroupComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div [class]="cn('grid gap-2', class)" role="radiogroup">
       <ng-content></ng-content>
     </div>

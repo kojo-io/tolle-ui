@@ -8,7 +8,6 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 
 @Component({
     selector: 'app-accordion-interactive',
-    standalone: true,
     imports: [
         FormsModule,
         AccordionComponent,

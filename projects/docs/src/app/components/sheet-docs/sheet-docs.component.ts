@@ -8,7 +8,6 @@ import { BaseService } from '../../shared/base.service';
 
 @Component({
     selector: 'app-sheet-docs',
-    standalone: true,
     imports: [
         CommonModule,
         SheetOverviewComponent,

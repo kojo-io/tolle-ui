@@ -8,7 +8,6 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 
 @Component({
     selector: 'app-toggle-group-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

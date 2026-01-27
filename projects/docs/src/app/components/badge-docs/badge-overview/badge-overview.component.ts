@@ -3,7 +3,6 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 
 @Component({
     selector: 'app-badge-overview',
-    standalone: true,
     imports: [BaseEditorComponent],
     templateUrl: './badge-overview.component.html'
 })

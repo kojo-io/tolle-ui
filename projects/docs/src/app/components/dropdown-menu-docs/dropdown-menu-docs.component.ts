@@ -8,17 +8,15 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-dropdown-menu-docs',
-  standalone: true,
-  imports: [
-    CommonModule,
-    DropdownMenuOverviewComponent,
-    DropdownMenuInteractiveComponent,
-    DropdownMenuApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './dropdown-menu-docs.component.html'
+    selector: 'app-dropdown-menu-docs',
+    imports: [
+        CommonModule,
+        DropdownMenuOverviewComponent,
+        DropdownMenuInteractiveComponent,
+        DropdownMenuApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './dropdown-menu-docs.component.html'
 })
 export class DropdownMenuDocsComponent {
   baseService = inject(BaseService);

@@ -5,10 +5,9 @@ import { ToastService, Toast, ToastPosition } from './toast.service';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-toaster',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-toaster',
+    imports: [CommonModule],
+    template: `
     <div [class]="cn('fixed z-[100] flex flex-col gap-2 w-full max-w-[380px] p-4', positionClasses)">
       <div
         *ngFor="let toast of toasts$ | async"

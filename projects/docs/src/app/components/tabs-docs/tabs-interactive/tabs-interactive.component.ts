@@ -11,24 +11,23 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-tabs-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    TabsComponent,
-    TabsListComponent,
-    TabsTriggerComponent,
-    TabsContentComponent,
-    PlaygroundComponent,
-    CardComponent,
-    ButtonComponent,
-    InputComponent,
-    LabelComponent,
-    SelectComponent,
-    SelectItemComponent
-  ],
-  template: `
+    selector: 'app-tabs-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        TabsComponent,
+        TabsListComponent,
+        TabsTriggerComponent,
+        TabsContentComponent,
+        PlaygroundComponent,
+        CardComponent,
+        ButtonComponent,
+        InputComponent,
+        LabelComponent,
+        SelectComponent,
+        SelectItemComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

@@ -62,7 +62,6 @@ export class CarouselContext {
 
 @Component({
     selector: 'tolle-carousel',
-    standalone: true,
     imports: [CommonModule],
     providers: [CarouselContext],
     template: `

@@ -104,7 +104,6 @@ const textareaProps: PropEntry[] = [
 
 @Component({
     selector: 'app-textarea-api',
-    standalone: true,
     imports: [CommonModule, PropTableComponent],
     templateUrl: './textarea-api.component.html'
 })

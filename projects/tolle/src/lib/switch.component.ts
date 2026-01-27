@@ -4,17 +4,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-switch',
-  standalone: true,
-  imports: [CommonModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SwitchComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-switch',
+    imports: [CommonModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SwitchComponent),
+            multi: true
+        }
+    ],
+    template: `
     <button
       type="button"
       role="switch"

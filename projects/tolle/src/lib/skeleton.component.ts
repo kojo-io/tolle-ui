@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-skeleton',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-skeleton',
+    imports: [CommonModule],
+    template: `
     <div [class]="computedClass"></div>
-  `,
+  `
 })
 export class SkeletonComponent {
   @Input() variant: 'rect' | 'circle' | 'pill' = 'rect';

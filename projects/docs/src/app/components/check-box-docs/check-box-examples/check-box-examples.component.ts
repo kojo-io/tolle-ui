@@ -10,7 +10,6 @@ import { CheckboxDisabledComponent } from '../../../docs-examples/check-box/chec
 
 @Component({
     selector: 'app-check-box-examples',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

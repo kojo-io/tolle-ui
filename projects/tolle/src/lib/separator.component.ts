@@ -4,7 +4,6 @@ import { cn } from './utils/cn';
 
 @Component({
     selector: 'tolle-separator',
-    standalone: true,
     imports: [CommonModule],
     template: `
     <div

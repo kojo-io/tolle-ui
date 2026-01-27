@@ -8,7 +8,6 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-hover-card-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

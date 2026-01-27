@@ -10,7 +10,6 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 
 @Component({
     selector: 'app-badge-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

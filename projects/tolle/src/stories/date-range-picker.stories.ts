@@ -9,10 +9,9 @@ import {DateRange} from '../lib/types/date-range';
 
 // 1. Wrapper to visualize the range selection and form integration
 @Component({
-  selector: 'range-picker-story-wrapper', // <--- This selector must match the template below
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DateRangePickerComponent, RangeCalendarComponent],
-  template: `
+    selector: 'range-picker-story-wrapper',
+    imports: [CommonModule, ReactiveFormsModule, DateRangePickerComponent, RangeCalendarComponent],
+    template: `
     <div class="p-10 space-y-8 max-w-2xl bg-background border rounded-xl shadow-sm">
       <div class="space-y-1">
         <h3 class="text-lg font-bold">Booking Duration</h3>

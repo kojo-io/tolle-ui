@@ -5,7 +5,6 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 
 @Component({
     selector: 'app-basic-input-example',
-    standalone: true,
     imports: [CommonModule, FormsModule, InputComponent],
     template: `
     <div class="w-full max-w-sm space-y-4">

@@ -9,7 +9,6 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 
 @Component({
     selector: 'app-avatar-interactive',
-    standalone: true,
     imports: [
         FormsModule,
         AvatarComponent,

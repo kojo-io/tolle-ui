@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
 
 @Component({
-  selector: 'app-card-overview',
-  standalone: true,
-  imports: [BaseEditorComponent],
-  template: `
+    selector: 'app-card-overview',
+    imports: [BaseEditorComponent],
+    template: `
     <section class="mb-16" id="overview">
       <h1 class="text-4xl font-extrabold tracking-tight mb-4">Card</h1>
       <p class="text-lg text-muted-foreground mb-8">

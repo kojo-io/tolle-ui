@@ -2,13 +2,12 @@ import {Component, Input} from '@angular/core';
 import {NgIf, NgTemplateOutlet} from '@angular/common';
 
 @Component({
-  selector: 'tolle-breadcrumb-link',
-  standalone: true,
-  imports: [
-    NgIf,
-    NgTemplateOutlet
-  ],
-  template: `
+    selector: 'tolle-breadcrumb-link',
+    imports: [
+        NgIf,
+        NgTemplateOutlet
+    ],
+    template: `
     <ng-template #content>
       <ng-content></ng-content>
     </ng-template>
@@ -30,7 +29,7 @@ import {NgIf, NgTemplateOutlet} from '@angular/common';
       </div>
     </ng-template>
   `,
-  styles: ``
+    styles: ``
 })
 export class BreadcrumbLinkComponent {
   @Input() active: boolean = false;

@@ -8,18 +8,17 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 
 @Component({
-  selector: 'app-slider-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SliderComponent,
-    PlaygroundComponent,
-    LabelComponent,
-    InputComponent,
-    SwitchComponent
-  ],
-  template: `
+    selector: 'app-slider-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SliderComponent,
+        PlaygroundComponent,
+        LabelComponent,
+        InputComponent,
+        SwitchComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

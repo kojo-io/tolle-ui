@@ -21,10 +21,9 @@ export type SidebarGroup = {
 }
 
 @Component({
-  selector: 'tolle-sidebar',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  template: `
+    selector: 'tolle-sidebar',
+    imports: [CommonModule, RouterModule],
+    template: `
     <aside [class]="cn(
       'flex flex-col h-full bg-background transition-[width] duration-300 ease-in-out shrink-0 overflow-hidden',
       collapsed ? 'w-16' : 'w-64',
@@ -190,7 +189,7 @@ export type SidebarGroup = {
       </div>
     </aside>
   `,
-  styles: [`
+    styles: [`
     :host { display: block; height: 100%; }
     .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(156, 163, 175, 0.3) transparent; }
     .custom-scrollbar::-webkit-scrollbar { width: 4px; }

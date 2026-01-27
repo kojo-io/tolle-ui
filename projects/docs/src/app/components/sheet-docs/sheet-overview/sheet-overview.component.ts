@@ -3,13 +3,12 @@ import { CommonModule } from '@angular/common';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
 
 @Component({
-  selector: 'app-sheet-overview',
-  standalone: true,
-  imports: [
-    CommonModule,
-    BaseEditorComponent
-  ],
-  template: `
+    selector: 'app-sheet-overview',
+    imports: [
+        CommonModule,
+        BaseEditorComponent
+    ],
+    template: `
     <header class="mb-12 border-b border-slate-200 pb-8">
       <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-foreground">
         Sheet

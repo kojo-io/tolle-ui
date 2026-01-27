@@ -10,17 +10,16 @@ import { MaskedInputComponent } from './masked-input.component';
 import { CalendarComponent, CalendarMode } from './calendar.component';
 
 @Component({
-  selector: 'tolle-date-picker',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MaskedInputComponent, CalendarComponent],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DatePickerComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-date-picker',
+    imports: [CommonModule, FormsModule, MaskedInputComponent, CalendarComponent],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DatePickerComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div class="relative w-full" #triggerContainer>
       <tolle-masked-input
         #maskInput

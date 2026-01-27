@@ -21,18 +21,17 @@ import { SelectService } from './select.service';
 import { InputComponent } from './input.component';
 
 @Component({
-  selector: 'tolle-select',
-  standalone: true,
-  imports: [CommonModule, FormsModule, InputComponent],
-  providers: [
-    SelectService,
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-select',
+    imports: [CommonModule, FormsModule, InputComponent],
+    providers: [
+        SelectService,
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SelectComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div [class]="cn('relative w-full', 'size-' + size)" #container>
       <button
         type="button"
@@ -71,7 +70,7 @@ import { InputComponent } from './input.component';
         </div>
       </div>
     </div>
-  `,
+  `
 })
 export class SelectComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
   @Input() placeholder = 'Select an option';

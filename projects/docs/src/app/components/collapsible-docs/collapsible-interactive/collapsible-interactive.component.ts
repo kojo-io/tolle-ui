@@ -7,7 +7,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-collapsible-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

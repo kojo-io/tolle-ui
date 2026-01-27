@@ -12,19 +12,18 @@ import {FormsModule} from '@angular/forms';
 import {SearchableComponent} from '../../../docs-examples/data-table/searchable/searchable.component';
 
 @Component({
-  selector: 'app-searchable-docs',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    BaseEditorComponent,
-    NgIf,
-    PaginationExampleComponent,
-    SegmentedComponent,
-    FormsModule,
-    SearchableComponent
-  ],
-  templateUrl: './searchable-docs.component.html',
-  styleUrl: './searchable-docs.component.css'
+    selector: 'app-searchable-docs',
+    imports: [
+        AsyncPipe,
+        BaseEditorComponent,
+        NgIf,
+        PaginationExampleComponent,
+        SegmentedComponent,
+        FormsModule,
+        SearchableComponent
+    ],
+    templateUrl: './searchable-docs.component.html',
+    styleUrl: './searchable-docs.component.css'
 })
 export class SearchableDocsComponent implements OnInit {
   baseService = inject(BaseService);

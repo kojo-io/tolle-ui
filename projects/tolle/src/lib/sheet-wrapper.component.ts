@@ -5,7 +5,6 @@ import { cn } from './utils/cn';
 
 @Component({
     selector: 'tolle-sheet-wrapper',
-    standalone: true,
     imports: [CommonModule],
     template: `
     <div 

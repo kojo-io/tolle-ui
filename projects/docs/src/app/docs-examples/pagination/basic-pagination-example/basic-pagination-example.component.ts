@@ -4,7 +4,6 @@ import { PaginationComponent } from '../../../../../../tolle/src/lib/pagination.
 
 @Component({
     selector: 'app-basic-pagination-example',
-    standalone: true,
     imports: [CommonModule, PaginationComponent],
     template: `
     <div class="w-full flex flex-col gap-4">

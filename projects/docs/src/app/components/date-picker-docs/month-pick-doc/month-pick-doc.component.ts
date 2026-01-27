@@ -10,18 +10,17 @@ import {FormsModule} from '@angular/forms';
 import {MonthPickerComponent} from '../../../docs-examples/date-picker/month-picker/month-picker.component';
 
 @Component({
-  selector: 'app-month-pick-doc',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    BaseEditorComponent,
-    NgIf,
-    SegmentedComponent,
-    FormsModule,
-    MonthPickerComponent
-  ],
-  templateUrl: './month-pick-doc.component.html',
-  styleUrl: './month-pick-doc.component.css'
+    selector: 'app-month-pick-doc',
+    imports: [
+        AsyncPipe,
+        BaseEditorComponent,
+        NgIf,
+        SegmentedComponent,
+        FormsModule,
+        MonthPickerComponent
+    ],
+    templateUrl: './month-pick-doc.component.html',
+    styleUrl: './month-pick-doc.component.css'
 })
 export class MonthPickDocComponent implements OnInit {
   baseService = inject(BaseService);

@@ -5,10 +5,9 @@ import { TemplatePortal } from '@angular/cdk/portal';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-sheet',
-  standalone: true,
-  imports: [CommonModule],
-  template: `<ng-content></ng-content>`
+    selector: 'tolle-sheet',
+    imports: [CommonModule],
+    template: `<ng-content></ng-content>`
 })
 export class SheetComponent {
   @Input() isOpen = false;
@@ -78,14 +77,13 @@ export class SheetComponent {
 }
 
 @Component({
-  selector: 'tolle-sheet-trigger',
-  standalone: true,
-  imports: [CommonModule],
-  template: `<ng-content></ng-content>`,
-  host: {
-    '(click)': 'onClick()',
-    'class': 'inline-block'
-  }
+    selector: 'tolle-sheet-trigger',
+    imports: [CommonModule],
+    template: `<ng-content></ng-content>`,
+    host: {
+        '(click)': 'onClick()',
+        'class': 'inline-block'
+    }
 })
 export class SheetTriggerComponent {
   private sheet = inject(SheetComponent);
@@ -96,10 +94,9 @@ export class SheetTriggerComponent {
 }
 
 @Component({
-  selector: 'tolle-sheet-content',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-sheet-content',
+    imports: [CommonModule],
+    template: `
     <ng-template #sheetContent>
       <div 
         [class]="computedClass" 

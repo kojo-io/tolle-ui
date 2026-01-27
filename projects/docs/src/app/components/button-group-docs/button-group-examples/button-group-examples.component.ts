@@ -8,17 +8,16 @@ import { BasicButtonGroupComponent } from '../../../docs-examples/button-group/b
 import { MixedButtonGroupComponent } from '../../../docs-examples/button-group/mixed-button-group.component';
 
 @Component({
-  selector: 'app-button-group-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SegmentedComponent,
-    BaseEditorComponent,
-    BasicButtonGroupComponent,
-    MixedButtonGroupComponent
-  ],
-  template: `
+    selector: 'app-button-group-examples',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SegmentedComponent,
+        BaseEditorComponent,
+        BasicButtonGroupComponent,
+        MixedButtonGroupComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Examples</h2>
 

@@ -20,18 +20,17 @@ export interface TableColumn {
 }
 
 @Component({
-  selector: 'tolle-data-table',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    PaginationComponent,
-    InputComponent,
-    PopoverComponent,
-    PopoverContentComponent,
-    CheckboxComponent,
-  ],
-  template: `
+    selector: 'tolle-data-table',
+    imports: [
+        CommonModule,
+        FormsModule,
+        PaginationComponent,
+        InputComponent,
+        PopoverComponent,
+        PopoverContentComponent,
+        CheckboxComponent,
+    ],
+    template: `
     <div class="space-y-4">
       <div class="flex items-center justify-between py-2">
         <div *ngIf="searchable" class="w-full max-w-sm">

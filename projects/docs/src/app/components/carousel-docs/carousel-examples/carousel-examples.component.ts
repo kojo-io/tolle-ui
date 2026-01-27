@@ -24,33 +24,32 @@ import { LazyLoadCarouselComponent } from '../../../docs-examples/carousel/lazy-
 import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel/infinite-scroll-carousel.component';
 
 @Component({
-  selector: 'app-carousel-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SegmentedComponent,
-    BaseEditorComponent,
-    BasicCarouselComponent,
-    MultipleCarouselComponent,
-    VerticalCarouselComponent,
-    AutoplayCarouselComponent,
-    LoopCarouselComponent,
-    ThumbnailsCarouselComponent,
-    AlignmentCarouselComponent,
-    VariableWidthCarouselComponent,
-    RtlCarouselComponent,
-    AutoScrollCarouselComponent,
-    FadeCarouselComponent,
-    ClassNamesCarouselComponent,
-    ParallaxCarouselComponent,
-    ScaleCarouselComponent,
-    OpacityCarouselComponent,
-    ProgressCarouselComponent,
-    LazyLoadCarouselComponent,
-    InfiniteScrollCarouselComponent
-  ],
-  template: `
+    selector: 'app-carousel-examples',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SegmentedComponent,
+        BaseEditorComponent,
+        BasicCarouselComponent,
+        MultipleCarouselComponent,
+        VerticalCarouselComponent,
+        AutoplayCarouselComponent,
+        LoopCarouselComponent,
+        ThumbnailsCarouselComponent,
+        AlignmentCarouselComponent,
+        VariableWidthCarouselComponent,
+        RtlCarouselComponent,
+        AutoScrollCarouselComponent,
+        FadeCarouselComponent,
+        ClassNamesCarouselComponent,
+        ParallaxCarouselComponent,
+        ScaleCarouselComponent,
+        OpacityCarouselComponent,
+        ProgressCarouselComponent,
+        LazyLoadCarouselComponent,
+        InfiniteScrollCarouselComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
 

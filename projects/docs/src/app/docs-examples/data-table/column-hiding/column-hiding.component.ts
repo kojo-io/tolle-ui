@@ -4,15 +4,14 @@ import {ButtonComponent} from '../../../../../../tolle/src/lib/button.component'
 import {TolleCellDirective} from '../../../../../../tolle/src/lib/tolle-cell.directive';
 
 @Component({
-  selector: 'app-column-hiding',
-  standalone: true,
-  imports: [
-    ButtonComponent,
-    DataTableComponent,
-    TolleCellDirective
-  ],
-  templateUrl: './column-hiding.component.html',
-  styleUrl: './column-hiding.component.css'
+    selector: 'app-column-hiding',
+    imports: [
+        ButtonComponent,
+        DataTableComponent,
+        TolleCellDirective
+    ],
+    templateUrl: './column-hiding.component.html',
+    styleUrl: './column-hiding.component.css'
 })
 export class ColumnHidingComponent {
   columns: TableColumn[] = [

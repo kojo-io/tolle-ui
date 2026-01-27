@@ -9,18 +9,17 @@ import { ModeCalendarComponent } from '../../../docs-examples/calendar/mode-cale
 import { DisabledCalendarComponent } from '../../../docs-examples/calendar/disabled-calendar.component';
 
 @Component({
-  selector: 'app-calendar-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SegmentedComponent,
-    BaseEditorComponent,
-    BasicCalendarComponent,
-    ModeCalendarComponent,
-    DisabledCalendarComponent
-  ],
-  template: `
+    selector: 'app-calendar-examples',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SegmentedComponent,
+        BaseEditorComponent,
+        BasicCalendarComponent,
+        ModeCalendarComponent,
+        DisabledCalendarComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
 

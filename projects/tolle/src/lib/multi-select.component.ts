@@ -9,14 +9,13 @@ import { InputComponent } from './input.component';
 import { BadgeComponent } from './badge.component';
 
 @Component({
-  selector: 'tolle-multi-select',
-  standalone: true,
-  imports: [CommonModule, FormsModule, BadgeComponent, InputComponent],
-  providers: [
-    SelectService,
-    { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true }
-  ],
-  template: `
+    selector: 'tolle-multi-select',
+    imports: [CommonModule, FormsModule, BadgeComponent, InputComponent],
+    providers: [
+        SelectService,
+        { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true }
+    ],
+    template: `
     <div [class]="cn('relative w-full', 'size-' + size)" #container>
       <button
         #trigger

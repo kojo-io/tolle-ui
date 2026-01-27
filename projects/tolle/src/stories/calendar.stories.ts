@@ -8,10 +8,9 @@ import {CalendarComponent} from '../lib/calendar.component';
 // 1. Wrapper for Form Integration
 // This allows us to see the value update in real-time
 @Component({
-  selector: 'calendar-story-wrapper',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, CalendarComponent],
-  template: `
+    selector: 'calendar-story-wrapper',
+    imports: [CommonModule, ReactiveFormsModule, CalendarComponent],
+    template: `
     <div class="p-10 flex flex-col gap-6 items-start max-w-md border rounded-xl bg-card">
       <div>
         <h2 class="text-lg font-semibold">Schedule Meeting</h2>

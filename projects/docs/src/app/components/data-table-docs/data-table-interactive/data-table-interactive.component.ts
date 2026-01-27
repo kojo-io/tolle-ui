@@ -10,18 +10,17 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 import { TolleCellDirective } from '../../../../../../tolle/src/lib/tolle-cell.directive';
 
 @Component({
-  selector: 'app-data-table-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DataTableComponent,
-    PlaygroundComponent,
-    SelectComponent,
-    SelectItemComponent,
-    CheckboxComponent
-  ],
-  templateUrl: './data-table-interactive.component.html'
+    selector: 'app-data-table-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        DataTableComponent,
+        PlaygroundComponent,
+        SelectComponent,
+        SelectItemComponent,
+        CheckboxComponent
+    ],
+    templateUrl: './data-table-interactive.component.html'
 })
 export class DataTableInteractiveComponent {
   searchable = true;

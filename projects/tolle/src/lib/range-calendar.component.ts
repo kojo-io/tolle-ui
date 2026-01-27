@@ -11,17 +11,16 @@ import { cn } from './utils/cn';
 import {DateRange} from './types/date-range';
 
 @Component({
-  selector: 'tolle-range-calendar',
-  standalone: true,
-  imports: [CommonModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => RangeCalendarComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-range-calendar',
+    imports: [CommonModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => RangeCalendarComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div [class]="cn('p-3 border rounded-md bg-background text-popover-foreground shadow-sm inline-block min-w-fit', class)">
 
       <div class="flex items-center justify-between pt-1 pb-4 gap-2">

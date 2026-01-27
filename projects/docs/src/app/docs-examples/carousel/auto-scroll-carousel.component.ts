@@ -9,16 +9,15 @@ import {
 } from '../../../../../tolle/src/lib/carousel';
 
 @Component({
-  selector: 'app-auto-scroll-carousel',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CarouselComponent,
-    CarouselContentDirective,
-    CarouselContainerDirective,
-    CarouselItemDirective
-  ],
-  template: `
+    selector: 'app-auto-scroll-carousel',
+    imports: [
+        CommonModule,
+        CarouselComponent,
+        CarouselContentDirective,
+        CarouselContainerDirective,
+        CarouselItemDirective
+    ],
+    template: `
     <div class="relative max-w-3xl mx-auto group">
       <tolle-carousel (api)="onApi($event)" [plugins]="plugins" [opts]="{ loop: true, dragFree: true }" class="w-full">
         <div tolleCarouselContent>

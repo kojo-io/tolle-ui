@@ -9,18 +9,17 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
 
 @Component({
-  selector: 'app-calendar-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CalendarComponent,
-    PlaygroundComponent,
-    SelectComponent,
-    SelectItemComponent,
-    CheckboxComponent
-  ],
-  template: `
+    selector: 'app-calendar-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CalendarComponent,
+        PlaygroundComponent,
+        SelectComponent,
+        SelectItemComponent,
+        CheckboxComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

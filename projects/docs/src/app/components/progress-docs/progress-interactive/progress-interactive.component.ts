@@ -6,7 +6,6 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-progress-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

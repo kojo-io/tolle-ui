@@ -6,7 +6,6 @@ import { BasicTooltipExampleComponent } from '../../../docs-examples/tooltip/bas
 
 @Component({
     selector: 'app-tooltip-overview',
-    standalone: true,
     imports: [CommonModule, AsyncPipe, BaseEditorComponent, BasicTooltipExampleComponent],
     templateUrl: './tooltip-overview.component.html'
 })

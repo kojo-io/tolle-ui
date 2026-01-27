@@ -10,19 +10,18 @@ import { IconButtonComponent } from '../../../docs-examples/button/icon-button.c
 import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.component';
 
 @Component({
-  selector: 'app-button-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SegmentedComponent,
-    BaseEditorComponent,
-    BasicButtonComponent,
-    DestructiveButtonComponent,
-    IconButtonComponent,
-    BusyButtonComponent
-  ],
-  template: `
+    selector: 'app-button-examples',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SegmentedComponent,
+        BaseEditorComponent,
+        BasicButtonComponent,
+        DestructiveButtonComponent,
+        IconButtonComponent,
+        BusyButtonComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Examples</h2>
 

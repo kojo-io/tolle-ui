@@ -149,10 +149,9 @@ const COLUMNS: TableColumn[] = [
 
 // 2. Wrapper Component to handle Templates
 @Component({
-  selector: 'data-table-wrapper',
-  standalone: true,
-  imports: [CommonModule, DataTableComponent, TolleCellDirective, BadgeComponent, ButtonComponent],
-  template: `
+    selector: 'data-table-wrapper',
+    imports: [CommonModule, DataTableComponent, TolleCellDirective, BadgeComponent, ButtonComponent],
+    template: `
     <tolle-data-table
       [data]="data"
       [columns]="columns"
@@ -190,7 +189,7 @@ const COLUMNS: TableColumn[] = [
         </div>
       </div>
     </ng-template>
-  `,
+  `
 })
 class DataTableWrapperComponent {
   @Input() data = MOCK_USERS;

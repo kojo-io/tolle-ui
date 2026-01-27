@@ -24,7 +24,6 @@ class CollapsibleService {
 
 @Component({
     selector: 'tolle-collapsible',
-    standalone: true,
     imports: [CommonModule],
     providers: [CollapsibleService],
     template: `<ng-content></ng-content>`,
@@ -54,7 +53,6 @@ export class CollapsibleComponent {
 
 @Component({
     selector: 'tolle-collapsible-trigger',
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: {
@@ -86,7 +84,6 @@ export class CollapsibleTriggerComponent {
 
 @Component({
     selector: 'tolle-collapsible-content',
-    standalone: true,
     imports: [CommonModule],
     template: `
     <div [@expandCollapse]="isOpen ? 'open' : 'closed'" class="overflow-hidden">

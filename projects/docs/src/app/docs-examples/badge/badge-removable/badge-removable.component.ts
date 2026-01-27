@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-badge-removable',
-    standalone: true,
     imports: [BadgeComponent, CommonModule],
     templateUrl: './badge-removable.component.html'
 })

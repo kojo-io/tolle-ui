@@ -3,10 +3,9 @@ import { cn } from "./utils/cn";
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'tolle-otp-slot',
-  standalone: true,
-  imports: [NgIf],
-  template: `
+    selector: 'tolle-otp-slot',
+    imports: [NgIf],
+    template: `
     <div [class]="computedClass">
       <span class="text-lg font-medium">{{ char || '' }}</span>
       <div *ngIf="isActive && !char" class="pointer-events-none absolute inset-0 flex items-center justify-center">

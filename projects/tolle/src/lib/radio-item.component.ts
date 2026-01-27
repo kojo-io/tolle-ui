@@ -5,10 +5,9 @@ import { RadioService } from './radio-service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'tolle-radio-item',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-radio-item',
+    imports: [CommonModule],
+    template: `
     <div
       (click)="!isEffectiveDisabled && select()"
       [class]="cn(

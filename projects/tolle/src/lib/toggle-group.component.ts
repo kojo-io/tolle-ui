@@ -6,7 +6,6 @@ import { ToggleComponent } from './toggle.component';
 
 @Component({
     selector: 'tolle-toggle-group',
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     providers: [
@@ -135,7 +134,6 @@ export class ToggleGroupComponent implements AfterContentInit, ControlValueAcces
 
 @Component({
     selector: 'tolle-toggle-group-item',
-    standalone: true,
     imports: [CommonModule, ToggleComponent],
     template: `
         <tolle-toggle

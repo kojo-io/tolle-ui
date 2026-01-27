@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-slider-docs',
-    standalone: true,
     imports: [
         CommonModule,
         SliderOverviewComponent,

@@ -4,10 +4,9 @@ import { ContextMenuItem } from '../../../../../../tolle/src/lib/context-menu.se
 import { ContextMenuTriggerDirective } from '../../../../../../tolle/src/lib/context-menu-trigger.directive';
 
 @Component({
-  selector: 'app-basic-context-menu-example',
-  standalone: true,
-  imports: [CommonModule, ContextMenuTriggerDirective],
-  template: `
+    selector: 'app-basic-context-menu-example',
+    imports: [CommonModule, ContextMenuTriggerDirective],
+    template: `
     <div 
       [tolleContextMenuTrigger]="menuItems" 
       (action)="onAction($event)"

@@ -4,30 +4,29 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-accordion-item',
-  standalone: true,
-  imports: [CommonModule],
-  animations: [
-    trigger('expandCollapse', [
-      state('collapsed', style({
-        height: '0px',
-        opacity: '0',
-        overflow: 'hidden',
-        visibility: 'hidden'
-      })),
-      state('expanded', style({
-        height: '*', // "Star" means actual content height
-        opacity: '1',
-        overflow: 'hidden',
-        visibility: 'visible'
-      })),
-      // Use cubic-bezier to match Tailwind/shadcn-ui default ease
-      transition('collapsed <=> expanded', [
-        animate('300ms cubic-bezier(0.87, 0, 0.13, 1)')
-      ])
-    ])
-  ],
-  template: `
+    selector: 'tolle-accordion-item',
+    imports: [CommonModule],
+    animations: [
+        trigger('expandCollapse', [
+            state('collapsed', style({
+                height: '0px',
+                opacity: '0',
+                overflow: 'hidden',
+                visibility: 'hidden'
+            })),
+            state('expanded', style({
+                height: '*', // "Star" means actual content height
+                opacity: '1',
+                overflow: 'hidden',
+                visibility: 'visible'
+            })),
+            // Use cubic-bezier to match Tailwind/shadcn-ui default ease
+            transition('collapsed <=> expanded', [
+                animate('300ms cubic-bezier(0.87, 0, 0.13, 1)')
+            ])
+        ])
+    ],
+    template: `
     <div [class]="cn('flex flex-col border-b border-border', class)">
       <button
         type="button"

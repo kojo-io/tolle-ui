@@ -9,18 +9,17 @@ import { ToastContainerComponent } from '../../../../../../tolle/src/lib/toaster
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
-  selector: 'app-toaster-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    PlaygroundComponent,
-    ButtonComponent,
-    SelectComponent,
-    SelectItemComponent,
-    ToastContainerComponent
-  ],
-  templateUrl: './toaster-interactive.component.html'
+    selector: 'app-toaster-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        PlaygroundComponent,
+        ButtonComponent,
+        SelectComponent,
+        SelectItemComponent,
+        ToastContainerComponent
+    ],
+    templateUrl: './toaster-interactive.component.html'
 })
 export class ToasterInteractiveComponent {
   private toastService = inject(ToastService);

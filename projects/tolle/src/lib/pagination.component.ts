@@ -17,10 +17,9 @@ import {SelectComponent} from './select.component';
 import {SelectItemComponent} from './select-item.component';
 
 @Component({
-  selector: 'tolle-pagination',
-  standalone: true,
-  imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
-  template: `
+    selector: 'tolle-pagination',
+    imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
+    template: `
     <div [class]="cn('flex items-center justify-between px-2 py-4', class)">
 
       <div *ngIf="showCurrentPageInfo" class="text-sm text-muted-foreground">
@@ -87,7 +86,7 @@ import {SelectItemComponent} from './select-item.component';
       </div>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent implements OnInit, OnChanges {
   @Input() class = '';

@@ -5,10 +5,9 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 import { BasicToasterExampleComponent } from '../../../docs-examples/toaster/basic-toaster-example/basic-toaster-example.component';
 
 @Component({
-  selector: 'app-toaster-overview',
-  standalone: true,
-  imports: [AsyncPipe, BaseEditorComponent, BasicToasterExampleComponent],
-  templateUrl: './toaster-overview.component.html'
+    selector: 'app-toaster-overview',
+    imports: [AsyncPipe, BaseEditorComponent, BasicToasterExampleComponent],
+    templateUrl: './toaster-overview.component.html'
 })
 export class ToasterOverviewComponent {
   private sourceCodeService = inject(SourceCodeService);

@@ -4,10 +4,9 @@ import { AccordionItemComponent } from './accordion-item.component';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-accordion',
-  standalone: true,
-  imports: [CommonModule], // No AccordionItemComponent import needed here if projected via ng-content
-  template: `
+    selector: 'tolle-accordion',
+    imports: [CommonModule], // No AccordionItemComponent import needed here if projected via ng-content
+    template: `
     <div [class]="cn('w-full', class)">
       <ng-content></ng-content>
     </div>

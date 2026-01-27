@@ -9,7 +9,6 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 
 @Component({
     selector: 'app-check-box-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

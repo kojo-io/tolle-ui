@@ -8,17 +8,16 @@ import { BasicBreadcrumbComponent } from '../../../docs-examples/breadcrumb/basi
 import { CustomSeparatorBreadcrumbComponent } from '../../../docs-examples/breadcrumb/custom-separator-breadcrumb.component';
 
 @Component({
-  selector: 'app-breadcrumb-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SegmentedComponent,
-    BaseEditorComponent,
-    BasicBreadcrumbComponent,
-    CustomSeparatorBreadcrumbComponent
-  ],
-  templateUrl: './breadcrumb-examples.component.html'
+    selector: 'app-breadcrumb-examples',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SegmentedComponent,
+        BaseEditorComponent,
+        BasicBreadcrumbComponent,
+        CustomSeparatorBreadcrumbComponent
+    ],
+    templateUrl: './breadcrumb-examples.component.html'
 })
 export class BreadcrumbExamplesComponent {
   sourceService = inject(SourceCodeService);

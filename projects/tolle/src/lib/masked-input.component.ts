@@ -7,17 +7,16 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/f
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-masked-input',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MaskedInputComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-masked-input',
+    imports: [CommonModule, FormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => MaskedInputComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div class="flex flex-col gap-1.5 w-full">
       <label
         *ngIf="label"

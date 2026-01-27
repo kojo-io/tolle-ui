@@ -9,18 +9,17 @@ import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.comp
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-date-pick-doc',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    BaseDatePickerComponent,
-    BaseEditorComponent,
-    NgIf,
-    SegmentedComponent,
-    FormsModule
-  ],
-  templateUrl: './date-pick-doc.component.html',
-  styleUrl: './date-pick-doc.component.css'
+    selector: 'app-date-pick-doc',
+    imports: [
+        AsyncPipe,
+        BaseDatePickerComponent,
+        BaseEditorComponent,
+        NgIf,
+        SegmentedComponent,
+        FormsModule
+    ],
+    templateUrl: './date-pick-doc.component.html',
+    styleUrl: './date-pick-doc.component.css'
 })
 export class DatePickDocComponent implements OnInit {
   baseService = inject(BaseService);

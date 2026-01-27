@@ -8,7 +8,6 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
 
 @Component({
     selector: 'app-context-menu-interactive',
-    standalone: true,
     imports: [CommonModule, FormsModule, ContextMenuTriggerDirective, PlaygroundComponent, CheckboxComponent],
     templateUrl: './context-menu-interactive.component.html'
 })

@@ -9,14 +9,12 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-getting-started-docs',
-    standalone: true,
     imports: [
         CommonModule,
         GSIntroductionComponent,
         GSInstallationComponent,
         GSSetupComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './getting-started-docs.component.html'
 })

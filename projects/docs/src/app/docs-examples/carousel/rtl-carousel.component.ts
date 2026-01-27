@@ -11,7 +11,6 @@ import {
 
 @Component({
     selector: 'app-rtl-carousel',
-    standalone: true,
     imports: [
         CommonModule,
         CarouselComponent,

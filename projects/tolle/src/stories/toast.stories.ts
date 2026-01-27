@@ -35,10 +35,9 @@ const HTML_CODE = `
 
 // 2. Define the Wrapper Component
 @Component({
-  selector: 'toast-story-wrapper',
-  standalone: true,
-  imports: [ToastContainerComponent, ButtonComponent],
-  template: `
+    selector: 'toast-story-wrapper',
+    imports: [ToastContainerComponent, ButtonComponent],
+    template: `
     <div class="space-y-4 p-10">
       <h2 class="mb-4 text-lg font-bold">Toast Notifications</h2>
       <div class="flex flex-wrap gap-2">
@@ -81,7 +80,7 @@ const HTML_CODE = `
 
       <tolle-toaster [position]="position" />
     </div>
-  `,
+  `
 })
 class ToastStoryWrapper {
   @Input() position: ToastPosition = 'top-right';

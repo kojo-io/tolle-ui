@@ -8,10 +8,9 @@ import {SelectItemComponent} from '../lib/select-item.component';
 
 // 1. Wrapper to manage dynamic data updates
 @Component({
-  selector: 'pagination-story-wrapper',
-  standalone: true,
-  imports: [CommonModule, PaginationComponent],
-  template: `
+    selector: 'pagination-story-wrapper',
+    imports: [CommonModule, PaginationComponent],
+    template: `
     <div class="p-8 space-y-8 bg-background border rounded-xl">
       <div>
         <h3 class="text-lg font-bold">Data Table Simulation</h3>

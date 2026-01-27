@@ -9,18 +9,17 @@ import {ColumnHidingComponent} from '../../../docs-examples/data-table/column-hi
 import {BaseService} from '../../../shared/base.service';
 
 @Component({
-  selector: 'app-column-hiding-docs',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    BaseEditorComponent,
-    NgIf,
-    SegmentedComponent,
-    FormsModule,
-    ColumnHidingComponent
-  ],
-  templateUrl: './column-hiding-docs.component.html',
-  styleUrl: './column-hiding-docs.component.css'
+    selector: 'app-column-hiding-docs',
+    imports: [
+        AsyncPipe,
+        BaseEditorComponent,
+        NgIf,
+        SegmentedComponent,
+        FormsModule,
+        ColumnHidingComponent
+    ],
+    templateUrl: './column-hiding-docs.component.html',
+    styleUrl: './column-hiding-docs.component.css'
 })
 export class ColumnHidingDocsComponent implements OnInit {
   baseService = inject(BaseService);

@@ -4,17 +4,16 @@ import { cn } from './utils/cn';
 import { ResizablePanelItemComponent } from './resizable-panel-item.component';
 
 @Component({
-  selector: 'tolle-resizable-panel',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-resizable-panel',
+    imports: [CommonModule],
+    template: `
     <div [class]="computedContainerClass">
       <div class="flex" [class.flex-col]="direction === 'vertical'" [class.flex-row]="direction === 'horizontal'">
         <ng-content></ng-content>
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: block;
     }

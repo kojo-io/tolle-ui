@@ -3,10 +3,9 @@ import { cn } from './utils/cn';
 import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'tolle-avatar',
-  standalone: true,
-  imports: [NgIf],
-  template: `
+    selector: 'tolle-avatar',
+    imports: [NgIf],
+    template: `
     <!-- Image Layer -->
     <img *ngIf="src && !hasError"
          [src]="src"

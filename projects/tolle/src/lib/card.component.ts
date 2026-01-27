@@ -3,14 +3,13 @@ import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-card',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-card',
+    imports: [CommonModule],
+    template: `
     <div [class]="cn('rounded-md border border-border text-card-foreground shadow', class)">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class CardComponent { @Input() class = ''; protected cn = cn; }
 

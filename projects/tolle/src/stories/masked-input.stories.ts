@@ -7,10 +7,9 @@ import {MaskedInputComponent} from '../lib/masked-input.component';
 
 // 1. Wrapper Component for Form Logic
 @Component({
-  selector: 'masked-story-wrapper',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MaskedInputComponent],
-  template: `
+    selector: 'masked-story-wrapper',
+    imports: [CommonModule, ReactiveFormsModule, MaskedInputComponent],
+    template: `
     <div class="p-10 space-y-6 max-w-md bg-background border rounded-xl">
       <h3 class="font-bold text-lg">Input Masking Demo</h3>
 

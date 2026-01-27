@@ -10,18 +10,17 @@ import { FormsModule } from '@angular/forms';
 import { YearPickerComponent } from '../../../docs-examples/date-picker/year-picker/year-picker.component';
 
 @Component({
-  selector: 'app-year-pick-doc',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    BaseEditorComponent,
-    NgIf,
-    SegmentedComponent,
-    FormsModule,
-    YearPickerComponent
-  ],
-  templateUrl: './year-pick-doc.component.html',
-  styleUrl: './year-pick-doc.component.css'
+    selector: 'app-year-pick-doc',
+    imports: [
+        AsyncPipe,
+        BaseEditorComponent,
+        NgIf,
+        SegmentedComponent,
+        FormsModule,
+        YearPickerComponent
+    ],
+    templateUrl: './year-pick-doc.component.html',
+    styleUrl: './year-pick-doc.component.css'
 })
 export class YearPickDocComponent implements OnInit {
   baseService = inject(BaseService);

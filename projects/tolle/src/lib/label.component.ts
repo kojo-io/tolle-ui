@@ -4,7 +4,6 @@ import { cn } from './utils/cn';
 
 @Component({
     selector: 'tolle-label',
-    standalone: true,
     imports: [CommonModule],
     template: `
     <label

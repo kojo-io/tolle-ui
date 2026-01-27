@@ -4,7 +4,6 @@ import { SidebarComponent, SidebarGroup } from '../../../../../../tolle/src/lib/
 
 @Component({
     selector: 'app-basic-sidebar-example',
-    standalone: true,
     imports: [CommonModule, SidebarComponent],
     template: `
     <div class="w-full h-[600px] border border-input rounded-lg overflow-hidden flex bg-background">

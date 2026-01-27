@@ -10,7 +10,6 @@ import { BadgeWithIconsComponent } from '../../../docs-examples/badge/badge-with
 
 @Component({
     selector: 'app-badge-examples',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

@@ -14,17 +14,16 @@ import { cn } from './utils/cn';
 export type CalendarMode = 'date' | 'month' | 'year';
 
 @Component({
-  selector: 'tolle-calendar',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CalendarComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-calendar',
+    imports: [CommonModule, FormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CalendarComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div [class]="cn('p-3 border rounded-md bg-background text-popover-foreground shadow-sm inline-block min-w-fit', class)">
       <!-- Header with Navigation -->
       <div class="flex items-center justify-between pt-1 pb-4 gap-2">

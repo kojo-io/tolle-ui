@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-carousel-overview',
-    standalone: true,
     imports: [CommonModule],
     template: `
     <header class="mb-12 border-b border-slate-200 pb-8">

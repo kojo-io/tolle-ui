@@ -9,18 +9,17 @@ import {FormsModule} from '@angular/forms';
 import {BaseDatePickerComponent} from '../../../docs-examples/date-picker/base-date-picker/base-date-picker.component';
 
 @Component({
-  selector: 'app-base-picker',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    BaseEditorComponent,
-    NgIf,
-    SegmentedComponent,
-    FormsModule,
-    BaseDatePickerComponent
-  ],
-  templateUrl: './base-picker.component.html',
-  styleUrl: './base-picker.component.css'
+    selector: 'app-base-picker',
+    imports: [
+        AsyncPipe,
+        BaseEditorComponent,
+        NgIf,
+        SegmentedComponent,
+        FormsModule,
+        BaseDatePickerComponent
+    ],
+    templateUrl: './base-picker.component.html',
+    styleUrl: './base-picker.component.css'
 })
 export class BasePickerComponent implements OnInit {
   baseService = inject(BaseService);

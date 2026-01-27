@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-badge',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-badge',
+    imports: [CommonModule],
+    template: `
     <div [class]="computedClass">
       <ng-content select="[prefix]"></ng-content>
 
@@ -21,7 +20,7 @@ import { cn } from './utils/cn';
         <i class="ri-close-line"></i>
       </button>
     </div>
-  `,
+  `
 })
 export class BadgeComponent {
   @Input() variant: 'default' | 'secondary' | 'outline' | 'destructive' = 'default';

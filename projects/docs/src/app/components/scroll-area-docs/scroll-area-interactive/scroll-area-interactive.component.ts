@@ -7,7 +7,6 @@ import { SeparatorComponent } from '../../../../../../tolle/src/lib/separator.co
 
 @Component({
     selector: 'app-scroll-area-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

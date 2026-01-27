@@ -6,7 +6,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-docs-wrapper',
-    standalone: true,
     imports: [CommonModule, ButtonComponent],
     templateUrl: './docs-wrapper.component.html',
     styleUrl: './docs-wrapper.component.css'
