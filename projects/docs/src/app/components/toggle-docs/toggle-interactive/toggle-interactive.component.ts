@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ToggleComponent } from '../../../../../../tolle/src/lib/toggle.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -9,13 +9,12 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 @Component({
     selector: 'app-toggle-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        ToggleComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent
-    ],
+    FormsModule,
+    ToggleComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>

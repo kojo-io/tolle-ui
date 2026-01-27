@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseService } from '../../../shared/base.service';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
@@ -11,13 +11,12 @@ import { Observable } from 'rxjs';
 @Component({
     selector: 'app-data-table-basic',
     imports: [
-        BaseEditorComponent,
-        NgIf,
-        AsyncPipe,
-        SegmentedComponent,
-        FormsModule,
-        BaseTableComponent
-    ],
+    BaseEditorComponent,
+    AsyncPipe,
+    SegmentedComponent,
+    FormsModule,
+    BaseTableComponent
+],
     templateUrl: './data-table-basic.component.html'
 })
 export class DataTableBasicComponent implements OnInit {

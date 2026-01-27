@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { computePosition, offset, shift, flip, size } from '@floating-ui/dom';
 
 export type ContextMenuItem = {
@@ -27,14 +27,14 @@ export type ContextMenuState = {
   providedIn: 'root'
 })
 export class ContextMenuService {
-  private _state: ContextMenuState = {
+  private _state = signal<ContextMenuState>({
     x: 0,
     y: 0,
     items: [],
     isOpen: false
-  };
+  });
 
-  readonly stateChanged = new EventEmitter<ContextMenuState>();
+  public state = this._state.asReadonly();
 
   open(config: {
     event: MouseEvent;
@@ -47,25 +47,22 @@ export class ContextMenuService {
     // Prevent browser context menu
     event.preventDefault();
 
-    this._state = {
+    this._state.set({
       x: event.clientX,
       y: event.clientY,
       items,
       isOpen: true,
       triggerElement,
       onAction
-    };
-
-    this.stateChanged.emit(this._state);
+    });
   }
 
   close() {
-    this._state = { ...this._state, isOpen: false };
-    this.stateChanged.emit(this._state);
+    this._state.update((s: ContextMenuState) => ({ ...s, isOpen: false }));
   }
 
   async positionMenu(menuElement: HTMLElement) {
-    const state = this._state;
+    const state = this._state();
     if (!state.isOpen || !menuElement) return;
 
     // Create a precise virtual element for the mouse coordinates
@@ -148,7 +145,7 @@ export class ContextMenuService {
   }
 
   performAction(actionId: string) {
-    this._state.onAction?.(actionId);
+    this._state().onAction?.(actionId);
     this.close();
   }
 }

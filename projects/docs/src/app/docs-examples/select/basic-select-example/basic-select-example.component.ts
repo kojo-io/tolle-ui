@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 
 @Component({
     selector: 'app-basic-select-example',
-    imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
+    imports: [FormsModule, SelectComponent, SelectItemComponent],
     template: `
     <div class="w-full max-w-[200px] space-y-4">
       <tolle-select [(ngModel)]="selectedFruit" placeholder="Select a fruit">

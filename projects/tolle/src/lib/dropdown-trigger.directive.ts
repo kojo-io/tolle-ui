@@ -1,4 +1,4 @@
-import { Directive, Input, ElementRef, OnDestroy, HostListener, ViewContainerRef } from '@angular/core';
+import { Directive, input, ElementRef, OnDestroy, HostListener, ViewContainerRef, signal, inject } from '@angular/core';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 import { DropdownMenuComponent } from './dropdown-menu.component';
 
@@ -7,45 +7,50 @@ import { DropdownMenuComponent } from './dropdown-menu.component';
   standalone: true
 })
 export class DropdownTriggerDirective implements OnDestroy {
-  @Input('tolleDropdownTrigger') menu!: DropdownMenuComponent;
+  menu = input.required<DropdownMenuComponent>({ alias: 'tolleDropdownTrigger' });
+
+  private el = inject(ElementRef);
+  private vcr = inject(ViewContainerRef);
 
   private cleanup?: () => void;
-  private isOpen = false;
+  private isOpen = signal(false);
   private menuElement?: HTMLElement;
-
-  constructor(
-    private el: ElementRef,
-    private vcr: ViewContainerRef
-  ) {}
 
   @HostListener('click')
   toggle() {
-    this.isOpen ? this.close() : this.open();
+    this.isOpen() ? this.close() : this.open();
   }
 
   private open() {
-    this.isOpen = true;
+    const template = this.menu().templateRef;
+    if (!template) return;
+
+    this.isOpen.set(true);
 
     // Create the menu view
-    const view = this.vcr.createEmbeddedView(this.menu.templateRef);
+    const view = this.vcr.createEmbeddedView(template);
     this.menuElement = view.rootNodes[0] as HTMLElement;
     document.body.appendChild(this.menuElement);
 
     // Floating UI positioning logic
     this.cleanup = autoUpdate(this.el.nativeElement, this.menuElement, () => {
-      computePosition(this.el.nativeElement, this.menuElement!, {
+      if (!this.menuElement) return;
+
+      computePosition(this.el.nativeElement, this.menuElement, {
         placement: 'bottom-end',
         middleware: [
-          offset(4), // Space between trigger and menu
-          flip(),   // Flip to top if space is tight
-          shift({ padding: 8 }) // Prevent menu from hitting screen edges
+          offset(4),
+          flip(),
+          shift({ padding: 8 })
         ]
       }).then(({ x, y }) => {
-        Object.assign(this.menuElement!.style, {
-          left: `${x}px`,
-          top: `${y}px`,
-          position: 'absolute'
-        });
+        if (this.menuElement) {
+          Object.assign(this.menuElement.style, {
+            left: `${x}px`,
+            top: `${y}px`,
+            position: 'absolute'
+          });
+        }
       });
     });
 
@@ -56,9 +61,10 @@ export class DropdownTriggerDirective implements OnDestroy {
   }
 
   private close() {
-    this.isOpen = false;
+    this.isOpen.set(false);
     this.cleanup?.();
     this.menuElement?.remove();
+    this.menuElement = undefined;
     document.removeEventListener('click', this.outsideClick);
   }
 

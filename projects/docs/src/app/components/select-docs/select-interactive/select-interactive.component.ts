@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
@@ -10,14 +10,13 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 @Component({
     selector: 'app-select-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        SelectComponent,
-        SelectItemComponent,
-        InputComponent,
-        CheckboxComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    SelectComponent,
+    SelectItemComponent,
+    InputComponent,
+    CheckboxComponent,
+    PlaygroundComponent
+],
     templateUrl: './select-interactive.component.html'
 })
 export class SelectInteractiveComponent {

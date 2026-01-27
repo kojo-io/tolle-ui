@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
@@ -10,14 +10,13 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 @Component({
     selector: 'app-switch-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        SwitchComponent,
-        SelectComponent,
-        SelectItemComponent,
-        CheckboxComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    SwitchComponent,
+    SelectComponent,
+    SelectItemComponent,
+    CheckboxComponent,
+    PlaygroundComponent
+],
     templateUrl: './switch-interactive.component.html'
 })
 export class SwitchInteractiveComponent {

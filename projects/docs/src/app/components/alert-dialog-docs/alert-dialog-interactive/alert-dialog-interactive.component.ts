@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import {
   AlertDialogComponent,
@@ -20,21 +20,20 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 @Component({
     selector: 'app-alert-dialog-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        AlertDialogComponent,
-        AlertDialogTriggerComponent,
-        AlertDialogPortalComponent,
-        AlertDialogContentComponent,
-        AlertDialogHeaderComponent,
-        AlertDialogFooterComponent,
-        AlertDialogTitleComponent,
-        AlertDialogDescriptionComponent,
-        AlertDialogActionComponent,
-        AlertDialogCancelComponent,
-        PlaygroundComponent,
-        ButtonComponent
-    ],
+    FormsModule,
+    AlertDialogComponent,
+    AlertDialogTriggerComponent,
+    AlertDialogPortalComponent,
+    AlertDialogContentComponent,
+    AlertDialogHeaderComponent,
+    AlertDialogFooterComponent,
+    AlertDialogTitleComponent,
+    AlertDialogDescriptionComponent,
+    AlertDialogActionComponent,
+    AlertDialogCancelComponent,
+    PlaygroundComponent,
+    ButtonComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>

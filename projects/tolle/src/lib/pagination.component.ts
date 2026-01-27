@@ -1,218 +1,180 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  EventEmitter,
+  input,
+  output,
+  computed,
   inject,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
+  ChangeDetectorRef
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { cn } from './utils/cn';
-import {FormsModule} from '@angular/forms';
-import {SelectComponent} from './select.component';
-import {SelectItemComponent} from './select-item.component';
+import { FormsModule } from '@angular/forms';
+import { SelectComponent } from './select.component';
+import { SelectItemComponent } from './select-item.component';
 
 @Component({
-    selector: 'tolle-pagination',
-    imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
-    template: `
-    <div [class]="cn('flex items-center justify-between px-2 py-4', class)">
-
-      <div *ngIf="showCurrentPageInfo" class="text-sm text-muted-foreground">
-        <ng-container *ngIf="currentPageInfoTemplate; else defaultReport">
-          {{ pageReport }}
-        </ng-container>
-        <ng-template #defaultReport>
-          Showing {{ first }} to {{ last }} of {{ totalRecords }} entries
-        </ng-template>
-      </div>
-
-      <div class="flex items-center space-x-6 lg:space-x-8">
-
-        <div *ngIf="showPageOptions" class="flex items-center space-x-2">
-          <p class="text-sm font-medium">Rows per page</p>
-          <tolle-select
-            class="w-[70px]"
-            size="sm"
-            [ngModel]="currentPageSize"
-            (ngModelChange)="sizeChange($event)"
-          >
-            <tolle-select-item *ngFor="let opt of pageSizeOptions" [value]="opt">
-              {{ opt }}
-            </tolle-select-item>
-          </tolle-select>
+  selector: 'tolle-pagination',
+  standalone: true,
+  imports: [FormsModule, SelectComponent, SelectItemComponent],
+  template: `
+    <div [class]="cn('flex items-center justify-between px-2 py-4', class())">
+    
+      @if (showCurrentPageInfo()) {
+        <div class="text-sm text-muted-foreground">
+          @if (currentPageInfoTemplate()) {
+            {{ pageReport() }}
+          } @else {
+            Showing {{ first() }} to {{ last() }} of {{ totalRecords() }} entries
+          }
         </div>
-
-        <div class="flex items-center space-x-2">
-          <div *ngIf="!showPageLinks" class="flex w-[100px] items-center justify-center text-sm font-medium">
-            Page {{ currentPage }} of {{ totalPages }}
+      }
+    
+      <div class="flex items-center space-x-6 lg:space-x-8">
+    
+        @if (showPageOptions()) {
+          <div class="flex items-center space-x-2">
+            <p class="text-sm font-medium">Rows per page</p>
+            <tolle-select
+              class="w-[70px]"
+              size="sm"
+              [ngModel]="currentPageSize()"
+              (ngModelChange)="sizeChange($event)"
+              >
+              @for (opt of pageSizeOptions(); track opt) {
+                <tolle-select-item [value]="opt">
+                  {{ opt }}
+                </tolle-select-item>
+              }
+            </tolle-select>
           </div>
-
-          <div *ngIf="showPageLinks" class="flex items-center space-x-1">
-            <button
-              (click)="previousPage()"
-              [disabled]="currentPage === 1"
-              [class]="navBtnClass"
-            >
-              <i class="ri-arrow-left-s-line"></i>
-            </button>
-
-            <button
-              *ngFor="let page of displayPageIndex"
-              (click)="selectPage(page)"
+        }
+    
+        <div class="flex items-center space-x-2">
+          @if (!showPageLinks()) {
+            <div class="flex w-[100px] items-center justify-center text-sm font-medium">
+              Page {{ currentPage() }} of {{ totalPages() }}
+            </div>
+          }
+    
+          @if (showPageLinks()) {
+            <div class="flex items-center space-x-1">
+              <button
+                (click)="previousPage()"
+                [disabled]="currentPage() === 1"
+                [class]="navBtnClass"
+                >
+                <i class="ri-arrow-left-s-line"></i>
+              </button>
+              @for (page of displayPageIndex(); track page) {
+                <button
+                  (click)="selectPage(page)"
               [class]="cn(
                 'h-8 w-8 text-sm rounded-md flex items-center justify-center transition-colors',
-                currentPage === page
+                currentPage() === page
                   ? 'bg-primary text-primary-foreground font-medium'
                   : 'hover:bg-accent hover:text-accent-foreground'
               )"
-            >
-              {{ page }}
-            </button>
-
-            <button
-              (click)="nextPage()"
-              [disabled]="currentPage === totalPages || totalPages === 0"
-              [class]="navBtnClass"
-            >
-              <i class="ri-arrow-right-s-line"></i>
-            </button>
-          </div>
+                  >
+                  {{ page }}
+                </button>
+              }
+              <button
+                (click)="nextPage()"
+                [disabled]="currentPage() === totalPages() || totalPages() === 0"
+                [class]="navBtnClass"
+                >
+                <i class="ri-arrow-right-s-line"></i>
+              </button>
+            </div>
+          }
         </div>
       </div>
     </div>
-  `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+    `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PaginationComponent implements OnInit, OnChanges {
-  @Input() class = '';
-  @Input() showPageLinks = true;
-  @Input() showPageOptions = true;
-  @Input() showCurrentPageInfo = true;
-  @Input() currentPageInfoTemplate?: string;
+export class PaginationComponent {
+  class = input('');
+  showPageLinks = input(true);
+  showPageOptions = input(true);
+  showCurrentPageInfo = input(true);
+  currentPageInfoTemplate = input<string | undefined>();
 
-  @Input() totalRecords = 0;
-  @Input() currentPageSize = 10;
-  @Input() currentPage = 1;
-  @Input() pageSizeOptions: number[] = [10, 20, 30, 50];
+  totalRecords = input(0);
+  currentPageSize = input(10);
+  currentPage = input(1);
+  pageSizeOptions = input<number[]>([10, 20, 30, 50]);
 
-  @Output() onPageNumberChange = new EventEmitter<number>();
-  @Output() onPageSizeChange = new EventEmitter<number>();
+  onPageNumberChange = output<number>();
+  onPageSizeChange = output<number>();
 
-  totalPages = 0;
-  first = 0;
-  last = 0;
-  displayPageIndex: number[] = [];
-  pageReport = '';
-
-  private initialized = false;
-  private cd = inject(ChangeDetectorRef);
   protected cn = cn;
-
   navBtnClass = 'h-8 w-8 p-0 flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed';
 
-  ngOnInit(): void {
-    if (this.pageSizeOptions.length === 0) {
-      this.pageSizeOptions = [10, 20, 30, 50];
-    }
-    this.initializePagination();
-  }
+  totalPages = computed(() => Math.ceil(this.totalRecords() / this.currentPageSize()) || 0);
 
-  ngOnChanges(changes: SimpleChanges): void {
-    // Only re-init if meaningful data changes
-    if (changes['totalRecords'] || changes['currentPage'] || changes['currentPageSize']) {
-      this.initializePagination();
-    }
-  }
+  first = computed(() => this.totalRecords() === 0 ? 0 : (this.currentPage() - 1) * this.currentPageSize() + 1);
+  last = computed(() => Math.min(this.totalRecords(), this.currentPage() * this.currentPageSize()));
 
-  private initializePagination(): void {
-    this.calcPagination();
-    if (!this.initialized) {
-      this.initialized = true;
+  displayPageIndex = computed(() => {
+    const total = this.totalPages();
+    const current = this.currentPage();
+    const pages: number[] = Array.from({ length: total }, (_, i) => i + 1);
+
+    if (total <= 5) {
+      return pages;
+    } else {
+      let start = Math.max(0, current - 3);
+      let end = start + 5;
+
+      if (end > total) {
+        end = total;
+        start = end - 5;
+      }
+      return pages.slice(start, end);
     }
-    this.cd.detectChanges();
-  }
+  });
+
+  pageReport = computed(() => {
+    const template = this.currentPageInfoTemplate();
+    if (!template) return '';
+
+    return template.replace(
+      /{first}|{last}|{totalRecords}|{currentPage}|{currentPageSize}|{totalPages}/g,
+      (match) => {
+        switch (match) {
+          case '{first}': return `${this.first()}`;
+          case '{last}': return `${this.last()}`;
+          case '{totalRecords}': return `${this.totalRecords()}`;
+          case '{totalPages}': return `${this.totalPages()}`;
+          case '{currentPage}': return `${this.currentPage()}`;
+          case '{currentPageSize}': return `${this.currentPageSize()}`;
+          default: return match;
+        }
+      }
+    );
+  });
 
   nextPage() {
-    if (this.totalPages > this.currentPage) {
-      this.currentPage++;
-      this.emitChange();
+    if (this.totalPages() > this.currentPage()) {
+      this.onPageNumberChange.emit(this.currentPage() + 1);
     }
   }
 
   previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.emitChange();
+    if (this.currentPage() > 1) {
+      this.onPageNumberChange.emit(this.currentPage() - 1);
     }
   }
 
   selectPage(page: number) {
-    if (this.currentPage === page) return;
-    this.currentPage = page;
-    this.emitChange();
+    if (this.currentPage() === page) return;
+    this.onPageNumberChange.emit(page);
   }
 
   sizeChange(size: number) {
-    this.currentPageSize = size;
-    this.currentPage = 1; // Reset to page 1 on size change
-    this.emitChange();
-  }
-
-  private emitChange(): void {
-    this.calcPagination();
-    this.onPageNumberChange.emit(this.currentPage);
-    this.onPageSizeChange.emit(this.currentPageSize);
-    this.cd.detectChanges();
-  }
-
-  private calcPagination(): void {
-    this.totalPages = Math.ceil(this.totalRecords / this.currentPageSize) || 0;
-
-    // Bounds check
-    if (this.currentPage > this.totalPages && this.totalPages > 0) {
-      this.currentPage = this.totalPages;
-    }
-
-    this.first = this.totalRecords === 0 ? 0 : (this.currentPage - 1) * this.currentPageSize + 1;
-    this.last = Math.min(this.totalRecords, this.currentPage * this.currentPageSize);
-
-    // Calculate Sliding Window for Page Numbers (Max 5 visible)
-    const pages: number[] = Array.from({ length: this.totalPages }, (_, i) => i + 1);
-
-    if (this.totalPages <= 5) {
-      this.displayPageIndex = pages;
-    } else {
-      let start = Math.max(0, this.currentPage - 3);
-      let end = start + 5;
-
-      if (end > this.totalPages) {
-        end = this.totalPages;
-        start = end - 5;
-      }
-      this.displayPageIndex = pages.slice(start, end);
-    }
-
-    // Template Parsing
-    if (this.currentPageInfoTemplate) {
-      this.pageReport = this.currentPageInfoTemplate.replace(
-        /{first}|{last}|{totalRecords}|{currentPage}|{currentPageSize}|{totalPages}/g,
-        (match) => {
-          switch (match) {
-            case '{first}': return `${this.first}`;
-            case '{last}': return `${this.last}`;
-            case '{totalRecords}': return `${this.totalRecords}`;
-            case '{totalPages}': return `${this.totalPages}`;
-            case '{currentPage}': return `${this.currentPage}`;
-            case '{currentPageSize}': return `${this.currentPageSize}`;
-            default: return match;
-          }
-        }
-      );
-    }
+    this.onPageSizeChange.emit(size);
+    this.onPageNumberChange.emit(1); // Reset to page 1 on size change
   }
 }

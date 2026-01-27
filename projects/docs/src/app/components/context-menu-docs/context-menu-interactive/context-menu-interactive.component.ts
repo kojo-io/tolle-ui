@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ContextMenuItem } from '../../../../../../tolle/src/lib/context-menu.service';
 import { ContextMenuTriggerDirective } from '../../../../../../tolle/src/lib/context-menu-trigger.directive';
@@ -8,7 +8,7 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
 
 @Component({
     selector: 'app-context-menu-interactive',
-    imports: [CommonModule, FormsModule, ContextMenuTriggerDirective, PlaygroundComponent, CheckboxComponent],
+    imports: [FormsModule, ContextMenuTriggerDirective, PlaygroundComponent, CheckboxComponent],
     templateUrl: './context-menu-interactive.component.html'
 })
 export class ContextMenuInteractiveComponent {

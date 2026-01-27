@@ -7,7 +7,7 @@ import {ButtonComponent} from '../lib/button.component';
 
 @Component({
     selector: 'sidebar-story-host',
-    imports: [CommonModule, SidebarComponent, ButtonComponent, RouterModule],
+    imports: [SidebarComponent, ButtonComponent, RouterModule],
     template: `
     <!-- We assume Remix Icon CSS is loaded globally -->
     <div class="flex h-[500px] w-full overflow-hidden border rounded-xl bg-muted/10 shadow-2xl">

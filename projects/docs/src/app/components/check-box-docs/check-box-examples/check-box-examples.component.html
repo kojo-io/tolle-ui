@@ -1,56 +1,68 @@
 <section class="mb-16" id="examples">
-    <h2 class="text-2xl font-bold mb-6 text-foreground/90">Examples</h2>
+  <h2 class="text-2xl font-bold mb-6 text-foreground/90">Examples</h2>
 
-    <div class="space-y-12">
-        <!-- Basic -->
-        <div id="basic">
-            <h3 class="text-xl font-semibold mb-4 text-foreground/80">Basic</h3>
-            <p class="text-muted-foreground mb-4">A simple checkbox with a label.</p>
-            <div class="w-full md:w-1/4 mb-4">
-                <tolle-segment [items]="viewOptions" [(ngModel)]="basicView" />
-            </div>
-            <div *ngIf="basicView === 'preview'"
-                class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-                <app-basic-checkbox />
-            </div>
-            <div *ngIf="basicView === 'code'"
-                class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-                <app-base-editor [code]="basicCode" language="typescript" />
-            </div>
+  <div class="space-y-12">
+    <!-- Basic -->
+    <div id="basic">
+      <h3 class="text-xl font-semibold mb-4 text-foreground/80">Basic</h3>
+      <p class="text-muted-foreground mb-4">A simple checkbox with a label.</p>
+      <div class="w-full md:w-1/4 mb-4">
+        <tolle-segment [items]="viewOptions" [(ngModel)]="basicView" />
+      </div>
+      @if (basicView === 'preview') {
+        <div
+          class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+          <app-basic-checkbox />
         </div>
-
-        <!-- With Description -->
-        <div id="with-description">
-            <h3 class="text-xl font-semibold mb-4 text-foreground/80">With Description</h3>
-            <p class="text-muted-foreground mb-4">Checkbox with a label and a supporting description.</p>
-            <div class="w-full md:w-1/4 mb-4">
-                <tolle-segment [items]="viewOptions" [(ngModel)]="descriptionView" />
-            </div>
-            <div *ngIf="descriptionView === 'preview'"
-                class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-                <app-checkbox-with-description />
-            </div>
-            <div *ngIf="descriptionView === 'code'"
-                class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-                <app-base-editor [code]="descriptionCode" language="typescript" />
-            </div>
+      }
+      @if (basicView === 'code') {
+        <div
+          class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+          <app-base-editor [code]="basicCode" language="typescript" />
         </div>
-
-        <!-- Disabled -->
-        <div id="disabled">
-            <h3 class="text-xl font-semibold mb-4 text-foreground/80">Disabled</h3>
-            <p class="text-muted-foreground mb-4">A checkbox in a disabled state.</p>
-            <div class="w-full md:w-1/4 mb-4">
-                <tolle-segment [items]="viewOptions" [(ngModel)]="disabledView" />
-            </div>
-            <div *ngIf="disabledView === 'preview'"
-                class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-                <app-checkbox-disabled />
-            </div>
-            <div *ngIf="disabledView === 'code'"
-                class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-                <app-base-editor [code]="disabledCode" language="typescript" />
-            </div>
-        </div>
+      }
     </div>
+
+    <!-- With Description -->
+    <div id="with-description">
+      <h3 class="text-xl font-semibold mb-4 text-foreground/80">With Description</h3>
+      <p class="text-muted-foreground mb-4">Checkbox with a label and a supporting description.</p>
+      <div class="w-full md:w-1/4 mb-4">
+        <tolle-segment [items]="viewOptions" [(ngModel)]="descriptionView" />
+      </div>
+      @if (descriptionView === 'preview') {
+        <div
+          class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+          <app-checkbox-with-description />
+        </div>
+      }
+      @if (descriptionView === 'code') {
+        <div
+          class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+          <app-base-editor [code]="descriptionCode" language="typescript" />
+        </div>
+      }
+    </div>
+
+    <!-- Disabled -->
+    <div id="disabled">
+      <h3 class="text-xl font-semibold mb-4 text-foreground/80">Disabled</h3>
+      <p class="text-muted-foreground mb-4">A checkbox in a disabled state.</p>
+      <div class="w-full md:w-1/4 mb-4">
+        <tolle-segment [items]="viewOptions" [(ngModel)]="disabledView" />
+      </div>
+      @if (disabledView === 'preview') {
+        <div
+          class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+          <app-checkbox-disabled />
+        </div>
+      }
+      @if (disabledView === 'code') {
+        <div
+          class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+          <app-base-editor [code]="disabledCode" language="typescript" />
+        </div>
+      }
+    </div>
+  </div>
 </section>

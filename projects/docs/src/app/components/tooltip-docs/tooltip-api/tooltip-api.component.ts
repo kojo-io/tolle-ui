@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 
 @Component({
     selector: 'app-tooltip-api',
-    imports: [CommonModule, PropTableComponent],
+    imports: [PropTableComponent],
     templateUrl: './tooltip-api.component.html'
 })
 export class TooltipApiComponent {

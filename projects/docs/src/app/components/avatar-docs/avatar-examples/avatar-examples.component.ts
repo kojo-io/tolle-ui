@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -11,15 +11,14 @@ import { AvatarFallbackExampleComponent } from '../../../docs-examples/avatar/av
 @Component({
     selector: 'app-avatar-examples',
     imports: [
-        CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
-        BasicAvatarComponent,
-        AvatarSizesComponent,
-        AvatarShapesComponent,
-        AvatarFallbackExampleComponent
-    ],
+    FormsModule,
+    SegmentedComponent,
+    BaseEditorComponent,
+    BasicAvatarComponent,
+    AvatarSizesComponent,
+    AvatarShapesComponent,
+    AvatarFallbackExampleComponent
+],
     templateUrl: './avatar-examples.component.html'
 })
 export class AvatarExamplesComponent {

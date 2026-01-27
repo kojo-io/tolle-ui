@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MaskedInputComponent } from '../../../../../../tolle/src/lib/masked-input.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
@@ -11,15 +11,14 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 @Component({
     selector: 'app-masked-input-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        MaskedInputComponent,
-        InputComponent,
-        CheckboxComponent,
-        SelectComponent,
-        SelectItemComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    MaskedInputComponent,
+    InputComponent,
+    CheckboxComponent,
+    SelectComponent,
+    SelectItemComponent,
+    PlaygroundComponent
+],
     templateUrl: './masked-input-interactive.component.html'
 })
 export class MaskedInputInteractiveComponent {

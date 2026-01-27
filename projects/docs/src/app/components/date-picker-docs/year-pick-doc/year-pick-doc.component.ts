@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { BaseService } from '../../../shared/base.service';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { Observable } from 'rxjs';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
 import { MonthPickerComponent } from '../../../docs-examples/date-picker/month-picker/month-picker.component';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
@@ -12,13 +12,12 @@ import { YearPickerComponent } from '../../../docs-examples/date-picker/year-pic
 @Component({
     selector: 'app-year-pick-doc',
     imports: [
-        AsyncPipe,
-        BaseEditorComponent,
-        NgIf,
-        SegmentedComponent,
-        FormsModule,
-        YearPickerComponent
-    ],
+    AsyncPipe,
+    BaseEditorComponent,
+    SegmentedComponent,
+    FormsModule,
+    YearPickerComponent
+],
     templateUrl: './year-pick-doc.component.html',
     styleUrl: './year-pick-doc.component.css'
 })

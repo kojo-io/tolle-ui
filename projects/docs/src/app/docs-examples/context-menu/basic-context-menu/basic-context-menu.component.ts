@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ContextMenuItem } from '../../../../../../tolle/src/lib/context-menu.service';
 import { ContextMenuTriggerDirective } from '../../../../../../tolle/src/lib/context-menu-trigger.directive';
 
 @Component({
     selector: 'app-basic-context-menu-example',
-    imports: [CommonModule, ContextMenuTriggerDirective],
+    imports: [ContextMenuTriggerDirective],
     template: `
     <div 
       [tolleContextMenuTrigger]="menuItems" 

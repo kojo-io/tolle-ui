@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { AspectRatioComponent } from '../../../../../../tolle/src/lib/aspect-ratio.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
     selector: 'app-aspect-ratio-interactive',
-    imports: [CommonModule, FormsModule, AspectRatioComponent, PlaygroundComponent],
+    imports: [FormsModule, AspectRatioComponent, PlaygroundComponent],
     templateUrl: './aspect-ratio-interactive.component.html'
 })
 export class AspectRatioInteractiveComponent {

@@ -5,17 +5,16 @@ import { SeparatorOverviewComponent } from './separator-overview/separator-overv
 import { SeparatorInteractiveComponent } from './separator-interactive/separator-interactive.component';
 import { SeparatorApiComponent } from './separator-api/separator-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-separator-docs',
     imports: [
-        CommonModule,
-        SeparatorOverviewComponent,
-        SeparatorInteractiveComponent,
-        SeparatorApiComponent,
-        DocsWrapperComponent
-    ],
+    SeparatorOverviewComponent,
+    SeparatorInteractiveComponent,
+    SeparatorApiComponent,
+    DocsWrapperComponent
+],
     templateUrl: './separator-docs.component.html'
 })
 export class SeparatorDocsComponent implements OnInit {

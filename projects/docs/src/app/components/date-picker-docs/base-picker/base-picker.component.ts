@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {BaseService} from '../../../shared/base.service';
 import {SourceCodeService} from '../../../shared/source-code.service';
 import {Observable} from 'rxjs';
-import {AsyncPipe, NgIf} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {BaseEditorComponent} from '../../../shared/base-editor/base-editor.component';
 import {SegmentedComponent} from '../../../../../../tolle/src/lib/segment.component';
 import {FormsModule} from '@angular/forms';
@@ -11,13 +11,12 @@ import {BaseDatePickerComponent} from '../../../docs-examples/date-picker/base-d
 @Component({
     selector: 'app-base-picker',
     imports: [
-        AsyncPipe,
-        BaseEditorComponent,
-        NgIf,
-        SegmentedComponent,
-        FormsModule,
-        BaseDatePickerComponent
-    ],
+    AsyncPipe,
+    BaseEditorComponent,
+    SegmentedComponent,
+    FormsModule,
+    BaseDatePickerComponent
+],
     templateUrl: './base-picker.component.html',
     styleUrl: './base-picker.component.css'
 })

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PaginationComponent } from '../../../../../../tolle/src/lib/pagination.component';
 
 @Component({
     selector: 'app-basic-pagination-example',
-    imports: [CommonModule, PaginationComponent],
+    imports: [PaginationComponent],
     template: `
     <div class="w-full flex flex-col gap-4">
       <tolle-pagination

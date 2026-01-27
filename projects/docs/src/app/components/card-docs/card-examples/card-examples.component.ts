@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -11,18 +11,17 @@ import { FormCardComponent } from '../../../docs-examples/card/form-card.compone
 @Component({
     selector: 'app-card-examples',
     imports: [
-        CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
-        BasicCardComponent,
-        FullCardComponent,
-        FormCardComponent
-    ],
+    FormsModule,
+    SegmentedComponent,
+    BaseEditorComponent,
+    BasicCardComponent,
+    FullCardComponent,
+    FormCardComponent
+],
     template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
-
+    
       <div class="space-y-12">
         <div id="basic">
           <h3 class="text-xl font-semibold mb-4">Basic</h3>
@@ -30,44 +29,56 @@ import { FormCardComponent } from '../../../docs-examples/card/form-card.compone
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
           </div>
-          <div *ngIf="basicTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-basic-card />
-          </div>
-          <div *ngIf="basicTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="basicCode" language="typescript" />
-          </div>
+          @if (basicTab === 'preview') {
+            <div class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+              <app-basic-card />
+            </div>
+          }
+          @if (basicTab === 'code') {
+            <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+              <app-base-editor [code]="basicCode" language="typescript" />
+            </div>
+          }
         </div>
-
+    
         <div id="full">
           <h3 class="text-xl font-semibold mb-4">Full Card</h3>
           <p class="text-muted-foreground mb-4">A complete card using header, content, and footer sub-components.</p>
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="fullTab" />
           </div>
-          <div *ngIf="fullTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-full-card />
-          </div>
-          <div *ngIf="fullTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="fullCode" language="typescript" />
-          </div>
+          @if (fullTab === 'preview') {
+            <div class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+              <app-full-card />
+            </div>
+          }
+          @if (fullTab === 'code') {
+            <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+              <app-base-editor [code]="fullCode" language="typescript" />
+            </div>
+          }
         </div>
-
+    
         <div id="form">
           <h3 class="text-xl font-semibold mb-4">Form Card</h3>
           <p class="text-muted-foreground mb-4">A complex card containing input fields and mixed content.</p>
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="formTab" />
           </div>
-          <div *ngIf="formTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-form-card />
-          </div>
-          <div *ngIf="formTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="formCode" language="typescript" />
-          </div>
+          @if (formTab === 'preview') {
+            <div class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+              <app-form-card />
+            </div>
+          }
+          @if (formTab === 'code') {
+            <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+              <app-base-editor [code]="formCode" language="typescript" />
+            </div>
+          }
         </div>
       </div>
     </section>
-  `
+    `
 })
 export class CardExamplesComponent {
   sourceService = inject(SourceCodeService);

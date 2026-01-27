@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PopoverComponent } from '../../../../../../tolle/src/lib/popover.component';
 import { PopoverContentComponent } from '../../../../../../tolle/src/lib/popover-content.component';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
     selector: 'app-basic-popover-example',
-    imports: [CommonModule, PopoverComponent, PopoverContentComponent, ButtonComponent],
+    imports: [PopoverComponent, PopoverContentComponent, ButtonComponent],
     template: `
     <div class="flex justify-center p-10">
       <tolle-popover placement="bottom">

@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, computed } from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -37,45 +37,48 @@ const buttonVariants = cva(
 export type ButtonProps = VariantProps<typeof buttonVariants>;
 
 @Component({
-    selector: 'tolle-button',
-    imports: [CommonModule],
-    template: `
+  selector: 'tolle-button',
+  standalone: true,
+  imports: [],
+  template: `
     <button
-      [class]="computedClass"
-      [disabled]="disabled || busy"
-      [attr.aria-busy]="busy"
-    >
-      <div *ngIf="busy" class="absolute inset-0 flex items-center justify-center">
-        <svg class="animate-spin h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-      </div>
-
-      <span class="flex items-center justify-center w-full h-full pointer-events-none" [class.invisible]="busy">
+      [class]="computedClass()"
+      [disabled]="disabled() || busy()"
+      [attr.aria-busy]="busy()"
+      >
+      @if (busy()) {
+        <div class="absolute inset-0 flex items-center justify-center">
+          <svg class="animate-spin h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+        </div>
+      }
+    
+      <span class="flex items-center justify-center w-full h-full pointer-events-none" [class.invisible]="busy()">
         <ng-content></ng-content>
       </span>
     </button>
-  `,
-    host: {
-        'class': 'tolle-button-wrapper inline-block align-middle'
-    }
+    `,
+  host: {
+    'class': 'tolle-button-wrapper inline-block align-middle'
+  }
 })
 export class ButtonComponent {
-  @Input() class: string = '';
-  @Input() variant: ButtonProps['variant'] = 'default';
-  @Input() size: ButtonProps['size'] = 'default';
-  @Input() disabled: boolean = false;
-  @Input() busy: boolean = false;
+  class = input<string>('');
+  variant = input<ButtonProps['variant']>('default');
+  size = input<ButtonProps['size']>('default');
+  disabled = input<boolean>(false);
+  busy = input<boolean>(false);
 
-  get computedClass() {
+  computedClass = computed(() => {
     return cn(
       buttonVariants({
-        variant: this.variant,
-        size: this.size,
-        busy: this.busy
+        variant: this.variant(),
+        size: this.size(),
+        busy: this.busy()
       }),
-      this.class
+      this.class()
     );
-  }
+  });
 }

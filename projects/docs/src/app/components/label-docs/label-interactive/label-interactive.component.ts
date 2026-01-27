@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -8,12 +8,11 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 @Component({
     selector: 'app-label-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        LabelComponent,
-        PlaygroundComponent,
-        InputComponent
-    ],
+    FormsModule,
+    LabelComponent,
+    PlaygroundComponent,
+    InputComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>

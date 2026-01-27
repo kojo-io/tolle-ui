@@ -1,18 +1,19 @@
-import { Component, Input, Output, EventEmitter, inject, TemplateRef, ViewChild, ViewContainerRef, OnDestroy, ContentChild, forwardRef, ElementRef, AfterContentInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, output, inject, TemplateRef, viewChild, ViewContainerRef, OnDestroy, contentChild, forwardRef, ElementRef, computed } from '@angular/core';
+
 import { Overlay, OverlayRef, OverlayConfig, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-sheet',
-    imports: [CommonModule],
-    template: `<ng-content></ng-content>`
+  selector: 'tolle-sheet',
+  standalone: true,
+  imports: [],
+  template: `<ng-content></ng-content>`
 })
-export class SheetComponent {
-  @Input() isOpen = false;
-  @Input() hasBackdrop = true;
-  @Output() isOpenChange = new EventEmitter<boolean>();
+export class SheetComponent implements OnDestroy {
+  isOpen = input(false);
+  hasBackdrop = input(true);
+  isOpenChange = output<boolean>();
 
   private overlay = inject(Overlay);
   private viewContainerRef = inject(ViewContainerRef);
@@ -20,38 +21,37 @@ export class SheetComponent {
 
   private overlayRef?: OverlayRef;
 
-  @ContentChild(forwardRef(() => SheetContentComponent)) contentComponent?: any;
+  contentComponent = contentChild(forwardRef(() => SheetContentComponent));
 
   open() {
-    if (this.isOpen) return;
-    this.isOpen = true;
+    if (this.isOpen()) return;
     this.isOpenChange.emit(true);
     this.show();
   }
 
   close() {
-    if (!this.isOpen) return;
-    this.isOpen = false;
+    if (!this.isOpen()) return;
     this.isOpenChange.emit(false);
     this.hide();
   }
 
   private show() {
-    if (this.overlayRef || !this.contentComponent?.contentTemplate) return;
+    const content = this.contentComponent();
+    if (this.overlayRef || !content?.contentTemplate) return;
 
     const overlayConfig = new OverlayConfig({
-      hasBackdrop: this.hasBackdrop,
+      hasBackdrop: this.hasBackdrop(),
       backdropClass: 'tolle-modal-backdrop',
       scrollStrategy: this.scrollStrategy.block(),
-      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically() // This centers key, but sheet is fixed via classes
+      positionStrategy: this.overlay.position().global().centerHorizontally().centerVertically()
     });
 
     this.overlayRef = this.overlay.create(overlayConfig);
 
-    const portal = new TemplatePortal(this.contentComponent.contentTemplate, this.viewContainerRef);
+    const portal = new TemplatePortal(content.contentTemplate, this.viewContainerRef);
     this.overlayRef.attach(portal);
 
-    if (this.hasBackdrop) {
+    if (this.hasBackdrop()) {
       this.overlayRef.backdropClick().subscribe(() => this.close());
     }
   }
@@ -69,7 +69,6 @@ export class SheetComponent {
   }
 
   ngOnDestroy() {
-    // Immediate cleanup on destroy
     if (this.overlayRef) {
       this.overlayRef.dispose();
     }
@@ -77,13 +76,14 @@ export class SheetComponent {
 }
 
 @Component({
-    selector: 'tolle-sheet-trigger',
-    imports: [CommonModule],
-    template: `<ng-content></ng-content>`,
-    host: {
-        '(click)': 'onClick()',
-        'class': 'inline-block'
-    }
+  selector: 'tolle-sheet-trigger',
+  standalone: true,
+  imports: [],
+  template: `<ng-content></ng-content>`,
+  host: {
+    '(click)': 'onClick()',
+    'class': 'inline-block'
+  }
 })
 export class SheetTriggerComponent {
   private sheet = inject(SheetComponent);
@@ -94,13 +94,14 @@ export class SheetTriggerComponent {
 }
 
 @Component({
-    selector: 'tolle-sheet-content',
-    imports: [CommonModule],
-    template: `
+  selector: 'tolle-sheet-content',
+  standalone: true,
+  imports: [],
+  template: `
     <ng-template #sheetContent>
       <div 
-        [class]="computedClass" 
-        [attr.data-state]="sheet.isOpen ? 'open' : 'closed'"
+        [class]="computedClass()" 
+        [attr.data-state]="sheet.isOpen() ? 'open' : 'closed'"
         (mousedown)="$event.stopPropagation()">
         <button 
           (click)="close()" 
@@ -115,11 +116,11 @@ export class SheetTriggerComponent {
   `
 })
 export class SheetContentComponent {
-  @Input() side: 'top' | 'bottom' | 'left' | 'right' = 'right';
-  @Input() rounded: boolean = false;
-  @Input() class: string = '';
+  side = input<'top' | 'bottom' | 'left' | 'right'>('right');
+  rounded = input(false);
+  class = input('');
 
-  @ViewChild('sheetContent', { static: true }) contentTemplate!: TemplateRef<any>;
+  contentTemplate = viewChild.required<TemplateRef<any>>('sheetContent');
 
   public sheet = inject(SheetComponent);
 
@@ -127,28 +128,30 @@ export class SheetContentComponent {
     this.sheet.close();
   }
 
-  get computedClass() {
-    const sideClasses = {
+  computedClass = computed(() => {
+    const sideMap = {
       top: "inset-x-0 top-0 border-b data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top",
       bottom: "inset-x-0 bottom-0 border-t data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom",
       left: "inset-y-0 left-0 h-full w-3/4 border-r data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm",
       right: "inset-y-0 right-0 h-full w-3/4  border-l data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm",
     };
 
-    const roundingClasses = {
+    const roundingMap = {
       top: "rounded-b-2xl",
       bottom: "rounded-t-2xl",
       left: "rounded-r-2xl",
       right: "rounded-l-2xl",
     };
 
+    const currentSide = this.side();
+
     return cn(
       "fixed z-50 gap-4 bg-background p-6 shadow-lg transition ease-in-out data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:duration-500 data-[state=closed]:duration-300",
-      sideClasses[this.side],
-      this.rounded && roundingClasses[this.side],
-      this.class
+      sideMap[currentSide as keyof typeof sideMap],
+      this.rounded() && roundingMap[currentSide as keyof typeof roundingMap],
+      this.class()
     );
-  }
+  });
 }
 
 @Component({

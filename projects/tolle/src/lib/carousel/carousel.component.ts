@@ -1,43 +1,37 @@
 import {
     Component,
-    Input,
-    Output,
-    EventEmitter,
+    input,
+    output,
     ElementRef,
-    ViewChild,
     AfterViewInit,
     OnDestroy,
     OnInit,
-    OnChanges,
-    ContentChild,
-    forwardRef,
     Injectable,
     Directive,
-    HostListener,
     inject,
     ChangeDetectorRef,
+    signal,
+    computed,
+    effect
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import EmblaCarousel, {
     EmblaCarouselType,
     EmblaOptionsType,
     EmblaPluginType,
 } from 'embla-carousel';
-import { Subject } from 'rxjs';
 
 @Injectable()
 export class CarouselContext {
-    api$ = new Subject<EmblaCarouselType>();
-    api?: EmblaCarouselType;
-    orientation: 'horizontal' | 'vertical' = 'horizontal';
-    canScrollPrev = false;
-    canScrollNext = false;
+    api = signal<EmblaCarouselType | undefined>(undefined);
+    orientation = signal<'horizontal' | 'vertical'>('horizontal');
+    canScrollPrev = signal(false);
+    canScrollNext = signal(false);
 
-    constructor(private cdr: ChangeDetectorRef) { }
+    private cdr = inject(ChangeDetectorRef);
 
     setApi(api: EmblaCarouselType) {
-        this.api = api;
-        this.api$.next(api);
+        this.api.set(api);
         this.updateState();
 
         api.on('select', () => this.updateState());
@@ -45,73 +39,69 @@ export class CarouselContext {
     }
 
     updateState() {
-        if (!this.api) return;
-        this.canScrollPrev = this.api.canScrollPrev();
-        this.canScrollNext = this.api.canScrollNext();
+        const api = this.api();
+        if (!api) return;
+        this.canScrollPrev.set(api.canScrollPrev());
+        this.canScrollNext.set(api.canScrollNext());
         this.cdr.detectChanges();
     }
 
     scrollPrev() {
-        this.api?.scrollPrev();
+        this.api()?.scrollPrev();
     }
 
     scrollNext() {
-        this.api?.scrollNext();
+        this.api()?.scrollNext();
     }
 }
 
 @Component({
     selector: 'tolle-carousel',
-    imports: [CommonModule],
+    standalone: true,
+    imports: [],
     providers: [CarouselContext],
     template: `
     <div
       class="relative"
       role="region"
       aria-roledescription="carousel"
-      [class.flex-col]="orientation === 'vertical'"
+      [class.flex-col]="orientation() === 'vertical'"
     >
       <ng-content></ng-content>
     </div>
   `,
     host: {
-        '[class.flex]': 'orientation === "vertical"',
+        '[class.flex]': 'orientation() === "vertical"',
     }
 })
-export class CarouselComponent implements AfterViewInit, OnDestroy {
-    @Input() opts: EmblaOptionsType = {};
-    @Input() plugins: EmblaPluginType[] = [];
-    @Input() orientation: 'horizontal' | 'vertical' = 'horizontal';
+export class CarouselComponent implements OnInit, OnDestroy {
+    opts = input<EmblaOptionsType>({});
+    plugins = input<EmblaPluginType[]>([]);
+    orientation = input<'horizontal' | 'vertical'>('horizontal');
 
-    @Output() api = new EventEmitter<EmblaCarouselType>();
+    apiEvent = output<EmblaCarouselType>({ alias: 'api' });
 
     private carouselContext = inject(CarouselContext);
     private emblaApi?: EmblaCarouselType;
 
-    @ViewChild('container', { static: false }) containerRef?: ElementRef;
-
-    constructor() { }
+    constructor() {
+        effect(() => {
+            this.carouselContext.orientation.set(this.orientation());
+        });
+    }
 
     ngOnInit() {
-        this.carouselContext.orientation = this.orientation;
-    }
-
-    ngOnChanges() {
-        this.carouselContext.orientation = this.orientation;
-    }
-
-    ngAfterViewInit() {
-        // We expect tolleCarouselContent to provide the viewport element
+        this.carouselContext.orientation.set(this.orientation());
     }
 
     initApi(viewport: HTMLElement) {
         this.emblaApi = EmblaCarousel(viewport, {
-            ...this.opts,
-            axis: this.orientation === 'horizontal' ? 'x' : 'y',
-        }, this.plugins);
+            ...this.opts(),
+            axis: this.orientation() === 'horizontal' ? 'x' : 'y',
+        }, this.plugins());
 
         this.carouselContext.setApi(this.emblaApi);
-        this.api.emit(this.emblaApi);
+        this.apiEvent.emit(this.emblaApi);
     }
 
     ngOnDestroy() {
@@ -139,7 +129,7 @@ export class CarouselContentDirective implements AfterViewInit {
     selector: '[tolleCarouselContainer]',
     standalone: true,
     host: {
-        '[class]': 'carouselContext.orientation === "horizontal" ? "flex -ml-4" : "flex flex-col -mt-4"',
+        '[class]': 'carouselContext.orientation() === "horizontal" ? "flex -ml-4" : "flex flex-col -mt-4"',
     }
 })
 export class CarouselContainerDirective {
@@ -152,7 +142,7 @@ export class CarouselContainerDirective {
     host: {
         'role': 'group',
         'aria-roledescription': 'slide',
-        '[class]': 'carouselContext.orientation === "horizontal" ? "min-w-0 shrink-0 grow-0 basis-full pl-4" : "min-w-0 shrink-0 grow-0 basis-full pt-4"',
+        '[class]': 'carouselContext.orientation() === "horizontal" ? "min-w-0 shrink-0 grow-0 basis-full pl-4" : "min-w-0 shrink-0 grow-0 basis-full pt-4"',
     }
 })
 export class CarouselItemDirective {
@@ -163,7 +153,7 @@ export class CarouselItemDirective {
     selector: '[tolleCarouselPrevious]',
     standalone: true,
     host: {
-        '[attr.disabled]': '!carouselContext.canScrollPrev ? true : null',
+        '[attr.disabled]': '!carouselContext.canScrollPrev() ? true : null',
         '(click)': 'carouselContext.scrollPrev()',
     }
 })
@@ -175,7 +165,7 @@ export class CarouselPreviousDirective {
     selector: '[tolleCarouselNext]',
     standalone: true,
     host: {
-        '[attr.disabled]': '!carouselContext.canScrollNext ? true : null',
+        '[attr.disabled]': '!carouselContext.canScrollNext() ? true : null',
         '(click)': 'carouselContext.scrollNext()',
     }
 })

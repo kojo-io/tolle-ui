@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -10,13 +10,12 @@ import { CustomSeparatorBreadcrumbComponent } from '../../../docs-examples/bread
 @Component({
     selector: 'app-breadcrumb-examples',
     imports: [
-        CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
-        BasicBreadcrumbComponent,
-        CustomSeparatorBreadcrumbComponent
-    ],
+    FormsModule,
+    SegmentedComponent,
+    BaseEditorComponent,
+    BasicBreadcrumbComponent,
+    CustomSeparatorBreadcrumbComponent
+],
     templateUrl: './breadcrumb-examples.component.html'
 })
 export class BreadcrumbExamplesComponent {

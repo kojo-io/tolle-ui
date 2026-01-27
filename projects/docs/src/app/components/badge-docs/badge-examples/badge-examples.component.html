@@ -1,69 +1,85 @@
 <section class="mb-16" id="examples">
-    <h2 class="text-2xl font-bold mb-6">Examples</h2>
+  <h2 class="text-2xl font-bold mb-6">Examples</h2>
 
-    <!-- Basic -->
-    <div class="space-y-4 mb-12" id="basic">
-        <h3 class="text-xl font-semibold">Basic</h3>
-        <p class="text-muted-foreground">Badges come in several semantic variants.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
-        </div>
-        <div *ngIf="basicTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-basic-badge />
-        </div>
-        <div *ngIf="basicTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="basicCode" language="angular" />
-        </div>
+  <!-- Basic -->
+  <div class="space-y-4 mb-12" id="basic">
+    <h3 class="text-xl font-semibold">Basic</h3>
+    <p class="text-muted-foreground">Badges come in several semantic variants.</p>
+    <div class="w-full md:w-1/4">
+      <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
     </div>
+    @if (basicTab === 'preview') {
+      <div
+        class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-basic-badge />
+      </div>
+    }
+    @if (basicTab === 'code') {
+      <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+        <app-base-editor [code]="basicCode" language="angular" />
+      </div>
+    }
+  </div>
 
-    <!-- Sizes -->
-    <div class="space-y-4 mb-12" id="sizes">
-        <h3 class="text-xl font-semibold">Sizes</h3>
-        <p class="text-muted-foreground">Standardized sizes for different layout needs.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="sizesTab" />
-        </div>
-        <div *ngIf="sizesTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-badge-sizes />
-        </div>
-        <div *ngIf="sizesTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="sizesCode" language="html" />
-        </div>
+  <!-- Sizes -->
+  <div class="space-y-4 mb-12" id="sizes">
+    <h3 class="text-xl font-semibold">Sizes</h3>
+    <p class="text-muted-foreground">Standardized sizes for different layout needs.</p>
+    <div class="w-full md:w-1/4">
+      <tolle-segment [items]="viewOptions" [(ngModel)]="sizesTab" />
     </div>
+    @if (sizesTab === 'preview') {
+      <div
+        class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-badge-sizes />
+      </div>
+    }
+    @if (sizesTab === 'code') {
+      <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+        <app-base-editor [code]="sizesCode" language="html" />
+      </div>
+    }
+  </div>
 
-    <!-- Removable -->
-    <div class="space-y-4 mb-12" id="removable-example">
-        <h3 class="text-xl font-semibold">Removable</h3>
-        <p class="text-muted-foreground">Badges can be removable (closable), making them perfect for tags or filters.
-        </p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="removableTab" />
-        </div>
-        <div *ngIf="removableTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-badge-removable />
-        </div>
-        <div *ngIf="removableTab === 'code'"
-            class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="removableCode" language="html" />
-        </div>
+  <!-- Removable -->
+  <div class="space-y-4 mb-12" id="removable-example">
+    <h3 class="text-xl font-semibold">Removable</h3>
+    <p class="text-muted-foreground">Badges can be removable (closable), making them perfect for tags or filters.
+    </p>
+    <div class="w-full md:w-1/4">
+      <tolle-segment [items]="viewOptions" [(ngModel)]="removableTab" />
     </div>
+    @if (removableTab === 'preview') {
+      <div
+        class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-badge-removable />
+      </div>
+    }
+    @if (removableTab === 'code') {
+      <div
+        class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+        <app-base-editor [code]="removableCode" language="html" />
+      </div>
+    }
+  </div>
 
-    <!-- Icons -->
-    <div class="space-y-4" id="icons">
-        <h3 class="text-xl font-semibold">With Icons</h3>
-        <p class="text-muted-foreground">You can project icons using the <code>prefix</code> slot.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="iconsTab" />
-        </div>
-        <div *ngIf="iconsTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-badge-with-icons />
-        </div>
-        <div *ngIf="iconsTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="iconsCode" language="html" />
-        </div>
+  <!-- Icons -->
+  <div class="space-y-4" id="icons">
+    <h3 class="text-xl font-semibold">With Icons</h3>
+    <p class="text-muted-foreground">You can project icons using the <code>prefix</code> slot.</p>
+    <div class="w-full md:w-1/4">
+      <tolle-segment [items]="viewOptions" [(ngModel)]="iconsTab" />
     </div>
+    @if (iconsTab === 'preview') {
+      <div
+        class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-badge-with-icons />
+      </div>
+    }
+    @if (iconsTab === 'code') {
+      <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+        <app-base-editor [code]="iconsCode" language="html" />
+      </div>
+    }
+  </div>
 </section>

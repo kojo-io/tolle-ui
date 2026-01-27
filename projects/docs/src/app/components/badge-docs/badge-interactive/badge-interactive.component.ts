@@ -4,21 +4,20 @@ import { BadgeComponent } from '../../../../../../tolle/src/lib/badge.component'
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
-import { CommonModule } from '@angular/common';
+
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 
 @Component({
     selector: 'app-badge-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        BadgeComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        SwitchComponent
-    ],
+    FormsModule,
+    BadgeComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    SwitchComponent
+],
     templateUrl: './badge-interactive.component.html'
 })
 export class BadgeInteractiveComponent {

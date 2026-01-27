@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { CollapsibleComponent, CollapsibleTriggerComponent, CollapsibleContentComponent } from '../../../../../../tolle/src/lib/collapsible.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -8,14 +8,13 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 @Component({
     selector: 'app-collapsible-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        CollapsibleComponent,
-        CollapsibleTriggerComponent,
-        CollapsibleContentComponent,
-        PlaygroundComponent,
-        ButtonComponent
-    ],
+    FormsModule,
+    CollapsibleComponent,
+    CollapsibleTriggerComponent,
+    CollapsibleContentComponent,
+    PlaygroundComponent,
+    ButtonComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>

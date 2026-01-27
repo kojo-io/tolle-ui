@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-carousel-api',
-    imports: [CommonModule],
+    imports: [],
     template: `
     <div class="space-y-8">
       <div>

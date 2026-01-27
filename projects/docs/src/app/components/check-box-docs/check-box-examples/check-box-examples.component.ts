@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -11,14 +11,13 @@ import { CheckboxDisabledComponent } from '../../../docs-examples/check-box/chec
 @Component({
     selector: 'app-check-box-examples',
     imports: [
-        CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
-        BasicCheckboxComponent,
-        CheckboxWithDescriptionComponent,
-        CheckboxDisabledComponent
-    ],
+    FormsModule,
+    SegmentedComponent,
+    BaseEditorComponent,
+    BasicCheckboxComponent,
+    CheckboxWithDescriptionComponent,
+    CheckboxDisabledComponent
+],
     templateUrl: './check-box-examples.component.html'
 })
 export class CheckBoxExamplesComponent {

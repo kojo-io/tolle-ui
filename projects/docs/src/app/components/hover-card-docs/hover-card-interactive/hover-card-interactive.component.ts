@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { HoverCardComponent, HoverCardTriggerComponent, HoverCardContentComponent } from '../../../../../../tolle/src/lib/hover-card.component';
 import { AvatarComponent } from '../../../../../../tolle/src/lib/avatar.component';
@@ -9,15 +9,14 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 @Component({
     selector: 'app-hover-card-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        HoverCardComponent,
-        HoverCardTriggerComponent,
-        HoverCardContentComponent,
-        AvatarComponent,
-        AvatarFallbackComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    HoverCardComponent,
+    HoverCardTriggerComponent,
+    HoverCardContentComponent,
+    AvatarComponent,
+    AvatarFallbackComponent,
+    PlaygroundComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BaseService } from '../../shared/base.service';
 import { ContextMenuOverviewComponent } from './context-menu-overview/context-menu-overview.component';
 import { ContextMenuInteractiveComponent } from './context-menu-interactive/context-menu-interactive.component';
@@ -10,12 +10,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 @Component({
     selector: 'app-context-menu-docs',
     imports: [
-        CommonModule,
-        ContextMenuOverviewComponent,
-        ContextMenuInteractiveComponent,
-        ContextMenuApiComponent,
-        DocsWrapperComponent
-    ],
+    ContextMenuOverviewComponent,
+    ContextMenuInteractiveComponent,
+    ContextMenuApiComponent,
+    DocsWrapperComponent
+],
     templateUrl: './context-menu-docs.component.html'
 })
 export class ContextMenuDocsComponent {

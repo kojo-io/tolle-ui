@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 import { PropEntry } from '../../../shared/types';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-scroll-area-api',
-    imports: [PropTableComponent, CommonModule],
+    imports: [PropTableComponent],
     template: `
     <section class="mb-16" id="api-reference">
       <h2 class="text-2xl font-bold mb-6 text-foreground">API Reference</h2>

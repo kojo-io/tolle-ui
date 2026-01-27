@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { TooltipDirective } from '../../../../../../tolle/src/lib/tooltip.directive';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
@@ -10,14 +10,13 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 @Component({
     selector: 'app-tooltip-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        TooltipDirective,
-        ButtonComponent,
-        SelectComponent,
-        SelectItemComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    TooltipDirective,
+    ButtonComponent,
+    SelectComponent,
+    SelectItemComponent,
+    PlaygroundComponent
+],
     templateUrl: './tooltip-interactive.component.html'
 })
 export class TooltipInteractiveComponent {

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-carousel-overview',
-    imports: [CommonModule],
+    imports: [],
     template: `
     <header class="mb-12 border-b border-slate-200 pb-8">
       <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-foreground">

@@ -5,17 +5,16 @@ import { ProgressOverviewComponent } from './progress-overview/progress-overview
 import { ProgressInteractiveComponent } from './progress-interactive/progress-interactive.component';
 import { ProgressApiComponent } from './progress-api/progress-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-progress-docs',
     imports: [
-        CommonModule,
-        ProgressOverviewComponent,
-        ProgressInteractiveComponent,
-        ProgressApiComponent,
-        DocsWrapperComponent
-    ],
+    ProgressOverviewComponent,
+    ProgressInteractiveComponent,
+    ProgressApiComponent,
+    DocsWrapperComponent
+],
     templateUrl: './progress-docs.component.html'
 })
 export class ProgressDocsComponent implements OnInit {

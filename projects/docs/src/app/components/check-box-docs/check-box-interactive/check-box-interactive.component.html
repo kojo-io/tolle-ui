@@ -1,47 +1,49 @@
 <section class="mb-16" id="interactive">
-    <h2 class="text-2xl font-bold mb-6 text-foreground/90">Interactive Playground</h2>
-    <app-playground [code]="playgroundCode">
-        <div preview
-            class="w-full h-full flex items-center justify-center p-8 bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 rounded-lg">
-            <div class="flex items-start space-x-2">
-                <tolle-checkbox [(ngModel)]="playgroundChecked" [size]="playgroundSize"
-                    [disabled]="playgroundDisabled" />
-                <div class="grid gap-1.5 leading-none">
-                    <label class="text-sm font-medium leading-none">
-                        {{ playgroundLabel }}
-                    </label>
-                    <p *ngIf="playgroundDescription" class="text-xs text-muted-foreground">
-                        {{ playgroundDescription }}
-                    </p>
-                </div>
-            </div>
+  <h2 class="text-2xl font-bold mb-6 text-foreground/90">Interactive Playground</h2>
+  <app-playground [code]="playgroundCode">
+    <div preview
+      class="w-full h-full flex items-center justify-center p-8 bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 rounded-lg">
+      <div class="flex items-start space-x-2">
+        <tolle-checkbox [(ngModel)]="playgroundChecked" [size]="playgroundSize"
+          [disabled]="playgroundDisabled" />
+        <div class="grid gap-1.5 leading-none">
+          <label class="text-sm font-medium leading-none">
+            {{ playgroundLabel }}
+          </label>
+          @if (playgroundDescription) {
+            <p class="text-xs text-muted-foreground">
+              {{ playgroundDescription }}
+            </p>
+          }
         </div>
+      </div>
+    </div>
 
-        <div controls class="space-y-6">
-            <div class="space-y-2">
-                <label class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Label</label>
-                <tolle-input [(ngModel)]="playgroundLabel" placeholder="Checkbox label..." />
-            </div>
+    <div controls class="space-y-6">
+      <div class="space-y-2">
+        <label class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Label</label>
+        <tolle-input [(ngModel)]="playgroundLabel" placeholder="Checkbox label..." />
+      </div>
 
-            <div class="space-y-2">
-                <label class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Description</label>
-                <tolle-input [(ngModel)]="playgroundDescription" placeholder="Optional description..." />
-            </div>
+      <div class="space-y-2">
+        <label class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Description</label>
+        <tolle-input [(ngModel)]="playgroundDescription" placeholder="Optional description..." />
+      </div>
 
-            <div class="space-y-2">
-                <label class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Size</label>
-                <tolle-select [(ngModel)]="playgroundSize">
-                    <tolle-select-item value="xs">Extra Small (xs)</tolle-select-item>
-                    <tolle-select-item value="sm">Small (sm)</tolle-select-item>
-                    <tolle-select-item value="default">Default</tolle-select-item>
-                    <tolle-select-item value="lg">Large (lg)</tolle-select-item>
-                </tolle-select>
-            </div>
+      <div class="space-y-2">
+        <label class="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Size</label>
+        <tolle-select [(ngModel)]="playgroundSize">
+          <tolle-select-item value="xs">Extra Small (xs)</tolle-select-item>
+          <tolle-select-item value="sm">Small (sm)</tolle-select-item>
+          <tolle-select-item value="default">Default</tolle-select-item>
+          <tolle-select-item value="lg">Large (lg)</tolle-select-item>
+        </tolle-select>
+      </div>
 
-            <div class="flex items-center justify-between pt-2">
-                <label class="text-sm font-medium">Disabled State</label>
-                <tolle-checkbox [(ngModel)]="playgroundDisabled" />
-            </div>
-        </div>
-    </app-playground>
+      <div class="flex items-center justify-between pt-2">
+        <label class="text-sm font-medium">Disabled State</label>
+        <tolle-checkbox [(ngModel)]="playgroundDisabled" />
+      </div>
+    </div>
+  </app-playground>
 </section>

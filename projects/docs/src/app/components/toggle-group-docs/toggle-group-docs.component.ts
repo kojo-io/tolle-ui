@@ -5,17 +5,16 @@ import { ToggleGroupOverviewComponent } from './toggle-group-overview/toggle-gro
 import { ToggleGroupInteractiveComponent } from './toggle-group-interactive/toggle-group-interactive.component';
 import { ToggleGroupApiComponent } from './toggle-group-api/toggle-group-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-toggle-group-docs',
     imports: [
-        CommonModule,
-        ToggleGroupOverviewComponent,
-        ToggleGroupInteractiveComponent,
-        ToggleGroupApiComponent,
-        DocsWrapperComponent
-    ],
+    ToggleGroupOverviewComponent,
+    ToggleGroupInteractiveComponent,
+    ToggleGroupApiComponent,
+    DocsWrapperComponent
+],
     templateUrl: './toggle-group-docs.component.html'
 })
 export class ToggleGroupDocsComponent implements OnInit {

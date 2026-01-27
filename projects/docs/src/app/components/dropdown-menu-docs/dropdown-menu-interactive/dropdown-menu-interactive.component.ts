@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { DropdownMenuComponent } from '../../../../../../tolle/src/lib/dropdown-menu.component';
 import { DropdownTriggerDirective } from '../../../../../../tolle/src/lib/dropdown-trigger.directive';
@@ -12,16 +12,15 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 @Component({
     selector: 'app-dropdown-menu-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        DropdownMenuComponent,
-        DropdownTriggerDirective,
-        ButtonComponent,
-        PlaygroundComponent,
-        SwitchComponent,
-        SelectComponent,
-        SelectItemComponent
-    ],
+    FormsModule,
+    DropdownMenuComponent,
+    DropdownTriggerDirective,
+    ButtonComponent,
+    PlaygroundComponent,
+    SwitchComponent,
+    SelectComponent,
+    SelectItemComponent
+],
     template: `
     <section class="space-y-6">
       <h2 class="text-2xl font-bold text-foreground">Interactive Playground</h2>

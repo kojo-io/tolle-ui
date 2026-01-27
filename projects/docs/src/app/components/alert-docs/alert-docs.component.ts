@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BaseService } from '../../shared/base.service';
-import { NgIf } from '@angular/common';
+
 import { SegmentedComponent } from '../../../../../tolle/src/lib/segment.component';
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from '../../../../../tolle/src/lib/alert.component';

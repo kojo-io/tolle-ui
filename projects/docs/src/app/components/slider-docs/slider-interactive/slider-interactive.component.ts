@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SliderComponent } from '../../../../../../tolle/src/lib/slider.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -10,14 +10,13 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 @Component({
     selector: 'app-slider-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        SliderComponent,
-        PlaygroundComponent,
-        LabelComponent,
-        InputComponent,
-        SwitchComponent
-    ],
+    FormsModule,
+    SliderComponent,
+    PlaygroundComponent,
+    LabelComponent,
+    InputComponent,
+    SwitchComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ModalService } from '../../../../../../tolle/src/lib/modal.service';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
@@ -11,14 +11,13 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 @Component({
     selector: 'app-modal-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        ButtonComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        SwitchComponent
-    ],
+    FormsModule,
+    ButtonComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    SwitchComponent
+],
     template: `
     <section class="space-y-6">
       <h2 class="text-2xl font-bold text-foreground">Interactive Playground</h2>

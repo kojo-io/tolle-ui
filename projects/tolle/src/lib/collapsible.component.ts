@@ -1,92 +1,83 @@
-import { Component, Input, Output, EventEmitter, Injectable, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, output, Injectable, inject, OnInit, computed, effect, signal } from '@angular/core';
+
 import { cn } from './utils/cn';
-import { BehaviorSubject } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Injectable()
 class CollapsibleService {
-    private openSubject = new BehaviorSubject<boolean>(false);
-    open$ = this.openSubject.asObservable();
+    isOpen = signal(false);
 
     setOpen(value: boolean) {
-        this.openSubject.next(value);
-    }
-
-    getOpen() {
-        return this.openSubject.getValue();
+        this.isOpen.set(value);
     }
 
     toggle() {
-        this.setOpen(!this.getOpen());
+        this.isOpen.update(v => !v);
     }
 }
 
 @Component({
     selector: 'tolle-collapsible',
-    imports: [CommonModule],
+    standalone: true,
+    imports: [],
     providers: [CollapsibleService],
     template: `<ng-content></ng-content>`,
     host: {
-        '[class]': 'computedClass'
+        '[class]': 'computedClass()'
     }
 })
 export class CollapsibleComponent {
-    @Input() set open(val: boolean) {
-        this.collapsibleService.setOpen(val);
-    }
-    @Output() openChange = new EventEmitter<boolean>();
-    @Input() class: string = '';
+    open = input<boolean>(false);
+    openChange = output<boolean>();
+    className = input('', { alias: 'class' });
 
     private collapsibleService = inject(CollapsibleService);
 
-    ngOnInit() {
-        this.collapsibleService.open$.subscribe(val => {
-            this.openChange.emit(val);
+    constructor() {
+        // Sync initial input to service
+        effect(() => {
+            this.collapsibleService.setOpen(this.open());
+        });
+
+        // Sync service back to output
+        effect(() => {
+            this.openChange.emit(this.collapsibleService.isOpen());
         });
     }
 
-    get computedClass() {
-        return cn("w-full", this.class);
-    }
+    computedClass = computed(() => cn("w-full", this.className()));
 }
 
 @Component({
     selector: 'tolle-collapsible-trigger',
-    imports: [CommonModule],
+    standalone: true,
+    imports: [],
     template: `<ng-content></ng-content>`,
     host: {
-        '[attr.data-state]': 'isOpen ? "open" : "closed"',
+        '[attr.data-state]': 'isOpen() ? "open" : "closed"',
         '(click)': 'onToggle()',
-        '[class]': 'computedClass'
+        '[class]': 'computedClass()'
     }
 })
 export class CollapsibleTriggerComponent {
-    @Input() class: string = '';
+    className = input('', { alias: 'class' });
 
     private collapsibleService = inject(CollapsibleService);
-    isOpen = false;
-
-    constructor() {
-        this.collapsibleService.open$.subscribe(open => {
-            this.isOpen = open;
-        });
-    }
+    isOpen = computed(() => this.collapsibleService.isOpen());
 
     onToggle() {
         this.collapsibleService.toggle();
     }
 
-    get computedClass() {
-        return cn("cursor-pointer", this.class);
-    }
+    computedClass = computed(() => cn("cursor-pointer", this.className()));
 }
 
 @Component({
     selector: 'tolle-collapsible-content',
-    imports: [CommonModule],
+    standalone: true,
+    imports: [],
     template: `
-    <div [@expandCollapse]="isOpen ? 'open' : 'closed'" class="overflow-hidden">
+    <div [@expandCollapse]="isOpen() ? 'open' : 'closed'" class="overflow-hidden">
       <ng-content></ng-content>
     </div>
   `,
@@ -98,23 +89,15 @@ export class CollapsibleTriggerComponent {
         ])
     ],
     host: {
-        '[attr.data-state]': 'isOpen ? "open" : "closed"',
-        '[class]': 'computedClass'
+        '[attr.data-state]': 'isOpen() ? "open" : "closed"',
+        '[class]': 'computedClass()'
     }
 })
 export class CollapsibleContentComponent {
-    @Input() class: string = '';
+    className = input('', { alias: 'class' });
 
     private collapsibleService = inject(CollapsibleService);
-    isOpen = false;
+    isOpen = computed(() => this.collapsibleService.isOpen());
 
-    constructor() {
-        this.collapsibleService.open$.subscribe(open => {
-            this.isOpen = open;
-        });
-    }
-
-    get computedClass() {
-        return cn("", this.class);
-    }
+    computedClass = computed(() => cn("", this.className()));
 }

@@ -8,62 +8,66 @@
       <tolle-segment [items]="columnViewOptions" [(ngModel)]="columnTab" />
     </div>
 
-    <div *ngIf="columnTab === 'preview'"
-      class="p-4 rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
-      <div class="w-full">
-        <app-searchable />
+    @if (columnTab === 'preview') {
+      <div
+        class="p-4 rounded-lg bg-background flex flex-col gap-4 justify-center items-center">
+        <div class="w-full">
+          <app-searchable />
+        </div>
       </div>
-    </div>
-    <div *ngIf="columnTab === 'code'"
-      class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-      <div class="w-full md:w-1/4 p-2">
-        <tolle-segment [items]="columnCodeViewOptions" [(ngModel)]="columnCode" />
+    }
+    @if (columnTab === 'code') {
+      <div
+        class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+        <div class="w-full md:w-1/4 p-2">
+          <tolle-segment [items]="columnCodeViewOptions" [(ngModel)]="columnCode" />
+        </div>
+        <!-- Header -->
+        @if (columnCode === 'html') {
+          <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+            <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+              <span class="w-3 h-3 rounded-full bg-green-600"></span>
+              <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+              <span class="w-3 h-3 rounded-full bg-red-600"></span>
+            </div>
+            <!-- Copy icon -->
+            @if (hidingHtmlCode$ | async; as code) {
+              <div>
+                <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition"
+                  aria-label="Copy">
+                  <i class="ri-file-copy-line"></i>
+                </button>
+              </div>
+            }
+          </div>
+          <!-- Body -->
+          <div class="relative group rounded-md overflow-hidden h-auto">
+            <app-base-editor [code]="(hidingHtmlCode$ | async) ?? ''" language="html" />
+          </div>
+        }
+        @if (columnCode === 'typescript') {
+          <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+            <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+              <span class="w-3 h-3 rounded-full bg-green-600"></span>
+              <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+              <span class="w-3 h-3 rounded-full bg-red-600"></span>
+            </div>
+            <!-- Copy icon -->
+            @if (hidingJsCode$ | async; as code) {
+              <div>
+                <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition"
+                  aria-label="Copy">
+                  <i class="ri-file-copy-line"></i>
+                </button>
+              </div>
+            }
+          </div>
+          <!-- Body -->
+          <div class="relative group rounded-md overflow-hidden h-auto">
+            <app-base-editor [code]="(hidingJsCode$ | async) ?? ''" language="javascript" />
+          </div>
+        }
       </div>
-      <!-- Header -->
-      <ng-container *ngIf="columnCode === 'html'">
-        <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-          <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-            <span class="w-3 h-3 rounded-full bg-green-600"></span>
-            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-            <span class="w-3 h-3 rounded-full bg-red-600"></span>
-          </div>
-
-          <!-- Copy icon -->
-          <div *ngIf="hidingHtmlCode$ | async as code">
-            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition"
-              aria-label="Copy">
-              <i class="ri-file-copy-line"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Body -->
-        <div class="relative group rounded-md overflow-hidden h-auto">
-          <app-base-editor [code]="(hidingHtmlCode$ | async) ?? ''" language="html" />
-        </div>
-      </ng-container>
-      <ng-container *ngIf="columnCode === 'typescript'">
-        <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
-          <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
-            <span class="w-3 h-3 rounded-full bg-green-600"></span>
-            <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
-            <span class="w-3 h-3 rounded-full bg-red-600"></span>
-          </div>
-
-          <!-- Copy icon -->
-          <div *ngIf="hidingJsCode$ | async as code">
-            <button (click)="baseService.copyTo(code)" class="text-neutral-400 hover:text-neutral-200 transition"
-              aria-label="Copy">
-              <i class="ri-file-copy-line"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Body -->
-        <div class="relative group rounded-md overflow-hidden h-auto">
-          <app-base-editor [code]="(hidingJsCode$ | async) ?? ''" language="javascript" />
-        </div>
-      </ng-container>
-    </div>
+    }
   </div>
 </section>

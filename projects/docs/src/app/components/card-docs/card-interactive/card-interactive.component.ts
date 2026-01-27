@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent } from '../../../../../../tolle/src/lib/card.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -9,36 +9,41 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
 @Component({
     selector: 'app-card-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        CardComponent,
-        CardHeaderComponent,
-        CardTitleComponent,
-        CardContentComponent,
-        CardFooterComponent,
-        PlaygroundComponent,
-        InputComponent,
-        CheckboxComponent
-    ],
+    FormsModule,
+    CardComponent,
+    CardHeaderComponent,
+    CardTitleComponent,
+    CardContentComponent,
+    CardFooterComponent,
+    PlaygroundComponent,
+    InputComponent,
+    CheckboxComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <tolle-card [class]="customClass">
-            <tolle-card-header *ngIf="showHeader">
-              <tolle-card-title>{{ title }}</tolle-card-title>
-              <p *ngIf="description" class="text-sm text-muted-foreground">{{ description }}</p>
-            </tolle-card-header>
+            @if (showHeader) {
+              <tolle-card-header>
+                <tolle-card-title>{{ title }}</tolle-card-title>
+                @if (description) {
+                  <p class="text-sm text-muted-foreground">{{ description }}</p>
+                }
+              </tolle-card-header>
+            }
             <tolle-card-content>
               <p class="text-sm">This is the main content area of the card. You can add any components or text here.</p>
             </tolle-card-content>
-            <tolle-card-footer *ngIf="showFooter">
-              <span class="text-xs text-muted-foreground">Card Footer Content</span>
-            </tolle-card-footer>
+            @if (showFooter) {
+              <tolle-card-footer>
+                <span class="text-xs text-muted-foreground">Card Footer Content</span>
+              </tolle-card-footer>
+            }
           </tolle-card>
         </div>
-
+    
         <div controls class="space-y-4">
           <div class="space-y-2">
             <label class="text-sm font-medium">Title</label>
@@ -58,14 +63,14 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
               <label class="text-sm font-medium cursor-pointer" (click)="showFooter = !showFooter">Footer</label>
             </div>
           </div>
-           <div class="space-y-2">
+          <div class="space-y-2">
             <label class="text-sm font-medium">Custom Class (width)</label>
             <tolle-input [(ngModel)]="customClass" placeholder="e.g., max-w-sm" />
           </div>
         </div>
       </app-playground>
     </section>
-  `
+    `
 })
 export class CardInteractiveComponent {
   title = 'Card Title';

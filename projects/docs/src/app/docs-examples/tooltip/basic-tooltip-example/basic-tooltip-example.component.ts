@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { TooltipDirective } from '../../../../../../tolle/src/lib/tooltip.directive';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
     selector: 'app-basic-tooltip-example',
-    imports: [CommonModule, TooltipDirective, ButtonComponent],
+    imports: [TooltipDirective, ButtonComponent],
     template: `
     <div class="flex flex-wrap gap-4 items-center justify-center p-8">
       <tolle-button variant="outline" tolleTooltip="Tooltip on top" placement="top">

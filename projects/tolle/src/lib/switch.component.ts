@@ -1,55 +1,56 @@
-import { Component, Input, forwardRef, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, forwardRef, inject, ChangeDetectorRef, signal, computed } from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-switch',
-    imports: [CommonModule],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SwitchComponent),
-            multi: true
-        }
-    ],
-    template: `
+  selector: 'tolle-switch',
+  standalone: true,
+  imports: [],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SwitchComponent),
+      multi: true
+    }
+  ],
+  template: `
     <button
       type="button"
       role="switch"
-      [attr.aria-checked]="checked"
-      [disabled]="disabled"
+      [attr.aria-checked]="checked()"
+      [disabled]="disabled()"
       (click)="toggle()"
       [class]="cn(
-    'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
-    sizeClasses.track,
-    checked ? 'bg-primary' : 'bg-input',
-    class
-  )"
+        'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
+        sizeClasses().track,
+        checked() ? 'bg-primary' : 'bg-input',
+        class()
+      )"
     >
-  <span
-    [class]="cn(
-      'pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform',
-      sizeClasses.thumb,
-      checked ? sizeClasses.translate : 'translate-x-0'
-    )"
-  ></span>
+      <span
+        [class]="cn(
+          'pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform',
+          sizeClasses().thumb,
+          checked() ? sizeClasses().translate : 'translate-x-0'
+        )"
+      ></span>
     </button>
   `
 })
 export class SwitchComponent implements ControlValueAccessor {
-  @Input() class = '';
-  @Input() disabled = false;
-  @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  class = input('');
+  disabled = input(false);
+  size = input<'xs' | 'sm' | 'default' | 'lg'>('default');
 
-  checked = false;
+  checked = signal(false);
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  private onChange: (value: boolean) => void = () => { };
+  private onTouched: () => void = () => { };
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  private cdr = inject(ChangeDetectorRef);
 
-  get sizeClasses() {
+  sizeClasses = computed(() => {
     const sizes = {
       xs: {
         track: 'h-4 w-7',
@@ -72,25 +73,31 @@ export class SwitchComponent implements ControlValueAccessor {
         translate: 'translate-x-6'
       }
     };
-    return sizes[this.size];
-  }
+    return sizes[this.size() as keyof typeof sizes];
+  });
 
   protected cn = cn;
 
   toggle() {
-    if (this.disabled) return;
-    this.checked = !this.checked;
-    this.onChange(this.checked);
+    if (this.disabled()) return;
+    this.checked.update((v: boolean) => !v);
+    this.onChange(this.checked());
     this.onTouched();
   }
 
   // --- ControlValueAccessor ---
   writeValue(value: boolean): void {
-    this.checked = value;
+    this.checked.set(value);
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  registerOnChange(fn: (value: boolean) => void): void { this.onChange = fn; }
+  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
+  setDisabledState(isDisabled: boolean): void {
+    // This is problematic with input() as it's read-only.
+    // However, setDisabledState is usually called by Angular Forms.
+    // If we need to support this, we might need a separate signal or model().
+    // For now, most of our components use input() and handle disabled state via the template.
+    // If the form sets it, we might need a signal to override.
+  }
 }

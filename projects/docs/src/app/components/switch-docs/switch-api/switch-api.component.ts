@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 import { PropEntry } from '../../../shared/types';
 
@@ -26,7 +26,7 @@ const switchProps: PropEntry[] = [
 
 @Component({
     selector: 'app-switch-api',
-    imports: [CommonModule, PropTableComponent],
+    imports: [PropTableComponent],
     templateUrl: './switch-api.component.html'
 })
 export class SwitchApiComponent {

@@ -5,17 +5,16 @@ import { ScrollAreaOverviewComponent } from './scroll-area-overview/scroll-area-
 import { ScrollAreaInteractiveComponent } from './scroll-area-interactive/scroll-area-interactive.component';
 import { ScrollAreaApiComponent } from './scroll-area-api/scroll-area-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-scroll-area-docs',
     imports: [
-        CommonModule,
-        ScrollAreaOverviewComponent,
-        ScrollAreaInteractiveComponent,
-        ScrollAreaApiComponent,
-        DocsWrapperComponent
-    ],
+    ScrollAreaOverviewComponent,
+    ScrollAreaInteractiveComponent,
+    ScrollAreaApiComponent,
+    DocsWrapperComponent
+],
     templateUrl: './scroll-area-docs.component.html'
 })
 export class ScrollAreaDocsComponent implements OnInit {

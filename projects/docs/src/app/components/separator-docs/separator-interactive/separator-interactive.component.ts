@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SeparatorComponent } from '../../../../../../tolle/src/lib/separator.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -9,13 +9,12 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 @Component({
     selector: 'app-separator-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        SeparatorComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent
-    ],
+    FormsModule,
+    SeparatorComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
@@ -31,16 +30,24 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
             <tolle-separator [orientation]="orientation"></tolle-separator>
             <div class="flex h-5 items-center space-x-4 text-sm" [class.flex-col]="orientation === 'vertical'" [class.h-auto]="orientation === 'vertical'">
               <div>Blog</div>
-              <tolle-separator orientation="vertical" *ngIf="orientation === 'horizontal'"></tolle-separator>
-              <tolle-separator orientation="horizontal" *ngIf="orientation === 'vertical'" class="my-2"></tolle-separator>
+              @if (orientation === 'horizontal') {
+                <tolle-separator orientation="vertical"></tolle-separator>
+              }
+              @if (orientation === 'vertical') {
+                <tolle-separator orientation="horizontal" class="my-2"></tolle-separator>
+              }
               <div>Docs</div>
-              <tolle-separator orientation="vertical" *ngIf="orientation === 'horizontal'"></tolle-separator>
-              <tolle-separator orientation="horizontal" *ngIf="orientation === 'vertical'" class="my-2"></tolle-separator>
+              @if (orientation === 'horizontal') {
+                <tolle-separator orientation="vertical"></tolle-separator>
+              }
+              @if (orientation === 'vertical') {
+                <tolle-separator orientation="horizontal" class="my-2"></tolle-separator>
+              }
               <div>Source</div>
             </div>
           </div>
         </div>
-
+    
         <div controls class="space-y-4">
           <div class="space-y-2">
             <label class="text-sm font-medium">Orientation</label>
@@ -52,7 +59,7 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
         </div>
       </app-playground>
     </section>
-  `
+    `
 })
 export class SeparatorInteractiveComponent {
     orientation: 'horizontal' | 'vertical' = 'horizontal';

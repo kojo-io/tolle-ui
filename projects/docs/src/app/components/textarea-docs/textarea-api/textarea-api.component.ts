@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 import { PropEntry } from '../../../shared/types';
 
@@ -104,7 +104,7 @@ const textareaProps: PropEntry[] = [
 
 @Component({
     selector: 'app-textarea-api',
-    imports: [CommonModule, PropTableComponent],
+    imports: [PropTableComponent],
     templateUrl: './textarea-api.component.html'
 })
 export class TextareaApiComponent {

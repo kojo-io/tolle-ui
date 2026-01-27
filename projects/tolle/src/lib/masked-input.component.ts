@@ -1,149 +1,154 @@
 import {
-  Component, Input, forwardRef, ElementRef, ViewChild,
-  AfterContentChecked, ChangeDetectorRef
+  Component, input, forwardRef, ElementRef, viewChild,
+  AfterContentChecked, ChangeDetectorRef, signal, computed, inject
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-masked-input',
-    imports: [CommonModule, FormsModule],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => MaskedInputComponent),
-            multi: true
-        }
-    ],
-    template: `
+  selector: 'tolle-masked-input',
+  standalone: true,
+  imports: [FormsModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MaskedInputComponent),
+      multi: true
+    }
+  ],
+  template: `
     <div class="flex flex-col gap-1.5 w-full">
-      <label
-        *ngIf="label"
-        [for]="id"
-        [class]="computedLabelClass"
-      >
-        {{ label }}
-      </label>
-
+      @if (label()) {
+        <label
+          [for]="id()"
+          [class]="computedLabelClass()"
+        >
+          {{ label() }}
+        </label>
+      }
+    
       <div
-        [class]="computedContainerClass"
+        [class]="computedContainerClass()"
         (click)="focusInput()"
       >
         <!-- Prefix Icon -->
         <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
           <ng-content select="[prefix]"></ng-content>
         </div>
-
+    
         <input
           #inputEl
-          [id]="id"
-          [type]="type"
-          [placeholder]="placeholder"
-          [disabled]="disabled"
-          [readOnly]="readonly"
-          [value]="displayValue"
+          [id]="id()"
+          [type]="type()"
+          [placeholder]="placeholder()"
+          [disabled]="disabled()"
+          [readOnly]="readonly()"
+          [value]="displayValue()"
           (input)="onInput($event)"
           (blur)="onBlur()"
           (focus)="onFocus()"
-          [class]="computedInputClass"
-          [attr.aria-invalid]="error"
-          [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
+          [class]="computedInputClass()"
+          [attr.aria-invalid]="error()"
+          [attr.aria-describedby]="error() && errorMessage() ? id() + '-error' : null"
         />
-
+    
         <!-- Suffix Icon -->
         <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
           <ng-content select="[suffix]"></ng-content>
         </div>
       </div>
-
-      <ng-container *ngIf="!disabled">
-        <p
-          *ngIf="hint && !error"
-          class="text-xs text-muted-foreground px-1 transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus"
-        >
-          {{ hint }}
-        </p>
-        <p
-          *ngIf="error && errorMessage"
-          [id]="id + '-error'"
-          class="text-xs text-destructive px-1"
-        >
-          {{ errorMessage }}
-        </p>
-      </ng-container>
+    
+      @if (!disabled()) {
+        @if (hint() && !error()) {
+          <p
+            class="text-xs text-muted-foreground px-1 transition-opacity duration-200"
+            [class.opacity-0]="isFocused() && hideHintOnFocus()"
+          >
+            {{ hint() }}
+          </p>
+        }
+        @if (error() && errorMessage()) {
+          <p
+            [id]="id() + '-error'"
+            class="text-xs text-destructive px-1"
+          >
+            {{ errorMessage() }}
+          </p>
+        }
+      }
     </div>
   `
 })
 export class MaskedInputComponent implements ControlValueAccessor, AfterContentChecked {
-  @Input() id: string = `masked-input-${Math.random().toString(36).substr(2, 9)}`;
-  @Input() label: string = '';
-  @Input() hint: string = '';
-  @Input() errorMessage: string = '';
-  @Input() mask: string = '';
-  @Input() placeholder = '';
-  @Input() type = 'text';
-  @Input() disabled = false;
-  @Input() readonly = false;
-  @Input() class = '';
-  @Input() containerClass: string = '';
-  @Input() error: boolean = false;
-  @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
-  @Input() returnRaw = false;
-  @Input() hideHintOnFocus: boolean = true;
+  id = input<string>(`masked-input-${Math.random().toString(36).substr(2, 9)}`);
+  label = input<string>('');
+  hint = input<string>('');
+  errorMessage = input<string>('');
+  mask = input<string>('');
+  placeholder = input('');
+  type = input('text');
+  disabled = input(false);
+  readonly = input(false);
+  className = input('', { alias: 'class' });
+  containerClass = input<string>('');
+  error = input<boolean>(false);
+  size = input<'xs' | 'sm' | 'default' | 'lg'>('default');
+  returnRaw = input(false);
+  hideHintOnFocus = input<boolean>(true);
 
-  @ViewChild('inputEl', { static: true }) inputEl!: ElementRef<HTMLInputElement>;
+  inputEl = viewChild<ElementRef<HTMLInputElement>>('inputEl');
 
-  hasPrefix = false;
-  hasSuffix = false;
-  displayValue = '';
-  isFocused: boolean = false;
+  hasPrefix = signal(false);
+  hasSuffix = signal(false);
+  displayValue = signal('');
+  isFocused = signal(false);
+
+  private el = inject(ElementRef);
+  private cdr = inject(ChangeDetectorRef);
 
   private tokens: { [key: string]: RegExp } = {
     '0': /\d/, '9': /\d/, 'a': /[a-z]/i, 'A': /[a-z]/i, '*': /[a-z0-9]/i
   };
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
-
-  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {}
+  onChange: (value: any) => void = () => { };
+  onTouched: () => void = () => { };
 
   ngAfterContentChecked() {
     const prefix = this.el.nativeElement.querySelector('[prefix]');
     const suffix = this.el.nativeElement.querySelector('[suffix]');
 
-    if (this.hasPrefix !== !!prefix || this.hasSuffix !== !!suffix) {
-      this.hasPrefix = !!prefix;
-      this.hasSuffix = !!suffix;
+    if (this.hasPrefix() !== !!prefix || this.hasSuffix() !== !!suffix) {
+      this.hasPrefix.set(!!prefix);
+      this.hasSuffix.set(!!suffix);
       this.cdr.detectChanges();
     }
   }
 
-  get computedLabelClass() {
+  computedLabelClass = computed(() => {
     return cn(
       "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
-      this.disabled && "opacity-50"
+      this.disabled() && "opacity-50"
     );
-  }
+  });
 
-  get computedContainerClass() {
+  computedContainerClass = computed(() => {
+    const size = this.size();
+    const readonly = this.readonly();
+    const disabled = this.disabled();
+    const error = this.error();
+
     return cn(
-      // Base styles
       "group relative flex items-center w-full rounded-md border transition-all duration-200",
       "bg-background",
-
-      // Border and shadow
       "border-input shadow-sm",
 
-      // Sizing
-      this.size === 'xs' && "h-8 px-2 gap-1.5 text-xs",
-      this.size === 'sm' && "h-9 px-3 gap-2 text-sm",
-      this.size === 'default' && "h-10 px-3 gap-2 text-sm",
-      this.size === 'lg' && "h-11 px-4 gap-3 text-base",
+      size === 'xs' && "h-8 px-2 gap-1.5 text-xs",
+      size === 'sm' && "h-9 px-3 gap-2 text-sm",
+      size === 'default' && "h-10 px-3 gap-2 text-sm",
+      size === 'lg' && "h-11 px-4 gap-3 text-base",
 
-      // Focus state - SIMPLE LIKE ZARDUI
-      !(this.readonly || this.disabled) && [
+      !(readonly || disabled) && [
         "focus-within:border-primary/80",
         "focus-within:ring-4",
         "focus-within:ring-ring/30",
@@ -151,93 +156,87 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
         "focus-within:shadow-none",
       ],
 
-      // Error state
-      this.error && [
+      error && [
         "border-destructive",
-        !(this.readonly || this.disabled) && [
+        !(readonly || disabled) && [
           "focus-within:border-destructive/80",
           "focus-within:ring-destructive/30"
         ]
       ],
 
-      // Disabled state
-      this.disabled && [
+      disabled && [
         "cursor-not-allowed opacity-50",
         "border-opacity-50"
       ],
 
-      // Readonly state
-      this.readonly && [
+      readonly && [
         "cursor-default",
         "border-dashed",
-        !this.disabled && "focus-within:ring-0 focus-within:border-opacity-100"
+        !disabled && "focus-within:ring-0 focus-within:border-opacity-100"
       ],
 
-      this.containerClass
+      this.containerClass()
     );
-  }
+  });
 
-  get computedInputClass() {
+  computedInputClass = computed(() => {
+    const size = this.size();
+    const disabled = this.disabled();
+    const readonly = this.readonly();
+
     return cn(
-      // Base styles
       "flex-1 bg-transparent border-none p-0",
       "placeholder:text-muted-foreground",
-
-      // Remove all default focus styles
       "focus:outline-none focus:ring-0 focus:shadow-none",
 
-      // Text sizing
-      this.size === 'xs' && "text-xs",
-      this.size === 'sm' && "text-sm",
-      this.size === 'default' && "text-sm",
-      this.size === 'lg' && "text-base",
+      size === 'xs' && "text-xs",
+      size === 'sm' && "text-sm",
+      size === 'default' && "text-sm",
+      size === 'lg' && "text-base",
 
-      // Cursor states
-      this.disabled && "cursor-not-allowed",
-      this.readonly && "cursor-default",
-
-      // Text color
+      disabled && "cursor-not-allowed",
+      readonly && "cursor-default",
       "text-foreground",
-
-      // Selection color
       "selection:bg-primary/20 selection:text-foreground",
 
-      this.class
+      this.className()
     );
-  }
+  });
 
   focusInput(): void {
-    if (!this.disabled && this.inputEl) {
-      this.inputEl.nativeElement.focus();
+    if (!this.disabled()) {
+      this.inputEl()?.nativeElement.focus();
     }
   }
 
   onFocus(): void {
-    this.isFocused = true;
+    this.isFocused.set(true);
   }
 
   onBlur(): void {
-    this.isFocused = false;
+    this.isFocused.set(false);
     this.onTouched();
   }
 
-  // --- Masking Logic ---
   onInput(event: Event) {
-    if (this.readonly || this.disabled) return;
+    if (this.readonly() || this.disabled()) return;
     const input = event.target as HTMLInputElement;
     const raw = this.unmask(input.value);
     const masked = this.applyMask(raw);
-    this.displayValue = masked;
+    this.displayValue.set(masked);
     input.value = masked;
-    this.returnRaw ? this.onChange(raw) : this.onChange(masked);
+    this.returnRaw() ? this.onChange(raw) : this.onChange(masked);
   }
 
   private applyMask(rawValue: string): string {
+    const mask = this.mask();
+    if (!mask) return rawValue;
+
     let rawIndex = 0;
     let formatted = '';
-    for (let i = 0; i < this.mask.length; i++) {
+    for (let i = 0; i < mask.length; i++) {
       if (rawIndex >= rawValue.length) break;
-      const maskChar = this.mask[i];
+      const maskChar = mask[i];
       const rawChar = rawValue[rawIndex];
       if (this.tokens[maskChar]) {
         if (this.tokens[maskChar].test(rawChar)) {
@@ -260,21 +259,20 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
   }
 
   writeValue(value: any): void {
-    this.displayValue = value ? this.applyMask(this.unmask(value.toString())) : '';
+    this.displayValue.set(value ? this.applyMask(this.unmask(value.toString())) : '');
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: any) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-    this.cdr.markForCheck();
+    // disabled is an input
   }
 
   protected cn = cn;

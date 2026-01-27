@@ -1,6 +1,6 @@
 import { Meta, StoryObj, moduleMetadata, applicationConfig } from '@storybook/angular';
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { DataTableComponent, TableColumn } from '../lib/data-table.component';
@@ -150,7 +150,7 @@ const COLUMNS: TableColumn[] = [
 // 2. Wrapper Component to handle Templates
 @Component({
     selector: 'data-table-wrapper',
-    imports: [CommonModule, DataTableComponent, TolleCellDirective, BadgeComponent, ButtonComponent],
+    imports: [DataTableComponent, TolleCellDirective, BadgeComponent, ButtonComponent],
     template: `
     <tolle-data-table
       [data]="data"

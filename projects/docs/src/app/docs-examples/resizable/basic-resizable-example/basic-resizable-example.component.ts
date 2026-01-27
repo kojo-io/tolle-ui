@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ResizablePanelComponent } from '../../../../../../tolle/src/lib/resizable-panel.component';
 import { ResizablePanelItemComponent } from '../../../../../../tolle/src/lib/resizable-panel-item.component';
 
 @Component({
     selector: 'app-basic-resizable-example',
-    imports: [CommonModule, ResizablePanelComponent, ResizablePanelItemComponent],
+    imports: [ResizablePanelComponent, ResizablePanelItemComponent],
     template: `
     <div class="w-full h-[300px] rounded-lg border border-input overflow-hidden">
       <tolle-resizable-panel direction="horizontal" class="h-full">

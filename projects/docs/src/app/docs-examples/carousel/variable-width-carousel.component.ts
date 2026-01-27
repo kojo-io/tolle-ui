@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   CarouselComponent,
   CarouselContentDirective,
@@ -12,14 +12,13 @@ import {
 @Component({
     selector: 'app-variable-width-carousel',
     imports: [
-        CommonModule,
-        CarouselComponent,
-        CarouselContentDirective,
-        CarouselContainerDirective,
-        CarouselItemDirective,
-        CarouselPreviousDirective,
-        CarouselNextDirective
-    ],
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
     template: `
     <div class="relative max-w-2xl mx-auto group">
       <tolle-carousel (api)="onApi($event)" [opts]="{ align: 'start' }" class="w-full">
@@ -55,7 +54,7 @@ import {
             </div>
           </div>
         </div>
-        
+    
         <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
           <i class="ri-arrow-left-s-line text-xl"></i>
         </button>
@@ -63,16 +62,18 @@ import {
           <i class="ri-arrow-right-s-line text-xl"></i>
         </button>
       </tolle-carousel>
-
+    
       <div class="flex justify-center gap-2 mt-4">
-        <button *ngFor="let snap of scrollSnaps; let i = index"
-                (click)="scrollTo(i)"
-                [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
-                [attr.aria-label]="'Go to slide ' + (i + 1)">
-        </button>
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
       </div>
     </div>
-  `
+    `
 })
 export class VariableWidthCarouselComponent {
   api?: any;

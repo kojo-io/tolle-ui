@@ -1,5 +1,5 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
     AlertDialogComponent,
     AlertDialogContentComponent,
@@ -16,17 +16,16 @@ import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
 @Component({
     selector: 'tolle-alert-dialog-dynamic',
     imports: [
-        CommonModule,
-        AlertDialogComponent,
-        AlertDialogContentComponent,
-        AlertDialogHeaderComponent,
-        AlertDialogTitleComponent,
-        AlertDialogDescriptionComponent,
-        AlertDialogFooterComponent,
-        AlertDialogCancelComponent,
-        AlertDialogActionComponent,
-        ButtonComponent
-    ],
+    AlertDialogComponent,
+    AlertDialogContentComponent,
+    AlertDialogHeaderComponent,
+    AlertDialogTitleComponent,
+    AlertDialogDescriptionComponent,
+    AlertDialogFooterComponent,
+    AlertDialogCancelComponent,
+    AlertDialogActionComponent,
+    ButtonComponent
+],
     template: `
     <tolle-alert-dialog [open]="true" (openChange)="onOpenChange($event)">
         <tolle-alert-dialog-content>

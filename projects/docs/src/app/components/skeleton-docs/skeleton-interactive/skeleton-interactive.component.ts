@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SkeletonComponent } from '../../../../../../tolle/src/lib/skeleton.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
@@ -9,13 +9,12 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 @Component({
     selector: 'app-skeleton-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        SkeletonComponent,
-        SelectComponent,
-        SelectItemComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    SkeletonComponent,
+    SelectComponent,
+    SelectItemComponent,
+    PlaygroundComponent
+],
     templateUrl: './skeleton-interactive.component.html'
 })
 export class SkeletonInteractiveComponent {

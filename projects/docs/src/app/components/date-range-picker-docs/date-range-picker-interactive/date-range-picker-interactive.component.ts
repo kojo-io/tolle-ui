@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { DateRangePickerComponent } from '../../../../../../tolle/src/lib/date-range-picker.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -11,14 +11,13 @@ import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
 @Component({
     selector: 'app-date-range-picker-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        DateRangePickerComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        SwitchComponent
-    ],
+    FormsModule,
+    DateRangePickerComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    SwitchComponent
+],
     template: `
     <section class="space-y-6">
       <h2 class="text-2xl font-bold text-foreground">Interactive Playground</h2>

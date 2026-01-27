@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { AspectRatioComponent } from '../../../../../../tolle/src/lib/aspect-ratio.component';
 
 @Component({
     selector: 'app-basic-aspect-ratio-example',
-    imports: [CommonModule, AspectRatioComponent],
+    imports: [AspectRatioComponent],
     template: `
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
       <div class="space-y-4">

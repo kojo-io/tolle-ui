@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ProgressComponent } from '../../../../../../tolle/src/lib/progress.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -7,11 +7,10 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 @Component({
     selector: 'app-progress-interactive',
     imports: [
-        CommonModule,
-        FormsModule,
-        ProgressComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    ProgressComponent,
+    PlaygroundComponent
+],
     template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>

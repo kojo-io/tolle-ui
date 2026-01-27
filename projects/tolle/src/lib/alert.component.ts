@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, output, signal } from '@angular/core';
+
 import { trigger, transition, style, animate } from '@angular/animations';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -29,60 +29,63 @@ const alertVariants = cva(
 type AlertVariants = VariantProps<typeof alertVariants>;
 
 @Component({
-    selector: 'tolle-alert',
-    imports: [CommonModule],
-    animations: [
-        trigger('fade', [
-            transition(':leave', [
-                style({ opacity: 1, transform: 'scale(1)' }),
-                animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.95)', height: 0, margin: 0, padding: 0 }))
-            ])
-        ])
-    ],
-    template: `
-    <div
-      *ngIf="!dismissed"
-      @fade
-      [class]="cn(alertVariants({ variant }), class)"
-      role="alert"
-    >
-      <ng-content select="[icon]"></ng-content>
-
-      <button
-        *ngIf="dismissible"
-        (click)="dismiss()"
-        class="absolute right-2 top-2 rounded-md p-1 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
-        type="button"
-      >
-        <i class="ri-close-line text-lg"></i>
-        <span class="sr-only">Close</span>
-      </button>
-
-      <div>
-        <h5 *ngIf="title" class="mb-1 font-medium leading-none tracking-tight">
-          {{ title }}
-        </h5>
-        <div class="text-sm [&_p]:leading-relaxed opacity-90">
-          <ng-content></ng-content>
+  selector: 'tolle-alert',
+  standalone: true,
+  imports: [],
+  animations: [
+    trigger('fade', [
+      transition(':leave', [
+        style({ opacity: 1, transform: 'scale(1)' }),
+        animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.95)', height: 0, margin: 0, padding: 0 }))
+      ])
+    ])
+  ],
+  template: `
+    @if (!dismissed()) {
+      <div
+        @fade
+        [class]="cn(alertVariants({ variant: variant() }), className())"
+        role="alert"
+        >
+        <ng-content select="[icon]"></ng-content>
+        @if (dismissible()) {
+          <button
+            (click)="dismiss()"
+            class="absolute right-2 top-2 rounded-md p-1 opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+            type="button"
+            >
+            <i class="ri-close-line text-lg"></i>
+            <span class="sr-only">Close</span>
+          </button>
+        }
+        <div>
+          @if (title()) {
+            <h5 class="mb-1 font-medium leading-none tracking-tight">
+              {{ title() }}
+            </h5>
+          }
+          <div class="text-sm [&_p]:leading-relaxed opacity-90">
+            <ng-content></ng-content>
+          </div>
         </div>
       </div>
-    </div>
-  `
+    }
+    `
 })
 export class AlertComponent {
-  @Input() variant: AlertVariants['variant'] = 'default';
-  @Input() title?: string;
-  @Input() class: string = '';
-  @Input() dismissible: boolean = false;
+  variant = input<AlertVariants['variant']>('default');
+  title = input<string | undefined>();
+  className = input('', { alias: 'class' });
+  dismissible = input<boolean>(false);
 
-  @Output() onClose = new EventEmitter<void>();
+  onClose = output<void>();
 
-  dismissed = false;
+  dismissed = signal(false);
   protected alertVariants = alertVariants;
   protected cn = cn;
 
   dismiss() {
-    this.dismissed = true;
+    this.dismissed.set(true);
     this.onClose.emit();
   }
 }

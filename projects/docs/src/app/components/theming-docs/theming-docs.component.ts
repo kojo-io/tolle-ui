@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BaseService } from '../../shared/base.service';
 import { ThemingOverviewComponent } from './theming-overview/theming-overview.component';
 import { ThemingColorsComponent } from './theming-colors/theming-colors.component';
@@ -12,14 +12,13 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 @Component({
     selector: 'app-theming-docs',
     imports: [
-        CommonModule,
-        ThemingOverviewComponent,
-        ThemingColorsComponent,
-        ThemingConfigComponent,
-        ThemingIntegrationComponent,
-        ThemingOverridesComponent,
-        DocsWrapperComponent
-    ],
+    ThemingOverviewComponent,
+    ThemingColorsComponent,
+    ThemingConfigComponent,
+    ThemingIntegrationComponent,
+    ThemingOverridesComponent,
+    DocsWrapperComponent
+],
     templateUrl: './theming-docs.component.html'
 })
 export class ThemingDocsComponent {
