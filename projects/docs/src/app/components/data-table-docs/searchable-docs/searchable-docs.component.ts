@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {BaseService} from '../../../shared/base.service';
 import {SourceCodeService} from '../../../shared/source-code.service';
 import {Observable} from 'rxjs';
-import {AsyncPipe, NgIf} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {BaseEditorComponent} from '../../../shared/base-editor/base-editor.component';
 import {
   PaginationExampleComponent
@@ -12,19 +12,16 @@ import {FormsModule} from '@angular/forms';
 import {SearchableComponent} from '../../../docs-examples/data-table/searchable/searchable.component';
 
 @Component({
-  selector: 'app-searchable-docs',
-  standalone: true,
-  imports: [
+    selector: 'app-searchable-docs',
+    imports: [
     AsyncPipe,
     BaseEditorComponent,
-    NgIf,
-    PaginationExampleComponent,
     SegmentedComponent,
     FormsModule,
     SearchableComponent
-  ],
-  templateUrl: './searchable-docs.component.html',
-  styleUrl: './searchable-docs.component.css'
+],
+    templateUrl: './searchable-docs.component.html',
+    styleUrl: './searchable-docs.component.css'
 })
 export class SearchableDocsComponent implements OnInit {
   baseService = inject(BaseService);

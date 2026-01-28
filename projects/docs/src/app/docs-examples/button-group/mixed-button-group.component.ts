@@ -4,10 +4,9 @@ import { ButtonGroupComponent } from '../../../../../tolle/src/lib/button-group.
 import { TooltipDirective } from '../../../../../tolle/src/lib/tooltip.directive';
 
 @Component({
-  selector: 'app-mixed-button-group',
-  standalone: true,
-  imports: [ButtonComponent, ButtonGroupComponent, TooltipDirective],
-  template: `
+    selector: 'app-mixed-button-group',
+    imports: [ButtonComponent, ButtonGroupComponent, TooltipDirective],
+    template: `
     <tolle-button-group>
       <tolle-button variant="outline" size="lg">
         <i class="ri-github-line mr-2"></i>

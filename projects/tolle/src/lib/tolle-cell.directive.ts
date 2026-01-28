@@ -1,10 +1,10 @@
-import { Directive, Input, TemplateRef } from '@angular/core';
+import { Directive, input, TemplateRef } from '@angular/core';
 
 @Directive({
   selector: '[tolleCell]',
   standalone: true
 })
 export class TolleCellDirective {
-  @Input('tolleCell') name!: string; // The column key this template belongs to
-  constructor(public template: TemplateRef<any>) {}
+  name = input.required<string>({ alias: 'tolleCell' });
+  constructor(public template: TemplateRef<any>) { }
 }

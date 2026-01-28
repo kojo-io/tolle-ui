@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -9,16 +9,14 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
 
 @Component({
     selector: 'app-input-interactive',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        InputComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        CheckboxComponent
-    ],
+    FormsModule,
+    InputComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    CheckboxComponent
+],
     templateUrl: './input-interactive.component.html'
 })
 export class InputInteractiveComponent {

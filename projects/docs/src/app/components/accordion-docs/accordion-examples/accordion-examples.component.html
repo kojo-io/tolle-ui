@@ -1,43 +1,51 @@
 <section class="mb-16">
-    <h2 class="text-2xl font-bold mb-6">Examples</h2>
+  <h2 class="text-2xl font-bold mb-6">Examples</h2>
 
-    <!-- Basic Example -->
-    <div class="space-y-4 mb-12" id="basic">
-        <h3 class="text-xl font-semibold">Basic</h3>
-        <p class="text-muted-foreground">
-            The default accordion allows only one item to be open at a time.
-        </p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
-        </div>
-
-        <div *ngIf="basicTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-basic-accordion />
-        </div>
-
-        <div *ngIf="basicTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="basicCode" language="angular" />
-        </div>
+  <!-- Basic Example -->
+  <div class="space-y-4 mb-12" id="basic">
+    <h3 class="text-xl font-semibold">Basic</h3>
+    <p class="text-muted-foreground">
+      The default accordion allows only one item to be open at a time.
+    </p>
+    <div class="w-full md:w-1/4">
+      <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
     </div>
 
-    <!-- Multiple Example -->
-    <div class="space-y-4" id="multiple">
-        <h3 class="text-xl font-semibold">Multiple</h3>
-        <p class="text-muted-foreground">
-            Set the <code>type</code> prop to <code>multiple</code> to allow multiple items to be open at once.
-        </p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="multiTab" />
-        </div>
+    @if (basicTab === 'preview') {
+      <div
+        class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-basic-accordion />
+      </div>
+    }
 
-        <div *ngIf="multiTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-multiple-accordion />
-        </div>
+    @if (basicTab === 'code') {
+      <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+        <app-base-editor [code]="basicCode" language="angular" />
+      </div>
+    }
+  </div>
 
-        <div *ngIf="multiTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="multiCode" language="html" />
-        </div>
+  <!-- Multiple Example -->
+  <div class="space-y-4" id="multiple">
+    <h3 class="text-xl font-semibold">Multiple</h3>
+    <p class="text-muted-foreground">
+      Set the <code>type</code> prop to <code>multiple</code> to allow multiple items to be open at once.
+    </p>
+    <div class="w-full md:w-1/4">
+      <tolle-segment [items]="viewOptions" [(ngModel)]="multiTab" />
     </div>
+
+    @if (multiTab === 'preview') {
+      <div
+        class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-multiple-accordion />
+      </div>
+    }
+
+    @if (multiTab === 'code') {
+      <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+        <app-base-editor [code]="multiCode" language="html" />
+      </div>
+    }
+  </div>
 </section>

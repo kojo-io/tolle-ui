@@ -6,7 +6,6 @@ import { BasicSelectExampleComponent } from '../../../docs-examples/select/basic
 
 @Component({
     selector: 'app-select-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, BasicSelectExampleComponent],
     templateUrl: './select-overview.component.html'
 })

@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {SourceCodeService} from '../../../shared/source-code.service';
-import {AsyncPipe, NgIf} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {BaseEditorComponent} from '../../../shared/base-editor/base-editor.component';
 import {SegmentedComponent} from '../../../../../../tolle/src/lib/segment.component';
 import {FormsModule} from '@angular/forms';
@@ -9,18 +9,16 @@ import {ColumnHidingComponent} from '../../../docs-examples/data-table/column-hi
 import {BaseService} from '../../../shared/base.service';
 
 @Component({
-  selector: 'app-column-hiding-docs',
-  standalone: true,
-  imports: [
+    selector: 'app-column-hiding-docs',
+    imports: [
     AsyncPipe,
     BaseEditorComponent,
-    NgIf,
     SegmentedComponent,
     FormsModule,
     ColumnHidingComponent
-  ],
-  templateUrl: './column-hiding-docs.component.html',
-  styleUrl: './column-hiding-docs.component.css'
+],
+    templateUrl: './column-hiding-docs.component.html',
+    styleUrl: './column-hiding-docs.component.css'
 })
 export class ColumnHidingDocsComponent implements OnInit {
   baseService = inject(BaseService);

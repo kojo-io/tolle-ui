@@ -3,7 +3,6 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 
 @Component({
     selector: 'app-accordion-overview',
-    standalone: true,
     imports: [BaseEditorComponent],
     templateUrl: './accordion-overview.component.html'
 })

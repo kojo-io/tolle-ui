@@ -6,7 +6,6 @@ import { BasicRangeComponent } from '../../../docs-examples/date-range-picker/ba
 
 @Component({
     selector: 'app-date-range-picker-overview',
-    standalone: true,
     imports: [CommonModule, AsyncPipe, BaseEditorComponent, BasicRangeComponent],
     templateUrl: './date-range-picker-overview.component.html'
 })

@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-resizable-docs',
-    standalone: true,
     imports: [
         ResizableOverviewComponent,
         ResizableInteractiveComponent,
         ResizableApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './resizable-docs.component.html',
     styleUrl: './resizable-docs.component.css'

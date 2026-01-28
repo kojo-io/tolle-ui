@@ -6,7 +6,6 @@ import { BasicPaginationExampleComponent } from '../../../docs-examples/paginati
 
 @Component({
     selector: 'app-pagination-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, BasicPaginationExampleComponent],
     templateUrl: './pagination-overview.component.html'
 })

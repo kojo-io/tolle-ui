@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
 import { Component, Input } from '@angular/core';
-import {CommonModule} from '@angular/common';
+
 import {ButtonComponent} from '../lib/button.component';
 import {ModalService} from '../lib/modal.service'; // Add CommonModule for ngIf
 
@@ -35,17 +35,18 @@ const HTML_CODE = `
 
 // 2. Create a dummy component to actually run in the canvas
 @Component({
-  selector: 'modal-story-host',
-  standalone: true,
-  imports: [ButtonComponent, CommonModule], // Add CommonModule
-  template: `
+    selector: 'modal-story-host',
+    imports: [ButtonComponent], // Add CommonModule
+    template: `
     <div class="p-4 flex flex-col gap-4 items-start">
       <tolle-button (click)="open()">Open Modal</tolle-button>
-      <div *ngIf="lastEvent" class="text-sm text-muted-foreground">
-        Last Event: {{ lastEvent }}
-      </div>
+      @if (lastEvent) {
+        <div class="text-sm text-muted-foreground">
+          Last Event: {{ lastEvent }}
+        </div>
+      }
     </div>
-  `
+    `
 })
 class ModalStoryHost {
   @Input() size: "fullscreen" | "xs" | "sm" | "default" | "lg" = 'default';

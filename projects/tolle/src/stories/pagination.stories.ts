@@ -8,10 +8,9 @@ import {SelectItemComponent} from '../lib/select-item.component';
 
 // 1. Wrapper to manage dynamic data updates
 @Component({
-  selector: 'pagination-story-wrapper',
-  standalone: true,
-  imports: [CommonModule, PaginationComponent],
-  template: `
+    selector: 'pagination-story-wrapper',
+    imports: [PaginationComponent],
+    template: `
     <div class="p-8 space-y-8 bg-background border rounded-xl">
       <div>
         <h3 class="text-lg font-bold">Data Table Simulation</h3>
@@ -20,7 +19,7 @@ import {SelectItemComponent} from '../lib/select-item.component';
           Page Size: <strong>{{ size }}</strong>
         </p>
       </div>
-
+    
       <tolle-pagination
         [totalRecords]="totalRecords"
         [currentPage]="page"
@@ -32,12 +31,14 @@ import {SelectItemComponent} from '../lib/select-item.component';
         (onPageNumberChange)="page = $event"
         (onPageSizeChange)="size = $event"
       ></tolle-pagination>
-
+    
       <div class="grid grid-cols-5 gap-2 mt-4">
-        <div *ngFor="let i of [].constructor(size)" class="h-8 bg-muted animate-pulse rounded"></div>
+        @for (i of [].constructor(size); track i) {
+          <div class="h-8 bg-muted animate-pulse rounded"></div>
+        }
       </div>
     </div>
-  `
+    `
 })
 class PaginationWrapperComponent {
   @Input() totalRecords = 120;

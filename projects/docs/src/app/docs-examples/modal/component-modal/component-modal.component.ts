@@ -5,7 +5,6 @@ import { UserFormComponent } from './user-form.component';
 
 @Component({
     selector: 'app-component-modal',
-    standalone: true,
     imports: [ButtonComponent],
     template: `
     <tolle-button variant="secondary" (click)="openComponentModal()">

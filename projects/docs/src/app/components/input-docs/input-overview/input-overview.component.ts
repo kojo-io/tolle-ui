@@ -8,7 +8,6 @@ import { BasicInputExampleComponent } from '../../../docs-examples/input/basic-i
 
 @Component({
     selector: 'app-input-overview',
-    standalone: true,
     imports: [CommonModule, BaseEditorComponent, BasicInputExampleComponent],
     templateUrl: './input-overview.component.html'
 })

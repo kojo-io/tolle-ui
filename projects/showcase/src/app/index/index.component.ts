@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ButtonComponent} from '../../../../tolle/src/lib/button.component';
-import {AsyncPipe, NgIf, NgStyle} from '@angular/common';
+import { AsyncPipe, NgStyle } from '@angular/common';
 import {ThemeService} from '../../../../tolle/src/lib/theme.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {coloris, init} from '@melloware/coloris';
@@ -49,9 +49,8 @@ import {AccordionComponent} from '../../../../tolle/src/lib/accordion.component'
 import {AccordionItemComponent} from '../../../../tolle/src/lib/accordion-item.component';
 
 @Component({
-  selector: 'app-index',
-  standalone: true,
-  imports: [
+    selector: 'app-index',
+    imports: [
     ButtonComponent,
     NgStyle,
     FormsModule,
@@ -92,12 +91,11 @@ import {AccordionItemComponent} from '../../../../tolle/src/lib/accordion-item.c
     OtpSlotComponent,
     MultiSelectComponent,
     SegmentedComponent,
-    NgIf,
     AccordionComponent,
-    AccordionItemComponent,
-  ],
-  templateUrl: './index.component.html',
-  styleUrl: './index.component.css'
+    AccordionItemComponent
+],
+    templateUrl: './index.component.html',
+    styleUrl: './index.component.css'
 })
 export class IndexComponent implements OnInit {
   modalService = inject(ModalService);

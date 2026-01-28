@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-input-docs',
-    standalone: true,
     imports: [
         InputOverviewComponent,
         InputInteractiveComponent,
         InputApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './input-docs.component.html',
     styleUrl: './input-docs.component.css'

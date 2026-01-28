@@ -4,15 +4,14 @@ import {DataTableComponent, TableColumn} from "../../../../../../tolle/src/lib/d
 import {TolleCellDirective} from "../../../../../../tolle/src/lib/tolle-cell.directive";
 
 @Component({
-  selector: 'app-pagination-example',
-  standalone: true,
+    selector: 'app-pagination-example',
     imports: [
         ButtonComponent,
         DataTableComponent,
         TolleCellDirective
     ],
-  templateUrl: './pagination-example.component.html',
-  styleUrl: './pagination-example.component.css'
+    templateUrl: './pagination-example.component.html',
+    styleUrl: './pagination-example.component.css'
 })
 export class PaginationExampleComponent {
   columns: TableColumn[] = [

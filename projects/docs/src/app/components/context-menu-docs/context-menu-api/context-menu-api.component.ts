@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 
 @Component({
     selector: 'app-context-menu-api',
-    standalone: true,
-    imports: [CommonModule, PropTableComponent],
+    imports: [PropTableComponent],
     templateUrl: './context-menu-api.component.html'
 })
 export class ContextMenuApiComponent {

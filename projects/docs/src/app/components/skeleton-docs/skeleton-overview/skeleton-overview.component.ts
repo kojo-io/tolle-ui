@@ -6,7 +6,6 @@ import { BasicSkeletonExampleComponent } from '../../../docs-examples/skeleton/b
 
 @Component({
     selector: 'app-skeleton-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, BasicSkeletonExampleComponent],
     templateUrl: './skeleton-overview.component.html'
 })

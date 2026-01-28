@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { RadioGroupComponent } from '../../../../../../tolle/src/lib/radio-group.component';
 import { RadioItemComponent } from '../../../../../../tolle/src/lib/radio-item.component';
@@ -9,16 +9,14 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-radio-group-interactive',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        RadioGroupComponent,
-        RadioItemComponent,
-        InputComponent,
-        CheckboxComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    RadioGroupComponent,
+    RadioItemComponent,
+    InputComponent,
+    CheckboxComponent,
+    PlaygroundComponent
+],
     templateUrl: './radio-group-interactive.component.html'
 })
 export class RadioGroupInteractiveComponent {

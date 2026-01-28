@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -24,16 +24,13 @@ import { LazyLoadCarouselComponent } from '../../../docs-examples/carousel/lazy-
 import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel/infinite-scroll-carousel.component';
 
 @Component({
-  selector: 'app-carousel-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-carousel-examples',
+    imports: [
     FormsModule,
     SegmentedComponent,
     BaseEditorComponent,
     BasicCarouselComponent,
     MultipleCarouselComponent,
-    VerticalCarouselComponent,
     AutoplayCarouselComponent,
     LoopCarouselComponent,
     ThumbnailsCarouselComponent,
@@ -49,8 +46,8 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
     ProgressCarouselComponent,
     LazyLoadCarouselComponent,
     InfiniteScrollCarouselComponent
-  ],
-  template: `
+],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
 
@@ -61,14 +58,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="basicView" />
           </div>
-          <div *ngIf="basicView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-basic-carousel />
-          </div>
-          <div *ngIf="basicView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="basicCode" language="typescript" />
-          </div>
+          @if (basicView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-basic-carousel />
+            </div>
+          }
+          @if (basicView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="basicCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="multiple">
@@ -77,14 +78,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="multipleView" />
           </div>
-          <div *ngIf="multipleView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-multiple-carousel />
-          </div>
-          <div *ngIf="multipleView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="multipleCode" language="typescript" />
-          </div>
+          @if (multipleView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-multiple-carousel />
+            </div>
+          }
+          @if (multipleView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="multipleCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="alignment">
@@ -93,14 +98,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="alignmentView" />
           </div>
-          <div *ngIf="alignmentView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-alignment-carousel />
-          </div>
-          <div *ngIf="alignmentView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="alignmentCode" language="typescript" />
-          </div>
+          @if (alignmentView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-alignment-carousel />
+            </div>
+          }
+          @if (alignmentView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="alignmentCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="variable-width">
@@ -109,14 +118,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="variableWidthView" />
           </div>
-          <div *ngIf="variableWidthView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-variable-width-carousel />
-          </div>
-          <div *ngIf="variableWidthView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="variableWidthCode" language="typescript" />
-          </div>
+          @if (variableWidthView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-variable-width-carousel />
+            </div>
+          }
+          @if (variableWidthView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="variableWidthCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="rtl">
@@ -125,14 +138,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="rtlView" />
           </div>
-          <div *ngIf="rtlView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-rtl-carousel />
-          </div>
-          <div *ngIf="rtlView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="rtlCode" language="typescript" />
-          </div>
+          @if (rtlView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-rtl-carousel />
+            </div>
+          }
+          @if (rtlView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="rtlCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="autoplay">
@@ -141,14 +158,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="autoplayView" />
           </div>
-          <div *ngIf="autoplayView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-autoplay-carousel />
-          </div>
-          <div *ngIf="autoplayView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="autoplayCode" language="typescript" />
-          </div>
+          @if (autoplayView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-autoplay-carousel />
+            </div>
+          }
+          @if (autoplayView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="autoplayCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="auto-scroll">
@@ -157,14 +178,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="autoScrollView" />
           </div>
-          <div *ngIf="autoScrollView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-auto-scroll-carousel />
-          </div>
-          <div *ngIf="autoScrollView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="autoScrollCode" language="typescript" />
-          </div>
+          @if (autoScrollView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-auto-scroll-carousel />
+            </div>
+          }
+          @if (autoScrollView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="autoScrollCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="fade">
@@ -173,14 +198,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="fadeView" />
           </div>
-          <div *ngIf="fadeView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-fade-carousel />
-          </div>
-          <div *ngIf="fadeView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="fadeCode" language="typescript" />
-          </div>
+          @if (fadeView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-fade-carousel />
+            </div>
+          }
+          @if (fadeView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="fadeCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="class-names">
@@ -189,14 +218,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="classNamesView" />
           </div>
-          <div *ngIf="classNamesView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-class-names-carousel />
-          </div>
-          <div *ngIf="classNamesView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="classNamesCode" language="typescript" />
-          </div>
+          @if (classNamesView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-class-names-carousel />
+            </div>
+          }
+          @if (classNamesView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="classNamesCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="loop">
@@ -205,14 +238,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="loopView" />
           </div>
-          <div *ngIf="loopView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-loop-carousel />
-          </div>
-          <div *ngIf="loopView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="loopCode" language="typescript" />
-          </div>
+          @if (loopView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-loop-carousel />
+            </div>
+          }
+          @if (loopView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="loopCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="parallax">
@@ -221,14 +258,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="parallaxView" />
           </div>
-          <div *ngIf="parallaxView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-parallax-carousel />
-          </div>
-          <div *ngIf="parallaxView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="parallaxCode" language="typescript" />
-          </div>
+          @if (parallaxView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-parallax-carousel />
+            </div>
+          }
+          @if (parallaxView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="parallaxCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="scale">
@@ -237,14 +278,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="scaleView" />
           </div>
-          <div *ngIf="scaleView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-scale-carousel />
-          </div>
-          <div *ngIf="scaleView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="scaleCode" language="typescript" />
-          </div>
+          @if (scaleView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-scale-carousel />
+            </div>
+          }
+          @if (scaleView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="scaleCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="opacity">
@@ -253,14 +298,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="opacityView" />
           </div>
-          <div *ngIf="opacityView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-opacity-carousel />
-          </div>
-          <div *ngIf="opacityView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="opacityCode" language="typescript" />
-          </div>
+          @if (opacityView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-opacity-carousel />
+            </div>
+          }
+          @if (opacityView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="opacityCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="thumbnails">
@@ -269,14 +318,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="thumbnailsView" />
           </div>
-          <div *ngIf="thumbnailsView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-thumbnails-carousel />
-          </div>
-          <div *ngIf="thumbnailsView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="thumbnailsCode" language="typescript" />
-          </div>
+          @if (thumbnailsView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-thumbnails-carousel />
+            </div>
+          }
+          @if (thumbnailsView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="thumbnailsCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="progress">
@@ -285,14 +338,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="progressView" />
           </div>
-          <div *ngIf="progressView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-progress-carousel />
-          </div>
-          <div *ngIf="progressView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="progressCode" language="typescript" />
-          </div>
+          @if (progressView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-progress-carousel />
+            </div>
+          }
+          @if (progressView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="progressCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="lazy-load">
@@ -301,14 +358,18 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="lazyLoadView" />
           </div>
-          <div *ngIf="lazyLoadView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-lazy-load-carousel />
-          </div>
-          <div *ngIf="lazyLoadView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="lazyLoadCode" language="typescript" />
-          </div>
+          @if (lazyLoadView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-lazy-load-carousel />
+            </div>
+          }
+          @if (lazyLoadView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="lazyLoadCode" language="typescript" />
+            </div>
+          }
         </div>
 
         <div id="infinite-scroll">
@@ -317,18 +378,22 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
           <div class="w-full md:w-1/4 mb-4">
             <tolle-segment [items]="viewOptions" [(ngModel)]="infiniteScrollView" />
           </div>
-          <div *ngIf="infiniteScrollView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
-            <app-infinite-scroll-carousel />
-          </div>
-          <div *ngIf="infiniteScrollView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="infiniteScrollCode" language="typescript" />
-          </div>
+          @if (infiniteScrollView === 'preview') {
+            <div
+              class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+              <app-infinite-scroll-carousel />
+            </div>
+          }
+          @if (infiniteScrollView === 'code') {
+            <div
+              class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
+              <app-base-editor [code]="infiniteScrollCode" language="typescript" />
+            </div>
+          }
         </div>
       </div>
     </section>
-  `
+    `
 })
 export class CarouselExamplesComponent {
   sourceService = inject(SourceCodeService);

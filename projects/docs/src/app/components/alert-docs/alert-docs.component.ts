@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BaseService } from '../../shared/base.service';
-import { NgIf } from '@angular/common';
+
 import { SegmentedComponent } from '../../../../../tolle/src/lib/segment.component';
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from '../../../../../tolle/src/lib/alert.component';
@@ -21,23 +21,21 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-alert-docs',
-  standalone: true,
-  imports: [
-    BaseEditorComponent,
-    FormsModule,
-    AlertComponent,
-    PropTableComponent,
-    PlaygroundComponent,
-    SelectComponent,
-    SelectItemComponent,
-    InputComponent,
-    CheckboxComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './alert-docs.component.html',
-  styleUrl: './alert-docs.component.css'
+    selector: 'app-alert-docs',
+    imports: [
+        BaseEditorComponent,
+        FormsModule,
+        AlertComponent,
+        PropTableComponent,
+        PlaygroundComponent,
+        SelectComponent,
+        SelectItemComponent,
+        InputComponent,
+        CheckboxComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './alert-docs.component.html',
+    styleUrl: './alert-docs.component.css'
 })
 export class AlertDocsComponent implements OnInit {
   baseService = inject(BaseService);

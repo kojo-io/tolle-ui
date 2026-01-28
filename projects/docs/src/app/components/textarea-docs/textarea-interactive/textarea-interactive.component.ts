@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { TextareaComponent } from '../../../../../../tolle/src/lib/textarea.component';
 import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
@@ -8,15 +8,13 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-textarea-interactive',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        TextareaComponent,
-        CheckboxComponent,
-        InputComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    TextareaComponent,
+    CheckboxComponent,
+    InputComponent,
+    PlaygroundComponent
+],
     templateUrl: './textarea-interactive.component.html'
 })
 export class TextareaInteractiveComponent {

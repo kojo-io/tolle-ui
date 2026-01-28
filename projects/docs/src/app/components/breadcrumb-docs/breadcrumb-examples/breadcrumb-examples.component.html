@@ -1,55 +1,63 @@
 <section class="mb-16" id="examples">
-    <h2 class="text-2xl font-bold mb-6 text-foreground">Examples</h2>
+  <h2 class="text-2xl font-bold mb-6 text-foreground">Examples</h2>
 
-    <!-- Basic -->
-    <div class="space-y-4 mb-16" id="basic">
-        <h3 class="text-xl font-semibold text-foreground">Basic</h3>
-        <p class="text-sm text-muted-foreground leading-relaxed">
-            A standard breadcrumb hierarchy with default separators.
-        </p>
-        <div
-            class="flex flex-col rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-neutral-50/50 dark:bg-neutral-900/30">
-            <div
-                class="p-4 border-b border-neutral-200 dark:border-neutral-800 flex justify-between items-center bg-white dark:bg-neutral-950">
-                <div class="flex gap-2">
-                    <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" size="sm" class="w-40" />
-                </div>
-            </div>
-
-            <div *ngIf="basicTab === 'preview'"
-                class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[200px]">
-                <app-basic-breadcrumb></app-basic-breadcrumb>
-            </div>
-
-            <div *ngIf="basicTab === 'code'" class="bg-neutral-900">
-                <app-base-editor [code]="basicCode" language="typescript"></app-base-editor>
-            </div>
+  <!-- Basic -->
+  <div class="space-y-4 mb-16" id="basic">
+    <h3 class="text-xl font-semibold text-foreground">Basic</h3>
+    <p class="text-sm text-muted-foreground leading-relaxed">
+      A standard breadcrumb hierarchy with default separators.
+    </p>
+    <div
+      class="flex flex-col rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-neutral-50/50 dark:bg-neutral-900/30">
+      <div
+        class="p-4 border-b border-neutral-200 dark:border-neutral-800 flex justify-between items-center bg-white dark:bg-neutral-950">
+        <div class="flex gap-2">
+          <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" size="sm" class="w-40" />
         </div>
-    </div>
+      </div>
 
-    <!-- Custom Separator -->
-    <div class="space-y-4 mb-16" id="custom-separator">
-        <h3 class="text-xl font-semibold text-foreground">Custom Separator</h3>
-        <p class="text-sm text-muted-foreground leading-relaxed">
-            Use the <code>tolle-breadcrumb-separator</code> component to use any icon or character as a separator.
-        </p>
+      @if (basicTab === 'preview') {
         <div
-            class="flex flex-col rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-neutral-50/50 dark:bg-neutral-900/30">
-            <div
-                class="p-4 border-b border-neutral-200 dark:border-neutral-800 flex justify-between items-center bg-white dark:bg-neutral-950">
-                <div class="flex gap-2">
-                    <tolle-segment [items]="viewOptions" [(ngModel)]="separatorTab" size="sm" class="w-40" />
-                </div>
-            </div>
-
-            <div *ngIf="separatorTab === 'preview'"
-                class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[200px]">
-                <app-custom-separator-breadcrumb></app-custom-separator-breadcrumb>
-            </div>
-
-            <div *ngIf="separatorTab === 'code'" class="bg-neutral-900">
-                <app-base-editor [code]="separatorCode" language="typescript"></app-base-editor>
-            </div>
+          class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[200px]">
+          <app-basic-breadcrumb></app-basic-breadcrumb>
         </div>
+      }
+
+      @if (basicTab === 'code') {
+        <div class="bg-neutral-900">
+          <app-base-editor [code]="basicCode" language="typescript"></app-base-editor>
+        </div>
+      }
     </div>
+  </div>
+
+  <!-- Custom Separator -->
+  <div class="space-y-4 mb-16" id="custom-separator">
+    <h3 class="text-xl font-semibold text-foreground">Custom Separator</h3>
+    <p class="text-sm text-muted-foreground leading-relaxed">
+      Use the <code>tolle-breadcrumb-separator</code> component to use any icon or character as a separator.
+    </p>
+    <div
+      class="flex flex-col rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden bg-neutral-50/50 dark:bg-neutral-900/30">
+      <div
+        class="p-4 border-b border-neutral-200 dark:border-neutral-800 flex justify-between items-center bg-white dark:bg-neutral-950">
+        <div class="flex gap-2">
+          <tolle-segment [items]="viewOptions" [(ngModel)]="separatorTab" size="sm" class="w-40" />
+        </div>
+      </div>
+
+      @if (separatorTab === 'preview') {
+        <div
+          class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[200px]">
+          <app-custom-separator-breadcrumb></app-custom-separator-breadcrumb>
+        </div>
+      }
+
+      @if (separatorTab === 'code') {
+        <div class="bg-neutral-900">
+          <app-base-editor [code]="separatorCode" language="typescript"></app-base-editor>
+        </div>
+      }
+    </div>
+  </div>
 </section>

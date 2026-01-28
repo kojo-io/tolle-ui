@@ -10,20 +10,18 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-date-picker-docs',
-  standalone: true,
-  imports: [
-    DatePickerOverviewComponent,
-    DatePickerInteractiveComponent,
-    DatePickDocComponent,
-    MonthPickDocComponent,
-    YearPickDocComponent,
-    DatePickerApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './date-picker-docs.component.html',
-  styleUrl: './date-picker-docs.component.css'
+    selector: 'app-date-picker-docs',
+    imports: [
+        DatePickerOverviewComponent,
+        DatePickerInteractiveComponent,
+        DatePickDocComponent,
+        MonthPickDocComponent,
+        YearPickDocComponent,
+        DatePickerApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './date-picker-docs.component.html',
+    styleUrl: './date-picker-docs.component.css'
 })
 export class DatePickerDocsComponent {
   baseService = inject(BaseService);

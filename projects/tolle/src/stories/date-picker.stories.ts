@@ -8,10 +8,9 @@ import { DatePickerComponent } from '../lib/date-picker.component';
 
 // 1. Wrapper Component for Form State
 @Component({
-  selector: 'date-picker-story-wrapper',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DatePickerComponent],
-  template: `
+    selector: 'date-picker-story-wrapper',
+    imports: [CommonModule, ReactiveFormsModule, DatePickerComponent],
+    template: `
     <div class="p-10 w-full h-screen flex flex-col justify-content-center items-center">
       <div class="w-full max-w-xs space-y-4">
         <div>
@@ -33,7 +32,7 @@ import { DatePickerComponent } from '../lib/date-picker.component';
         </div>
       </div>
     </div>
-  `,
+  `
 })
 class DatePickerWrapperComponent {
   dateControl = new FormControl<Date | null>(null);

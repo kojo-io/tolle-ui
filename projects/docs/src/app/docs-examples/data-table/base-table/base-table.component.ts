@@ -4,15 +4,14 @@ import {ButtonComponent} from '../../../../../../tolle/src/lib/button.component'
 import {TolleCellDirective} from '../../../../../../tolle/src/lib/tolle-cell.directive';
 
 @Component({
-  selector: 'app-base-table',
-  standalone: true,
-  imports: [
-    ButtonComponent,
-    DataTableComponent,
-    TolleCellDirective
-  ],
-  templateUrl: './base-table.component.html',
-  styleUrl: './base-table.component.css'
+    selector: 'app-base-table',
+    imports: [
+        ButtonComponent,
+        DataTableComponent,
+        TolleCellDirective
+    ],
+    templateUrl: './base-table.component.html',
+    styleUrl: './base-table.component.css'
 })
 export class BaseTableComponent {
   columns: TableColumn[] = [

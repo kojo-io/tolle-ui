@@ -5,18 +5,16 @@ import { CollapsibleOverviewComponent } from './collapsible-overview/collapsible
 import { CollapsibleInteractiveComponent } from './collapsible-interactive/collapsible-interactive.component';
 import { CollapsibleApiComponent } from './collapsible-api/collapsible-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-collapsible-docs',
-    standalone: true,
     imports: [
-        CommonModule,
-        CollapsibleOverviewComponent,
-        CollapsibleInteractiveComponent,
-        CollapsibleApiComponent,
-        DocsWrapperComponent
-    ],
+    CollapsibleOverviewComponent,
+    CollapsibleInteractiveComponent,
+    CollapsibleApiComponent,
+    DocsWrapperComponent
+],
     templateUrl: './collapsible-docs.component.html'
 })
 export class CollapsibleDocsComponent implements OnInit {

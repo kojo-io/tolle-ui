@@ -5,18 +5,16 @@ import { HoverCardOverviewComponent } from './hover-card-overview/hover-card-ove
 import { HoverCardInteractiveComponent } from './hover-card-interactive/hover-card-interactive.component';
 import { HoverCardApiComponent } from './hover-card-api/hover-card-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-hover-card-docs',
-    standalone: true,
     imports: [
-        CommonModule,
-        HoverCardOverviewComponent,
-        HoverCardInteractiveComponent,
-        HoverCardApiComponent,
-        DocsWrapperComponent
-    ],
+    HoverCardOverviewComponent,
+    HoverCardInteractiveComponent,
+    HoverCardApiComponent,
+    DocsWrapperComponent
+],
     templateUrl: './hover-card-docs.component.html'
 })
 export class HoverCardDocsComponent implements OnInit {

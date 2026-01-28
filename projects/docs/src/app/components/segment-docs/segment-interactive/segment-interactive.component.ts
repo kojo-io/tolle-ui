@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent, SegmentItem } from '../../../../../../tolle/src/lib/segment.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
@@ -9,16 +9,14 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-segment-interactive',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        SwitchComponent,
-        SelectComponent,
-        SelectItemComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    SegmentedComponent,
+    SwitchComponent,
+    SelectComponent,
+    SelectItemComponent,
+    PlaygroundComponent
+],
     templateUrl: './segment-interactive.component.html'
 })
 export class SegmentInteractiveComponent {

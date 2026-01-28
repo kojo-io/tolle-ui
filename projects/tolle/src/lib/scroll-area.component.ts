@@ -1,26 +1,26 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input } from '@angular/core';
+
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-scroll-area',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+  selector: 'tolle-scroll-area',
+  standalone: true,
+  imports: [],
+  template: `
     <div 
-      [class]="cn('relative overflow-hidden', class)"
-      [style.height]="height"
+      [class]="cn('relative overflow-hidden', class())"
+      [style.height]="height()"
     >
       <div 
         class="h-full w-full rounded-[inherit] overflow-auto scrollbar-hide select-none"
-        [class.overflow-x-hidden]="orientation === 'vertical'"
-        [class.overflow-y-hidden]="orientation === 'horizontal'"
+        [class.overflow-x-hidden]="orientation() === 'vertical'"
+        [class.overflow-y-hidden]="orientation() === 'horizontal'"
       >
         <ng-content></ng-content>
       </div>
     </div>
   `,
-    styles: [`
+  styles: [`
     :host { display: block; }
     
     .scrollbar-hide::-webkit-scrollbar {
@@ -51,9 +51,9 @@ import { cn } from './utils/cn';
   `]
 })
 export class ScrollAreaComponent {
-    @Input() class: string = '';
-    @Input() height: string = '100%';
-    @Input() orientation: 'vertical' | 'horizontal' | 'both' = 'both';
+  class = input<string>('');
+  height = input<string>('100%');
+  orientation = input<'vertical' | 'horizontal' | 'both'>('both');
 
-    cn = cn;
+  protected cn = cn;
 }

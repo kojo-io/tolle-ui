@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { DataTableComponent, TableColumn } from '../../../../../../tolle/src/lib/data-table.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -10,18 +10,16 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 import { TolleCellDirective } from '../../../../../../tolle/src/lib/tolle-cell.directive';
 
 @Component({
-  selector: 'app-data-table-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-data-table-interactive',
+    imports: [
     FormsModule,
     DataTableComponent,
     PlaygroundComponent,
     SelectComponent,
     SelectItemComponent,
     CheckboxComponent
-  ],
-  templateUrl: './data-table-interactive.component.html'
+],
+    templateUrl: './data-table-interactive.component.html'
 })
 export class DataTableInteractiveComponent {
   searchable = true;

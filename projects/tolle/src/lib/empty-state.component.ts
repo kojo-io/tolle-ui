@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input } from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -23,47 +23,51 @@ type EmptyStateVariants = VariantProps<typeof emptyStateVariants>;
 @Component({
   selector: 'tolle-empty-state',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div [class]="cn(emptyStateVariants({ variant }), class)">
-
+    <div [class]="cn(emptyStateVariants({ variant: variant() }), class())">
+    
       <div [class]="cn(
         'flex items-center justify-center rounded-full bg-muted',
-        variant === 'minimal' ? 'h-12 w-12' : 'h-20 w-20'
+        variant() === 'minimal' ? 'h-12 w-12' : 'h-20 w-20'
       )">
         <ng-content select="[icon]">
           <i [class]="cn(
             'ri-inbox-line text-muted-foreground/60',
-            variant === 'minimal' ? 'text-xl' : 'text-3xl'
+            variant() === 'minimal' ? 'text-xl' : 'text-3xl'
           )"></i>
         </ng-content>
       </div>
-
+    
       <h3 [class]="cn(
         'font-semibold text-foreground',
-        variant === 'minimal' ? 'mt-2 text-sm' : 'mt-4 text-lg'
+        variant() === 'minimal' ? 'mt-2 text-sm' : 'mt-4 text-lg'
       )">
-        {{ title }}
+        {{ title() }}
       </h3>
-
-      <p *ngIf="description" [class]="cn(
-        'text-muted-foreground',
-        variant === 'minimal' ? 'mt-1 text-xs' : 'mb-6 mt-2 max-w-sm text-sm'
-      )">
-        {{ description }}
-      </p>
-
-      <div *ngIf="variant !== 'minimal'" class="flex items-center justify-center gap-3">
-        <ng-content select="[actions]"></ng-content>
-      </div>
+    
+      @if (description()) {
+        <p [class]="cn(
+          'text-muted-foreground',
+          variant() === 'minimal' ? 'mt-1 text-xs' : 'mb-6 mt-2 max-w-sm text-sm'
+        )">
+          {{ description() }}
+        </p>
+      }
+    
+      @if (variant() !== 'minimal') {
+        <div class="flex items-center justify-center gap-3">
+          <ng-content select="[actions]"></ng-content>
+        </div>
+      }
     </div>
-  `
+    `
 })
 export class EmptyStateComponent {
-  @Input() variant: EmptyStateVariants['variant'] = 'default';
-  @Input() title: string = 'No items found';
-  @Input() description?: string;
-  @Input() class: string = '';
+  variant = input<EmptyStateVariants['variant']>('default');
+  title = input<string>('No items found');
+  description = input<string | undefined>();
+  class = input<string>('');
 
   protected emptyStateVariants = emptyStateVariants;
   protected cn = cn;

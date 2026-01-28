@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
 
 @Component({
-  selector: 'app-breadcrumb-overview',
-  standalone: true,
-  imports: [BaseEditorComponent],
-  templateUrl: './breadcrumb-overview.component.html'
+    selector: 'app-breadcrumb-overview',
+    imports: [BaseEditorComponent],
+    templateUrl: './breadcrumb-overview.component.html'
 })
 export class BreadcrumbOverviewComponent {
   installationCode = `import { 

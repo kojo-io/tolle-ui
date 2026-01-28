@@ -10,9 +10,6 @@ import { Component } from '@angular/core';
         <i class="ri-arrow-right-s-line"></i>
       </ng-content>
     </li>
-  `,
-  styles: ``
+  `
 })
-export class BreadcrumbSeparatorComponent {
-
-}
+export class BreadcrumbSeparatorComponent { }

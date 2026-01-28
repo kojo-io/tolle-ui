@@ -9,33 +9,34 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
 
 @Component({
-  selector: 'app-calendar-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CalendarComponent,
-    PlaygroundComponent,
-    SelectComponent,
-    SelectItemComponent,
-    CheckboxComponent
-  ],
-  template: `
+    selector: 'app-calendar-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CalendarComponent,
+        PlaygroundComponent,
+        SelectComponent,
+        SelectItemComponent,
+        CheckboxComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <div class="flex flex-col items-center gap-4">
-            <p class="text-sm text-muted-foreground" *ngIf="date">Selected: {{ date | date:'fullDate' }}</p>
-            <tolle-calendar 
+            @if (date) {
+              <p class="text-sm text-muted-foreground">Selected: {{ date | date:'fullDate' }}</p>
+            }
+            <tolle-calendar
               [(ngModel)]="date"
-              [mode]="mode" 
+              [mode]="mode"
               [disablePastDates]="disablePastDates"
               [showQuickActions]="showQuickActions">
             </tolle-calendar>
           </div>
         </div>
-
+    
         <div controls class="space-y-4">
           <div class="space-y-2">
             <label class="text-sm font-medium">Mode</label>
@@ -45,12 +46,12 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
               <tolle-select-item value="year">Year</tolle-select-item>
             </tolle-select>
           </div>
-
+    
           <div class="flex items-center gap-2 py-2">
             <tolle-checkbox [(ngModel)]="disablePastDates" size="sm"></tolle-checkbox>
             <label class="text-sm font-medium cursor-pointer" (click)="disablePastDates = !disablePastDates">Disable Past Dates</label>
           </div>
-
+    
           <div class="flex items-center gap-2 py-2">
             <tolle-checkbox [(ngModel)]="showQuickActions" size="sm"></tolle-checkbox>
             <label class="text-sm font-medium cursor-pointer" (click)="showQuickActions = !showQuickActions">Show Quick Actions</label>
@@ -58,7 +59,7 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
         </div>
       </app-playground>
     </section>
-  `
+    `
 })
 export class CalendarInteractiveComponent {
   date: Date = new Date();

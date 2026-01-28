@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-masked-input-docs',
-    standalone: true,
     imports: [
         MaskedInputOverviewComponent,
         MaskedInputInteractiveComponent,
         MaskedInputApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './masked-input-docs.component.html',
     styleUrl: './masked-input-docs.component.css'

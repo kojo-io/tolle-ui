@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -10,17 +10,15 @@ import { BadgeWithIconsComponent } from '../../../docs-examples/badge/badge-with
 
 @Component({
     selector: 'app-badge-examples',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
-        BasicBadgeComponent,
-        BadgeSizesComponent,
-        BadgeRemovableComponent,
-        BadgeWithIconsComponent
-    ],
+    FormsModule,
+    SegmentedComponent,
+    BaseEditorComponent,
+    BasicBadgeComponent,
+    BadgeSizesComponent,
+    BadgeRemovableComponent,
+    BadgeWithIconsComponent
+],
     templateUrl: './badge-examples.component.html'
 })
 export class BadgeExamplesComponent {

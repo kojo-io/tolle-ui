@@ -1,7 +1,7 @@
 import {
-  Component, Input, forwardRef, ElementRef, ViewChild, HostListener, ChangeDetectorRef
+  Component, input, forwardRef, ElementRef, viewChild, HostListener, ChangeDetectorRef, signal, computed, inject
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom';
 import { cn } from './utils/cn';
@@ -13,7 +13,7 @@ import { DateRange } from './types/date-range';
 @Component({
   selector: 'tolle-date-range-picker',
   standalone: true,
-  imports: [CommonModule, FormsModule, RangeCalendarComponent, InputComponent],
+  imports: [FormsModule, RangeCalendarComponent, InputComponent],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -24,71 +24,73 @@ import { DateRange } from './types/date-range';
   template: `
     <div class="relative w-full" #triggerContainer>
       <tolle-input
-        [placeholder]="placeholder"
-        [disabled]="disabled"
-        [ngModel]="displayValue"
-        [class]="class"
-      >
+        [placeholder]="placeholder()"
+        [disabled]="disabled()"
+        [ngModel]="displayValue()"
+        [class]="className()"
+        >
         <div suffix class="flex items-center gap-1.5 cursor-pointer">
-          <i
-            *ngIf="(value.start || value.end) && !disabled"
-            (click)="clear($event)"
-            class="ri-close-line cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
-          ></i>
-
+          @if ((value().start || value().end) && !disabled()) {
+            <i
+              (click)="clear($event)"
+              class="ri-close-line cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
+            ></i>
+          }
+    
           <i
             (click)="togglePopover($event)"
             class="ri-calendar-line cursor-pointer text-muted-foreground hover:text-primary transition-colors"
           ></i>
         </div>
       </tolle-input>
-
-      <div
-        #popover
-        *ngIf="isOpen"
-        class="fixed z-50"
-        style="visibility: hidden;"
-      >
-        <tolle-range-calendar class="shadow-lg"
-          [ngModel]="value"
-          (rangeSelect)="onCalendarSelect($event)"
-          [disablePastDates]="disablePastDates"
-        ></tolle-range-calendar>
-      </div>
+    
+      @if (isOpen()) {
+        <div
+          #popover
+          class="fixed z-50"
+          style="visibility: hidden;"
+          >
+          <tolle-range-calendar class="shadow-lg"
+            [ngModel]="value()"
+            (rangeSelect)="onCalendarSelect($event)"
+            [disablePastDates]="disablePastDates()"
+          ></tolle-range-calendar>
+        </div>
+      }
     </div>
   `
 })
 export class DateRangePickerComponent implements ControlValueAccessor {
-  @Input() disabled = false;
-  @Input() placeholder = 'Pick a date range';
-  @Input() class = '';
-  @Input() disablePastDates = false;
-  @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  disabled = input(false);
+  placeholder = input('Pick a date range');
+  className = input('', { alias: 'class' });
+  disablePastDates = input(false);
+  inputSize = input<'xs' | 'sm' | 'default' | 'lg'>('default', { alias: 'size' });
 
-  @ViewChild('triggerContainer') triggerContainer!: ElementRef;
-  @ViewChild('popover') popover!: ElementRef;
+  triggerContainer = viewChild<ElementRef>('triggerContainer');
+  popover = viewChild<ElementRef>('popover');
 
-  value: DateRange = { start: null, end: null };
-  isOpen = false;
-  cleanupAutoUpdate?: () => void;
+  value = signal<DateRange>({ start: null, end: null });
+  isOpen = signal(false);
+  private cleanupAutoUpdate?: () => void;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  private cdr = inject(ChangeDetectorRef);
 
-  get displayValue(): string {
-    if (!this.value.start) return '';
+  displayValue = computed(() => {
+    const val = this.value();
+    if (!val.start) return '';
 
-    const startStr = format(this.value.start, 'MMM dd, yyyy');
-    if (!this.value.end) return startStr;
+    const startStr = format(val.start, 'MMM dd, yyyy');
+    if (!val.end) return startStr;
 
-    const endStr = format(this.value.end, 'MMM dd, yyyy');
+    const endStr = format(val.end, 'MMM dd, yyyy');
     return `${startStr} - ${endStr}`;
-  }
+  });
 
   onCalendarSelect(range: DateRange) {
-    this.value = range;
-    this.onChange(this.value);
+    this.value.set(range);
+    this.onChange(range);
 
-    // Close only if range is complete
     if (range.start && range.end) {
       setTimeout(() => this.close(), 150);
     }
@@ -96,17 +98,17 @@ export class DateRangePickerComponent implements ControlValueAccessor {
 
   togglePopover(event: MouseEvent) {
     event.stopPropagation();
-    if (this.disabled) return;
-    this.isOpen ? this.close() : this.open();
+    if (this.disabled()) return;
+    this.isOpen() ? this.close() : this.open();
   }
 
   open() {
-    this.isOpen = true;
+    this.isOpen.set(true);
     setTimeout(() => this.updatePosition());
   }
 
   close() {
-    this.isOpen = false;
+    this.isOpen.set(false);
     if (this.cleanupAutoUpdate) {
       this.cleanupAutoUpdate();
       this.cleanupAutoUpdate = undefined;
@@ -115,22 +117,23 @@ export class DateRangePickerComponent implements ControlValueAccessor {
 
   clear(event: MouseEvent) {
     event.stopPropagation();
-    this.value = { start: null, end: null };
-    this.onChange(this.value);
+    this.value.set({ start: null, end: null });
+    this.onChange(this.value());
     this.cdr.markForCheck();
   }
 
-  // --- Floating UI Positioning with Fixed Strategy ---
   private updatePosition() {
-    if (!this.triggerContainer || !this.popover) return;
+    const trigger = this.triggerContainer()?.nativeElement;
+    const popover = this.popover()?.nativeElement;
+    if (!trigger || !popover) return;
 
     this.cleanupAutoUpdate = autoUpdate(
-      this.triggerContainer.nativeElement,
-      this.popover.nativeElement,
+      trigger,
+      popover,
       () => {
-        computePosition(this.triggerContainer.nativeElement, this.popover.nativeElement, {
+        computePosition(trigger, popover, {
           placement: 'bottom-end',
-          strategy: 'fixed', // Use fixed to escape column layout
+          strategy: 'fixed',
           middleware: [
             offset(4),
             flip({
@@ -140,27 +143,25 @@ export class DateRangePickerComponent implements ControlValueAccessor {
             shift({ padding: 8 }),
             size({
               apply({ rects, elements, availableHeight }) {
-                // Constrain popover to available space
                 Object.assign(elements.floating.style, {
                   maxHeight: `${Math.min(400, availableHeight)}px`,
-                  minWidth: `${Math.max(rects.reference.width, 320)}px`, // Calendar minimum width
+                  minWidth: `${Math.max(rects.reference.width, 320)}px`,
                 });
               }
             })
           ],
         }).then(({ x, y, placement }) => {
-          Object.assign(this.popover.nativeElement.style, {
+          Object.assign(popover.style, {
             left: `${x}px`,
             top: `${y}px`,
             visibility: 'visible',
           });
 
-          // Optional: Add placement class for styling
-          this.popover.nativeElement.classList.remove('calendar-top', 'calendar-bottom');
+          popover.classList.remove('calendar-top', 'calendar-bottom');
           if (placement.includes('top')) {
-            this.popover.nativeElement.classList.add('calendar-top');
+            popover.classList.add('calendar-top');
           } else {
-            this.popover.nativeElement.classList.add('calendar-bottom');
+            popover.classList.add('calendar-bottom');
           }
         });
       }
@@ -169,41 +170,40 @@ export class DateRangePickerComponent implements ControlValueAccessor {
 
   @HostListener('document:mousedown', ['$event'])
   onClickOutside(event: MouseEvent) {
-    if (this.isOpen &&
-      !this.triggerContainer.nativeElement.contains(event.target) &&
-      !this.popover?.nativeElement.contains(event.target)) {
+    const trigger = this.triggerContainer()?.nativeElement;
+    const popover = this.popover()?.nativeElement;
+    if (this.isOpen() && trigger && popover &&
+      !trigger.contains(event.target) &&
+      !popover.contains(event.target)) {
       this.close();
     }
   }
 
   @HostListener('window:resize')
   onWindowResize() {
-    if (this.isOpen) {
-      this.close(); // Close on resize for simplicity
+    if (this.isOpen()) {
+      this.close();
     }
   }
 
-  @HostListener('window:scroll')
-  onWindowScroll() {
-    // Floating-UI's autoUpdate handles scroll repositioning
-  }
-
   // --- Control Value Accessor ---
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: (value: DateRange) => void = () => { };
+  onTouched: () => void = () => { };
 
   writeValue(val: DateRange | null): void {
     if (val) {
-      this.value = { ...val };
+      this.value.set({ ...val });
     } else {
-      this.value = { start: null, end: null };
+      this.value.set({ start: null, end: null });
     }
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  registerOnChange(fn: (value: DateRange) => void): void { this.onChange = fn; }
+  registerOnTouched(fn: () => void): void { this.onTouched = fn; }
+  setDisabledState(isDisabled: boolean): void {
+    // disabled is an input
+  }
 
   protected cn = cn;
 }

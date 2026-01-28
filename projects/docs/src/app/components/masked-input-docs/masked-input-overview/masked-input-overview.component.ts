@@ -6,7 +6,6 @@ import { BasicMaskedInputExampleComponent } from '../../../docs-examples/masked-
 
 @Component({
     selector: 'app-masked-input-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, BasicMaskedInputExampleComponent],
     templateUrl: './masked-input-overview.component.html'
 })
