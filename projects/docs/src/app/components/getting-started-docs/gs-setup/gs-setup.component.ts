@@ -3,14 +3,14 @@ import { BaseService } from '../../../shared/base.service';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
 
 @Component({
-    selector: 'app-gs-setup',
-    imports: [BaseEditorComponent],
-    templateUrl: './gs-setup.component.html'
+  selector: 'app-gs-setup',
+  imports: [BaseEditorComponent],
+  templateUrl: './gs-setup.component.html'
 })
 export class GSSetupComponent {
-    baseService = inject(BaseService);
+  baseService = inject(BaseService);
 
-    appConfigCode = `import { ApplicationConfig } from '@angular/core';
+  appConfigCode = `import { ApplicationConfig } from '@angular/core';
 import { provideTolleConfig } from '@tolle_/tolle-ui';
 
 export const appConfig: ApplicationConfig = {
@@ -23,20 +23,17 @@ export const appConfig: ApplicationConfig = {
   ]
 };`;
 
-    tailwindConfigCode = `const { tolleUi } = require('@tolle_/tolle-ui/tailwind');
-
+  tailwindConfigCode = `/** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
+  presets: [
+    require('@tolle_/tolle-ui/preset') // Point to your library preset
+  ],
   content: [
     "./src/**/*.{html,ts}",
-    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs}"
+    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs,html}"
   ],
-  plugins: [tolleUi()],
+  plugins: [],
 };`;
-
-    globalStyles = `{
-  "styles": [
-    "src/styles.css",
-    "node_modules/@tolle_/tolle-ui/styles/theme.css"
-  ]
-}`;
 }
+
