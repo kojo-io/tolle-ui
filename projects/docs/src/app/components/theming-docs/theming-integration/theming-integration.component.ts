@@ -17,8 +17,7 @@ export class ThemingIntegrationComponent {
   ]
 }`;
 
-  tailwindConfigCode = `const { tolleUi } = require('@tolle_/tolle-ui/tailwind');
-
+  tailwindConfigCode = `
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
