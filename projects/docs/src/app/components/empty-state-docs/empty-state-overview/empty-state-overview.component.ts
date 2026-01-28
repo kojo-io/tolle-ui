@@ -6,7 +6,6 @@ import { BasicEmptyStateComponent } from '../../../docs-examples/empty-state/bas
 
 @Component({
     selector: 'app-empty-state-overview',
-    standalone: true,
     imports: [CommonModule, AsyncPipe, BaseEditorComponent, BasicEmptyStateComponent],
     templateUrl: './empty-state-overview.component.html'
 })

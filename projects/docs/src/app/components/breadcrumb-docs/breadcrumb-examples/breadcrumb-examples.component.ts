@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -8,17 +8,15 @@ import { BasicBreadcrumbComponent } from '../../../docs-examples/breadcrumb/basi
 import { CustomSeparatorBreadcrumbComponent } from '../../../docs-examples/breadcrumb/custom-separator-breadcrumb.component';
 
 @Component({
-  selector: 'app-breadcrumb-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-breadcrumb-examples',
+    imports: [
     FormsModule,
     SegmentedComponent,
     BaseEditorComponent,
     BasicBreadcrumbComponent,
     CustomSeparatorBreadcrumbComponent
-  ],
-  templateUrl: './breadcrumb-examples.component.html'
+],
+    templateUrl: './breadcrumb-examples.component.html'
 })
 export class BreadcrumbExamplesComponent {
   sourceService = inject(SourceCodeService);

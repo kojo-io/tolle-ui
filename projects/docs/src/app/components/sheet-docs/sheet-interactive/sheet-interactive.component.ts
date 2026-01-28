@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
 import {
@@ -22,7 +22,6 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
   selector: 'app-sheet-interactive',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     SheetComponent,
     SheetTriggerComponent,
@@ -48,7 +47,7 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
         <div class="lg:col-span-2 p-12 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[500px]">
           <tolle-sheet [hasBackdrop]="hasBackdrop">
             <tolle-sheet-trigger>
-              <button tolle-button variant="outline">Open Sheet</button>
+              <tolle-button variant="outline">Open Sheet</tolle-button>
             </tolle-sheet-trigger>
             <tolle-sheet-content [side]="side" [rounded]="rounded">
               <tolle-sheet-header>
@@ -60,17 +59,17 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
               
               <div class="grid gap-4 py-4">
                 <div class="grid grid-cols-4 items-center gap-4">
-                  <label tolle-label for="name" class="text-right">Name</label>
-                  <input tolle-input id="name" value="Pedro Duarte" class="col-span-3" />
+                  <tolle-label for="name" class="text-right">Name</tolle-label>
+                  <tolle-input id="name" value="Pedro Duarte" class="col-span-3"></tolle-input>
                 </div>
                 <div class="grid grid-cols-4 items-center gap-4">
-                  <label tolle-label for="username" class="text-right">Username</label>
-                  <input tolle-input id="username" value="@peduarte" class="col-span-3" />
+                  <tolle-label for="username" class="text-right">Username</tolle-label>
+                  <tolle-input id="username" value="@peduarte" class="col-span-3"></tolle-input>
                 </div>
               </div>
               
               <tolle-sheet-footer>
-                <button tolle-button type="submit">Save changes</button>
+                <tolle-button type="submit">Save changes</tolle-button>
               </tolle-sheet-footer>
             </tolle-sheet-content>
           </tolle-sheet>
@@ -82,7 +81,7 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
           
           <div class="space-y-6">
             <div>
-              <label tolle-label class="mb-2 block">Side</label>
+              <tolle-label class="mb-2 block">Side</tolle-label>
               <tolle-select [(ngModel)]="side">
                 <tolle-select-item value="top">Top</tolle-select-item>
                 <tolle-select-item value="bottom">Bottom</tolle-select-item>
@@ -92,12 +91,12 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
             </div>
 
             <div class="flex items-center justify-between">
-              <label tolle-label>Show Backdrop</label>
+              <tolle-label>Show Backdrop</tolle-label>
               <tolle-switch [(ngModel)]="hasBackdrop"></tolle-switch>
             </div>
 
             <div class="flex items-center justify-between">
-              <label tolle-label>Rounded Corners</label>
+              <tolle-label>Rounded Corners</tolle-label>
               <tolle-switch [(ngModel)]="rounded"></tolle-switch>
             </div>
           </div>
@@ -121,7 +120,7 @@ export class SheetInteractiveComponent {
   get code() {
     return `<tolle-sheet [hasBackdrop]="${this.hasBackdrop}">
   <tolle-sheet-trigger>
-    <button tolle-button variant="outline">Open Sheet</button>
+    <tolle-button variant="outline">Open Sheet</tolle-button>
   </tolle-sheet-trigger>
   <tolle-sheet-content side="${this.side}" [rounded]="${this.rounded}">
     <tolle-sheet-header>
@@ -132,7 +131,7 @@ export class SheetInteractiveComponent {
     </tolle-sheet-header>
     <!-- Content goes here -->
     <tolle-sheet-footer>
-      <button tolle-button type="submit">Save changes</button>
+      <tolle-button type="submit">Save changes</tolle-button>
     </tolle-sheet-footer>
   </tolle-sheet-content>
 </tolle-sheet>`;

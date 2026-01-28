@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DropdownMenuComponent } from '../../../../../../tolle/src/lib/dropdown-menu.component';
 import { DropdownTriggerDirective } from '../../../../../../tolle/src/lib/dropdown-trigger.directive';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
-  selector: 'app-basic-dropdown',
-  standalone: true,
-  imports: [CommonModule, DropdownMenuComponent, DropdownTriggerDirective, ButtonComponent],
-  template: `
+    selector: 'app-basic-dropdown',
+    imports: [DropdownMenuComponent, DropdownTriggerDirective, ButtonComponent],
+    template: `
     <tolle-button variant="outline" [tolleDropdownTrigger]="menu">
       Open Menu
       <i class="ri-arrow-down-s-line ml-2"></i>

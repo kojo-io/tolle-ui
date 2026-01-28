@@ -50,7 +50,7 @@
               [ngModel]="theme.primaryColor" (ngModelChange)="changeBrand($event)">
           </div>
           <tolle-button variant="ghost" size="icon" (click)="toggle()">
-            <i [class]="(theme.isDark$ | async) ? 'ri-sun-line' : 'ri-moon-line'"></i>
+            <i [class]="theme.isDark() ? 'ri-sun-line' : 'ri-moon-line'"></i>
           </tolle-button>
         </div>
       </header>

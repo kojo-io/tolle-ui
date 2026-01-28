@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, Type } from '@angular/core';
+import { Component, OnInit, TemplateRef, Type, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ModalRef } from './modal-ref';
 import { cn } from './utils/cn';
@@ -8,75 +8,78 @@ import { cn } from './utils/cn';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div [class]="modalClasses" class="pointer-events-auto" (mousedown)="$event.stopPropagation()">
-
-      <div *ngIf="ref.modal.showCloseButton || ref.modal.title" class="flex items-center justify-between px-6 pt-6">
-        <h3 *ngIf="ref.modal.title" class="text-lg font-semibold text-foreground tracking-tight">
-          {{ ref.modal.title }}
-        </h3>
-        <button *ngIf="ref.modal.showCloseButton" (click)="ref.close()" class="ml-auto p-1 text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
-          <i class="ri-close-line text-2xl"></i>
-        </button>
-      </div>
-
+    <div [class]="computedModalClasses()" class="pointer-events-auto" (mousedown)="$event.stopPropagation()">
+    
+      @if (ref.modal.showCloseButton || ref.modal.title) {
+        <div class="flex items-center justify-between px-6 pt-6">
+          @if (ref.modal.title) {
+            <h3 class="text-lg font-semibold text-foreground tracking-tight">
+              {{ ref.modal.title }}
+            </h3>
+          }
+          @if (ref.modal.showCloseButton) {
+            <button (click)="ref.close()" class="ml-auto p-1 text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
+              <i class="ri-close-line text-2xl"></i>
+            </button>
+          }
+        </div>
+      }
+    
       <div class="px-6 pb-6 pt-4 overflow-y-auto max-h-[80vh] text-foreground">
-        <ng-container [ngSwitch]="contentType">
-          <div *ngSwitchCase="'string'">{{ content }}</div>
-
-          <ng-container *ngSwitchCase="'template'">
-            <ng-container *ngTemplateOutlet="asTemplate; context: ref.modal.context"></ng-container>
-          </ng-container>
-
-          <ng-container *ngSwitchCase="'component'">
-            <ng-container *ngComponentOutlet="asComponent"></ng-container>
-          </ng-container>
-        </ng-container>
+        @switch (contentType()) {
+          @case ('string') {
+            <div>{{ content() }}</div>
+          }
+          @case ('template') {
+            <ng-container *ngTemplateOutlet="asTemplate(); context: ref.modal.context"></ng-container>
+          }
+          @case ('component') {
+            <ng-container *ngComponentOutlet="asComponent()"></ng-container>
+          }
+        }
       </div>
     </div>
   `,
   styles: [`
     :host {
-      display: contents; /* This makes the host "disappear" so the div targets the overlay pane directly */
+      display: contents;
     }
   `]
 })
 export class ModalComponent implements OnInit {
-  contentType: 'template' | 'string' | 'component' = 'string';
-  content: any;
-  modalClasses = '';
+  public ref = inject(ModalRef);
 
-  constructor(public ref: ModalRef) {}
+  contentType = signal<'template' | 'string' | 'component'>('string');
+  content = signal<any>(null);
+
+  constructor() { }
 
   ngOnInit() {
-    this.content = this.ref.modal.content;
-    this.modalClasses = this.getModalSizeCss();
-    this.determineContentType();
+    const val = this.ref.modal.content;
+    this.content.set(val);
+    this.determineContentType(val);
   }
 
-  private getModalSizeCss(): string {
+  computedModalClasses = computed(() => {
     const { size } = this.ref.modal;
 
     return cn(
-      // Base classes: Added 'w-full' and 'mx-auto'
       'bg-background border border-border shadow-lg relative flex flex-col w-full mx-auto ',
-
       size === 'fullscreen' ? 'h-screen w-screen rounded-none' : 'rounded-md',
-
-      // Sizing scale with explicit max-widths
       size === 'xs' && 'max-w-[320px]',
       size === 'sm' && 'max-w-[425px]',
       size === 'default' && 'max-w-[544px]',
       size === 'lg' && 'max-w-[1024px]'
     );
+  });
+
+  private determineContentType(content: any) {
+    if (typeof content === 'string') this.contentType.set('string');
+    else if (content instanceof TemplateRef) this.contentType.set('template');
+    else this.contentType.set('component');
   }
 
-  private determineContentType() {
-    if (typeof this.content === 'string') this.contentType = 'string';
-    else if (this.content instanceof TemplateRef) this.contentType = 'template';
-    else this.contentType = 'component';
-  }
-
-  get asTemplate() { return this.content as TemplateRef<any>; }
-  get asComponent() { return this.content as Type<any>; }
+  asTemplate = computed(() => this.content() as TemplateRef<any>);
+  asComponent = computed(() => this.content() as Type<any>);
   protected cn = cn;
 }

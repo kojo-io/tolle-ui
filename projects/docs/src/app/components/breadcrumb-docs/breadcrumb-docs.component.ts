@@ -8,17 +8,15 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 import { BaseService } from '../../shared/base.service';
 
 @Component({
-  selector: 'app-breadcrumb-docs',
-  standalone: true,
-  imports: [
-    BreadcrumbOverviewComponent,
-    BreadcrumbInteractiveComponent,
-    BreadcrumbExamplesComponent,
-    BreadcrumbApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './breadcrumb-docs.component.html'
+    selector: 'app-breadcrumb-docs',
+    imports: [
+        BreadcrumbOverviewComponent,
+        BreadcrumbInteractiveComponent,
+        BreadcrumbExamplesComponent,
+        BreadcrumbApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './breadcrumb-docs.component.html'
 })
 export class BreadcrumbDocsComponent {
   baseService = inject(BaseService);

@@ -1,18 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseService } from '../../../shared/base.service';
 import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-data-table-overview',
-    standalone: true,
     imports: [
-        BaseEditorComponent,
-        NgIf,
-        AsyncPipe
-    ],
+    BaseEditorComponent,
+    AsyncPipe
+],
     templateUrl: './data-table-overview.component.html'
 })
 export class DataTableOverviewComponent implements OnInit {

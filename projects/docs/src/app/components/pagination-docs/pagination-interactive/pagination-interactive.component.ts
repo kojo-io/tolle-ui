@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { PaginationComponent } from '../../../../../../tolle/src/lib/pagination.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
@@ -8,15 +8,13 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-pagination-interactive',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        PaginationComponent,
-        InputComponent,
-        CheckboxComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    PaginationComponent,
+    InputComponent,
+    CheckboxComponent,
+    PlaygroundComponent
+],
     templateUrl: './pagination-interactive.component.html'
 })
 export class PaginationInteractiveComponent {

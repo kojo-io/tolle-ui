@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -10,10 +10,8 @@ import { IconButtonComponent } from '../../../docs-examples/button/icon-button.c
 import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.component';
 
 @Component({
-  selector: 'app-button-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-button-examples',
+    imports: [
     FormsModule,
     SegmentedComponent,
     BaseEditorComponent,
@@ -21,11 +19,11 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
     DestructiveButtonComponent,
     IconButtonComponent,
     BusyButtonComponent
-  ],
-  template: `
+],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Examples</h2>
-
+    
       <!-- Basic -->
       <div class="space-y-4 mb-12" id="basic">
         <h3 class="text-xl font-semibold text-foreground">Basic</h3>
@@ -33,14 +31,18 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
         <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
         </div>
-        <div *ngIf="basicTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-          <app-basic-button />
-        </div>
-        <div *ngIf="basicTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-          <app-base-editor [code]="basicCode" language="typescript" />
-        </div>
+        @if (basicTab === 'preview') {
+          <div class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+            <app-basic-button />
+          </div>
+        }
+        @if (basicTab === 'code') {
+          <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <app-base-editor [code]="basicCode" language="typescript" />
+          </div>
+        }
       </div>
-
+    
       <!-- Destructive -->
       <div class="space-y-4 mb-12" id="destructive">
         <h3 class="text-xl font-semibold text-foreground">Destructive</h3>
@@ -48,14 +50,18 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
         <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="destructiveTab" />
         </div>
-        <div *ngIf="destructiveTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-          <app-destructive-button />
-        </div>
-        <div *ngIf="destructiveTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-          <app-base-editor [code]="destructiveCode" language="typescript" />
-        </div>
+        @if (destructiveTab === 'preview') {
+          <div class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+            <app-destructive-button />
+          </div>
+        }
+        @if (destructiveTab === 'code') {
+          <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <app-base-editor [code]="destructiveCode" language="typescript" />
+          </div>
+        }
       </div>
-
+    
       <!-- Icon -->
       <div class="space-y-4 mb-12" id="icon">
         <h3 class="text-xl font-semibold text-foreground">Icons</h3>
@@ -63,14 +69,18 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
         <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="iconTab" />
         </div>
-        <div *ngIf="iconTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-          <app-icon-button />
-        </div>
-        <div *ngIf="iconTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-          <app-base-editor [code]="iconCode" language="typescript" />
-        </div>
+        @if (iconTab === 'preview') {
+          <div class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+            <app-icon-button />
+          </div>
+        }
+        @if (iconTab === 'code') {
+          <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <app-base-editor [code]="iconCode" language="typescript" />
+          </div>
+        }
       </div>
-
+    
       <!-- Busy -->
       <div class="space-y-4 mb-12" id="busy">
         <h3 class="text-xl font-semibold text-foreground">Busy State</h3>
@@ -78,15 +88,19 @@ import { BusyButtonComponent } from '../../../docs-examples/button/busy-button.c
         <div class="w-full md:w-1/4">
           <tolle-segment [items]="viewOptions" [(ngModel)]="busyTab" />
         </div>
-        <div *ngIf="busyTab === 'preview'" class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-          <app-busy-button />
-        </div>
-        <div *ngIf="busyTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-          <app-base-editor [code]="busyCode" language="typescript" />
-        </div>
+        @if (busyTab === 'preview') {
+          <div class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+            <app-busy-button />
+          </div>
+        }
+        @if (busyTab === 'code') {
+          <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <app-base-editor [code]="busyCode" language="typescript" />
+          </div>
+        }
       </div>
     </section>
-  `
+    `
 })
 export class ButtonExamplesComponent {
   sourceService = inject(SourceCodeService);

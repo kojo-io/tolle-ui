@@ -8,18 +8,16 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-check-box-docs',
-  standalone: true,
-  imports: [
-    CheckBoxOverviewComponent,
-    CheckBoxInteractiveComponent,
-    CheckBoxExamplesComponent,
-    CheckBoxApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './check-box-docs.component.html',
-  styleUrl: './check-box-docs.component.css'
+    selector: 'app-check-box-docs',
+    imports: [
+        CheckBoxOverviewComponent,
+        CheckBoxInteractiveComponent,
+        CheckBoxExamplesComponent,
+        CheckBoxApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './check-box-docs.component.html',
+    styleUrl: './check-box-docs.component.css'
 })
 export class CheckBoxDocsComponent {
   baseService = inject(BaseService);

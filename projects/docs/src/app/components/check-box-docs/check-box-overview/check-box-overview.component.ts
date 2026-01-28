@@ -3,7 +3,6 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 
 @Component({
     selector: 'app-check-box-overview',
-    standalone: true,
     imports: [BaseEditorComponent],
     templateUrl: './check-box-overview.component.html'
 })

@@ -6,7 +6,6 @@ import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
 
 @Component({
     selector: 'app-basic-range',
-    standalone: true,
     imports: [DateRangePickerComponent, FormsModule, DatePipe],
     template: `
     <div class="max-w-md w-full">

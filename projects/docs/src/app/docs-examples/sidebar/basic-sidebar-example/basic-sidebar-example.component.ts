@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { SidebarComponent, SidebarGroup } from '../../../../../../tolle/src/lib/sidebar.component';
 
 @Component({
     selector: 'app-basic-sidebar-example',
-    standalone: true,
-    imports: [CommonModule, SidebarComponent],
+    imports: [SidebarComponent],
     template: `
     <div class="w-full h-[600px] border border-input rounded-lg overflow-hidden flex bg-background">
       <tolle-sidebar [items]="sidebarItems" [collapsed]="false">

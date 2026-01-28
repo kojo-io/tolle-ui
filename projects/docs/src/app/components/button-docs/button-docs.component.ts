@@ -9,16 +9,15 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-button-docs',
-  standalone: true,
-  imports: [
-    ButtonOverviewComponent,
-    ButtonInteractiveComponent,
-    ButtonExamplesComponent,
-    ButtonApiComponent,
-    DocsWrapperComponent
-  ],
-  templateUrl: './button-docs.component.html'
+    selector: 'app-button-docs',
+    imports: [
+        ButtonOverviewComponent,
+        ButtonInteractiveComponent,
+        ButtonExamplesComponent,
+        ButtonApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './button-docs.component.html'
 })
 export class ButtonDocsComponent implements OnInit {
   baseService = inject(BaseService);

@@ -3,7 +3,6 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 
 @Component({
     selector: 'app-avatar-overview',
-    standalone: true,
     imports: [BaseEditorComponent],
     templateUrl: './avatar-overview.component.html'
 })

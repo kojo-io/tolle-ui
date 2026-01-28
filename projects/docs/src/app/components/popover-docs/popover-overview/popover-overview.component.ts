@@ -6,7 +6,6 @@ import { BasicPopoverExampleComponent } from '../../../docs-examples/popover/bas
 
 @Component({
     selector: 'app-popover-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, BasicPopoverExampleComponent],
     templateUrl: './popover-overview.component.html'
 })

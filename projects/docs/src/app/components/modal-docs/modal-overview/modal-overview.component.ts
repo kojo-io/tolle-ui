@@ -8,7 +8,6 @@ import { ComponentModalComponent } from '../../../docs-examples/modal/component-
 
 @Component({
     selector: 'app-modal-overview',
-    standalone: true,
     imports: [
         CommonModule,
         AsyncPipe,

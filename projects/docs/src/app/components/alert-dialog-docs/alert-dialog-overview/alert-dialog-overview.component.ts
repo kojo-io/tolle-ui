@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
 
 @Component({
-  selector: 'app-alert-dialog-overview',
-  standalone: true,
-  imports: [BaseEditorComponent],
-  template: `
+    selector: 'app-alert-dialog-overview',
+    imports: [BaseEditorComponent],
+    template: `
     <header class="mb-12 border-b border-neutral-200 dark:border-neutral-800 pb-8" id="overview">
       <h1 class="text-4xl font-extrabold tracking-tight mb-4 text-foreground">Alert Dialog</h1>
       <p class="text-lg text-muted-foreground mb-6">

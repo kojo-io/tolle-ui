@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 import { ButtonGroupComponent } from '../../../../../../tolle/src/lib/button-group.component';
@@ -8,18 +8,16 @@ import { SelectComponent } from '../../../../../../tolle/src/lib/select.componen
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 
 @Component({
-  selector: 'app-button-group-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-button-group-interactive',
+    imports: [
     FormsModule,
     ButtonComponent,
     ButtonGroupComponent,
     PlaygroundComponent,
     SelectComponent,
     SelectItemComponent
-  ],
-  template: `
+],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

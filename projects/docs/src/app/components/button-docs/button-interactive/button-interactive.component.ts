@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -8,18 +8,16 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
 
 @Component({
-  selector: 'app-button-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-button-interactive',
+    imports: [
     FormsModule,
     ButtonComponent,
     PlaygroundComponent,
     SelectComponent,
     SelectItemComponent,
     CheckboxComponent
-  ],
-  template: `
+],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 
 @Component({
-  selector: 'app-aspect-ratio-api',
-  standalone: true,
-  imports: [CommonModule, PropTableComponent],
-  templateUrl: './aspect-ratio-api.component.html'
+    selector: 'app-aspect-ratio-api',
+    imports: [PropTableComponent],
+    templateUrl: './aspect-ratio-api.component.html'
 })
 export class AspectRatioApiComponent {
   aspectRatioProps = [

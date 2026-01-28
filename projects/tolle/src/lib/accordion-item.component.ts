@@ -1,12 +1,11 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, model } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-accordion-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   animations: [
     trigger('expandCollapse', [
       state('collapsed', style({
@@ -28,43 +27,43 @@ import { cn } from './utils/cn';
     ])
   ],
   template: `
-    <div [class]="cn('flex flex-col border-b border-border', class)">
+    <div [class]="cn('flex flex-col border-b border-border', className())">
       <button
         type="button"
         (click)="toggle()"
-        [attr.aria-expanded]="isOpen"
-        [attr.data-state]="isOpen ? 'open' : 'closed'"
+        [attr.aria-expanded]="isOpen()"
+        [attr.data-state]="isOpen() ? 'open' : 'closed'"
         class="flex flex-1 items-center justify-between py-4 font-medium transition-all group [&[data-state=open]>i]:rotate-180"
       >
-        <span class="text-left group-hover:underline">{{ title }}</span>
+        <span class="text-left group-hover:underline">{{ title() }}</span>
         <i class="ri-arrow-down-s-line text-muted-foreground text-lg transition-transform duration-200 hover:no-underline"></i>
       </button>
-
+  
       <div
-        [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'"
+        [@expandCollapse]="isOpen() ? 'expanded' : 'collapsed'"
         class="overflow-hidden">
         <div class="pb-4 pt-0 text-sm text-muted-foreground">
           <ng-content></ng-content>
         </div>
       </div>
     </div>
-  `
+    `
 })
 export class AccordionItemComponent {
-  @Input() title: string = '';
-  @Input() class: string = '';
-  @Input() id!: string | number;
+  title = input<string>('');
+  className = input('', { alias: 'class' });
+  id = input<string | number>(Math.random().toString(36).substring(2, 9));
 
-  isOpen = false;
+  isOpen = model(false);
 
   // This will be set by the parent Accordion component
   onToggle?: (id: string | number) => void;
 
   toggle() {
     if (this.onToggle) {
-      this.onToggle(this.id);
+      this.onToggle(this.id());
     } else {
-      this.isOpen = !this.isOpen;
+      this.isOpen.update(v => !v);
     }
   }
 

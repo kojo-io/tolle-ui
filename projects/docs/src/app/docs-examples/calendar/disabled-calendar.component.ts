@@ -5,7 +5,6 @@ import { addDays, subDays } from 'date-fns';
 
 @Component({
     selector: 'app-disabled-calendar',
-    standalone: true,
     imports: [CalendarComponent, FormsModule],
     template: `
     <div class="flex flex-wrap gap-8 justify-center p-4 border rounded-lg bg-card">

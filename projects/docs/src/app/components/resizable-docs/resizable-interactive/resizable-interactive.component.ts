@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ResizablePanelComponent } from '../../../../../../tolle/src/lib/resizable-panel.component';
 import { ResizablePanelItemComponent } from '../../../../../../tolle/src/lib/resizable-panel-item.component';
@@ -9,16 +9,14 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-resizable-interactive',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        ResizablePanelComponent,
-        ResizablePanelItemComponent,
-        SelectComponent,
-        SelectItemComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    ResizablePanelComponent,
+    ResizablePanelItemComponent,
+    SelectComponent,
+    SelectItemComponent,
+    PlaygroundComponent
+],
     templateUrl: './resizable-interactive.component.html'
 })
 export class ResizableInteractiveComponent {

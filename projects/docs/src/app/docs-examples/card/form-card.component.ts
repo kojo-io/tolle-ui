@@ -6,7 +6,6 @@ import { InputComponent } from '../../../../../tolle/src/lib/input.component';
 
 @Component({
     selector: 'app-form-card',
-    standalone: true,
     imports: [CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent, ButtonComponent, InputComponent, FormsModule],
     template: `
     <tolle-card class="max-w-md">

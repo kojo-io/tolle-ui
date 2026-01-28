@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
-  selector: 'app-carousel-api',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-carousel-api',
+    imports: [],
+    template: `
     <div class="space-y-8">
       <div>
         <h2 class="text-lg font-bold mb-4">API Reference</h2>

@@ -1,31 +1,31 @@
-import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ContextMenuItem, ContextMenuService, ContextMenuState } from './context-menu.service';
+import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, viewChild, viewChildren, signal, computed, effect, ChangeDetectorRef } from '@angular/core';
+
+import { ContextMenuItem, ContextMenuService } from './context-menu.service';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-context-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    @if (isOpen) {
+    @if (isOpen()) {
       <div
         #menu
         role="menu"
         aria-orientation="vertical"
-        [attr.data-state]="isOpen ? 'open' : 'closed'"
+        [attr.data-state]="isOpen() ? 'open' : 'closed'"
         class="fixed z-50 min-w-[12rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md
                data-[state=closed]:animate-out
                data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
                data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95
                slide-in-from-top-2"
-        [style.visibility]="isPositioned ? 'visible' : 'hidden'"
-        [style.opacity]="isPositioned ? '1' : '0'"
+        [style.visibility]="isPositioned() ? 'visible' : 'hidden'"
+        [style.opacity]="isPositioned() ? '1' : '0'"
         style="will-change: transform; top: 0; left: 0;"
         (keydown)="onKeyDown($event)"
       >
         <div class="flex flex-col">
-          @for (item of items; track $index) {
+          @for (item of items(); track $index) {
             @if (item.separator) {
               <div role="separator" class="h-px -mx-1 my-1 bg-border"></div>
             } @else {
@@ -35,7 +35,7 @@ import { cn } from './utils/cn';
                   type="button"
                   role="menuitem"
                   [attr.aria-haspopup]="item.submenu ? 'true' : null"
-                  [attr.aria-expanded]="openSubmenuId === item.id ? 'true' : null"
+                  [attr.aria-expanded]="openSubmenuId() === item.id ? 'true' : null"
                   [attr.aria-disabled]="item.disabled ? 'true' : null"
                   (click)="onItemClick(item)"
                   (mouseenter)="onItemMouseEnter(item, itemButton)"
@@ -48,7 +48,7 @@ import { cn } from './utils/cn';
                     item.destructive ? 'text-destructive focus:bg-destructive/10 focus:text-destructive' : '',
                     item.disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
                     (item.type === 'checkbox' || item.type === 'radio') ? 'pl-8' : '',
-                    activeIndex === $index && 'bg-accent text-accent-foreground'
+                    activeIndex() === $index && 'bg-accent text-accent-foreground'
                   )"
                 >
                   @if (item.checked) {
@@ -73,19 +73,19 @@ import { cn } from './utils/cn';
         </div>
       </div>
 
-      @if (openSubmenuId && activeSubmenuItems.length > 0) {
+      @if (openSubmenuId() && activeSubmenuItems().length > 0) {
         <div
           #submenu
           role="menu"
-          [id]="'submenu-' + openSubmenuId"
+          [id]="'submenu-' + openSubmenuId()"
           class="fixed z-50 min-w-[12rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md"
-          [style.visibility]="isSubmenuPositioned ? 'visible' : 'hidden'"
-          [style.opacity]="isSubmenuPositioned ? '1' : '0'"
+          [style.visibility]="isSubmenuPositioned() ? 'visible' : 'hidden'"
+          [style.opacity]="isSubmenuPositioned() ? '1' : '0'"
           style="will-change: transform"
           (mouseenter)="onSubmenuMouseEnter()"
           (mouseleave)="onSubmenuMouseLeave()"
         >
-          @for (subItem of activeSubmenuItems; track $index) {
+          @for (subItem of activeSubmenuItems(); track $index) {
             @if (subItem.separator) {
               <div role="separator" class="h-px -mx-1 my-1 bg-border"></div>
             } @else {
@@ -127,38 +127,34 @@ import { cn } from './utils/cn';
 })
 export class ContextMenuComponent implements OnInit, OnDestroy {
   private contextMenuService = inject(ContextMenuService);
-  private elementRef = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
 
-  @ViewChild('menu') menuElement!: ElementRef<HTMLDivElement>;
+  menuElement = viewChild<ElementRef<HTMLDivElement>>('menu');
+  submenuElement = viewChild<ElementRef<HTMLDivElement>>('submenu');
+  itemButtons = viewChildren<ElementRef<HTMLButtonElement>>('itemButton');
 
-  // We only have one active submenu now, so we can use ViewChild instead of ViewChildren
-  @ViewChild('submenu') submenuElement!: ElementRef<HTMLDivElement>;
+  isOpen = signal(false);
+  isPositioned = signal(false);
+  isSubmenuPositioned = signal(false);
+  items = signal<ContextMenuItem[]>([]);
 
-  @ViewChildren('itemButton') itemButtons!: QueryList<ElementRef<HTMLButtonElement>>;
+  openSubmenuId = signal<string | null>(null);
+  activeSubmenuTrigger = signal<HTMLElement | null>(null);
 
-  isOpen = false;
-  isPositioned = false;
-  isSubmenuPositioned = false;
-  items: ContextMenuItem[] = [];
-
-  openSubmenuId: string | null = null;
-  activeSubmenuTrigger: HTMLElement | null = null; // Store the button that triggered the submenu
-
-  activeIndex = -1;
-  private stateSubscription: any;
+  activeIndex = signal(-1);
   private submenuTimeout: any;
 
   protected readonly cn = cn;
 
-  ngOnInit() {
-    this.stateSubscription = this.contextMenuService.stateChanged.subscribe((state: ContextMenuState) => {
-      this.isOpen = state.isOpen;
-      this.items = state.items;
+  constructor() {
+    effect(() => {
+      const state = this.contextMenuService.state();
+      this.isOpen.set(state.isOpen);
+      this.items.set(state.items);
 
       if (state.isOpen) {
-        this.activeIndex = -1;
-        this.isPositioned = false;
+        this.activeIndex.set(-1);
+        this.isPositioned.set(false);
         this.cdr.detectChanges();
         requestAnimationFrame(() => {
           this.positionMenu();
@@ -166,26 +162,27 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
         });
       } else {
         this.closeSubmenu();
-        this.activeIndex = -1;
-        this.isPositioned = false;
+        this.activeIndex.set(-1);
+        this.isPositioned.set(false);
       }
     });
   }
 
-  // Helper to get items for the currently open submenu
-  get activeSubmenuItems(): ContextMenuItem[] {
-    if (!this.openSubmenuId) return [];
-    return this.items.find(i => i.id === this.openSubmenuId)?.submenu || [];
-  }
+  ngOnInit() { }
+
+  activeSubmenuItems = computed(() => {
+    const subId = this.openSubmenuId();
+    if (!subId) return [];
+    return this.items().find((i: ContextMenuItem) => i.id === subId)?.submenu || [];
+  });
 
   @HostListener('document:click', ['$event'])
   @HostListener('document:contextmenu', ['$event'])
   onDocumentEvents(event: MouseEvent) {
-    if (!this.isOpen) return;
+    if (!this.isOpen()) return;
 
-    // Check if click is inside main menu OR the active submenu
-    const clickedInsideMenu = this.menuElement?.nativeElement.contains(event.target as Node);
-    const clickedInsideSubmenu = this.submenuElement?.nativeElement.contains(event.target as Node);
+    const clickedInsideMenu = this.menuElement()?.nativeElement.contains(event.target as Node);
+    const clickedInsideSubmenu = this.submenuElement()?.nativeElement.contains(event.target as Node);
 
     if (clickedInsideMenu || clickedInsideSubmenu) {
       return;
@@ -195,19 +192,20 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
   }
 
   async positionMenu() {
-    if (this.menuElement?.nativeElement) {
-      this.isPositioned = false;
+    const el = this.menuElement()?.nativeElement;
+    if (el) {
+      this.isPositioned.set(false);
       this.cdr.detectChanges();
-      await this.contextMenuService.positionMenu(this.menuElement.nativeElement);
-      this.isPositioned = true;
+      await this.contextMenuService.positionMenu(el);
+      this.isPositioned.set(true);
       this.cdr.detectChanges();
     }
   }
 
   focusFirstItem() {
-    const firstEnabledIndex = this.items.findIndex(item => !item.disabled && !item.separator);
+    const firstEnabledIndex = this.items().findIndex((item: ContextMenuItem) => !item.disabled && !item.separator);
     if (firstEnabledIndex !== -1) {
-      this.activeIndex = firstEnabledIndex;
+      this.activeIndex.set(firstEnabledIndex);
     }
   }
 
@@ -215,12 +213,8 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
     if (item.disabled || item.separator) return;
 
     if (item.submenu) {
-      // Toggle logic handled by enter/leave mostly, but click can force toggle
-      if (this.openSubmenuId === item.id) {
+      if (this.openSubmenuId() === item.id) {
         this.closeSubmenu();
-      } else {
-        // We need the button ref to open it via click. 
-        // Implementation detail: Hover is preferred for submenus.
       }
     } else {
       this.contextMenuService.performAction(item.id!);
@@ -230,13 +224,12 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
   onItemMouseEnter(item: ContextMenuItem, trigger: HTMLButtonElement) {
     if (item.disabled || item.separator) return;
 
-    // Clear any pending close actions
     clearTimeout(this.submenuTimeout);
 
     this.submenuTimeout = setTimeout(() => {
       if (item.submenu) {
-        this.openSubmenuId = item.id!;
-        this.activeSubmenuTrigger = trigger; // Save the trigger for positioning
+        this.openSubmenuId.set(item.id!);
+        this.activeSubmenuTrigger.set(trigger);
         this.positionSubmenu();
       } else {
         this.closeSubmenu();
@@ -244,39 +237,30 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
     }, 150);
   }
 
-  onItemMouseLeave() {
-    // We don't close immediately; we wait to see if the user enters the submenu
-    // Logic handled by the timeout in `onItemMouseEnter` of a sibling, 
-    // or we could add a timeout here to close if they go nowhere.
-  }
+  onItemMouseLeave() { }
 
   onSubmenuMouseEnter() {
-    // If user is hovering the submenu, keep it open
     clearTimeout(this.submenuTimeout);
   }
 
-  onSubmenuMouseLeave() {
-    // If user leaves submenu, standard behavior is usually to keep it open 
-    // until they hover another main item or click away.
-  }
+  onSubmenuMouseLeave() { }
 
   private closeSubmenu() {
-    this.openSubmenuId = null;
-    this.activeSubmenuTrigger = null;
-    this.isSubmenuPositioned = false;
+    this.openSubmenuId.set(null);
+    this.activeSubmenuTrigger.set(null);
+    this.isSubmenuPositioned.set(false);
   }
 
   private async positionSubmenu() {
-    this.isSubmenuPositioned = false;
-    this.cdr.detectChanges(); // Render the submenu DOM
+    this.isSubmenuPositioned.set(false);
+    this.cdr.detectChanges();
 
     requestAnimationFrame(async () => {
-      if (this.activeSubmenuTrigger && this.submenuElement) {
-        await this.contextMenuService.positionSubmenu(
-          this.activeSubmenuTrigger,
-          this.submenuElement.nativeElement
-        );
-        this.isSubmenuPositioned = true;
+      const trigger = this.activeSubmenuTrigger();
+      const el = this.submenuElement()?.nativeElement;
+      if (trigger && el) {
+        await this.contextMenuService.positionSubmenu(trigger, el);
+        this.isSubmenuPositioned.set(true);
         this.cdr.detectChanges();
       }
     });
@@ -298,28 +282,29 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
         this.navigate(-1);
         break;
       case 'ArrowRight':
-        const currentItem = this.items[this.activeIndex];
+        const currentItems = this.items();
+        const currentItem = currentItems[this.activeIndex()];
         if (currentItem?.submenu) {
           event.preventDefault();
-          // Force open submenu via keyboard
-          this.openSubmenuId = currentItem.id!;
-          const trigger = this.itemButtons.toArray()[this.activeIndex]?.nativeElement;
+          this.openSubmenuId.set(currentItem.id!);
+          const buttons = this.itemButtons();
+          const trigger = buttons[this.activeIndex()]?.nativeElement;
           if (trigger) {
-            this.activeSubmenuTrigger = trigger;
+            this.activeSubmenuTrigger.set(trigger);
             this.positionSubmenu();
           }
         }
         break;
       case 'ArrowLeft':
-        if (this.openSubmenuId) {
+        if (this.openSubmenuId()) {
           event.preventDefault();
           this.closeSubmenu();
         }
         break;
       case 'Enter':
-        if (this.activeIndex !== -1) {
+        if (this.activeIndex() !== -1) {
           event.preventDefault();
-          this.onItemClick(this.items[this.activeIndex]);
+          this.onItemClick(this.items()[this.activeIndex()]);
         }
         break;
       case 'Escape':
@@ -330,12 +315,13 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
   }
 
   private navigate(direction: number) {
-    let nextIndex = this.activeIndex + direction;
-    const count = this.items.length;
+    let nextIndex = this.activeIndex() + direction;
+    const items = this.items();
+    const count = items.length;
     while (nextIndex >= 0 && nextIndex < count) {
-      const item = this.items[nextIndex];
+      const item = items[nextIndex];
       if (!item.disabled && !item.separator) {
-        this.activeIndex = nextIndex;
+        this.activeIndex.set(nextIndex);
         return;
       }
       nextIndex += direction;
@@ -348,9 +334,6 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.stateSubscription) {
-      this.stateSubscription.unsubscribe();
-    }
     clearTimeout(this.submenuTimeout);
   }
 }

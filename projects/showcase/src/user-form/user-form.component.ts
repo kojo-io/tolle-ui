@@ -9,19 +9,18 @@ import {SelectItemComponent} from '../../../tolle/src/lib/select-item.component'
 import {SelectSeparatorComponent} from '../../../tolle/src/lib/select-separator.component';
 
 @Component({
-  selector: 'app-user-form',
-  standalone: true,
-  imports: [
-    InputComponent,
-    ReactiveFormsModule,
-    ButtonComponent,
-    SelectComponent,
-    SelectGroupComponent,
-    SelectItemComponent,
-    SelectSeparatorComponent
-  ],
-  templateUrl: './user-form.component.html',
-  styleUrl: './user-form.component.css'
+    selector: 'app-user-form',
+    imports: [
+        InputComponent,
+        ReactiveFormsModule,
+        ButtonComponent,
+        SelectComponent,
+        SelectGroupComponent,
+        SelectItemComponent,
+        SelectSeparatorComponent
+    ],
+    templateUrl: './user-form.component.html',
+    styleUrl: './user-form.component.css'
 })
 export class UserFormComponent implements OnInit {
   form: FormGroup;

@@ -7,7 +7,6 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
 
 @Component({
     selector: 'app-calendar-range-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

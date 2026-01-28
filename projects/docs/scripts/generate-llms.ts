@@ -113,8 +113,26 @@ function renderComponentGroup(key: string, group: any): string {
             if (exampleKeys.length > 0) {
                 md += `### Usage Examples\n`;
                 exampleKeys.forEach(ex => {
-                    const lang = ex.toLowerCase().includes('html') || ex.toLowerCase().includes('code') ? 'html' : 'typescript';
-                    md += `#### ${ex.replace('Code', '')}\n\`\`\`${lang}\n${comp.examples[ex]}\n\`\`\`\n\n`;
+                    const content = comp.examples[ex] || '';
+                    const isPlayground = ex === 'playgroundCode';
+
+                    let lang = 'typescript';
+                    if (isPlayground) {
+                        lang = 'html';
+                    } else if (content.trim().startsWith('<')) {
+                        lang = 'html';
+                    } else if (content.includes('@Component') || content.includes('import {')) {
+                        lang = 'typescript';
+                    } else if (ex.toLowerCase().includes('html')) {
+                        lang = 'html';
+                    }
+
+                    // Fallback for edge cases where simple detection fails but key implies code type
+                    if (lang === 'typescript' && !content.includes('@Component') && !content.includes('import {') && (ex.toLowerCase().includes('preview') || ex.toLowerCase().includes('template'))) {
+                        lang = 'html';
+                    }
+
+                    md += `#### ${ex.replace('Code', '')}\n\`\`\`${lang}\n${content}\n\`\`\`\n\n`;
                 });
             }
         }

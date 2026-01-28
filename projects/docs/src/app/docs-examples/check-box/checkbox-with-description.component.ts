@@ -3,7 +3,6 @@ import { CheckboxComponent } from '../../../../../tolle/src/lib/checkbox.compone
 
 @Component({
     selector: 'app-checkbox-with-description',
-    standalone: true,
     imports: [CheckboxComponent],
     template: `
     <div class="items-top flex space-x-2">

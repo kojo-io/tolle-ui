@@ -1,65 +1,68 @@
 
-import { CommonModule } from '@angular/common';
+
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild} from '@angular/core';
+import { Component, ElementRef, HostListener, input, OnDestroy, output, viewChild, signal } from '@angular/core';
 
 @Component({
   selector: 'tolle-popover',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="inline-block" #trigger (click)="toggle()">
       <ng-content select="[trigger]"></ng-content>
     </div>
-
-    <div
-      *ngIf="isOpen"
-      #popover
-      class="absolute top-0 left-0 w-max z-[9999]"
-    >
-      <ng-content></ng-content>
-    </div>
-  `,
+    
+    @if (isOpen()) {
+      <div
+        #popover
+        class="absolute top-0 left-0 w-max z-[9999]"
+        >
+        <ng-content></ng-content>
+      </div>
+    }
+    `
 })
 export class PopoverComponent implements OnDestroy {
-  @Input() placement: 'top' | 'bottom' | 'left' | 'right' = 'bottom';
-  @Output() onOpen = new EventEmitter<void>();
-  @Output() onClose = new EventEmitter<void>();
+  placement = input<'top' | 'bottom' | 'left' | 'right'>('bottom');
+  onOpen = output<void>();
+  onClose = output<void>();
 
-  @ViewChild('trigger') triggerEl!: ElementRef;
-  @ViewChild('popover') popoverEl!: ElementRef;
+  triggerEl = viewChild<ElementRef>('trigger');
+  popoverEl = viewChild<ElementRef>('popover');
 
-  isOpen = false;
+  isOpen = signal(false);
   private cleanup?: () => void;
 
   toggle() {
-    this.isOpen ? this.close() : this.open();
+    this.isOpen() ? this.close() : this.open();
   }
 
   open() {
-    this.isOpen = true;
+    this.isOpen.set(true);
     this.onOpen.emit();
     setTimeout(() => this.updatePosition());
   }
 
   close() {
-    this.isOpen = false;
+    this.isOpen.set(false);
     this.onClose.emit();
     if (this.cleanup) this.cleanup();
   }
 
   private updatePosition() {
-    if (!this.triggerEl || !this.popoverEl) return;
+    const trigger = this.triggerEl();
+    const popover = this.popoverEl();
+    if (!trigger || !popover) return;
 
     this.cleanup = autoUpdate(
-      this.triggerEl.nativeElement,
-      this.popoverEl.nativeElement,
+      trigger.nativeElement,
+      popover.nativeElement,
       () => {
-        computePosition(this.triggerEl.nativeElement, this.popoverEl.nativeElement, {
-          placement: this.placement,
+        computePosition(trigger.nativeElement, popover.nativeElement, {
+          placement: this.placement(),
           middleware: [offset(8), flip(), shift({ padding: 8 })],
         }).then(({ x, y }) => {
-          Object.assign(this.popoverEl.nativeElement.style, {
+          Object.assign(popover.nativeElement.style, {
             left: `${x}px`,
             top: `${y}px`,
           });
@@ -70,10 +73,13 @@ export class PopoverComponent implements OnDestroy {
 
   @HostListener('document:mousedown', ['$event'])
   onClickOutside(event: MouseEvent) {
+    const trigger = this.triggerEl();
+    const popover = this.popoverEl();
     if (
-      this.isOpen &&
-      !this.triggerEl.nativeElement.contains(event.target) &&
-      !this.popoverEl?.nativeElement.contains(event.target)
+      this.isOpen() &&
+      trigger &&
+      !trigger.nativeElement.contains(event.target) &&
+      (!popover || !popover.nativeElement.contains(event.target))
     ) {
       this.close();
     }

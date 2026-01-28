@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, HostListener, inject, Input, Output } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, input, output } from '@angular/core';
 import { ContextMenuService, ContextMenuItem } from './context-menu.service';
 
 @Directive({
@@ -9,17 +9,17 @@ export class ContextMenuTriggerDirective {
   private elementRef = inject(ElementRef);
   private contextMenuService = inject(ContextMenuService);
 
-  @Input('tolleContextMenuTrigger') items: ContextMenuItem[] = [];
-  @Output() action = new EventEmitter<string>();
+  items = input<ContextMenuItem[]>([], { alias: 'tolleContextMenuTrigger' });
+  action = output<string>();
 
   @HostListener('contextmenu', ['$event'])
   onContextMenu(event: MouseEvent) {
     event.stopPropagation();
     this.contextMenuService.open({
       event,
-      items: this.items,
+      items: this.items(),
       triggerElement: this.elementRef.nativeElement,
-      onAction: (actionId) => this.action.emit(actionId)
+      onAction: (actionId: string) => this.action.emit(actionId)
     });
   }
 }

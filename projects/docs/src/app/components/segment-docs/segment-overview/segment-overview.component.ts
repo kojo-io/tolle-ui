@@ -6,7 +6,6 @@ import { BasicSegmentExampleComponent } from '../../../docs-examples/segment/bas
 
 @Component({
     selector: 'app-segment-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, BasicSegmentExampleComponent],
     templateUrl: './segment-overview.component.html'
 })

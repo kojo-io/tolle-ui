@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { TabsComponent, TabsListComponent, TabsTriggerComponent, TabsContentComponent } from '../../../../../../tolle/src/lib/tabs.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -11,10 +11,8 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-tabs-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-tabs-interactive',
+    imports: [
     FormsModule,
     TabsComponent,
     TabsListComponent,
@@ -27,8 +25,8 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
     LabelComponent,
     SelectComponent,
     SelectItemComponent
-  ],
-  template: `
+],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

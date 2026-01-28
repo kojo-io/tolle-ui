@@ -6,14 +6,13 @@ import {ModalService} from '../../../tolle/src/lib/modal.service';
 import {Modal} from '../../../tolle/src/lib/modal';
 
 @Component({
-  selector: 'app-user-list',
-  standalone: true,
-  imports: [
-    DataTableComponent,
-    TolleCellDirective
-  ],
-  templateUrl: './user-list.component.html',
-  styleUrl: './user-list.component.css'
+    selector: 'app-user-list',
+    imports: [
+        DataTableComponent,
+        TolleCellDirective
+    ],
+    templateUrl: './user-list.component.html',
+    styleUrl: './user-list.component.css'
 })
 export class UserListComponent {
   users = [

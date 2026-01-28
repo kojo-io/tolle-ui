@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent, SidebarGroup } from '../../../../../../tolle/src/lib/sidebar.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
@@ -9,16 +9,14 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-sidebar-interactive',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        SidebarComponent,
-        SwitchComponent,
-        SelectComponent,
-        SelectItemComponent,
-        PlaygroundComponent
-    ],
+    FormsModule,
+    SidebarComponent,
+    SwitchComponent,
+    SelectComponent,
+    SelectItemComponent,
+    PlaygroundComponent
+],
     templateUrl: './sidebar-interactive.component.html'
 })
 export class SidebarInteractiveComponent {

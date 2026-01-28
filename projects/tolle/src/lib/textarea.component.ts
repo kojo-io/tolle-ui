@@ -1,12 +1,12 @@
-import { Component, Input, forwardRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, forwardRef, viewChild, ElementRef, AfterViewInit, signal, computed, inject, ChangeDetectorRef } from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-textarea',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -16,101 +16,114 @@ import { cn } from './utils/cn';
   ],
   template: `
     <div class="flex flex-col gap-1.5 w-full">
-      <label
-        *ngIf="label"
-        [for]="id"
-        [class]="computedLabelClass"
-      >
-        {{ label }}
-      </label>
-
+      @if (label()) {
+        <label
+          [for]="id()"
+          [class]="computedLabelClass()"
+          >
+          {{ label() }}
+        </label>
+      }
+    
       <div class="relative">
         <textarea
           #textareaElement
-          [id]="id"
-          [placeholder]="placeholder"
-          [disabled]="disabled"
-          [readOnly]="readonly"
-          [rows]="rows"
-          [(ngModel)]="value"
+          [id]="id()"
+          [placeholder]="placeholder()"
+          [disabled]="disabled()"
+          [readOnly]="readonly()"
+          [rows]="rows()"
+          [ngModel]="value()"
+          (ngModelChange)="handleModelChange($event)"
           (input)="handleInput($event)"
           (blur)="onBlur()"
           (focus)="onFocus()"
-          [class]="textareaClasses"
-          [style.resize]="(autoGrow || readonly || disabled) ? 'none' : 'vertical'"
-          [style.overflow]="autoGrow ? 'hidden' : 'auto'"
-          [attr.aria-invalid]="error"
-          [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
-          [attr.maxlength]="maxLength"
+          [class]="textareaClasses()"
+          [style.resize]="(autoGrow() || readonly() || disabled()) ? 'none' : 'vertical'"
+          [style.overflow]="autoGrow() ? 'hidden' : 'auto'"
+          [attr.aria-invalid]="error()"
+          [attr.aria-describedby]="error() && errorMessage() ? id() + '-error' : null"
+          [attr.maxlength]="maxLength()"
         ></textarea>
       </div>
-
-      <div *ngIf="(showCharacterCount || hint || errorMessage) && !disabled" class="flex justify-between items-center px-1">
-        <p
-          *ngIf="hint && !error"
-          class="text-xs text-muted-foreground transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus"
-        >
-          {{ hint }}
-        </p>
-        <p
-          *ngIf="error && errorMessage"
-          [id]="id + '-error'"
-          class="text-xs text-destructive"
-        >
-          {{ errorMessage }}
-        </p>
-        <p
-          *ngIf="showCharacterCount"
-          class="text-[10px] uppercase tracking-wider text-muted-foreground ml-auto font-medium transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideCharacterCountOnFocus"
-        >
-          {{ value.length || 0 }}{{ maxLength ? ' / ' + maxLength : '' }}
-        </p>
-      </div>
+    
+      @if ((showCharacterCount() || hint() || errorMessage()) && !disabled()) {
+        <div class="flex justify-between items-center px-1">
+          @if (hint() && !error()) {
+            <p
+              class="text-xs text-muted-foreground transition-opacity duration-200"
+              [class.opacity-0]="isFocused() && hideHintOnFocus()"
+              >
+              {{ hint() }}
+            </p>
+          }
+          @if (error() && errorMessage()) {
+            <p
+              [id]="id() + '-error'"
+              class="text-xs text-destructive"
+              >
+              {{ errorMessage() }}
+            </p>
+          }
+          @if (showCharacterCount()) {
+            <p
+              class="text-[10px] uppercase tracking-wider text-muted-foreground ml-auto font-medium transition-opacity duration-200"
+              [class.opacity-0]="isFocused() && hideCharacterCountOnFocus()"
+              >
+              {{ value().length || 0 }}{{ maxLength() ? ' / ' + maxLength() : '' }}
+            </p>
+          }
+        </div>
+      }
     </div>
   `
 })
 export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
-  @ViewChild('textareaElement') textareaElement!: ElementRef<HTMLTextAreaElement>;
+  textareaEl = viewChild<ElementRef<HTMLTextAreaElement>>('textareaElement');
 
-  @Input() id = `textarea-${Math.random().toString(36).substr(2, 9)}`;
-  @Input() label = '';
-  @Input() placeholder = '';
-  @Input() hint = '';
-  @Input() errorMessage = '';
-  @Input() rows = 3;
-  @Input() maxLength?: number;
-  @Input() showCharacterCount = false;
-  @Input() autoGrow = false;
-  @Input() error = false;
-  @Input() className = '';
+  id = input(`textarea-${Math.random().toString(36).substr(2, 9)}`);
+  label = input('');
+  placeholder = input('');
+  hint = input('');
+  errorMessage = input('');
+  rows = input(3);
+  maxLength = input<number | undefined>(undefined);
+  showCharacterCount = input(false);
+  autoGrow = input(false);
+  error = input(false);
+  className = input('', { alias: 'class' });
 
   // Focus behavior
-  @Input() hideHintOnFocus = true;
-  @Input() hideCharacterCountOnFocus = false;
+  hideHintOnFocus = input(true);
+  hideCharacterCountOnFocus = input(false);
 
   // New States
-  @Input() disabled = false;
-  @Input() readonly = false;
+  disabled = input(false);
+  readonly = input(false);
 
-  value: string = '';
-  isFocused: boolean = false;
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  value = signal<string>('');
+  isFocused = signal(false);
+
+  private onChange: (value: string) => void = () => { };
+  private onTouched: () => void = () => { };
+  private cdr = inject(ChangeDetectorRef);
 
   ngAfterViewInit() {
-    if (this.autoGrow) this.resize();
+    if (this.autoGrow()) this.resize();
   }
 
-  get computedLabelClass() {
+  computedLabelClass = computed(() => {
     return cn(
       "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
-      this.disabled && "opacity-50"
+      this.disabled() && "opacity-50"
     );
-  }
+  });
 
-  get textareaClasses() {
+  textareaClasses = computed(() => {
+    const error = this.error();
+    const readonly = this.readonly();
+    const disabled = this.disabled();
+
     return cn(
       // Base styles
       'flex w-full rounded-md border bg-background px-3 py-2 text-sm',
@@ -123,8 +136,8 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
       // Minimum height
       'min-h-[80px]',
 
-      // Focus state - SIMPLE LIKE ZARDUI
-      !(this.readonly || this.disabled) && [
+      // Focus state
+      !(readonly || disabled) && [
         'focus:outline-none',
         'focus:ring-4',
         'focus:ring-ring/30',
@@ -135,71 +148,81 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
       ],
 
       // Error state
-      this.error && [
+      error && [
         'border-destructive',
-        !(this.readonly || this.disabled) && [
+        !(readonly || disabled) && [
           'focus:border-destructive/80',
           'focus:ring-destructive/30'
         ]
       ],
 
       // Disabled state
-      this.disabled && [
+      disabled && [
         'cursor-not-allowed opacity-50',
         'border-opacity-50'
       ],
 
       // Readonly state
-      this.readonly && [
+      readonly && [
         'cursor-default',
         'border-dashed',
-        !this.disabled && 'focus:ring-0 focus:border-opacity-100'
+        !disabled && 'focus:ring-0 focus:border-opacity-100'
       ],
 
       // Scrollbar styling
       'scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent',
 
-      this.className
+      this.className()
     );
+  });
+
+  handleModelChange(val: string) {
+    if (this.readonly() || this.disabled()) return;
+    this.value.set(val);
+    this.onChange(val);
+    if (this.autoGrow()) this.resize();
   }
 
-  handleInput(event: any) {
-    if (this.readonly || this.disabled) return;
-    const val = event.target.value;
-    this.value = val;
+  handleInput(event: Event) {
+    if (this.readonly() || this.disabled()) return;
+    const val = (event.target as HTMLTextAreaElement).value;
+    this.value.set(val);
     this.onChange(val);
-    if (this.autoGrow) this.resize();
+    if (this.autoGrow()) this.resize();
   }
 
   onFocus(): void {
-    this.isFocused = true;
+    this.isFocused.set(true);
   }
 
   onBlur(): void {
-    this.isFocused = false;
+    this.isFocused.set(false);
     this.onTouched();
   }
 
   private resize() {
-    const textarea = this.textareaElement.nativeElement;
+    const textarea = this.textareaEl()?.nativeElement;
+    if (!textarea) return;
     textarea.style.height = 'auto';
     textarea.style.height = `${textarea.scrollHeight}px`;
   }
 
-  writeValue(value: any): void {
-    this.value = value;
-    if (this.autoGrow) setTimeout(() => this.resize());
+  writeValue(value: string): void {
+    this.value.set(value || '');
+    if (this.autoGrow()) setTimeout(() => this.resize());
+    this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
   setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
+    // Similarly to SwitchComponent, disabled is an input.
+    // However, we handle it in the template and classes.
   }
 }

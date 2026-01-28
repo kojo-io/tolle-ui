@@ -1,29 +1,33 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, viewChild, ElementRef, AfterViewInit, OnDestroy, ChangeDetectorRef, signal } from '@angular/core';
+
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-aspect-ratio',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div
       #container
-      [class]="cn('relative w-full overflow-hidden bg-muted/20', class)"
-      [style.aspect-ratio]="ratio"
-    >
-      <div *ngIf="isLoading && !hasError" class="absolute inset-0 z-10 animate-pulse bg-muted flex items-center justify-center">
-        <i class="ri-image-line text-muted-foreground/40 text-3xl"></i>
-      </div>
-
-      <div *ngIf="hasError" class="absolute inset-0 z-20 bg-secondary flex flex-col items-center justify-center gap-2">
-        <i class="ri-image-warning-line text-destructive text-2xl"></i>
-        <span class="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Failed to load</span>
-      </div>
-
+      [class]="cn('relative w-full overflow-hidden bg-muted/20', className())"
+      [style.aspect-ratio]="ratio()"
+      >
+      @if (isLoading() && !hasError()) {
+        <div class="absolute inset-0 z-10 animate-pulse bg-muted flex items-center justify-center">
+          <i class="ri-image-line text-muted-foreground/40 text-3xl"></i>
+        </div>
+      }
+    
+      @if (hasError()) {
+        <div class="absolute inset-0 z-20 bg-secondary flex flex-col items-center justify-center gap-2">
+          <i class="ri-image-warning-line text-destructive text-2xl"></i>
+          <span class="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Failed to load</span>
+        </div>
+      }
+    
       <ng-content></ng-content>
     </div>
-  `,
+    `,
   styles: [`
     :host {
       display: block;
@@ -53,20 +57,20 @@ import { cn } from './utils/cn';
   `]
 })
 export class AspectRatioComponent implements AfterViewInit, OnDestroy {
-  @Input() ratio: string | number = '16 / 9';
-  @Input() class: string = '';
+  ratio = input<string | number>('16 / 9');
+  className = input('', { alias: 'class' });
 
-  @ViewChild('container') container!: ElementRef<HTMLElement>;
+  container = viewChild.required<ElementRef<HTMLElement>>('container');
 
-  isLoading = true;
-  hasError = false;
+  isLoading = signal(true);
+  hasError = signal(false);
 
   private cleanupListeners: (() => void)[] = [];
 
   constructor(private cdr: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
-    const el = this.container.nativeElement;
+    const el = this.container().nativeElement;
 
     // Use capture phase because load/error do not bubble
     const onLoad = (event: Event) => {
@@ -110,14 +114,14 @@ export class AspectRatioComponent implements AfterViewInit, OnDestroy {
   }
 
   onLoad() {
-    this.isLoading = false;
-    this.hasError = false;
+    this.isLoading.set(false);
+    this.hasError.set(false);
     this.cdr.detectChanges();
   }
 
   onError() {
-    this.isLoading = false;
-    this.hasError = true;
+    this.isLoading.set(false);
+    this.hasError.set(true);
     this.cdr.detectChanges();
   }
 

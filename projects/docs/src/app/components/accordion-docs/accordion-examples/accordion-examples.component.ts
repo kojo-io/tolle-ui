@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
@@ -8,15 +8,13 @@ import { MultipleAccordionComponent } from '../../../docs-examples/accordion/mul
 
 @Component({
     selector: 'app-accordion-examples',
-    standalone: true,
     imports: [
-        CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
-        BasicAccordionComponent,
-        MultipleAccordionComponent
-    ],
+    FormsModule,
+    SegmentedComponent,
+    BaseEditorComponent,
+    BasicAccordionComponent,
+    MultipleAccordionComponent
+],
     templateUrl: './accordion-examples.component.html'
 })
 export class AccordionExamplesComponent {

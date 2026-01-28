@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {BaseService} from '../../../shared/base.service';
 import {SourceCodeService} from '../../../shared/source-code.service';
 import {Observable} from 'rxjs';
-import {AsyncPipe, NgIf} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {BaseEditorComponent} from '../../../shared/base-editor/base-editor.component';
 import {SegmentedComponent} from '../../../../../../tolle/src/lib/segment.component';
 import {FormsModule} from '@angular/forms';
@@ -11,18 +11,16 @@ import {
 } from '../../../docs-examples/data-table/pagination-example/pagination-example.component';
 
 @Component({
-  selector: 'app-pagination-docs',
-  standalone: true,
-  imports: [
+    selector: 'app-pagination-docs',
+    imports: [
     AsyncPipe,
     BaseEditorComponent,
-    NgIf,
     SegmentedComponent,
     FormsModule,
     PaginationExampleComponent
-  ],
-  templateUrl: './pagination-docs.component.html',
-  styleUrl: './pagination-docs.component.css'
+],
+    templateUrl: './pagination-docs.component.html',
+    styleUrl: './pagination-docs.component.css'
 })
 export class PaginationDocsComponent implements OnInit {
   baseService = inject(BaseService);

@@ -4,15 +4,14 @@ import {ButtonComponent} from '../../../../../../tolle/src/lib/button.component'
 import {TolleCellDirective} from '../../../../../../tolle/src/lib/tolle-cell.directive';
 
 @Component({
-  selector: 'app-searchable',
-  standalone: true,
-  imports: [
-    ButtonComponent,
-    DataTableComponent,
-    TolleCellDirective
-  ],
-  templateUrl: './searchable.component.html',
-  styleUrl: './searchable.component.css'
+    selector: 'app-searchable',
+    imports: [
+        ButtonComponent,
+        DataTableComponent,
+        TolleCellDirective
+    ],
+    templateUrl: './searchable.component.html',
+    styleUrl: './searchable.component.css'
 })
 export class SearchableComponent {
   columns: TableColumn[] = [

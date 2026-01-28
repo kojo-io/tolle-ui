@@ -1,13 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input } from '@angular/core';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-button-group',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div [class]="cn('inline-flex items-center -space-x-px rounded-md shadow-sm', class)">
+    <div [class]="cn('inline-flex items-center -space-x-px rounded-md shadow-sm', className())">
       <ng-content></ng-content>
     </div>
   `,
@@ -39,6 +38,6 @@ import { cn } from './utils/cn';
   `]
 })
 export class ButtonGroupComponent {
-  @Input() class: string = '';
+  className = input('', { alias: 'class' });
   protected cn = cn;
 }

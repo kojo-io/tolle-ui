@@ -3,7 +3,6 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 
 @Component({
     selector: 'app-label-overview',
-    standalone: true,
     imports: [BaseEditorComponent],
     template: `
     <header class="mb-12 border-b border-neutral-200 dark:border-neutral-800 pb-8" id="overview">

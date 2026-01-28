@@ -1,70 +1,86 @@
 <section class="mb-16" id="examples">
-    <h2 class="text-2xl font-bold mb-6">Examples</h2>
+  <h2 class="text-2xl font-bold mb-6">Examples</h2>
 
-    <!-- Basic -->
-    <div class="space-y-4 mb-12" id="basic">
-        <h3 class="text-xl font-semibold">Basic</h3>
-        <p class="text-muted-foreground">Standard usage with an image source and a text fallback.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
-        </div>
-        <div *ngIf="basicTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-basic-avatar />
-        </div>
-        <div *ngIf="basicTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="basicCode" language="angular" />
-        </div>
+  <!-- Basic -->
+  <div class="space-y-4 mb-12" id="basic">
+    <h3 class="text-xl font-semibold">Basic</h3>
+    <p class="text-muted-foreground">Standard usage with an image source and a text fallback.</p>
+    <div class="w-full md:w-1/4">
+      <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
     </div>
+    @if (basicTab === 'preview') {
+      <div
+        class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-basic-avatar />
+      </div>
+    }
+    @if (basicTab === 'code') {
+      <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+        <app-base-editor [code]="basicCode" language="angular" />
+      </div>
+    }
+  </div>
 
-    <!-- Sizes -->
-    <div class="space-y-4 mb-12" id="sizes">
-        <h3 class="text-xl font-semibold">Sizes</h3>
-        <p class="text-muted-foreground">Four standardized size variants are supported: <code>sm</code>,
-            <code>default</code>, <code>lg</code>, and <code>xl</code>.
-        </p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="sizesTab" />
-        </div>
-        <div *ngIf="sizesTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-avatar-sizes />
-        </div>
-        <div *ngIf="sizesTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="sizesCode" language="html" />
-        </div>
+  <!-- Sizes -->
+  <div class="space-y-4 mb-12" id="sizes">
+    <h3 class="text-xl font-semibold">Sizes</h3>
+    <p class="text-muted-foreground">Four standardized size variants are supported: <code>sm</code>,
+    <code>default</code>, <code>lg</code>, and <code>xl</code>.
+  </p>
+  <div class="w-full md:w-1/4">
+    <tolle-segment [items]="viewOptions" [(ngModel)]="sizesTab" />
+  </div>
+  @if (sizesTab === 'preview') {
+    <div
+      class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+      <app-avatar-sizes />
     </div>
+  }
+  @if (sizesTab === 'code') {
+    <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+      <app-base-editor [code]="sizesCode" language="html" />
+    </div>
+  }
+</div>
 
-    <!-- Shapes -->
-    <div class="space-y-4 mb-12" id="shapes">
-        <h3 class="text-xl font-semibold">Shapes</h3>
-        <p class="text-muted-foreground">Avatars can be <code>circle</code> (default) or <code>square</code>.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="shapesTab" />
-        </div>
-        <div *ngIf="shapesTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-avatar-shapes />
-        </div>
-        <div *ngIf="shapesTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="shapesCode" language="html" />
-        </div>
+<!-- Shapes -->
+<div class="space-y-4 mb-12" id="shapes">
+  <h3 class="text-xl font-semibold">Shapes</h3>
+  <p class="text-muted-foreground">Avatars can be <code>circle</code> (default) or <code>square</code>.</p>
+  <div class="w-full md:w-1/4">
+    <tolle-segment [items]="viewOptions" [(ngModel)]="shapesTab" />
+  </div>
+  @if (shapesTab === 'preview') {
+    <div
+      class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+      <app-avatar-shapes />
     </div>
+  }
+  @if (shapesTab === 'code') {
+    <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+      <app-base-editor [code]="shapesCode" language="html" />
+    </div>
+  }
+</div>
 
-    <!-- Fallback -->
-    <div class="space-y-4" id="fallback">
-        <h3 class="text-xl font-semibold">Fallback</h3>
-        <p class="text-muted-foreground">The fallback is shown when the image fails to load or no source is provided. It
-            accepts text or icons.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="fallbackTab" />
-        </div>
-        <div *ngIf="fallbackTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
-            <app-avatar-fallback-example />
-        </div>
-        <div *ngIf="fallbackTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="fallbackCode" language="html" />
-        </div>
+<!-- Fallback -->
+<div class="space-y-4" id="fallback">
+  <h3 class="text-xl font-semibold">Fallback</h3>
+  <p class="text-muted-foreground">The fallback is shown when the image fails to load or no source is provided. It
+  accepts text or icons.</p>
+  <div class="w-full md:w-1/4">
+    <tolle-segment [items]="viewOptions" [(ngModel)]="fallbackTab" />
+  </div>
+  @if (fallbackTab === 'preview') {
+    <div
+      class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+      <app-avatar-fallback-example />
     </div>
+  }
+  @if (fallbackTab === 'code') {
+    <div class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+      <app-base-editor [code]="fallbackCode" language="html" />
+    </div>
+  }
+</div>
 </section>

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { DropdownMenuOverviewComponent } from './dropdown-menu-overview/dropdown-menu-overview.component';
 import { DropdownMenuInteractiveComponent } from './dropdown-menu-interactive/dropdown-menu-interactive.component';
 import { BaseService } from '../../shared/base.service';
@@ -8,17 +8,14 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-dropdown-menu-docs',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-dropdown-menu-docs',
+    imports: [
     DropdownMenuOverviewComponent,
     DropdownMenuInteractiveComponent,
     DropdownMenuApiComponent,
     DocsWrapperComponent
-
-  ],
-  templateUrl: './dropdown-menu-docs.component.html'
+],
+    templateUrl: './dropdown-menu-docs.component.html'
 })
 export class DropdownMenuDocsComponent {
   baseService = inject(BaseService);

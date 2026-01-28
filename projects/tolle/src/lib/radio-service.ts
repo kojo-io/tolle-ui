@@ -1,21 +1,17 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject} from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable()
 export class RadioService {
-  private selectedValueSource = new BehaviorSubject<any>(null);
-  selectedValue$ = this.selectedValueSource.asObservable();
-
-  private disabledSource = new BehaviorSubject<boolean>(false);
-  disabled$ = this.disabledSource.asObservable();
+  selectedValue = signal<any>(null);
+  disabled = signal<boolean>(false);
 
   select(value: any) {
-    if (!this.disabledSource.value) {
-      this.selectedValueSource.next(value);
+    if (!this.disabled()) {
+      this.selectedValue.set(value);
     }
   }
 
   setDisabled(isDisabled: boolean) {
-    this.disabledSource.next(isDisabled);
+    this.disabled.set(isDisabled);
   }
 }

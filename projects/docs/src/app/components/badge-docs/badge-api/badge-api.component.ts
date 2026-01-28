@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-badge-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './badge-api.component.html'
 })

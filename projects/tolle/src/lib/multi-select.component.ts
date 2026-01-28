@@ -1,5 +1,5 @@
-import { Component, Input, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, contentChildren, AfterContentInit, ElementRef, viewChild, HostListener, signal, computed, inject, effect } from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom';
 import { SelectItemComponent } from './select-item.component';
@@ -11,210 +11,222 @@ import { BadgeComponent } from './badge.component';
 @Component({
   selector: 'tolle-multi-select',
   standalone: true,
-  imports: [CommonModule, FormsModule, BadgeComponent, InputComponent],
+  imports: [FormsModule, BadgeComponent, InputComponent],
   providers: [
     SelectService,
     { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true }
   ],
   template: `
-    <div [class]="cn('relative w-full', 'size-' + size)" #container>
+    <div [class]="cn('relative w-full', 'size-' + size())" #container>
       <button
         #trigger
         type="button"
         (click)="toggle()"
-        [disabled]="disabled"
-        [class]="computedTriggerClass">
-
+        [disabled]="disabled()"
+        [class]="computedTriggerClass()">
+    
         <div class="flex flex-wrap gap-1 items-center max-w-[95%]">
-          <ng-container *ngIf="value?.length; else placeholderTpl">
-            <tolle-badge *ngFor="let item of displayItems" size="xs" variant="secondary" [removable]="true" (onRemove)="removeValue($event, item.value)">
-              {{ item.label }}
-            </tolle-badge>
-            <span *ngIf="exceedsDisplayLimit" class="text-xs text-muted-foreground px-1">
-              +{{ value.length - maxDisplayItems }} more
-            </span>
-            <span *ngIf="maxSelections && value.length >= maxSelections" class="text-xs text-muted-foreground px-1">
-              (Max reached)
-            </span>
-          </ng-container>
-          <ng-template #placeholderTpl><span class="text-muted-foreground">{{ placeholder }}</span></ng-template>
+          @if (value().length) {
+            @for (item of displayItems(); track item.value) {
+              <tolle-badge size="xs" variant="secondary" [removable]="true" (onRemove)="removeValue($event, item.value)">
+                {{ item.label }}
+              </tolle-badge>
+            }
+            @if (exceedsDisplayLimit()) {
+              <span class="text-xs text-muted-foreground px-1">
+                +{{ value().length - maxDisplayItems() }} more
+              </span>
+            }
+            @if (maxSelections() && value().length >= maxSelections()!) {
+              <span class="text-xs text-muted-foreground px-1">
+                (Max reached)
+              </span>
+            }
+          } @else {
+            <span class="text-muted-foreground">{{ placeholder() }}</span>
+          }
         </div>
-        <i [class]="cn('ri-arrow-down-s-line text-muted-foreground ml-2 transition-transform duration-200', isOpen ? 'rotate-180' : '')"></i>
+        <i [class]="cn('ri-arrow-down-s-line text-muted-foreground ml-2 transition-transform duration-200', isOpen() ? 'rotate-180' : '')"></i>
       </button>
-
-      <div #popover *ngIf="isOpen"
-           class="fixed bg-popover z-[999] rounded-md border border-border shadow-md overflow-hidden"
-           style="visibility: hidden; top: 0; left: 0;">
-
-        <div class="p-2 border-b border-border space-y-2 bg-popover">
-          <div class="flex items-center justify-between px-1 text-xs">
-            <span class="text-muted-foreground">
-              {{ value.length }} selected
-              <span *ngIf="maxSelections">/ {{ maxSelections }} max</span>
-            </span>
-            <span *ngIf="maxSelections && value.length >= maxSelections" class="text-destructive text-xs font-medium">
-              Maximum reached
-            </span>
-          </div>
-
-          <tolle-input *ngIf="searchable" size="xs" placeholder="Search..." [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)">
-            <i prefix class="ri-search-line"></i>
-          </tolle-input>
-
-          <div class="flex items-center justify-between px-1">
-            <button type="button"
-                    (click)="selectAll()"
-                    [disabled]="maxSelections && selectableItems.length > maxSelections"
+    
+      @if (isOpen()) {
+        <div #popover
+          class="fixed bg-popover z-[999] rounded-md border border-border shadow-md overflow-hidden"
+          style="visibility: hidden; top: 0; left: 0;">
+          <div class="p-2 border-b border-border space-y-2 bg-popover">
+            <div class="flex items-center justify-between px-1 text-xs">
+              <span class="text-muted-foreground">
+                {{ value().length }} selected
+                @if (maxSelections()) {
+                  <span>/ {{ maxSelections() }} max</span>
+                }
+              </span>
+              @if (maxSelections() && value().length >= maxSelections()!) {
+                <span class="text-destructive text-xs font-medium">
+                  Maximum reached
+                </span>
+              }
+            </div>
+            @if (searchable()) {
+              <tolle-input size="xs" placeholder="Search..." [ngModel]="searchQuery()" (ngModelChange)="onSearchChange($event)">
+                <i prefix class="ri-search-line"></i>
+              </tolle-input>
+            }
+            <div class="flex items-center justify-between px-1">
+              <button type="button"
+                (click)="selectAll()"
+                [disabled]="maxSelections() && selectableItems().length > maxSelections()!"
                     [class]="cn(
                       'text-[10px] font-bold uppercase transition-colors',
-                      maxSelections && selectableItems.length > maxSelections
+                      maxSelections() && selectableItems().length > maxSelections()!
                         ? 'text-muted-foreground cursor-not-allowed'
                         : 'text-primary hover:underline'
                     )">
-              Select All
-            </button>
-            <button type="button" (click)="clearAll()" class="text-[10px] font-bold uppercase text-muted-foreground hover:underline">
-              Clear
-            </button>
+                Select All
+              </button>
+              <button type="button" (click)="clearAll()" class="text-[10px] font-bold uppercase text-muted-foreground hover:underline">
+                Clear
+              </button>
+            </div>
+          </div>
+          <div class="p-1 max-h-60 overflow-y-auto">
+            <ng-content></ng-content>
+            @if (noResults()) {
+              <div class="py-4 text-center text-xs text-muted-foreground">
+                No results found for "{{searchQuery()}}"
+              </div>
+            }
+            @if (maxSelections() && value().length >= maxSelections()!) {
+              <div
+                class="p-2 text-center border-t border-border bg-muted/20">
+                <span class="text-xs text-destructive">
+                  <i class="ri-alert-line mr-1"></i>
+                  Maximum selection limit reached ({{maxSelections()}})
+                </span>
+              </div>
+            }
           </div>
         </div>
-
-        <div class="p-1 max-h-60 overflow-y-auto">
-          <ng-content></ng-content>
-          <div *ngIf="noResults" class="py-4 text-center text-xs text-muted-foreground">
-            No results found for "{{searchQuery}}"
-          </div>
-          <div *ngIf="maxSelections && value.length >= maxSelections"
-               class="p-2 text-center border-t border-border bg-muted/20">
-            <span class="text-xs text-destructive">
-              <i class="ri-alert-line mr-1"></i>
-              Maximum selection limit reached ({{maxSelections}})
-            </span>
-          </div>
-        </div>
-      </div>
+      }
     </div>
   `
 })
 export class MultiSelectComponent implements ControlValueAccessor, AfterContentInit {
-  @Input() placeholder = 'Select options...';
-  @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
-  @Input() searchable = false;
-  @Input() disabled = false;
-  @Input() class = '';
-  @Input() maxSelections?: number;
-  @Input() maxDisplayItems = 3;
-  @Input() error = false; // Added to support error styling
+  placeholder = input('Select options...');
+  size = input<'xs' | 'sm' | 'default' | 'lg'>('default');
+  searchable = input(false);
+  disabled = input(false);
+  class = input('');
+  maxSelections = input<number>();
+  maxDisplayItems = input(3);
+  error = input(false);
 
-  @ViewChild('trigger') trigger!: ElementRef;
-  @ViewChild('popover') popover!: ElementRef;
-  @ContentChildren(SelectItemComponent, { descendants: true }) items!: QueryList<SelectItemComponent>;
+  trigger = viewChild<ElementRef>('trigger');
+  popover = viewChild<ElementRef>('popover');
+  items = contentChildren(SelectItemComponent, { descendants: true });
 
-  value: any[] = [];
-  selectedItems: {label: string, value: any}[] = [];
-  isOpen = false;
-  searchQuery = '';
-  noResults = false;
+  value = signal<any[]>([]);
+  selectedItems = signal<{ label: string, value: any }[]>([]);
+  isOpen = signal(false);
+  searchQuery = signal('');
+  noResults = signal(false);
+
   private cleanup?: () => void;
+  private selectService = inject(SelectService);
 
-  constructor(private selectService: SelectService) {
-    this.selectService.selectedValue$.subscribe(val => {
-      if (val !== undefined && this.isOpen) this.toggleValue(val);
+  constructor() {
+    effect(() => {
+      const val = this.selectService.selectedValue();
+      if (val !== undefined && val !== null && this.isOpen()) {
+        this.toggleValue(val);
+      }
+    });
+
+    // Reactive sync whenever items or value change
+    effect(() => {
+      this.syncItems();
     });
   }
 
-  // NEW: Matches InputComponent styles exactly
-  get computedTriggerClass() {
+  computedTriggerClass = computed(() => {
     return cn(
-      // Base styles
       'flex min-h-10 w-full items-center justify-between rounded-md border transition-all duration-200 h-auto',
       'bg-background text-sm',
-
-      // Border and shadow
       'border-input shadow-sm',
-
-      // Padding based on size (aligned with InputComponent logic)
-      this.size === 'xs' && 'px-2 py-1',
-      this.size === 'sm' && 'px-3 py-1.5',
-      this.size === 'default' && 'px-3 py-2',
-      this.size === 'lg' && 'px-4 py-2',
-
-      // Focus state - ZARDUI STYLE (Soft ring, no offset)
-      !this.disabled && [
+      this.size() === 'xs' && 'px-2 py-1',
+      this.size() === 'sm' && 'px-3 py-1.5',
+      this.size() === 'default' && 'px-3 py-2',
+      this.size() === 'lg' && 'px-4 py-2',
+      !this.disabled() && [
         'focus:outline-none',
         'focus:ring-4',
         'focus:ring-ring/30',
         'focus:ring-offset-0',
         'focus:shadow-none',
-        'focus:border-primary/80' // Darkens border on focus
+        'focus:border-primary/80'
       ],
-
-      // Hover state
-      !this.disabled && 'hover:border-accent',
-
-      // Error state
-      this.error && [
+      !this.disabled() && 'hover:border-accent',
+      this.error() && [
         'border-destructive',
-        !this.disabled && [
+        !this.disabled() && [
           'focus:border-destructive/80',
           'focus:ring-destructive/30'
         ]
       ],
-
-      // Disabled state
-      this.disabled && [
+      this.disabled() && [
         'cursor-not-allowed opacity-50',
         'border-opacity-50'
       ],
-
-      this.class
+      this.class()
     );
-  }
+  });
 
   ngAfterContentInit() {
-    this.syncItems();
-    this.items.changes.subscribe(() => this.syncItems());
+    // Initial sync will be handled by effect
   }
 
-  get displayItems(): {label: string, value: any}[] {
-    return this.selectedItems.slice(0, this.maxDisplayItems);
-  }
+  displayItems = computed(() => {
+    return this.selectedItems().slice(0, this.maxDisplayItems());
+  });
 
-  get exceedsDisplayLimit(): boolean {
-    return this.value.length > this.maxDisplayItems;
-  }
+  exceedsDisplayLimit = computed(() => {
+    return this.value().length > this.maxDisplayItems();
+  });
 
-  get selectableItems(): SelectItemComponent[] {
-    return this.items ? this.items.filter(item => !item.disabled) : [];
-  }
+  selectableItems = computed(() => {
+    return this.items().filter((item: SelectItemComponent) => !item.disabled());
+  });
 
-  get availableSelections(): number {
-    if (!this.maxSelections) return Infinity;
-    return Math.max(0, this.maxSelections - this.value.length);
-  }
+  availableSelections = computed(() => {
+    const max = this.maxSelections();
+    if (!max) return Infinity;
+    return Math.max(0, max - this.value().length);
+  });
 
   toggle() {
-    if (this.disabled) return;
-    this.isOpen ? this.close() : this.open();
+    if (this.disabled()) return;
+    this.isOpen() ? this.close() : this.open();
   }
 
   open() {
-    this.isOpen = true;
+    this.isOpen.set(true);
     setTimeout(() => this.updatePosition());
   }
 
   close() {
-    this.isOpen = false;
-    this.searchQuery = '';
+    this.isOpen.set(false);
+    this.searchQuery.set('');
     this.onSearchChange('');
     if (this.cleanup) this.cleanup();
   }
 
   private updatePosition() {
-    if (!this.trigger || !this.popover) return;
+    const trigger = this.trigger();
+    const popover = this.popover();
+    if (!trigger || !popover) return;
 
-    this.cleanup = autoUpdate(this.trigger.nativeElement, this.popover.nativeElement, () => {
-      computePosition(this.trigger.nativeElement, this.popover.nativeElement, {
+    this.cleanup = autoUpdate(trigger.nativeElement, popover.nativeElement, () => {
+      computePosition(trigger.nativeElement, popover.nativeElement, {
         strategy: 'fixed',
         placement: 'bottom-start',
         middleware: [
@@ -231,7 +243,7 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
           }),
         ],
       }).then(({ x, y, strategy }) => {
-        Object.assign(this.popover.nativeElement.style, {
+        Object.assign(popover.nativeElement.style, {
           position: strategy,
           left: `${x}px`,
           top: `${y}px`,
@@ -242,37 +254,39 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
   }
 
   toggleValue(val: any) {
-    const index = this.value.indexOf(val);
-    if (index > -1) {
-      this.value.splice(index, 1);
-    } else {
-      if (this.maxSelections && this.value.length >= this.maxSelections) return;
-      this.value.push(val);
-    }
-    this.syncItems();
-    this.onChange([...this.value]);
+    this.value.update((current: any[]) => {
+      const index = current.indexOf(val);
+      if (index > -1) {
+        return current.filter((_: any, i: number) => i !== index);
+      } else {
+        if (this.maxSelections() && current.length >= this.maxSelections()!) return current;
+        return [...current, val];
+      }
+    });
+    this.onChange(this.value());
   }
 
   selectAll() {
-    if (!this.items) return;
-    let itemsToSelect: any[] = [];
-    if (this.maxSelections) {
-      const availableItems = this.items
-        .filter(item => !item.disabled && !this.value.includes(item.value))
-        .slice(0, this.availableSelections)
-        .map(item => item.value);
-      itemsToSelect = [...this.value, ...availableItems];
+    const max = this.maxSelections();
+    const currentVal = this.value();
+    let nextVal: any[] = [];
+
+    if (max) {
+      const availableItems = this.items()
+        .filter((item: SelectItemComponent) => !item.disabled() && !currentVal.includes(item.value()))
+        .slice(0, this.availableSelections())
+        .map((item: SelectItemComponent) => item.value());
+      nextVal = [...currentVal, ...availableItems];
     } else {
-      itemsToSelect = this.items.filter(item => !item.disabled).map(item => item.value);
+      nextVal = this.items().filter((item: SelectItemComponent) => !item.disabled()).map((item: SelectItemComponent) => item.value());
     }
-    this.value = itemsToSelect;
-    this.syncItems();
-    this.onChange([...this.value]);
+
+    this.value.set(nextVal);
+    this.onChange(this.value());
   }
 
   clearAll() {
-    this.value = [];
-    this.syncItems();
+    this.value.set([]);
     this.onChange([]);
   }
 
@@ -282,49 +296,67 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
   }
 
   private syncItems() {
-    if (!this.items) return;
-    this.selectedItems = [];
-    this.items.forEach(item => {
-      item.selected = this.value.includes(item.value);
-      if (item.selected) {
-        this.selectedItems.push({ label: item.getLabel(), value: item.value });
+    const items = this.items();
+    const val = this.value();
+    const max = this.maxSelections();
+
+    const nextSelectedItems: { label: string, value: any }[] = [];
+
+    items.forEach((item: SelectItemComponent) => {
+      const isSelected = val.includes(item.value());
+      item.selected.set(isSelected);
+
+      if (isSelected) {
+        nextSelectedItems.push({ label: item.getLabel(), value: item.value() });
       }
-      if (this.maxSelections && this.value.length >= this.maxSelections) {
-        item.disabled = !this.value.includes(item.value);
-      } else if (item.disabled) {
-        item.disabled = false;
+
+      if (max && val.length >= max) {
+        item.disabled.set(!isSelected);
+      } else {
+        // Only reset if it was disabled by this logic
+        // (Wait, the original logic reset it if not disabled, but that's risky if it was disabled via input)
+        // Best to just set it to false if it's not selected and we're under the limit
+        if (!isSelected) item.disabled.set(false);
       }
     });
+
+    this.selectedItems.set(nextSelectedItems);
   }
 
   onSearchChange(q: string) {
+    this.searchQuery.set(q);
     const filter = (q || '').toLowerCase();
     let visibleCount = 0;
-    this.items.forEach(item => {
+
+    this.items().forEach((item: SelectItemComponent) => {
       const isVisible = item.getLabel().toLowerCase().includes(filter);
-      item.hidden = !isVisible;
+      item.hidden.set(!isVisible);
       if (isVisible) visibleCount++;
     });
-    this.noResults = visibleCount === 0 && filter !== '';
+
+    this.noResults.set(visibleCount === 0 && filter !== '');
   }
 
   @HostListener('document:mousedown', ['$event'])
   onClickOutside(event: MouseEvent) {
-    if (this.isOpen && !this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+    const trigger = this.trigger();
+    const popover = this.popover();
+    if (this.isOpen() && trigger && !trigger.nativeElement.contains(event.target) && (!popover || !popover.nativeElement.contains(event.target))) {
       this.close();
     }
   }
 
   // ControlValueAccessor
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
   writeValue(v: any[]): void {
-    this.value = Array.isArray(v) ? v : [];
-    this.syncItems();
+    this.value.set(Array.isArray(v) ? v : []);
   }
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void {
+    // We can't set input signal, but we handle it via the disabled() signal call in template
+  }
 
   protected cn = cn;
 }
