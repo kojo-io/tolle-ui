@@ -1,4 +1,4 @@
-import { Project, SyntaxKind, ClassDeclaration, PropertyDeclaration, GetAccessorDeclaration, Node } from 'ts-morph';
+import { Project, SyntaxKind, ClassDeclaration, PropertyDeclaration, GetAccessorDeclaration, ConstructorDeclaration, Node } from 'ts-morph';
 import * as path from 'path';
 import * as fs from 'fs';
 
@@ -7,6 +7,7 @@ const project = new Project({
 });
 
 const componentsDir = path.join(__dirname, '../src/app/components');
+const examplesDir = path.join(__dirname, '../src/app/docs-examples');
 
 interface DocContent {
     name: string;
@@ -76,6 +77,48 @@ function extractFromClass(clazz: ClassDeclaration): DocContent {
                 }
             }
         }
+    });
+
+    // Extract dynamic code loading in constructor (e.g. this.sourceService.getFile(...))
+    clazz.getConstructors().forEach((ctor: ConstructorDeclaration) => {
+        ctor.getDescendantsOfKind(SyntaxKind.CallExpression).forEach(call => {
+            const text = call.getText();
+            if (text.includes('.getFile(')) {
+                const args = call.getArguments();
+                if (args.length > 0 && Node.isStringLiteral(args[0])) {
+                    const filePath = args[0].getLiteralText();
+                    
+                    // Look for subscription assignment: .subscribe(code => this.propName = code)
+                    const callParent = call.getParent(); // PropertyAccessExpression (.subscribe)
+                    if (Node.isPropertyAccessExpression(callParent) && callParent.getName() === 'subscribe') {
+                        const subscribeCall = callParent.getParent(); // CallExpression
+                        if (Node.isCallExpression(subscribeCall)) {
+                            const subArgs = subscribeCall.getArguments();
+                            if (subArgs.length > 0) {
+                                const arrow = subArgs[0];
+                                if (Node.isArrowFunction(arrow)) {
+                                    const arrowText = arrow.getText();
+                                    const match = arrowText.match(/this\.(\w+)\s*=/);
+                                    if (match) {
+                                        const propName = match[1];
+                                        const fullPath = path.join(examplesDir, filePath);
+                                        if (fs.existsSync(fullPath)) {
+                                            try {
+                                                content.examples[propName] = fs.readFileSync(fullPath, 'utf-8');
+                                            } catch (e) {
+                                                console.warn(`Error reading file ${fullPath}:`, e);
+                                            }
+                                        } else {
+                                            console.warn(`Example file not found: ${fullPath} (in ${name})`);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
     });
 
     return content;

@@ -478,12 +478,78 @@ import { BadgeComponent } from '@tolle_/tolle-ui';
 
 ### Usage Examples
 #### basic
-```html
+```typescript
+import { Component } from '@angular/core';
+import { BreadcrumbComponent } from '../../../../../tolle/src/lib/breadcrumb.component';
+import { BreadcrumbItemComponent } from '../../../../../tolle/src/lib/breadcrumb-item.component';
+import { BreadcrumbLinkComponent } from '../../../../../tolle/src/lib/breadcrumb-link.component';
+import { BreadcrumbSeparatorComponent } from '../../../../../tolle/src/lib/breadcrumb-separator.component';
+
+@Component({
+    selector: 'app-basic-breadcrumb',
+    imports: [
+        BreadcrumbComponent,
+        BreadcrumbItemComponent,
+        BreadcrumbLinkComponent,
+        BreadcrumbSeparatorComponent
+    ],
+    template: `
+    <tolle-breadcrumb>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link>Home</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+      <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link>Components</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+      <tolle-breadcrumb-separator></tolle-breadcrumb-separator>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link [active]="true">Breadcrumb</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+    </tolle-breadcrumb>
+  `
+})
+export class BasicBreadcrumbComponent { }
 
 ```
 
 #### separator
-```html
+```typescript
+import { Component } from '@angular/core';
+import { BreadcrumbComponent } from '../../../../../tolle/src/lib/breadcrumb.component';
+import { BreadcrumbItemComponent } from '../../../../../tolle/src/lib/breadcrumb-item.component';
+import { BreadcrumbLinkComponent } from '../../../../../tolle/src/lib/breadcrumb-link.component';
+import { BreadcrumbSeparatorComponent } from '../../../../../tolle/src/lib/breadcrumb-separator.component';
+
+@Component({
+    selector: 'app-custom-separator-breadcrumb',
+    imports: [
+        BreadcrumbComponent,
+        BreadcrumbItemComponent,
+        BreadcrumbLinkComponent,
+        BreadcrumbSeparatorComponent
+    ],
+    template: `
+    <tolle-breadcrumb>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link>Home</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+      <tolle-breadcrumb-separator>
+        <i class="ri-arrow-right-double-line text-muted-foreground/50"></i>
+      </tolle-breadcrumb-separator>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link>Components</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+      <tolle-breadcrumb-separator>
+        <i class="ri-arrow-right-double-line text-muted-foreground/50"></i>
+      </tolle-breadcrumb-separator>
+      <tolle-breadcrumb-item>
+        <tolle-breadcrumb-link [active]="true">Breadcrumb</tolle-breadcrumb-link>
+      </tolle-breadcrumb-item>
+    </tolle-breadcrumb>
+  `
+})
+export class CustomSeparatorBreadcrumbComponent { }
 
 ```
 
@@ -521,22 +587,114 @@ import { BadgeComponent } from '@tolle_/tolle-ui';
 
 ### Usage Examples
 #### basic
-```html
+```typescript
+import { Component } from '@angular/core';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+
+@Component({
+    selector: 'app-basic-button',
+    imports: [ButtonComponent],
+    template: `
+    <div class="flex flex-wrap gap-4">
+      <tolle-button>Primary (Auto)</tolle-button>
+      <tolle-button variant="secondary">Secondary (Derived)</tolle-button>
+      <tolle-button variant="outline">Outline</tolle-button>
+      <tolle-button variant="ghost">Ghost</tolle-button>
+      <tolle-button variant="link">Link</tolle-button>
+    </div>
+    
+    <div class="flex flex-wrap items-center gap-4 mt-8">
+      <tolle-button size="sm">Small</tolle-button>
+      <tolle-button size="default">Default</tolle-button>
+      <tolle-button size="lg">Large</tolle-button>
+    </div>
+  `
+})
+export class BasicButtonComponent { }
 
 ```
 
 #### destructive
-```html
+```typescript
+import { Component } from '@angular/core';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+
+@Component({
+    selector: 'app-destructive-button',
+    imports: [ButtonComponent],
+    template: `
+    <div class="flex flex-wrap gap-4">
+      <tolle-button variant="destructive">Destructive Default</tolle-button>
+      <tolle-button variant="destructive" size="sm">Small</tolle-button>
+      <tolle-button variant="destructive" size="lg">Large</tolle-button>
+    </div>
+  `
+})
+export class DestructiveButtonComponent { }
 
 ```
 
 #### icon
-```html
+```typescript
+import { Component } from '@angular/core';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+import { TooltipDirective } from '../../../../../tolle/src/lib/tooltip.directive';
+
+@Component({
+    selector: 'app-icon-button',
+    imports: [ButtonComponent, TooltipDirective],
+    template: `
+    <div class="flex flex-wrap gap-4 items-center">
+      <tolle-button variant="outline">
+        <i class="ri-github-line mr-2"></i>
+        <span>View on GitHub</span>
+      </tolle-button>
+
+      <tolle-button variant="outline" size="icon" tolleTooltip="Edit Profile" placement="top">
+        <i class="ri-edit-line"></i>
+      </tolle-button>
+
+      <tolle-button size="icon-lg">
+        <i class="ri-more-2-fill"></i>
+      </tolle-button>
+
+      <tolle-button size="icon" variant="destructive">
+        <i class="ri-more-2-fill"></i>
+      </tolle-button>
+
+      <tolle-button size="icon-sm" variant="secondary">
+        <i class="ri-more-2-fill"></i>
+      </tolle-button>
+
+      <tolle-button size="icon-xs">
+        <i class="ri-more-2-fill"></i>
+      </tolle-button>
+    </div>
+  `
+})
+export class IconButtonComponent { }
 
 ```
 
 #### busy
-```html
+```typescript
+import { Component } from '@angular/core';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+
+@Component({
+    selector: 'app-busy-button',
+    imports: [ButtonComponent],
+    template: `
+    <div class="flex flex-wrap gap-4">
+      <tolle-button [busy]="true">Please wait</tolle-button>
+      <tolle-button variant="outline" [busy]="true">Loading...</tolle-button>
+      <tolle-button size="icon" [busy]="true">
+        <i class="ri-save-line"></i>
+      </tolle-button>
+    </div>
+  `
+})
+export class BusyButtonComponent { }
 
 ```
 
@@ -562,12 +720,74 @@ import { BadgeComponent } from '@tolle_/tolle-ui';
 
 ### Usage Examples
 #### basic
-```html
+```typescript
+import { Component } from '@angular/core';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+import { ButtonGroupComponent } from '../../../../../tolle/src/lib/button-group.component';
+
+@Component({
+    selector: 'app-basic-button-group',
+    imports: [ButtonComponent, ButtonGroupComponent],
+    template: `
+    <tolle-button-group>
+      <tolle-button variant="outline">Year</tolle-button>
+      <tolle-button variant="outline">Month</tolle-button>
+      <tolle-button variant="outline">Day</tolle-button>
+    </tolle-button-group>
+
+    <div class="mt-8">
+      <tolle-button-group>
+        <tolle-button>Primary</tolle-button>
+        <tolle-button variant="secondary">Secondary</tolle-button>
+        <tolle-button variant="outline">Outline</tolle-button>
+        <tolle-button variant="destructive">Destructive</tolle-button>
+      </tolle-button-group>
+    </div>
+  `
+})
+export class BasicButtonGroupComponent { }
 
 ```
 
 #### mixed
-```html
+```typescript
+import { Component } from '@angular/core';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+import { ButtonGroupComponent } from '../../../../../tolle/src/lib/button-group.component';
+import { TooltipDirective } from '../../../../../tolle/src/lib/tooltip.directive';
+
+@Component({
+    selector: 'app-mixed-button-group',
+    imports: [ButtonComponent, ButtonGroupComponent, TooltipDirective],
+    template: `
+    <tolle-button-group>
+      <tolle-button variant="outline" size="lg">
+        <i class="ri-github-line mr-2"></i>
+        <span>View on GitHub</span>
+      </tolle-button>
+
+      <tolle-button
+        variant="outline"
+        size="icon-lg"
+        tolleTooltip="Edit Profile"
+        placement="top">
+        <i class="ri-edit-line"></i>
+      </tolle-button>
+    </tolle-button-group>
+
+    <div class="mt-8">
+      <tolle-button-group>
+        <tolle-button size="icon-lg">
+          <i class="ri-arrow-left-s-line"></i>
+        </tolle-button>
+        <tolle-button size="icon-lg">
+          <i class="ri-arrow-right-s-line"></i>
+        </tolle-button>
+      </tolle-button-group>
+    </div>
+  `
+})
+export class MixedButtonGroupComponent { }
 
 ```
 
@@ -600,17 +820,84 @@ import { BadgeComponent } from '@tolle_/tolle-ui';
 
 ### Usage Examples
 #### basic
-```html
+```typescript
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { CalendarComponent } from '../../../../../tolle/src/lib/calendar.component';
+import { DatePipe } from '@angular/common';
+
+@Component({
+    selector: 'app-basic-calendar',
+    imports: [CalendarComponent, FormsModule, DatePipe],
+    template: `
+    <div class="flex flex-col items-center gap-4 p-4 border rounded-lg bg-card">
+      <p class="text-sm text-muted-foreground">Selected: {{ date | date:'fullDate' }}</p>
+      <tolle-calendar [(ngModel)]="date"></tolle-calendar>
+    </div>
+  `
+})
+export class BasicCalendarComponent {
+  date: Date = new Date();
+}
 
 ```
 
 #### mode
-```html
+```typescript
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CalendarComponent } from '../../../../../tolle/src/lib/calendar.component';
+
+@Component({
+    selector: 'app-mode-calendar',
+    imports: [CalendarComponent, FormsModule],
+    template: `
+    <div class="flex flex-wrap gap-8 justify-center p-4 border rounded-lg bg-card">
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-sm font-medium">Month Mode</span>
+        <tolle-calendar mode="month"></tolle-calendar>
+      </div>
+      
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-sm font-medium">Year Mode</span>
+        <tolle-calendar mode="year"></tolle-calendar>
+      </div>
+    </div>
+  `
+})
+export class ModeCalendarComponent { }
 
 ```
 
 #### disabled
-```html
+```typescript
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CalendarComponent } from '../../../../../tolle/src/lib/calendar.component';
+import { addDays, subDays } from 'date-fns';
+
+@Component({
+    selector: 'app-disabled-calendar',
+    imports: [CalendarComponent, FormsModule],
+    template: `
+    <div class="flex flex-wrap gap-8 justify-center p-4 border rounded-lg bg-card">
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-sm font-medium">Disable Past Dates</span>
+        <tolle-calendar [disablePastDates]="true"></tolle-calendar>
+      </div>
+      
+      <div class="flex flex-col items-center gap-2">
+        <span class="text-sm font-medium">Min/Max Date (±7 days)</span>
+        <tolle-calendar [minDate]="minDate" [maxDate]="maxDate"></tolle-calendar>
+      </div>
+    </div>
+  `
+})
+export class DisabledCalendarComponent {
+    minDate = subDays(new Date(), 7);
+    maxDate = addDays(new Date(), 7);
+}
 
 ```
 
@@ -635,7 +922,25 @@ import { BadgeComponent } from '@tolle_/tolle-ui';
 
 ### Usage Examples
 #### basic
-```html
+```typescript
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { RangeCalendarComponent } from '../../../../../tolle/src/lib/range-calendar.component';
+
+@Component({
+    selector: 'app-basic-range-calendar',
+    imports: [RangeCalendarComponent, FormsModule, JsonPipe],
+    template: `
+    <div class="flex flex-col items-center gap-4 p-4 border rounded-lg bg-card">
+      <pre class="text-xs bg-muted p-2 rounded w-full overflow-auto">{{ range | json }}</pre>
+      <tolle-range-calendar [(ngModel)]="range"></tolle-range-calendar>
+    </div>
+  `
+})
+export class BasicRangeCalendarComponent {
+    range = { start: null, end: null };
+}
 
 ```
 
@@ -664,17 +969,104 @@ import { BadgeComponent } from '@tolle_/tolle-ui';
 
 ### Usage Examples
 #### basic
-```html
+```typescript
+import { Component } from '@angular/core';
+import { CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent } from '../../../../../tolle/src/lib/card.component';
+
+@Component({
+    selector: 'app-basic-card',
+    imports: [CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent],
+    template: `
+    <tolle-card class="max-w-[350px]">
+      <tolle-card-header>
+        <tolle-card-title>Card Title</tolle-card-title>
+      </tolle-card-header>
+      <tolle-card-content>
+        <p class="text-sm text-muted-foreground">This is a basic card with a title and content area.</p>
+      </tolle-card-content>
+    </tolle-card>
+  `
+})
+export class BasicCardComponent { }
 
 ```
 
 #### full
-```html
+```typescript
+import { Component } from '@angular/core';
+import { CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent } from '../../../../../tolle/src/lib/card.component';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+
+@Component({
+    selector: 'app-full-card',
+    imports: [CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent, ButtonComponent],
+    template: `
+    <tolle-card class="max-w-[400px]">
+      <tolle-card-header>
+        <tolle-card-title>Project Details</tolle-card-title>
+        <p class="text-sm text-muted-foreground">Manage your project settings and configuration.</p>
+      </tolle-card-header>
+      <tolle-card-content>
+        <div class="p-4 rounded-lg bg-secondary text-secondary-foreground text-sm">
+          Everything you need to build amazing user interfaces.
+        </div>
+      </tolle-card-content>
+      <tolle-card-footer class="flex justify-end gap-2">
+        <tolle-button variant="ghost">Cancel</tolle-button>
+        <tolle-button>Save</tolle-button>
+      </tolle-card-footer>
+    </tolle-card>
+  `
+})
+export class FullCardComponent { }
 
 ```
 
 #### form
-```html
+```typescript
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent } from '../../../../../tolle/src/lib/card.component';
+import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+import { InputComponent } from '../../../../../tolle/src/lib/input.component';
+
+@Component({
+    selector: 'app-form-card',
+    imports: [CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent, ButtonComponent, InputComponent, FormsModule],
+    template: `
+    <tolle-card class="max-w-md">
+      <tolle-card-header>
+        <tolle-card-title class="flex items-center gap-2">
+          <i class="ri-palette-line text-primary"></i>
+          Theme Settings
+        </tolle-card-title>
+        <p class="text-sm text-muted-foreground">
+          Derived colors will update as you change the primary.
+        </p>
+      </tolle-card-header>
+
+      <tolle-card-content class="space-y-4">
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold uppercase text-muted-foreground">Primary Hex</label>
+          <tolle-input [ngModel]="'#2563eb'">
+            <i prefix class="ri-drop-line"></i>
+          </tolle-input>
+        </div>
+
+        <div class="p-4 rounded-lg bg-secondary text-secondary-foreground text-sm">
+          <strong>Pro Tip:</strong> This background is auto-generated using <code>color-mix</code>
+          based on your primary color!
+        </div>
+      </tolle-card-content>
+
+      <tolle-card-footer class="flex justify-between gap-1">
+        <tolle-button variant="ghost">Cancel</tolle-button>
+        <tolle-button>Save Changes</tolle-button>
+      </tolle-card-footer>
+    </tolle-card>
+  `
+})
+export class FormCardComponent { }
 
 ```
 
@@ -696,92 +1088,1876 @@ import { BadgeComponent } from '@tolle_/tolle-ui';
 
 ### Usage Examples
 #### basic
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-basic-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <!-- Navigation Buttons -->
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <!-- Dots -->
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class BasicCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### multiple
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-multiple-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-3xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [opts]="{ align: 'start', slidesToScroll: 'auto' }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5, 6, 7, 8]; track item) {
+              <div tolleCarouselItem class="basis-[45%] md:basis-[31%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-4xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class MultipleCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### vertical
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-vertical-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group flex flex-col items-center">
+      <tolle-carousel (api)="onApi($event)" orientation="vertical" [opts]="{ align: 'start', loop: true }" class="w-full">
+        <div tolleCarouselContent class="h-[400px]">
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-[70%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute top-4 left-1/2 -translate-x-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 z-10">
+          <i class="ri-arrow-up-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute bottom-4 left-1/2 -translate-x-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 z-10">
+          <i class="ri-arrow-down-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex flex-col justify-center gap-2 absolute -right-8 top-1/2 -translate-y-1/2 h-full py-12">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary h-4 rounded-full' : 'bg-neutral-300 dark:bg-neutral-700 h-2 rounded-full')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class VerticalCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### autoplay
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import Autoplay from 'embla-carousel-autoplay';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-autoplay-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [plugins]="plugins" [opts]="{ loop: true }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class AutoplayCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  plugins = [
+    Autoplay({
+      delay: 4000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true
+    })
+  ];
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### loop
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-loop-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [opts]="{ loop: true, dragFree: true }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class LoopCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### thumbnails
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import { EmblaCarouselType } from 'embla-carousel';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-thumbnails-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="space-y-4 max-w-3xl mx-auto group">
+      <!-- Main Carousel -->
+      <tolle-carousel (api)="onMainApi($event)" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of images; track item; let i = $index) {
+              <div tolleCarouselItem class="basis-full">
+                <div class="p-1">
+                  <div class="relative flex aspect-[16/9] items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 overflow-hidden shadow-sm dark:border-neutral-800 dark:bg-neutral-900 transition-all duration-500">
+                    <img [src]="item" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                    <div class="absolute bottom-6 left-6 right-6">
+                      <h4 class="text-white text-xl font-bold mb-1">Slide {{ i + 1 }}</h4>
+                      <p class="text-white/80 text-sm">Description for beautiful landscape {{ i + 1 }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center rounded-full border border-neutral-200 bg-white/90 backdrop-blur-md text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/90 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-xl transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 -translate-x-2 group-hover:translate-x-0">
+          <i class="ri-arrow-left-s-line text-2xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center rounded-full border border-neutral-200 bg-white/90 backdrop-blur-md text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/90 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-xl transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 translate-x-2 group-hover:translate-x-0">
+          <i class="ri-arrow-right-s-line text-2xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <!-- Thumbnails Carousel -->
+      <div class="px-1">
+        <tolle-carousel (api)="onThumbApi($event)" [opts]="{ containScroll: 'keepSnaps', dragFree: true }" class="w-full">
+          <div tolleCarouselContent>
+            <div tolleCarouselContainer class="flex -ml-2">
+              @for (item of images; track item; let i = $index) {
+                <div
+                  tolleCarouselItem
+                  class="basis-1/4 md:basis-[18%] pl-2 cursor-pointer"
+                  (click)="onThumbClick(i)">
+                  <div [class]="'relative flex aspect-[4/3] items-center justify-center rounded-xl overflow-hidden border-2 transition-all duration-300 ' + (selectedIndex === i ? 'border-primary ring-2 ring-primary/20 scale-[1.02]' : 'border-transparent opacity-60 hover:opacity-100')">
+                    <img [src]="item" class="absolute inset-0 w-full h-full object-cover">
+                    @if (selectedIndex === i) {
+                      <div class="absolute inset-0 bg-primary/10"></div>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </tolle-carousel>
+      </div>
+    </div>
+    `
+})
+export class ThumbnailsCarouselComponent {
+  mainApi?: EmblaCarouselType;
+  thumbApi?: EmblaCarouselType;
+  selectedIndex = 0;
+  images = [
+    'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800',
+    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&q=80&w=800',
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=800',
+    'https://images.unsplash.com/photo-1511884642898-4c92249e20b6?auto=format&fit=crop&q=80&w=800',
+    'https://images.unsplash.com/photo-1434725039720-abb26e22ebe8?auto=format&fit=crop&q=80&w=800',
+    'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=800'
+  ];
+
+  onMainApi(api: EmblaCarouselType) {
+    this.mainApi = api;
+    this.mainApi.on('select', () => {
+      this.selectedIndex = this.mainApi!.selectedScrollSnap();
+      this.thumbApi?.scrollTo(this.selectedIndex);
+    });
+  }
+
+  onThumbApi(api: EmblaCarouselType) {
+    this.thumbApi = api;
+  }
+
+  onThumbClick(index: number) {
+    this.mainApi?.scrollTo(index);
+  }
+}
 
 ```
 
 #### alignment
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-alignment-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="space-y-12">
+      <!-- Center -->
+      <div class="relative max-w-2xl mx-auto group">
+        <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4 text-center">Center Alignment</p>
+        <tolle-carousel (api)="onApiCenter($event)" [opts]="{ align: 'center' }" class="w-full">
+          <div tolleCarouselContent>
+            <div tolleCarouselContainer>
+              @for (item of [1, 2, 3, 4, 5]; track item) {
+                <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                  <div class="p-2">
+                    <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                      <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+          <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+            <i class="ri-arrow-left-s-line text-xl"></i>
+          </button>
+          <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+            <i class="ri-arrow-right-s-line text-xl"></i>
+          </button>
+        </tolle-carousel>
+        <div class="flex justify-center gap-2 mt-4">
+          @for (snap of centerSnaps; track snap; let i = $index) {
+            <button (click)="centerApi?.scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (centerIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"></button>
+          }
+        </div>
+      </div>
+    
+      <!-- End -->
+      <div class="relative max-w-2xl mx-auto group">
+        <p class="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4 text-center">End Alignment</p>
+        <tolle-carousel (api)="onApiEnd($event)" [opts]="{ align: 'end' }" class="w-full">
+          <div tolleCarouselContent>
+            <div tolleCarouselContainer>
+              @for (item of [1, 2, 3, 4, 5]; track item) {
+                <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                  <div class="p-2">
+                    <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                      <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+          <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+            <i class="ri-arrow-left-s-line text-xl"></i>
+          </button>
+          <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+            <i class="ri-arrow-right-s-line text-xl"></i>
+          </button>
+        </tolle-carousel>
+        <div class="flex justify-center gap-2 mt-4">
+          @for (snap of endSnaps; track snap; let i = $index) {
+            <button (click)="endApi?.scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (endIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"></button>
+          }
+        </div>
+      </div>
+    </div>
+    `
+})
+export class AlignmentCarouselComponent {
+  centerApi?: any;
+  centerSnaps: number[] = [];
+  centerIndex = 0;
+
+  endApi?: any;
+  endSnaps: number[] = [];
+  endIndex = 0;
+
+  onApiCenter(api: any) {
+    this.centerApi = api;
+    this.centerSnaps = api.scrollSnapList();
+    this.centerIndex = api.selectedScrollSnap();
+    api.on('select', () => this.centerIndex = api.selectedScrollSnap());
+  }
+
+  onApiEnd(api: any) {
+    this.endApi = api;
+    this.endSnaps = api.scrollSnapList();
+    this.endIndex = api.selectedScrollSnap();
+    api.on('select', () => this.endIndex = api.selectedScrollSnap());
+  }
+}
 
 ```
 
 #### variableWidth
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-variable-width-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [opts]="{ align: 'start' }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            <div tolleCarouselItem class="basis-[60%] pl-4">
+              <div class="p-2">
+                <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                  <span class="text-4xl font-bold text-neutral-200 dark:text-neutral-800 select-none italic">60%</span>
+                </div>
+              </div>
+            </div>
+            <div tolleCarouselItem class="basis-[30%] pl-4">
+              <div class="p-2">
+                <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                  <span class="text-4xl font-bold text-neutral-200 dark:text-neutral-800 select-none italic">30%</span>
+                </div>
+              </div>
+            </div>
+            <div tolleCarouselItem class="basis-[50%] pl-4">
+              <div class="p-2">
+                <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                  <span class="text-4xl font-bold text-neutral-200 dark:text-neutral-800 select-none italic">50%</span>
+                </div>
+              </div>
+            </div>
+            <div tolleCarouselItem class="basis-[40%] pl-4">
+              <div class="p-2">
+                <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                  <span class="text-4xl font-bold text-neutral-200 dark:text-neutral-800 select-none italic">40%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class VariableWidthCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### rtl
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import {
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-rtl-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div dir="rtl" class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [opts]="{ direction: 'rtl' }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class RtlCarouselComponent {
+    api?: any;
+    scrollSnaps: number[] = [];
+    selectedIndex = 0;
+
+    onApi(api: any) {
+        this.api = api;
+        this.scrollSnaps = api.scrollSnapList();
+        this.selectedIndex = api.selectedScrollSnap();
+
+        api.on('select', () => {
+            this.selectedIndex = api.selectedScrollSnap();
+        });
+
+        api.on('reInit', () => {
+            this.scrollSnaps = api.scrollSnapList();
+            this.selectedIndex = api.selectedScrollSnap();
+        });
+    }
+
+    scrollTo(index: number) {
+        this.api?.scrollTo(index);
+    }
+}
 
 ```
 
 #### autoScroll
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import AutoScroll from 'embla-carousel-auto-scroll';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-auto-scroll-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective
+],
+    template: `
+    <div class="relative max-w-3xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [plugins]="plugins" [opts]="{ loop: true, dragFree: true }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5, 6, 7, 8]; track item) {
+              <div tolleCarouselItem class="basis-[45%] md:basis-[31%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-4xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class AutoScrollCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  plugins = [
+    AutoScroll({
+      speed: 1,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true
+    })
+  ];
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### fade
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import Fade from 'embla-carousel-fade';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-fade-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [plugins]="plugins" [opts]="{ loop: true, duration: 0 }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-full">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class FadeCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+  plugins = [Fade()];
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### classNames
-```html
+```typescript
+import { Component } from '@angular/core';
+
+import ClassNames from 'embla-carousel-class-names';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-class-names-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [plugins]="plugins" [opts]="{ loop: true }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5, 6]; track item) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="embla__slide_class flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-all duration-300">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    
+    <style>
+      :host ::ng-deep .embla__slide_class.is-selected {
+      border-color: #7c3aed;
+      background-color: rgba(124, 58, 237, 0.05);
+      transform: scale(1.05);
+    }
+    :host ::ng-deep .embla__slide_class.is-selected span {
+    color: #7c3aed;
+    }
+    </style>
+    `
+})
+export class ClassNamesCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  plugins = [
+    ClassNames({
+      snapped: 'is-selected'
+    })
+  ];
+
+  onApi(api: any) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### parallax
-```html
+```typescript
+import { Component, ChangeDetectorRef } from '@angular/core';
+
+import { EmblaCarouselType } from 'embla-carousel';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-parallax-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [opts]="{ dragFree: true, loop: true }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="relative flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 overflow-hidden shadow-sm transition-all duration-300">
+                    <!-- Parallax Content -->
+                    <div class="parallax__layer absolute inset-0 flex items-center justify-center pointer-events-none" [style.transform]="'translateX(' + parallaxValues[item-1] + '%)'">
+                      <span class="text-[12rem] font-bold opacity-10 select-none text-neutral-400 dark:text-neutral-600">{{ item }}</span>
+                    </div>
+                    <span class="relative text-3xl font-bold z-10 text-neutral-600 dark:text-neutral-400">Slide {{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class ParallaxCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+  parallaxValues: number[] = [0, 0, 0, 0, 0];
+  TWEEN_FACTOR = 1.2;
+
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  onApi(api: EmblaCarouselType) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    api.on('scroll', () => {
+      const engine = api.internalEngine();
+      const scrollProgress = api.scrollProgress();
+
+      api.scrollSnapList().forEach((scrollSnap, index) => {
+        let diffToTarget = scrollSnap - scrollProgress;
+
+        if (engine.options.loop) {
+          engine.slideLooper.loopPoints.forEach((loopPoint) => {
+            const target = loopPoint.target();
+            if (loopPoint.index === index) {
+              if (diffToTarget > 0.5) diffToTarget -= 1;
+              if (diffToTarget < -0.5) diffToTarget += 1;
+            }
+          });
+        }
+
+        const parallax = diffToTarget * (-1) * 100 * this.TWEEN_FACTOR;
+        this.parallaxValues[index] = parallax;
+      });
+      this.cdr.detectChanges();
+    });
+
+    api.on('select', () => this.selectedIndex = api.selectedScrollSnap());
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+    });
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### scale
-```html
+```typescript
+import { Component, ChangeDetectorRef } from '@angular/core';
+
+import { EmblaCarouselType } from 'embla-carousel';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-scale-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [opts]="{ loop: true }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-all duration-75"
+                    [style.transform]="'scale(' + scaleValues[item-1] + ')'">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class ScaleCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+  scaleValues: number[] = [1, 1, 1, 1, 1];
+  TWEEN_FACTOR = 0.5;
+
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  onApi(api: EmblaCarouselType) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    const update = () => {
+      const engine = api.internalEngine();
+      const scrollProgress = api.scrollProgress();
+
+      api.scrollSnapList().forEach((scrollSnap, index) => {
+        let diffToTarget = scrollSnap - scrollProgress;
+
+        if (engine.options.loop) {
+          engine.slideLooper.loopPoints.forEach((loopPoint) => {
+            if (loopPoint.index === index) {
+              if (diffToTarget > 0.5) diffToTarget -= 1;
+              if (diffToTarget < -0.5) diffToTarget += 1;
+            }
+          });
+        }
+
+        const tweenValue = 1 - Math.abs(diffToTarget * this.TWEEN_FACTOR);
+        this.scaleValues[index] = Math.max(0.7, tweenValue);
+      });
+      this.selectedIndex = api.selectedScrollSnap();
+      this.cdr.detectChanges();
+    };
+
+    api.on('scroll', update);
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      update();
+    });
+    api.on('select', update);
+    update();
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### opacity
-```html
+```typescript
+import { Component, ChangeDetectorRef } from '@angular/core';
+
+import { EmblaCarouselType } from 'embla-carousel';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-opacity-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [opts]="{ loop: true }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of [1, 2, 3, 4, 5]; track item) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-all duration-300"
+                    [style.opacity]="opacityValues[item-1]">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class OpacityCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+  opacityValues: number[] = [1, 1, 1, 1, 1];
+  TWEEN_FACTOR = 1.2;
+
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  onApi(api: EmblaCarouselType) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    const update = () => {
+      const engine = api.internalEngine();
+      const scrollProgress = api.scrollProgress();
+
+      api.scrollSnapList().forEach((scrollSnap, index) => {
+        let diffToTarget = scrollSnap - scrollProgress;
+
+        if (engine.options.loop) {
+          engine.slideLooper.loopPoints.forEach((loopPoint) => {
+            if (loopPoint.index === index) {
+              if (diffToTarget > 0.5) diffToTarget -= 1;
+              if (diffToTarget < -0.5) diffToTarget += 1;
+            }
+          });
+        }
+
+        const tweenValue = 1 - Math.abs(diffToTarget * this.TWEEN_FACTOR);
+        this.opacityValues[index] = Math.max(0.1, tweenValue);
+      });
+      this.selectedIndex = api.selectedScrollSnap();
+      this.cdr.detectChanges();
+    };
+
+    api.on('scroll', update);
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      update();
+    });
+    api.on('select', update);
+    update();
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### progress
-```html
+```typescript
+import { Component, ChangeDetectorRef } from '@angular/core';
+
+import { EmblaCarouselType } from 'embla-carousel';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+import { ProgressComponent } from '../../../../../tolle/src/lib/progress.component';
+
+@Component({
+    selector: 'app-progress-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective,
+    ProgressComponent
+],
+    template: `
+    <div class="space-y-6 max-w-2xl mx-auto group">
+      <div class="relative">
+        <tolle-carousel (api)="onApi($event)" [opts]="{ dragFree: true }" class="w-full">
+          <div tolleCarouselContent>
+            <div tolleCarouselContainer>
+              @for (item of [1, 2, 3, 4, 5, 6, 7, 8]; track item) {
+                <div tolleCarouselItem class="basis-[80%] md:basis-[48%]">
+                  <div class="p-2">
+                    <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                      <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ item }}</span>
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+    
+          <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+            <i class="ri-arrow-left-s-line text-xl"></i>
+          </button>
+          <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+            <i class="ri-arrow-right-s-line text-xl"></i>
+          </button>
+        </tolle-carousel>
+      </div>
+    
+      <div class="space-y-4">
+        <!-- Progress Bar -->
+        <tolle-progress [value]="progress" class="bg-neutral-100 dark:bg-neutral-800"></tolle-progress>
+    
+        <!-- Dots -->
+        <div class="flex justify-center gap-2">
+          @for (snap of scrollSnaps; track snap; let i = $index) {
+            <button
+              (click)="scrollTo(i)"
+              [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+              [attr.aria-label]="'Go to slide ' + (i + 1)">
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+    `
+})
+export class ProgressCarouselComponent {
+  api?: any;
+  progress = 0;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  onApi(api: EmblaCarouselType) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    const update = () => {
+      this.progress = Math.max(0, Math.min(1, api.scrollProgress())) * 100;
+      this.selectedIndex = api.selectedScrollSnap();
+      this.cdr.detectChanges();
+    };
+
+    api.on('scroll', update);
+    api.on('select', update);
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      update();
+    });
+    update();
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### lazyLoad
-```html
+```typescript
+import { Component, ChangeDetectorRef } from '@angular/core';
+
+import { EmblaCarouselType } from 'embla-carousel';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-lazy-load-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of slides; track item; let i = $index) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div class="relative flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 overflow-hidden shadow-sm transition-all duration-300">
+                    @if (loadedSlides.has(i)) {
+                      <img
+                        [src]="'https://images.unsplash.com/photo-' + (seeds[i]) + '?auto=format&fit=crop&q=80&w=800'"
+                        class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
+                        (load)="onImageLoad(i)"
+                        [class.opacity-0]="!imagesReady.has(i)"
+                        [class.scale-110]="!imagesReady.has(i)"
+                        [class.scale-100]="imagesReady.has(i)">
+                    }
+                    @if (!imagesReady.has(i)) {
+                      <div class="absolute inset-0 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900">
+                        <div class="flex flex-col items-center gap-2">
+                          <i class="ri-loader-4-line animate-spin text-3xl text-primary/40"></i>
+                          <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">Loading asset</span>
+                        </div>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+    </div>
+    `
+})
+export class LazyLoadCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+  slides = Array.from({ length: 10 });
+  loadedSlides = new Set<number>();
+  imagesReady = new Set<number>();
+  seeds = [
+    '1464822759023-fed622ff2c3b',
+    '1501785888041-af3ef285b470',
+    '1506744038136-46273834b3fb',
+    '1511884642898-4c92249e20b6',
+    '1434725039720-abb26e22ebe8',
+    '1469474968028-56623f02e42e',
+    '1441974231531-c6227db76b6e',
+    '1500382017468-9049fee7c9cd',
+    '1470071459604-3b5ec3a7fe05',
+    '1447752875215-b2761acb3c5d'
+  ];
+
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  onApi(api: EmblaCarouselType) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    const update = () => {
+      const index = api.selectedScrollSnap();
+      const slidesInView = api.slidesInView();
+
+      slidesInView.forEach(i => {
+        if (!this.loadedSlides.has(i)) {
+          this.loadedSlides.add(i);
+        }
+      });
+      this.selectedIndex = api.selectedScrollSnap();
+      this.cdr.detectChanges();
+    };
+
+    api.on('select', update);
+    api.on('slidesInView', update);
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      update();
+    });
+    update();
+  }
+
+  onImageLoad(index: number) {
+    this.imagesReady.add(index);
+    this.cdr.detectChanges();
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
 #### infiniteScroll
-```html
+```typescript
+import { Component, ChangeDetectorRef } from '@angular/core';
+
+import { EmblaCarouselType } from 'embla-carousel';
+import {
+  CarouselComponent,
+  CarouselContentDirective,
+  CarouselContainerDirective,
+  CarouselItemDirective,
+  CarouselPreviousDirective,
+  CarouselNextDirective
+} from '../../../../../tolle/src/lib/carousel';
+
+@Component({
+    selector: 'app-infinite-scroll-carousel',
+    imports: [
+    CarouselComponent,
+    CarouselContentDirective,
+    CarouselContainerDirective,
+    CarouselItemDirective,
+    CarouselPreviousDirective,
+    CarouselNextDirective
+],
+    template: `
+    <div class="relative max-w-2xl mx-auto group">
+      <tolle-carousel (api)="onApi($event)" [opts]="{ dragFree: true }" class="w-full">
+        <div tolleCarouselContent>
+          <div tolleCarouselContainer>
+            @for (item of slides; track item; let i = $index) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[48%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-950 transition-colors duration-300">
+                    <span class="text-6xl font-bold text-neutral-200 dark:text-neutral-800 select-none">{{ i + 1 }}</span>
+                  </div>
+                </div>
+              </div>
+            }
+    
+            <!-- Loading Indicator -->
+            @if (loading) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[48%]">
+                <div class="p-2">
+                  <div class="flex aspect-video items-center justify-center rounded-2xl border border-dashed border-primary/30 p-4 bg-primary/5 dark:bg-primary/5 transition-all duration-300">
+                    <div class="flex flex-col items-center gap-3">
+                      <i class="ri-loader-4-line animate-spin text-4xl text-primary/60"></i>
+                      <span class="text-xs font-semibold text-primary/40 uppercase tracking-widest">Fetching data</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+    
+        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-left-s-line text-xl"></i>
+        </button>
+        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+          <i class="ri-arrow-right-s-line text-xl"></i>
+        </button>
+      </tolle-carousel>
+    
+      <div class="flex justify-center gap-2 mt-4">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+          </button>
+        }
+      </div>
+      <p class="text-center text-xs text-muted-foreground mt-4 italic">Scroll to the end to load more slides...</p>
+    </div>
+    `
+})
+export class InfiniteScrollCarouselComponent {
+  api?: any;
+  scrollSnaps: number[] = [];
+  selectedIndex = 0;
+  slides = Array.from({ length: 10 });
+  loading = false;
+  hasMore = true;
+
+  constructor(private cdr: ChangeDetectorRef) { }
+
+  onApi(api: EmblaCarouselType) {
+    this.api = api;
+    this.scrollSnaps = api.scrollSnapList();
+    this.selectedIndex = api.selectedScrollSnap();
+
+    const checkScroll = () => {
+      if (this.loading || !this.hasMore) return;
+      const scrollProgress = api.scrollProgress();
+
+      if (scrollProgress > 0.9) {
+        this.loadMore();
+      }
+      this.selectedIndex = api.selectedScrollSnap();
+      this.cdr.detectChanges();
+    };
+
+    api.on('scroll', checkScroll);
+    api.on('select', () => {
+      this.selectedIndex = api.selectedScrollSnap();
+      this.cdr.detectChanges();
+    });
+    api.on('reInit', () => {
+      this.scrollSnaps = api.scrollSnapList();
+      this.selectedIndex = api.selectedScrollSnap();
+      this.cdr.detectChanges();
+    });
+  }
+
+  loadMore() {
+    this.loading = true;
+    this.cdr.detectChanges();
+
+    setTimeout(() => {
+      const nextBatch = Array.from({ length: 5 });
+      this.slides = [...this.slides, ...nextBatch];
+      this.loading = false;
+
+      if (this.slides.length > 50) {
+        this.hasMore = false;
+      }
+      this.cdr.detectChanges();
+    }, 1000);
+  }
+
+  scrollTo(index: number) {
+    this.api?.scrollTo(index);
+  }
+}
 
 ```
 
@@ -802,17 +2978,79 @@ import { BadgeComponent } from '@tolle_/tolle-ui';
 
 ### Usage Examples
 #### basic
-```html
+```typescript
+import { Component } from '@angular/core';
+import { CheckboxComponent } from '../../../../../tolle/src/lib/checkbox.component';
+
+@Component({
+    selector: 'app-basic-checkbox',
+    imports: [CheckboxComponent],
+    template: `
+    <div class="flex items-center space-x-2">
+      <tolle-checkbox id="terms" />
+      <label
+        for="terms"
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        Accept terms and conditions
+      </label>
+    </div>
+  `
+})
+export class BasicCheckboxComponent { }
 
 ```
 
 #### description
-```html
+```typescript
+import { Component } from '@angular/core';
+import { CheckboxComponent } from '../../../../../tolle/src/lib/checkbox.component';
+
+@Component({
+    selector: 'app-checkbox-with-description',
+    imports: [CheckboxComponent],
+    template: `
+    <div class="items-top flex space-x-2">
+      <tolle-checkbox id="terms1" />
+      <div class="grid gap-1.5 leading-none">
+        <label
+          for="terms1"
+          class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+        >
+          Accept terms and conditions
+        </label>
+        <p class="text-sm text-muted-foreground">
+          You agree to our Terms of Service and Privacy Policy.
+        </p>
+      </div>
+    </div>
+  `
+})
+export class CheckboxWithDescriptionComponent { }
 
 ```
 
 #### disabled
-```html
+```typescript
+import { Component } from '@angular/core';
+import { CheckboxComponent } from '../../../../../tolle/src/lib/checkbox.component';
+
+@Component({
+    selector: 'app-checkbox-disabled',
+    imports: [CheckboxComponent],
+    template: `
+    <div class="flex items-center space-x-2">
+      <tolle-checkbox id="terms2" [disabled]="true" />
+      <label
+        for="terms2"
+        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        Accept terms and conditions
+      </label>
+    </div>
+  `
+})
+export class CheckboxDisabledComponent { }
 
 ```
 
@@ -951,7 +3189,7 @@ const menuItems: ContextMenuItem[] = [
 
 ### Usage Examples
 #### column
-```html
+```typescript
 html
 ```
 
@@ -1000,13 +3238,13 @@ html
 
 ### Usage Examples
 #### column
-```html
+```typescript
 html
 ```
 
 ### Usage Examples
 #### column
-```html
+```typescript
 html
 ```
 
@@ -1779,7 +4017,7 @@ value = ${valueStr};
 
 ### Usage Examples
 #### appConfig
-```html
+```typescript
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideTolleConfig } from '@tolle_/tolle-ui'; // Import
@@ -1812,7 +4050,7 @@ export const appConfig: ApplicationConfig = {
 ```
 
 #### tailwindConfig
-```html
+```typescript
 const { tolleUi } = require('@tolle_/tolle-ui/tailwind');
 
 /** @type {import('tailwindcss').Config} */
@@ -1856,7 +4094,7 @@ module.exports = {
 
 ### Usage Examples
 #### generated
-```html
+```typescript
 // 1. Call the service in your component
 this.toastService.show({
   title: '${this.title}',
