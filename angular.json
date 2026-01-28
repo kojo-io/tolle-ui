@@ -33,44 +33,6 @@
               "zone.js/testing"
             ]
           }
-        },
-        "storybook": {
-          "builder": "@storybook/angular:start-storybook",
-          "options": {
-            "configDir": "projects/tolle/.storybook",
-            "browserTarget": "tolle:build",
-            "styles": [
-              "projects/tolle/theme.css",
-              "node_modules/remixicon/fonts/remixicon.css"
-            ],
-            "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/tolle"
-            ],
-            "port": 6006
-          }
-        },
-        "build-storybook": {
-          "builder": "@storybook/angular:build-storybook",
-          "options": {
-            "configDir": "projects/tolle/.storybook",
-            "browserTarget": "tolle:build",
-            "styles": [
-              "projects/tolle/theme.css",
-              "node_modules/remixicon/fonts/remixicon.css"
-            ],
-            "docs": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/tolle"
-            ],
-            "outputDir": "dist/storybook/tolle"
-          }
         }
       }
     },
@@ -169,39 +131,6 @@
             "scripts": []
           }
         },
-        "storybook": {
-          "builder": "@storybook/angular:start-storybook",
-          "options": {
-            "configDir": "projects/showcase/.storybook",
-            "browserTarget": "showcase:build",
-            "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/showcase"
-            ],
-            "styles": [
-              "projects/showcase/src/styles.css"
-            ],
-            "port": 6006
-          }
-        },
-        "build-storybook": {
-          "builder": "@storybook/angular:build-storybook",
-          "options": {
-            "configDir": "projects/showcase/.storybook",
-            "browserTarget": "showcase:build",
-            "compodoc": true,
-            "compodocArgs": [
-              "-e",
-              "json",
-              "-d",
-              "projects/showcase"
-            ],
-            "outputDir": "dist/storybook/showcase"
-          }
-        }
       }
     },
     "docs": {
