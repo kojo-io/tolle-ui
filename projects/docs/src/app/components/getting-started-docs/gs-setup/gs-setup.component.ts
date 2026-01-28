@@ -35,5 +35,12 @@ module.exports = {
   ],
   plugins: [],
 };`;
+
+  globalStyles = `{
+  "styles": [
+    "src/styles.css",
+    "node_modules/@tolle_/tolle-ui/theme.css"
+  ]
+}`;
 }
 
