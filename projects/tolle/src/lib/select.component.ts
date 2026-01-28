@@ -24,6 +24,10 @@ import { InputComponent } from './input.component';
   selector: 'tolle-select',
   standalone: true,
   imports: [FormsModule, InputComponent],
+  providers: [
+    SelectService,
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SelectComponent), multi: true }
+  ],
   template: `
     <div [class]="cn('relative w-full', 'size-' + size())" #container>
       <button

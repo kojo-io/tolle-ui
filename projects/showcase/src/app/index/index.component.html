@@ -5,21 +5,54 @@
         <div class="flex items-center space-x-4">
           <div class="flex items-center space-x-2">
             <div class="w-32">
-              <img [src]="(theme.isDark$ | async) ? 'tolle-white.png' : 'tolle-black.png'" alt="logo">
+              <img [src]="theme.isDark() ? 'tolle-white.png' : 'tolle-black.png'" alt="logo">
             </div>
+            <tolle-button variant="outline" size="xs"
+              class="h-6 px-1.5 text-[10px] uppercase font-bold text-muted-foreground border-slate-200 dark:border-slate-800"
+              [tolleDropdownTrigger]="versionSelector">
+              {{ currentVersion }}
+              <i class="ri-arrow-down-s-line ml-1"></i>
+            </tolle-button>
           </div>
         </div>
+        <tolle-dropdown-menu #versionSelector>
+          <tolle-dropdown-label>Select Version</tolle-dropdown-label>
+          <tolle-dropdown-separator></tolle-dropdown-separator>
+          <tolle-dropdown-item (click)="switchVersion('v21')">
+            <div class="flex flex-col">
+              <span class="font-bold">v21 (Latest)</span>
+              <span class="text-[10px] text-muted-foreground">Standard Release</span>
+            </div>
+            @if (currentVersion === 'v21') {
+            <i class="ri-check-line ml-auto text-primary"></i>
+            }
+          </tolle-dropdown-item>
+          <tolle-dropdown-item (click)="switchVersion('v18')">
+            <div class="flex flex-col">
+              <span class="font-bold">v18</span>
+              <span class="text-[10px] text-muted-foreground">Legacy Compatibility</span>
+            </div>
+            @if (currentVersion === 'v18') {
+            <i class="ri-check-line ml-auto text-primary"></i>
+            }
+          </tolle-dropdown-item>
+        </tolle-dropdown-menu>
         <nav class="hidden md:flex items-center space-x-8 text-primary-700 ">
-          <a href="{{baseUrl}}" target="_blank" class="text-sm font-medium hover:text-primary transition-colors">Docs</a>
-          <a href="{{baseUrl}}components" target="_blank" class="text-sm font-medium hover:text-primary transition-colors">Components</a>
-          <a [tolleDropdownTrigger]="blocksSetting" class="cursor-pointer text-sm font-medium hover:text-primary transition-colors">Blocks</a>
-          <a [tolleDropdownTrigger]="chartSetting" class="cursor-pointer text-sm font-medium hover:text-primary transition-colors">Charts</a>
-          <a href="{{github}}" target="_blank" class="flex items-center space-x-1 text-sm font-medium hover:text-primary transition-colors">
+          <a href="{{baseUrl}}" target="_blank"
+            class="text-sm font-medium hover:text-primary transition-colors">Docs</a>
+          <a href="{{baseUrl}}components" target="_blank"
+            class="text-sm font-medium hover:text-primary transition-colors">Components</a>
+          <a [tolleDropdownTrigger]="blocksSetting"
+            class="cursor-pointer text-sm font-medium hover:text-primary transition-colors">Blocks</a>
+          <a [tolleDropdownTrigger]="chartSetting"
+            class="cursor-pointer text-sm font-medium hover:text-primary transition-colors">Charts</a>
+          <a href="{{github}}" target="_blank"
+            class="flex items-center space-x-1 text-sm font-medium hover:text-primary transition-colors">
             <i class="ri-github-line text-base"></i>
             <span>GitHub</span>
           </a>
           <tolle-button variant="ghost" size="icon" (click)="toggle()">
-            <i [class]="(theme.isDark$ | async) ? 'ri-sun-line' : 'ri-moon-line'"></i>
+            <i [class]="theme.isDark() ? 'ri-sun-line' : 'ri-moon-line'"></i>
           </tolle-button>
         </nav>
         <button class="md:hidden w-8 h-8 flex items-center justify-center">
@@ -29,18 +62,12 @@
     </div>
   </header>
   <tolle-dropdown-menu #blocksSetting>
-    <tolle-empty-state
-      variant="minimal"
-      title="Blocks coming soon"
-      description="We are currently working on blocks.">
+    <tolle-empty-state variant="minimal" title="Blocks coming soon" description="We are currently working on blocks.">
       <i icon class="ri-info-i"></i>
     </tolle-empty-state>
   </tolle-dropdown-menu>
   <tolle-dropdown-menu #chartSetting>
-    <tolle-empty-state
-      variant="minimal"
-      title="Charts coming soon"
-      description="We are currently working on charts.">
+    <tolle-empty-state variant="minimal" title="Charts coming soon" description="We are currently working on charts.">
       <i icon class="ri-info-i"></i>
     </tolle-empty-state>
   </tolle-dropdown-menu>
@@ -56,12 +83,9 @@
           <div class="flex justify-center border  items-center px-2 py-1 rounded-full">
             <div class="min-w-8 w-8 h-8 rounded-full mr-2 relative overflow-hidden cursor-pointer">
               <div class="absolute min-w-8 w-8 h-8 z-[2]"
-                [ngStyle]="{'backgroundColor': theme.primaryColor ?? '#000000'}"
-              (click)="color.click()"></div>
-              <input #color type="text"
-                class="bg-coloris min-w-8 w-8 h-8 absolute z-[1] bg-transparent"
-                [ngModel]="theme.primaryColor"
-                (ngModelChange)="changeBrand($event)">
+                [ngStyle]="{'backgroundColor': theme.primaryColor ?? '#000000'}" (click)="color.click()"></div>
+              <input #color type="text" class="bg-coloris min-w-8 w-8 h-8 absolute z-[1] bg-transparent"
+                [ngModel]="theme.primaryColor" (ngModelChange)="changeBrand($event)">
             </div>
             <label class="cursor-pointer text-primary " (click)="color.click()">Click to select primary color</label>
           </div>
@@ -70,7 +94,8 @@
           Build your <span class="text-red-500 dark:text-red-600">Angular</span> UI faster with Tolle
         </h1>
         <p class="text-xl max-w-3xl mx-auto mb-8 leading-relaxed">
-          A Tailwind CSS–based component library. Set your primary color, install once, and let Tailwind handle the rest. Accessible, customizable, and open source.
+          A Tailwind CSS–based component library. Set your primary color, install once, and let Tailwind handle the
+          rest. Accessible, customizable, and open source.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <tolle-button size="lg">
@@ -97,10 +122,10 @@
           </div>
           <div class="py-4 break-inside-avoid border-b">
             <div class="space-y-3 flex flex-col">
-              <tolle-input  size="lg" placeholder="name@example.com" hint="hey"></tolle-input>
-              <tolle-input  placeholder="name@example.com"></tolle-input>
-              <tolle-input  size="xs" placeholder="name@example.com"></tolle-input>
-              <tolle-input  size="sm" placeholder="name@example.com"></tolle-input>
+              <tolle-input size="lg" placeholder="name@example.com" hint="hey"></tolle-input>
+              <tolle-input placeholder="name@example.com"></tolle-input>
+              <tolle-input size="xs" placeholder="name@example.com"></tolle-input>
+              <tolle-input size="sm" placeholder="name@example.com"></tolle-input>
             </div>
           </div>
           <div class="py-4 break-inside-avoid border-b">
@@ -250,9 +275,7 @@
                 Ecommerce
               </tolle-badge>
 
-              <tolle-badge
-                variant="outline"
-                [removable]="true">
+              <tolle-badge variant="outline" [removable]="true">
                 Design
               </tolle-badge>
 
@@ -264,9 +287,10 @@
 
           <div class="py-4 break-inside-avoid border-b">
             <div class="flex items-start gap-3">
-              <tolle-checkbox ></tolle-checkbox>
+              <tolle-checkbox></tolle-checkbox>
               <div class="grid gap-1.5 leading-none">
-                <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                <label
+                  class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                   Accept terms and conditions
                 </label>
                 <p class="text-xs text-muted-foreground">
@@ -282,17 +306,11 @@
 
           <div class="py-4 break-inside-avoid border-b">
             <div class="flex flex-row space-x-2 items-center">
-              <tolle-button
-                variant="outline"
-                size="icon"
-                tolleTooltip="Edit Profile"
-                placement="top">
+              <tolle-button variant="outline" size="icon" tolleTooltip="Edit Profile" placement="top">
                 <i class="ri-edit-line"></i>
               </tolle-button>
 
-              <tolle-badge
-                variant="secondary"
-                tolleTooltip="Verified Account Status">
+              <tolle-badge variant="secondary" tolleTooltip="Verified Account Status">
                 <i prefix class="ri-shield-check-line"></i>
                 Verified Tooltip
               </tolle-badge>
@@ -326,25 +344,19 @@
 
               <div class="space-y-1">
                 <label class="text-sm font-medium text-foreground">Date of Birth</label>
-                <tolle-masked-input
-                  mask="00/00/0000"
-                  placeholder="MM/DD/YYYY">
+                <tolle-masked-input mask="00/00/0000" placeholder="MM/DD/YYYY">
                 </tolle-masked-input>
               </div>
 
               <div class="space-y-1">
                 <label class="text-sm font-medium text-foreground">Card Number</label>
-                <tolle-masked-input
-                  mask="0000 0000 0000 0000"
-                  placeholder="0000 0000 0000 0000">
+                <tolle-masked-input mask="0000 0000 0000 0000" placeholder="0000 0000 0000 0000">
                 </tolle-masked-input>
               </div>
 
               <div class="space-y-1">
                 <label class="text-sm font-medium text-foreground">License Key</label>
-                <tolle-masked-input
-                  mask="****-****-****-****"
-                  class="font-mono uppercase"
+                <tolle-masked-input mask="****-****-****-****" class="font-mono uppercase"
                   placeholder="XXXX-XXXX-XXXX-XXXX">
                 </tolle-masked-input>
               </div>
@@ -377,10 +389,8 @@
 
           <div class="py-4 break-inside-avoid border-b">
             <div class="flex flex-col space-y-2">
-              <tolle-date-range-picker
-                [disablePastDates]="true"
-                placeholder="Select dates..."
-              ></tolle-date-range-picker>
+              <tolle-date-range-picker [disablePastDates]="true"
+                placeholder="Select dates..."></tolle-date-range-picker>
             </div>
           </div>
 
@@ -423,18 +433,13 @@
                 </tolle-dropdown-item>
               </tolle-dropdown-menu>
 
-              <tolle-button
-                [tolleDropdownTrigger]="userSettings"
-                variant="default">
+              <tolle-button [tolleDropdownTrigger]="userSettings" variant="default">
                 <i class="ri-user-fill"></i>
                 Account
                 <i class="ri-arrow-down-s-line ml-2"></i>
               </tolle-button>
 
-              <tolle-button
-                [tolleDropdownTrigger]="userSettings"
-                variant="outline"
-                size="icon">
+              <tolle-button [tolleDropdownTrigger]="userSettings" variant="outline" size="icon">
                 <i class="ri-more-2-fill"></i>
               </tolle-button>
             </div>
@@ -450,10 +455,7 @@
             <div class="flex flex-col space-y-2">
               <tolle-textarea label="Comments"></tolle-textarea>
 
-              <tolle-textarea
-                label="Detailed Bio"
-                [autoGrow]="true"
-                [readonly]="true"
+              <tolle-textarea label="Detailed Bio" [autoGrow]="true" [readonly]="true"
                 placeholder="Start typing, I will grow with you...">
               </tolle-textarea>
             </div>
@@ -479,11 +481,7 @@
                   Your profile has been updated successfully.
                 </tolle-alert>
               </div>
-              <tolle-alert
-                variant="warning"
-                title="System Maintenance"
-                [dismissible]="true"
-                >
+              <tolle-alert variant="warning" title="System Maintenance" [dismissible]="true">
                 <i icon class="ri-error-warning-line"></i>
                 The server will be down for 5 minutes at midnight.
               </tolle-alert>
@@ -494,9 +492,7 @@
             <div class="flex flex-col space-y-2">
               <tolle-textarea label="Comments"></tolle-textarea>
 
-              <tolle-textarea
-                label="Detailed Bio"
-                [autoGrow]="true"
+              <tolle-textarea label="Detailed Bio" [autoGrow]="true"
                 placeholder="Start typing, I will grow with you...">
               </tolle-textarea>
             </div>
@@ -530,15 +526,11 @@
 
           <div class="py-4 break-inside-avoid border-b">
             <div class="flex flex-col space-y-2">
-              <tolle-empty-state
-                variant="minimal"
-                title="All caught up!"
-                description="No new alerts.">
+              <tolle-empty-state variant="minimal" title="All caught up!" description="No new alerts.">
                 <i icon class="ri-notification-off-line"></i>
               </tolle-empty-state>
 
-              <tolle-empty-state
-                title="No files yet"
+              <tolle-empty-state title="No files yet"
                 description="Upload your first document to get started with the project.">
                 <i icon class="ri-file-upload-line"></i>
 
@@ -550,29 +542,21 @@
           </div>
           <div class="py-4 break-inside-avoid border-b">
             <div class="flex flex-col space-y-2">
-              <tolle-date-picker
-                [disablePastDates]="false"
-                [disabled]="false"
-              placeholder="Select your birthday"></tolle-date-picker>
+              <tolle-date-picker [disablePastDates]="false" [disabled]="false"
+                placeholder="Select your birthday"></tolle-date-picker>
             </div>
           </div>
           <div class="py-4 break-inside-avoid border-b">
             <div class="flex flex-col space-y-2">
-              <tolle-date-picker
-                [disablePastDates]="false"
-                [disabled]="false"
-                mode="month"
-              placeholder="Select your month"></tolle-date-picker>
+              <tolle-date-picker [disablePastDates]="false" [disabled]="false" mode="month"
+                placeholder="Select your month"></tolle-date-picker>
             </div>
           </div>
 
           <div class="py-4 break-inside-avoid border-b">
             <div class="flex flex-col space-y-2">
-              <tolle-date-picker
-                [disablePastDates]="false"
-                [disabled]="false"
-                mode="year"
-              placeholder="Select your year"></tolle-date-picker>
+              <tolle-date-picker [disablePastDates]="false" [disabled]="false" mode="year"
+                placeholder="Select your year"></tolle-date-picker>
             </div>
           </div>
 
@@ -581,32 +565,30 @@
               <div class="p-2 font-bold">OTP</div>
               <tolle-otp #otp [length]="6" [(ngModel)]="myOtp">
                 <tolle-otp-group>
-                  <tolle-otp-slot [isFirst]="true" [char]="myOtp[0]" [isActive]="otp.isFocused && myOtp.length === 0"></tolle-otp-slot>
-                  <tolle-otp-slot [char]="myOtp[1]" [isActive]="otp.isFocused && myOtp.length === 1"></tolle-otp-slot>
-                  <tolle-otp-slot [isLast]="true" [char]="myOtp[2]" [isActive]="otp.isFocused && myOtp.length === 2"></tolle-otp-slot>
+                  <tolle-otp-slot [isFirst]="true" [char]="myOtp[0]"
+                    [isActive]="otp.isFocused() && myOtp.length === 0"></tolle-otp-slot>
+                  <tolle-otp-slot [char]="myOtp[1]" [isActive]="otp.isFocused() && myOtp.length === 1"></tolle-otp-slot>
+                  <tolle-otp-slot [isLast]="true" [char]="myOtp[2]"
+                    [isActive]="otp.isFocused() && myOtp.length === 2"></tolle-otp-slot>
                 </tolle-otp-group>
 
                 <div class="px-2 text-muted-foreground">-</div>
 
                 <tolle-otp-group>
-                  <tolle-otp-slot [isFirst]="true" [char]="myOtp[3]" [isActive]="otp.isFocused && myOtp.length === 3"></tolle-otp-slot>
-                  <tolle-otp-slot [char]="myOtp[4]" [isActive]="otp.isFocused && myOtp.length === 4"></tolle-otp-slot>
-                  <tolle-otp-slot [isLast]="true" [char]="myOtp[5]" [isActive]="otp.isFocused && myOtp.length === 5"></tolle-otp-slot>
+                  <tolle-otp-slot [isFirst]="true" [char]="myOtp[3]"
+                    [isActive]="otp.isFocused() && myOtp.length === 3"></tolle-otp-slot>
+                  <tolle-otp-slot [char]="myOtp[4]" [isActive]="otp.isFocused() && myOtp.length === 4"></tolle-otp-slot>
+                  <tolle-otp-slot [isLast]="true" [char]="myOtp[5]"
+                    [isActive]="otp.isFocused() && myOtp.length === 5"></tolle-otp-slot>
                 </tolle-otp-group>
               </tolle-otp>
             </div>
           </div>
           <div class="py-4 break-inside-avoid border-b gap-2">
-            <tolle-segment
-              [items]="tabs"
-              [(ngModel)]="selectedTab"
-            ></tolle-segment>
+            <tolle-segment [items]="tabs" [(ngModel)]="selectedTab"></tolle-segment>
 
             <div class="w-[300px] mt-2">
-              <tolle-segment
-                [items]="tabs"
-                [(ngModel)]="selectedTab"
-              ></tolle-segment>
+              <tolle-segment [items]="tabs" [(ngModel)]="selectedTab"></tolle-segment>
             </div>
 
             <tolle-segment class="mt-2" [items]="viewOptions" [(ngModel)]="view"></tolle-segment>
@@ -621,8 +603,9 @@
                 <span>{{ item.label }}</span>
 
                 @if (item.data?.count) {
-                  <span
-                  class="flex h-4 min-w-4 items-center justify-center rounded-full bg-white/10 px-1 text-[10px] font-bold text-white">{{ item.data.count }}</span>
+                <span
+                  class="flex h-4 min-w-4 items-center justify-center rounded-full bg-white/10 px-1 text-[10px] font-bold text-white">{{
+                  item.data.count }}</span>
                 }
               </div>
             </ng-template>
@@ -637,7 +620,8 @@
         <div class="grid md:grid-cols-3 gap-8">
 
           <!-- Tailwind First -->
-          <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm dark:bg-background dark:border-background ">
+          <div
+            class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm dark:bg-background dark:border-background ">
             <div class="w-12 h-12 bg-blue-600/40 rounded-lg flex items-center justify-center mb-6">
               <i class="ri-brush-line text-blue-600 text-xl"></i>
             </div>
@@ -649,7 +633,8 @@
           </div>
 
           <!-- Easy Customization -->
-          <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm dark:bg-background dark:border-background">
+          <div
+            class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm dark:bg-background dark:border-background">
             <div class="w-12 h-12 bg-green-600/40 rounded-lg flex items-center justify-center mb-6">
               <i class="ri-settings-4-line text-green-600 text-xl"></i>
             </div>
@@ -661,7 +646,8 @@
           </div>
 
           <!-- Install & Use -->
-          <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm dark:bg-background dark:border-background">
+          <div
+            class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm dark:bg-background dark:border-background">
             <div class="w-12 h-12 bg-purple-600/40 rounded-lg flex items-center justify-center mb-6">
               <i class="ri-download-cloud-line text-purple-600 text-xl"></i>
             </div>
@@ -708,7 +694,7 @@
       <div class="grid md:grid-cols-4 gap-8">
         <div class="md:col-span-1">
           <div class="w-60 h-16 flex items-center -ml-10">
-            <img [src]="(theme.isDark$ | async) ? 'tolle-white.png' : 'tolle-black.png'" alt="logo">
+            <img [src]="theme.isDark() ? 'tolle-white.png' : 'tolle-black.png'" alt="logo">
           </div>
           <p class="text-sm ">
             Build your component library with beautifully designed components.
@@ -717,13 +703,15 @@
         <div>
           <h4 class="font-semibold text-primary mb-4 ">Documentation</h4>
           <ul class="space-y-2">
-            <li><a href="{{baseUrl}}" target="_blank" class="text-sm hover:text-primary transition-colors ">Introduction</a></li>
+            <li><a href="{{baseUrl}}" target="_blank"
+                class="text-sm hover:text-primary transition-colors ">Introduction</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-semibold text-primary mb-4 ">Community</h4>
           <ul class="space-y-2">
-            <li><a href="{{github}}" target="_blank" class="text-sm hover:text-primary transition-colors ">GitHub</a></li>
+            <li><a href="{{github}}" target="_blank" class="text-sm hover:text-primary transition-colors ">GitHub</a>
+            </li>
           </ul>
         </div>
         <div class="hidden">
@@ -736,10 +724,12 @@
           </ul>
         </div>
       </div>
-      <div class="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center dark:border-background">
+      <div
+        class="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center dark:border-background">
         <p class="text-sm ">© 2024 tolle-ui. All rights reserved.</p>
         <div class="flex items-center space-x-4 mt-4 md:mt-0">
-          <a href="{{github}}" target="_blank" class="w-8 h-8 flex items-center justify-center  hover:text-primary transition-colors">
+          <a href="{{github}}" target="_blank"
+            class="w-8 h-8 flex items-center justify-center  hover:text-primary transition-colors">
             <i class="ri-github-line text-lg"></i>
           </a>
         </div>
