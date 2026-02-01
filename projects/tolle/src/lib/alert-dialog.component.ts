@@ -142,7 +142,7 @@ export class AlertDialogContentComponent {
 
     get computedClass() {
         return cn(
-            "fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-50 grid w-full max-w-lg gap-4 border bg-background p-6 shadow-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] rounded-lg",
+            "fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-50 grid w-full max-w-lg gap-4 border border-input bg-background p-6 shadow-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] rounded-lg",
             this.class
         );
     }
@@ -181,7 +181,7 @@ export class AlertDialogFooterComponent {
 })
 export class AlertDialogTitleComponent {
     @Input() class: string = '';
-    get computedClass() { return cn("text-lg font-semibold", this.class); }
+    get computedClass() { return cn("text-lg font-semibold text-foreground", this.class); }
 }
 
 @Component({
