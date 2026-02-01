@@ -55,7 +55,7 @@ export class ToastContainerComponent {
   getVariantClasses(variant: string = 'default') {
     switch (variant) {
       case 'destructive':
-        return 'border-destructive/50 bg-destructive/5 dark:bg-destructive/10 text-destructive dark:text-red-400';
+        return 'border-destructive/50 bg-red-50 dark:bg-destructive/10 text-destructive dark:text-red-400';
       case 'success':
         return 'border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400';
       default:
