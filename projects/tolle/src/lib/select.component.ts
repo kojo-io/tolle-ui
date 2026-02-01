@@ -10,6 +10,7 @@ import {
   computed,
   signal,
   effect,
+  untracked,
   inject
 } from '@angular/core';
 
@@ -103,16 +104,24 @@ export class SelectComponent implements ControlValueAccessor, OnDestroy {
     // React to service signal changes
     effect(() => {
       const val = this.selectService.selectedValue();
-      this.value.set(val);
-      this.onChange(val);
+      untracked(() => {
+        if (val !== this.value()) {
+          this.value.set(val);
+          this.onChange(val);
+        }
+      });
     });
 
     effect(() => {
       const label = this.selectService.selectedLabel();
-      this.selectedLabel.set(label);
-      if (label) {
-        this.close();
-      }
+      untracked(() => {
+        if (label !== this.selectedLabel()) {
+          this.selectedLabel.set(label);
+          if (label) {
+            this.close();
+          }
+        }
+      });
     });
 
     // Sync item selection state whenever value or items change
@@ -248,8 +257,13 @@ export class SelectComponent implements ControlValueAccessor, OnDestroy {
 
   writeValue(value: any): void {
     this.value.set(value);
+    this.selectService.selectedValue.set(value);
     const found = this.items().find((i: SelectItemComponent) => i.value() === value);
-    if (found) this.selectedLabel.set(found.getLabel());
+    if (found) {
+      const label = found.getLabel();
+      this.selectedLabel.set(label);
+      this.selectService.selectedLabel.set(label);
+    }
   }
 
   registerOnChange(fn: any): void { this.onChange = fn; }

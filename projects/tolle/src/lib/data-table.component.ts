@@ -1,6 +1,6 @@
 import {
   Component, input, computed, signal, contentChildren,
-  TemplateRef, model
+  TemplateRef, model, effect, untracked
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -46,7 +46,7 @@ export interface TableColumn {
             </tolle-input>
           </div>
         }
-    
+
         @if (allowColumnHiding() && showSettings()) {
           <tolle-popover>
             <button trigger
@@ -75,9 +75,9 @@ export interface TableColumn {
           </tolle-popover>
         }
       </div>
-    
+
       <div class="rounded-md border border-border overflow-auto shadow-sm bg-background">
-        <table class="w-full text-sm">
+        <table class="min-w-full text-sm">
           <thead class="border-b border-border bg-background">
             <tr>
               @if (expandable()) {
@@ -141,7 +141,7 @@ export interface TableColumn {
           </tbody>
         </table>
       </div>
-    
+
       @if (paginate() && filteredData().length > 0) {
         <tolle-pagination
           [totalRecords]="filteredData().length"
@@ -160,7 +160,7 @@ export class DataTableComponent {
   columns = input<TableColumn[]>([]);
   searchable = input(true);
   paginate = input(true);
-  pageSizeOptions = input<number[]>([]);
+  pageSizeOptions = input<number[]>([10, 20, 30, 50]);
   pageSize = model(10);
   expandable = input(false);
   size = input<'xs' | 'sm' | 'default' | 'lg'>('default');
@@ -180,10 +180,27 @@ export class DataTableComponent {
   columnVisibility = signal<Record<string, boolean>>({});
 
   constructor() {
-    // Initial visibility
-    const initialVisibility: Record<string, boolean> = {};
-    this.columns().forEach((col: any) => initialVisibility[col.key] = true);
-    this.columnVisibility.set(initialVisibility);
+    effect(() => {
+      const cols = this.columns();
+      if (cols.length > 0) {
+        untracked(() => {
+          const currentVisibility = this.columnVisibility();
+          const initialVisibility: Record<string, boolean> = { ...currentVisibility };
+          let changed = false;
+
+          cols.forEach((col: any) => {
+            if (initialVisibility[col.key] === undefined) {
+              initialVisibility[col.key] = true;
+              changed = true;
+            }
+          });
+
+          if (changed) {
+            this.columnVisibility.set(initialVisibility);
+          }
+        });
+      }
+    }, { allowSignalWrites: true });
   }
 
   activeColumns = computed(() => {
@@ -220,8 +237,11 @@ export class DataTableComponent {
     const data = this.filteredData();
     if (!this.paginate()) return data;
 
-    const size = this.pageSize();
-    const current = this.currentPage();
+    const size = Number(this.pageSize());
+    const current = Number(this.currentPage());
+
+    if (isNaN(size) || size <= 0) return [];
+
     const start = (current - 1) * size;
     const end = start + size;
 

@@ -36,7 +36,7 @@ import { SelectItemComponent } from './select-item.component';
           <div class="flex items-center space-x-2">
             <p class="text-sm font-medium">Rows per page</p>
             <tolle-select
-              class="w-[70px]"
+              class="w-[80px]"
               size="sm"
               [ngModel]="currentPageSize()"
               (ngModelChange)="sizeChange($event)"
@@ -112,7 +112,12 @@ export class PaginationComponent {
   protected cn = cn;
   navBtnClass = 'h-8 w-8 p-0 flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed';
 
-  totalPages = computed(() => Math.ceil(this.totalRecords() / this.currentPageSize()) || 0);
+  totalPages = computed(() => {
+    const size = this.currentPageSize();
+    const total = this.totalRecords();
+    if (!size || size <= 0) return 0;
+    return Math.ceil(total / size) || 0;
+  });
 
   first = computed(() => this.totalRecords() === 0 ? 0 : (this.currentPage() - 1) * this.currentPageSize() + 1);
   last = computed(() => Math.min(this.totalRecords(), this.currentPage() * this.currentPageSize()));
