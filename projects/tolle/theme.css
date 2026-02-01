@@ -122,8 +122,7 @@ a:hover {
 }
 
 /* Remix Icons */
-i[class^="ri-"],
-i[class*=" ri-"] {
+:where(i[class^="ri-"], i[class*=" ri-"]) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
