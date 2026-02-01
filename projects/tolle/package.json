@@ -1,6 +1,6 @@
 {
   "name": "@tolle_/tolle-ui",
-  "version": "18.2.7",
+  "version": "18.2.8",
   "publishConfig": {
     "access": "public"
   },
