@@ -37,14 +37,17 @@ export const appConfig: ApplicationConfig = {
 
 #### Tailwind Configuration (tailwind.config.js)
 ```javascript
-const { tolleUi } = require('@tolle_/tolle-ui/tailwind');
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
+  presets: [
+    require('@tolle_/tolle-ui/preset') // Point to your library preset
+  ],
   content: [
     "./src/**/*.{html,ts}",
-    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs}"
+    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs,html}"
   ],
-  plugins: [tolleUi()],
+  plugins: [],
 };
 ```
 
@@ -53,7 +56,7 @@ module.exports = {
 {
   "styles": [
     "src/styles.css",
-    "node_modules/@tolle_/tolle-ui/styles/theme.css"
+    "node_modules/@tolle_/tolle-ui/theme.css"
   ]
 }
 ```
@@ -1806,32 +1809,25 @@ export const appConfig: ApplicationConfig = {
 {
   "styles": [
     "src/styles.css",
-    "node_modules/@tolle_/tolle-ui/styles/theme.css" 
+    "node_modules/@tolle_/tolle-ui/styles/theme.css"
   ]
 }
 ```
 
 #### tailwindConfig
 ```html
-const { tolleUi } = require('@tolle_/tolle-ui/tailwind');
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
+  presets: [
+    require('@tolle_/tolle-ui/preset') // Point to your library preset
+  ],
   content: [
     "./src/**/*.{html,ts}",
-    // Include Tolle UI sources
-    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs}"
+    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs,html}"
   ],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-    tolleUi({
-       // Optional: override prefix
-       // prefix: 'tolle-'
-    })
-  ],
-}
+  plugins: [],
+};
 ```
 
 

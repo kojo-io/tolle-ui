@@ -7,8 +7,9 @@ import { ColumnHidingDocsComponent } from './column-hiding-docs/column-hiding-do
 import { PaginationDocsComponent } from './pagination-docs/pagination-docs.component';
 import { SearchableDocsComponent } from './searchable-docs/searchable-docs.component';
 import { DataTableApiComponent } from './data-table-api/data-table-api.component';
-import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
 
+import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
+import { StickyDocsComponent } from './sticky-docs/sticky-docs.component';
 
 @Component({
   selector: 'app-data-table-docs',
@@ -21,7 +22,8 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
     PaginationDocsComponent,
     SearchableDocsComponent,
     DataTableApiComponent,
-    DocsWrapperComponent
+    DocsWrapperComponent,
+    StickyDocsComponent
 
   ],
   templateUrl: './data-table-docs.component.html',
