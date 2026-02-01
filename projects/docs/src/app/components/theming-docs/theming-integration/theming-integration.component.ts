@@ -14,29 +14,22 @@ export class ThemingIntegrationComponent {
     globalStyles = `{
   "styles": [
     "src/styles.css",
-    "node_modules/@tolle_/tolle-ui/styles/theme.css" 
+    "node_modules/@tolle_/tolle-ui/styles/theme.css"
   ]
 }`;
 
-    tailwindConfigCode = `const { tolleUi } = require('@tolle_/tolle-ui/tailwind');
-
-/** @type {import('tailwindcss').Config} */
+    tailwindConfigCode = `/** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
+  presets: [
+    require('@tolle_/tolle-ui/preset') // Point to your library preset
+  ],
   content: [
     "./src/**/*.{html,ts}",
-    // Include Tolle UI sources
-    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs}"
+    "./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs,html}"
   ],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-    tolleUi({
-       // Optional: override prefix
-       // prefix: 'tolle-'
-    })
-  ],
-}`;
+  plugins: [],
+};`;
 
     tailAlongside = `<div class="p-4 bg-primary-50 rounded-lg">
   <tolle-button>Click Me</tolle-button>
