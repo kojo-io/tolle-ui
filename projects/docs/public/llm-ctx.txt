@@ -981,7 +981,7 @@ html
   [paginate]="${this.paginate}"
   [allowColumnHiding]="${this.allowColumnHiding}"
   [expandable]="${this.expandable}"
-  size="${this.size}">
+  [size]="${this.size}">
 
   ${this.expandable ? `<ng-template #expandedTemplate let-row="row">
     <div class="grid grid-cols-2 gap-4 text-sm">

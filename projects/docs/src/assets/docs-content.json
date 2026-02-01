@@ -986,7 +986,7 @@
       {
         "name": "DataTableInteractiveComponent",
         "examples": {
-          "playgroundCode": "<tolle-data-table\n  [data]=\"data\"\n  [columns]=\"columns\"\n  [searchable]=\"${this.searchable}\"\n  [paginate]=\"${this.paginate}\"\n  [allowColumnHiding]=\"${this.allowColumnHiding}\"\n  [expandable]=\"${this.expandable}\"\n  size=\"${this.size}\">\n\n  ${this.expandable ? `<ng-template #expandedTemplate let-row=\"row\">\n    <div class=\"grid grid-cols-2 gap-4 text-sm\">\n      <div>\n        <span class=\"font-medium text-muted-foreground\">ID:</span>\n        <span class=\"ml-2\">{{ row.id }}</span>\n      </div>\n      <div>\n        <span class=\"font-medium text-muted-foreground\">Role:</span>\n        <span class=\"ml-2\">{{ row.role }}</span>\n      </div>\n    </div>\n  </ng-template>` : ''}\n</tolle-data-table>"
+          "playgroundCode": "<tolle-data-table\n  [data]=\"data\"\n  [columns]=\"columns\"\n  [searchable]=\"${this.searchable}\"\n  [paginate]=\"${this.paginate}\"\n  [allowColumnHiding]=\"${this.allowColumnHiding}\"\n  [expandable]=\"${this.expandable}\"\n  [size]=\"${this.size}\">\n\n  ${this.expandable ? `<ng-template #expandedTemplate let-row=\"row\">\n    <div class=\"grid grid-cols-2 gap-4 text-sm\">\n      <div>\n        <span class=\"font-medium text-muted-foreground\">ID:</span>\n        <span class=\"ml-2\">{{ row.id }}</span>\n      </div>\n      <div>\n        <span class=\"font-medium text-muted-foreground\">Role:</span>\n        <span class=\"ml-2\">{{ row.role }}</span>\n      </div>\n    </div>\n  </ng-template>` : ''}\n</tolle-data-table>"
         },
         "props": {},
         "selector": "app-data-table-interactive"
