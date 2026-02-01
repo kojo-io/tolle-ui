@@ -12,7 +12,7 @@
     "build:docs": "npm run generate:llms && ng build docs --configuration production",
     "generate:llms": "npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/extract-docs.ts && npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/generate-llms.ts"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^18.2.0",
     "@angular/cdk": "^18.2.0",
@@ -76,6 +76,7 @@
     "prettier-plugin-tailwindcss": "^0.7.2",
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.19",
+    "ts-morph": "^27.0.2",
     "typescript": "~5.5.2"
   }
 }

@@ -26,7 +26,7 @@ import { BadgeComponent } from './badge.component';
         [class]="computedTriggerClass">
 
         <div class="flex flex-wrap gap-1 items-center max-w-[95%]">
-          <ng-container *ngIf="value?.length; else placeholderTpl">
+          <ng-container *ngIf="value.length; else placeholderTpl">
             <tolle-badge *ngFor="let item of displayItems" size="xs" variant="secondary" [removable]="true" (onRemove)="removeValue($event, item.value)">
               {{ item.label }}
             </tolle-badge>
@@ -111,7 +111,7 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
   @ContentChildren(SelectItemComponent, { descendants: true }) items!: QueryList<SelectItemComponent>;
 
   value: any[] = [];
-  selectedItems: {label: string, value: any}[] = [];
+  selectedItems: { label: string, value: any }[] = [];
   isOpen = false;
   searchQuery = '';
   noResults = false;
@@ -176,7 +176,7 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
     this.items.changes.subscribe(() => this.syncItems());
   }
 
-  get displayItems(): {label: string, value: any}[] {
+  get displayItems(): { label: string, value: any }[] {
     return this.selectedItems.slice(0, this.maxDisplayItems);
   }
 
@@ -316,8 +316,8 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
   }
 
   // ControlValueAccessor
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
   writeValue(v: any[]): void {
     this.value = Array.isArray(v) ? v : [];
     this.syncItems();
