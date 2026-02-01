@@ -1,12 +1,14 @@
-import { Injectable, Inject, PLATFORM_ID, Optional, Renderer2, RendererFactory2, DOCUMENT, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, Inject, PLATFORM_ID, Optional, Renderer2, RendererFactory2, signal } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { TOLLE_CONFIG, TolleConfig } from './tolle-config';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
   private renderer: Renderer2;
   private _isDark = signal<boolean>(false);
   public isDark = this._isDark.asReadonly();
+  public isDark$ = toObservable(this._isDark);
 
   private styleId = 'tolle-dynamic-theme';
 
@@ -70,10 +72,34 @@ export class ThemeService {
     const root = this.document.documentElement;
     this.renderer.setStyle(root, '--radius', radius);
     this.updateRadiusInDynamicStyles(radius);
+    this.updateAllRadiusVariables(radius);
 
     if (persist) {
       localStorage.setItem('tolle-radius', radius);
     }
+  }
+
+  private updateAllRadiusVariables(baseRadius: string) {
+    const root = this.document.documentElement;
+
+    // Parse the radius to extract numeric value and unit
+    const radiusMatch = baseRadius.match(/^(\d*\.?\d+)([a-z]+|%)$/);
+    if (!radiusMatch) {
+      console.warn(`Invalid radius format: ${baseRadius}. Using default values.`);
+      return;
+    }
+
+    const numericValue = parseFloat(radiusMatch[1]);
+    const unit = radiusMatch[2];
+
+    // Set all radius variables according to your CSS classes
+    this.renderer.setStyle(root, '--radius-sm', `${numericValue * 0.5}${unit}`);
+    this.renderer.setStyle(root, '--radius-md', `${numericValue}${unit}`);
+    this.renderer.setStyle(root, '--radius-lg', `${numericValue * 1.5}${unit}`);
+    this.renderer.setStyle(root, '--radius-xl', `${numericValue * 2}${unit}`);
+    this.renderer.setStyle(root, '--radius-2xl', `${numericValue * 3}${unit}`);
+    this.renderer.setStyle(root, '--radius-3xl', `${numericValue * 4}${unit}`);
+    this.renderer.setStyle(root, '--radius-full', '9999px');
   }
 
   private updateRadiusInDynamicStyles(radius: string) {
@@ -82,21 +108,38 @@ export class ThemeService {
     if (existingStyle) {
       let css = existingStyle.textContent || '';
 
-      if (css.includes('--radius:')) {
-        css = css.replace(/--radius:[^;]+;/g, `--radius: ${radius};`);
-      } else {
-        css = css.replace(/:root\s*{/, `:root {\n      --radius: ${radius};`);
-      }
+      // Parse the radius to calculate derived values
+      const radiusMatch = radius.match(/^(\d*\.?\d+)([a-z]+|%)$/);
+      if (radiusMatch) {
+        const numericValue = parseFloat(radiusMatch[1]);
+        const unit = radiusMatch[2];
 
-      const radiusCalcRegex = /calc\(var\(--radius[^)]+\)/g;
-      css = css.replace(radiusCalcRegex, (match: string) => {
-        if (match.includes('- 2px')) {
-          return `calc(${radius} - 2px)`;
-        } else if (match.includes('- 4px')) {
-          return `calc(${radius} - 4px)`;
+        const derivedRadii = {
+          '--radius-sm': `${numericValue * 0.5}${unit}`,
+          '--radius-md': `${numericValue}${unit}`,
+          '--radius-lg': `${numericValue * 1.5}${unit}`,
+          '--radius-xl': `${numericValue * 2}${unit}`,
+          '--radius-2xl': `${numericValue * 3}${unit}`,
+          '--radius-3xl': `${numericValue * 4}${unit}`,
+          '--radius-full': '9999px'
+        };
+
+        // Update base radius
+        if (css.includes('--radius:')) {
+          css = css.replace(/--radius:[^;]+;/g, `--radius: ${radius};`);
         }
-        return match;
-      });
+
+        // Update all derived radius variables
+        Object.entries(derivedRadii).forEach(([varName, value]) => {
+          if (css.includes(varName)) {
+            const regex = new RegExp(`${varName}:[^;]+;`, 'g');
+            css = css.replace(regex, `${varName}: ${value};`);
+          } else {
+            // Add the variable if it doesn't exist
+            css = css.replace(/:root\s*{/, `:root {\n      ${varName}: ${value};`);
+          }
+        });
+      }
 
       existingStyle.textContent = css;
     }
@@ -114,14 +157,37 @@ export class ThemeService {
     const ringDarkRgb = this.hexToRgb(ringDark);
     const ringDarkRgbString = ringDarkRgb ? `${ringDarkRgb.r} ${ringDarkRgb.g} ${ringDarkRgb.b}` : '147 197 253';
 
+    // Get current radius or default
     const root = this.document.documentElement;
     const currentRadius = getComputedStyle(root).getPropertyValue('--radius').trim() || '0.5rem';
+
+    // Calculate all derived radius values
+    const radiusMatch = currentRadius.match(/^(\d*\.?\d+)([a-z]+|%)$/);
+    let radiusVariables = '';
+
+    if (radiusMatch) {
+      const numericValue = parseFloat(radiusMatch[1]);
+      const unit = radiusMatch[2];
+
+      radiusVariables = `
+        --radius: ${currentRadius};
+        --radius-sm: ${numericValue * 0.5}${unit};
+        --radius-md: ${numericValue}${unit};
+        --radius-lg: ${numericValue * 1.5}${unit};
+        --radius-xl: ${numericValue * 2}${unit};
+        --radius-2xl: ${numericValue * 3}${unit};
+        --radius-3xl: ${numericValue * 4}${unit};
+        --radius-full: 9999px;
+      `;
+    } else {
+      radiusVariables = `--radius: ${currentRadius};`;
+    }
 
     const css = `
       :root {
         --primary: ${rgbString};
         --primary-foreground: ${this.getContrastColorRgb(baseColor)};
-        --radius: ${currentRadius};
+        ${radiusVariables}
         --primary-50: ${this.hexToRgbString(this.lightenColor(baseColor, 90))};
         --primary-100: ${this.hexToRgbString(this.lightenColor(baseColor, 80))};
         --primary-200: ${this.hexToRgbString(this.lightenColor(baseColor, 60))};
@@ -138,6 +204,7 @@ export class ThemeService {
       .dark {
         --primary: ${rgbString};
         --primary-foreground: ${this.getContrastColorRgb(baseColor)};
+        ${radiusVariables}
         --primary-50: ${this.hexToRgbString(this.darkenColor(baseColor, 85))};
         --primary-100: ${this.hexToRgbString(this.darkenColor(baseColor, 75))};
         --primary-200: ${this.hexToRgbString(this.darkenColor(baseColor, 65))};
@@ -273,7 +340,7 @@ export class ThemeService {
   }
 
   get currentTheme(): 'dark' | 'light' {
-    return this.isDark() ? 'dark' : 'light';
+    return this._isDark() ? 'dark' : 'light';
   }
 
   get primaryColor(): string | null {
@@ -329,6 +396,12 @@ export class ThemeService {
     const root = this.document.documentElement;
     this.renderer.removeStyle(root, '--primary');
     this.renderer.removeStyle(root, '--radius');
+
+    // Also remove all derived radius variables
+    ['--radius-sm', '--radius-md', '--radius-lg', '--radius-xl', '--radius-2xl', '--radius-3xl', '--radius-full']
+      .forEach(varName => {
+        this.renderer.removeStyle(root, varName);
+      });
 
     const existingStyle = this.document.getElementById(this.styleId);
     if (existingStyle) {

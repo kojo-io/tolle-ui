@@ -978,6 +978,18 @@
               "description": "The template to render when a row is expanded.",
               "type": "TemplateRef<any>",
               "default": "undefined"
+            },
+            {
+              "name": "stickyHeader",
+              "description": "If true, the table header stays fixed at the top while scrolling.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "maxHeight",
+              "description": "Sets the maximum height of the table container, enabling vertical scrolling if content exceeds this value.",
+              "type": "string",
+              "default": "undefined"
             }
           ]
         },
@@ -1220,8 +1232,8 @@
         "name": "GSSetupComponent",
         "examples": {
           "appConfigCode": "import { ApplicationConfig } from '@angular/core';\nimport { provideTolleConfig } from '@tolle_/tolle-ui';\n\nexport const appConfig: ApplicationConfig = {\n  providers: [\n    provideTolleConfig({\n      primaryColor: '#8b5cf6', // Indigo\n      radius: '0.5rem',\n      darkByDefault: false\n    })\n  ]\n};",
-          "tailwindConfigCode": "const { tolleUi } = require('@tolle_/tolle-ui/tailwind');\n\nmodule.exports = {\n  content: [\n    \"./src/**/*.{html,ts}\",\n    \"./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs}\"\n  ],\n  plugins: [tolleUi()],\n};",
-          "globalStyles": "{\n  \"styles\": [\n    \"src/styles.css\",\n    \"node_modules/@tolle_/tolle-ui/styles/theme.css\"\n  ]\n}"
+          "tailwindConfigCode": "/** @type {import('tailwindcss').Config} */\nmodule.exports = {\n  darkMode: 'class',\n  presets: [\n    require('@tolle_/tolle-ui/preset') // Point to your library preset\n  ],\n  content: [\n    \"./src/**/*.{html,ts}\",\n    \"./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs,html}\"\n  ],\n  plugins: [],\n};",
+          "globalStyles": "{\n  \"styles\": [\n    \"src/styles.css\",\n    \"node_modules/@tolle_/tolle-ui/theme.css\"\n  ]\n}"
         },
         "props": {},
         "selector": "app-gs-setup"
@@ -2472,8 +2484,8 @@
       {
         "name": "ThemingIntegrationComponent",
         "examples": {
-          "globalStyles": "{\n  \"styles\": [\n    \"src/styles.css\",\n    \"node_modules/@tolle_/tolle-ui/styles/theme.css\" \n  ]\n}",
-          "tailwindConfigCode": "const { tolleUi } = require('@tolle_/tolle-ui/tailwind');\n\n/** @type {import('tailwindcss').Config} */\nmodule.exports = {\n  content: [\n    \"./src/**/*.{html,ts}\",\n    // Include Tolle UI sources\n    \"./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs}\"\n  ],\n  theme: {\n    extend: {},\n  },\n  plugins: [\n    tolleUi({\n       // Optional: override prefix\n       // prefix: 'tolle-'\n    })\n  ],\n}"
+          "globalStyles": "{\n  \"styles\": [\n    \"src/styles.css\",\n    \"node_modules/@tolle_/tolle-ui/theme.css\" \n  ]\n}",
+          "tailwindConfigCode": "\n/** @type {import('tailwindcss').Config} */\nmodule.exports = {\n  darkMode: 'class',\n  presets: [\n    require('@tolle_/tolle-ui/preset') // Point to your library preset\n  ],\n  content: [\n    \"./src/**/*.{html,ts}\",\n    \"./node_modules/@tolle_/tolle-ui/**/*.{html,ts,mjs,html}\"\n  ],\n  plugins: [],\n};"
         },
         "props": {},
         "selector": "app-theming-integration"
