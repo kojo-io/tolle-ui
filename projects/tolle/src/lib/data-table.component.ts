@@ -79,15 +79,15 @@ export interface TableColumn {
       </div>
 
       <div class="rounded-md border border-border overflow-hidden shadow-sm relative w-full">
-        <div class="overflow-auto w-full">
+        <div class="overflow-auto w-full" [style.max-height]="maxHeight">
 
           <table class="w-full table-auto border-collapse">
             <thead class="border-b border-border bg-background">
             <tr>
-              <th *ngIf="expandable" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]')"></th>
+              <th *ngIf="expandable" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]', stickyHeader ? 'sticky top-0 z-10 bg-background' : '')"></th>
 
               <th *ngFor="let col of activeColumns"
-                  [class]="cn('text-left font-medium text-foreground',headerPaddingClass,fontSizeClass, col.class)">
+                  [class]="cn('text-left font-medium text-foreground',headerPaddingClass,fontSizeClass, col.class, stickyHeader ? 'sticky top-0 z-10 bg-background shadow-sm' : '')">
 
                 <div *ngIf="col.sortable; else plainHeader"
                      (click)="toggleSort(col.key)"
@@ -185,7 +185,10 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() pageSizeOptions: number[] = []
   @Input() pageSize = 10;
   @Input() expandable = false;
+
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  @Input() stickyHeader = false;
+  @Input() maxHeight?: string;
 
   // --- Column Hiding Settings ---
   @Input() allowColumnHiding = true;

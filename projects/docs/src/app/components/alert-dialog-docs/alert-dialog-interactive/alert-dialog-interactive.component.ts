@@ -66,7 +66,15 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
             </tolle-alert-dialog-portal>
           </tolle-alert-dialog>
 
-          <tolle-button (click)="openFromService()">Service-based Trigger</tolle-button>
+          <div class="flex flex-wrap gap-2">
+            <tolle-button (click)="openFromService('xs')">Size: XS</tolle-button>
+            <tolle-button (click)="openFromService('sm')">Size: SM</tolle-button>
+            <tolle-button (click)="openFromService('md')">Size: MD</tolle-button>
+            <tolle-button (click)="openFromService('lg')">Size: LG</tolle-button>
+            <tolle-button (click)="openFromService('xl')">Size: XL</tolle-button>
+            <tolle-button (click)="openFromService('2xl')">Size: 2XL</tolle-button>
+            <tolle-button (click)="openFromService('full')">Size: Full</tolle-button>
+          </div>
         </div>
       </app-playground>
     </section>
@@ -75,12 +83,13 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 export class AlertDialogInteractiveComponent {
   private alertDialog = inject(AlertDialogService);
 
-  openFromService() {
+  openFromService(size: any = 'lg') {
     this.alertDialog.open({
       title: "Delete Project?",
       description: "This will permanently delete the selected project. This action cannot be undone.",
       actionText: "Delete",
-      variant: "destructive"
+      variant: "destructive",
+      size: size
     });
   }
 

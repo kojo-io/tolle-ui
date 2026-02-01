@@ -6,6 +6,7 @@
     <app-column-hiding-docs id="column-hiding" />
     <app-pagination-docs id="pagination" />
     <app-searchable-docs id="searchable" />
+    <app-sticky-docs id="sticky-header" />
     <app-data-table-api id="api-reference" />
   </div>
 
@@ -54,6 +55,12 @@
             </a>
           </li>
         </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('sticky-header')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Sticky Header
+        </a>
       </li>
       <li>
         <a (click)="baseService.scrollTo('api-reference')"
