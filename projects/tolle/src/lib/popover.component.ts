@@ -1,7 +1,7 @@
 
 import { CommonModule } from '@angular/common';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
-import {Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild} from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'tolle-popover',
@@ -15,14 +15,15 @@ import {Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Out
     <div
       *ngIf="isOpen"
       #popover
-      class="absolute top-0 left-0 w-max z-[9999]"
+      class="fixed top-0 left-0 w-max z-[9999]"
+      style="visibility: hidden"
     >
       <ng-content></ng-content>
     </div>
   `,
 })
 export class PopoverComponent implements OnDestroy {
-  @Input() placement: 'top' | 'bottom' | 'left' | 'right' = 'bottom';
+  @Input() placement: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end' = 'bottom';
   @Output() onOpen = new EventEmitter<void>();
   @Output() onClose = new EventEmitter<void>();
 
@@ -57,11 +58,13 @@ export class PopoverComponent implements OnDestroy {
       () => {
         computePosition(this.triggerEl.nativeElement, this.popoverEl.nativeElement, {
           placement: this.placement,
+          strategy: 'fixed',
           middleware: [offset(8), flip(), shift({ padding: 8 })],
         }).then(({ x, y }) => {
           Object.assign(this.popoverEl.nativeElement.style, {
             left: `${x}px`,
             top: `${y}px`,
+            visibility: 'visible',
           });
         });
       }

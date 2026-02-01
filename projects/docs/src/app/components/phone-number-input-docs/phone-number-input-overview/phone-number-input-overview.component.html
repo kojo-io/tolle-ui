@@ -1,0 +1,35 @@
+<header class="mb-12 border-b border-slate-200 pb-8 text-foreground">
+    <h1 class="text-4xl font-extrabold tracking-tight mb-4">
+        Phone Number Input
+    </h1>
+    <p class="text-lg text-muted-foreground">
+        A specialized input for entering and formatting phone numbers with an integrated country selector.
+    </p>
+</header>
+
+<section class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Basic Usage</h2>
+    <p class="mb-6">
+        The phone number input combines a country selector with a formatted text field. It automatically formats the
+        number based on standard patterns and uses <code>libphonenumber-js</code> for parsing and validation.
+    </p>
+    <div
+        class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden">
+        <div class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[200px]">
+            <app-basic-phone-number-input-example></app-basic-phone-number-input-example>
+        </div>
+        <div class="border-t border-neutral-200 dark:border-neutral-800">
+            <app-base-editor [code]="(basicCode$ | async) || ''" language="typescript"></app-base-editor>
+        </div>
+    </div>
+</section>
+
+<section id="installation" class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">
+        Import
+    </h2>
+    <div class="rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
+        <app-base-editor code="import { PhoneNumberInputComponent } from 'tolle';"
+            language="typescript"></app-base-editor>
+    </div>
+</section>

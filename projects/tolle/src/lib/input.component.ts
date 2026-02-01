@@ -27,7 +27,7 @@ import { cn } from './utils/cn';
         [class]="computedContainerClass"
         (click)="focusInput()"
       >
-        <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
+        <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
           <ng-content select="[prefix]"></ng-content>
         </div>
 
@@ -47,7 +47,7 @@ import { cn } from './utils/cn';
           [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
         />
 
-        <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
+        <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
           <ng-content select="[suffix]"></ng-content>
         </div>
       </div>
@@ -93,11 +93,11 @@ export class InputComponent implements ControlValueAccessor, AfterViewInit {
   @Input() hideHintOnFocus: boolean = true;
 
   value: any = '';
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
   isFocused: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
     if (this.inputElement?.nativeElement.hasAttribute('autofocus')) {

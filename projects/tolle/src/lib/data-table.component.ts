@@ -23,7 +23,7 @@ export interface TableColumn {
   selector: 'tolle-data-table',
   standalone: true,
   styles: [`
-    :host { display: block; width: 100%; }
+    :host { display: block; width: 100%; height: 100%; }
     table { width: 100%; border-collapse: collapse; display: table; }
     thead { display: table-header-group; }
     tbody { display: table-row-group; }
@@ -40,8 +40,8 @@ export interface TableColumn {
     CheckboxComponent,
   ],
   template: `
-    <div class="space-y-4 w-full">
-      <div class="flex items-center justify-between py-2">
+    <div class="h-full flex flex-col w-full">
+      <div class="flex items-center justify-between py-2 flex-none">
         <div *ngIf="searchable" class="w-full max-w-sm">
           <tolle-input
             [size]="size === 'lg' ? 'default' : 'sm'"
@@ -78,8 +78,8 @@ export interface TableColumn {
         </tolle-popover>
       </div>
 
-      <div class="rounded-md border border-border overflow-hidden shadow-sm relative w-full">
-        <div class="overflow-auto w-full" [style.max-height]="maxHeight">
+      <div class="flex-1 min-h-0 rounded-md border border-border overflow-hidden shadow-sm relative w-full">
+        <div class="overflow-auto w-full h-full" [style.max-height]="maxHeight">
 
           <table class="w-full table-auto border-collapse">
             <thead class="border-b border-border bg-background">
@@ -165,15 +165,17 @@ export interface TableColumn {
         </div>
       </div>
 
-      <tolle-pagination
-        *ngIf="paginate && filteredData.length > 0"
-        [totalRecords]="filteredData.length"
-        [pageSizeOptions]="pageSizeOptions"
-        [currentPage]="currentPage"
-        [currentPageSize]="pageSize"
-        (onPageNumberChange)="handlePageChange($event)"
-        (onPageSizeChange)="handlePageSizeChange($event)"
-      ></tolle-pagination>
+      <div class="flex-none py-2">
+        <tolle-pagination
+          *ngIf="paginate && filteredData.length > 0"
+          [totalRecords]="filteredData.length"
+          [pageSizeOptions]="pageSizeOptions"
+          [currentPage]="currentPage"
+          [currentPageSize]="pageSize"
+          (onPageNumberChange)="handlePageChange($event)"
+          (onPageSizeChange)="handlePageSizeChange($event)"
+        ></tolle-pagination>
+      </div>
     </div>
   `
 })

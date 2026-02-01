@@ -94,6 +94,14 @@ export const routes: Routes = [
             loadComponent: () => import('./components/date-range-picker-docs/date-range-picker-docs.component').then(m => m.DateRangePickerDocsComponent),
           },
           {
+            path: 'country-selector',
+            loadComponent: () => import('./components/country-selector-docs/country-selector-docs.component').then(m => m.CountrySelectorDocsComponent),
+          },
+          {
+            path: 'phone-number-input',
+            loadComponent: () => import('./components/phone-number-input-docs/phone-number-input-docs.component').then(m => m.PhoneNumberInputDocsComponent),
+          },
+          {
             path: 'dropdown-menu',
             loadComponent: () => import('./components/dropdown-menu-docs/dropdown-menu-docs.component').then(m => m.DropdownMenuDocsComponent),
           },

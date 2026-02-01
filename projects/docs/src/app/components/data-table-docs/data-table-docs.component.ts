@@ -9,7 +9,7 @@ import { SearchableDocsComponent } from './searchable-docs/searchable-docs.compo
 import { DataTableApiComponent } from './data-table-api/data-table-api.component';
 
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { StickyDocsComponent } from './sticky-docs/sticky-docs.component';
+import { DataTableStickyDocsComponent } from './data-table-sticky/data-table-sticky.component';
 
 @Component({
   selector: 'app-data-table-docs',
@@ -23,7 +23,7 @@ import { StickyDocsComponent } from './sticky-docs/sticky-docs.component';
     SearchableDocsComponent,
     DataTableApiComponent,
     DocsWrapperComponent,
-    StickyDocsComponent
+    DataTableStickyDocsComponent
 
   ],
   templateUrl: './data-table-docs.component.html',

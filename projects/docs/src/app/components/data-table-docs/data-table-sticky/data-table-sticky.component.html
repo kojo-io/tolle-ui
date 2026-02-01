@@ -1,0 +1,79 @@
+<section id="sticky-header" class="space-y-4 pt-10">
+    <div class="space-y-2">
+        <h2 class="text-2xl font-bold tracking-tight">Sticky Header</h2>
+        <p class="text-muted-foreground">
+            The table header can be fixed at the top of the container while scrolling. Use
+            <code>stickyHeader="true"</code> and provide a <code>maxHeight</code> to enable this feature.
+        </p>
+    </div>
+
+    <div class="space-y-4">
+        <div class="flex flex-col md:flex-row gap-4 items-center">
+            <div class="w-full md:w-1/4">
+                <tolle-segment [items]="viewOptions" [(ngModel)]="tab" />
+            </div>
+            <div class="w-full md:w-1/3 flex items-center gap-2">
+                <span class="text-xs text-muted-foreground whitespace-nowrap font-medium">Max Height:</span>
+                <tolle-segment [items]="heightOptions" [(ngModel)]="selectedHeight" />
+            </div>
+        </div>
+
+        @if (tab === 'preview') {
+        <div class="p-4 rounded-lg bg-background flex flex-col gap-4 justify-center items-center h-[500px] border">
+            <div class="w-full h-full overflow-hidden">
+                <app-data-table-sticky [maxHeight]="selectedHeight" class="w-full h-full" />
+            </div>
+        </div>
+        }
+
+        @if (tab === 'code') {
+        <div class="w-full rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
+            <div class="w-full md:w-1/4 p-2">
+                <tolle-segment [items]="codeViewOptions" [(ngModel)]="codeTab" />
+            </div>
+
+            @if (codeTab === 'html') {
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-red-600"></span>
+                </div>
+                @if (htmlCode | async; as code) {
+                <div>
+                    <button (click)="baseService.copyTo(code)"
+                        class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                        <i class="ri-file-copy-line"></i>
+                    </button>
+                </div>
+                }
+            </div>
+            <div class="relative group rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="(htmlCode | async) ?? ''" language="html" />
+            </div>
+            }
+
+            @if (codeTab === 'typescript') {
+            <div class="flex items-center justify-between px-4 py-2 border-b border-neutral-800">
+                <div class="flex items-center gap-2 text-neutral-300 text-sm font-medium">
+                    <span class="w-3 h-3 rounded-full bg-green-600"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-red-600"></span>
+                </div>
+                @if (tsCode | async; as code) {
+                <div>
+                    <button (click)="baseService.copyTo(code)"
+                        class="text-neutral-400 hover:text-neutral-200 transition" aria-label="Copy">
+                        <i class="ri-file-copy-line"></i>
+                    </button>
+                </div>
+                }
+            </div>
+            <div class="relative group rounded-md overflow-hidden h-auto">
+                <app-base-editor [code]="(tsCode | async) ?? ''" language="typescript" />
+            </div>
+            }
+        </div>
+        }
+    </div>
+</section>

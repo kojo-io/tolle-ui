@@ -1,0 +1,42 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full flex justify-center p-20">
+        <div class="w-full max-w-sm">
+            <tolle-phone-number-input [(ngModel)]="value" [size]="size" [dataType]="dataType" [disabled]="disabled"
+                [readonly]="readonly"></tolle-phone-number-input>
+            <div class="mt-4 p-4 bg-muted rounded-md text-xs font-mono overflow-auto max-h-40">
+                Value:
+                <pre>{{ value | json }}</pre>
+            </div>
+        </div>
+    </div>
+
+    <div controls class="grid gap-6">
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Size</h3>
+            <tolle-select [(ngModel)]="size">
+                <tolle-select-item value="xs">Extra Small (xs)</tolle-select-item>
+                <tolle-select-item value="sm">Small (sm)</tolle-select-item>
+                <tolle-select-item value="default">Default</tolle-select-item>
+                <tolle-select-item value="lg">Large (lg)</tolle-select-item>
+            </tolle-select>
+        </div>
+
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Data Type</h3>
+            <tolle-select [(ngModel)]="dataType">
+                <tolle-select-item value="FullObject">Full Object</tolle-select-item>
+                <tolle-select-item value="NumberOnly">Number Only</tolle-select-item>
+            </tolle-select>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Disabled</label>
+            <tolle-switch [(ngModel)]="disabled"></tolle-switch>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Readonly</label>
+            <tolle-switch [(ngModel)]="readonly"></tolle-switch>
+        </div>
+    </div>
+</app-playground>

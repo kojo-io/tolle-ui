@@ -1,0 +1,43 @@
+<app-playground [code]="playgroundCode">
+    <div preview class="w-full flex justify-center p-20">
+        <div class="w-full max-w-xs">
+            <tolle-country-selector [(ngModel)]="selectedIso" [size]="size" [returnValue]="returnValue"
+                [disabled]="disabled" [readonly]="readonly"></tolle-country-selector>
+            <div class="mt-4 p-2 bg-muted rounded text-xs font-mono">
+                Value: {{ selectedIso | json }}
+            </div>
+        </div>
+    </div>
+
+    <div controls class="grid gap-6">
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Size</h3>
+            <tolle-select [(ngModel)]="size">
+                <tolle-select-item value="xs">Extra Small (xs)</tolle-select-item>
+                <tolle-select-item value="sm">Small (sm)</tolle-select-item>
+                <tolle-select-item value="default">Default</tolle-select-item>
+                <tolle-select-item value="lg">Large (lg)</tolle-select-item>
+            </tolle-select>
+        </div>
+
+        <div class="space-y-2">
+            <h3 class="text-sm font-medium leading-none">Return Value</h3>
+            <tolle-select [(ngModel)]="returnValue">
+                <tolle-select-item value="isoAlpha2">ISO Alpha-2 (e.g. "GH")</tolle-select-item>
+                <tolle-select-item value="dialCode">Dial Code (e.g. "+233")</tolle-select-item>
+                <tolle-select-item value="name">Country Name</tolle-select-item>
+                <tolle-select-item value="object">Full Object</tolle-select-item>
+            </tolle-select>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Disabled</label>
+            <tolle-switch [(ngModel)]="disabled"></tolle-switch>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Readonly</label>
+            <tolle-switch [(ngModel)]="readonly"></tolle-switch>
+        </div>
+    </div>
+</app-playground>

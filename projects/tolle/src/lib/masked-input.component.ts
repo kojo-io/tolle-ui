@@ -32,7 +32,7 @@ import { cn } from './utils/cn';
         (click)="focusInput()"
       >
         <!-- Prefix Icon -->
-        <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
+        <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
           <ng-content select="[prefix]"></ng-content>
         </div>
 
@@ -53,7 +53,7 @@ import { cn } from './utils/cn';
         />
 
         <!-- Suffix Icon -->
-        <div class="flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
+        <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
           <ng-content select="[suffix]"></ng-content>
         </div>
       </div>
@@ -105,10 +105,10 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
     '0': /\d/, '9': /\d/, 'a': /[a-z]/i, 'A': /[a-z]/i, '*': /[a-z0-9]/i
   };
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  onChange: any = () => { };
+  onTouched: any = () => { };
 
-  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) {}
+  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) { }
 
   ngAfterContentChecked() {
     const prefix = this.el.nativeElement.querySelector('[prefix]');

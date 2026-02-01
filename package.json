@@ -45,6 +45,7 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-class-names": "^8.6.0",
     "embla-carousel-fade": "^8.6.0",
+    "libphonenumber-js": "^1.12.36",
     "marked": "^12.0.2",
     "prismjs": "^1.30.0",
     "remark-gfm": "^4.0.1",

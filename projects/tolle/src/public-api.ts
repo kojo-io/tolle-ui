@@ -79,3 +79,8 @@ export * from './lib/sheet.service';
 export * from './lib/sheet-ref';
 export * from './lib/sheet.types';
 export * from './lib/sheet-wrapper.component';
+export * from './lib/country-selector.component';
+export * from './lib/phone-number-input.component';
+export * from './lib/phone-number.service';
+export * from './lib/country-codes.service';
+
