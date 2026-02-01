@@ -94,6 +94,7 @@ import { AccordionItemComponent } from '../../../../tolle/src/lib/accordion-item
     AccordionItemComponent
   ],
   templateUrl: './index.component.html',
+  standalone: true,
   styleUrl: './index.component.css'
 })
 export class IndexComponent implements OnInit {
