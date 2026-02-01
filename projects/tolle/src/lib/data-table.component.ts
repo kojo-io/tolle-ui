@@ -31,6 +31,14 @@ export interface TableColumn {
     PopoverContentComponent,
     CheckboxComponent,
   ],
+  styles: [`
+    :host { display: block; width: 100%; }
+    table { width: 100%; border-collapse: collapse; display: table; }
+    thead { display: table-header-group; }
+    tbody { display: table-row-group; }
+    tr { display: table-row; }
+    th, td { display: table-cell; }
+  `],
   template: `
     <div class="space-y-4">
       <div class="flex items-center justify-between py-2">
