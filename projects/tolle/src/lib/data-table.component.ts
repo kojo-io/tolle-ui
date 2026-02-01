@@ -22,6 +22,14 @@ export interface TableColumn {
 @Component({
   selector: 'tolle-data-table',
   standalone: true,
+  styles: [`
+    :host { display: block; width: 100%; }
+    table { width: 100%; border-collapse: collapse; display: table; }
+    thead { display: table-header-group; }
+    tbody { display: table-row-group; }
+    tr { display: table-row; }
+    th, td { display: table-cell; }
+  `],
   imports: [
     CommonModule,
     FormsModule,
@@ -32,7 +40,7 @@ export interface TableColumn {
     CheckboxComponent,
   ],
   template: `
-    <div class="space-y-4">
+    <div class="space-y-4 w-full">
       <div class="flex items-center justify-between py-2">
         <div *ngIf="searchable" class="w-full max-w-sm">
           <tolle-input
@@ -70,53 +78,91 @@ export interface TableColumn {
         </tolle-popover>
       </div>
 
-      <div class="rounded-md border border-border overflow-auto shadow-sm bg-background">
-        <table class="w-full text-sm">
-          <thead class="border-b border-border bg-background">
-          <tr>
-            <th *ngIf="expandable" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]')"></th>
-            <th *ngFor="let col of activeColumns"
-                [class]="cn('font-medium text-foreground text-left transition-all', headerPaddingClass, fontSizeClass, col.class)">
-              <div *ngIf="col.sortable; else simpleHeader" (click)="toggleSort(col.key)" class="flex items-center gap-1 cursor-pointer hover:text-foreground group select-none">
-                {{ col.label }}
-                <i [class]="cn('transition-opacity', getSortIcon(col.key))"></i>
-              </div>
-              <ng-template #simpleHeader>{{ col.label }}</ng-template>
-            </th>
-          </tr>
-          </thead>
-          <tbody class="divide-y divide-border">
-          <ng-container *ngFor="let row of pagedData; let i = index">
-            <tr class="hover:bg-muted/50 transition-colors">
-              <td *ngIf="expandable" class="px-4">
-                <button (click)="toggleRow(i)"
-                        [class]="cn('flex items-center justify-center rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors', size === 'xs' ? 'h-6 w-6' : 'h-8 w-8')">
-                  <i [class]="expandedRows.has(i) ? 'ri-arrow-down-s-line' : 'ri-arrow-right-s-line'"></i>
-                </button>
-              </td>
-              <td *ngFor="let col of activeColumns" [class]="cn('align-middle transition-all', cellPaddingClass, fontSizeClass, col.class)">
-                <ng-container *ngIf="getTemplate(col.key) as cell; else defaultValue">
-                  <ng-container *ngTemplateOutlet="cell.template; context: { $implicit: row[col.key], row: row }"></ng-container>
-                </ng-container>
-                <ng-template #defaultValue><span class="text-foreground">{{ row[col.key] }}</span></ng-template>
-              </td>
-            </tr>
-            <tr *ngIf="expandedRows.has(i)" class="bg-muted/10">
-              <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)" class="p-0">
-                <div class="p-6 border-b border-dashed border-border">
-                  <ng-container *ngIf="expandedTemplate; else defaultExpanded">
-                    <ng-container *ngTemplateOutlet="expandedTemplate; context: { row: row }"></ng-container>
-                  </ng-container>
-                  <ng-template #defaultExpanded><div class="text-xs text-muted-foreground italic">No details available.</div></ng-template>
+      <div class="rounded-md border border-border overflow-hidden shadow-sm relative w-full">
+        <div class="overflow-auto w-full">
+
+          <table class="w-full table-auto border-collapse">
+            <thead class="border-b border-border bg-background">
+            <tr>
+              <th *ngIf="expandable" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]')"></th>
+
+              <th *ngFor="let col of activeColumns"
+                  [class]="cn('text-left font-medium text-foreground',headerPaddingClass,fontSizeClass, col.class)">
+
+                <div *ngIf="col.sortable; else plainHeader"
+                     (click)="toggleSort(col.key)"
+                     class="flex items-center gap-1 cursor-pointer select-none">
+                  {{ col.label }}
+                  <i [class]="getSortIcon(col.key)"></i>
                 </div>
+
+                <ng-template #plainHeader>
+                  {{ col.label }}
+                </ng-template>
+              </th>
+            </tr>
+            </thead>
+
+            <tbody class="divide-y divide-border">
+            <ng-container *ngFor="let row of pagedData; let i = index">
+              <tr class="hover:bg-muted/50 transition-colors">
+                <td *ngIf="expandable" class="px-4">
+                  <button (click)="toggleRow(i)"
+                          [class]="cn(
+                      'rounded-md hover:bg-accent transition-colors',
+                      size === 'xs' ? 'h-6 w-6' : 'h-8 w-8'
+                    )">
+                    <i [class]="expandedRows.has(i)
+                ? 'ri-arrow-down-s-line'
+                : 'ri-arrow-right-s-line'">
+                    </i>
+                  </button>
+                </td>
+
+                <td *ngFor="let col of activeColumns"
+                    [class]="cn('align-middle',cellPaddingClass,fontSizeClass,col.class)">
+
+                  <ng-container *ngIf="getTemplate(col.key) as cell; else defaultCell">
+                    <ng-container
+                      *ngTemplateOutlet="cell.template; context: { $implicit: row[col.key], row: row }">
+                    </ng-container>
+                  </ng-container>
+
+                  <ng-template #defaultCell>
+                    {{ row[col.key] }}
+                  </ng-template>
+                </td>
+              </tr>
+
+              <tr *ngIf="expandedRows.has(i)" class="bg-muted/10">
+                <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)"
+                    class="p-0">
+                  <div class="p-6 border-t border-dashed border-border">
+                    <ng-container *ngIf="expandedTemplate; else noExpanded">
+                      <ng-container
+                        *ngTemplateOutlet="expandedTemplate; context: { row: row }">
+                      </ng-container>
+                    </ng-container>
+
+                    <ng-template #noExpanded>
+                      <p class="text-xs text-muted-foreground italic">
+                        No details available.
+                      </p>
+                    </ng-template>
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+
+            <tr *ngIf="pagedData.length === 0">
+              <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)"
+                  class="h-24 text-center text-muted-foreground">
+                No results found.
               </td>
             </tr>
-          </ng-container>
-          <tr *ngIf="pagedData.length === 0" class="h-24">
-            <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)" class="text-center text-muted-foreground">No results found.</td>
-          </tr>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <tolle-pagination

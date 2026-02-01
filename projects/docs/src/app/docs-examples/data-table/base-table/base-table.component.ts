@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {DataTableComponent, TableColumn} from '../../../../../../tolle/src/lib/data-table.component';
-import {ButtonComponent} from '../../../../../../tolle/src/lib/button.component';
-import {TolleCellDirective} from '../../../../../../tolle/src/lib/tolle-cell.directive';
+import { DataTableComponent, TableColumn } from '../../../../../../tolle/src/lib/data-table.component';
+import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
+import { TolleCellDirective } from '../../../../../../tolle/src/lib/tolle-cell.directive';
 
 @Component({
   selector: 'app-base-table',

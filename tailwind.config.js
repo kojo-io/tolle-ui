@@ -8,7 +8,7 @@ module.exports = {
     "./src/**/*.{html,ts}",
     "./projects/**/*.{html,ts}",
     "./projects/tolle/src/**/*.{html,ts}",
-    "./.storybook/**/*.{html,ts,js}",
+
   ],
   theme: {
     extend: {

@@ -10,9 +10,7 @@
     "build:web": "ng build showcase --configuration production",
     "build:lib": "ng build tolle --configuration production",
     "build:docs": "npm run generate:llms && ng build docs --configuration production",
-    "generate:llms": "npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/extract-docs.ts && npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/generate-llms.ts",
-    "docs:json": "npx compodoc -p projects/tolle/tsconfig.lib.json -e json -d projects/tolle/.storybook",
-    "build:storybook": "npm run docs:json && ng run tolle:build-storybook"
+    "generate:llms": "npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/extract-docs.ts && npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/generate-llms.ts"
   },
   "private": true,
   "dependencies": {
@@ -48,7 +46,6 @@
     "embla-carousel-class-names": "^8.6.0",
     "embla-carousel-fade": "^8.6.0",
     "marked": "^12.0.2",
-    "ngx-markdown": "^18.1.0",
     "prismjs": "^1.30.0",
     "remark-gfm": "^4.0.1",
     "remixicon": "^4.7.0",
@@ -63,11 +60,6 @@
     "@angular-devkit/core": "^18.2.0",
     "@angular/cli": "^18.2.21",
     "@angular/compiler-cli": "^18.2.0",
-    "@compodoc/compodoc": "^1.1.32",
-    "@storybook/addon-a11y": "^10.1.10",
-    "@storybook/addon-docs": "^10.1.10",
-    "@storybook/addon-themes": "^10.1.11",
-    "@storybook/angular": "^10.1.10",
     "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.23",
     "css-loader": "^7.1.2",
@@ -82,7 +74,6 @@
     "postcss-loader": "^8.2.0",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "storybook": "^10.1.10",
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.19",
     "typescript": "~5.5.2"
