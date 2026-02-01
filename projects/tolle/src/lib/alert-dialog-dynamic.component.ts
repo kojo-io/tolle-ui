@@ -1,6 +1,23 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  AlertDialogComponent,
+  AlertDialogContentComponent,
+  AlertDialogHeaderComponent,
+  AlertDialogTitleComponent,
+  AlertDialogDescriptionComponent,
+  AlertDialogFooterComponent,
+  AlertDialogCancelComponent,
+  AlertDialogActionComponent
+} from './alert-dialog.component';
+import { ButtonComponent } from './button.component';
+import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
+
+@Component({
+  selector: 'tolle-alert-dialog-dynamic',
+  standalone: true,
+  imports: [
+    CommonModule,
     AlertDialogComponent,
     AlertDialogContentComponent,
     AlertDialogHeaderComponent,
@@ -8,29 +25,12 @@ import {
     AlertDialogDescriptionComponent,
     AlertDialogFooterComponent,
     AlertDialogCancelComponent,
-    AlertDialogActionComponent
-} from './alert-dialog.component';
-import { ButtonComponent } from './button.component';
-import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
-
-@Component({
-    selector: 'tolle-alert-dialog-dynamic',
-    standalone: true,
-    imports: [
-        CommonModule,
-        AlertDialogComponent,
-        AlertDialogContentComponent,
-        AlertDialogHeaderComponent,
-        AlertDialogTitleComponent,
-        AlertDialogDescriptionComponent,
-        AlertDialogFooterComponent,
-        AlertDialogCancelComponent,
-        AlertDialogActionComponent,
-        ButtonComponent
-    ],
-    template: `
+    AlertDialogActionComponent,
+    ButtonComponent
+  ],
+  template: `
     <tolle-alert-dialog [open]="true" (openChange)="onOpenChange($event)">
-        <tolle-alert-dialog-content>
+        <tolle-alert-dialog-content [size]="config.size || 'lg'">
           <tolle-alert-dialog-header>
             <tolle-alert-dialog-title>{{ config.title }}</tolle-alert-dialog-title>
             <tolle-alert-dialog-description>
@@ -52,16 +52,16 @@ import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
   `
 })
 export class AlertDialogDynamicComponent {
-    config!: AlertDialogConfig;
-    dialogRef!: AlertDialogRef;
+  config!: AlertDialogConfig;
+  dialogRef!: AlertDialogRef;
 
-    onOpenChange(open: boolean) {
-        if (!open) {
-            this.close(false);
-        }
+  onOpenChange(open: boolean) {
+    if (!open) {
+      this.close(false);
     }
+  }
 
-    close(result: boolean) {
-        this.dialogRef.close(result);
-    }
+  close(result: boolean) {
+    this.dialogRef.close(result);
+  }
 }

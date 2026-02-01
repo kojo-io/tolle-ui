@@ -4,6 +4,7 @@ import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal, ComponentPortal } from '@angular/cdk/portal';
 import { cn } from './utils/cn';
 import { BehaviorSubject } from 'rxjs';
+import { AlertDialogSize } from './alert-dialog.types';
 
 @Injectable()
 class AlertDialogInternalService {
@@ -130,6 +131,7 @@ export class AlertDialogPortalComponent implements OnInit, OnDestroy {
 })
 export class AlertDialogContentComponent {
     @Input() class: string = '';
+    @Input() size: AlertDialogSize = 'lg';
 
     private alertDialogService = inject(AlertDialogInternalService);
     isOpen = false;
@@ -142,7 +144,17 @@ export class AlertDialogContentComponent {
 
     get computedClass() {
         return cn(
-            "fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-50 grid w-full max-w-lg gap-4 border border-input bg-background p-6 shadow-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] rounded-lg",
+            "fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-50 grid w-full gap-4 border border-input bg-background p-6 shadow-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] rounded-lg",
+            {
+                'max-w-xs': this.size === 'xs',
+                'max-w-sm': this.size === 'sm',
+                'max-w-md': this.size === 'md',
+                'max-w-lg': this.size === 'lg',
+                'max-w-xl': this.size === 'xl',
+                'max-w-2xl': this.size === '2xl',
+                'max-w-full': this.size === 'full',
+                'max-w-fit': this.size === 'fit',
+            },
             this.class
         );
     }

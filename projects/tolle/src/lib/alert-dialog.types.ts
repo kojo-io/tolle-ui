@@ -1,11 +1,14 @@
 import { Subject, Observable } from 'rxjs';
 
+export type AlertDialogSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full' | 'fit';
+
 export interface AlertDialogConfig {
     title: string;
     description: string;
     cancelText?: string;
     actionText?: string;
     variant?: 'default' | 'destructive';
+    size?: AlertDialogSize;
 }
 
 export class AlertDialogRef {
