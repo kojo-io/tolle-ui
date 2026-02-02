@@ -61,7 +61,7 @@ import { InputComponent } from './input.component';
               </tolle-input>
             </div>
           }
-          <div class="p-1 overflow-y-auto scrollbar-hidden grow h-full w-full">
+          <div class="p-1 overflow-y-auto grow h-full w-full">
             <ng-content></ng-content>
             @if (noResults()) {
               <div class="py-6 text-center text-sm text-muted-foreground">

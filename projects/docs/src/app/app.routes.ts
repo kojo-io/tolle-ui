@@ -42,6 +42,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/avatar-docs/avatar-docs.component').then(m => m.AvatarDocsComponent),
           },
           {
+            path: 'country-selector',
+            loadComponent: () => import('./components/country-selector-docs/country-selector-docs.component').then(m => m.CountrySelectorDocsComponent),
+          },
+          {
             path: 'badge',
             loadComponent: () => import('./components/badge-docs/badge-docs.component').then(m => m.BadgeDocsComponent),
           },
@@ -136,6 +140,10 @@ export const routes: Routes = [
           {
             path: 'popover',
             loadComponent: () => import('./components/popover-docs/popover-docs.component').then(m => m.PopoverDocsComponent),
+          },
+          {
+            path: 'phone-number-input',
+            loadComponent: () => import('./components/phone-number-input-docs/phone-number-input-docs.component').then(m => m.PhoneNumberInputDocsComponent),
           },
           {
             path: 'progress',
