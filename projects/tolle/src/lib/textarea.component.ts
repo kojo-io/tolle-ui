@@ -169,9 +169,6 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
         !disabled && 'focus:ring-0 focus:border-opacity-100'
       ],
 
-      // Scrollbar styling
-      'scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent',
-
       this.className()
     );
   });

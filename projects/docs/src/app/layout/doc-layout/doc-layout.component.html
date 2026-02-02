@@ -2,11 +2,11 @@
   <div class="container h-screen w-full flex relative">
 
     <!-- Backdrop for mobile menu -->
-    @if ((isHandset$ | async) && mobileMenuOpen) {
+    @if (isHandset() && mobileMenuOpen) {
     <div class="fixed inset-0 bg-black/50 z-40 transition-opacity" (click)="closeMobileMenu()"></div>
     }
 
-    <div [class]="(isHandset$ | async) ? 
+    <div [class]="isHandset() ? 
            'fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out ' + (mobileMenuOpen ? 'translate-x-0' : '-translate-x-full') : 
            'relative'">
       <tolle-sidebar [items]="navGroups" [collapsed]="isCollapsed" (click)="closeMobileMenu()">
@@ -31,7 +31,7 @@
     <main class="flex-1 flex flex-col h-full overflow-auto px-4 md:px-8 pt-4">
       <header class="flex items-center justify-between mb-4">
         <div class="flex items-center">
-          @if (isHandset$ | async) {
+          @if (isHandset()) {
           <tolle-button variant="ghost" size="icon" (click)="toggleMobileMenu()" class="mr-2">
             <i class="ri-menu-line text-xl"></i>
           </tolle-button>

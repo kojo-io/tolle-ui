@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
 import { SidebarComponent } from '../../../../../tolle/src/lib/sidebar.component';
@@ -13,19 +14,19 @@ import { Observable } from 'rxjs';
 
 
 @Component({
-    selector: 'app-doc-layout',
-    imports: [
-        RouterOutlet,
-        ButtonComponent,
-        SidebarComponent,
-        TooltipDirective,
-        ReactiveFormsModule,
-        NgStyle,
-        FormsModule,
-        AsyncPipe
-    ],
-    templateUrl: './doc-layout.component.html',
-    styleUrl: './doc-layout.component.css'
+  selector: 'app-doc-layout',
+  standalone: true,
+  imports: [
+    RouterOutlet,
+    ButtonComponent,
+    SidebarComponent,
+    TooltipDirective,
+    ReactiveFormsModule,
+    NgStyle,
+    FormsModule
+  ],
+  templateUrl: './doc-layout.component.html',
+  styleUrl: './doc-layout.component.css'
 })
 export class DocLayoutComponent implements OnInit {
   ngOnInit(): void {
@@ -48,11 +49,14 @@ export class DocLayoutComponent implements OnInit {
   theme = inject(ThemeService);
   private breakpointObserver = inject(BreakpointObserver);
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(['(max-width: 1024px)'])
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  isHandset = toSignal(
+    this.breakpointObserver.observe(['(max-width: 1024px)'])
+      .pipe(
+        map(result => result.matches),
+        shareReplay()
+      ),
+    { initialValue: false }
+  );
 
   changeBrand(value: string) {
     this.theme.setPrimaryColor(value, true); // purple
@@ -104,6 +108,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Checkbox", url: "/components/checkbox" },
         { title: "Collapsible", url: "/components/collapsible" },
         { title: "Context Menu", url: "/components/context-menu" },
+        { title: "Country Selector", url: "/components/country-selector" },
         { title: "Data Table", url: "/components/data-table" },
         { title: "Date Picker", url: "/components/date-picker" },
         { title: "Date Range Picker", url: "/components/date-range-picker" },
@@ -117,6 +122,7 @@ export class DocLayoutComponent implements OnInit {
         { title: "Multi Select", url: "/components/multi-select" },
         { title: "OTP", url: "/components/otp" },
         { title: "Pagination", url: "/components/pagination" },
+        { title: "Phone Number Input", url: "/components/phone-number-input" },
         { title: "Popover", url: "/components/popover" },
         { title: "Progress", url: "/components/progress" },
         { title: "Radio Group", url: "/components/radio-group" },

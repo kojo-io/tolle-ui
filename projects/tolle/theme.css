@@ -97,6 +97,26 @@
 /* Base text color inheritance - THIS IS KEY */
 * {
   border-color: var(--border, #e4e4e7);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.3);
+  border-radius: 20px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.5);
 }
 
 html {
@@ -122,8 +142,7 @@ a:hover {
 }
 
 /* Remix Icons */
-i[class^="ri-"],
-i[class*=" ri-"] {
+:where(i[class^="ri-"], i[class*=" ri-"]) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -411,4 +430,37 @@ tolle-input:focus-within {
 /* Error state ring color */
 .ring-destructive {
   --tw-ring-color: var(--destructive) !important;
+}
+
+/* In your global styles.css or tailwind.config.js if using Tailwind */
+.rounded-sm {
+  border-radius: var(--radius-sm, 0.125rem);
+}
+
+.rounded {
+  border-radius: var(--radius, 0.25rem);
+}
+
+.rounded-md {
+  border-radius: var(--radius-md, 0.375rem);
+}
+
+.rounded-lg {
+  border-radius: var(--radius-lg, 0.5rem);
+}
+
+.rounded-xl {
+  border-radius: var(--radius-xl, 0.75rem);
+}
+
+.rounded-2xl {
+  border-radius: var(--radius-2xl, 1rem);
+}
+
+.rounded-3xl {
+  border-radius: var(--radius-3xl, 1.5rem);
+}
+
+.rounded-full {
+  border-radius: var(--radius-full, 9999px);
 }

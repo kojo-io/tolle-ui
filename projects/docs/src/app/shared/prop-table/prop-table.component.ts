@@ -3,9 +3,10 @@ import { Component, Input } from '@angular/core';
 import { PropEntry } from '../types';
 
 @Component({
-    selector: 'app-prop-table',
-    imports: [],
-    template: `
+  selector: 'app-prop-table',
+  standalone: true,
+  imports: [],
+  template: `
     <div class="overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-800 my-6">
       <table class="w-full text-left text-sm">
         <thead class="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
@@ -19,7 +20,7 @@ import { PropEntry } from '../types';
         <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800 bg-white dark:bg-transparent">
           @for (prop of props; track prop.name) {
             <tr class="hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors">
-              <td class="px-6 py-4 font-mono font-medium text-primary-foreground">
+              <td class="px-6 py-4 font-mono font-medium text-foreground">
                 {{ prop.name }}
               </td>
               <td class="px-6 py-4">

@@ -35,7 +35,7 @@ export type SidebarGroup = {
         <ng-content select="[header]"></ng-content>
       </div>
 
-      <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden py-4 px-3 custom-scrollbar">
+      <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden py-4 px-3">
 
         @for (group of items(); track group.id || group.title || $index; let gIndex = $index) {
           <div class="mb-6">
@@ -239,10 +239,6 @@ export type SidebarGroup = {
   `,
   styles: [`
     :host { display: block; height: 100%; }
-    .custom-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(156, 163, 175, 0.3) transparent; }
-    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(156, 163, 175, 0.3); border-radius: 20px; }
     button:disabled { cursor: not-allowed; opacity: 0.6; }
     * { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
   `]

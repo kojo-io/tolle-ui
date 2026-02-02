@@ -5,9 +5,10 @@ import { BaseEditorComponent } from '../base-editor/base-editor.component';
 import { SegmentedComponent } from '../../../../../tolle/src/lib/segment.component';
 
 @Component({
-    selector: 'app-playground',
-    imports: [BaseEditorComponent, SegmentedComponent, FormsModule],
-    template: `
+  selector: 'app-playground',
+  standalone: true,
+  imports: [BaseEditorComponent, SegmentedComponent, FormsModule],
+  template: `
     <div class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden my-8">
       <!-- Tabs -->
       <div class="flex border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-2">
