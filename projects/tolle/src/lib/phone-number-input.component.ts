@@ -22,6 +22,12 @@ import { cn } from './utils/cn';
     imports: [CommonModule, FormsModule, CountrySelectorComponent, MaskedInputComponent],
     template: `
     <tolle-masked-input
+      [id]="id"
+      [label]="label"
+      [hint]="hint"
+      [error]="error"
+      [errorMessage]="errorMessage"
+      [hideHintOnFocus]="hideHintOnFocus"
       [mask]="mask"
       [size]="size"
       [disabled]="disabled"
@@ -88,6 +94,12 @@ import { cn } from './utils/cn';
 export class PhoneNumberInputComponent implements ControlValueAccessor {
     private cdr = inject(ChangeDetectorRef);
 
+    @Input() id = `phone-input-${Math.random().toString(36).substr(2, 9)}`;
+    @Input() label = '';
+    @Input() hint = '';
+    @Input() errorMessage = '';
+    @Input() error = false;
+    @Input() hideHintOnFocus = true;
     @Input() placeholder = 'Phone number';
     @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
     @Input() disabled = false;

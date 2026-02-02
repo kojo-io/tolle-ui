@@ -10,6 +10,11 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 })
 export class CountrySelectorApiComponent {
   props: PropEntry[] = [
+    { name: 'label', description: 'The label text for the field.', type: 'string', default: "''" },
+    { name: 'hint', description: 'Helpful hint text displayed below the field.', type: 'string', default: "''" },
+    { name: 'errorMessage', description: 'Error message to display when the field is in an error state.', type: 'string', default: "''" },
+    { name: 'error', description: 'Whether the field is in an error state.', type: 'boolean', default: 'false' },
+    { name: 'id', description: 'The unique ID for the component.', type: 'string', default: 'auto-generated' },
     { name: 'placeholder', description: 'The placeholder text when no country is selected.', type: 'string', default: "'Select country'" },
     { name: 'size', description: 'The size of the component.', type: "'xs' | 'sm' | 'default' | 'lg'", default: "'default'" },
     { name: 'defaultCountryCode', description: 'The initial country code (ISO Alpha-2).', type: 'string', default: "'GH'" },

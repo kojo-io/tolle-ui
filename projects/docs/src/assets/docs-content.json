@@ -897,6 +897,19 @@
       }
     ]
   },
+  "country-selector-docs": {
+    "category": "country-selector-docs",
+    "components": [
+      {
+        "name": "CountrySelectorInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-country-selector\n  [(ngModel)]=\"value\"\n  [label]=\"${this.label ? `'${this.label}'` : 'null'}\"\n  [hint]=\"${this.hint ? `'${this.hint}'` : 'null'}\"\n  [error]=\"${this.error}\"\n  [errorMessage]=\"${this.error ? `'${this.errorMessage}'` : 'null'}\"\n  size=\"${this.size}\"\n  returnValue=\"${this.returnValue}\"\n  [showName]=\"${this.showName}\"\n  [disabled]=\"${this.disabled}\"\n  [readonly]=\"${this.readonly}\"\n></tolle-country-selector>"
+        },
+        "props": {},
+        "selector": "app-country-selector-interactive"
+      }
+    ]
+  },
   "data-table-docs": {
     "category": "data-table-docs",
     "components": [
@@ -1563,6 +1576,19 @@
         },
         "props": {},
         "selector": "app-pagination-interactive"
+      }
+    ]
+  },
+  "phone-number-input-docs": {
+    "category": "phone-number-input-docs",
+    "components": [
+      {
+        "name": "PhoneNumberInputInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-phone-number-input\n  [(ngModel)]=\"value\"\n  [label]=\"${this.label ? `'${this.label}'` : 'null'}\"\n  [hint]=\"${this.hint ? `'${this.hint}'` : 'null'}\"\n  [error]=\"${this.error}\"\n  [errorMessage]=\"${this.error ? `'${this.errorMessage}'` : 'null'}\"\n  size=\"${this.size}\"\n  dataType=\"${this.dataType}\"\n  [disabled]=\"${this.disabled}\"\n  [readonly]=\"${this.readonly}\"\n></tolle-phone-number-input>"
+        },
+        "props": {},
+        "selector": "app-phone-number-input-interactive"
       }
     ]
   },

@@ -950,6 +950,29 @@ const menuItems: ContextMenuItem[] = [
 
 ---
 
+## Country-selector
+
+### Usage Examples
+#### playground
+```html
+<tolle-country-selector
+  [(ngModel)]="value"
+  [label]="${this.label ? `'${this.label}'` : 'null'}"
+  [hint]="${this.hint ? `'${this.hint}'` : 'null'}"
+  [error]="${this.error}"
+  [errorMessage]="${this.error ? `'${this.errorMessage}'` : 'null'}"
+  size="${this.size}"
+  returnValue="${this.returnValue}"
+  [showName]="${this.showName}"
+  [disabled]="${this.disabled}"
+  [readonly]="${this.readonly}"
+></tolle-country-selector>
+```
+
+
+
+---
+
 ## Data-table
 
 ### Usage Examples
@@ -1305,6 +1328,28 @@ html
 ```html
 <tolle-pagination${inputs ? '\n  ' + inputs : ''}
 ></tolle-pagination>
+```
+
+
+
+---
+
+## Phone-number-input
+
+### Usage Examples
+#### playground
+```html
+<tolle-phone-number-input
+  [(ngModel)]="value"
+  [label]="${this.label ? `'${this.label}'` : 'null'}"
+  [hint]="${this.hint ? `'${this.hint}'` : 'null'}"
+  [error]="${this.error}"
+  [errorMessage]="${this.error ? `'${this.errorMessage}'` : 'null'}"
+  size="${this.size}"
+  dataType="${this.dataType}"
+  [disabled]="${this.disabled}"
+  [readonly]="${this.readonly}"
+></tolle-phone-number-input>
 ```
 
 

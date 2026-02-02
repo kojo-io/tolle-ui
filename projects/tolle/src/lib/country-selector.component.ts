@@ -29,71 +29,108 @@ import { cn } from './utils/cn';
     }
   ],
   template: `
-    <tolle-popover #popover [placement]="'bottom-start'" (onClose)="onPopoverClose()">
-      <div trigger class="w-full">
-        <button
-          type="button"
-          [disabled]="disabled"
-          [class]="computedTriggerClass"
-        >
-          <div class="flex items-center gap-2 truncate">
-            <img
-              *ngIf="selectedCountry"
-              [src]="getFlagUrl(selectedCountry.flag)"
-              class="h-4 w-6 rounded-sm border border-border object-cover flex-shrink-0"
-              [alt]="selectedCountry.name"
-            />
-            <span *ngIf="selectedCountry && showName" class="truncate font-medium">
-              {{ selectedCountry.name }}
-            </span>
-            <span *ngIf="!selectedCountry" class="text-muted-foreground truncate">
-              {{ placeholder }}
-            </span>
-          </div>
-          <i [class]="iconClass"></i>
-        </button>
-      </div>
+    <div class="flex flex-col gap-1.5 w-full">
+      <label
+        *ngIf="label"
+        [for]="id"
+        [class]="computedLabelClass">
+        {{ label }}
+      </label>
 
-      <div class="flex flex-col bg-popover rounded-md border border-border shadow-md min-w-[300px] max-w-[400px] overflow-hidden">
-        <div class="p-2 border-b border-border bg-popover shadow-sm sticky top-0 z-10">
-          <tolle-input
-            size="sm"
-            placeholder="Search country..."
-            [(ngModel)]="searchQuery"
-            (ngModelChange)="filterCountries($event)"
-            class="w-full"
-            #searchInput
+      <tolle-popover #popover [placement]="'bottom-start'" (onClose)="onPopoverClose()">
+        <div trigger class="w-full">
+          <button
+            type="button"
+            [id]="id"
+            [disabled]="disabled"
+            [class]="computedTriggerClass"
+            (blur)="onBlur()"
+            (focus)="onFocus()"
+            [attr.aria-invalid]="error"
+            [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
           >
-            <i prefix class="ri-search-line"></i>
-          </tolle-input>
+            <div class="flex items-center gap-2 truncate">
+              <img
+                *ngIf="selectedCountry"
+                [src]="getFlagUrl(selectedCountry.flag)"
+                class="h-4 w-6 rounded-sm border border-border object-cover flex-shrink-0"
+                [alt]="selectedCountry.name"
+              />
+              <span *ngIf="selectedCountry && showName" class="truncate font-medium">
+                {{ selectedCountry.name }}
+              </span>
+              <span *ngIf="!selectedCountry" class="text-muted-foreground truncate">
+                {{ placeholder }}
+              </span>
+            </div>
+            <i [class]="iconClass"></i>
+          </button>
         </div>
 
-        <div class="max-h-[300px] overflow-y-auto p-1">
-          <div
-            *ngFor="let country of shadowCountries"
-            (click)="selectCountry(country)"
-            [class]="getItemClass(country)"
-          >
-            <div class="flex items-center gap-3 w-full">
-              <img
-                [src]="getFlagUrl(country.flag)"
-                class="h-4 w-6 rounded-sm border border-border object-cover flex-shrink-0"
-                [alt]="country.name"
-              />
-              <span class="text-sm flex-1 truncate">{{ country.name }}</span>
-              <span class="text-xs text-muted-foreground">{{ country.dialCode }}</span>
-              <i *ngIf="selectedCountry?.isoAlpha2 === country.isoAlpha2" class="ri-check-line text-primary"></i>
+        <div class="flex flex-col bg-popover rounded-md border border-border shadow-md min-w-[300px] max-w-[400px] overflow-hidden">
+          <div class="p-2 border-b border-border bg-popover shadow-sm sticky top-0 z-10">
+            <tolle-input
+              size="sm"
+              placeholder="Search country..."
+              [(ngModel)]="searchQuery"
+              (ngModelChange)="filterCountries($event)"
+              class="w-full"
+              #searchInput
+            >
+              <i prefix class="ri-search-line"></i>
+            </tolle-input>
+          </div>
+
+          <div class="max-h-[300px] overflow-y-auto p-1">
+            <div
+              *ngFor="let country of shadowCountries"
+              (click)="selectCountry(country)"
+              [class]="getItemClass(country)"
+            >
+              <div class="flex items-center gap-3 w-full">
+                <img
+                  [src]="getFlagUrl(country.flag)"
+                  class="h-4 w-6 rounded-sm border border-border object-cover flex-shrink-0"
+                  [alt]="country.name"
+                />
+                <span class="text-sm flex-1 truncate">{{ country.name }}</span>
+                <span class="text-xs text-muted-foreground">{{ country.dialCode }}</span>
+                <i *ngIf="selectedCountry?.isoAlpha2 === country.isoAlpha2" class="ri-check-line text-primary"></i>
+              </div>
+            </div>
+            <div *ngIf="shadowCountries.length === 0" class="py-6 text-center text-sm text-muted-foreground">
+              No countries found.
             </div>
           </div>
-          <div *ngIf="shadowCountries.length === 0" class="py-6 text-center text-sm text-muted-foreground">
-            No countries found.
-          </div>
         </div>
-      </div>
-    </tolle-popover>
+      </tolle-popover>
+
+      <ng-container *ngIf="!disabled">
+        <p
+          *ngIf="hint && !error"
+          class="text-xs text-muted-foreground px-1 transition-opacity duration-200"
+          [class.opacity-0]="isFocused && hideHintOnFocus"
+        >
+          {{ hint }}
+        </p>
+        <p
+          *ngIf="error && errorMessage"
+          [id]="id + '-error'"
+          class="text-xs text-destructive px-1 font-medium"
+        >
+          {{ errorMessage }}
+        </p>
+      </ng-container>
+    </div>
   `
 })
 export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
+  @Input() id = `country-selector-${Math.random().toString(36).substr(2, 9)}`;
+  @Input() label = '';
+  @Input() hint = '';
+  @Input() errorMessage = '';
+  @Input() error = false;
+  @Input() hideHintOnFocus = true;
   @Input() placeholder = 'Select country';
   @Input() class = '';
   @Input() disabled = false;
@@ -115,6 +152,7 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   selectedCountry: any = null;
   searchQuery = '';
   shadowCountries: any[] = [];
+  isFocused = false;
 
   onChange: any = () => { };
   onTouched: any = () => { };
@@ -150,9 +188,23 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
         'focus:border-primary/80'
       ],
       !(this.readonly || this.disabled) && 'hover:border-accent',
+      this.error && [
+        'border-destructive',
+        !(this.readonly || this.disabled) && [
+          'focus:border-destructive/80',
+          'focus:ring-destructive/30'
+        ]
+      ],
       this.disabled && 'cursor-not-allowed opacity-50 border-opacity-50',
       this.readonly && 'cursor-default border-dashed',
       this.class
+    );
+  }
+
+  get computedLabelClass() {
+    return cn(
+      "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
+      this.disabled && "opacity-50"
     );
   }
 
@@ -206,10 +258,19 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  onFocus(): void {
+    this.isFocused = true;
+  }
+
+  onBlur(): void {
+    this.isFocused = false;
+    this.onTouched();
+  }
+
   onPopoverClose() {
     this.searchQuery = '';
     this.filterCountries('');
-    this.onTouched();
+    this.onBlur();
   }
 
   writeValue(value: any): void {

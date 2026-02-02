@@ -1,7 +1,8 @@
 <app-playground [code]="playgroundCode">
     <div preview class="w-full flex justify-center p-20">
         <div class="w-full max-w-sm">
-            <tolle-phone-number-input [(ngModel)]="value" [size]="size" [dataType]="dataType" [disabled]="disabled"
+            <tolle-phone-number-input [(ngModel)]="value" [label]="label" [hint]="hint" [error]="error"
+                [errorMessage]="errorMessage" [size]="size" [dataType]="dataType" [disabled]="disabled"
                 [readonly]="readonly"></tolle-phone-number-input>
             <div class="mt-4 p-4 bg-muted rounded-md text-xs font-mono overflow-auto max-h-40">
                 Value:
@@ -11,6 +12,16 @@
     </div>
 
     <div controls class="grid gap-6">
+        <div class="space-y-2">
+            <label class="text-sm font-medium">Label</label>
+            <tolle-input [(ngModel)]="label" size="sm"></tolle-input>
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-sm font-medium">Hint</label>
+            <tolle-input [(ngModel)]="hint" size="sm"></tolle-input>
+        </div>
+
         <div class="space-y-2">
             <h3 class="text-sm font-medium leading-none">Size</h3>
             <tolle-select [(ngModel)]="size">
@@ -27,6 +38,16 @@
                 <tolle-select-item value="FullObject">Full Object</tolle-select-item>
                 <tolle-select-item value="NumberOnly">Number Only</tolle-select-item>
             </tolle-select>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Error State</label>
+            <tolle-switch [(ngModel)]="error"></tolle-switch>
+        </div>
+
+        <div class="space-y-2" *ngIf="error">
+            <label class="text-sm font-medium">Error Message</label>
+            <tolle-input [(ngModel)]="errorMessage" size="sm"></tolle-input>
         </div>
 
         <div class="flex items-center justify-between">

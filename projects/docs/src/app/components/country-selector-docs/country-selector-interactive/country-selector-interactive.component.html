@@ -1,7 +1,8 @@
 <app-playground [code]="playgroundCode">
     <div preview class="w-full flex justify-center p-20">
         <div class="w-full max-w-xs">
-            <tolle-country-selector [(ngModel)]="selectedIso" [size]="size" [returnValue]="returnValue"
+            <tolle-country-selector [(ngModel)]="selectedIso" [label]="label" [hint]="hint" [error]="error"
+                [errorMessage]="errorMessage" [size]="size" [returnValue]="returnValue" [showName]="showName"
                 [disabled]="disabled" [readonly]="readonly"></tolle-country-selector>
             <div class="mt-4 p-2 bg-muted rounded text-xs font-mono">
                 Value: {{ selectedIso | json }}
@@ -10,6 +11,16 @@
     </div>
 
     <div controls class="grid gap-6">
+        <div class="space-y-2">
+            <label class="text-sm font-medium">Label</label>
+            <tolle-input [(ngModel)]="label" size="sm"></tolle-input>
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-sm font-medium">Hint</label>
+            <tolle-input [(ngModel)]="hint" size="sm"></tolle-input>
+        </div>
+
         <div class="space-y-2">
             <h3 class="text-sm font-medium leading-none">Size</h3>
             <tolle-select [(ngModel)]="size">
@@ -28,6 +39,21 @@
                 <tolle-select-item value="name">Country Name</tolle-select-item>
                 <tolle-select-item value="object">Full Object</tolle-select-item>
             </tolle-select>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Show Name</label>
+            <tolle-switch [(ngModel)]="showName"></tolle-switch>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Error State</label>
+            <tolle-switch [(ngModel)]="error"></tolle-switch>
+        </div>
+
+        <div class="space-y-2" *ngIf="error">
+            <label class="text-sm font-medium">Error Message</label>
+            <tolle-input [(ngModel)]="errorMessage" size="sm"></tolle-input>
         </div>
 
         <div class="flex items-center justify-between">
