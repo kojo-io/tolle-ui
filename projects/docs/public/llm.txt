@@ -23,6 +23,7 @@ Modern UI component library for Angular built with Tailwind CSS and the Angular 
 - check-box-docs
 - collapsible-docs
 - context-menu-docs
+- country-selector-docs
 - data-table-docs
 - date-picker-docs
 - date-range-picker-docs
@@ -36,6 +37,7 @@ Modern UI component library for Angular built with Tailwind CSS and the Angular 
 - multi-select-docs
 - otp-docs
 - pagination-docs
+- phone-number-input-docs
 - popover-docs
 - progress-docs
 - radio-group-docs

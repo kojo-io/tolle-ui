@@ -23,7 +23,7 @@ import { Component, ElementRef, HostListener, input, OnDestroy, output, viewChil
     `
 })
 export class PopoverComponent implements OnDestroy {
-  placement = input<'top' | 'bottom' | 'left' | 'right'>('bottom');
+  placement = input<'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'>('bottom');
   onOpen = output<void>();
   onClose = output<void>();
 

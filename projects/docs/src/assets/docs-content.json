@@ -897,6 +897,76 @@
       }
     ]
   },
+  "country-selector-docs": {
+    "category": "country-selector-docs",
+    "components": [
+      {
+        "name": "CountrySelectorApiComponent",
+        "examples": {},
+        "props": {
+          "componentProps": [
+            {
+              "name": "placeholder",
+              "description": "Text to display when no country is selected.",
+              "type": "string",
+              "default": "'Select country'"
+            },
+            {
+              "name": "size",
+              "description": "The size of the selector.",
+              "type": "'xs' | 'sm' | 'default' | 'lg'",
+              "default": "'default'"
+            },
+            {
+              "name": "defaultCountryCode",
+              "description": "The ISO alpha-2 code of the country to select by default.",
+              "type": "string",
+              "default": "'GH'"
+            },
+            {
+              "name": "returnValue",
+              "description": "The format of the value emitted by ngModel.",
+              "type": "'isoAlpha2' | 'dialCode' | 'name' | 'object'",
+              "default": "'isoAlpha2'"
+            },
+            {
+              "name": "showName",
+              "description": "Whether to show the country name in the trigger.",
+              "type": "boolean",
+              "default": "true"
+            },
+            {
+              "name": "disabled",
+              "description": "Whether the component is disabled.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "readonly",
+              "description": "Whether the component is readonly.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the trigger.",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-country-selector-api"
+      },
+      {
+        "name": "CountrySelectorInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-country-selector\n  [(ngModel)]=\"value\"\n  [size]=\"${this.size}\"\n  [returnValue]=\"${this.returnValue}\"\n  [showName]=\"${this.showName}\"\n  [disabled]=\"${this.disabled}\"\n  [readonly]=\"${this.readonly}\"\n></tolle-country-selector>"
+        },
+        "props": {},
+        "selector": "app-country-selector-interactive"
+      }
+    ]
+  },
   "data-table-docs": {
     "category": "data-table-docs",
     "components": [
@@ -1575,6 +1645,76 @@
         },
         "props": {},
         "selector": "app-pagination-interactive"
+      }
+    ]
+  },
+  "phone-number-input-docs": {
+    "category": "phone-number-input-docs",
+    "components": [
+      {
+        "name": "PhoneNumberInputApiComponent",
+        "examples": {},
+        "props": {
+          "componentProps": [
+            {
+              "name": "placeholder",
+              "description": "Text to display when the input is empty.",
+              "type": "string",
+              "default": "'Phone number'"
+            },
+            {
+              "name": "size",
+              "description": "The size of the input.",
+              "type": "'xs' | 'sm' | 'default' | 'lg'",
+              "default": "'default'"
+            },
+            {
+              "name": "defaultCountryCode",
+              "description": "The ISO alpha-2 code of the country to select by default.",
+              "type": "string",
+              "default": "'GH'"
+            },
+            {
+              "name": "dataType",
+              "description": "The format of the value emitted by ngModel.",
+              "type": "'NumberOnly' | 'FullObject'",
+              "default": "'FullObject'"
+            },
+            {
+              "name": "mask",
+              "description": "The input mask for the phone number.",
+              "type": "string",
+              "default": "'(000) 000-0000'"
+            },
+            {
+              "name": "disabled",
+              "description": "Whether the component is disabled.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "readonly",
+              "description": "Whether the component is readonly.",
+              "type": "boolean",
+              "default": "false"
+            },
+            {
+              "name": "class",
+              "description": "Additional CSS classes for the container.",
+              "type": "string",
+              "default": "''"
+            }
+          ]
+        },
+        "selector": "app-phone-number-input-api"
+      },
+      {
+        "name": "PhoneNumberInputInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-phone-number-input\n  [(ngModel)]=\"phoneNumber\"\n  [size]=\"${this.size}\"\n  [dataType]=\"${this.dataType}\"\n  [mask]=\"${this.mask}\"\n  [disabled]=\"${this.disabled}\"\n  [readonly]=\"${this.readonly}\"\n></tolle-phone-number-input>"
+        },
+        "props": {},
+        "selector": "app-phone-number-input-interactive"
       }
     ]
   },

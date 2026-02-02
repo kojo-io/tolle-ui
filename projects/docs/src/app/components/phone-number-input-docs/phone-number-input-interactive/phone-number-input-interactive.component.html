@@ -1,0 +1,51 @@
+<section class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Playground</h2>
+    <app-playground [code]="playgroundCode">
+        <div preview>
+            <div class="flex flex-col gap-6 w-full max-w-md">
+                <tolle-phone-number-input [(ngModel)]="phoneNumber" [size]="size" [dataType]="dataType" [mask]="mask"
+                    [disabled]="disabled" [readonly]="readonly"></tolle-phone-number-input>
+
+                <div class="p-4 rounded-md bg-muted text-xs font-mono overflow-auto border border-border">
+                    <div class="text-[10px] uppercase tracking-wider text-muted-foreground mb-2">Returned Value</div>
+                    {{ phoneNumber | json }}
+                </div>
+            </div>
+        </div>
+
+        <div controls class="flex flex-col gap-6">
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium">Size</label>
+                <tolle-select [(ngModel)]="size">
+                    <tolle-select-item value="xs">Extra Small</tolle-select-item>
+                    <tolle-select-item value="sm">Small</tolle-select-item>
+                    <tolle-select-item value="default">Default</tolle-select-item>
+                    <tolle-select-item value="lg">Large</tolle-select-item>
+                </tolle-select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium">Data Type</label>
+                <tolle-select [(ngModel)]="dataType">
+                    <tolle-select-item value="NumberOnly">Number Only (String)</tolle-select-item>
+                    <tolle-select-item value="FullObject">Full Object (libphonenumber)</tolle-select-item>
+                </tolle-select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label class="text-sm font-medium">Mask</label>
+                <tolle-input [(ngModel)]="mask" size="sm"></tolle-input>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <label class="text-sm font-medium">Disabled</label>
+                <tolle-switch [(ngModel)]="disabled"></tolle-switch>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <label class="text-sm font-medium">Readonly</label>
+                <tolle-switch [(ngModel)]="readonly"></tolle-switch>
+            </div>
+        </div>
+    </app-playground>
+</section>

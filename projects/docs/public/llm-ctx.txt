@@ -3188,6 +3188,38 @@ const menuItems: ContextMenuItem[] = [
 
 ---
 
+## Country-selector
+
+### API Reference
+#### component Properties
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| placeholder | `string` | 'Select country' | Text to display when no country is selected. |
+| size | `'xs' | 'sm' | 'default' | 'lg'` | 'default' | The size of the selector. |
+| defaultCountryCode | `string` | 'GH' | The ISO alpha-2 code of the country to select by default. |
+| returnValue | `'isoAlpha2' | 'dialCode' | 'name' | 'object'` | 'isoAlpha2' | The format of the value emitted by ngModel. |
+| showName | `boolean` | true | Whether to show the country name in the trigger. |
+| disabled | `boolean` | false | Whether the component is disabled. |
+| readonly | `boolean` | false | Whether the component is readonly. |
+| class | `string` | '' | Additional CSS classes for the trigger. |
+
+### Usage Examples
+#### playground
+```html
+<tolle-country-selector
+  [(ngModel)]="value"
+  [size]="${this.size}"
+  [returnValue]="${this.returnValue}"
+  [showName]="${this.showName}"
+  [disabled]="${this.disabled}"
+  [readonly]="${this.readonly}"
+></tolle-country-selector>
+```
+
+
+
+---
+
 ## Data-table
 
 ### Usage Examples
@@ -3545,6 +3577,38 @@ html
 ```html
 <tolle-pagination${inputs ? '\n  ' + inputs : ''}
 ></tolle-pagination>
+```
+
+
+
+---
+
+## Phone-number-input
+
+### API Reference
+#### component Properties
+| Name | Type | Default | Description |
+|------|------|---------|-------------|
+| placeholder | `string` | 'Phone number' | Text to display when the input is empty. |
+| size | `'xs' | 'sm' | 'default' | 'lg'` | 'default' | The size of the input. |
+| defaultCountryCode | `string` | 'GH' | The ISO alpha-2 code of the country to select by default. |
+| dataType | `'NumberOnly' | 'FullObject'` | 'FullObject' | The format of the value emitted by ngModel. |
+| mask | `string` | '(000) 000-0000' | The input mask for the phone number. |
+| disabled | `boolean` | false | Whether the component is disabled. |
+| readonly | `boolean` | false | Whether the component is readonly. |
+| class | `string` | '' | Additional CSS classes for the container. |
+
+### Usage Examples
+#### playground
+```html
+<tolle-phone-number-input
+  [(ngModel)]="phoneNumber"
+  [size]="${this.size}"
+  [dataType]="${this.dataType}"
+  [mask]="${this.mask}"
+  [disabled]="${this.disabled}"
+  [readonly]="${this.readonly}"
+></tolle-phone-number-input>
 ```
 
 
