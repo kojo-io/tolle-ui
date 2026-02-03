@@ -44,6 +44,7 @@ Modern UI component library for Angular built with Tailwind CSS and the Angular 
 - resizable-docs
 - scroll-area-docs
 - segment-docs
+- select-docs
 - separator-docs
 - sheet-docs
 - sidebar-docs

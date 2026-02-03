@@ -1978,6 +1978,19 @@
       }
     ]
   },
+  "select-docs": {
+    "category": "select-docs",
+    "components": [
+      {
+        "name": "SelectInteractiveComponent",
+        "examples": {
+          "playgroundCode": "<tolle-select\n  [(ngModel)]=\"selectedValue\"${inputs ? '\\n  ' + inputs : ''}\n>\n  <tolle-select-item value=\"apple\">Apple</tolle-select-item>\n  <tolle-select-item value=\"banana\">Banana</tolle-select-item>\n  <tolle-select-item value=\"blueberry\">Blueberry</tolle-select-item>\n  <tolle-select-item value=\"grapes\">Grapes</tolle-select-item>\n  <tolle-select-item value=\"pineapple\">Pineapple</tolle-select-item>\n</tolle-select>\n\n<!-- Selected: {{ selectedValue }} -->"
+        },
+        "props": {},
+        "selector": "app-select-interactive"
+      }
+    ]
+  },
   "separator-docs": {
     "category": "separator-docs",
     "components": [

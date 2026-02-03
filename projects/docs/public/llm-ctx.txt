@@ -1552,6 +1552,28 @@ html
 
 ---
 
+## Select
+
+### Usage Examples
+#### playground
+```html
+<tolle-select
+  [(ngModel)]="selectedValue"${inputs ? '\n  ' + inputs : ''}
+>
+  <tolle-select-item value="apple">Apple</tolle-select-item>
+  <tolle-select-item value="banana">Banana</tolle-select-item>
+  <tolle-select-item value="blueberry">Blueberry</tolle-select-item>
+  <tolle-select-item value="grapes">Grapes</tolle-select-item>
+  <tolle-select-item value="pineapple">Pineapple</tolle-select-item>
+</tolle-select>
+
+<!-- Selected: {{ selectedValue }} -->
+```
+
+
+
+---
+
 ## Separator
 
 ### API Reference

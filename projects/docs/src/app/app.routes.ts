@@ -170,6 +170,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/segment-docs/segment-docs.component').then(m => m.SegmentDocsComponent),
           },
           {
+            path: 'select',
+            loadComponent: () => import('./components/select-docs/select-docs.component').then(m => m.SelectDocsComponent),
+          },
+          {
             path: 'separator',
             loadComponent: () => import('./components/separator-docs/separator-docs.component').then(m => m.SeparatorDocsComponent),
           },
