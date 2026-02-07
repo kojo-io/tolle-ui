@@ -212,30 +212,16 @@ export class AlertDialogDescriptionComponent {
     selector: 'tolle-alert-dialog-action',
     standalone: true,
     imports: [CommonModule],
-    template: `<ng-content></ng-content>`,
-    host: {
-        '(click)': 'onAction()'
-    }
+    template: `<ng-content></ng-content>`
 })
 export class AlertDialogActionComponent {
-    private alertDialogService = inject(AlertDialogInternalService);
-    onAction() {
-        this.alertDialogService.setOpen(false);
-    }
 }
 
 @Component({
     selector: 'tolle-alert-dialog-cancel',
     standalone: true,
     imports: [CommonModule],
-    template: `<ng-content></ng-content>`,
-    host: {
-        '(click)': 'onCancel()'
-    }
+    template: `<ng-content></ng-content>`
 })
 export class AlertDialogCancelComponent {
-    private alertDialogService = inject(AlertDialogInternalService);
-    onCancel() {
-        this.alertDialogService.setOpen(false);
-    }
 }

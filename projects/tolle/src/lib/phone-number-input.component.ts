@@ -42,7 +42,7 @@ import { cn } from './utils/cn';
         class="country-selector-override"
         [showName]="false"
         [size]="size"
-        [disabled]="disabled"
+        [disabled]="disabled || !enableCountrySelector"
         [readonly]="readonly"
         [(ngModel)]="selectedIso"
         (ngModelChange)="onCountryChange($event)"
@@ -108,6 +108,7 @@ export class PhoneNumberInputComponent implements ControlValueAccessor {
     @Input() dataType: 'NumberOnly' | 'FullObject' = 'FullObject';
     @Input() mask = '(000) 000-0000';
     @Input() class = '';
+    @Input() enableCountrySelector = true;
 
     @Output() onSelect = new EventEmitter<any>();
 

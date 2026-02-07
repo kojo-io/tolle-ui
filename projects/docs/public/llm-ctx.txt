@@ -157,11 +157,26 @@ import { AccordionComponent, AccordionItemComponent } from '@tolle_/tolle-ui';
 #### playground
 ```html
 <!-- Template-driven -->
-<tolle-alert-dialog>
+<tolle-alert-dialog #dialog>
   <tolle-alert-dialog-trigger>
     <tolle-button variant="outline">Open Dialog</tolle-button>
   </tolle-alert-dialog-trigger>
-  ...
+  
+  <tolle-alert-dialog-portal>
+    <tolle-alert-dialog-content>
+      <tolle-alert-dialog-header>
+        <tolle-alert-dialog-title>Are you sure?</tolle-alert-dialog-title>
+      </tolle-alert-dialog-header>
+      <tolle-alert-dialog-footer>
+        <tolle-alert-dialog-cancel (click)="dialog.open = false">
+          <button>Cancel</button>
+        </tolle-alert-dialog-cancel>
+        <tolle-alert-dialog-action (click)="dialog.open = false">
+          <button>Continue</button>
+        </tolle-alert-dialog-action>
+      </tolle-alert-dialog-footer>
+    </tolle-alert-dialog-content>
+  </tolle-alert-dialog-portal>
 </tolle-alert-dialog>
 
 <!-- Service-based (in your component.ts) -->
@@ -1347,6 +1362,7 @@ html
   [errorMessage]="${this.error ? `'${this.errorMessage}'` : 'null'}"
   size="${this.size}"
   dataType="${this.dataType}"
+  [showCountrySelector]="${this.showCountrySelector}"
   [disabled]="${this.disabled}"
   [readonly]="${this.readonly}"
 ></tolle-phone-number-input>

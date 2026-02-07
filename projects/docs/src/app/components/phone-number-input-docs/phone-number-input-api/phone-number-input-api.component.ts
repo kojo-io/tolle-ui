@@ -19,6 +19,7 @@ export class PhoneNumberInputApiComponent {
         { name: 'size', description: 'The size of the component.', type: "'xs' | 'sm' | 'default' | 'lg'", default: "'default'" },
         { name: 'defaultCountryCode', description: 'The initial country code for the prefix selector (ISO Alpha-2).', type: 'string', default: "'GH'" },
         { name: 'dataType', description: 'What data format to emit through ngModel.', type: "'FullObject' | 'NumberOnly'", default: "'FullObject'" },
+        { name: 'enableCountrySelector', description: 'Whether the country selector is enabled (when false, it appears disabled).', type: 'boolean', default: 'true' },
         { name: 'disabled', description: 'Whether the component is disabled.', type: 'boolean', default: 'false' },
         { name: 'readonly', description: 'Whether the component is readonly.', type: 'boolean', default: 'false' },
         { name: 'class', description: 'Additional CSS classes for the container.', type: 'string', default: "''" }

@@ -2,7 +2,8 @@
     <div preview class="w-full flex justify-center p-20">
         <div class="w-full max-w-sm">
             <tolle-phone-number-input [(ngModel)]="value" [label]="label" [hint]="hint" [error]="error"
-                [errorMessage]="errorMessage" [size]="size" [dataType]="dataType" [disabled]="disabled"
+                [errorMessage]="errorMessage" [size]="size" [dataType]="dataType"
+                [enableCountrySelector]="enableCountrySelector" [disabled]="disabled"
                 [readonly]="readonly"></tolle-phone-number-input>
             <div class="mt-4 p-4 bg-muted rounded-md text-xs font-mono overflow-auto max-h-40">
                 Value:
@@ -48,6 +49,11 @@
         <div class="space-y-2" *ngIf="error">
             <label class="text-sm font-medium">Error Message</label>
             <tolle-input [(ngModel)]="errorMessage" size="sm"></tolle-input>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <label class="text-sm font-medium">Enable Country Selector</label>
+            <tolle-switch [(ngModel)]="enableCountrySelector"></tolle-switch>
         </div>
 
         <div class="flex items-center justify-between">

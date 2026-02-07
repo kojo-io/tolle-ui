@@ -102,7 +102,7 @@
       {
         "name": "AlertDialogInteractiveComponent",
         "examples": {
-          "playgroundCode": "<!-- Template-driven -->\n<tolle-alert-dialog>\n  <tolle-alert-dialog-trigger>\n    <tolle-button variant=\"outline\">Open Dialog</tolle-button>\n  </tolle-alert-dialog-trigger>\n  ...\n</tolle-alert-dialog>\n\n<!-- Service-based (in your component.ts) -->\nopen() {\n  this.alertDialog.open({\n    title: \"Are you sure?\",\n    description: \"This is irreversible.\",\n    variant: \"destructive\"\n  });\n}"
+          "playgroundCode": "<!-- Template-driven -->\n<tolle-alert-dialog #dialog>\n  <tolle-alert-dialog-trigger>\n    <tolle-button variant=\"outline\">Open Dialog</tolle-button>\n  </tolle-alert-dialog-trigger>\n  \n  <tolle-alert-dialog-portal>\n    <tolle-alert-dialog-content>\n      <tolle-alert-dialog-header>\n        <tolle-alert-dialog-title>Are you sure?</tolle-alert-dialog-title>\n      </tolle-alert-dialog-header>\n      <tolle-alert-dialog-footer>\n        <tolle-alert-dialog-cancel (click)=\"dialog.open = false\">\n          <button>Cancel</button>\n        </tolle-alert-dialog-cancel>\n        <tolle-alert-dialog-action (click)=\"dialog.open = false\">\n          <button>Continue</button>\n        </tolle-alert-dialog-action>\n      </tolle-alert-dialog-footer>\n    </tolle-alert-dialog-content>\n  </tolle-alert-dialog-portal>\n</tolle-alert-dialog>\n\n<!-- Service-based (in your component.ts) -->\nopen() {\n  this.alertDialog.open({\n    title: \"Are you sure?\",\n    description: \"This is irreversible.\",\n    variant: \"destructive\"\n  });\n}"
         },
         "props": {},
         "selector": "app-alert-dialog-interactive"
@@ -1585,7 +1585,7 @@
       {
         "name": "PhoneNumberInputInteractiveComponent",
         "examples": {
-          "playgroundCode": "<tolle-phone-number-input\n  [(ngModel)]=\"value\"\n  [label]=\"${this.label ? `'${this.label}'` : 'null'}\"\n  [hint]=\"${this.hint ? `'${this.hint}'` : 'null'}\"\n  [error]=\"${this.error}\"\n  [errorMessage]=\"${this.error ? `'${this.errorMessage}'` : 'null'}\"\n  size=\"${this.size}\"\n  dataType=\"${this.dataType}\"\n  [disabled]=\"${this.disabled}\"\n  [readonly]=\"${this.readonly}\"\n></tolle-phone-number-input>"
+          "playgroundCode": "<tolle-phone-number-input\n  [(ngModel)]=\"value\"\n  [label]=\"${this.label ? `'${this.label}'` : 'null'}\"\n  [hint]=\"${this.hint ? `'${this.hint}'` : 'null'}\"\n  [error]=\"${this.error}\"\n  [errorMessage]=\"${this.error ? `'${this.errorMessage}'` : 'null'}\"\n  size=\"${this.size}\"\n  dataType=\"${this.dataType}\"\n  [showCountrySelector]=\"${this.showCountrySelector}\"\n  [disabled]=\"${this.disabled}\"\n  [readonly]=\"${this.readonly}\"\n></tolle-phone-number-input>"
         },
         "props": {},
         "selector": "app-phone-number-input-interactive"

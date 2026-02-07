@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PhoneNumberInputComponent } from '../../../../../../tolle/src/lib/phone-number-input.component';
+import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
@@ -14,6 +15,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         CommonModule,
         FormsModule,
         PhoneNumberInputComponent,
+        InputComponent,
         SelectComponent,
         SelectItemComponent,
         SwitchComponent,
@@ -29,6 +31,7 @@ export class PhoneNumberInputInteractiveComponent {
     hint = 'Enter your phone number starting with your country code';
     error = false;
     errorMessage = 'Invalid phone number';
+    enableCountrySelector = true;
     disabled = false;
     readonly = false;
 
@@ -41,6 +44,7 @@ export class PhoneNumberInputInteractiveComponent {
   [errorMessage]="${this.error ? `'${this.errorMessage}'` : 'null'}"
   size="${this.size}"
   dataType="${this.dataType}"
+  [enableCountrySelector]="${this.enableCountrySelector}"
   [disabled]="${this.disabled}"
   [readonly]="${this.readonly}"
 ></tolle-phone-number-input>`;

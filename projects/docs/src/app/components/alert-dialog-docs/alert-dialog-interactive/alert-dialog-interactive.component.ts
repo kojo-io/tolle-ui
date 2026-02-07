@@ -41,7 +41,7 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
       <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview class="flex flex-col gap-4">
-          <tolle-alert-dialog>
+          <tolle-alert-dialog #templateDialog>
             <tolle-alert-dialog-trigger>
               <tolle-button variant="outline">Template-driven Trigger</tolle-button>
             </tolle-alert-dialog-trigger>
@@ -55,10 +55,10 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
                   </tolle-alert-dialog-description>
                 </tolle-alert-dialog-header>
                 <tolle-alert-dialog-footer>
-                  <tolle-alert-dialog-cancel>
+                  <tolle-alert-dialog-cancel (click)="templateDialog.open = false">
                     <tolle-button variant="outline">Cancel</tolle-button>
                   </tolle-alert-dialog-cancel>
-                  <tolle-alert-dialog-action>
+                  <tolle-alert-dialog-action (click)="templateDialog.open = false">
                     <tolle-button>Continue</tolle-button>
                   </tolle-alert-dialog-action>
                 </tolle-alert-dialog-footer>
@@ -84,22 +84,43 @@ export class AlertDialogInteractiveComponent {
   private alertDialog = inject(AlertDialogService);
 
   openFromService(size: any = 'lg') {
-    this.alertDialog.open({
+    const dialog = this.alertDialog.open({
       title: "Delete Project?",
       description: "This will permanently delete the selected project. This action cannot be undone.",
       actionText: "Delete",
       variant: "destructive",
       size: size
     });
+
+    dialog.afterClosed$.subscribe({
+      next: (result) => {
+        alert(result);
+      }
+    })
   }
 
   get playgroundCode() {
     return `<!-- Template-driven -->
-<tolle-alert-dialog>
+<tolle-alert-dialog #dialog>
   <tolle-alert-dialog-trigger>
     <tolle-button variant="outline">Open Dialog</tolle-button>
   </tolle-alert-dialog-trigger>
-  ...
+  
+  <tolle-alert-dialog-portal>
+    <tolle-alert-dialog-content>
+      <tolle-alert-dialog-header>
+        <tolle-alert-dialog-title>Are you sure?</tolle-alert-dialog-title>
+      </tolle-alert-dialog-header>
+      <tolle-alert-dialog-footer>
+        <tolle-alert-dialog-cancel (click)="dialog.open = false">
+          <button>Cancel</button>
+        </tolle-alert-dialog-cancel>
+        <tolle-alert-dialog-action (click)="dialog.open = false">
+          <button>Continue</button>
+        </tolle-alert-dialog-action>
+      </tolle-alert-dialog-footer>
+    </tolle-alert-dialog-content>
+  </tolle-alert-dialog-portal>
 </tolle-alert-dialog>
 
 <!-- Service-based (in your component.ts) -->
