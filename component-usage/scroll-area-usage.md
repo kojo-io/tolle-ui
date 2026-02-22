@@ -25,19 +25,19 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
 ### Vertical Scroll Area
 
 ```html
-<scroll-area-component height="300px">
+<tolle-scroll-area height="300px">
   <div class="p-4">
     <p>Long content goes here...</p>
     <p>More content...</p>
     <p>Even more content...</p>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ### Horizontal Scroll Area
 
 ```html
-<scroll-area-component
+<tolle-scroll-area
   height="200px"
   orientation="horizontal"
 >
@@ -47,20 +47,20 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
     <div class="h-24 w-48 bg-muted rounded"></div>
     <div class="h-24 w-48 bg-muted rounded"></div>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ### Both Directions
 
 ```html
-<scroll-area-component
+<tolle-scroll-area
   height="300px"
   orientation="both"
 >
   <div class="p-4" style="width: 1000px;">
     <p>Content that needs scrolling in both directions...</p>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ## Scroll Area Sizes
@@ -68,7 +68,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
 ### Small Height
 
 ```html
-<scroll-area-component height="150px">
+<tolle-scroll-area height="150px">
   <div class="p-4 space-y-2">
     <div class="h-8 bg-muted rounded"></div>
     <div class="h-8 bg-muted rounded"></div>
@@ -77,13 +77,13 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
     <div class="h-8 bg-muted rounded"></div>
     <div class="h-8 bg-muted rounded"></div>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ### Medium Height
 
 ```html
-<scroll-area-component height="250px">
+<tolle-scroll-area height="250px">
   <div class="p-4 space-y-2">
     <div class="h-8 bg-muted rounded"></div>
     <div class="h-8 bg-muted rounded"></div>
@@ -91,18 +91,18 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
     <div class="h-8 bg-muted rounded"></div>
     <div class="h-8 bg-muted rounded"></div>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ### Full Height
 
 ```html
-<scroll-area-component height="100%">
+<tolle-scroll-area height="100%">
   <div class="p-4 space-y-4">
     <div class="h-20 bg-muted rounded"></div>
     <div class="h-20 bg-muted rounded"></div>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ## Scroll Area with Custom Content
@@ -110,7 +110,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
 ### List with Scroll
 
 ```html
-<scroll-area-component height="300px">
+<tolle-scroll-area height="300px">
   <div class="space-y-1">
     <div class="flex items-center gap-3 p-3 hover:bg-accent rounded cursor-pointer">
       <div class="h-8 w-8 bg-primary rounded flex items-center justify-center text-primary-foreground">
@@ -140,13 +140,13 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
       </div>
     </div>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ### Grid with Scroll
 
 ```html
-<scroll-area-component height="300px">
+<tolle-scroll-area height="300px">
   <div class="grid grid-cols-2 gap-4 p-4">
     <div class="h-32 bg-muted rounded-lg"></div>
     <div class="h-32 bg-muted rounded-lg"></div>
@@ -155,7 +155,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
     <div class="h-32 bg-muted rounded-lg"></div>
     <div class="h-32 bg-muted rounded-lg"></div>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ## Scroll Area in Card
@@ -166,7 +166,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
     <tolle-card-title>Recent Files</tolle-card-title>
   </tolle-card-header>
   <tolle-card-content class="p-0">
-    <scroll-area-component height="300px">
+    <tolle-scroll-area height="300px">
       <div class="space-y-1 p-2">
         <div class="flex items-center gap-3 p-2 hover:bg-accent rounded cursor-pointer">
           <i class="ri-file-text-line text-muted-foreground"></i>
@@ -190,7 +190,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
           </div>
         </div>
       </div>
-    </scroll-area-component>
+    </tolle-scroll-area>
   </tolle-card-content>
 </tolle-card>
 ```
@@ -200,7 +200,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
 ### Comment Thread
 
 ```html
-<scroll-area-component height="400px">
+<tolle-scroll-area height="400px">
   <div class="space-y-4 p-4">
     <div class="flex gap-3">
       <div class="h-10 w-10 bg-primary rounded-full flex items-center justify-center text-primary-foreground">
@@ -230,7 +230,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
       </div>
     </div>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ## Scroll Area with Sticky Header
@@ -240,7 +240,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
   <div class="flex items-center gap-2 p-3 border-b bg-background">
     <div class="font-medium">Files</div>
   </div>
-  <scroll-area-component class="flex-1">
+  <tolle-scroll-area class="flex-1">
     <div class="p-2 space-y-1">
       <div class="flex items-center gap-2 p-2 hover:bg-accent rounded">
         <i class="ri-file-text-line text-muted-foreground"></i>
@@ -251,7 +251,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
         <span>Image.png</span>
       </div>
     </div>
-  </scroll-area-component>
+  </tolle-scroll-area>
 </div>
 ```
 
@@ -297,13 +297,13 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
   </tolle-alert-dialog-header>
 
   <tolle-alert-dialog-content class="max-h-[400px]">
-    <scroll-area-component height="300px">
+    <tolle-scroll-area height="300px">
       <div class="space-y-4 p-4 text-sm">
         <p>Term 1:...</p>
         <p>Term 2:...</p>
         <p>Term 3:...</p>
       </div>
-    </scroll-area-component>
+    </tolle-scroll-area>
   </tolle-alert-dialog-content>
 
   <tolle-alert-dialog-footer>
@@ -318,7 +318,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
 ### Auto Scroll to Bottom
 
 ```html
-<scroll-area-component
+<tolle-scroll-area
   height="300px"
   #scrollArea
 >
@@ -335,7 +335,7 @@ import { ScrollAreaComponent } from '@tolle_/tolle-ui';
       </div>
     </div>
   </div>
-</scroll-area-component>
+</tolle-scroll-area>
 ```
 
 ```typescript

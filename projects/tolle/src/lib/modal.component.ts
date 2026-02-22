@@ -19,7 +19,7 @@ import { cn } from './utils/cn';
         </button>
       </div>
 
-      <div class="px-6 pb-6 pt-4 overflow-y-auto max-h-[80vh] text-foreground">
+      <div class="overflow-y-auto max-h-[100vh] text-foreground">
         <ng-container [ngSwitch]="contentType">
           <div *ngSwitchCase="'string'">{{ content }}</div>
 

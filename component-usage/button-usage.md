@@ -18,10 +18,11 @@ import { ButtonComponent, ButtonGroupComponent } from '@tolle_/tolle-ui';
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
-| `variant` | `'default'\|'outline'\|'ghost'\|'destructive'\|'secondary'` | `'default'` | Button variant |
-| `size` | `'xs'\|'sm'\|'default'\|'lg'` | `'default'` | Button size |
+| `variant` | `'default'\|'outline'\|'ghost'\|'destructive'\|'secondary'\|'link'` | `'default'` | Button variant |
+| `size` | `'xs'\|'sm'\|'default'\|'lg'\|'icon-xs'\|'icon-sm'\|'icon'\|'icon-lg'` | `'default'` | Button size |
 | `class` | `string` | `''` | Additional CSS classes |
 | `disabled` | `boolean` | `false` | Disabled state |
+| `busy` | `boolean` | `false` | Loading state (shows spinner) |
 
 ### ButtonGroupComponent
 
@@ -36,31 +37,31 @@ import { ButtonComponent, ButtonGroupComponent } from '@tolle_/tolle-ui';
 ### Default Button
 
 ```html
-<button tolleButton>Click me</button>
+<tolle-button>Click me</tolle-button>
 ```
 
 ### Outlined Button
 
 ```html
-<button tolleButton variant="outline">Outline</button>
+<tolle-button variant="outline">Outline</tolle-button>
 ```
 
 ### Ghost Button
 
 ```html
-<button tolleButton variant="ghost">Ghost</button>
+<tolle-button variant="ghost">Ghost</tolle-button>
 ```
 
 ### Destructive Button
 
 ```html
-<button tolleButton variant="destructive">Delete</button>
+<tolle-button variant="destructive">Delete</tolle-button>
 ```
 
 ### Secondary Button
 
 ```html
-<button tolleButton variant="secondary">Secondary</button>
+<tolle-button variant="secondary">Secondary</tolle-button>
 ```
 
 ## Button Sizes
@@ -68,33 +69,67 @@ import { ButtonComponent, ButtonGroupComponent } from '@tolle_/tolle-ui';
 ### Extra Small (xs)
 
 ```html
-<button tolleButton size="xs">Extra Small</button>
+<tolle-button size="xs">Extra Small</tolle-button>
 ```
 
 ### Small (sm)
 
 ```html
-<button tolleButton size="sm">Small</button>
+<tolle-button size="sm">Small</tolle-button>
 ```
 
 ### Default
 
 ```html
-<button tolleButton size="default">Default</button>
+<tolle-button size="default">Default</tolle-button>
 ```
 
 ### Large (lg)
 
 ```html
-<button tolleButton size="lg">Large</button>
+<tolle-button size="lg">Large</tolle-button>
+```
+
+## Icon Sizes
+
+### Icon Extra Small
+
+```html
+<tolle-button size="icon-xs">
+  <i class="ri-upload-line"></i>
+</tolle-button>
+```
+
+### Icon Small
+
+```html
+<tolle-button size="icon-sm">
+  <i class="ri-edit-line"></i>
+</tolle-button>
+```
+
+### Icon (default square)
+
+```html
+<tolle-button size="icon">
+  <i class="ri-search-line"></i>
+</tolle-button>
+```
+
+### Icon Large
+
+```html
+<tolle-button size="icon-lg">
+  <i class="ri-add-line"></i>
+</tolle-button>
 ```
 
 ## Disabled State
 
 ```html
-<button tolleButton disabled>Disabled</button>
-<button tolleButton variant="outline" disabled>Outline Disabled</button>
-<button tolleButton variant="ghost" disabled>Ghost Disabled</button>
+<tolle-button disabled>Disabled</tolle-button>
+<tolle-button variant="outline" disabled>Outline Disabled</tolle-button>
+<tolle-button variant="ghost" disabled>Ghost Disabled</tolle-button>
 ```
 
 ## Button with Icon
@@ -102,46 +137,46 @@ import { ButtonComponent, ButtonGroupComponent } from '@tolle_/tolle-ui';
 ### Icon on Left
 
 ```html
-<button tolleButton>
+<tolle-button>
   <i class="ri-upload-line"></i>
   <span>Upload</span>
-</button>
+</tolle-button>
 ```
 
 ### Icon on Right
 
 ```html
-<button tolleButton>
+<tolle-button>
   <span>Download</span>
   <i class="ri-download-line"></i>
-</button>
+</tolle-button>
 ```
 
 ### Icon Only
 
 ```html
-<button tolleButton variant="ghost" size="sm">
+<tolle-button variant="ghost" size="sm">
   <i class="ri-edit-line"></i>
-</button>
+</tolle-button>
 ```
 
-## Loading Button
+## Loading State (busy)
 
 ### Spinner with Text
 
 ```html
-<button tolleButton [disabled]="true">
+<tolle-button [busy]="true">
   <i class="ri-loader-4-line ri-spin mr-2"></i>
   Loading...
-</button>
+</tolle-button>
 ```
 
 ### Spinner Only
 
 ```html
-<button tolleButton variant="ghost" [disabled]="true">
+<tolle-button variant="ghost" [busy]="true">
   <i class="ri-loader-4-line ri-spin"></i>
-</button>
+</tolle-button>
 ```
 
 ## Button Group
@@ -150,9 +185,9 @@ import { ButtonComponent, ButtonGroupComponent } from '@tolle_/tolle-ui';
 
 ```html
 <tolle-button-group class="inline-flex">
-  <button tolleButton variant="outline">Left</button>
-  <button tolleButton variant="outline">Middle</button>
-  <button tolleButton variant="outline">Right</button>
+  <tolle-button variant="outline">Left</tolle-button>
+  <tolle-button variant="outline">Middle</tolle-button>
+  <tolle-button variant="outline">Right</tolle-button>
 </tolle-button-group>
 ```
 
@@ -160,9 +195,9 @@ import { ButtonComponent, ButtonGroupComponent } from '@tolle_/tolle-ui';
 
 ```html
 <tolle-button-group class="flex flex-col w-48">
-  <button tolleButton variant="outline">Option 1</button>
-  <button tolleButton variant="outline">Option 2</button>
-  <button tolleButton variant="outline">Option 3</button>
+  <tolle-button variant="outline">Option 1</tolle-button>
+  <tolle-button variant="outline">Option 2</tolle-button>
+  <tolle-button variant="outline">Option 3</tolle-button>
 </tolle-button-group>
 ```
 
@@ -170,40 +205,46 @@ import { ButtonComponent, ButtonGroupComponent } from '@tolle_/tolle-ui';
 
 ```html
 <tolle-button-group class="inline-flex rounded-md">
-  <button tolleButton variant="outline" class="rounded-r-none border-r-0">Preview</button>
-  <button tolleButton variant="outline" class="rounded-l-none rounded-r-none border-r-0 border-l-0 bg-accent">Code</button>
-  <button tolleButton variant="outline" class="rounded-l-none">Settings</button>
+  <tolle-button variant="outline" class="rounded-r-none border-r-0">Preview</tolle-button>
+  <tolle-button variant="outline" class="rounded-l-none rounded-r-none border-r-0 border-l-0 bg-accent">Code</tolle-button>
+  <tolle-button variant="outline" class="rounded-l-none">Settings</tolle-button>
 </tolle-button-group>
+```
+
+## Link Variant
+
+```html
+<tolle-button variant="link">Read more</tolle-button>
 ```
 
 ## Square Button
 
 ```html
-<button tolleButton class="h-10 w-10 p-0">
+<tolle-button class="h-10 w-10 p-0">
   <i class="ri-menu-line"></i>
-</button>
+</tolle-button>
 ```
 
 ## Circular Button
 
 ```html
-<button tolleButton class="h-10 w-10 rounded-full p-0">
+<tolle-button class="h-10 w-10 rounded-full p-0">
   <i class="ri-add-line"></i>
-</button>
+</tolle-button>
 ```
 
 ## Link-style Button
 
 ```html
-<button tolleButton variant="ghost" class="text-primary hover:text-primary">
+<tolle-button variant="ghost" class="text-primary hover:text-primary">
   Read more
-</button>
+</tolle-button>
 ```
 
 ## Block Button
 
 ```html
-<button tolleButton class="w-full">Full Width Button</button>
+<tolle-button class="w-full">Full Width Button</tolle-button>
 ```
 
 ## Icon Variants
@@ -211,40 +252,40 @@ import { ButtonComponent, ButtonGroupComponent } from '@tolle_/tolle-ui';
 ### Icon with Text
 
 ```html
-<button tolleButton variant="secondary">
+<tolle-button variant="secondary">
   <i class="ri-star-line mr-2"></i>
   Favorite
-</button>
+</tolle-button>
 ```
 
 ### Icon Only (Ghost)
 
 ```html
-<button tolleButton variant="ghost" size="sm">
+<tolle-button variant="ghost" size="sm">
   <i class="ri-heart-line"></i>
-</button>
+</tolle-button>
 ```
 
 ### Icon Only (Default)
 
 ```html
-<button tolleButton class="h-10 w-10 p-0">
+<tolle-button class="h-10 w-10 p-0">
   <i class="ri-search-line"></i>
-</button>
+</tolle-button>
 ```
 
 ## Dark Variant
 
 ```html
-<button tolleButton class="bg-slate-900 text-white hover:bg-slate-800">
+<tolle-button class="bg-slate-900 text-white hover:bg-slate-800">
   Dark Button
-</button>
+</tolle-button>
 ```
 
 ## Custom Style
 
 ```html
-<button tolleButton class="bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:opacity-90">
+<tolle-button class="bg-gradient-to-r from-blue-500 to-purple-500 text-white hover:opacity-90">
   Gradient Button
-</button>
+</tolle-button>
 ```

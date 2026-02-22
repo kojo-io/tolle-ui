@@ -16,6 +16,7 @@ import { SkeletonComponent } from '@tolle_/tolle-ui';
 
 | Input | Type | Default | Description |
 |-------|------|---------|-------------|
+| `variant` | `'rect'\|'circle'\|'pill'` | `'rect'` | Skeleton shape |
 | `class` | `string` | `''` | Additional CSS classes |
 
 ## Basic Usage
@@ -23,13 +24,13 @@ import { SkeletonComponent } from '@tolle_/tolle-ui';
 ### Simple Skeleton
 
 ```html
-<skeleton-component class="h-4 w-full"></skeleton-component>
+<tolle-skeleton class="h-4 w-full"></tolle-skeleton>
 ```
 
 ### Skeleton with Custom Dimensions
 
 ```html
-<skeleton-component class="h-8 w-32"></skeleton-component>
+<tolle-skeleton class="h-8 w-32"></tolle-skeleton>
 ```
 
 ## Skeleton Sizes
@@ -37,37 +38,37 @@ import { SkeletonComponent } from '@tolle_/tolle-ui';
 ### Text Line (Small)
 
 ```html
-<skeleton-component class="h-4 w-full"></skeleton-component>
+<tolle-skeleton class="h-4 w-full"></tolle-skeleton>
 ```
 
 ### Text Line (Medium)
 
 ```html
-<skeleton-component class="h-6 w-full"></skeleton-component>
+<tolle-skeleton class="h-6 w-full"></tolle-skeleton>
 ```
 
 ### Text Line (Large)
 
 ```html
-<skeleton-component class="h-8 w-full"></skeleton-component>
+<tolle-skeleton class="h-8 w-full"></tolle-skeleton>
 ```
 
 ### Square Skeleton
 
 ```html
-<skeleton-component class="h-24 w-24 rounded-lg"></skeleton-component>
+<tolle-skeleton class="h-24 w-24 rounded-lg"></tolle-skeleton>
 ```
 
 ### Circle Skeleton (Avatar)
 
 ```html
-<skeleton-component class="h-12 w-12 rounded-full"></skeleton-component>
+<tolle-skeleton variant="circle" class="h-12 w-12 rounded-full"></tolle-skeleton>
 ```
 
 ### Rectangle Skeleton
 
 ```html
-<skeleton-component class="h-48 w-full rounded-lg"></skeleton-component>
+<tolle-skeleton class="h-48 w-full rounded-lg"></tolle-skeleton>
 ```
 
 ## Skeleton in Card
@@ -78,14 +79,14 @@ import { SkeletonComponent } from '@tolle_/tolle-ui';
 <tolle-card class="w-full max-w-md">
   <tolle-card-header>
     <div class="space-y-2">
-      <skeleton-component class="h-6 w-32"></skeleton-component>
-      <skeleton-component class="h-4 w-48"></skeleton-component>
+      <tolle-skeleton class="h-6 w-32"></tolle-skeleton>
+      <tolle-skeleton class="h-4 w-48"></tolle-skeleton>
     </div>
   </tolle-card-header>
   <tolle-card-content class="space-y-4">
-    <skeleton-component class="h-4 w-full"></skeleton-component>
-    <skeleton-component class="h-4 w-5/6"></skeleton-component>
-    <skeleton-component class="h-4 w-4/6"></skeleton-component>
+    <tolle-skeleton class="h-4 w-full"></tolle-skeleton>
+    <tolle-skeleton class="h-4 w-5/6"></tolle-skeleton>
+    <tolle-skeleton class="h-4 w-4/6"></tolle-skeleton>
   </tolle-card-content>
 </tolle-card>
 ```
@@ -95,17 +96,17 @@ import { SkeletonComponent } from '@tolle_/tolle-ui';
 ```html
 <tolle-card class="w-full max-w-sm">
   <div class="h-48 overflow-hidden rounded-t-lg">
-    <skeleton-component class="h-full w-full rounded-t-lg"></skeleton-component>
+    <tolle-skeleton class="h-full w-full rounded-t-lg"></tolle-skeleton>
   </div>
   <tolle-card-header>
     <div class="space-y-2">
-      <skeleton-component class="h-6 w-48"></skeleton-component>
-      <skeleton-component class="h-4 w-64"></skeleton-component>
+      <tolle-skeleton class="h-6 w-48"></tolle-skeleton>
+      <tolle-skeleton class="h-4 w-64"></tolle-skeleton>
     </div>
   </tolle-card-header>
   <tolle-card-content>
-    <skeleton-component class="h-4 w-full mb-2"></skeleton-component>
-    <skeleton-component class="h-4 w-5/6"></skeleton-component>
+    <tolle-skeleton class="h-4 w-full mb-2"></tolle-skeleton>
+    <tolle-skeleton class="h-4 w-5/6"></tolle-skeleton>
   </tolle-card-content>
 </tolle-card>
 ```
@@ -115,24 +116,24 @@ import { SkeletonComponent } from '@tolle_/tolle-ui';
 ```html
 <div class="space-y-4">
   <div class="flex items-center gap-4">
-    <skeleton-component class="h-10 w-10 rounded-full"></skeleton-component>
+    <tolle-skeleton class="h-10 w-10 rounded-full"></tolle-skeleton>
     <div class="flex-1 space-y-2">
-      <skeleton-component class="h-4 w-32"></skeleton-component>
-      <skeleton-component class="h-3 w-48"></skeleton-component>
+      <tolle-skeleton class="h-4 w-32"></tolle-skeleton>
+      <tolle-skeleton class="h-3 w-48"></tolle-skeleton>
     </div>
   </div>
   <div class="flex items-center gap-4">
-    <skeleton-component class="h-10 w-10 rounded-full"></skeleton-component>
+    <tolle-skeleton class="h-10 w-10 rounded-full"></tolle-skeleton>
     <div class="flex-1 space-y-2">
-      <skeleton-component class="h-4 w-32"></skeleton-component>
-      <skeleton-component class="h-3 w-48"></skeleton-component>
+      <tolle-skeleton class="h-4 w-32"></tolle-skeleton>
+      <tolle-skeleton class="h-3 w-48"></tolle-skeleton>
     </div>
   </div>
   <div class="flex items-center gap-4">
-    <skeleton-component class="h-10 w-10 rounded-full"></skeleton-component>
+    <tolle-skeleton class="h-10 w-10 rounded-full"></tolle-skeleton>
     <div class="flex-1 space-y-2">
-      <skeleton-component class="h-4 w-32"></skeleton-component>
-      <skeleton-component class="h-3 w-48"></skeleton-component>
+      <tolle-skeleton class="h-4 w-32"></tolle-skeleton>
+      <tolle-skeleton class="h-3 w-48"></tolle-skeleton>
     </div>
   </div>
 </div>
@@ -146,26 +147,26 @@ import { SkeletonComponent } from '@tolle_/tolle-ui';
     <thead class="bg-muted">
       <tr>
         <th class="p-4">
-          <skeleton-component class="h-4 w-24"></skeleton-component>
+          <tolle-skeleton class="h-4 w-24"></tolle-skeleton>
         </th>
         <th class="p-4">
-          <skeleton-component class="h-4 w-24"></skeleton-component>
+          <tolle-skeleton class="h-4 w-24"></tolle-skeleton>
         </th>
         <th class="p-4">
-          <skeleton-component class="h-4 w-24"></skeleton-component>
+          <tolle-skeleton class="h-4 w-24"></tolle-skeleton>
         </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let row of [1, 2, 3]">
         <td class="p-4">
-          <skeleton-component class="h-4 w-20"></skeleton-component>
+          <tolle-skeleton class="h-4 w-20"></tolle-skeleton>
         </td>
         <td class="p-4">
-          <skeleton-component class="h-4 w-32"></skeleton-component>
+          <tolle-skeleton class="h-4 w-32"></tolle-skeleton>
         </td>
         <td class="p-4">
-          <skeleton-component class="h-4 w-16"></skeleton-component>
+          <tolle-skeleton class="h-4 w-16"></tolle-skeleton>
         </td>
       </tr>
     </tbody>
@@ -179,7 +180,7 @@ import { SkeletonComponent } from '@tolle_/tolle-ui';
 
 ```html
 <div *ngIf="isLoading; else loaded">
-  <skeleton-component class="h-48 w-full rounded-lg"></skeleton-component>
+  <tolle-skeleton class="h-48 w-full rounded-lg"></tolle-skeleton>
 </div>
 
 <ng-template #loaded>
@@ -203,7 +204,7 @@ ngOnInit() {
 
 ```html
 <div *ngIf="isLoading; else loaded">
-  <skeleton-component class="h-full w-full rounded-lg"></skeleton-component>
+  <tolle-skeleton class="h-full w-full rounded-lg"></tolle-skeleton>
 </div>
 
 <ng-template #loaded>
@@ -217,10 +218,10 @@ ngOnInit() {
 
 ```html
 <tolle-carousel *ngIf="!imagesLoaded; else carousel">
-  <div tolleCarouselContent>
-    <div tolleCarouselContainer>
-      <div *ngFor="let i of [1, 2, 3]" tolleCarouselItem>
-        <skeleton-component class="h-64 w-full rounded-lg"></skeleton-component>
+  <div tolle-carousel-content>
+    <div tolle-carousel-container>
+      <div *ngFor="let i of [1, 2, 3]" tolle-carousel-item>
+        <tolle-skeleton class="h-64 w-full rounded-lg"></tolle-skeleton>
       </div>
     </div>
   </div>
@@ -228,9 +229,9 @@ ngOnInit() {
 
 <ng-template #carousel>
   <tolle-carousel>
-    <div tolleCarouselContent>
-      <div tolleCarouselContainer>
-        <div *ngFor="let image of images" tolleCarouselItem>
+    <div tolle-carousel-content>
+      <div tolle-carousel-container>
+        <div *ngFor="let image of images" tolle-carousel-item>
           <img [src]="image" class="h-64 w-full rounded-lg object-cover" />
         </div>
       </div>
@@ -244,14 +245,14 @@ ngOnInit() {
 ```html
 <div class="space-y-4">
   <div class="space-y-2">
-    <skeleton-component class="h-4 w-24"></skeleton-component>
-    <skeleton-component class="h-10 w-full"></skeleton-component>
+    <tolle-skeleton class="h-4 w-24"></tolle-skeleton>
+    <tolle-skeleton class="h-10 w-full"></tolle-skeleton>
   </div>
   <div class="space-y-2">
-    <skeleton-component class="h-4 w-24"></skeleton-component>
-    <skeleton-component class="h-24 w-full"></skeleton-component>
+    <tolle-skeleton class="h-4 w-24"></tolle-skeleton>
+    <tolle-skeleton class="h-24 w-full"></tolle-skeleton>
   </div>
-  <skeleton-component class="h-10 w-full"></skeleton-component>
+  <tolle-skeleton class="h-10 w-full"></tolle-skeleton>
 </div>
 ```
 
@@ -260,19 +261,19 @@ ngOnInit() {
 ### Rounded Corners
 
 ```html
-<skeleton-component class="h-48 w-full rounded-xl"></skeleton-component>
+<tolle-skeleton class="h-48 w-full rounded-xl"></tolle-skeleton>
 ```
 
 ### Pill Shape
 
 ```html
-<skeleton-component class="h-12 w-full rounded-full"></skeleton-component>
+<tolle-skeleton variant="pill" class="h-12 w-full rounded-full"></tolle-skeleton>
 ```
 
 ### Custom Border Radius
 
 ```html
-<skeleton-component class="h-32 w-full rounded-2xl"></skeleton-component>
+<tolle-skeleton class="h-32 w-full rounded-2xl"></tolle-skeleton>
 ```
 
 ## Skeleton with Text Lines
@@ -281,10 +282,10 @@ ngOnInit() {
 
 ```html
 <div class="space-y-2">
-  <skeleton-component class="h-4 w-full"></skeleton-component>
-  <skeleton-component class="h-4 w-11/12"></skeleton-component>
-  <skeleton-component class="h-4 w-10/12"></skeleton-component>
-  <skeleton-component class="h-4 w-9/12"></skeleton-component>
+  <tolle-skeleton class="h-4 w-full"></tolle-skeleton>
+  <tolle-skeleton class="h-4 w-11/12"></tolle-skeleton>
+  <tolle-skeleton class="h-4 w-10/12"></tolle-skeleton>
+  <tolle-skeleton class="h-4 w-9/12"></tolle-skeleton>
 </div>
 ```
 
@@ -292,12 +293,12 @@ ngOnInit() {
 
 ```html
 <div class="space-y-4">
-  <skeleton-component class="h-64 w-full rounded-lg"></skeleton-component>
-  <skeleton-component class="h-8 w-3/4"></skeleton-component>
+  <tolle-skeleton class="h-64 w-full rounded-lg"></tolle-skeleton>
+  <tolle-skeleton class="h-8 w-3/4"></tolle-skeleton>
   <div class="space-y-2">
-    <skeleton-component class="h-4 w-full"></skeleton-component>
-    <skeleton-component class="h-4 w-full"></skeleton-component>
-    <skeleton-component class="h-4 w-5/6"></skeleton-component>
+    <tolle-skeleton class="h-4 w-full"></tolle-skeleton>
+    <tolle-skeleton class="h-4 w-full"></tolle-skeleton>
+    <tolle-skeleton class="h-4 w-5/6"></tolle-skeleton>
   </div>
 </div>
 ```

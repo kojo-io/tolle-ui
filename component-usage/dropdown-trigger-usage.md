@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Dropdown Trigger directive provides a simple way to trigger dropdown menus with automatic positioning using Floating UI. It works in conjunction with the DropdownMenuComponent.
+The Dropdown Trigger directive provides a simple way to trigger dropdown menus with automatic positioning using Floating UI. It works in conjunction with the DropdownMenuComponent by binding to a DropdownMenuComponent instance.
 
 ## Import
 
@@ -23,13 +23,15 @@ Selector: `[tolleDropdownTrigger]`
 
 | Input | Type | Description |
 |-------|------|-------------|
-| `tolleDropdownTrigger` | `DropdownMenuComponent` | The dropdown menu component to trigger |
+| `tolleDropdownTrigger` | `DropdownMenuComponent` | The dropdown menu component instance to trigger |
 
 **Note:** This directive does not emit events directly. Use the dropdown menu's events for interaction handling.
 
 ## Basic Usage
 
 ### Simple Dropdown
+
+The `DropdownTriggerDirective` binds to a `DropdownMenuComponent` instance. The dropdown menu contains the content that will be shown when the trigger is clicked.
 
 ```html
 <div class="relative inline-block text-left">
@@ -43,14 +45,12 @@ Selector: `[tolleDropdownTrigger]`
     <i class="ri-arrow-down-s-line"></i>
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-48">
-      <tolle-dropdown-item>Profile</tolle-dropdown-item>
-      <tolle-dropdown-item>Settings</tolle-dropdown-item>
-      <tolle-dropdown-separator></tolle-dropdown-separator>
-      <tolle-dropdown-item>DLog out</tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-48">
+    <tolle-dropdown-item>Profile</tolle-dropdown-item>
+    <tolle-dropdown-item>Settings</tolle-dropdown-item>
+    <tolle-dropdown-separator></tolle-dropdown-separator>
+    <tolle-dropdown-item>Log out</tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -60,39 +60,37 @@ Selector: `[tolleDropdownTrigger]`
 <div class="relative inline-block text-left">
   <button
     tolleDropdownTrigger
-    [tolleDropdownTrigger]="menu"
+    [tolleDropdownTrigger]="filterMenu"
     type="button"
     class="px-4 py-2 text-sm font-medium hover:bg-accent rounded-md"
   >
     Filter
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-64 p-4">
-      <div class="mb-4">
-        <h3 class="font-semibold">Filter by Category</h3>
-      </div>
+  <tolle-dropdown-menu #filterMenu="tolleDropdownMenu" class="w-64 p-4">
+    <div class="mb-4">
+      <h3 class="font-semibold">Filter by Category</h3>
+    </div>
 
-      <div class="space-y-2">
-        <label class="flex items-center gap-2">
-          <input type="checkbox" />
-          <span>All</span>
-        </label>
-        <label class="flex items-center gap-2">
-          <input type="checkbox" />
-          <span>Active</span>
-        </label>
-        <label class="flex items-center gap-2">
-          <input type="checkbox" />
-          <span>Archived</span>
-        </label>
-      </div>
+    <div class="space-y-2">
+      <label class="flex items-center gap-2">
+        <input type="checkbox" />
+        <span>All</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="checkbox" />
+        <span>Active</span>
+      </label>
+      <label class="flex items-center gap-2">
+        <input type="checkbox" />
+        <span>Archived</span>
+      </label>
+    </div>
 
-      <button class="w-full mt-4 py-2 bg-primary text-primary-foreground rounded">
-        Apply Filter
-      </button>
-    </tolle-dropdown-menu>
-  </ng-template>
+    <button class="w-full mt-4 py-2 bg-primary text-primary-foreground rounded">
+      Apply Filter
+    </button>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -102,29 +100,27 @@ Selector: `[tolleDropdownTrigger]`
 <div class="relative inline-block text-left">
   <button
     tolleDropdownTrigger
-    [tolleDropdownTrigger]="menu"
+    [tolleDropdownTrigger]="actionsMenu"
     class="p-2 hover:bg-accent rounded-md"
   >
     <i class="ri-more-2-fill"></i>
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-48">
-      <tolle-dropdown-item>
-        <i class="ri-user-line mr-2"></i>
-        Profile
-      </tolle-dropdown-item>
-      <tolle-dropdown-item>
-        <i class="ri-settings-3-line mr-2"></i>
-        Settings
-      </tolle-dropdown-item>
-      <tolle-dropdown-separator></tolle-dropdown-separator>
-      <tolle-dropdown-item class="text-destructive">
-        <i class="ri-delete-bin-line mr-2"></i>
-        Delete
-      </tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #actionsMenu="tolleDropdownMenu" class="w-48">
+    <tolle-dropdown-item>
+      <i class="ri-user-line mr-2"></i>
+      Profile
+    </tolle-dropdown-item>
+    <tolle-dropdown-item>
+      <i class="ri-settings-3-line mr-2"></i>
+      Settings
+    </tolle-dropdown-item>
+    <tolle-dropdown-separator></tolle-dropdown-separator>
+    <tolle-dropdown-item class="text-destructive">
+      <i class="ri-delete-bin-line mr-2"></i>
+      Delete
+    </tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -140,16 +136,14 @@ Selector: `[tolleDropdownTrigger]`
     Actions
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-48">
-      <tolle-dropdown-item>View</tolle-dropdown-item>
-      <tolle-dropdown-item>Edit</tolle-dropdown-item>
-      <tolle-dropdown-separator></tolle-dropdown-separator>
-      <tolle-dropdown-item>Duplicate</tolle-dropdown-item>
-      <tolle-dropdown-separator></tolle-dropdown-separator>
-      <tolle-dropdown-item class="text-destructive">Delete</tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-48">
+    <tolle-dropdown-item>View</tolle-dropdown-item>
+    <tolle-dropdown-item>Edit</tolle-dropdown-item>
+    <tolle-dropdown-separator></tolle-dropdown-separator>
+    <tolle-dropdown-item>Duplicate</tolle-dropdown-item>
+    <tolle-dropdown-separator></tolle-dropdown-separator>
+    <tolle-dropdown-item class="text-destructive">Delete</tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -165,14 +159,12 @@ Selector: `[tolleDropdownTrigger]`
     Manage
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-48">
-      <tolle-dropdown-item>View All</tolle-dropdown-item>
-      <tolle-dropdown-item [disabled]="true">Edit (Locked)</tolle-dropdown-item>
-      <tolle-dropdown-separator></tolle-dropdown-separator>
-      <tolle-dropdown-item>Delete</tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-48">
+    <tolle-dropdown-item>View All</tolle-dropdown-item>
+    <tolle-dropdown-item [disabled]="true">Edit (Locked)</tolle-dropdown-item>
+    <tolle-dropdown-separator></tolle-dropdown-separator>
+    <tolle-dropdown-item>Delete</tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -190,12 +182,10 @@ Selector: `[tolleDropdownTrigger]`
     Align Right
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-48 origin-top-right">
-      <tolle-dropdown-item>Option 1</tolle-dropdown-item>
-      <tolle-dropdown-item>Option 2</tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-48 origin-top-right">
+    <tolle-dropdown-item>Option 1</tolle-dropdown-item>
+    <tolle-dropdown-item>Option 2</tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -211,12 +201,10 @@ Selector: `[tolleDropdownTrigger]`
     Align Left
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-48 origin-top-left">
-      <tolle-dropdown-item>Option 1</tolle-dropdown-item>
-      <tolle-dropdown-item>Option 2</tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-48 origin-top-left">
+    <tolle-dropdown-item>Option 1</tolle-dropdown-item>
+    <tolle-dropdown-item>Option 2</tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -241,13 +229,11 @@ Selector: `[tolleDropdownTrigger]`
     </button>
   </div>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-48">
-      <tolle-dropdown-item>New Project</tolle-dropdown-item>
-      <tolle-dropdown-item>New File</tolle-dropdown-item>
-      <tolle-dropdown-item>New Folder</tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-48">
+    <tolle-dropdown-item>New Project</tolle-dropdown-item>
+    <tolle-dropdown-item>New File</tolle-dropdown-item>
+    <tolle-dropdown-item>New Folder</tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -272,13 +258,11 @@ Selector: `[tolleDropdownTrigger]`
     </button>
   </div>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-40">
-      <tolle-dropdown-item>Left Align</tolle-dropdown-item>
-      <tolle-dropdown-item>Center Align</tolle-dropdown-item>
-      <tolle-dropdown-item>Right Align</tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-40">
+    <tolle-dropdown-item>Left Align</tolle-dropdown-item>
+    <tolle-dropdown-item>Center Align</tolle-dropdown-item>
+    <tolle-dropdown-item>Right Align</tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -295,25 +279,23 @@ Selector: `[tolleDropdownTrigger]`
     Search Items...
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-72">
-      <div class="p-2">
-        <input
-          type="text"
-          placeholder="Search..."
-          class="w-full px-3 py-2 text-sm rounded-md border focus:outline-none focus:ring-2 focus:ring-ring"
-        />
-      </div>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-72">
+    <div class="p-2">
+      <input
+        type="text"
+        placeholder="Search..."
+        class="w-full px-3 py-2 text-sm rounded-md border focus:outline-none focus:ring-2 focus:ring-ring"
+      />
+    </div>
 
-      <tolle-dropdown-separator></tolle-dropdown-separator>
+    <tolle-dropdown-separator></tolle-dropdown-separator>
 
-      <div class="max-h-64 overflow-y-auto">
-        <tolle-dropdown-item *ngFor="let item of items">
-          {{ item }}
-        </tolle-dropdown-item>
-      </div>
-    </tolle-dropdown-menu>
-  </ng-template>
+    <div class="max-h-64 overflow-y-auto">
+      <tolle-dropdown-item *ngFor="let item of items">
+        {{ item }}
+      </tolle-dropdown-item>
+    </div>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -345,14 +327,12 @@ Selector: `[tolleDropdownTrigger]`
   </tbody>
 </table>
 
-<ng-template #rowMenu>
-  <tolle-dropdown-menu class="w-48">
-    <tolle-dropdown-item>View</tolle-dropdown-item>
-    <tolle-dropdown-item>Edit</tolle-dropdown-item>
-    <tolle-dropdown-separator></tolle-dropdown-separator>
-    <tolle-dropdown-item class="text-destructive">Delete</tolle-dropdown-item>
-  </tolle-dropdown-menu>
-</ng-template>
+<tolle-dropdown-menu #rowMenu="tolleDropdownMenu" class="w-48">
+  <tolle-dropdown-item>View</tolle-dropdown-item>
+  <tolle-dropdown-item>Edit</tolle-dropdown-item>
+  <tolle-dropdown-separator></tolle-dropdown-separator>
+  <tolle-dropdown-item class="text-destructive">Delete</tolle-dropdown-item>
+</tolle-dropdown-menu>
 ```
 
 ## Dropdown with Custom Content
@@ -367,37 +347,35 @@ Selector: `[tolleDropdownTrigger]`
     User Menu
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-64 p-4">
-      <div class="flex items-center gap-3 mb-4 pb-4 border-b">
-        <div class="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
-          {{ user.initials }}
-        </div>
-        <div>
-          <div class="font-semibold">{{ user.name }}</div>
-          <div class="text-sm text-muted-foreground">{{ user.email }}</div>
-        </div>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-64 p-4">
+    <div class="flex items-center gap-3 mb-4 pb-4 border-b">
+      <div class="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground">
+        {{ user.initials }}
       </div>
-
-      <div class="space-y-2">
-        <button tolle-dropdown-item class="w-full text-left">
-          <i class="ri-user-line mr-2"></i>
-          Profile
-        </button>
-        <button tolle-dropdown-item class="w-full text-left">
-          <i class="ri-settings-3-line mr-2"></i>
-          Settings
-        </button>
+      <div>
+        <div class="font-semibold">{{ user.name }}</div>
+        <div class="text-sm text-muted-foreground">{{ user.email }}</div>
       </div>
+    </div>
 
-      <tolle-dropdown-separator></tolle-dropdown-separator>
-
-      <button tolle-dropdown-item class="w-full text-left text-destructive">
-        <i class="ri-logout-box-line mr-2"></i>
-        Logout
+    <div class="space-y-2">
+      <button tolle-dropdown-item class="w-full text-left">
+        <i class="ri-user-line mr-2"></i>
+        Profile
       </button>
-    </tolle-dropdown-menu>
-  </ng-template>
+      <button tolle-dropdown-item class="w-full text-left">
+        <i class="ri-settings-3-line mr-2"></i>
+        Settings
+      </button>
+    </div>
+
+    <tolle-dropdown-separator></tolle-dropdown-separator>
+
+    <button tolle-dropdown-item class="w-full text-left text-destructive">
+      <i class="ri-logout-box-line mr-2"></i>
+      Logout
+    </button>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -413,24 +391,22 @@ Selector: `[tolleDropdownTrigger]`
     Sort By
   </button>
 
-  <ng-template #menu>
-    <tolle-dropdown-menu class="w-48">
-      <div class="px-2 py-1.5 text-sm font-medium">Sort by</div>
-      <tolle-dropdown-item
-        *ngFor="let sort of sorts"
-        [class.bg-accent]="sort.active"
-        (click)="applySort(sort)"
-      >
-        {{ sort.label }}
-        <i *ngIf="sort.active" class="ri-check-line ml-auto"></i>
-      </tolle-dropdown-item>
-      <tolle-dropdown-separator></tolle-dropdown-separator>
-      <div class="px-2 py-1.5 text-sm font-medium">Secondary sort</div>
-      <tolle-dropdown-item *ngFor="let sort of secondarySorts" (click)="applySecondarySort(sort)">
-        {{ sort.label }}
-      </tolle-dropdown-item>
-    </tolle-dropdown-menu>
-  </ng-template>
+  <tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-48">
+    <div class="px-2 py-1.5 text-sm font-medium">Sort by</div>
+    <tolle-dropdown-item
+      *ngFor="let sort of sorts"
+      [class.bg-accent]="sort.active"
+      (click)="applySort(sort)"
+    >
+      {{ sort.label }}
+      <i *ngIf="sort.active" class="ri-check-line ml-auto"></i>
+    </tolle-dropdown-item>
+    <tolle-dropdown-separator></tolle-dropdown-separator>
+    <div class="px-2 py-1.5 text-sm font-medium">Secondary sort</div>
+    <tolle-dropdown-item *ngFor="let sort of secondarySorts" (click)="applySecondarySort(sort)">
+      {{ sort.label }}
+    </tolle-dropdown-item>
+  </tolle-dropdown-menu>
 </div>
 ```
 
@@ -442,3 +418,27 @@ The dropdown uses Floating UI with the following behaviors:
 - **Flip**: Automatically flips to top if space is tight
 - **Shift**: Prevents menu from hitting screen edges
 - **Offset**: 4px gap between trigger and menu
+
+## Accessing the Menu Component
+
+You can access the DropdownMenuComponent through template reference variables to programmatically control it:
+
+```html
+<button
+  tolleDropdownTrigger
+  [tolleDropdownTrigger]="menu"
+>
+  Open Menu
+</button>
+
+<tolle-dropdown-menu #menu="tolleDropdownMenu" class="w-48">
+  <tolle-dropdown-item>Item 1</tolle-dropdown-item>
+</tolle-dropdown-menu>
+```
+
+## Notes
+
+- The `DropdownTriggerDirective` binds to a `DropdownMenuComponent` instance (not an `ng-template`)
+- The dropdown menu content is projected via `ng-content` in the `DropdownMenuComponent`
+- The directive handles opening/closing the menu on click
+- Clicking outside the menu will automatically close it

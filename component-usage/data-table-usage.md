@@ -2,17 +2,17 @@
 
 ## Overview
 
-The DataListComponent provides a data table with sorting and pagination capabilities for displaying structured data.
+The DataTableComponent provides a data table with sorting and pagination capabilities for displaying structured data.
 
 ## Import
 
 ```typescript
-import { DataListComponent, PaginationComponent } from '@tolle_/tolle-ui';
+import { DataTableComponent, PaginationComponent } from '@tolle_/tolle-ui';
 ```
 
 ## Components
 
-### DataListComponent
+### DataTableComponent
 
 **Inputs:**
 
@@ -69,28 +69,28 @@ columns = [
 ```
 
 ```html
-<data-list-component
+<tolle-data-table
   [data]="dataSource"
   [columns]="columns"
-></data-list-component>
+></tolle-data-table>
 ```
 
 ### Data Table with Pagination
 
 ```html
-<data-list-component
+<tolle-data-table
   [data]="dataSource"
   [columns]="columns"
   [pageSize]="10"
-></data-list-component>
+></tolle-data-table>
 
-<pagination-component
+<tolle-pagination
   [totalRecords]="totalRecords"
   [currentPageSize]="10"
   [currentPage]="currentPage"
   (onPageNumberChange)="onPageChange($event)"
   (onPageSizeChange)="onPageSizeChange($event)"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ## Column Definitions
@@ -110,25 +110,25 @@ columns = [
 ### Custom Cell Template
 
 ```html
-<data-list-component
+<tolle-data-table
   [data]="dataSource"
   [columns]="columns"
 >
   <ng-template #cellActions let-row>
-    <button tolleButton variant="ghost" size="sm">
+    <button tolle-button variant="ghost" size="sm">
       <i class="ri-edit-line"></i>
     </button>
-    <button tolleButton variant="ghost" size="sm" class="text-destructive">
+    <button tolle-button variant="ghost" size="sm" class="text-destructive">
       <i class="ri-delete-bin-line"></i>
     </button>
   </ng-template>
-</data-list-component>
+</tolle-data-table>
 ```
 
 ### Custom Header Template
 
 ```html
-<data-list-component
+<tolle-data-table
   [data]="dataSource"
   [columns]="columns"
 >
@@ -138,7 +138,7 @@ columns = [
       <i class="ri-arrow-up-line"></i>
     </div>
   </ng-template>
-</data-list-component>
+</tolle-data-table>
 ```
 
 ## Sorting
@@ -146,12 +146,12 @@ columns = [
 ### Sortable Columns
 
 ```html
-<data-list-component
+<tolle-data-table
   [data]="dataSource"
   [columns]="columns"
   [sortable]="true"
   (onSortChange)="onSortChange($event)"
-></data-list-component>
+></tolle-data-table>
 ```
 
 ```typescript
@@ -174,7 +174,7 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
 ### Pagination with Page Size Options
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="totalRecords"
   [currentPageSize]="pageSize"
   [currentPage]="currentPage"
@@ -184,18 +184,18 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
   [showCurrentPageInfo]="true"
   (onPageNumberChange)="onPageChange($event)"
   (onPageSizeChange)="onPageSizeChange($event)"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ### Custom Page Info Template
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="totalRecords"
   [currentPageSize]="pageSize"
   [currentPage]="currentPage"
   [currentPageInfoTemplate]="'Displaying {{ start }}-{{ end }} of {{ total }} items'"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ## Table Variants
@@ -203,11 +203,11 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
 ### Striped Table
 
 ```html
-<data-list-component
+<tolle-data-table
   [data]="dataSource"
   [columns]="columns"
   class="data-table-striped"
-></data-list-component>
+></tolle-data-table>
 ```
 
 ```css
@@ -219,11 +219,11 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
 ### Bordered Table
 
 ```html
-<data-list-component
+<tolle-data-table
   [data]="dataSource"
   [columns]="columns"
   class="data-table-bordered"
-></data-list-component>
+></tolle-data-table>
 ```
 
 ```css
@@ -240,7 +240,7 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
 ## Data Table with Actions
 
 ```html
-<data-list-component
+<tolle-data-table
   [data]="dataSource"
   [columns]="columns"
 >
@@ -252,7 +252,7 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
   <ng-template #cellActions let-row>
     <div class="flex items-center gap-2">
       <button
-        tolleButton
+        tolle-button
         variant="ghost"
         size="sm"
         (click)="editRow(row)"
@@ -260,7 +260,7 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
         <i class="ri-edit-line"></i>
       </button>
       <button
-        tolleButton
+        tolle-button
         variant="ghost"
         size="sm"
         class="text-destructive"
@@ -270,7 +270,7 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
       </button>
     </div>
   </ng-template>
-</data-list-component>
+</tolle-data-table>
 ```
 
 ## Data Table in Card
@@ -284,19 +284,19 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
     </tolle-card-description>
   </tolle-card-header>
   <tolle-card-content>
-    <data-list-component
+    <tolle-data-table
       [data]="users"
       [columns]="userColumns"
-    ></data-list-component>
+    ></tolle-data-table>
   </tolle-card-content>
   <tolle-card-footer>
-    <pagination-component
+    <tolle-pagination
       [totalRecords]="totalUsers"
       [currentPageSize]="pageSize"
       [currentPage]="currentPage"
       (onPageNumberChange)="onPageChange($event)"
       (onPageSizeChange)="onPageSizeChange($event)"
-    ></pagination-component>
+    ></tolle-pagination>
   </tolle-card-footer>
 </tolle-card>
 ```
@@ -315,10 +315,10 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
     </tolle-input>
   </div>
 
-  <data-list-component
+  <tolle-data-table
     [data]="filteredData"
     [columns]="columns"
-  ></data-list-component>
+  ></tolle-data-table>
 </div>
 ```
 
@@ -326,13 +326,13 @@ onSortChange(sort: { key: string; direction: 'asc' | 'desc' }) {
 
 ```html
 <div *ngIf="isLoading; else loadedTable">
-  <skeleton-component class="h-10 w-full mb-2" *ngFor="let i of [1, 2, 3, 4, 5]"></skeleton-component>
+  <tolle-skeleton class="h-10 w-full mb-2" *ngFor="let i of [1, 2, 3, 4, 5]"></tolle-skeleton>
 </div>
 
 <ng-template #loadedTable>
-  <data-list-component
+  <tolle-data-table
     [data]="dataSource"
     [columns]="columns"
-  ></data-list-component>
+  ></tolle-data-table>
 </ng-template>
 ```

@@ -24,7 +24,7 @@ import { PaginationComponent } from '@tolle_/tolle-ui';
 | `totalRecords` | `number` | `0` | Total record count |
 | `currentPageSize` | `number` | `10` | Current page size |
 | `currentPage` | `number` | `1` | Current page number |
-| `pageSizeOptions` | `number[]` | `[5, 10, 20, 50]` | Page size options |
+| `pageSizeOptions` | `number[]` | `[10, 20, 30, 50]` | Page size options |
 
 **Outputs:**
 
@@ -38,23 +38,23 @@ import { PaginationComponent } from '@tolle_/tolle-ui';
 ### Simple Pagination
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="1"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ### Pagination with Event Handling
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="totalRecords"
   [currentPageSize]="pageSize"
   [currentPage]="currentPage"
   (onPageNumberChange)="onPageChange($event)"
   (onPageSizeChange)="onPageSizeChange($event)"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ```typescript
@@ -79,53 +79,53 @@ loadPage() {
 ### Minimal Pagination
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="1"
   [showPageLinks]="false"
   [showPageOptions]="false"
   [showCurrentPageInfo]="false"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ### Page Links Only
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="1"
   [showPageLinks]="true"
   [showPageOptions]="false"
   [showCurrentPageInfo]="false"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ### Page Size Only
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="1"
   [showPageLinks]="false"
   [showPageOptions]="true"
   [showCurrentPageInfo]="false"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ### Page Info Only
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="1"
   [showPageLinks]="false"
   [showPageOptions]="false"
   [showCurrentPageInfo]="true"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ## Page Size Options
@@ -133,23 +133,23 @@ loadPage() {
 ### Custom Page Sizes
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="20"
   [currentPage]="1"
   [pageSizeOptions]="[5, 10, 20, 50, 100]"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ### Smaller Options
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="5"
   [currentPage]="1"
   [pageSizeOptions]="[5, 10, 15]"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ## Custom Page Info Template
@@ -157,25 +157,25 @@ loadPage() {
 ### Custom Text
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="1"
   [showCurrentPageInfo]="true"
   [currentPageInfoTemplate]="'Showing {{ start }}-{{ end }} of {{ total }} items'"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ### Custom HTML
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="1"
   [showCurrentPageInfo]="true"
   [currentPageInfoTemplate]="'Page {{ currentPage }} of {{ totalPages }}'"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ## Pagination with Page Number Limits
@@ -183,13 +183,13 @@ loadPage() {
 ### Limited Page Links
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="5"
   [showPageLinks]="true"
   [showPageOptions]="false"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ## Pagination in Card
@@ -225,13 +225,13 @@ loadPage() {
     </div>
   </tolle-card-content>
   <tolle-card-footer>
-    <pagination-component
+    <tolle-pagination
       [totalRecords]="totalUsers"
       [currentPageSize]="pageSize"
       [currentPage]="currentPage"
       (onPageNumberChange)="onPageChange($event)"
       (onPageSizeChange)="onPageSizeChange($event)"
-    ></pagination-component>
+    ></tolle-pagination>
   </tolle-card-footer>
 </tolle-card>
 ```
@@ -248,18 +248,18 @@ loadPage() {
     <i prefix class="ri-search-line"></i>
   </tolle-input>
 
-  <data-list-component
+  <tolle-data-list
     [data]="filteredData"
     [columns]="columns"
-  ></data-list-component>
+  ></tolle-data-list>
 
-  <pagination-component
+  <tolle-pagination
     [totalRecords]="filteredTotal"
     [currentPageSize]="pageSize"
     [currentPage]="currentPage"
     (onPageNumberChange)="onPageChange($event)"
     (onPageSizeChange)="onPageSizeChange($event)"
-  ></pagination-component>
+  ></tolle-pagination>
 </div>
 ```
 
@@ -267,23 +267,23 @@ loadPage() {
 
 ```html
 <div *ngIf="isLoading; else loaded">
-  <skeleton-component class="h-10 w-full mb-2" *ngFor="let i of [1, 2, 3, 4, 5]"></skeleton-component>
+  <tolle-skeleton class="h-10 w-full mb-2" *ngFor="let i of [1, 2, 3, 4, 5]"></tolle-skeleton>
 </div>
 
 <ng-template #loaded>
   <div>
-    <data-list-component
+    <tolle-data-list
       [data]="dataSource"
       [columns]="columns"
-    ></data-list-component>
+    ></tolle-data-list>
 
-    <pagination-component
+    <tolle-pagination
       [totalRecords]="totalRecords"
       [currentPageSize]="pageSize"
       [currentPage]="currentPage"
       (onPageNumberChange)="onPageChange($event)"
       (onPageSizeChange)="onPageSizeChange($event)"
-    ></pagination-component>
+    ></tolle-pagination>
   </div>
 </ng-template>
 ```
@@ -294,14 +294,14 @@ loadPage() {
 
 ```html
 <div class="flex items-center gap-2">
-  <pagination-component
+  <tolle-pagination
     [totalRecords]="100"
     [currentPageSize]="10"
     [currentPage]="currentPage"
     [showPageLinks]="false"
     [showPageOptions]="false"
     [showCurrentPageInfo]="false"
-  ></pagination-component>
+  ></tolle-pagination>
 
   <div class="flex items-center gap-2">
     <label class="text-sm">Go to page:</label>
@@ -313,7 +313,7 @@ loadPage() {
       min="1"
       [max]="totalPages"
     />
-    <button tolleButton size="sm" (click)="jumpToPage()">Go</button>
+    <button tolle-button size="sm" (click)="jumpToPage()">Go</button>
   </div>
 </div>
 ```
@@ -336,13 +336,13 @@ jumpToPage() {
 ### Showing Current Range
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="totalRecords"
   [currentPageSize]="pageSize"
   [currentPage]="currentPage"
   [showCurrentPageInfo]="true"
   [currentPageInfoTemplate]="'Page {{ currentPage }} of {{ totalPages }} ({{ startRecord }}-{{ endRecord }} of {{ totalRecords }})'"
-></pagination-component>
+></tolle-pagination>
 ```
 
 ## Pagination Responsive
@@ -350,10 +350,10 @@ jumpToPage() {
 ### Stack on Mobile
 
 ```html
-<pagination-component
+<tolle-pagination
   [totalRecords]="100"
   [currentPageSize]="10"
   [currentPage]="1"
   class="flex flex-col sm:flex-row items-center gap-2"
-></pagination-component>
+></tolle-pagination>
 ```

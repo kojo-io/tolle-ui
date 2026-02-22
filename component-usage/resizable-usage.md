@@ -10,8 +10,7 @@ The Resizable component provides a container that can be resized by dragging its
 import {
   ResizableComponent,
   ResizablePanelComponent,
-  ResizablePanelItemComponent,
-  ResizableHandleComponent
+  ResizablePanelItemComponent
 } from '@tolle_/tolle-ui';
 ```
 

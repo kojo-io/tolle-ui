@@ -19,44 +19,43 @@ import { CheckboxComponent } from '@tolle_/tolle-ui';
 | `class` | `string` | `''` | Additional CSS classes |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `size` | `'xs'\|'sm'\|'default'\|'lg'` | `'default'` | Checkbox size |
-| `checked` | `boolean` | `false` | Checked state (for standalone use) |
-| `ngModel` | `any` | `null` | Two-way binding value |
-| `formControlName` | `string` | - | Form control name |
 
 ## Basic Usage
 
 ### Single Checkbox
 
 ```html
-<label class="flex items-center gap-2">
-  <input type="checkbox" tolleCheckbox />
-  <span>Agree to terms</span>
-</label>
+<tolle-checkbox [(ngModel)]="isSelected" />
+<span>Selected: {{ isSelected }}</span>
 ```
 
 ### Disabled Checkbox
 
 ```html
-<label class="flex items-center gap-2">
-  <input type="checkbox" tolleCheckbox [disabled]="true" />
-  <span class="text-muted-foreground">Cannot be changed</span>
-</label>
+<tolle-checkbox [disabled]="true" [(ngModel)]="disabledValue" />
+<span class="text-muted-foreground">Cannot be changed</span>
 ```
 
 ### Checkbox with ngModel
 
 ```html
-<input type="checkbox" tolleCheckbox [(ngModel)]="isSelected" />
+<tolle-checkbox [(ngModel)]="isSelected" />
 <span>Selected: {{ isSelected }}</span>
 ```
 
-### Checkbox in Form
+### Checkbox in Reactive Form
 
 ```html
 <form [formGroup]="form">
-  <input type="checkbox" tolleCheckbox formControlName="terms" />
+  <tolle-checkbox formControlName="terms" />
   <span>Accept terms</span>
 </form>
+```
+
+```typescript
+this.form = this.fb.group({
+  terms: [false]
+});
 ```
 
 ## Checkbox Sizes
@@ -64,28 +63,28 @@ import { CheckboxComponent } from '@tolle_/tolle-ui';
 ### Extra Small (xs)
 
 ```html
-<input type="checkbox" tolleCheckbox size="xs" />
+<tolle-checkbox size="xs" [(ngModel)]="value" />
 <span class="text-xs">Extra Small</span>
 ```
 
 ### Small (sm)
 
 ```html
-<input type="checkbox" tolleCheckbox size="sm" />
+<tolle-checkbox size="sm" [(ngModel)]="value" />
 <span class="text-sm">Small</span>
 ```
 
 ### Default
 
 ```html
-<input type="checkbox" tolleCheckbox />
+<tolle-checkbox [(ngModel)]="value" />
 <span class="text-base">Default</span>
 ```
 
 ### Large (lg)
 
 ```html
-<input type="checkbox" tolleCheckbox size="lg" />
+<tolle-checkbox size="lg" [(ngModel)]="value" />
 <span class="text-lg">Large</span>
 ```
 
@@ -94,14 +93,14 @@ import { CheckboxComponent } from '@tolle_/tolle-ui';
 ### Checked
 
 ```html
-<input type="checkbox" tolleCheckbox [checked]="true" />
+<tolle-checkbox [ngModel]="true" (ngModelChange)="value = $event" />
 <span>Checked</span>
 ```
 
 ### Indeterminate (via template reference)
 
 ```html
-<input type="checkbox" tolleCheckbox #checkbox="ngModel" [(ngModel)]="value" />
+<tolle-checkbox #checkbox="ngModel" [(ngModel)]="value" />
 <button (click)="checkbox.indeterminate = true">Set Indeterminate</button>
 ```
 
@@ -112,15 +111,15 @@ import { CheckboxComponent } from '@tolle_/tolle-ui';
 ```html
 <div class="space-y-2">
   <label class="flex items-center gap-2">
-    <input type="checkbox" tolleCheckbox [value]="'apple'" [(ngModel)]="fruits" />
+    <tolle-checkbox [value]="'apple'" [(ngModel)]="fruits" />
     <span>Apple</span>
   </label>
   <label class="flex items-center gap-2">
-    <input type="checkbox" tolleCheckbox [value]="'banana'" [(ngModel)]="fruits" />
+    <tolle-checkbox [value]="'banana'" [(ngModel)]="fruits" />
     <span>Banana</span>
   </label>
   <label class="flex items-center gap-2">
-    <input type="checkbox" tolleCheckbox [value]="'orange'" [(ngModel)]="fruits" />
+    <tolle-checkbox [value]="'orange'" [(ngModel)]="fruits" />
     <span>Orange</span>
   </label>
 </div>
@@ -146,7 +145,7 @@ toggleFruit(fruit: string) {
 
 ```html
 <div class="flex items-start gap-3">
-  <input type="checkbox" tolleCheckbox id="checkbox" />
+  <tolle-checkbox id="checkbox" />
   <label for="checkbox" class="flex-1">
     <span class="block font-medium">Subscribe to newsletter</span>
     <span class="block text-sm text-muted-foreground">Receive updates weekly</span>
@@ -159,7 +158,7 @@ toggleFruit(fruit: string) {
 ```html
 <div class="space-y-2">
   <label class="flex items-center gap-2">
-    <input type="checkbox" tolleCheckbox />
+    <tolle-checkbox />
     <span>Allow notifications</span>
   </label>
   <p class="text-xs text-muted-foreground ml-6">
@@ -173,7 +172,7 @@ toggleFruit(fruit: string) {
 ```html
 <div class="space-y-2">
   <label class="flex items-center gap-2">
-    <input type="checkbox" tolleCheckbox [class.border-destructive]="!form.valid" />
+    <tolle-checkbox [class.border-destructive]="!form.valid" />
     <span>Required option</span>
   </label>
   <p class="text-xs text-destructive" *ngIf="!form.valid && !selected">
@@ -189,7 +188,7 @@ toggleFruit(fruit: string) {
   <thead>
     <tr>
       <th>
-        <input type="checkbox" tolleCheckbox [checked]="allSelected" (change)="toggleAll($event)" />
+        <tolle-checkbox [checked]="allSelected" (change)="toggleAll($event)" />
       </th>
       <th>Name</th>
     </tr>
@@ -197,7 +196,7 @@ toggleFruit(fruit: string) {
   <tbody>
     <tr *ngFor="let item of items">
       <td>
-        <input type="checkbox" tolleCheckbox [value]="item.id" [(ngModel)]="selectedIds" />
+        <tolle-checkbox [value]="item.id" [(ngModel)]="selectedIds" />
       </td>
       <td>{{ item.name }}</td>
     </tr>
@@ -208,10 +207,9 @@ toggleFruit(fruit: string) {
 ## Checkbox with Custom Color
 
 ```html
-<input
-  type="checkbox"
-  tolleCheckbox
-  class="peer h-4 w-4 rounded border border-primary accent-primary"
+<tolle-checkbox
+  class="bg-blue-500 data-[checked=true]:bg-blue-600"
+  [(ngModel)]="value"
 />
 <span>Custom accent</span>
 ```
@@ -225,11 +223,11 @@ toggleFruit(fruit: string) {
   </tolle-card-header>
   <tolle-card-content class="space-y-4">
     <label class="flex items-center gap-2">
-      <input type="checkbox" tolleCheckbox />
+      <tolle-checkbox />
       <span>Email notifications</span>
     </label>
     <label class="flex items-center gap-2">
-      <input type="checkbox" tolleCheckbox />
+      <tolle-checkbox />
       <span>SMS notifications</span>
     </label>
   </tolle-card-content>

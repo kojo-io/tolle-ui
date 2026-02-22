@@ -71,26 +71,24 @@ import {
 ### Single Toggle
 
 ```html
-<button
-  tolleToggle
+<tolle-toggle
   [pressed]="isenabled"
   (pressedChange)="isenabled = !isenabled"
 >
   {{ isenabled ? 'On' : 'Off' }}
-</button>
+</tolle-toggle>
 ```
 
 ### Toggle with Icon
 
 ```html
-<button
-  tolleToggle
+<tolle-toggle
   [pressed]="darkMode"
   (pressedChange)="darkMode = !darkMode"
 >
   <i class="ri-moon-line" *ngIf="!darkMode"></i>
   <i class="ri-sun-line" *ngIf="darkMode"></i>
-</button>
+</tolle-toggle>
 ```
 
 ## Toggle Sizes
@@ -98,39 +96,36 @@ import {
 ### Small
 
 ```html
-<button
-  tolleToggle
+<tolle-toggle
   size="sm"
   [pressed]="value"
   (pressedChange)="value = !value"
 >
   Small
-</button>
+</tolle-toggle>
 ```
 
 ### Default
 
 ```html
-<button
-  tolleToggle
+<tolle-toggle
   [pressed]="value"
   (pressedChange)="value = !value"
 >
   Default
-</button>
+</tolle-toggle>
 ```
 
 ### Large
 
 ```html
-<button
-  tolleToggle
+<tolle-toggle
   size="lg"
   [pressed]="value"
   (pressedChange)="value = !value"
 >
   Large
-</button>
+</tolle-toggle>
 ```
 
 ## Toggle Variants
@@ -139,20 +134,18 @@ import {
 
 ```html
 <div class="space-y-2">
-  <button
-    tolleToggle
+  <tolle-toggle
     variant="default"
     [pressed]="true"
   >
     On
-  </button>
-  <button
-    tolleToggle
+  </tolle-toggle>
+  <tolle-toggle
     variant="default"
     [pressed]="false"
   >
     Off
-  </button>
+  </tolle-toggle>
 </div>
 ```
 
@@ -160,20 +153,18 @@ import {
 
 ```html
 <div class="space-y-2">
-  <button
-    tolleToggle
+  <tolle-toggle
     variant="outline"
     [pressed]="true"
   >
     On
-  </button>
-  <button
-    tolleToggle
+  </tolle-toggle>
+  <tolle-toggle
     variant="outline"
     [pressed]="false"
   >
     Off
-  </button>
+  </tolle-toggle>
 </div>
 ```
 
@@ -186,24 +177,21 @@ import {
   [(ngModel)]="alignment"
   type="single"
 >
-  <button
-    tolleToggleGroupItem
+  <tolle-toggle-group-item
     value="left"
   >
     <i class="ri-align-left"></i>
-  </button>
-  <button
-    tolleToggleGroupItem
+  </tolle-toggle-group-item>
+  <tolle-toggle-group-item
     value="center"
   >
     <i class="ri-align-center"></i>
-  </button>
-  <button
-    tolleToggleGroupItem
+  </tolle-toggle-group-item>
+  <tolle-toggle-group-item
     value="right"
   >
     <i class="ri-align-right"></i>
-  </button>
+  </tolle-toggle-group-item>
 </tolle-toggle-group>
 <p>Alignment: {{ alignment }}</p>
 ```
@@ -215,18 +203,16 @@ import {
   [(ngModel)]="visibility"
   type="single"
 >
-  <button
-    tolleToggleGroupItem
+  <tolle-toggle-group-item
     value="public"
   >
     Public
-  </button>
-  <button
-    tolleToggleGroupItem
+  </tolle-toggle-group-item>
+  <tolle-toggle-group-item
     value="private"
   >
     Private
-  </button>
+  </tolle-toggle-group-item>
 </tolle-toggle-group>
 ```
 
@@ -239,24 +225,21 @@ import {
   [(ngModel)]="permissions"
   type="multiple"
 >
-  <button
-    tolleToggleGroupItem
+  <tolle-toggle-group-item
     value="read"
   >
     Read
-  </button>
-  <button
-    tolleToggleGroupItem
+  </tolle-toggle-group-item>
+  <tolle-toggle-group-item
     value="write"
   >
     Write
-  </button>
-  <button
-    tolleToggleGroupItem
+  </tolle-toggle-group-item>
+  <tolle-toggle-group-item
     value="delete"
   >
     Delete
-  </button>
+  </tolle-toggle-group-item>
 </tolle-toggle-group>
 <p>Permissions: {{ permissions | json }}</p>
 ```
@@ -318,8 +301,7 @@ modes: SegmentItem[] = [
         <div class="font-medium">Dark Mode</div>
         <div class="text-sm text-muted-foreground">Toggle dark theme</div>
       </div>
-      <button
-        tolleToggle
+      <tolle-toggle
         [pressed]="darkMode"
         (pressedChange)="darkMode = !darkMode"
       />
@@ -330,8 +312,7 @@ modes: SegmentItem[] = [
         <div class="font-medium">Compact Mode</div>
         <div class="text-sm text-muted-foreground">Reduce spacing</div>
       </div>
-      <button
-        tolleToggle
+      <tolle-toggle
         [pressed]="compactMode"
         (pressedChange)="compactMode = !compactMode"
       />
@@ -345,61 +326,56 @@ modes: SegmentItem[] = [
 ### Custom Colors
 
 ```html
-<button
-  tolleToggle
+<tolle-toggle
   class="bg-blue-500 data-[pressed=true]:bg-blue-600"
   [pressed]="value"
   (pressedChange)="value = !value"
 >
   Custom
-</button>
+</tolle-toggle>
 ```
 
 ### Large Toggle
 
 ```html
-<button
-  tolleToggle
+<tolle-toggle
   size="lg"
   class="h-12 px-8 text-lg"
   [pressed]="value"
   (pressedChange)="value = !value"
 >
   {{ value ? 'Enabled' : 'Disabled' }}
-</button>
+</tolle-toggle>
 ```
 
 ## Toggle Group in Toolbar
 
 ```html
 <div class="flex items-center gap-1 p-1 border rounded-md">
-  <button
-    tolleToggle
+  <tolle-toggle
     size="sm"
     class="h-8 w-8 p-0"
     [pressed]="bold"
     (pressedChange)="bold = !bold"
   >
     <i class="ri-bold-line"></i>
-  </button>
-  <button
-    tolleToggle
+  </tolle-toggle>
+  <tolle-toggle
     size="sm"
     class="h-8 w-8 p-0"
     [pressed]="italic"
     (pressedChange)="italic = !italic"
   >
     <i class="ri-italic-line"></i>
-  </button>
-  <button
-    tolleToggle
+  </tolle-toggle>
+  <tolle-toggle
     size="sm"
     class="h-8 w-8 p-0"
     [pressed]="underline"
     (pressedChange)="underline = !underline"
   >
     <i class="ri-underline-line"></i>
-  </button>
+  </tolle-toggle>
 </div>
 ```
 
@@ -410,24 +386,21 @@ modes: SegmentItem[] = [
   [(ngModel)]="selected"
   type="single"
 >
-  <button
-    tolleToggleGroupItem
+  <tolle-toggle-group-item
     value="a"
   >
     Option A
-  </button>
-  <button
-    tolleToggleGroupItem
+  </tolle-toggle-group-item>
+  <tolle-toggle-group-item
     value="b"
     [disabled]="true"
   >
     Option B (Locked)
-  </button>
-  <button
-    tolleToggleGroupItem
+  </tolle-toggle-group-item>
+  <tolle-toggle-group-item
     value="c"
   >
     Option C
-  </button>
+  </tolle-toggle-group-item>
 </tolle-toggle-group>
 ```

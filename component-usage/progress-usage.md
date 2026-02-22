@@ -24,13 +24,13 @@ import { ProgressComponent } from '@tolle_/tolle-ui';
 ### Simple Progress Bar
 
 ```html
-<progress-component [value]="50" class="h-2"></progress-component>
+<tolle-progress [value]="50" class="h-2"></tolle-progress>
 ```
 
 ### Progress with Value Binding
 
 ```html
-<progress-component [value]="progress" class="h-2"></progress-component>
+<tolle-progress [value]="progress" class="h-2"></tolle-progress>
 <p>Progress: {{ progress }}%</p>
 ```
 
@@ -41,7 +41,7 @@ progress = 75;
 ### Indeterminate Progress
 
 ```html
-<progress-component [value]="null" class="h-2"></progress-component>
+<tolle-progress [value]="null" class="h-2"></tolle-progress>
 ```
 
 ## Progress Bar Sizes
@@ -49,19 +49,19 @@ progress = 75;
 ### Small Height (2px)
 
 ```html
-<progress-component [value]="60" class="h-1"></progress-component>
+<tolle-progress [value]="60" class="h-1"></tolle-progress>
 ```
 
 ### Medium Height (4px)
 
 ```html
-<progress-component [value]="60" class="h-2"></progress-component>
+<tolle-progress [value]="60" class="h-2"></tolle-progress>
 ```
 
 ### Large Height (8px)
 
 ```html
-<progress-component [value]="60" class="h-4"></progress-component>
+<tolle-progress [value]="60" class="h-4"></tolle-progress>
 ```
 
 ## Progress with Text Label
@@ -70,7 +70,7 @@ progress = 75;
 
 ```html
 <div class="space-y-2">
-  <progress-component [value]="75" class="h-2"></progress-component>
+  <tolle-progress [value]="75" class="h-2"></tolle-progress>
   <div class="flex justify-between text-xs text-muted-foreground">
     <span>Progress</span>
     <span>75%</span>
@@ -86,7 +86,7 @@ progress = 75;
     <span>Upload Status</span>
     <span>{{ progress }}%</span>
   </div>
-  <progress-component [value]="progress" class="h-2"></progress-component>
+  <tolle-progress [value]="progress" class="h-2"></tolle-progress>
 </div>
 ```
 
@@ -96,30 +96,30 @@ progress = 75;
 
 ```html
 <!-- Success (Green) -->
-<progress-component [value]="100" class="h-2">
+<tolle-progress [value]="100" class="h-2">
   <div class="bg-emerald-500 h-full rounded-full transition-all"></div>
-</progress-component>
+</tolle-progress>
 
 <!-- Warning (Yellow/Orange) -->
-<progress-component [value]="75" class="h-2">
+<tolle-progress [value]="75" class="h-2">
   <div class="bg-amber-500 h-full rounded-full transition-all"></div>
-</progress-component>
+</tolle-progress>
 
 <!-- Destructive (Red) -->
-<progress-component [value]="30" class="h-2">
+<tolle-progress [value]="30" class="h-2">
   <div class="bg-destructive h-full rounded-full transition-all"></div>
-</progress-component>
+</tolle-progress>
 ```
 
 ### Custom Colors
 
 ```html
-<progress-component [value]="progress" class="h-2">
+<tolle-progress [value]="progress" class="h-2">
   <div
     class="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full transition-all"
     [style.width.%]="progress"
   ></div>
-</progress-component>
+</tolle-progress>
 ```
 
 ## Progress in Card
@@ -135,7 +135,7 @@ progress = 75;
         <span>Uploading file...</span>
         <span>{{ uploadProgress }}%</span>
       </div>
-      <progress-component [value]="uploadProgress" class="h-2"></progress-component>
+      <tolle-progress [value]="uploadProgress" class="h-2"></tolle-progress>
     </div>
 
     <div class="space-y-2">
@@ -143,7 +143,7 @@ progress = 75;
         <span>Processing</span>
         <span>{{ processingProgress }}%</span>
       </div>
-      <progress-component [value]="processingProgress" class="h-2"></progress-component>
+      <tolle-progress [value]="processingProgress" class="h-2"></tolle-progress>
     </div>
   </tolle-card-content>
 </tolle-card>
@@ -159,7 +159,7 @@ progress = 75;
 
   <tolle-alert-dialog-content class="space-y-4">
     <p>Preparing your export...</p>
-    <progress-component [value]="exportProgress" class="h-2"></progress-component>
+    <tolle-progress [value]="exportProgress" class="h-2"></tolle-progress>
     <p class="text-xs text-muted-foreground text-center">
       {{ exportProgress === 100 ? 'Export complete!' : 'Please wait...' }}
     </p>
@@ -172,20 +172,20 @@ progress = 75;
 ### Animated Progress
 
 ```html
-<progress-component [value]="progress" class="h-2">
+<tolle-progress [value]="progress" class="h-2">
   <div
     class="bg-primary h-full rounded-full transition-all duration-500 ease-out"
     [style.width.%]="progress"
   ></div>
-</progress-component>
+</tolle-progress>
 ```
 
 ### Indeterminate Animation
 
 ```html
-<progress-component [value]="null" class="h-2">
+<tolle-progress [value]="null" class="h-2">
   <div class="bg-primary h-full rounded-full animate-progress-indeterminate"></div>
-</progress-component>
+</tolle-progress>
 ```
 
 ## Progress in Progress Circle (Custom Implementation)
@@ -227,7 +227,7 @@ progress = 75;
   <tolle-input formControlName="email" label="Email" type="email" />
 
   <button
-    tolleButton
+    tolle-button
     class="w-full"
     [disabled]="form.invalid || isSubmitting"
   >
@@ -236,7 +236,7 @@ progress = 75;
   </button>
 
   <div class="mt-4" *ngIf="isSubmitting">
-    <progress-component [value]="submitProgress" class="h-2"></progress-component>
+    <tolle-progress [value]="submitProgress" class="h-2"></tolle-progress>
   </div>
 </form>
 ```
@@ -250,21 +250,21 @@ progress = 75;
       <span>HTML</span>
       <span>90%</span>
     </div>
-    <progress-component [value]="90" class="h-1"></progress-component>
+    <tolle-progress [value]="90" class="h-1"></tolle-progress>
   </div>
   <div class="space-y-2">
     <div class="flex justify-between text-xs">
       <span>CSS</span>
       <span>75%</span>
     </div>
-    <progress-component [value]="75" class="h-1"></progress-component>
+    <tolle-progress [value]="75" class="h-1"></tolle-progress>
   </div>
   <div class="space-y-2">
     <div class="flex justify-between text-xs">
       <span>JavaScript</span>
       <span>60%</span>
     </div>
-    <progress-component [value]="60" class="h-1"></progress-component>
+    <tolle-progress [value]="60" class="h-1"></tolle-progress>
   </div>
 </div>
 ```
@@ -275,16 +275,16 @@ progress = 75;
 <div class="space-y-4">
   <div class="flex items-center gap-2">
     <button
-      tolleButton
+      tolle-button
       size="sm"
       (click)="incrementProgress()"
       [disabled]="progress >= 100"
     >
       +
     </button>
-    <progress-component [value]="progress" class="h-2 flex-1"></progress-component>
+    <tolle-progress [value]="progress" class="h-2 flex-1"></tolle-progress>
     <button
-      tolleButton
+      tolle-button
       size="sm"
       variant="outline"
       (click)="resetProgress()"

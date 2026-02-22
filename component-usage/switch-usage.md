@@ -19,44 +19,43 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 | `class` | `string` | `''` | Additional CSS classes |
 | `disabled` | `boolean` | `false` | Disabled state |
 | `size` | `'xs'\|'sm'\|'default'\|'lg'` | `'default'` | Switch size |
-| `checked` | `boolean` | `false` | Checked state |
-| `ngModel` | `any` | `null` | Two-way binding value |
-| `formControlName` | `string` | - | Form control name |
 
 ## Basic Usage
 
 ### Simple Switch
 
 ```html
-<label class="flex items-center gap-2">
-  <input type="checkbox" tolleSwitch />
-  <span>Enable feature</span>
-</label>
+<tolle-switch [(ngModel)]="enabled" />
+<span>Enabled: {{ enabled }}</span>
 ```
 
 ### Disabled Switch
 
 ```html
-<label class="flex items-center gap-2">
-  <input type="checkbox" tolleSwitch [disabled]="true" />
-  <span class="text-muted-foreground">Cannot be changed</span>
-</label>
+<tolle-switch [disabled]="true" [(ngModel)]="disabledValue" />
+<span class="text-muted-foreground">Cannot be changed</span>
 ```
 
 ### Switch with ngModel
 
 ```html
-<input type="checkbox" tolleSwitch [(ngModel)]="isenabled" />
+<tolle-switch [(ngModel)]="isenabled" />
 <span>Enabled: {{ isenabled }}</span>
 ```
 
-### Switch in Form
+### Switch in Reactive Form
 
 ```html
 <form [formGroup]="form">
-  <input type="checkbox" tolleSwitch formControlName="notifications" />
+  <tolle-switch formControlName="notifications" />
   <span>Enable notifications</span>
 </form>
+```
+
+```typescript
+this.form = this.fb.group({
+  notifications: [false]
+});
 ```
 
 ## Switch Sizes
@@ -64,28 +63,28 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 ### Extra Small (xs)
 
 ```html
-<input type="checkbox" tolleSwitch size="xs" [(ngModel)]="value" />
+<tolle-switch size="xs" [(ngModel)]="value" />
 <span class="text-xs">Extra Small</span>
 ```
 
 ### Small (sm)
 
 ```html
-<input type="checkbox" tolleSwitch size="sm" [(ngModel)]="value" />
+<tolle-switch size="sm" [(ngModel)]="value" />
 <span class="text-sm">Small</span>
 ```
 
 ### Default
 
 ```html
-<input type="checkbox" tolleSwitch [(ngModel)]="value" />
+<tolle-switch [(ngModel)]="value" />
 <span class="text-base">Default</span>
 ```
 
 ### Large (lg)
 
 ```html
-<input type="checkbox" tolleSwitch size="lg" [(ngModel)]="value" />
+<tolle-switch size="lg" [(ngModel)]="value" />
 <span class="text-lg">Large</span>
 ```
 
@@ -94,14 +93,14 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 ### Checked
 
 ```html
-<input type="checkbox" tolleSwitch [checked]="true" [(ngModel)]="value" />
+<tolle-switch [ngModel]="true" (ngModelChange)="value = $event" />
 <span>On</span>
 ```
 
 ### Unchecked
 
 ```html
-<input type="checkbox" tolleSwitch [checked]="false" [(ngModel)]="value" />
+<tolle-switch [ngModel]="false" (ngModelChange)="value = $event" />
 <span>Off</span>
 ```
 
@@ -111,7 +110,7 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 
 ```html
 <div class="flex items-center gap-3">
-  <input type="checkbox" tolleSwitch id="toggle" [(ngModel)]="value" />
+  <tolle-switch id="toggle" [(ngModel)]="value" />
   <label for="toggle" class="font-medium">Toggle me</label>
 </div>
 ```
@@ -121,7 +120,7 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 ```html
 <div class="flex items-center gap-3">
   <label class="font-medium">Enable dark mode</label>
-  <input type="checkbox" tolleSwitch id="dark-mode" [(ngModel)]="darkMode" />
+  <tolle-switch id="dark-mode" [(ngModel)]="darkMode" />
 </div>
 ```
 
@@ -130,7 +129,7 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 ```html
 <div class="space-y-2">
   <label class="block font-medium">Dark Mode</label>
-  <input type="checkbox" tolleSwitch id="dark-mode" [(ngModel)]="darkMode" />
+  <tolle-switch id="dark-mode" [(ngModel)]="darkMode" />
 </div>
 ```
 
@@ -139,7 +138,7 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 ```html
 <div class="space-y-2">
   <div class="flex items-center gap-2">
-    <input type="checkbox" tolleSwitch id="email-notif" [(ngModel)]="emailNotif" />
+    <tolle-switch id="email-notif" [(ngModel)]="emailNotif" />
     <label for="email-notif" class="font-medium">Email notifications</label>
   </div>
   <p class="text-xs text-muted-foreground ml-6">
@@ -153,7 +152,7 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 ```html
 <div class="space-y-2">
   <div class="flex items-center gap-2">
-    <input type="checkbox" tolleSwitch id="terms" [(ngModel)]="acceptedTerms" />
+    <tolle-switch id="terms" [(ngModel)]="acceptedTerms" />
     <label for="terms" class="font-medium">I accept the terms</label>
   </div>
   <p class="text-xs text-destructive" *ngIf="form.submitted && !acceptedTerms">
@@ -175,14 +174,14 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
         <div class="font-medium">Email notifications</div>
         <div class="text-xs text-muted-foreground">Receive emails about your account</div>
       </div>
-      <input type="checkbox" tolleSwitch [(ngModel)]="emailNotif" />
+      <tolle-switch [(ngModel)]="emailNotif" />
     </div>
     <div class="flex items-center justify-between">
       <div>
         <div class="font-medium">Push notifications</div>
         <div class="text-xs text-muted-foreground">Receive push alerts on your device</div>
       </div>
-      <input type="checkbox" tolleSwitch [(ngModel)]="pushNotif" />
+      <tolle-switch [(ngModel)]="pushNotif" />
     </div>
   </tolle-card-content>
 </tolle-card>
@@ -202,7 +201,7 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
     <tr *ngFor="let feature of features">
       <td>{{ feature.name }}</td>
       <td>
-        <input type="checkbox" tolleSwitch [(ngModel)]="feature.enabled" />
+        <tolle-switch [(ngModel)]="feature.enabled" />
       </td>
     </tr>
   </tbody>
@@ -212,11 +211,9 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 ## Switch with Custom Color
 
 ```html
-<input
-  type="checkbox"
-  tolleSwitch
-  class="peer h-5 w-9 rounded-full border border-primary bg-background checked:bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-  [checked]="value"
+<tolle-switch
+  class="bg-blue-500 data-[checked=true]:bg-blue-600"
+  [(ngModel)]="value"
 />
 ```
 
@@ -224,7 +221,7 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 
 ```html
 <div class="flex items-center gap-3">
-  <input type="checkbox" tolleSwitch id="airplane" [(ngModel)]="airplaneMode" />
+  <tolle-switch id="airplane" [(ngModel)]="airplaneMode" />
   <label for="airplane" class="flex items-center gap-2 font-medium">
     <i class="ri-airplane-line"></i>
     <span>Airplane Mode</span>
@@ -236,9 +233,7 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 
 ```html
 <div class="flex items-center gap-3">
-  <input
-    type="checkbox"
-    tolleSwitch
+  <tolle-switch
     id="save"
     [(ngModel)]="saveEnabled"
     [disabled]="isLoading"
@@ -257,15 +252,15 @@ import { SwitchComponent } from '@tolle_/tolle-ui';
 <div class="space-y-4">
   <div class="flex items-center justify-between">
     <span class="font-medium">Notifications</span>
-    <input type="checkbox" tolleSwitch [(ngModel)]="notifications" />
+    <tolle-switch [(ngModel)]="notifications" />
   </div>
   <div class="flex items-center justify-between">
     <span class="font-medium">Marketing emails</span>
-    <input type="checkbox" tolleSwitch [(ngModel)]="marketing" />
+    <tolle-switch [(ngModel)]="marketing" />
   </div>
   <div class="flex items-center justify-between">
     <span class="font-medium">Social updates</span>
-    <input type="checkbox" tolleSwitch [(ngModel)]="social" />
+    <tolle-switch [(ngModel)]="social" />
   </div>
 </div>
 ```

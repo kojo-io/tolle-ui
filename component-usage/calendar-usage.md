@@ -25,8 +25,6 @@ import { CalendarComponent, RangeCalendarComponent, DatePickerComponent, DateRan
 | `formatMonthFn` | `function` | - | Custom month formatter |
 | `formatYearFn` | `function` | - | Custom year formatter |
 | `formatDateFn` | `function` | - | Custom date formatter |
-| `ngModel` | `Date` | `null` | Two-way binding value |
-| `formControlName` | `string` | - | Form control name |
 
 **Outputs:**
 
@@ -39,14 +37,14 @@ import { CalendarComponent, RangeCalendarComponent, DatePickerComponent, DateRan
 ### Simple Calendar
 
 ```html
-<calendar-component [(ngModel)]="selectedDate" />
+<tolle-calendar [(ngModel)]="selectedDate" />
 <p>Selected: {{ selectedDate | date }}</p>
 ```
 
 ### Calendar with Quick Actions
 
 ```html
-<calendar-component
+<tolle-calendar
   [(ngModel)]="selectedDate"
   [showQuickActions]="true"
 />
@@ -55,7 +53,7 @@ import { CalendarComponent, RangeCalendarComponent, DatePickerComponent, DateRan
 ### Calendar with Date Range
 
 ```html
-<calendar-component
+<tolle-calendar
   [(ngModel)]="selectedDate"
   [minDate]="minDate"
   [maxDate]="maxDate"
@@ -72,25 +70,25 @@ maxDate = new Date(2023, 11, 31);
 ### Date Mode (Default)
 
 ```html
-<calendar-component [(ngModel)]="selectedDate" mode="date" />
+<tolle-calendar [(ngModel)]="selectedDate" mode="date" />
 ```
 
 ### Month Mode
 
 ```html
-<calendar-component [(ngModel)]="selectedMonth" mode="month" />
+<tolle-calendar [(ngModel)]="selectedMonth" mode="month" />
 ```
 
 ### Year Mode
 
 ```html
-<calendar-component [(ngModel)]="selectedYear" mode="year" />
+<tolle-calendar [(ngModel)]="selectedYear" mode="year" />
 ```
 
 ## Calendar with Disable Past Dates
 
 ```html
-<calendar-component
+<tolle-calendar
   [(ngModel)]="selectedDate"
   [disablePastDates]="true"
 />
@@ -101,7 +99,7 @@ maxDate = new Date(2023, 11, 31);
 ### Custom Month Formatter
 
 ```html
-<calendar-component
+<tolle-calendar
   [(ngModel)]="selectedDate"
   [formatMonthFn]="formatMonth"
   [formatYearFn]="formatYear"
@@ -122,7 +120,7 @@ formatYear(year: number): string {
 ### Custom Date Formatter
 
 ```html
-<calendar-component
+<tolle-calendar
   [(ngModel)]="selectedDate"
   [formatDateFn]="formatDate"
 />
@@ -149,7 +147,7 @@ formatDate(date: Date): string {
       </tolle-alert-dialog-header>
 
       <tolle-alert-dialog-content>
-        <calendar-component [(ngModel)]="selectedDate" />
+        <tolle-calendar [(ngModel)]="selectedDate" />
       </tolle-alert-dialog-content>
 
       <tolle-alert-dialog-footer>
@@ -168,7 +166,7 @@ formatDate(date: Date): string {
 ## Calendar with Event Emitter
 
 ```html
-<calendar-component
+<tolle-calendar
   [(ngModel)]="selectedDate"
   (dateSelect)="onDateSelect($event)"
 />
@@ -192,7 +190,7 @@ ngOnInit() {
 ```
 
 ```html
-<calendar-component [(ngModel)]="selectedDate" />
+<tolle-calendar [(ngModel)]="selectedDate" />
 ```
 
 ## Calendar in Card
@@ -204,7 +202,7 @@ ngOnInit() {
     <tolle-card-description>Select a date</tolle-card-description>
   </tolle-card-header>
   <tolle-card-content>
-    <calendar-component [(ngModel)]="selectedDate" />
+    <tolle-calendar [(ngModel)]="selectedDate" />
   </tolle-card-content>
 </tolle-card>
 ```
@@ -214,7 +212,7 @@ ngOnInit() {
 ### Date Range Selection
 
 ```html
-<range-calendar-component [(ngModel)]="dateRange" />
+<tolle-range-calendar [(ngModel)]="dateRange" />
 <p>Range: {{ dateRange?.start | date }} - {{ dateRange?.end | date }}</p>
 ```
 
@@ -225,7 +223,7 @@ dateRange = { start: null, end: null };
 ### Range Calendar with Disable Past Dates
 
 ```html
-<range-calendar-component
+<tolle-range-calendar
   [(ngModel)]="dateRange"
   [disablePastDates]="true"
 />
@@ -236,7 +234,7 @@ dateRange = { start: null, end: null };
 ### Date Picker Input
 
 ```html
-<date-picker-component [(ngModel)]="selectedDate" />
+<tolle-date-picker [(ngModel)]="selectedDate" />
 ```
 
 ## DateRangePickerComponent
@@ -244,7 +242,7 @@ dateRange = { start: null, end: null };
 ### Date Range Picker Input
 
 ```html
-<date-range-picker-component [(ngModel)]="dateRange" />
+<tolle-date-range-picker [(ngModel)]="dateRange" />
 ```
 
 ## Calendar with Time
@@ -253,7 +251,7 @@ dateRange = { start: null, end: null };
 
 ```html
 <!-- Note: This may require custom implementation or a different component -->
-<calendar-component [(ngModel)]="selectedDateTime" />
+<tolle-calendar [(ngModel)]="selectedDateTime" />
 ```
 
 ## Calendar with Disabled Dates
@@ -261,7 +259,7 @@ dateRange = { start: null, end: null };
 ### Custom Disabled Dates
 
 ```html
-<calendar-component
+<tolle-calendar
   [(ngModel)]="selectedDate"
   [disabledDates]="disabledDates"
 />
@@ -278,7 +276,7 @@ disabledDates = [
 ## Calendar with Custom Styling
 
 ```html
-<calendar-component
+<tolle-calendar
   [(ngModel)]="selectedDate"
   class="calendar-custom"
 />
