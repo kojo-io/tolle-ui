@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Sheet component provides a slide-out panel that appears from the side of the screen. It's commonly used for sidebars, drawers, or additional content that doesn't require a full modal.
+The Sheet component provides a slide-out panel that appears from the edge of the screen. It supports both declarative (template-based) and programmatic (service-based) usage, making it ideal for sidebars, drawers, forms, and additional content.
 
 ## Import
 
@@ -15,372 +15,458 @@ import {
   SheetFooterComponent,
   SheetTitleComponent,
   SheetDescriptionComponent,
-  SheetService
+  SheetService,
+  SheetRef,
 } from '@tolle_/tolle-ui';
 ```
 
-## Components
+## SheetService
 
-### SheetComponent
+The `SheetService` allows you to open sheets programmatically.
 
-**Inputs:**
+### Methods
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `isOpen` | `boolean` | `false` | Open state |
-| `hasBackdrop` | `boolean` | `true` | Show backdrop |
+| Method                         | Returns       | Description                           |
+| ------------------------------ | ------------- | ------------------------------------- |
+| `open<R>(config: SheetConfig)` | `SheetRef<R>` | Opens a sheet and returns a reference |
+
+## SheetConfig Interface
+
+| Property          | Type                                      | Default   | Description                            |
+| ----------------- | ----------------------------------------- | --------- | -------------------------------------- |
+| `content`         | `string \| Type<any> \| TemplateRef<any>` | -         | **Required.** Content to display       |
+| `title`           | `string`                                  | -         | Optional sheet title                   |
+| `description`     | `string`                                  | -         | Optional sheet description             |
+| `side`            | `'top' \| 'bottom' \| 'left' \| 'right'`  | `'right'` | Edge where sheet appears               |
+| `hasBackdrop`     | `boolean`                                 | `true`    | Whether to show backdrop               |
+| `backdropClose`   | `boolean`                                 | `true`    | Whether clicking backdrop closes sheet |
+| `showCloseButton` | `boolean`                                 | `true`    | Show close button                      |
+| `rounded`         | `boolean`                                 | `false`   | Rounded corners on inner edge          |
+| `data`            | `{ [key: string]: any }`                  | -         | Data passed to component content       |
+| `context`         | `T`                                       | -         | Context passed to template content     |
+| `class`           | `string`                                  | -         | Additional CSS classes                 |
+
+## SheetRef
+
+The `SheetRef` is returned by `SheetService.open()`.
+
+| Property/Method     | Type                                 | Description                             |
+| ------------------- | ------------------------------------ | --------------------------------------- |
+| `afterClosed$`      | `Observable<R \| undefined \| null>` | Observable that emits when sheet closes |
+| `config`            | `SheetConfig`                        | The sheet configuration                 |
+| `close(result?: R)` | `void`                               | Closes the sheet with optional result   |
+
+## Declarative Usage (Template-based)
+
+### SheetComponent Inputs
+
+| Input         | Type      | Default | Description   |
+| ------------- | --------- | ------- | ------------- |
+| `isOpen`      | `boolean` | `false` | Open state    |
+| `hasBackdrop` | `boolean` | `true`  | Show backdrop |
 
 **Outputs:**
 
-| Output | Type | Description |
-|--------|------|-------------|
+| Output         | Type                    | Description                     |
+| -------------- | ----------------------- | ------------------------------- |
 | `isOpenChange` | `EventEmitter<boolean>` | Emitted when open state changes |
 
-### SheetTriggerComponent
+### SheetContentComponent Inputs
 
-Triggers the sheet to open.
+| Input     | Type                                     | Default   | Description            |
+| --------- | ---------------------------------------- | --------- | ---------------------- |
+| `side`    | `'top' \| 'bottom' \| 'left' \| 'right'` | `'right'` | Sheet position         |
+| `rounded` | `boolean`                                | `false`   | Rounded corners        |
+| `class`   | `string`                                 | `''`      | Additional CSS classes |
 
-### SheetContentComponent
-
-**Inputs:**
-
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `side` | `'top'\|'bottom'\|'left'\|'right'` | `'right'` | Side of screen |
-| `rounded` | `boolean` | `false` | Rounded corners on inner side |
-| `class` | `string` | `''` | Additional CSS classes |
-
-### SheetHeaderComponent
-
-Header section of the sheet.
-
-### SheetFooterComponent
-
-Footer section of the sheet.
-
-### SheetTitleComponent
-
-Title element.
-
-### SheetDescriptionComponent
-
-Description element.
-
-## Basic Usage
-
-### Right Sheet (Default)
+### Basic Sheet
 
 ```html
 <tolle-sheet>
-  <button tolleSheetTrigger>Open Sheet</button>
-
-  <tolle-sheet-content side="right">
-    <h2 class="text-lg font-semibold">Sheet Title</h2>
-    <p class="text-sm text-muted-foreground">
-      This is a sheet content.
-    </p>
-  </tolle-sheet-content>
-</tolle-sheet>
-```
-
-### Left Sheet
-
-```html
-<tolle-sheet>
-  <button tolleSheetTrigger>Open Left Sheet</button>
-
-  <tolle-sheet-content side="left">
-    <h2 class="text-lg font-semibold">Left Sheet</h2>
-    <p class="text-sm text-muted-foreground">
-      Content slides from the left.
-    </p>
-  </tolle-sheet-content>
-</tolle-sheet>
-```
-
-### Bottom Sheet
-
-```html
-<tolle-sheet>
-  <button tolleSheetTrigger>Open Bottom Sheet</button>
-
-  <tolle-sheet-content side="bottom">
-    <h2 class="text-lg font-semibold">Bottom Sheet</h2>
-    <p class="text-sm text-muted-foreground">
-      Content slides from the bottom.
-    </p>
-  </tolle-sheet-content>
-</tolle-sheet>
-```
-
-### Top Sheet
-
-```html
-<tolle-sheet>
-  <button tolleSheetTrigger>Open Top Sheet</button>
-
-  <tolle-sheet-content side="top">
-    <h2 class="text-lg font-semibold">Top Sheet</h2>
-    <p class="text-sm text-muted-foreground">
-      Content slides from the top.
-    </p>
-  </tolle-sheet-content>
-</tolle-sheet>
-```
-
-## Sheet with Header and Footer
-
-### Complete Sheet
-
-```html
-<tolle-sheet>
-  <button tolleSheetTrigger>Settings</button>
-
+  <tolle-sheet-trigger>
+    <tolle-button variant="outline">Open Sheet</tolle-button>
+  </tolle-sheet-trigger>
   <tolle-sheet-content side="right">
     <tolle-sheet-header>
-      <tolle-sheet-title>Settings</tolle-sheet-title>
+      <tolle-sheet-title>Edit Profile</tolle-sheet-title>
       <tolle-sheet-description>
-        Manage your application settings
+        Make changes to your profile here. Click save when you're done.
       </tolle-sheet-description>
     </tolle-sheet-header>
 
-    <div class="space-y-4 py-4">
-      <div class="space-y-2">
-        <label class="text-sm font-medium">Theme</label>
-        <div class="flex gap-2">
-          <button tolleButton size="sm">Light</button>
-          <button tolleButton size="sm">Dark</button>
-        </div>
-      </div>
-      <div class="space-y-2">
-        <label class="text-sm font-medium">Notifications</label>
-        <div class="flex gap-2">
-          <button tolleButton size="sm" variant="secondary">Email</button>
-          <button tolleButton size="sm" variant="secondary">SMS</button>
-        </div>
+    <div class="grid gap-4 py-4">
+      <div class="grid grid-cols-4 items-center gap-4">
+        <tolle-label for="name" class="text-right">Name</tolle-label>
+        <tolle-input id="name" value="Pedro Duarte" class="col-span-3"></tolle-input>
       </div>
     </div>
 
     <tolle-sheet-footer>
-      <button tolleButton variant="outline" (click)="sheet.close()">Close</button>
-      <button tolleButton (click)="saveSettings()">Save</button>
+      <tolle-button type="submit">Save changes</tolle-button>
     </tolle-sheet-footer>
   </tolle-sheet-content>
 </tolle-sheet>
 ```
 
-## Sheet Service
+### Different Positions
 
-### Opening Sheet Programmatically
+```html
+<!-- Right side (default) -->
+<tolle-button tolleSheetTrigger="right-sheet">Right Sheet</tolle-button>
+<tolle-sheet #right-sheet>
+  <tolle-sheet-content side="right">Right content</tolle-sheet-content>
+</tolle-sheet>
+
+<!-- Left side -->
+<tolle-button tolleSheetTrigger="left-sheet">Left Sheet</tolle-button>
+<tolle-sheet #left-sheet>
+  <tolle-sheet-content side="left">Left content</tolle-sheet-content>
+</tolle-sheet>
+
+<!-- Top -->
+<tolle-button tolleSheetTrigger="top-sheet">Top Sheet</tolle-button>
+<tolle-sheet #top-sheet>
+  <tolle-sheet-content side="top">Top content</tolle-sheet-content>
+</tolle-sheet>
+
+<!-- Bottom -->
+<tolle-button tolleSheetTrigger="bottom-sheet">Bottom Sheet</tolle-button>
+<tolle-sheet #bottom-sheet>
+  <tolle-sheet-content side="bottom">Bottom content</tolle-sheet-content>
+</tolle-sheet>
+```
+
+### Controlled Sheet
+
+```html
+<tolle-button (click)="openSheet()">Open Settings</tolle-button>
+
+<tolle-sheet [(isOpen)]="isSheetOpen">
+  <tolle-sheet-content side="right">
+    <tolle-sheet-header>
+      <tolle-sheet-title>Settings</tolle-sheet-title>
+    </tolle-sheet-header>
+    <!-- Content -->
+  </tolle-sheet-content>
+</tolle-sheet>
+```
 
 ```typescript
-import { SheetService, SheetConfig } from '@tolle_/tolle-ui';
+import { Component } from '@angular/core';
 
-constructor(private sheetService: SheetService) {}
+@Component({
+  // ...
+})
+export class ExampleComponent {
+  isSheetOpen = false;
 
-openSheet() {
-  const config: SheetConfig = {
-    content: 'Sheet content',
-    title: 'Title',
-    side: 'right',
-    hasBackdrop: true
-  };
-
-  const sheetRef = this.sheetService.open(config);
+  openSheet() {
+    this.isSheetOpen = true;
+  }
 }
 ```
 
-### Sheet with Component Content
+## Programmatic Usage (Service-based)
+
+### Basic String Content
 
 ```typescript
-openComponentSheet() {
-  const config: SheetConfig = {
-    content: SettingsComponent,
+import { Component, inject } from '@angular/core';
+import { SheetService, ButtonComponent } from '@tolle_/tolle-ui';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [ButtonComponent],
+  template: ` <tolle-button (click)="showInfo()">Show Info</tolle-button> `,
+})
+export class ExampleComponent {
+  private sheetService = inject(SheetService);
+
+  showInfo() {
+    this.sheetService.open({
+      title: 'Information',
+      content: 'Your request has been submitted successfully.',
+      side: 'right',
+    });
+  }
+}
+```
+
+### Template Content
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { SheetService, ButtonComponent, InputComponent, LabelComponent } from '@tolle_/tolle-ui';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [ButtonComponent, InputComponent, LabelComponent],
+  template: `
+    <tolle-button (click)="openEditSheet()">Edit Profile</tolle-button>
+
+    <ng-template #editSheet let-close="close" let-user="user">
+      <div class="space-y-4 p-4">
+        <h3 class="text-lg font-semibold">Edit Profile</h3>
+
+        <div class="space-y-2">
+          <tolle-label for="sheet-name">Name</tolle-label>
+          <tolle-input id="sheet-name" [(ngModel)]="editedName"></tolle-input>
+        </div>
+
+        <div class="space-y-2">
+          <tolle-label for="sheet-email">Email</tolle-label>
+          <tolle-input id="sheet-email" type="email" [(ngModel)]="editedEmail"></tolle-input>
+        </div>
+
+        <div class="flex justify-end gap-2 pt-4">
+          <tolle-button variant="outline" (click)="close()">Cancel</tolle-button>
+          <tolle-button (click)="close({ name: editedName, email: editedEmail })"
+            >Save</tolle-button
+          >
+        </div>
+      </div>
+    </ng-template>
+  `,
+})
+export class ExampleComponent {
+  private sheetService = inject(SheetService);
+
+  editedName = '';
+  editedEmail = '';
+
+  openEditSheet() {
+    this.editedName = 'John Doe';
+    this.editedEmail = 'john@example.com';
+
+    const ref = this.sheetService.open({
+      content: this.editSheet,
+      context: { user: { name: this.editedName, email: this.editedEmail } },
+      side: 'right',
+    });
+
+    ref.afterClosed$.subscribe(result => {
+      if (result) {
+        console.log('Saved:', result);
+        // Update user
+      }
+    });
+  }
+}
+```
+
+### Component Content
+
+```typescript
+// filter-sheet.component.ts
+import { Component, inject } from '@angular/core';
+import { SheetRef, ButtonComponent } from '@tolle_/tolle-ui';
+
+@Component({
+  selector: 'app-filter-sheet',
+  standalone: true,
+  imports: [ButtonComponent],
+  template: `
+    <div class="space-y-4 p-4">
+      <h3 class="text-lg font-semibold">Filters</h3>
+
+      <!-- Filter options -->
+      <div class="space-y-4">
+        <div>
+          <label class="text-sm font-medium">Status</label>
+          <select class="mt-1 w-full rounded border p-2" [(ngModel)]="filters.status">
+            <option value="">All</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-sm font-medium">Date Range</label>
+          <!-- Date inputs -->
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 pt-4">
+        <tolle-button variant="outline" (click)="clearFilters()">Clear</tolle-button>
+        <tolle-button (click)="applyFilters()">Apply</tolle-button>
+      </div>
+    </div>
+  `,
+})
+export class FilterSheetComponent {
+  private sheetRef = inject(SheetRef);
+
+  data = this.sheetRef.config.data as { status: string };
+  filters = { status: this.data?.status || '' };
+
+  clearFilters() {
+    this.filters = { status: '' };
+    this.sheetRef.close({ status: '' });
+  }
+
+  applyFilters() {
+    this.sheetRef.close(this.filters);
+  }
+}
+
+// parent.component.ts
+import { Component, inject } from '@angular/core';
+import { SheetService, ButtonComponent } from '@tolle_/tolle-ui';
+import { FilterSheetComponent } from './filter-sheet.component';
+
+@Component({
+  selector: 'app-parent',
+  standalone: true,
+  imports: [ButtonComponent],
+  template: ` <tolle-button (click)="openFilters()">Open Filters</tolle-button> `,
+})
+export class ParentComponent {
+  private sheetService = inject(SheetService);
+
+  openFilters() {
+    const ref = this.sheetService.open({
+      content: FilterSheetComponent,
+      data: { status: 'active' },
+      side: 'left',
+    });
+
+    ref.afterClosed$.subscribe(filters => {
+      if (filters) {
+        this.applyFilters(filters);
+      }
+    });
+  }
+
+  applyFilters(filters: any) {
+    // Apply filters to data
+  }
+}
+```
+
+## Use Cases
+
+### Settings Panel (Right)
+
+```typescript
+openSettings() {
+  const ref = this.sheetService.open({
     title: 'Settings',
+    content: SettingsComponent,
     side: 'right',
-    data: { userId: this.userId }
-  };
-
-  this.sheetService.open(config);
+    size: 'lg'
+  });
 }
 ```
 
-### Sheet with Template Content
+### Mobile Navigation (Left)
 
 ```typescript
-@ViewChild('sheetTemplate') sheetTemplate!: TemplateRef<any>;
-
-openTemplateSheet() {
-  const config: SheetConfig = {
-    content: this.sheetTemplate,
-    title: 'Template Sheet',
-    side: 'left'
-  };
-
-  this.sheetService.open(config);
+openMobileNav() {
+  const ref = this.sheetService.open({
+    content: MobileNavComponent,
+    side: 'left',
+    backdropClose: true,
+    showCloseButton: true
+  });
 }
 ```
 
-## Sheet Sizes
+### Action Sheet (Bottom)
 
-### Full Width Sheet
-
-```html
-<tolle-sheet-content side="left" class="sm:max-w-sm">
-  <!-- Content -->
-</tolle-sheet-content>
-```
-
-### Medium Sheet
-
-```html
-<tolle-sheet-content side="right" class="w-3/4">
-  <!-- Content -->
-</tolle-sheet-content>
-```
-
-### Large Sheet
-
-```html
-<tolle-sheet-content side="right" class="w-full">
-  <!-- Content -->
-</tolle-sheet-content>
-```
-
-## Sheet with Form
-
-```html
-<tolle-sheet>
-  <button tolleSheetTrigger>Filter</button>
-
-  <tolle-sheet-content side="right">
-    <tolle-sheet-header>
-      <tolle-sheet-title>Filters</tolle-sheet-title>
-    </tolle-sheet-header>
-
-    <div class="space-y-4 py-4">
-      <tolle-input label="Name" />
-      <tolle-input label="Email" type="email" />
+```typescript
+openActions() {
+  this.sheetService.open({
+    title: 'Choose Action',
+    content: `
       <div class="space-y-2">
-        <label class="text-sm font-medium">Status</label>
-        <select class="w-full rounded-md border px-3 py-2">
-          <option>All</option>
-          <option>Active</option>
-          <option>Inactive</option>
-        </select>
+        <button (click)="share()" class="w-full text-left p-3 hover:bg-muted rounded">Share</button>
+        <button (click)="copy()" class="w-full text-left p-3 hover:bg-muted rounded">Copy Link</button>
+        <button (click)="delete()" class="w-full text-left p-3 text-destructive hover:bg-destructive/10 rounded">Delete</button>
       </div>
-    </div>
-
-    <tolle-sheet-footer>
-      <button tolleButton variant="outline" (click)="sheet.close()">Cancel</button>
-      <button tolleButton>Apply Filters</button>
-    </tolle-sheet-footer>
-  </tolle-sheet-content>
-</tolle-sheet>
+    `,
+    side: 'bottom',
+    rounded: true
+  });
+}
 ```
 
-## Sheet with Sidebar Content
+### Cart Preview (Right)
 
-### Navigation Sheet
-
-```html
-<tolle-sheet>
-  <button tolleSheetTrigger class="p-2">
-    <i class="ri-menu-line"></i>
-  </button>
-
-  <tolle-sheet-content side="left" class="sm:max-w-xs">
-    <tolle-sheet-header>
-      <tolle-sheet-title>Menu</tolle-sheet-title>
-    </tolle-sheet-header>
-
-    <nav class="space-y-1 py-4">
-      <button tolleButton variant="ghost" class="w-full justify-start">
-        <i class="ri-home-line mr-2"></i>
-        Home
-      </button>
-      <button tolleButton variant="ghost" class="w-full justify-start">
-        <i class="ri-user-line mr-2"></i>
-        Profile
-      </button>
-      <button tolleButton variant="ghost" class="w-full justify-start">
-        <i class="ri-settings-line mr-2"></i>
-        Settings
-      </button>
-    </nav>
-  </tolle-sheet-content>
-</tolle-sheet>
+```typescript
+openCart() {
+  this.sheetService.open({
+    title: 'Shopping Cart',
+    content: CartComponent,
+    data: { items: this.cartItems },
+    side: 'right',
+    showCloseButton: true
+  });
+}
 ```
 
-## Sheet with Rounded Corners
+### Full-height Form (Left)
 
-### Rounded Sheet
+```typescript
+openForm() {
+  const ref = this.sheetService.open({
+    title: 'Create New Item',
+    content: CreateItemFormComponent,
+    side: 'left',
+    backdropClose: false,
+    showCloseButton: true
+  });
 
-```html
-<tolle-sheet-content side="right" [rounded]="true">
-  <h2 class="text-lg font-semibold">Rounded Sheet</h2>
-  <p class="text-sm text-muted-foreground">
-    This sheet has rounded corners on the inner side.
-  </p>
-</tolle-sheet-content>
+  ref.afterClosed$.subscribe(result => {
+    if (result) {
+      this.items.push(result);
+    }
+  });
+}
 ```
 
-## Sheet with Backdrop
+### Non-Closable Sheet
 
-### No Backdrop Sheet
+```typescript
+openRequiredForm() {
+  this.sheetService.open({
+    title: 'Complete Your Profile',
+    content: ProfileFormComponent,
+    side: 'right',
+    backdropClose: false,
+    showCloseButton: false
+  });
 
-```html
-<tolle-sheet [hasBackdrop]="false">
-  <button tolleSheetTrigger>Open</button>
-
-  <tolle-sheet-content side="right">
-    <p>No backdrop effect</p>
-  </tolle-sheet-content>
-</tolle-sheet>
+  // User must complete the form to dismiss
+}
 ```
 
-## Sheet in Responsive Layout
+## Accessibility
 
-### Mobile Sheet
+The Sheet component follows WAI-ARIA dialog pattern:
 
-```html
-<tolle-sheet>
-  <button tolleSheetTrigger class="lg:hidden p-2">
-    <i class="ri-menu-line"></i>
-  </button>
+- **Roles**: Uses `role="dialog"` and `aria-modal="true"`.
+- **Labels**:
+  - Use `<tolle-sheet-title>` for the dialog title (required)
+  - Use `<tolle-sheet-description>` for additional context
+- **Keyboard Navigation**:
+  - Escape: Close the sheet
+  - Tab/Shift+Tab: Navigate between focusable elements within the sheet
+- **Focus Management**:
+  - Focus is automatically trapped within the sheet when opened
+  - Focus moves to the sheet when opened
+  - Focus returns to the trigger element when the sheet is closed
+- **Screen Readers**:
+  - Background content is marked as `inert` when sheet is open
+  - Title and description are announced when sheet opens
+- **Backdrop**: Click on backdrop to close (configurable via `hasBackdrop` and `backdropClose`)
 
-  <tolle-sheet-content side="left" class="sm:max-w-xs">
-    <p class="lg:hidden">Mobile menu</p>
-    <p class="hidden lg:block">Desktop menu</p>
-  </tolle-sheet-content>
-</tolle-sheet>
-```
+## Sides Reference
 
-## Sheet with Close Button
-
-### Custom Close Button
-
-```html
-<tolle-sheet-content side="right">
-  <button
-    (click)="sheet.close()"
-    class="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100"
-  >
-    <i class="ri-close-line"></i>
-  </button>
-  <p class="pl-8">Content with custom close button</p>
-</tolle-sheet-content>
-```
-
-## Sheet with Animation
-
-### Custom Animation
-
-```html
-<tolle-sheet-content
-  side="right"
-  class="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right"
->
-  <!-- Content -->
-</tolle-sheet-content>
-```
+| Side     | Direction          | Use Case                       |
+| -------- | ------------------ | ------------------------------ |
+| `right`  | Slides from right  | Settings, forms, detail panels |
+| `left`   | Slides from left   | Navigation, filters            |
+| `top`    | Slides from top    | Notifications, alerts          |
+| `bottom` | Slides from bottom | Action sheets, mobile menus    |

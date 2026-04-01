@@ -42,188 +42,23 @@ import { DatePickerComponent } from '@tolle_/tolle-ui';
 
 ## Basic Usage
 
-### Simple Date Picker
+### Base Date Picker
 
 ```html
-<tolle-date-picker
-  [label]="'Birth Date'"
-  [(ngModel)]="date"
-></tolle-date-picker>
+<tolle-date-picker [(ngModel)]="date"></tolle-date-picker>
 ```
 
-### With Placeholder
+### Month Picker
 
 ```html
-<tolle-date-picker
-  [label]="'Select Date'"
-  [placeholder]="'MM/DD/YYYY'"
-  [(ngModel)]="date"
-></tolle-date-picker>
+<tolle-date-picker mode="month" [(ngModel)]="date"></tolle-date-picker>
 ```
 
-### Disabled State
+### Year Picker
 
 ```html
-<tolle-date-picker
-  [label]="'Event Date'"
-  [disabled]="true"
-></tolle-date-picker>
+<tolle-date-picker mode="year" [(ngModel)]="date"></tolle-date-picker>
 ```
-
-### Read-Only State
-
-```html
-<tolle-date-picker
-  [label]="'Event Date'"
-  [readonly]="true"
-></tolle-date-picker>
-```
-
-## Date Limits
-
-### Minimum Date
-
-```html
-<tolle-date-picker
-  [label]="'Start Date'"
-  [minDate]="minDate"
-  [(ngModel)]="startDate"
-></tolle-date-picker>
-```
-
-```typescript
-minDate = new Date();
-```
-
-### Maximum Date
-
-```html
-<tolle-date-picker
-  [label]="'End Date'"
-  [maxDate]="maxDate"
-  [(ngModel)]="endDate"
-></tolle-date-picker>
-```
-
-```typescript
-maxDate = new Date(new Date().setDate(new Date().getDate() + 30));
-```
-
-### Disabled Dates
-
-```html
-<tolle-date-picker
-  [label]="'Appointment'"
-  [disabledDates]="disabledDates"
-  [(ngModel)]="appointmentDate"
-></tolle-date-picker>
-```
-
-```typescript
-disabledDates = [
-  new Date(2024, 0, 1),   // New Year's Day
-  new Date(2024, 11, 25), // Christmas
-  ...this.getSaturdaysAndSundays()
-];
-```
-
-## Form Integration
-
-### Template-Driven Form
-
-```html
-<form #form="ngForm">
-  <tolle-date-picker
-    name="date"
-    [(ngModel)]="formData.date"
-    #date="ngModel"
-    [label]="'Date'"
-    required
-  ></tolle-date-picker>
-
-  <div *ngIf="date.invalid && date.touched">
-    Date is required
-  </div>
-</form>
-```
-
-### Reactive Form
-
-```typescript
-this.form = this.fb.group({
-  date: [new Date(), [Validators.required]],
-});
-
-// Get the date value
-get dateValue() {
-  return this.form.get('date')?.value;
-}
-```
-
-## Date Selection Handler
-
-```html
-<tolle-date-picker
-  [label]="'Event Date'"
-  (dateSelect)="onDateSelect($event)"
-></tolle-date-picker>
-```
-
-```typescript
-onDateSelect(date: Date) {
-  console.log('Selected date:', date);
-  console.log('Date string:', date.toLocaleDateString());
-  console.log('ISO format:', date.toISOString());
-}
-```
-
-## Size Variants
-
-```html
-<!-- Extra Small -->
-<tolle-date-picker size="xs"></tolle-date-picker>
-
-<!-- Small -->
-<tolle-date-picker size="sm"></tolle-date-picker>
-
-<!-- Default -->
-<tolle-date-picker size="default"></tolle-date-picker>
-
-<!-- Large -->
-<tolle-date-picker size="lg"></tolle-date-picker>
-```
-
-## With Error State
-
-```html
-<tolle-date-picker
-  [label]="'Date of Birth'"
-  [error]="hasError"
-  [errorMessage]="'Please select a valid date'"
-  [(ngModel)]="date"
-></tolle-date-picker>
-```
-
-## Custom Input Formatting
-
-```html
-<tolle-date-picker
-  [label]="'Appointment Date'"
-  [placeholder]="'Select a date'"
-  [(ngModel)]="date"
-></tolle-date-picker>
-```
-
-The component uses the browser's default date formatting based on the user's locale.
-
-## Calendar Display
-
-The calendar shows:
-- Current month with days of the week
-- Previous and next month navigation
-- Selected date highlighted
-- Today's date marked
-- Keyboard navigation support
 
 ## Accessibility
 

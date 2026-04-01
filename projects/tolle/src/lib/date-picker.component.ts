@@ -1,5 +1,5 @@
 import {
-  Component, Input, forwardRef, ElementRef, ViewChild, HostListener, ChangeDetectorRef
+  Component, Input, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -68,7 +68,7 @@ import { CalendarComponent, CalendarMode } from './calendar.component';
     </div>
   `
 })
-export class DatePickerComponent implements ControlValueAccessor {
+export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
   @Input() placeholder = 'MM/DD/YYYY';
   @Input() disabled = false;
   @Input() class = '';
@@ -91,6 +91,12 @@ export class DatePickerComponent implements ControlValueAccessor {
   inputValue: string = '';
   isOpen = false;
   cleanupAutoUpdate?: () => void;
+
+  private _outsideClickHandler = (event: MouseEvent) => {
+    if (!this.triggerContainer.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+      this.close();
+    }
+  };
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -177,12 +183,16 @@ export class DatePickerComponent implements ControlValueAccessor {
 
   open() {
     this.isOpen = true;
-    setTimeout(() => this.updatePosition());
+    setTimeout(() => {
+      this.updatePosition();
+      document.addEventListener('mousedown', this._outsideClickHandler);
+    });
   }
 
   close() {
     this.isOpen = false;
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 
   clear(event: MouseEvent) {
@@ -220,13 +230,9 @@ export class DatePickerComponent implements ControlValueAccessor {
     );
   }
 
-  @HostListener('document:mousedown', ['$event'])
-  onClickOutside(event: MouseEvent) {
-    if (this.isOpen &&
-      !this.triggerContainer.nativeElement.contains(event.target) &&
-      !this.popover.nativeElement.contains(event.target)) {
-      this.close();
-    }
+  ngOnDestroy() {
+    if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 
   // CVA Implementation

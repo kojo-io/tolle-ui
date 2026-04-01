@@ -5,7 +5,6 @@ import {
   ElementRef,
   ViewChild,
   OnDestroy,
-  HostListener,
   ContentChildren,
   QueryList,
   AfterContentInit
@@ -169,6 +168,12 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     }
   }
 
+  private _outsideClickHandler = (event: MouseEvent) => {
+    if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+      this.close();
+    }
+  };
+
   toggle() {
     if (this.disabled || this.readonly) return;
     this.isOpen ? this.close() : this.open();
@@ -177,7 +182,10 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   open() {
     this.isOpen = true;
     this.trigger.nativeElement.focus();
-    setTimeout(() => this.updatePosition());
+    setTimeout(() => {
+      this.updatePosition();
+      document.addEventListener('mousedown', this._outsideClickHandler);
+    });
   }
 
   close() {
@@ -185,6 +193,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     this.searchQuery = '';
     this.onSearchChange('');
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 
   private updatePosition() {
@@ -237,13 +246,6 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     this.noResults = visibleCount === 0 && filter !== '';
   }
 
-  @HostListener('document:mousedown', ['$event'])
-  onDocumentClick(event: MouseEvent) {
-    if (this.isOpen && !this.trigger.nativeElement.contains(event.target) && !this.popover.nativeElement.contains(event.target)) {
-      this.close();
-    }
-  }
-
   writeValue(value: any): void {
     this.value = value;
     this.updateItemSelection();
@@ -260,5 +262,6 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   ngOnDestroy() {
     this.sub.unsubscribe();
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 }

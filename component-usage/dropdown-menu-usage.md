@@ -2,7 +2,7 @@
 
 ## Overview
 
-The DropdownMenu component provides a dropdown menu that can be triggered by a button or any element. It supports menu items, separators, labels, and submenus.
+The DropdownMenu component provides a dropdown menu that can be triggered by a button or any element. It supports menu items, separators, labels, and custom content for building navigation or action menus.
 
 ## Import
 
@@ -12,7 +12,7 @@ import {
   DropdownItemComponent,
   DropdownLabelComponent,
   DropdownSeparatorComponent,
-  DropdownTriggerComponent
+  DropdownTriggerDirective,
 } from '@tolle_/tolle-ui';
 ```
 
@@ -24,311 +24,404 @@ Container for dropdown items.
 
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
-| `open` | `boolean` | `false` | Open state |
-| `onOpenChange` | `EventEmitter<boolean>` | - | Emitted when open state changes |
+| Input   | Type      | Default | Description             |
+| ------- | --------- | ------- | ----------------------- |
+| `class` | `string`  | `''`    | Additional CSS classes  |
+| `open`  | `boolean` | `false` | Open state (controlled) |
+
+**Outputs:**
+
+| Output         | Type                    | Description                     |
+| -------------- | ----------------------- | ------------------------------- |
+| `onOpenChange` | `EventEmitter<boolean>` | Emitted when open state changes |
 
 ### DropdownItemComponent
 
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
-| `disabled` | `boolean` | `false` | Disabled state |
+| Input      | Type      | Default | Description            |
+| ---------- | --------- | ------- | ---------------------- |
+| `class`    | `string`  | `''`    | Additional CSS classes |
+| `disabled` | `boolean` | `false` | Disabled state         |
 
 ### DropdownLabelComponent
 
+Group label/section header.
+
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
+| Input   | Type     | Default | Description            |
+| ------- | -------- | ------- | ---------------------- |
+| `class` | `string` | `''`    | Additional CSS classes |
 
 ### DropdownSeparatorComponent
 
+Visual separator between items.
+
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
+| Input   | Type     | Default | Description            |
+| ------- | -------- | ------- | ---------------------- |
+| `class` | `string` | `''`    | Additional CSS classes |
 
-### DropdownTriggerComponent
+### DropdownTriggerDirective
 
-Directive for triggering the dropdown.
+**Selector:** `[tolleDropdownTrigger]`
+
+**Usage:** `[tolleDropdownTrigger]="dropdownMenu"`
 
 ## Basic Usage
 
-### Simple Dropdown
+### Simple Dropdown Menu
 
 ```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Menu</button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>Action 1</button>
-    <button tolleDropdownItem>Action 2</button>
-    <button tolleDropdownItem>Action 3</button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
+<tolle-button variant="outline" [tolleDropdownTrigger]="menu">
+  Open Menu
+  <i class="ri-arrow-down-s-line ml-2"></i>
+</tolle-button>
 
-### Dropdown with Separator
-
-```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Options</button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>View</button>
-    <button tolleDropdownItem>Edit</button>
-    <div tolleDropdownSeparator></div>
-    <button tolleDropdownItem>Delete</button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
-
-## Dropdown with Labels
-
-```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Settings</button>
-  <tolle-dropdown-menu-content>
-    <span tolleDropdownLabel>General</span>
-    <button tolleDropdownItem>Profile</button>
-    <button tolleDropdownItem>Preferences</button>
-
-    <div tolleDropdownSeparator></div>
-
-    <span tolleDropdownLabel>Account</span>
-    <button tolleDropdownItem>billing</button>
-    <button tolleDropdownItem>Settings</button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
-
-## Dropdown with Icons
-
-### Icons in Items
-
-```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>
-    <i class="ri-more-2-fill"></i>
-  </button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>
-      <i class="ri-edit-line mr-2"></i>
+<tolle-dropdown-menu #menu>
+  <div class="flex flex-col">
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+      <i class="ri-edit-line"></i>
       Edit
     </button>
-    <button tolleDropdownItem>
-      <i class="ri-delete-bin-line mr-2"></i>
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground">
+      <i class="ri-share-line"></i>
+      Share
+    </button>
+    <div class="my-1 h-px bg-border"></div>
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-destructive transition-colors hover:bg-destructive/10">
+      <i class="ri-delete-bin-line"></i>
       Delete
     </button>
-    <button tolleDropdownItem>
-      <i class="ri-download-line mr-2"></i>
-      Download
-    </button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
-
-### Icon Only Trigger
-
-```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger class="p-2">
-    <i class="ri-more-2-fill"></i>
-  </button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>
-      <i class="ri-edit-line mr-2"></i>
-      Edit
-    </button>
-    <button tolleDropdownItem>
-      <i class="ri-delete-bin-line mr-2"></i>
-      Delete
-    </button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
-
-## Disabled Dropdown Items
-
-```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Actions</button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem [disabled]="true">Locked Action</button>
-    <button tolleDropdownItem>Normal Action</button>
-    <button tolleDropdownItem [disabled]="true">Another Locked</button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
-
-## Dropdown with Submenu
-
-### Nested Menu
-
-```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>File</button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>New</button>
-    <button tolleDropdownItem>Open</button>
-
-    <div tolleDropdownItem class="relative">
-      <span>Export</span>
-      <i class="ri-arrow-right-s-line absolute right-2 text-xs"></i>
-      <tolle-dropdown-menu>
-        <button tolleDropdownTrigger class="invisible h-full w-full absolute inset-0"></button>
-        <tolle-dropdown-menu-content>
-          <button tolleDropdownItem>PDF</button>
-          <button tolleDropdownItem>CSV</button>
-          <button tolleDropdownItem>Excel</button>
-        </tolle-dropdown-menu-content>
-      </tolle-dropdown-menu>
-    </div>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
-
-## Dropdown in Card
-
-```html
-<tolle-card>
-  <tolle-card-header class="flex justify-between items-center">
-    <tolle-card-title>Files</tolle-card-title>
-    <tolle-dropdown-menu>
-      <button tolleDropdownTrigger class="p-2 hover:bg-accent rounded">
-        <i class="ri-more-2-fill"></i>
-      </button>
-      <tolle-dropdown-menu-content>
-        <button tolleDropdownItem>Sort by Name</button>
-        <button tolleDropdownItem>Sort by Date</button>
-        <div tolleDropdownSeparator></div>
-        <button tolleDropdownItem>Refresh</button>
-      </tolle-dropdown-menu-content>
-    </tolle-dropdown-menu>
-  </tolle-card-header>
-  <tolle-card-content>
-    <!-- Content -->
-  </tolle-card-content>
-</tolle-card>
-```
-
-## Dropdown with Custom Trigger
-
-### Custom Trigger Element
-
-```html
-<tolle-dropdown-menu>
-  <div tolleDropdownTrigger class="flex items-center gap-2 p-2 hover:bg-accent rounded cursor-pointer">
-    <tolle-avatar class="h-8 w-8">
-      <tolle-avatar-image src="avatar.jpg" />
-      <tolle-avatar-fallback>JD</tolle-avatar-fallback>
-    </tolle-avatar>
-    <span class="text-sm font-medium">John Doe</span>
-    <i class="ri-arrow-down-s-line text-xs"></i>
   </div>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>Profile</button>
-    <button tolleDropdownItem>Settings</button>
-    <div tolleDropdownSeparator></div>
-    <button tolleDropdownItem>Log out</button>
-  </tolle-dropdown-menu-content>
 </tolle-dropdown-menu>
 ```
 
-## Dropdown Positioning
-
-### Different Positions
+### Dropdown with Labels and Separators
 
 ```html
-<!-- Right (default) -->
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Right</button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>Action</button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
+<tolle-button variant="outline" [tolleDropdownTrigger]="actionsMenu"> Actions </tolle-button>
 
-<!-- Left -->
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Left</button>
-  <tolle-dropdown-menu-content side="left">
-    <button tolleDropdownItem>Action</button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-
-<!-- Top -->
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Top</button>
-  <tolle-dropdown-menu-content side="top">
-    <button tolleDropdownItem>Action</button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
-
-## Dropdown with Keyboard Navigation
-
-### Accessible Dropdown
-
-```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Menu</button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>View</button>
-    <button tolleDropdownItem>Edit</button>
-    <button tolleDropdownItem>Delete</button>
-  </tolle-dropdown-menu-content>
-</tolle-dropdown-menu>
-```
-
-## Dropdown in Toolbar
-
-```html
-<div class="flex items-center gap-2 p-2 border rounded-md">
-  <button tolleButton variant="ghost" size="sm">
-    <i class="ri-bold-line"></i>
-  </button>
-  <button tolleButton variant="ghost" size="sm">
-    <i class="ri-italic-line"></i>
-  </button>
-
-  <div tolleDropdownSeparator class="h-6 w-px mx-2"></div>
-
-  <tolle-dropdown-menu>
-    <button tolleDropdownTrigger variant="ghost" size="sm">
-      <i class="ri-align-left-line"></i>
+<tolle-dropdown-menu #actionsMenu>
+  <div class="p-2">
+    <div class="px-2 py-1.5 text-sm font-semibold text-muted-foreground">Account</div>
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      <i class="ri-user-line"></i>
+      Profile Settings
     </button>
-    <tolle-dropdown-menu-content>
-      <button tolleDropdownItem>Align Left</button>
-      <button tolleDropdownItem>Align Center</button>
-      <button tolleDropdownItem>Align Right</button>
-    </tolle-dropdown-menu-content>
-  </tolle-dropdown-menu>
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      <i class="ri-notification-line"></i>
+      Notifications
+    </button>
+
+    <div class="my-1 h-px bg-border"></div>
+
+    <div class="px-2 py-1.5 text-sm font-semibold text-muted-foreground">Workspace</div>
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      <i class="ri-team-line"></i>
+      Team Members
+    </button>
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      <i class="ri-folder-line"></i>
+      Projects
+    </button>
+
+    <div class="my-1 h-px bg-border"></div>
+
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-destructive hover:bg-destructive/10">
+      <i class="ri-logout-box-line"></i>
+      Sign Out
+    </button>
+  </div>
+</tolle-dropdown-menu>
+```
+
+### User Menu Dropdown
+
+```html
+<tolle-button variant="ghost" [tolleDropdownTrigger]="userMenu" class="flex items-center gap-2">
+  <tolle-avatar class="h-8 w-8">
+    <img src="https://github.com/shadcn.png" />
+  </tolle-avatar>
+  <span class="font-medium">John Doe</span>
+  <i class="ri-arrow-down-s-line"></i>
+</tolle-button>
+
+<tolle-dropdown-menu #userMenu>
+  <div class="w-56 p-2">
+    <div class="px-2 py-1.5">
+      <div class="font-semibold">John Doe</div>
+      <div class="text-xs text-muted-foreground">john@example.com</div>
+    </div>
+
+    <div class="my-1 h-px bg-border"></div>
+
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      <i class="ri-user-line"></i>
+      Your Profile
+    </button>
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      <i class="ri-settings-line"></i>
+      Settings
+    </button>
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      <i class="ri-bank-card-line"></i>
+      Billing
+    </button>
+
+    <div class="my-1 h-px bg-border"></div>
+
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-destructive hover:bg-destructive/10">
+      <i class="ri-logout-box-line"></i>
+      Sign Out
+    </button>
+  </div>
+</tolle-dropdown-menu>
+```
+
+### Controlled Dropdown
+
+```typescript
+import { Component } from '@angular/core';
+import { DropdownMenuComponent, DropdownTriggerDirective, ButtonComponent } from '@tolle_/tolle-ui';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [DropdownMenuComponent, DropdownTriggerDirective, ButtonComponent],
+  template: `
+    <tolle-button variant="outline" [tolleDropdownTrigger]="menu"> Options </tolle-button>
+
+    <tolle-dropdown-menu #menu [(open)]="isMenuOpen" (onOpenChange)="onMenuOpenChange($event)">
+      <div class="p-2">
+        <button
+          (click)="selectOption('edit')"
+          class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+          Edit
+        </button>
+        <button
+          (click)="selectOption('duplicate')"
+          class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+          Duplicate
+        </button>
+      </div>
+    </tolle-dropdown-menu>
+  `,
+})
+export class ExampleComponent {
+  isMenuOpen = false;
+
+  onMenuOpenChange(open: boolean) {
+    console.log('Menu open:', open);
+  }
+
+  selectOption(option: string) {
+    console.log('Selected:', option);
+    this.isMenuOpen = false;
+  }
+}
+```
+
+### Dropdown with Icons and Shortcuts
+
+```html
+<tolle-button [tolleDropdownTrigger]="fileMenu"> File </tolle-button>
+
+<tolle-dropdown-menu #fileMenu>
+  <div class="w-56 p-2">
+    <button
+      class="flex w-full items-center justify-between rounded-sm px-3 py-2 text-sm hover:bg-accent">
+      <div class="flex items-center gap-2">
+        <i class="ri-file-add-line"></i>
+        New File
+      </div>
+      <span class="text-xs text-muted-foreground">⌘N</span>
+    </button>
+    <button
+      class="flex w-full items-center justify-between rounded-sm px-3 py-2 text-sm hover:bg-accent">
+      <div class="flex items-center gap-2">
+        <i class="ri-folder-add-line"></i>
+        New Folder
+      </div>
+    </button>
+
+    <div class="my-1 h-px bg-border"></div>
+
+    <button
+      class="flex w-full items-center justify-between rounded-sm px-3 py-2 text-sm hover:bg-accent">
+      <div class="flex items-center gap-2">
+        <i class="ri-save-line"></i>
+        Save
+      </div>
+      <span class="text-xs text-muted-foreground">⌘S</span>
+    </button>
+
+    <div class="my-1 h-px bg-border"></div>
+
+    <button
+      class="flex w-full items-center justify-between rounded-sm px-3 py-2 text-sm hover:bg-accent">
+      <div class="flex items-center gap-2">
+        <i class="ri-download-line"></i>
+        Export
+      </div>
+    </button>
+  </div>
+</tolle-dropdown-menu>
+```
+
+### Dropdown with Checkboxes
+
+```typescript
+import { Component } from '@angular/core';
+import { DropdownMenuComponent, DropdownTriggerDirective, ButtonComponent } from '@tolle_/tolle-ui';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [DropdownMenuComponent, DropdownTriggerDirective, ButtonComponent],
+  template: `
+    <tolle-button [tolleDropdownTrigger]="filterMenu"> Filter </tolle-button>
+
+    <tolle-dropdown-menu #filterMenu>
+      <div class="w-48 p-2">
+        <div class="px-2 py-1.5 text-sm font-semibold">Status</div>
+
+        <button
+          *ngFor="let status of statuses"
+          (click)="toggleStatus(status)"
+          class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+          <i [class]="status.checked ? 'ri-checkbox-line' : 'ri-checkbox-blank-line'"></i>
+          {{ status.label }}
+        </button>
+      </div>
+    </tolle-dropdown-menu>
+  `,
+})
+export class ExampleComponent {
+  statuses = [
+    { label: 'Active', checked: true },
+    { label: 'Inactive', checked: false },
+    { label: 'Pending', checked: true },
+  ];
+
+  toggleStatus(status: any) {
+    status.checked = !status.checked;
+  }
+}
+```
+
+### Dropdown with Disabled Items
+
+```html
+<tolle-button [tolleDropdownTrigger]="menu"> Options </tolle-button>
+
+<tolle-dropdown-menu #menu>
+  <div class="p-2">
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Available Option
+    </button>
+
+    <!-- Disabled item -->
+    <button
+      disabled
+      class="flex w-full cursor-not-allowed items-center gap-2 px-3 py-2 text-left text-sm opacity-50">
+      <span>Coming Soon</span>
+      <span class="rounded bg-muted px-1.5 py-0.5 text-xs">Pro</span>
+    </button>
+
+    <div class="my-1 h-px bg-border"></div>
+
+    <button
+      class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Another Option
+    </button>
+  </div>
+</tolle-dropdown-menu>
+```
+
+### Dropdown with Search/Filter
+
+```html
+<tolle-button [tolleDropdownTrigger]="searchMenu"> Select Country </tolle-button>
+
+<tolle-dropdown-menu #searchMenu>
+  <div class="w-64 p-2">
+    <div class="flex items-center px-2 pb-2">
+      <tolle-input placeholder="Search countries..." [class]="'h-8'" />
+    </div>
+
+    <div class="max-h-48 overflow-auto">
+      <button
+        *ngFor="let country of countries"
+        class="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+        {{ country.name }}
+      </button>
+    </div>
+  </div>
+</tolle-dropdown-menu>
+```
+
+### Multiple Dropdowns
+
+```html
+<div class="flex gap-2">
+  <tolle-button [tolleDropdownTrigger]="editMenu">Edit</tolle-button>
+  <tolle-button [tolleDropdownTrigger]="viewMenu">View</tolle-button>
+  <tolle-button [tolleDropdownTrigger]="shareMenu">Share</tolle-button>
 </div>
-```
 
-## Dropdown with Hotkeys
+<tolle-dropdown-menu #editMenu>
+  <div class="p-2">
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">Cut</button>
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Copy
+    </button>
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Paste
+    </button>
+  </div>
+</tolle-dropdown-menu>
 
-```html
-<tolle-dropdown-menu>
-  <button tolleDropdownTrigger>Actions</button>
-  <tolle-dropdown-menu-content>
-    <button tolleDropdownItem>
-      <span class="flex-1">Copy</span>
-      <span class="text-xs text-muted-foreground ml-2">Ctrl+C</span>
+<tolle-dropdown-menu #viewMenu>
+  <div class="p-2">
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Grid
     </button>
-    <button tolleDropdownItem>
-      <span class="flex-1">Paste</span>
-      <span class="text-xs text-muted-foreground ml-2">Ctrl+V</span>
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      List
     </button>
-    <button tolleDropdownItem>
-      <span class="flex-1">Delete</span>
-      <span class="text-xs text-muted-foreground ml-2">Del</span>
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Compact
     </button>
-  </tolle-dropdown-menu-content>
+  </div>
+</tolle-dropdown-menu>
+
+<tolle-dropdown-menu #shareMenu>
+  <div class="p-2">
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Email
+    </button>
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Link
+    </button>
+    <button class="block w-full rounded-sm px-3 py-2 text-left text-sm hover:bg-accent">
+      Embed
+    </button>
+  </div>
 </tolle-dropdown-menu>
 ```

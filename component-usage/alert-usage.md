@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Alert component displays a brief, important message in a visually prominent way. It's typically used for notifications, warnings, or important information.
+The Alert component displays a brief, important message in a visually prominent way. It supports multiple variants for different use cases and can be dismissible.
 
 ## Import
 
@@ -12,141 +12,200 @@ import { AlertComponent } from '@tolle_/tolle-ui';
 
 ## AlertComponent
 
+**Selector:** `tolle-alert`
+
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
-| `variant` | `'default' \| 'destructive'` | `'default'` | Alert variant style |
+| Input         | Type                                                             | Default     | Description                          |
+| ------------- | ---------------------------------------------------------------- | ----------- | ------------------------------------ |
+| `variant`     | `'default' \| 'destructive' \| 'success' \| 'warning' \| 'info'` | `'default'` | Alert variant style                  |
+| `title`       | `string \| undefined`                                            | `undefined` | Optional title displayed prominently |
+| `dismissible` | `boolean`                                                        | `false`     | Whether the alert can be dismissed   |
+| `class`       | `string`                                                         | `''`        | Additional CSS classes               |
+
+**Outputs:**
+
+| Output    | Type                 | Description                         |
+| --------- | -------------------- | ----------------------------------- |
+| `onClose` | `EventEmitter<void>` | Emitted when the alert is dismissed |
+
+## Variants
+
+| Variant       | Use Case                        |
+| ------------- | ------------------------------- |
+| `default`     | General information             |
+| `destructive` | Errors, critical warnings       |
+| `success`     | Success messages, confirmations |
+| `warning`     | Warnings, caution messages      |
+| `info`        | Informational messages          |
 
 ## Basic Usage
 
 ### Default Alert
 
 ```html
-<tolle-alert class="rounded-lg">
-  <i class="ri-info-line text-xl mr-2"></i>
-  <div class="flex flex-col">
-    <h5 class="font-semibold">Heads up!</h5>
-    <p class="text-sm text-muted-foreground">
-      You can add components and dependencies to your app using the cli.
-    </p>
-  </div>
+<tolle-alert>
+  <i icon class="ri-information-line"></i>
+  This is an informational alert message.
+</tolle-alert>
+```
+
+### Success Alert
+
+```html
+<tolle-alert variant="success" title="Success">
+  <i icon class="ri-check-line"></i>
+  Your changes have been saved successfully.
+</tolle-alert>
+```
+
+### Warning Alert
+
+```html
+<tolle-alert variant="warning" title="Warning">
+  <i icon class="ri-alert-line"></i>
+  Please backup your data before proceeding to avoid data loss.
 </tolle-alert>
 ```
 
 ### Destructive Alert
 
 ```html
-<tolle-alert variant="destructive" class="rounded-lg">
-  <i class="ri-error-warning-line text-xl mr-2"></i>
-  <div class="flex flex-col">
-    <h5 class="font-semibold">Error</h5>
-    <p class="text-sm text-destructive">
-      Your session has expired. Please log in again.
-    </p>
-  </div>
+<tolle-alert variant="destructive" title="Error">
+  <i icon class="ri-error-warning-line"></i>
+  Failed to save changes. Please try again.
 </tolle-alert>
 ```
 
-### Alert with Title and Description
+### Info Alert
 
 ```html
-<tolle-alert class="flex items-start gap-4">
-  <i class="ri-checkbox-circle-line text-emerald-600 text-xl mt-0.5"></i>
-  <div class="flex-1">
-    <h5 class="font-semibold text-foreground">Success</h5>
-    <p class="text-sm text-muted-foreground mt-1">
-      Your changes have been saved successfully.
-    </p>
-  </div>
+<tolle-alert variant="info" title="Note">
+  <i icon class="ri-lightbulb-line"></i>
+  You can customize your preferences in the settings page.
 </tolle-alert>
 ```
 
-### Alert with Action Button
+### Dismissible Alert
 
 ```html
-<tolle-alert class="flex items-start gap-4">
-  <i class="ri-alert-line text-amber-500 text-xl mt-0.5"></i>
-  <div class="flex-1">
-    <h5 class="font-semibold text-foreground">Warning</h5>
-    <p class="text-sm text-muted-foreground mt-1">
-      This action cannot be undone.
-    </p>
-  </div>
-  <button class="px-3 py-1 text-sm font-medium rounded-md hover:bg-accent">
-    Undo
-  </button>
+<tolle-alert variant="success" title="Welcome!" [dismissible]="true" (onClose)="onAlertClose()">
+  <i icon class="ri-check-line"></i>
+  Thanks for signing up!
 </tolle-alert>
 ```
 
-## Alert with Close Button
+```typescript
+import { Component } from '@angular/core';
+import { AlertComponent } from '@tolle_/tolle-ui';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [AlertComponent],
+  template: `...`,
+})
+export class ExampleComponent {
+  onAlertClose() {
+    console.log('Alert was dismissed');
+  }
+}
+```
+
+### Alert with Title
 
 ```html
-<tolle-alert class="relative">
-  <button class="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100">
-    <i class="ri-close-line"></i>
-  </button>
-  <i class="ri-info-line text-xl mr-2"></i>
-  <div>
-    <p class="text-sm">This alert can be dismissed.</p>
-  </div>
+<tolle-alert variant="warning" title="Warning">
+  <i icon class="ri-alert-line"></i>
+  Your session will expire in 5 minutes due to inactivity.
 </tolle-alert>
 ```
 
-## Custom Styling
+### Alert Without Icon
 
 ```html
-<tolle-alert class="border-l-4 border-l-primary bg-primary/5">
-  <i class="ri-info-line text-primary text-xl mr-3"></i>
-  <div>
-    <h5 class="font-semibold">Note</h5>
-    <p class="text-sm mt-1">This is a custom styled alert.</p>
-  </div>
+<tolle-alert variant="info" title="Note">
+  This is an alert with just a title and message.
 </tolle-alert>
 ```
 
-## Alert Variants
-
-### Default (Info)
+### Conditional Alert
 
 ```html
-<tolle-alert>
-  <i class="ri-info-line text-primary text-xl mr-2"></i>
-  <div>
-    <p>Information message</p>
-  </div>
+@if (showAlert) {
+<tolle-alert variant="destructive" [dismissible]="true" (onClose)="showAlert = false">
+  <i icon class="ri-error-warning-line"></i>
+  An error occurred while processing your request.
 </tolle-alert>
+}
+
+<tolle-button (click)="showAlert = true">Show Alert</tolle-button>
 ```
 
-### Success
+```typescript
+import { Component } from '@angular/core';
+import { AlertComponent, ButtonComponent } from '@tolle_/tolle-ui';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [AlertComponent, ButtonComponent],
+  template: `...`,
+})
+export class ExampleComponent {
+  showAlert = false;
+}
+```
+
+## Use Cases
+
+### Form Validation Alert
 
 ```html
-<tolle-alert>
-  <i class="ri-checkbox-circle-line text-emerald-600 text-xl mr-2"></i>
-  <div>
-    <p class="text-emerald-700 dark:text-emerald-400">Operation completed successfully</p>
-  </div>
+@for (error of errors; track error.field) {
+<tolle-alert variant="destructive" class="mb-2">
+  <i icon class="ri-error-warning-line"></i>
+  <strong>{{ error.field }}:</strong> {{ error.message }}
 </tolle-alert>
+}
 ```
 
-### Destructive (Error)
+### Network Status Alert
 
 ```html
-<tolle-alert variant="destructive">
-  <i class="ri-error-warning-line text-destructive text-xl mr-2"></i>
-  <div>
-    <p class="text-destructive">An error occurred</p>
-  </div>
+@if (!isOnline) {
+<tolle-alert variant="warning" [dismissible]="false">
+  <i icon class="ri-wifi-off-line"></i>
+  You are currently offline. Some features may not be available.
 </tolle-alert>
+}
 ```
 
-## Animation
-
-The alert supports animation classes:
+### Feature Announcement
 
 ```html
-<tolle-alert class="animate-in fade-in slide-in-from-top-2 duration-300">
-  <!-- Content -->
+<tolle-alert variant="info" [dismissible]="true" title="New Feature!">
+  <i icon class="ri-gift-line"></i>
+  Check out our new dark mode feature in settings.
 </tolle-alert>
 ```
+
+### Rate Limit Warning
+
+```html
+<tolle-alert variant="warning" [dismissible]="true">
+  <i icon class="ri-time-line"></i>
+  API rate limit exceeded. Please wait 60 seconds before retrying.
+</tolle-alert>
+```
+
+## Styling
+
+The Alert component uses the following default classes:
+
+- Container: `rounded-md border text-card-foreground shadow`
+- Default variant: `bg-background border-border`
+- Destructive: `bg-destructive/10 border-destructive text-destructive`
+- Success: `bg-green-500/10 border-green-500 text-green-700 dark:text-green-400`
+- Warning: `bg-yellow-500/10 border-yellow-500 text-yellow-700 dark:text-yellow-400`
+- Info: `bg-blue-500/10 border-blue-500 text-blue-700 dark:text-blue-400`

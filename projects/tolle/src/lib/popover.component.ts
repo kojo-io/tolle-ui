@@ -1,7 +1,7 @@
 
 import { CommonModule } from '@angular/common';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'tolle-popover',
@@ -33,6 +33,12 @@ export class PopoverComponent implements OnDestroy {
   isOpen = false;
   private cleanup?: () => void;
 
+  private _outsideClickHandler = (event: MouseEvent) => {
+    if (!this.triggerEl.nativeElement.contains(event.target) && !this.popoverEl?.nativeElement.contains(event.target)) {
+      this.close();
+    }
+  };
+
   toggle() {
     this.isOpen ? this.close() : this.open();
   }
@@ -40,13 +46,17 @@ export class PopoverComponent implements OnDestroy {
   open() {
     this.isOpen = true;
     this.onOpen.emit();
-    setTimeout(() => this.updatePosition());
+    setTimeout(() => {
+      this.updatePosition();
+      document.addEventListener('mousedown', this._outsideClickHandler);
+    });
   }
 
   close() {
     this.isOpen = false;
     this.onClose.emit();
     if (this.cleanup) this.cleanup();
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 
   private updatePosition() {
@@ -71,18 +81,8 @@ export class PopoverComponent implements OnDestroy {
     );
   }
 
-  @HostListener('document:mousedown', ['$event'])
-  onClickOutside(event: MouseEvent) {
-    if (
-      this.isOpen &&
-      !this.triggerEl.nativeElement.contains(event.target) &&
-      !this.popoverEl?.nativeElement.contains(event.target)
-    ) {
-      this.close();
-    }
-  }
-
   ngOnDestroy() {
     if (this.cleanup) this.cleanup();
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 }

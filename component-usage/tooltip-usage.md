@@ -2,7 +2,7 @@
 
 ## Overview
 
-The TooltipDirective provides a lightweight tooltip that displays additional information when hovering over or focusing on an element.
+The TooltipDirective provides a lightweight tooltip that displays additional information when hovering over or focusing on an element. It supports multiple positions, custom triggers, and rich content via templates.
 
 ## Import
 
@@ -14,359 +14,388 @@ import { TooltipDirective } from '@tolle_/tolle-ui';
 
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `tolleTooltip` | `string\|TemplateRef` | `''` | Content to display (required) |
-| `tolleTooltipTrigger` | `'mouseenter'\|'click'\|'focus'` | `'mouseenter'` | Trigger event |
-| `tolleTooltipPosition` | `'top'\|'bottom'\|'left'\|'right'` | `'top'` | Tooltip position |
-| `tolleTooltipDelay` | `number` | `0` | Display delay in ms |
+| Input                  | Type                                     | Default        | Description                        |
+| ---------------------- | ---------------------------------------- | -------------- | ---------------------------------- |
+| `tolleTooltip`         | `string \| TemplateRef`                  | `''`           | Tooltip content (text or template) |
+| `tolleTooltipTrigger`  | `'mouseenter' \| 'click' \| 'focus'`     | `'mouseenter'` | Trigger event                      |
+| `tolleTooltipPosition` | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'`        | Tooltip position                   |
+| `tolleTooltipDelay`    | `number`                                 | `0`            | Delay before showing (ms)          |
 
 ## Basic Usage
 
 ### Simple Tooltip
 
 ```html
-<button
-  [tolleTooltip]="'This is a tooltip'"
-  tolleTooltipTrigger="mouseenter"
->
-  Hover me
-</button>
+<div class="flex flex-wrap items-center justify-center gap-4 p-8">
+  <tolle-button variant="outline" tolleTooltip="Tooltip on top"> Top </tolle-button>
+
+  <tolle-button variant="outline" tolleTooltip="Tooltip on bottom" tolleTooltipPosition="bottom">
+    Bottom
+  </tolle-button>
+
+  <tolle-button variant="outline" tolleTooltip="Tooltip on left" tolleTooltipPosition="left">
+    Left
+  </tolle-button>
+
+  <tolle-button variant="outline" tolleTooltip="Tooltip on right" tolleTooltipPosition="right">
+    Right
+  </tolle-button>
+</div>
 ```
 
-### Tooltip with Position
+### All Placements
 
 ```html
-<button
-  [tolleTooltip]="'Top tooltip'"
-  tolleTooltipPosition="top"
->
-  Top
-</button>
+<div class="grid grid-cols-3 gap-4 p-8">
+  <div></div>
+  <tolle-button tolleTooltip="Top tooltip" tolleTooltipPosition="top">Top</tolle-button>
+  <div></div>
 
-<button
-  [tolleTooltip]="'Bottom tooltip'"
-  tolleTooltipPosition="bottom"
->
-  Bottom
-</button>
+  <tolle-button tolleTooltip="Left tooltip" tolleTooltipPosition="left">Left</tolle-button>
+  <div class="flex items-center justify-center rounded-lg border p-8">Target</div>
+  <tolle-button tolleTooltip="Right tooltip" tolleTooltipPosition="right">Right</tolle-button>
 
-<button
-  [tolleTooltip]="'Left tooltip'"
-  tolleTooltipPosition="left"
->
-  Left
-</button>
-
-<button
-  [tolleTooltip]="'Right tooltip'"
-  tolleTooltipPosition="right"
->
-  Right
-</button>
+  <div></div>
+  <tolle-button tolleTooltip="Bottom tooltip" tolleTooltipPosition="bottom">Bottom</tolle-button>
+  <div></div>
+</div>
 ```
 
-## Tooltip Trigger Events
+## Triggers
 
 ### Mouse Enter (Default)
 
 ```html
-<button
-  [tolleTooltip]="'Hover to see tooltip'"
-  tolleTooltipTrigger="mouseenter"
->
-  Hover me
-</button>
+<tolle-button tolleTooltip="Hover to see this tooltip"> Hover Me </tolle-button>
 ```
 
 ### Click Trigger
 
 ```html
-<button
-  [tolleTooltip]="'Click to toggle tooltip'"
-  tolleTooltipTrigger="click"
->
-  Click me
-</button>
+<tolle-button
+  variant="outline"
+  tolleTooltip="Click to show, click elsewhere to hide"
+  tolleTooltipTrigger="click">
+  Click Me
+</tolle-button>
 ```
 
 ### Focus Trigger
 
-```html
-<input
-  type="text"
-  [tolleTooltip]="'Enter your email'"
-  tolleTooltipTrigger="focus"
-  placeholder="Email"
-/>
-```
-
-## Tooltip with Delay
+Useful for form inputs and accessibility:
 
 ```html
-<button
-  [tolleTooltip]="'Delayed tooltip'"
-  tolleTooltipDelay="500"
-  tolleTooltipTrigger="mouseenter"
->
-  Hover (500ms delay)
-</button>
-```
-
-## Tooltip with Icon
-
-### Icon with Tooltip
-
-```html
-<i
-  class="ri-question-line text-muted-foreground"
-  [tolleTooltip]="'Help information'"
+<tolte-input
+  label="Username"
+  placeholder="Enter username"
+  tolleTooltip="Username must be 3-20 characters"
   tolleTooltipPosition="right"
-></i>
-```
+  tolleTooltipTrigger="focus">
+</tolle-input>
 
-### Tooltip on Icon Button
-
-```html
-<button
-  [tolleTooltip]="'Edit profile'"
+<tolle-input
+  type="password"
+  label="Password"
+  placeholder="Enter password"
+  tolleTooltip="Must contain 8+ characters, 1 uppercase, 1 number"
   tolleTooltipPosition="bottom"
->
-  <i class="ri-edit-line"></i>
-</button>
+  tolleTooltipTrigger="focus">
+</tolle-input>
 ```
 
-## Tooltip in Card
+### Combined Trigger (Focus + Hover)
+
+For accessibility, use focus trigger on interactive elements:
 
 ```html
-<tolle-card>
-  <tolle-card-header>
-    <div class="flex justify-between items-center">
-      <tolle-card-title>Tasks</tolle-card-title>
-      <button
-        [tolleTooltip]="'Refresh list'"
-        tolleTooltipPosition="bottom"
-        class="p-2 hover:bg-accent rounded"
-      >
-        <i class="ri-refresh-line"></i>
-      </button>
-    </div>
-  </tolle-card-header>
-  <tolle-card-content>
-    <!-- Content -->
-  </tolle-card-content>
-</tolle-card>
+<tolle-button tolleTooltip="Press Tab or hover to see this" tolleTooltipTrigger="focus">
+  Accessible Button
+</tolle-button>
+
+<a href="#" tolleTooltip="Learn more about our services" tolleTooltipPosition="top"> Learn More </a>
 ```
 
-## Tooltip with Form Label
+## Delay
+
+### No Delay (Default)
+
+```html
+<tolle-button tolleTooltip="Appears instantly"> Instant </tolle-button>
+```
+
+### Custom Delay
+
+```html
+<!-- 500ms delay -->
+<tolle-button tolleTooltip="Takes 500ms to appear" [tolleTooltipDelay]="500">
+  Delayed Tooltip
+</tolle-button>
+
+<!-- 1 second delay -->
+<tolle-button tolleTooltip="Takes 1 second to appear" [tolleTooltipDelay]="1000">
+  Long Delay
+</tolle-button>
+```
+
+## Use Cases
+
+### Icon Buttons
+
+```html
+<div class="flex gap-2">
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Edit" tolleTooltipPosition="bottom">
+    <i class="ri-edit-line"></i>
+  </tolle-button>
+
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Copy" tolleTooltipPosition="bottom">
+    <i class="ri-file-copy-line"></i>
+  </tolle-button>
+
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Delete" tolleTooltipPosition="bottom">
+    <i class="ri-delete-bin-line"></i>
+  </tolle-button>
+
+  <tolle-button
+    size="icon"
+    variant="ghost"
+    tolleTooltip="More options"
+    tolleTooltipPosition="bottom">
+    <i class="ri-more-2-fill"></i>
+  </tolle-button>
+</div>
+```
+
+### Form Fields with Help
+
+```html
+<div class="space-y-4">
+  <div class="flex items-center gap-2">
+    <tolle-input label="API Key" placeholder="Enter your API key" class="flex-1"> </tolle-input>
+    <tolle-button
+      size="icon"
+      variant="ghost"
+      tolleTooltip="Find your API key in Settings > API Keys"
+      tolleTooltipPosition="top">
+      <i class="ri-question-line"></i>
+    </tolle-button>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <tolle-input
+      id="password"
+      type="password"
+      label="Password"
+      placeholder="Enter password"
+      tolleTooltip="8+ chars, 1 uppercase, 1 number"
+      tolleTooltipPosition="right"
+      tolleTooltipTrigger="focus">
+    </tolle-input>
+  </div>
+</div>
+```
+
+### Navigation Links
+
+```html
+<div class="flex gap-1">
+  <a
+    routerLink="/dashboard"
+    class="rounded-md p-2 hover:bg-muted"
+    tolleTooltip="Dashboard"
+    tolleTooltipPosition="bottom">
+    <i class="ri-dashboard-line"></i>
+  </a>
+
+  <a
+    routerLink="/settings"
+    class="rounded-md p-2 hover:bg-muted"
+    tolleTooltip="Settings"
+    tolleTooltipPosition="bottom">
+    <i class="ri-settings-line"></i>
+  </a>
+
+  <a
+    routerLink="/profile"
+    class="rounded-md p-2 hover:bg-muted"
+    tolleTooltip="Profile"
+    tolleTooltipPosition="bottom">
+    <i class="ri-user-line"></i>
+  </a>
+
+  <a
+    routerLink="/logout"
+    class="rounded-md p-2 hover:bg-muted"
+    tolleTooltip="Sign out"
+    tolleTooltipPosition="bottom">
+    <i class="ri-logout-box-line"></i>
+  </a>
+</div>
+```
+
+### Status Indicators
+
+```html
+<div class="flex items-center gap-4">
+  <div
+    class="h-3 w-3 cursor-pointer rounded-full bg-green-500"
+    tolleTooltip="All systems operational"
+    tolleTooltipPosition="top"></div>
+
+  <div
+    class="h-3 w-3 cursor-pointer rounded-full bg-yellow-500"
+    tolleTooltip="Performance degraded"
+    tolleTooltipPosition="top"></div>
+
+  <div
+    class="h-3 w-3 cursor-pointer rounded-full bg-red-500"
+    tolleTooltip="System offline"
+    tolleTooltipPosition="top"></div>
+</div>
+```
+
+### Toolbar Buttons
+
+```html
+<div class="flex items-center gap-1 rounded-lg border p-2">
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Bold (Ctrl+B)">
+    <i class="ri-bold"></i>
+  </tolle-button>
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Italic (Ctrl+I)">
+    <i class="ri-italic"></i>
+  </tolle-button>
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Underline (Ctrl+U)">
+    <i class="ri-underline"></i>
+  </tolle-button>
+
+  <div class="mx-1 h-4 w-px bg-border"></div>
+
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Align Left">
+    <i class="ri-align-left"></i>
+  </tolle-button>
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Align Center">
+    <i class="ri-align-center"></i>
+  </tolle-button>
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Align Right">
+    <i class="ri-align-right"></i>
+  </tolle-button>
+
+  <div class="mx-1 h-4 w-px bg-border"></div>
+
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Link">
+    <i class="ri-link"></i>
+  </tolle-button>
+  <tolle-button size="icon" variant="ghost" tolleTooltip="Image">
+    <i class="ri-image-line"></i>
+  </tolle-button>
+</div>
+```
+
+### Truncated Text
+
+```html
+<!-- Show full text in tooltip when truncated -->
+<div
+  class="max-w-[200px] cursor-pointer truncate"
+  tolleTooltip="This is a very long text that gets truncated and shows in tooltip"
+  tolleTooltipPosition="top">
+  This is a very long text that gets truncated and shows in tooltip
+</div>
+```
+
+### Keyboard Shortcuts
+
+```html
+<tolle-button variant="outline" tolleTooltip="Save (Ctrl+S)"> Save </tolle-button>
+
+<tolle-button variant="outline" tolleTooltip="Open (Ctrl+O)"> Open </tolle-button>
+
+<tolle-button variant="outline" tolleTooltip="Find (Ctrl+F)"> Find </tolle-button>
+```
+
+### Error States
 
 ```html
 <div class="space-y-2">
-  <label
-    class="flex items-center gap-1"
-    for="email"
-  >
-    <span>Email Address</span>
-    <i
-      class="ri-question-line text-xs"
-      [tolleTooltip]="'Enter a valid email address'"
-      tolleTooltipPosition="right"
-    ></i>
-  </label>
-  <input
-    type="email"
-    id="email"
-    placeholder="Enter your email"
-  />
+  <tolle-input
+    label="Email"
+    placeholder="Enter email"
+    [error]="!isValidEmail"
+    errorMessage="Invalid email format"
+    tolleTooltip="Enter a valid email address"
+    tolleTooltipPosition="right"
+    tolleTooltipTrigger="focus">
+  </tolle-input>
+
+  <tolle-input
+    id="password"
+    type="password"
+    label="Password"
+    placeholder="Enter password"
+    [error]="!isValidPassword"
+    errorMessage="Password is too weak"
+    tolleTooltip="Must be 8+ chars with uppercase and number"
+    tolleTooltipPosition="right"
+    tolleTooltipTrigger="focus">
+  </tolle-input>
 </div>
 ```
 
-## Tooltip with Menu Items
-
-```html
-<div class="flex flex-col space-y-1">
-  <button
-    [tolleTooltip]="'New file'"
-    tolleTooltipPosition="right"
-    class="p-2 hover:bg-accent rounded"
-  >
-    <i class="ri-file-add-line"></i>
-  </button>
-  <button
-    [tolleTooltip]="'Open file'"
-    tolleTooltipPosition="right"
-    class="p-2 hover:bg-accent rounded"
-  >
-    <i class="ri-folder-open-line"></i>
-  </button>
-  <button
-    [tolleTooltip]="'Save file'"
-    tolleTooltipPosition="right"
-    class="p-2 hover:bg-accent rounded"
-  >
-    <i class="ri-save-line"></i>
-  </button>
-</div>
-```
-
-## Tooltip with Avatar
+### Badge with Tooltip
 
 ```html
 <div class="flex items-center gap-2">
-  <tolle-avatar>
-    <tolle-avatar-image src="avatar.jpg" />
-    <tolle-avatar-fallback>JD</tolle-avatar-fallback>
-  </tolle-avatar>
-  <div>
-    <div class="font-medium">John Doe</div>
-    <div class="text-sm text-muted-foreground">
-      <button
-        [tolleTooltip]="'Send message'"
-        tolleTooltipPosition="top"
-        class="hover:text-primary"
-      >
-        <i class="ri-message-line"></i>
-      </button>
-    </div>
-  </div>
+  <tolle-badge variant="outline" tolleTooltip="Requires Premium subscription">
+    <i class="ri-vip-crown-line mr-1"></i>
+    Pro
+  </tolle-badge>
+
+  <tolle-badge variant="destructive" tolleTooltip="Expires in 3 days"> Expiring </tolle-badge>
+
+  <tolle-badge variant="success" tolleTooltip="Verification completed">
+    <i class="ri-check-line mr-1"></i>
+    Verified
+  </tolle-badge>
 </div>
 ```
 
-## Tooltip with Progress
+### Conditional Tooltip
 
-```html
-<div class="space-y-2">
-  <div class="flex justify-between text-sm">
-    <span>Processing</span>
-    <button
-      [tolleTooltip]="'View status'"
-      tolleTooltipPosition="top"
-      class="hover:text-primary"
-    >
-      <i class="ri-terminal-box-line"></i>
-    </button>
-  </div>
-  <progress-component [value]="75" class="h-2"></progress-component>
-</div>
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  template: `
+    <tolle-button
+      [tolleTooltip]="isDisabled ? 'Feature requires upgrade' : ''"
+      [disabled]="isDisabled">
+      {{ isDisabled ? 'Upgrade Required' : 'Use Feature' }}
+    </tolle-button>
+  `,
+})
+export class ExampleComponent {
+  isDisabled = true;
+}
 ```
 
-## Tooltip with Action Button
+## Accessibility
+
+- **Keyboard**: Focus on elements to show tooltip (when using `focus` trigger)
+- **Screen Readers**: Add `aria-label` to elements that use click trigger
+- **Mobile**: Click trigger is recommended for touch devices
+
+### Recommended Pattern for Icons
 
 ```html
-<button
-  [tolleTooltip]="'Add to favorites'"
-  tolleTooltipPosition="bottom"
-  class="p-2 hover:bg-accent rounded"
->
-  <i class="ri-heart-line"></i>
-</button>
-```
+<!-- For icon-only buttons, always include visible text or aria-label -->
+<tolle-button size="icon" variant="ghost" aria-label="Edit item" tolleTooltip="Edit item">
+  <i class="ri-edit-line"></i>
+</tolle-button>
 
-## Tooltip in Data Table
-
-```html
-<table class="w-full">
-  <thead>
-    <tr>
-      <th class="p-2 text-left">
-        <span class="flex items-center gap-2">
-          Name
-          <i
-            class="ri-question-line text-xs"
-            [tolleTooltip]="'Sort by name'"
-            tolleTooltipPosition="bottom"
-          ></i>
-        </span>
-      </th>
-      <th class="p-2 text-left">
-        <span class="flex items-center gap-2">
-          Status
-          <i
-            class="ri-question-line text-xs"
-            [tolleTooltip]="'Current status'"
-            tolleTooltipPosition="bottom"
-          ></i>
-        </span>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td class="p-2">John Doe</td>
-      <td class="p-2">
-        <tolle-badge variant="default">Active</tolle-badge>
-      </td>
-    </tr>
-  </tbody>
-</table>
-```
-
-## Tooltip with Custom Content
-
-### Template Ref (if supported)
-
-```html
-<ng-template #tooltipContent>
-  <div class="space-y-1">
-    <div class="font-semibold">User Profile</div>
-    <div class="text-sm">Click to view details</div>
-  </div>
-</ng-template>
-
-<button
-  [tolleTooltip]="tooltipContent"
-  tolleTooltipPosition="top"
->
-  View Profile
-</button>
-```
-
-## Tooltip in Form
-
-```html
-<form class="space-y-4">
-  <div class="space-y-1">
-    <label for="password" class="flex items-center gap-1">
-      Password
-      <i
-        class="ri-question-line text-xs"
-        [tolleTooltip]="'Must be at least 8 characters'"
-        tolleTooltipPosition="right"
-      ></i>
-    </label>
-    <input
-      type="password"
-      id="password"
-      placeholder="Enter password"
-    />
-  </div>
-
-  <div class="space-y-1">
-    <label for="confirm" class="flex items-center gap-1">
-      Confirm Password
-      <i
-        class="ri-question-line text-xs"
-        [tolleTooltip]="'Re-enter your password'"
-        tolleTooltipPosition="right"
-      ></i>
-    </label>
-    <input
-      type="password"
-      id="confirm"
-      placeholder="Confirm password"
-    />
-  </div>
-</form>
-```
-
-## Tooltip on Disabled Element
-
-```html
-<button
-  [tolleTooltip]="'Feature not available'"
-  tolleTooltipTrigger="mouseenter"
-  [disabled]="true"
->
-  <i class="ri-lock-line"></i>
-</button>
+<!-- Or use both tooltip and sr-only text -->
+<tolle-button size="icon" variant="ghost" tolleTooltip="Edit">
+  <i class="ri-edit-line"></i>
+  <span class="sr-only">Edit</span>
+</tolle-button>
 ```

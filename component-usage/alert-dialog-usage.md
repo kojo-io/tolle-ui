@@ -2,7 +2,7 @@
 
 ## Overview
 
-The AlertDialog component is a modal dialog used for user confirmations, important messages, or actions requiring explicit user consent. It includes a service for programmatic control.
+The AlertDialog component is a modal dialog used for user confirmations, important messages, or actions requiring explicit user consent. It supports both declarative (template-based) and programmatic (service-based) usage.
 
 ## Import
 
@@ -17,21 +17,52 @@ import {
   AlertDialogTitleComponent,
   AlertDialogDescriptionComponent,
   AlertDialogActionComponent,
-  AlertDialogCancelComponent
+  AlertDialogCancelComponent,
+  AlertDialogService,
+  AlertDialogRef,
 } from '@tolle_/tolle-ui';
-import { AlertDialogService } from '@tolle_/tolle-ui';
 ```
 
-## Components
+## AlertDialogService
+
+The `AlertDialogService` allows you to open alert dialogs programmatically without declaring them in your template.
+
+### Methods
+
+| Method                            | Returns                   | Description                                            |
+| --------------------------------- | ------------------------- | ------------------------------------------------------ |
+| `open(config: AlertDialogConfig)` | `AlertDialogRef<boolean>` | Opens an alert dialog with the specified configuration |
+
+### AlertDialogConfig Interface
+
+| Property      | Type                                                               | Default      | Description                              |
+| ------------- | ------------------------------------------------------------------ | ------------ | ---------------------------------------- |
+| `title`       | `string`                                                           | -            | **Required.** Dialog title               |
+| `description` | `string`                                                           | -            | **Required.** Dialog description/message |
+| `cancelText`  | `string`                                                           | `'Cancel'`   | Text for the cancel button               |
+| `actionText`  | `string`                                                           | `'Continue'` | Text for the action button               |
+| `variant`     | `'default' \| 'destructive'`                                       | `'default'`  | Visual variant of the action button      |
+| `size`        | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| 'full' \| 'fit'` | `'sm'`       | Dialog size                              |
+
+### AlertDialogRef
+
+The `AlertDialogRef` is returned by `AlertDialogService.open()` and provides control over the dialog.
+
+| Property/Method          | Type                  | Description                                                                           |
+| ------------------------ | --------------------- | ------------------------------------------------------------------------------------- |
+| `afterClosed$`           | `Observable<boolean>` | Observable that emits when dialog closes (true if action clicked, false if cancelled) |
+| `close(result: boolean)` | `void`                | Programmatically closes the dialog                                                    |
+
+## Declarative Usage (Template-based)
 
 ### AlertDialogComponent
 
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `open` | `boolean` | `false` | Controls dialog visibility |
-| `onOpenChange` | `EventEmitter<boolean>` | - | Emitted when dialog open state changes |
+| Input          | Type                    | Default | Description                            |
+| -------------- | ----------------------- | ------- | -------------------------------------- |
+| `open`         | `boolean`               | `false` | Controls dialog visibility             |
+| `onOpenChange` | `EventEmitter<boolean>` | -       | Emitted when dialog open state changes |
 
 ### AlertDialogTriggerComponent
 
@@ -45,106 +76,45 @@ Renders the dialog in an overlay portal.
 
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
-| `size` | `'xs'\|'sm'\|'md'\|'lg'\|'xl'\|'2xl'\|'full'\|'fit'` | `'sm'` | Dialog size |
+| Input   | Type                                                 | Default | Description            |
+| ------- | ---------------------------------------------------- | ------- | ---------------------- |
+| `class` | `string`                                             | `''`    | Additional CSS classes |
+| `size`  | `'xs'\|'sm'\|'md'\|'lg'\|'xl'\|'2xl'\|'full'\|'fit'` | `'sm'`  | Dialog size            |
 
-### AlertDialogHeaderComponent
+### AlertDialogHeaderComponent, AlertDialogFooterComponent, AlertDialogTitleComponent, AlertDialogDescriptionComponent
 
-**Inputs:**
+Container components for structuring the dialog content.
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
+| Input   | Type     | Default | Description            |
+| ------- | -------- | ------- | ---------------------- |
+| `class` | `string` | `''`    | Additional CSS classes |
 
-### AlertDialogFooterComponent
+### AlertDialogActionComponent, AlertDialogCancelComponent
 
-**Inputs:**
+Container for action/cancel buttons.
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
-
-### AlertDialogTitleComponent
-
-**Inputs:**
-
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
-
-### AlertDialogDescriptionComponent
-
-**Inputs:**
-
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
-
-### AlertDialogActionComponent
-
-Container for action buttons.
-
-### AlertDialogCancelComponent
-
-Container for cancel button.
-
-## Basic Usage
-
-### Simple Confirmation Dialog
+### Basic Declarative Example
 
 ```html
 <tolle-alert-dialog>
   <tolle-alert-dialog-trigger>
-    <button>Delete Account</button>
+    <tolle-button variant="outline">Delete Account</tolle-button>
   </tolle-alert-dialog-trigger>
-
-  <tolle-alert-dialog-portal>
-    <tolle-alert-dialog-content class="sm:max-w-[425px]">
-      <tolle-alert-dialog-header>
-        <tolle-alert-dialog-title>Are you sure?</tolle-alert-dialog-title>
-        <tolle-alert-dialog-description>
-          This action cannot be undone. This will permanently delete your account.
-        </tolle-alert-dialog-description>
-      </tolle-alert-dialog-header>
-
-      <tolle-alert-dialog-footer>
-        <tolle-alert-dialog-cancel>
-          <button variant="outline">Cancel</button>
-        </tolle-alert-dialog-cancel>
-        <tolle-alert-dialog-action>
-          <button variant="destructive">Delete</button>
-        </tolle-alert-dialog-action>
-      </tolle-alert-dialog-footer>
-    </tolle-alert-dialog-content>
-  </tolle-alert-dialog-portal>
-</tolle-alert-dialog>
-```
-
-### Destructive Action Dialog
-
-```html
-<tolle-alert-dialog>
-  <tolle-alert-dialog-trigger>
-    <button variant="destructive">Remove Item</button>
-  </tolle-alert-dialog-trigger>
-
   <tolle-alert-dialog-portal>
     <tolle-alert-dialog-content>
       <tolle-alert-dialog-header>
-        <tolle-alert-dialog-title>Remove Item</tolle-alert-dialog-title>
+        <tolle-alert-dialog-title>Are you absolutely sure?</tolle-alert-dialog-title>
         <tolle-alert-dialog-description>
-          Are you sure you want to remove this item from your cart?
+          This action cannot be undone. This will permanently delete your account and remove your
+          data from our servers.
         </tolle-alert-dialog-description>
       </tolle-alert-dialog-header>
-
       <tolle-alert-dialog-footer>
         <tolle-alert-dialog-cancel>
-          <button variant="outline">Keep</button>
+          <tolle-button variant="outline" class="w-full sm:w-auto">Cancel</tolle-button>
         </tolle-alert-dialog-cancel>
         <tolle-alert-dialog-action>
-          <button variant="destructive">Remove</button>
+          <tolle-button variant="destructive" class="w-full sm:w-auto">Continue</tolle-button>
         </tolle-alert-dialog-action>
       </tolle-alert-dialog-footer>
     </tolle-alert-dialog-content>
@@ -152,145 +122,156 @@ Container for cancel button.
 </tolle-alert-dialog>
 ```
 
-## Programmatic Control with AlertDialogService
+## Programmatic Usage (Service-based)
 
-### Opening a Dialog
+### Basic Confirmation
 
 ```typescript
-import { AlertDialogService, AlertDialogConfig } from '@tolle_/tolle-ui';
+import { Component, inject } from '@angular/core';
+import { AlertDialogService, ButtonComponent } from '@tolle_/tolle-ui';
 
-export class MyComponent {
-  constructor(private alertDialogService: AlertDialogService) {}
+@Component({
+  selector: 'app-example',
+  standalone: true,
+  imports: [ButtonComponent],
+  template: `
+    <tolle-button variant="destructive" (click)="confirmDelete()"> Delete Account </tolle-button>
+  `,
+})
+export class ExampleComponent {
+  private alertDialogService = inject(AlertDialogService);
 
-  openDialog() {
-    const config: AlertDialogConfig = {
-      title: 'Confirm Action',
-      description: 'This action cannot be undone.',
+  confirmDelete() {
+    const ref = this.alertDialogService.open({
+      title: 'Delete Account',
+      description:
+        'This action cannot be undone. Your account and all data will be permanently removed.',
+      variant: 'destructive',
+      actionText: 'Delete',
       cancelText: 'Cancel',
-      actionText: 'Confirm',
-      variant: 'default', // 'default' or 'destructive'
-      size: 'md' // 'xs', 'sm', 'md', 'lg', 'xl', '2xl', 'full', 'fit'
-    };
+    });
 
-    this.alertDialogService.open(config);
+    ref.afterClosed$.subscribe(confirmed => {
+      if (confirmed) {
+        this.deleteAccount();
+      }
+    });
+  }
+
+  deleteAccount() {
+    // Handle deletion
   }
 }
 ```
 
-### Using the After Closed Observable
+### Different Sizes
 
 ```typescript
-const dialogRef = this.alertDialogService.open(config);
+// Small alert (mobile-friendly)
+this.alertDialogService.open({
+  title: 'Success',
+  description: 'Your changes have been saved.',
+  size: 'xs',
+});
 
-dialogRef.afterClosed$.subscribe(result => {
-  if (result) {
-    // User clicked the action button
-    console.log('Action confirmed');
-  } else {
-    // User clicked cancel or closed the dialog
-    console.log('Action cancelled');
-  }
+// Large dialog for complex content
+this.alertDialogService.open({
+  title: 'Confirm Export',
+  description: 'You are about to export 1,234 records. This may take a few minutes.',
+  size: 'lg',
+  actionText: 'Export',
+});
+
+// Fit content size
+this.alertDialogService.open({
+  title: 'Quick Info',
+  description: 'The system will be down for maintenance in 10 minutes.',
+  size: 'fit',
 });
 ```
 
-## Dialog Sizes
-
-```html
-<!-- Extra Small -->
-<tolle-alert-dialog-content size="xs">...</tolle-alert-dialog-content>
-
-<!-- Small (default) -->
-<tolle-alert-dialog-content size="sm">...</tolle-alert-dialog-content>
-
-<!-- Medium -->
-<tolle-alert-dialog-content size="md">...</tolle-alert-dialog-content>
-
-<!-- Large -->
-<tolle-alert-dialog-content size="lg">...</tolle-alert-dialog-content>
-
-<!-- Extra Large -->
-<tolle-alert-dialog-content size="xl">...</tolle-alert-dialog-content>
-
-<!-- 2X Large -->
-<tolle-alert-dialog-content size="2xl">...</tolle-alert-dialog-content>
-
-<!-- Full Screen -->
-<tolle-alert-dialog-content size="full">...</tolle-alert-dialog-content>
-
-<!-- Fit Content -->
-<tolle-alert-dialog-content size="fit">...</tolle-alert-dialog-content>
-```
-
-## Custom Styling
-
-### Rounded Dialog
-
-```html
-<tolle-alert-dialog-content class="rounded-lg">
-  <!-- Content -->
-</tolle-alert-dialog-content>
-```
-
-### Full Width Dialog
-
-```html
-<tolle-alert-dialog-content size="full" class="h-screen w-screen rounded-none">
-  <!-- Content -->
-</tolle-alert-dialog-content>
-```
-
-### Custom Header
-
-```html
-<tolle-alert-dialog-header class="border-b bg-muted/50 p-6">
-  <tolle-alert-dialog-title class="text-xl">Custom Title</tolle-alert-dialog-title>
-  <tolle-alert-dialog-description class="text-muted-foreground">
-    Custom description
-  </tolle-alert-dialog-description>
-</tolle-alert-dialog-header>
-```
-
-### Custom Footer
-
-```html
-<tolle-alert-dialog-footer class="flex flex-col-reverse sm:flex-row sm:justify-end gap-2">
-  <button variant="outline">Cancel</button>
-  <button variant="default">Confirm</button>
-</tolle-alert-dialog-footer>
-```
-
-## Dynamic Content
-
-### Using TemplateRef
+### Info Dialog
 
 ```typescript
-@ViewChild('dialogTemplate', { static: true }) dialogTemplate!: TemplateRef<any>;
-
-openDialogWithTemplate() {
-  const config: AlertDialogConfig = {
-    title: 'Template Dialog',
-    content: this.dialogTemplate,
-    actionText: 'Close'
-  };
-  this.alertDialogService.open(config);
+showInfo() {
+  this.alertDialogService.open({
+    title: 'Update Available',
+    description: 'A new version of the application is available. Please refresh to update.',
+    variant: 'default',
+    actionText: 'Refresh Now',
+    cancelText: 'Later'
+  });
 }
 ```
 
-### Passing Context
+### Warning Dialog
 
 ```typescript
-const context = { user: this.user, action: 'delete' };
-const config: AlertDialogConfig = {
-  title: 'Delete User',
-  description: `Are you sure you want to delete ${this.user.name}?`,
-  actionText: 'Delete',
-  context
-};
+warnUnsavedChanges() {
+  const ref = this.alertDialogService.open({
+    title: 'Unsaved Changes',
+    description: 'You have unsaved changes. If you leave, your changes will be lost.',
+    variant: 'destructive',
+    actionText: 'Discard Changes',
+    cancelText: 'Keep Editing'
+  });
+
+  ref.afterClosed$.subscribe(discard => {
+    if (discard) {
+      this.navigateAway();
+    }
+  });
+}
 ```
 
-## Accessibility Features
+### Chained Confirmations
 
-- Keyboard navigation (Enter, Space, Escape)
-- Focus management
-- ARIA attributes for screen readers
-- Backdrop click to close (configurable)
+```typescript
+async deleteMultipleItems() {
+  const itemIds = [1, 2, 3];
+
+  for (const id of itemIds) {
+    const ref = this.alertDialogService.open({
+      title: `Delete Item ${id}?`,
+      description: 'This action cannot be undone.',
+      actionText: 'Delete',
+      variant: 'destructive'
+    });
+
+    const confirmed = await firstValueFrom(ref.afterClosed$);
+    if (!confirmed) break;
+
+    await this.deleteItem(id);
+  }
+}
+```
+
+## Accessibility
+
+The Alert Dialog component follows WAI-ARIA alertdialog pattern:
+
+- **Roles**: Uses `role="alertdialog"` and `aria-modal="true"`
+- **Labels**: `aria-labelledby` references the dialog title, `aria-describedby` references the description
+- **Keyboard Navigation**:
+  - Escape: Closes the dialog (triggers cancel)
+  - Tab/Shift+Tab: Navigate between buttons within the dialog
+- **Focus Management**:
+  - Focus is trapped within the dialog when open
+  - Focus automatically moves to the dialog content
+  - Focus returns to the trigger element when closed
+- **Screen Readers**:
+  - The `aria-modal="true"` attribute hides background content from screen readers
+  - The title and description are announced when the dialog opens
+
+## Sizes Reference
+
+| Size   | Width        | Use Case               |
+| ------ | ------------ | ---------------------- |
+| `xs`   | 320px        | Mobile alerts          |
+| `sm`   | 425px        | Standard confirmations |
+| `md`   | 500px        | Default size           |
+| `lg`   | 90% / 1024px | Forms, complex content |
+| `xl`   | 90% / 1200px | Large content          |
+| `2xl`  | 90% / 1400px | Extra large content    |
+| `full` | 100vw        | Fullscreen dialogs     |
+| `fit`  | Auto         | Fit to content         |

@@ -1,4 +1,4 @@
-import { Component, Input, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, HostListener } from '@angular/core';
+import { Component, Input, ContentChildren, QueryList, AfterContentInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom';
@@ -96,7 +96,7 @@ import { BadgeComponent } from './badge.component';
     </div>
   `
 })
-export class MultiSelectComponent implements ControlValueAccessor, AfterContentInit {
+export class MultiSelectComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
   @Input() placeholder = 'Select options...';
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
   @Input() searchable = false;
@@ -193,6 +193,12 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
     return Math.max(0, this.maxSelections - this.value.length);
   }
 
+  private _outsideClickHandler = (event: MouseEvent) => {
+    if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+      this.close();
+    }
+  };
+
   toggle() {
     if (this.disabled) return;
     this.isOpen ? this.close() : this.open();
@@ -200,7 +206,10 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
 
   open() {
     this.isOpen = true;
-    setTimeout(() => this.updatePosition());
+    setTimeout(() => {
+      this.updatePosition();
+      document.addEventListener('mousedown', this._outsideClickHandler);
+    });
   }
 
   close() {
@@ -208,6 +217,7 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
     this.searchQuery = '';
     this.onSearchChange('');
     if (this.cleanup) this.cleanup();
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 
   private updatePosition() {
@@ -308,11 +318,9 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
     this.noResults = visibleCount === 0 && filter !== '';
   }
 
-  @HostListener('document:mousedown', ['$event'])
-  onClickOutside(event: MouseEvent) {
-    if (this.isOpen && !this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
-      this.close();
-    }
+  ngOnDestroy() {
+    document.removeEventListener('mousedown', this._outsideClickHandler);
+    if (this.cleanup) this.cleanup();
   }
 
   // ControlValueAccessor

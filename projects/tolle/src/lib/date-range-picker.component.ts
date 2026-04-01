@@ -1,5 +1,5 @@
 import {
-  Component, Input, forwardRef, ElementRef, ViewChild, HostListener, ChangeDetectorRef
+  Component, Input, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy, HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -58,7 +58,7 @@ import { DateRange } from './types/date-range';
     </div>
   `
 })
-export class DateRangePickerComponent implements ControlValueAccessor {
+export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy {
   @Input() disabled = false;
   @Input() placeholder = 'Pick a date range';
   @Input() class = '';
@@ -71,6 +71,12 @@ export class DateRangePickerComponent implements ControlValueAccessor {
   value: DateRange = { start: null, end: null };
   isOpen = false;
   cleanupAutoUpdate?: () => void;
+
+  private _outsideClickHandler = (event: MouseEvent) => {
+    if (!this.triggerContainer.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+      this.close();
+    }
+  };
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -102,7 +108,10 @@ export class DateRangePickerComponent implements ControlValueAccessor {
 
   open() {
     this.isOpen = true;
-    setTimeout(() => this.updatePosition());
+    setTimeout(() => {
+      this.updatePosition();
+      document.addEventListener('mousedown', this._outsideClickHandler);
+    });
   }
 
   close() {
@@ -111,6 +120,7 @@ export class DateRangePickerComponent implements ControlValueAccessor {
       this.cleanupAutoUpdate();
       this.cleanupAutoUpdate = undefined;
     }
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 
   clear(event: MouseEvent) {
@@ -167,13 +177,9 @@ export class DateRangePickerComponent implements ControlValueAccessor {
     );
   }
 
-  @HostListener('document:mousedown', ['$event'])
-  onClickOutside(event: MouseEvent) {
-    if (this.isOpen &&
-      !this.triggerContainer.nativeElement.contains(event.target) &&
-      !this.popover?.nativeElement.contains(event.target)) {
-      this.close();
-    }
+  ngOnDestroy() {
+    if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
+    document.removeEventListener('mousedown', this._outsideClickHandler);
   }
 
   @HostListener('window:resize')

@@ -7,291 +7,75 @@ The Calendar component provides a date picker with date, month, and year views. 
 ## Import
 
 ```typescript
-import { CalendarComponent, RangeCalendarComponent, DatePickerComponent, DateRangePickerComponent } from '@tolle_/tolle-ui';
+import {
+  CalendarComponent,
+  RangeCalendarComponent,
+  DatePickerComponent,
+  DateRangePickerComponent,
+} from '@tolle_/tolle-ui';
 ```
 
 ## CalendarComponent
 
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
-| `mode` | `'date'\|'month'\|'year'` | `'date'` | Calendar mode |
-| `disablePastDates` | `boolean` | `false` | Disable past dates |
-| `showQuickActions` | `boolean` | `false` | Show today/clear buttons |
-| `minDate` | `Date` | - | Minimum selectable date |
-| `maxDate` | `Date` | - | Maximum selectable date |
-| `formatMonthFn` | `function` | - | Custom month formatter |
-| `formatYearFn` | `function` | - | Custom year formatter |
-| `formatDateFn` | `function` | - | Custom date formatter |
+| Input              | Type                          | Default     | Description                  |
+| ------------------ | ----------------------------- | ----------- | ---------------------------- |
+| `class`            | `string`                      | `''`        | Additional CSS classes       |
+| `mode`             | `'date' \| 'month' \| 'year'` | `'date'`    | Calendar view mode           |
+| `disablePastDates` | `boolean`                     | `false`     | Disable past dates selection |
+| `showQuickActions` | `boolean`                     | `true`      | Show today/clear buttons     |
+| `minDate`          | `Date`                        | `undefined` | Minimum selectable date      |
+| `maxDate`          | `Date`                        | `undefined` | Maximum selectable date      |
+| `formatMonthFn`    | `(date: Date) => string`      | `undefined` | Custom month formatter       |
+| `formatYearFn`     | `(date: Date) => string`      | `undefined` | Custom year formatter        |
+| `formatDateFn`     | `(date: Date) => string`      | `undefined` | Custom date formatter        |
 
 **Outputs:**
 
-| Output | Type | Description |
-|--------|------|-------------|
+| Output       | Type                 | Description                   |
+| ------------ | -------------------- | ----------------------------- |
 | `dateSelect` | `EventEmitter<Date>` | Emitted when date is selected |
 
 ## Basic Usage
 
-### Simple Calendar
+### Basic Calendar
 
 ```html
-<tolle-calendar [(ngModel)]="selectedDate" />
-<p>Selected: {{ selectedDate | date }}</p>
+<div class="flex flex-col items-center gap-4 rounded-lg border bg-card p-4">
+  <p class="text-sm text-muted-foreground">Selected: {{ date | date:'fullDate' }}</p>
+  <tolle-calendar [(ngModel)]="date"></tolle-calendar>
+</div>
 ```
 
-### Calendar with Quick Actions
+### Disabled Calendar
 
 ```html
-<tolle-calendar
-  [(ngModel)]="selectedDate"
-  [showQuickActions]="true"
-/>
+<div class="flex flex-wrap justify-center gap-8 rounded-lg border bg-card p-4">
+  <div class="flex flex-col items-center gap-2">
+    <span class="text-sm font-medium">Disable Past Dates</span>
+    <tolle-calendar [disablePastDates]="true"></tolle-calendar>
+  </div>
+
+  <div class="flex flex-col items-center gap-2">
+    <span class="text-sm font-medium">Min/Max Date (±7 days)</span>
+    <tolle-calendar [minDate]="minDate" [maxDate]="maxDate"></tolle-calendar>
+  </div>
+</div>
 ```
 
-### Calendar with Date Range
+### Mode Calendar
 
 ```html
-<tolle-calendar
-  [(ngModel)]="selectedDate"
-  [minDate]="minDate"
-  [maxDate]="maxDate"
-/>
-```
+<div class="flex flex-wrap justify-center gap-8 rounded-lg border bg-card p-4">
+  <div class="flex flex-col items-center gap-2">
+    <span class="text-sm font-medium">Month Mode</span>
+    <tolle-calendar mode="month"></tolle-calendar>
+  </div>
 
-```typescript
-minDate = new Date(2023, 0, 1);
-maxDate = new Date(2023, 11, 31);
-```
-
-## Calendar Modes
-
-### Date Mode (Default)
-
-```html
-<tolle-calendar [(ngModel)]="selectedDate" mode="date" />
-```
-
-### Month Mode
-
-```html
-<tolle-calendar [(ngModel)]="selectedMonth" mode="month" />
-```
-
-### Year Mode
-
-```html
-<tolle-calendar [(ngModel)]="selectedYear" mode="year" />
-```
-
-## Calendar with Disable Past Dates
-
-```html
-<tolle-calendar
-  [(ngModel)]="selectedDate"
-  [disablePastDates]="true"
-/>
-```
-
-## Calendar with Custom Formatting
-
-### Custom Month Formatter
-
-```html
-<tolle-calendar
-  [(ngModel)]="selectedDate"
-  [formatMonthFn]="formatMonth"
-  [formatYearFn]="formatYear"
-/>
-```
-
-```typescript
-formatMonth(month: number): string {
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  return months[month];
-}
-
-formatYear(year: number): string {
-  return year.toString();
-}
-```
-
-### Custom Date Formatter
-
-```html
-<tolle-calendar
-  [(ngModel)]="selectedDate"
-  [formatDateFn]="formatDate"
-/>
-```
-
-```typescript
-formatDate(date: Date): string {
-  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-}
-```
-
-## Calendar in Modal
-
-```html
-<tolle-alert-dialog>
-  <tolle-alert-dialog-trigger>
-    <button>Select Date</button>
-  </tolle-alert-dialog-trigger>
-
-  <tolle-alert-dialog-portal>
-    <tolle-alert-dialog-content>
-      <tolle-alert-dialog-header>
-        <tolle-alert-dialog-title>Select a Date</tolle-alert-dialog-title>
-      </tolle-alert-dialog-header>
-
-      <tolle-alert-dialog-content>
-        <tolle-calendar [(ngModel)]="selectedDate" />
-      </tolle-alert-dialog-content>
-
-      <tolle-alert-dialog-footer>
-        <tolle-alert-dialog-cancel>
-          <button variant="outline">Cancel</button>
-        </tolle-alert-dialog-cancel>
-        <tolle-alert-dialog-action>
-          <button (click)="confirmDate()">Confirm</button>
-        </tolle-alert-dialog-action>
-      </tolle-alert-dialog-footer>
-    </tolle-alert-dialog-content>
-  </tolle-alert-dialog-portal>
-</tolle-alert-dialog>
-```
-
-## Calendar with Event Emitter
-
-```html
-<tolle-calendar
-  [(ngModel)]="selectedDate"
-  (dateSelect)="onDateSelect($event)"
-/>
-```
-
-```typescript
-onDateSelect(date: Date) {
-  console.log('Date selected:', date);
-  // Perform action
-}
-```
-
-## Calendar with Selected State
-
-### Programmatically Setting Date
-
-```typescript
-ngOnInit() {
-  this.selectedDate = new Date();
-}
-```
-
-```html
-<tolle-calendar [(ngModel)]="selectedDate" />
-```
-
-## Calendar in Card
-
-```html
-<tolle-card>
-  <tolle-card-header>
-    <tolle-card-title>Calendar</tolle-card-title>
-    <tolle-card-description>Select a date</tolle-card-description>
-  </tolle-card-header>
-  <tolle-card-content>
-    <tolle-calendar [(ngModel)]="selectedDate" />
-  </tolle-card-content>
-</tolle-card>
-```
-
-## RangeCalendarComponent
-
-### Date Range Selection
-
-```html
-<tolle-range-calendar [(ngModel)]="dateRange" />
-<p>Range: {{ dateRange?.start | date }} - {{ dateRange?.end | date }}</p>
-```
-
-```typescript
-dateRange = { start: null, end: null };
-```
-
-### Range Calendar with Disable Past Dates
-
-```html
-<tolle-range-calendar
-  [(ngModel)]="dateRange"
-  [disablePastDates]="true"
-/>
-```
-
-## DatePickerComponent
-
-### Date Picker Input
-
-```html
-<tolle-date-picker [(ngModel)]="selectedDate" />
-```
-
-## DateRangePickerComponent
-
-### Date Range Picker Input
-
-```html
-<tolle-date-range-picker [(ngModel)]="dateRange" />
-```
-
-## Calendar with Time
-
-### Date and Time Picker
-
-```html
-<!-- Note: This may require custom implementation or a different component -->
-<tolle-calendar [(ngModel)]="selectedDateTime" />
-```
-
-## Calendar with Disabled Dates
-
-### Custom Disabled Dates
-
-```html
-<tolle-calendar
-  [(ngModel)]="selectedDate"
-  [disabledDates]="disabledDates"
-/>
-```
-
-```typescript
-disabledDates = [
-  new Date(2023, 0, 1),
-  new Date(2023, 0, 15),
-  new Date(2023, 1, 1)
-];
-```
-
-## Calendar with Custom Styling
-
-```html
-<tolle-calendar
-  [(ngModel)]="selectedDate"
-  class="calendar-custom"
-/>
-```
-
-```css
-.calendar-custom {
-  --calendar-bg: #f9fafb;
-  --calendar-border: #e5e7eb;
-  --calendar-text: #1f2937;
-  --calendar-accent: #3b82f6;
-}
-
-.calendar-custom .selected {
-  background-color: var(--calendar-accent);
-  color: white;
-}
+  <div class="flex flex-col items-center gap-2">
+    <span class="text-sm font-medium">Year Mode</span>
+    <tolle-calendar mode="year"></tolle-calendar>
+  </div>
+</div>
 ```

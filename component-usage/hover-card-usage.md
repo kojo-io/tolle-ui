@@ -2,7 +2,7 @@
 
 ## Overview
 
-The HoverCard component displays a floating card that appears when the user hovers over an element. It's commonly used for showing additional information, previews, or quick actions.
+The HoverCard component displays a floating card that appears when the user hovers over an element. It's commonly used for showing additional information, previews, or quick actions without clicking.
 
 ## Import
 
@@ -10,7 +10,7 @@ The HoverCard component displays a floating card that appears when the user hove
 import {
   HoverCardComponent,
   HoverCardTriggerComponent,
-  HoverCardContentComponent
+  HoverCardContentComponent,
 } from '@tolle_/tolle-ui';
 ```
 
@@ -20,281 +20,403 @@ import {
 
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `openDelay` | `number` | `700` | Delay before showing (ms) |
-| `closeDelay` | `number` | `300` | Delay before hiding (ms) |
-| `placement` | `'top'\|'bottom'\|'left'\|'right'` | `'bottom'` | Card position |
+| Input        | Type                                     | Default    | Description                    |
+| ------------ | ---------------------------------------- | ---------- | ------------------------------ |
+| `openDelay`  | `number`                                 | `700`      | Delay before showing card (ms) |
+| `closeDelay` | `number`                                 | `300`      | Delay before hiding card (ms)  |
+| `placement`  | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` | Card position                  |
 
 ### HoverCardTriggerComponent
 
-The element that triggers the hover card.
+The element that triggers the hover card. Typically contains a button, link, or any interactive element.
 
 ### HoverCardContentComponent
 
 **Inputs:**
 
-| Input | Type | Default | Description |
-|-------|------|---------|-------------|
-| `class` | `string` | `''` | Additional CSS classes |
+| Input   | Type     | Default | Description            |
+| ------- | -------- | ------- | ---------------------- |
+| `class` | `string` | `''`    | Additional CSS classes |
 
 ## Basic Usage
 
-### Simple Hover Card
+### Basic Hover Card
 
 ```html
 <tolle-hover-card>
-  <div tolle-hover-card-trigger class="cursor-pointer hover:text-primary">
-    <strong>Hover over me</strong>
-  </div>
-  <tolle-hover-card-content>
-    <p>This is a hover card.</p>
-  </tolle-hover-card-content>
-</tolle-hover-card>
-```
-
-### Hover Card with Avatar
-
-```html
-<tolle-hover-card>
-  <div tolle-hover-card-trigger class="flex items-center gap-2">
-    <tolle-avatar>
-      <tolle-avatar-image src="avatar.jpg" />
-      <tolle-avatar-fallback>JD</tolle-avatar-fallback>
-    </tolle-avatar>
-    <span class="font-medium">John Doe</span>
-  </div>
-  <tolle-hover-card-content class="w-64">
-    <div class="flex items-center gap-3 p-2">
-      <tolle-avatar class="h-12 w-12">
-        <tolle-avatar-image src="avatar.jpg" />
-        <tolle-avatar-fallback>JD</tolle-avatar-fallback>
+  <tolle-hover-card-trigger>
+    <tolle-button variant="link" class="p-0">@nextjs</tolle-button>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content class="w-80">
+    <div class="flex justify-between space-x-4">
+      <tolle-avatar>
+        <img src="https://github.com/vercel.png" />
+        <tolle-avatar-fallback>VC</tolle-avatar-fallback>
       </tolle-avatar>
-      <div>
-        <div class="font-semibold">John Doe</div>
-        <div class="text-sm text-muted-foreground">john@example.com</div>
+      <div class="space-y-1">
+        <h4 class="text-sm font-semibold">@nextjs</h4>
+        <p class="text-sm">The React Framework – created and maintained by Vercel.</p>
+        <div class="flex items-center pt-2 text-xs text-muted-foreground">
+          <i class="ri-calendar-line mr-1"></i>
+          Joined December 2021
+        </div>
       </div>
     </div>
-    <div class="border-t p-2">
-      <button tolle-button class="w-full justify-start" size="sm">View Profile</button>
+  </tolle-hover-card-content>
+</tolle-hover-card>
+```
+
+### All Placements
+
+```html
+<div class="flex flex-wrap justify-center gap-4 p-10">
+  <tolle-hover-card placement="top">
+    <tolle-hover-card-trigger>
+      <tolle-button variant="outline">Hover (Top)</tolle-button>
+    </tolle-hover-card-trigger>
+    <tolle-hover-card-content>
+      <p class="text-sm">Card appears above</p>
+    </tolle-hover-card-content>
+  </tolle-hover-card>
+
+  <tolle-hover-card placement="bottom">
+    <tolle-hover-card-trigger>
+      <tolle-button variant="outline">Hover (Bottom)</tolle-button>
+    </tolle-hover-card-trigger>
+    <tolle-hover-card-content>
+      <p class="text-sm">Card appears below</p>
+    </tolle-hover-card-content>
+  </tolle-hover-card>
+
+  <tolle-hover-card placement="left">
+    <tolle-hover-card-trigger>
+      <tolle-button variant="outline">Hover (Left)</tolle-button>
+    </tolle-hover-card-trigger>
+    <tolle-hover-card-content>
+      <p class="text-sm">Card appears left</p>
+    </tolle-hover-card-content>
+  </tolle-hover-card>
+
+  <tolle-hover-card placement="right">
+    <tolle-hover-card-trigger>
+      <tolle-button variant="outline">Hover (Right)</tolle-button>
+    </tolle-hover-card-trigger>
+    <tolle-hover-card-content>
+      <p class="text-sm">Card appears right</p>
+    </tolle-hover-card-content>
+  </tolle-hover-card>
+</div>
+```
+
+## Use Cases
+
+### User Profile Card
+
+```html
+<tolle-hover-card>
+  <tolle-hover-card-trigger>
+    <div
+      class="flex cursor-pointer items-center gap-2 rounded-md p-2 transition-colors hover:bg-muted">
+      <tolle-avatar size="sm">
+        <img src="https://github.com/shadcn.png" />
+      </tolle-avatar>
+      <span class="text-sm font-medium">shadcn</span>
+    </div>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content class="w-80">
+    <div class="flex space-x-4">
+      <tolle-avatar size="lg">
+        <img src="https://github.com/shadcn.png" />
+      </tolle-avatar>
+      <div class="space-y-1">
+        <h4 class="text-sm font-semibold">shadcn</h4>
+        <p class="text-xs text-muted-foreground">@shadcn</p>
+        <p class="pt-2 text-sm">Building UI components. Creator of shadcn/ui.</p>
+        <div class="flex items-center pt-2 text-xs text-muted-foreground">
+          <i class="ri-map-pin-line mr-1"></i>
+          San Francisco
+          <i class="ri-calendar-line ml-3 mr-1"></i>
+          Joined March 2021
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 flex justify-between border-t pt-3">
+      <div class="text-center">
+        <div class="text-sm font-semibold">2.5k</div>
+        <div class="text-xs text-muted-foreground">Followers</div>
+      </div>
+      <div class="text-center">
+        <div class="text-sm font-semibold">156</div>
+        <div class="text-xs text-muted-foreground">Following</div>
+      </div>
+      <div class="text-center">
+        <div class="text-sm font-semibold">89</div>
+        <div class="text-xs text-muted-foreground">Repos</div>
+      </div>
     </div>
   </tolle-hover-card-content>
 </tolle-hover-card>
 ```
 
-## Hover Card with Delay
+### Link Preview Card
+
+```html
+<tolle-hover-card>
+  <tolle-hover-card-trigger>
+    <a href="/docs/components" class="text-primary hover:underline"> Components Documentation </a>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content class="w-80">
+    <div class="space-y-2">
+      <h4 class="text-sm font-semibold">Components Overview</h4>
+      <p class="text-sm text-muted-foreground">
+        Learn about all available components in the library. Including buttons, forms, dialogs, and
+        more.
+      </p>
+      <div class="flex items-center text-xs text-muted-foreground">
+        <i class="ri-file-line mr-1"></i>
+        docs/components.md
+        <i class="ri-time-line ml-3 mr-1"></i>
+        Updated 2 days ago
+      </div>
+    </div>
+  </tolle-hover-card-content>
+</tolle-hover-card>
+```
+
+### Product Card Preview
+
+```html
+<tolle-hover-card openDelay="300" closeDelay="200">
+  <tolle-hover-card-trigger>
+    <div
+      class="flex cursor-pointer items-center gap-3 rounded-lg border p-2 transition-colors hover:border-primary">
+      <img
+        src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=60&h=60&fit=crop"
+        class="h-12 w-12 rounded object-cover"
+        alt="Product" />
+      <div>
+        <div class="text-sm font-medium">Smart Watch</div>
+        <div class="text-xs text-muted-foreground">$299.00</div>
+      </div>
+    </div>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content class="w-72">
+    <div class="space-y-3">
+      <img
+        src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=200&fit=crop"
+        class="h-32 w-full rounded object-cover"
+        alt="Product" />
+      <div>
+        <h4 class="text-sm font-semibold">Smart Watch Pro</h4>
+        <div class="mt-1 flex items-center gap-1">
+          <div class="flex">
+            <i class="ri-star-fill text-sm text-yellow-400"></i>
+            <i class="ri-star-fill text-sm text-yellow-400"></i>
+            <i class="ri-star-fill text-sm text-yellow-400"></i>
+            <i class="ri-star-fill text-sm text-yellow-400"></i>
+            <i class="ri-star-half-fill text-sm text-yellow-400"></i>
+          </div>
+          <span class="text-xs text-muted-foreground">(4.5)</span>
+        </div>
+        <div class="mt-2 text-lg font-bold">$299.00</div>
+        <div class="text-xs text-muted-foreground line-through">$349.00</div>
+      </div>
+      <div class="flex gap-2">
+        <tolle-button size="sm" class="flex-1">Add to Cart</tolle-button>
+        <tolle-button size="sm" variant="outline">
+          <i class="ri-heart-line"></i>
+        </tolle-button>
+      </div>
+    </div>
+  </tolle-hover-card-content>
+</tolle-hover-card>
+```
+
+### Repository Info
+
+```html
+<tolle-hover-card openDelay="500">
+  <tolle-hover-card-trigger>
+    <a href="#" class="font-mono text-sm font-medium text-primary hover:underline">
+      tolle-ui/components
+    </a>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content class="w-80">
+    <div class="space-y-3">
+      <div class="flex items-start gap-3">
+        <div class="rounded bg-muted p-2">
+          <i class="ri-code-s-slash-line text-xl"></i>
+        </div>
+        <div class="flex-1">
+          <h4 class="text-sm font-semibold">tolle-ui/components</h4>
+          <p class="mt-1 text-xs text-muted-foreground">
+            A collection of beautifully designed Angular components
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-4 text-xs text-muted-foreground">
+        <span class="flex items-center gap-1">
+          <i class="ri-star-line"></i>
+          12.5k
+        </span>
+        <span class="flex items-center gap-1">
+          <i class="ri-git-fork-line"></i>
+          523
+        </span>
+        <span class="flex items-center gap-1">
+          <i class="ri-eye-line"></i>
+          198
+        </span>
+      </div>
+      <div class="flex gap-2">
+        <span class="rounded-full bg-muted px-2 py-0.5 text-xs">typescript</span>
+        <span class="rounded-full bg-muted px-2 py-0.5 text-xs">angular</span>
+        <span class="rounded-full bg-muted px-2 py-0.5 text-xs">ui</span>
+      </div>
+    </div>
+  </tolle-hover-card-content>
+</tolle-hover-card>
+```
+
+### Article Preview
+
+```html
+<tolle-hover-card placement="right" openDelay="400">
+  <tolle-hover-card-trigger>
+    <a href="#" class="text-primary hover:underline"> Getting Started with Angular </a>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content class="w-80">
+    <div class="space-y-2">
+      <div class="text-xs text-muted-foreground">Tutorial · 8 min read</div>
+      <h4 class="text-sm font-semibold">Getting Started with Angular: A Complete Guide</h4>
+      <p class="text-sm text-muted-foreground">
+        Learn the fundamentals of Angular and build your first application from scratch.
+      </p>
+      <div class="flex items-center gap-2 pt-2">
+        <tolle-avatar size="sm">
+          <img src="https://github.com/shadcn.png" />
+        </tolle-avatar>
+        <div>
+          <div class="text-xs font-medium">John Doe</div>
+          <div class="text-xs text-muted-foreground">Mar 15, 2024</div>
+        </div>
+      </div>
+    </div>
+  </tolle-hover-card-content>
+</tolle-hover-card>
+```
+
+### Quick Actions Card
+
+```html
+<tolle-hover-card>
+  <tolle-hover-card-trigger>
+    <div class="flex cursor-pointer items-center gap-2 rounded-md px-3 py-2 hover:bg-muted">
+      <i class="ri-file-line"></i>
+      <span class="text-sm">Project_Document.pdf</span>
+    </div>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content class="w-64">
+    <div class="space-y-2">
+      <div class="flex items-center gap-2">
+        <i class="ri-file-line text-xl text-muted-foreground"></i>
+        <div>
+          <div class="text-sm font-medium">Project_Document.pdf</div>
+          <div class="text-xs text-muted-foreground">2.4 MB · PDF</div>
+        </div>
+      </div>
+      <div class="flex gap-2 pt-2">
+        <tolle-button size="sm" variant="outline" class="flex-1">
+          <i class="ri-eye-line mr-1"></i>View
+        </tolle-button>
+        <tolle-button size="sm" variant="outline" class="flex-1">
+          <i class="ri-download-line mr-1"></i>Download
+        </tolle-button>
+      </div>
+    </div>
+  </tolle-hover-card-content>
+</tolle-hover-card>
+```
+
+### Contact Card
+
+```html
+<tolle-hover-card>
+  <tolle-hover-card-trigger>
+    <div class="flex cursor-pointer items-center gap-3">
+      <tolle-avatar>
+        <img src="https://github.com/shadcn.png" />
+      </tolle-avatar>
+      <div>
+        <div class="text-sm font-medium">John Doe</div>
+        <div class="text-xs text-muted-foreground">john@example.com</div>
+      </div>
+    </div>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content class="w-72">
+    <div class="space-y-3">
+      <div class="flex items-center gap-3">
+        <tolle-avatar size="lg">
+          <img src="https://github.com/shadcn.png" />
+        </tolle-avatar>
+        <div>
+          <div class="text-sm font-semibold">John Doe</div>
+          <div class="text-xs text-muted-foreground">Software Engineer</div>
+        </div>
+      </div>
+      <div class="space-y-1 text-xs">
+        <div class="flex items-center gap-2">
+          <i class="ri-mail-line text-muted-foreground"></i>
+          john@example.com
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="ri-phone-line text-muted-foreground"></i>
+          +1 (555) 123-4567
+        </div>
+        <div class="flex items-center gap-2">
+          <i class="ri-map-pin-line text-muted-foreground"></i>
+          San Francisco, CA
+        </div>
+      </div>
+      <div class="flex gap-2 pt-2">
+        <tolle-button size="sm" variant="outline" class="flex-1">
+          <i class="ri-mail-line mr-1"></i>Email
+        </tolle-button>
+        <tolle-button size="sm" variant="outline" class="flex-1">
+          <i class="ri-phone-line mr-1"></i>Call
+        </tolle-button>
+      </div>
+    </div>
+  </tolle-hover-card-content>
+</tolle-hover-card>
+```
 
 ### Custom Delay
 
 ```html
+<!-- Instant hover (no delay) -->
+<tolle-hover-card [openDelay]="0" [closeDelay]="100">
+  <tolle-hover-card-trigger>
+    <tolle-button variant="ghost">Quick Preview</tolle-button>
+  </tolle-hover-card-trigger>
+  <tolle-hover-card-content>
+    <p class="text-sm">Appears instantly</p>
+  </tolle-hover-card-content>
+</tolle-hover-card>
+
+<!-- Slow hover (long delay) -->
 <tolle-hover-card [openDelay]="1000" [closeDelay]="500">
-  <div tolle-hover-card-trigger class="cursor-pointer">
-    Hover (1s delay)
-  </div>
+  <tolle-hover-card-trigger>
+    <tolle-button variant="ghost">Detailed Card</tolle-button>
+  </tolle-hover-card-trigger>
   <tolle-hover-card-content>
-    <p>Content with 1 second delay</p>
+    <p class="text-sm">Takes 1 second to appear</p>
   </tolle-hover-card-content>
 </tolle-hover-card>
 ```
 
-## Hover Card in List
+## Accessibility
 
-### User List
-
-```html
-<ul class="space-y-2">
-  <li *ngFor="let user of users" class="flex items-center gap-2">
-    <tolle-hover-card>
-      <div tolle-hover-card-trigger class="flex items-center gap-2">
-        <tolle-avatar>
-          <tolle-avatar-image [src]="user.avatar" />
-          <tolle-avatar-fallback>{{ user.name.charAt(0) }}</tolle-avatar-fallback>
-        </tolle-avatar>
-        <span class="text-sm">{{ user.name }}</span>
-      </div>
-      <tolle-hover-card-content class="w-48">
-        <div class="font-medium">{{ user.name }}</div>
-        <div class="text-sm text-muted-foreground">{{ user.email }}</div>
-        <div class="mt-2">
-          <button tolle-button size="sm" class="w-full">Message</button>
-        </div>
-      </tolle-hover-card-content>
-    </tolle-hover-card>
-  </li>
-</ul>
-```
-
-## Hover Card with Content Preview
-
-### Text Preview
-
-```html
-<tolle-hover-card>
-  <div tolle-hover-card-trigger class="cursor-pointer hover:underline">
-    See preview
-  </div>
-  <tolle-hover-card-content class="w-80">
-    <div class="text-sm">
-      <p class="font-medium mb-2">Content Preview</p>
-      <p class="text-muted-foreground line-clamp-3">
-        This is a preview of the content that would be shown in the main view.
-        Hover cards are great for giving users a glimpse of what's available
-        without navigating away from the current page.
-      </p>
-    </div>
-  </tolle-hover-card-content>
-</tolle-hover-card>
-```
-
-## Hover Card with Links
-
-### Navigation Preview
-
-```html
-<tolle-hover-card>
-  <div tolle-hover-card-trigger class="cursor-pointer hover:text-primary">
-    Dashboard
-  </div>
-  <tolle-hover-card-content class="w-48">
-    <div class="space-y-1">
-      <button tolle-button variant="ghost" class="w-full justify-start">
-        <i class="ri-home-line mr-2"></i> Overview
-      </button>
-      <button tolle-button variant="ghost" class="w-full justify-start">
-        <i class="ri-bar-chart-line mr-2"></i> Analytics
-      </button>
-      <button tolle-button variant="ghost" class="w-full justify-start">
-        <i class="ri-user-follow-line mr-2"></i> Users
-      </button>
-    </div>
-  </tolle-hover-card-content>
-</tolle-hover-card>
-```
-
-## Hover Card in Data Table
-
-### Cell Preview
-
-```html
-<table class="w-full">
-  <thead class="bg-muted">
-    <tr>
-      <th class="p-4">User</th>
-      <th class="p-4">Email</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let user of users">
-      <td class="p-4">
-        <tolle-hover-card>
-          <div tolle-hover-card-trigger class="cursor-pointer font-medium hover:text-primary">
-            {{ user.name }}
-          </div>
-          <tolle-hover-card-content class="w-48">
-            <div class="font-medium">{{ user.name }}</div>
-            <div class="text-sm text-muted-foreground">{{ user.email }}</div>
-          </tolle-hover-card-content>
-        </tolle-hover-card>
-      </td>
-      <td class="p-4">{{ user.email }}</td>
-    </tr>
-  </tbody>
-</table>
-```
-
-## Hover Card with Custom Placement
-
-### Different Positions
-
-```html
-<!-- Top -->
-<tolle-hover-card placement="top">
-  <div tolle-hover-card-trigger>Top</div>
-  <tolle-hover-card-content>Top content</tolle-hover-card-content>
-</tolle-hover-card>
-
-<!-- Bottom (default) -->
-<tolle-hover-card placement="bottom">
-  <div tolle-hover-card-trigger>Bottom</div>
-  <tolle-hover-card-content>Bottom content</tolle-hover-card-content>
-</tolle-hover-card>
-
-<!-- Left -->
-<tolle-hover-card placement="left">
-  <div tolle-hover-card-trigger>Left</div>
-  <tolle-hover-card-content>Left content</tolle-hover-card-content>
-</tolle-hover-card>
-
-<!-- Right -->
-<tolle-hover-card placement="right">
-  <div tolle-hover-card-trigger>Right</div>
-  <tolle-hover-card-content>Right content</tolle-hover-card-content>
-</tolle-hover-card>
-```
-
-## Hover Card with Card
-
-```html
-<tolle-hover-card>
-  <div tolle-hover-card-trigger class="cursor-pointer">
-    <tolle-card class="w-64">
-      <tolle-card-header>
-        <tolle-card-title>Card Title</tolle-card-title>
-      </tolle-card-header>
-      <tolle-card-content>
-        <p>Card content</p>
-      </tolle-card-content>
-    </tolle-card>
-  </div>
-  <tolle-hover-card-content>
-    <p>Additional information</p>
-  </tolle-hover-card-content>
-</tolle-hover-card>
-```
-
-## Hover Card with Image Preview
-
-### Image Preview
-
-```html
-<tolle-hover-card>
-  <div tolle-hover-card-trigger class="cursor-pointer">
-    <img
-      src="thumbnail.jpg"
-      class="h-24 w-24 rounded-lg object-cover"
-    />
-  </div>
-  <tolle-hover-card-content class="w-64">
-    <img
-      src="full-image.jpg"
-      class="w-full h-48 object-cover rounded-lg mb-2"
-    />
-    <div class="font-medium">Image Title</div>
-    <div class="text-sm text-muted-foreground">1024x768 • 2MB</div>
-  </tolle-hover-card-content>
-</tolle-hover-card>
-```
-
-## Hover Card with Action Buttons
-
-```html
-<tolle-hover-card>
-  <div tolle-hover-card-trigger class="cursor-pointer">
-    <button tolle-button variant="outline" size="sm">View User</button>
-  </div>
-  <tolle-hover-card-content class="w-48">
-    <div class="flex flex-col space-y-1">
-      <button tolle-button variant="ghost" size="sm" class="justify-start">
-        <i class="ri-edit-line mr-2"></i> Edit
-      </button>
-      <button tolle-button variant="ghost" size="sm" class="justify-start">
-        <i class="ri-delete-bin-line mr-2"></i> Delete
-      </button>
-      <div tolle-dropdown-separator></div>
-      <button tolle-button variant="ghost" size="sm" class="justify-start">
-        <i class="ri-mail-line mr-2"></i> Send Email
-      </button>
-    </div>
-  </tolle-hover-card-content>
-</tolle-hover-card>
-```
+- **Mouse Users**: Hover over the trigger element to show the card, move away to hide it.
+- **Keyboard Users**: Focus on the trigger element to show the card, blur or Tab away to hide it.
+- **Screen Readers**: The hover card content is accessible when the trigger receives focus.
