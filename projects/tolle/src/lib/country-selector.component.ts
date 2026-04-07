@@ -68,7 +68,8 @@ import { cn } from './utils/cn';
         </div>
 
         <div
-          class="flex min-w-[300px] max-w-[400px] flex-col overflow-hidden rounded-md border border-border bg-popover shadow-md">
+          class="flex min-w-[300px] max-w-[400px] flex-col overflow-hidden rounded-md border border-border bg-popover shadow-md"
+          (mousedown)="$event.stopPropagation()">
           <div class="sticky top-0 z-10 border-b border-border bg-popover p-2 shadow-sm">
             <tolle-input
               size="sm"
@@ -139,8 +140,11 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   @Input() defaultCountryCode = 'GH';
   @Input() returnValue: 'object' | 'isoAlpha2' | 'dialCode' | 'name' = 'isoAlpha2';
   @Input() showName = true;
+  @Input() externalFocused: boolean | undefined;
 
   @Output() onSelect = new EventEmitter<any>();
+  @Output() onFocusChange = new EventEmitter<void>();
+  @Output() onBlurChange = new EventEmitter<void>();
 
   @ViewChild('popover') popover!: PopoverComponent;
   @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
@@ -173,28 +177,40 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   get computedTriggerClass() {
+    const focused = this.externalFocused !== undefined ? this.externalFocused : this.isFocused;
     return cn(
-      'flex w-full items-center justify-between rounded-md border transition-all duration-200',
+      'flex w-full items-center justify-between border transition-all duration-200',
       'bg-background text-foreground',
       'border-input shadow-sm',
       this.size === 'xs' && 'h-8 px-2 text-xs',
       this.size === 'sm' && 'h-9 px-3 text-sm',
       this.size === 'default' && 'h-10 px-3 text-sm',
       this.size === 'lg' && 'h-11 px-4 text-base',
+      // Rounded corners
+      'rounded-md',
+      // Focus state
       !(this.readonly || this.disabled) && [
         'focus:outline-none',
         'focus:ring-4',
         'focus:ring-ring/30',
         'focus:ring-offset-0',
-        'focus:border-primary/80',
+        'shadow-none',
+        this.error ? 'focus:border-destructive/80' : 'focus:border-primary/80',
       ],
+      // External focus state (when controlled by parent)
+      !(this.readonly || this.disabled) &&
+        focused && [
+          'ring-4',
+          'ring-ring/30',
+          'ring-offset-0',
+          'shadow-none',
+          this.error ? 'border-destructive/80' : 'border-primary/80',
+        ],
       !(this.readonly || this.disabled) && 'hover:border-accent',
+      // Error state
       this.error && [
         'border-destructive',
-        !(this.readonly || this.disabled) && [
-          'focus:border-destructive/80',
-          'focus:ring-destructive/30',
-        ],
+        !(this.readonly || this.disabled) && focused && 'ring-destructive/30',
       ],
       this.disabled && 'cursor-not-allowed opacity-50 border-opacity-50',
       this.readonly && 'cursor-default border-dashed',
@@ -265,11 +281,13 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
 
   onFocus(): void {
     this.isFocused = true;
+    this.onFocusChange.emit();
   }
 
   onBlur(): void {
     this.isFocused = false;
     this.onTouched();
+    this.onBlurChange.emit();
   }
 
   onPopoverOpen() {

@@ -1,6 +1,11 @@
 import {
-  Component, Input, forwardRef, ElementRef, ViewChild,
-  AfterContentChecked, ChangeDetectorRef
+  Component,
+  Input,
+  forwardRef,
+  ElementRef,
+  ViewChild,
+  AfterContentChecked,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -14,25 +19,19 @@ import { cn } from './utils/cn';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => MaskedInputComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   template: `
-    <div class="flex flex-col gap-1.5 w-full">
-      <label
-        *ngIf="label"
-        [for]="id"
-        [class]="computedLabelClass"
-      >
+    <div class="flex w-full flex-col gap-1.5">
+      <label *ngIf="label" [for]="id" [class]="computedLabelClass">
         {{ label }}
       </label>
 
-      <div
-        [class]="computedContainerClass"
-        (click)="focusInput()"
-      >
+      <div [class]="computedContainerClass" (click)="focusInput()">
         <!-- Prefix Icon -->
-        <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
+        <div
+          class="flex h-full items-center text-muted-foreground transition-colors duration-200 group-focus-within:text-primary">
           <ng-content select="[prefix]"></ng-content>
         </div>
 
@@ -49,11 +48,11 @@ import { cn } from './utils/cn';
           (focus)="onFocus()"
           [class]="computedInputClass"
           [attr.aria-invalid]="error"
-          [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
-        />
+          [attr.aria-describedby]="error && errorMessage ? id + '-error' : null" />
 
         <!-- Suffix Icon -->
-        <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
+        <div
+          class="flex h-full items-center text-muted-foreground transition-colors duration-200 group-focus-within:text-primary">
           <ng-content select="[suffix]"></ng-content>
         </div>
       </div>
@@ -61,21 +60,16 @@ import { cn } from './utils/cn';
       <ng-container *ngIf="!disabled">
         <p
           *ngIf="hint && !error"
-          class="text-xs text-muted-foreground px-1 transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus"
-        >
+          class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
+          [class.opacity-0]="isFocused && hideHintOnFocus">
           {{ hint }}
         </p>
-        <p
-          *ngIf="error && errorMessage"
-          [id]="id + '-error'"
-          class="text-xs text-destructive px-1"
-        >
+        <p *ngIf="error && errorMessage" [id]="id + '-error'" class="px-1 text-xs text-destructive">
           {{ errorMessage }}
         </p>
       </ng-container>
     </div>
-  `
+  `,
 })
 export class MaskedInputComponent implements ControlValueAccessor, AfterContentChecked {
   @Input() id: string = `masked-input-${Math.random().toString(36).substr(2, 9)}`;
@@ -93,6 +87,7 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
   @Input() returnRaw = false;
   @Input() hideHintOnFocus: boolean = true;
+  @Input() externalFocused: boolean | undefined;
 
   @ViewChild('inputEl', { static: true }) inputEl!: ElementRef<HTMLInputElement>;
 
@@ -102,13 +97,20 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
   isFocused: boolean = false;
 
   private tokens: { [key: string]: RegExp } = {
-    '0': /\d/, '9': /\d/, 'a': /[a-z]/i, 'A': /[a-z]/i, '*': /[a-z0-9]/i
+    '0': /\d/,
+    '9': /\d/,
+    a: /[a-z]/i,
+    A: /[a-z]/i,
+    '*': /[a-z0-9]/i,
   };
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
-  constructor(private el: ElementRef, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private el: ElementRef,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngAfterContentChecked() {
     const prefix = this.el.nativeElement.querySelector('[prefix]');
@@ -123,56 +125,47 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
 
   get computedLabelClass() {
     return cn(
-      "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
-      this.disabled && "opacity-50"
+      'text-sm font-medium text-foreground leading-none transition-opacity duration-200',
+      this.disabled && 'opacity-50'
     );
   }
 
   get computedContainerClass() {
+    const focused = this.externalFocused !== undefined ? this.externalFocused : this.isFocused;
     return cn(
       // Base styles
-      "group relative flex items-center w-full rounded-md border transition-all duration-200",
-      "bg-background",
-
-      // Border and shadow
-      "border-input shadow-sm",
+      'group relative flex items-center w-full border transition-all duration-200',
+      'bg-background border-input shadow-sm',
 
       // Sizing
-      this.size === 'xs' && "h-8 px-2 gap-1.5 text-xs",
-      this.size === 'sm' && "h-9 px-3 gap-2 text-sm",
-      this.size === 'default' && "h-10 px-3 gap-2 text-sm",
-      this.size === 'lg' && "h-11 px-4 gap-3 text-base",
+      this.size === 'xs' && 'h-8 px-2 gap-1.5 text-xs',
+      this.size === 'sm' && 'h-9 px-3 gap-2 text-sm',
+      this.size === 'default' && 'h-10 px-3 gap-2 text-sm',
+      this.size === 'lg' && 'h-11 px-4 gap-3 text-base',
 
-      // Focus state - SIMPLE LIKE ZARDUI
+      // Rounded corners
+      'rounded-md',
+
+      // Focus state
       !(this.readonly || this.disabled) && [
-        "focus-within:border-primary/80",
-        "focus-within:ring-4",
-        "focus-within:ring-ring/30",
-        "focus-within:ring-offset-0",
-        "focus-within:shadow-none",
+        'focus-within:ring-4',
+        'focus-within:ring-ring/30',
+        'focus-within:ring-offset-0',
+        'focus-within:shadow-none',
+        this.error ? 'focus-within:border-destructive/80' : 'focus-within:border-primary/80',
       ],
 
       // Error state
       this.error && [
-        "border-destructive",
-        !(this.readonly || this.disabled) && [
-          "focus-within:border-destructive/80",
-          "focus-within:ring-destructive/30"
-        ]
+        'border-destructive',
+        !(this.readonly || this.disabled) && 'focus-within:ring-destructive/30',
       ],
 
       // Disabled state
-      this.disabled && [
-        "cursor-not-allowed opacity-50",
-        "border-opacity-50"
-      ],
+      this.disabled && ['cursor-not-allowed opacity-50', 'border-opacity-50'],
 
       // Readonly state
-      this.readonly && [
-        "cursor-default",
-        "border-dashed",
-        !this.disabled && "focus-within:ring-0 focus-within:border-opacity-100"
-      ],
+      this.readonly && ['cursor-default', 'border-dashed'],
 
       this.containerClass
     );
@@ -181,27 +174,27 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
   get computedInputClass() {
     return cn(
       // Base styles
-      "flex-1 bg-transparent border-none p-0",
-      "placeholder:text-muted-foreground",
+      'flex-1 bg-transparent border-none p-0',
+      'placeholder:text-muted-foreground',
 
       // Remove all default focus styles
-      "focus:outline-none focus:ring-0 focus:shadow-none",
+      'focus:outline-none focus:ring-0 focus:shadow-none',
 
       // Text sizing
-      this.size === 'xs' && "text-xs",
-      this.size === 'sm' && "text-sm",
-      this.size === 'default' && "text-sm",
-      this.size === 'lg' && "text-base",
+      this.size === 'xs' && 'text-xs',
+      this.size === 'sm' && 'text-sm',
+      this.size === 'default' && 'text-sm',
+      this.size === 'lg' && 'text-base',
 
       // Cursor states
-      this.disabled && "cursor-not-allowed",
-      this.readonly && "cursor-default",
+      this.disabled && 'cursor-not-allowed',
+      this.readonly && 'cursor-default',
 
       // Text color
-      "text-foreground",
+      'text-foreground',
 
       // Selection color
-      "selection:bg-primary/20 selection:text-foreground",
+      'selection:bg-primary/20 selection:text-foreground',
 
       this.class
     );
