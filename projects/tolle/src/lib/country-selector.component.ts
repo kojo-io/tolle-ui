@@ -5,9 +5,10 @@ import {
   inject,
   OnInit,
   ViewChild,
+  ElementRef,
   ChangeDetectorRef,
   Output,
-  EventEmitter
+  EventEmitter,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -25,19 +26,20 @@ import { cn } from './utils/cn';
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CountrySelectorComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   template: `
-    <div class="flex flex-col gap-1.5 w-full">
-      <label
-        *ngIf="label"
-        [for]="id"
-        [class]="computedLabelClass">
+    <div class="flex w-full flex-col gap-1.5">
+      <label *ngIf="label" [for]="id" [class]="computedLabelClass">
         {{ label }}
       </label>
 
-      <tolle-popover #popover [placement]="'bottom-start'" (onClose)="onPopoverClose()">
+      <tolle-popover
+        #popover
+        [placement]="'bottom-start'"
+        (onOpen)="onPopoverOpen()"
+        (onClose)="onPopoverClose()">
         <div trigger class="w-full">
           <button
             type="button"
@@ -47,19 +49,17 @@ import { cn } from './utils/cn';
             (blur)="onBlur()"
             (focus)="onFocus()"
             [attr.aria-invalid]="error"
-            [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
-          >
+            [attr.aria-describedby]="error && errorMessage ? id + '-error' : null">
             <div class="flex items-center gap-2 truncate">
               <img
                 *ngIf="selectedCountry"
                 [src]="getFlagUrl(selectedCountry.flag)"
-                class="h-4 w-6 rounded-sm border border-border object-cover flex-shrink-0"
-                [alt]="selectedCountry.name"
-              />
+                class="h-4 w-6 flex-shrink-0 rounded-sm border border-border object-cover"
+                [alt]="selectedCountry.name" />
               <span *ngIf="selectedCountry && showName" class="truncate font-medium">
                 {{ selectedCountry.name }}
               </span>
-              <span *ngIf="!selectedCountry" class="text-muted-foreground truncate">
+              <span *ngIf="!selectedCountry" class="truncate text-muted-foreground">
                 {{ placeholder }}
               </span>
             </div>
@@ -67,16 +67,16 @@ import { cn } from './utils/cn';
           </button>
         </div>
 
-        <div class="flex flex-col bg-popover rounded-md border border-border shadow-md min-w-[300px] max-w-[400px] overflow-hidden">
-          <div class="p-2 border-b border-border bg-popover shadow-sm sticky top-0 z-10">
+        <div
+          class="flex min-w-[300px] max-w-[400px] flex-col overflow-hidden rounded-md border border-border bg-popover shadow-md">
+          <div class="sticky top-0 z-10 border-b border-border bg-popover p-2 shadow-sm">
             <tolle-input
               size="sm"
               placeholder="Search country..."
               [(ngModel)]="searchQuery"
               (ngModelChange)="filterCountries($event)"
               class="w-full"
-              #searchInput
-            >
+              #searchInput>
               <i prefix class="ri-search-line"></i>
             </tolle-input>
           </div>
@@ -85,20 +85,22 @@ import { cn } from './utils/cn';
             <div
               *ngFor="let country of shadowCountries"
               (click)="selectCountry(country)"
-              [class]="getItemClass(country)"
-            >
-              <div class="flex items-center gap-3 w-full">
+              [class]="getItemClass(country)">
+              <div class="flex w-full items-center gap-3">
                 <img
                   [src]="getFlagUrl(country.flag)"
-                  class="h-4 w-6 rounded-sm border border-border object-cover flex-shrink-0"
-                  [alt]="country.name"
-                />
-                <span class="text-sm flex-1 truncate">{{ country.name }}</span>
+                  class="h-4 w-6 flex-shrink-0 rounded-sm border border-border object-cover"
+                  [alt]="country.name" />
+                <span class="flex-1 truncate text-sm">{{ country.name }}</span>
                 <span class="text-xs text-muted-foreground">{{ country.dialCode }}</span>
-                <i *ngIf="selectedCountry?.isoAlpha2 === country.isoAlpha2" class="ri-check-line text-primary"></i>
+                <i
+                  *ngIf="selectedCountry?.isoAlpha2 === country.isoAlpha2"
+                  class="ri-check-line text-primary"></i>
               </div>
             </div>
-            <div *ngIf="shadowCountries.length === 0" class="py-6 text-center text-sm text-muted-foreground">
+            <div
+              *ngIf="shadowCountries.length === 0"
+              class="py-6 text-center text-sm text-muted-foreground">
               No countries found.
             </div>
           </div>
@@ -108,21 +110,19 @@ import { cn } from './utils/cn';
       <ng-container *ngIf="!disabled">
         <p
           *ngIf="hint && !error"
-          class="text-xs text-muted-foreground px-1 transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus"
-        >
+          class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
+          [class.opacity-0]="isFocused && hideHintOnFocus">
           {{ hint }}
         </p>
         <p
           *ngIf="error && errorMessage"
           [id]="id + '-error'"
-          class="text-xs text-destructive px-1 font-medium"
-        >
+          class="px-1 text-xs font-medium text-destructive">
           {{ errorMessage }}
         </p>
       </ng-container>
     </div>
-  `
+  `,
 })
 export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   @Input() id = `country-selector-${Math.random().toString(36).substr(2, 9)}`;
@@ -143,6 +143,7 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   @Output() onSelect = new EventEmitter<any>();
 
   @ViewChild('popover') popover!: PopoverComponent;
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
 
   private countryCodesService = inject(CountryCodesService);
   private sanitizer = inject(DomSanitizer);
@@ -154,8 +155,8 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   shadowCountries: any[] = [];
   isFocused = false;
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   protected cn = cn;
 
@@ -185,15 +186,15 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
         'focus:ring-4',
         'focus:ring-ring/30',
         'focus:ring-offset-0',
-        'focus:border-primary/80'
+        'focus:border-primary/80',
       ],
       !(this.readonly || this.disabled) && 'hover:border-accent',
       this.error && [
         'border-destructive',
         !(this.readonly || this.disabled) && [
           'focus:border-destructive/80',
-          'focus:ring-destructive/30'
-        ]
+          'focus:ring-destructive/30',
+        ],
       ],
       this.disabled && 'cursor-not-allowed opacity-50 border-opacity-50',
       this.readonly && 'cursor-default border-dashed',
@@ -203,8 +204,8 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
 
   get computedLabelClass() {
     return cn(
-      "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
-      this.disabled && "opacity-50"
+      'text-sm font-medium text-foreground leading-none transition-opacity duration-200',
+      this.disabled && 'opacity-50'
     );
   }
 
@@ -212,7 +213,7 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
     return cn(
       'ri-arrow-down-s-line text-muted-foreground ml-2 transition-transform duration-200',
       this.popover?.isOpen ? 'rotate-180' : '',
-      (this.size === 'xs' || this.size === 'sm') ? 'text-[14px]' : 'text-[18px]',
+      this.size === 'xs' || this.size === 'sm' ? 'text-[14px]' : 'text-[18px]',
       (this.disabled || this.readonly) && 'opacity-30'
     );
   }
@@ -226,17 +227,16 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   getFlagUrl(flagBase64: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(
-      'data:image/*;base64,' + flagBase64
-    );
+    return this.sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + flagBase64);
   }
 
   filterCountries(query: string) {
     const filter = (query || '').toLowerCase().trim();
-    this.shadowCountries = this.countryCodesService.countries.filter(c =>
-      c.name.toLowerCase().includes(filter) ||
-      c.dialCode.includes(filter) ||
-      c.isoAlpha2.toLowerCase().includes(filter)
+    this.shadowCountries = this.countryCodesService.countries.filter(
+      c =>
+        c.name.toLowerCase().includes(filter) ||
+        c.dialCode.includes(filter) ||
+        c.isoAlpha2.toLowerCase().includes(filter)
     );
   }
 
@@ -250,11 +250,16 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
 
   private getReturnValue(country: any) {
     switch (this.returnValue) {
-      case 'object': return country;
-      case 'isoAlpha2': return country.isoAlpha2;
-      case 'dialCode': return country.dialCode;
-      case 'name': return country.name;
-      default: return country.isoAlpha2;
+      case 'object':
+        return country;
+      case 'isoAlpha2':
+        return country.isoAlpha2;
+      case 'dialCode':
+        return country.dialCode;
+      case 'name':
+        return country.name;
+      default:
+        return country.isoAlpha2;
     }
   }
 
@@ -265,6 +270,12 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   onBlur(): void {
     this.isFocused = false;
     this.onTouched();
+  }
+
+  onPopoverOpen() {
+    setTimeout(() => {
+      this.searchInput?.nativeElement?.focus();
+    }, 0);
   }
 
   onPopoverClose() {
@@ -289,7 +300,13 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
 }
