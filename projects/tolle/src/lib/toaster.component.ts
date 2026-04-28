@@ -47,7 +47,7 @@ export class ToastContainerComponent {
   position = input<ToastPosition>('bottom-right');
 
   icons = {
-    destructive: 'ri-error-warning-line text-destructive dark:text-red-400',
+    destructive: 'ri-error-warning-line text-red-600 dark:text-red-400',
     success: 'ri-checkbox-circle-line text-emerald-600 dark:text-emerald-400',
     default: 'ri-information-line text-primary'
   } as const;
@@ -55,9 +55,9 @@ export class ToastContainerComponent {
   getVariantClasses(variant: string = 'default') {
     switch (variant) {
       case 'destructive':
-        return 'border-destructive/50 bg-red-50 dark:bg-destructive/10 text-destructive dark:text-red-400';
+        return 'border-red-500/50 dark:border-red-800/50 bg-red-50 dark:bg-red-950 text-red-700 dark:text-red-300';
       case 'success':
-        return 'border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400';
+        return 'border-emerald-500/50 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300';
       default:
         return 'bg-background text-foreground border-border';
     }
@@ -66,7 +66,7 @@ export class ToastContainerComponent {
   getProgressClasses(variant: string = 'default') {
     switch (variant) {
       case 'destructive':
-        return 'bg-destructive dark:bg-red-400';
+        return 'bg-red-500 dark:bg-red-400';
       case 'success':
         return 'bg-emerald-600 dark:bg-emerald-400';
       default:
