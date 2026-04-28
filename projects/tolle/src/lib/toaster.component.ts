@@ -47,19 +47,19 @@ export class ToastContainerComponent {
   toasts$ = this.toastService.toasts$;
 
   icons = {
-    destructive: 'ri-error-warning-line text-destructive dark:text-red-400',
-    success: 'ri-checkbox-circle-line text-emerald-600 dark:text-emerald-400',
+    destructive: 'ri-error-warning-line text-destructive dark:text-red-300',
+    success: 'ri-checkbox-circle-line text-emerald-600 dark:text-emerald-300',
     default: 'ri-information-line text-primary'
   };
 
   getVariantClasses(variant: string = 'default') {
     switch (variant) {
       case 'destructive':
-        return 'border-destructive/50 bg-destructive/5 dark:bg-destructive/10 text-destructive dark:text-red-400';
+        return 'border-destructive/50 dark:border-red-800/50 bg-destructive/5 dark:bg-red-950 text-destructive dark:text-red-300';
       case 'success':
-        return 'border-emerald-500/50 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400';
+        return 'border-emerald-500/50 dark:border-emerald-800/50 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300';
       default:
-        return 'bg-background text-foreground border-border';
+        return 'bg-background dark:bg-gray-900 text-foreground border-border';
     }
   }
 

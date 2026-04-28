@@ -79,3 +79,5 @@ export * from './lib/sheet.service';
 export * from './lib/sheet-ref';
 export * from './lib/sheet.types';
 export * from './lib/sheet-wrapper.component';
+export * from './lib/resizable-panel.component';
+export * from './lib/resizable-panel-item.component';
