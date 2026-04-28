@@ -1,0 +1,8 @@
+{
+  "autoAcceptShell": false,
+  "allowSudo": false,
+  "commandAllowlist": [],
+  "defaultProvider": null,
+  "defaultModel": null,
+  "showThinking": true
+}
