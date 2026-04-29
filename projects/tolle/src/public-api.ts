@@ -14,6 +14,7 @@ export * from './lib/switch.component';
 export * from './lib/badge.component';
 export * from './lib/skeleton.component';
 export * from './lib/checkbox.component';
+export * from './lib/tag-input.component';
 export * from './lib/tooltip.directive';
 export * from './lib/toast.service'
 export * from './lib/toaster.component';
@@ -83,4 +84,3 @@ export * from './lib/country-selector.component';
 export * from './lib/phone-number-input.component';
 export * from './lib/phone-number.service';
 export * from './lib/country-codes.service';
-
