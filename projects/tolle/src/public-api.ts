@@ -81,3 +81,4 @@ export * from './lib/sheet.types';
 export * from './lib/sheet-wrapper.component';
 export * from './lib/resizable-panel.component';
 export * from './lib/resizable-panel-item.component';
+export * from './lib/tag-input.component';
