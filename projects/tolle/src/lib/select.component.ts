@@ -7,7 +7,8 @@ import {
   OnDestroy,
   ContentChildren,
   QueryList,
-  AfterContentInit
+  AfterContentInit,
+  ChangeDetectorRef
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -31,6 +32,11 @@ import { InputComponent } from './input.component';
       multi: true
     }
   ],
+  styles: [`
+    .hidden-dropdown {
+      display: none !important;
+    }
+  `],
   template: `
     <div [class]="cn('relative w-full', 'size-' + size)" #container>
       <button
@@ -48,7 +54,7 @@ import { InputComponent } from './input.component';
 
       <div
         #popover
-        *ngIf="isOpen"
+        [class.hidden-dropdown]="!isOpen"
         class="fixed bg-popover z-[999] overflow-auto flex flex-col rounded-md border border-border text-popover-foreground shadow-md"
         style="visibility: hidden; top: 0; left: 0;">
         <div *ngIf="searchable" class="p-2 border-b border-border bg-popover h-auto">
@@ -86,6 +92,9 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   @ContentChildren(SelectItemComponent, { descendants: true }) items!: QueryList<SelectItemComponent>;
 
   private sub = new Subscription();
+  private itemsChangeSub?: Subscription;
+  private pendingValue: any = undefined;
+
   searchQuery = '';
   noResults = false;
   isOpen = false;
@@ -98,7 +107,10 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
 
   protected cn = cn;
 
-  constructor(private selectService: SelectService) {
+  constructor(
+    private selectService: SelectService,
+    private cdr: ChangeDetectorRef
+  ) {
     this.sub.add(
       this.selectService.selectedValue$.subscribe(val => {
         this.value = val;
@@ -156,8 +168,26 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   }
 
   ngAfterContentInit() {
+    // Subscribe to items changes to handle dynamic content
+    this.itemsChangeSub = this.items.changes.subscribe(() => {
+      this.updateItemSelection();
+      this.applyPendingValue();
+    });
+
+    // Apply initial selection if items are already available
     this.updateItemSelection();
-    this.items.changes.subscribe(() => this.updateItemSelection());
+    this.applyPendingValue();
+  }
+
+  private applyPendingValue(): void {
+    if (this.pendingValue !== undefined && this.items && this.items.length > 0) {
+      const found = this.items.find(i => i.value === this.pendingValue);
+      if (found) {
+        this.selectedLabel = found.getLabel();
+        this.cdr.markForCheck();
+      }
+      this.pendingValue = undefined;
+    }
   }
 
   private updateItemSelection() {
@@ -165,6 +195,16 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       this.items.forEach(item => {
         item.selected = item.value === this.value;
       });
+    }
+  }
+
+  private syncSelectedLabel(): void {
+    if (this.items) {
+      const found = this.items.find(i => i.value === this.value);
+      if (found) {
+        this.selectedLabel = found.getLabel();
+        this.cdr.markForCheck();
+      }
     }
   }
 
@@ -182,7 +222,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   open() {
     this.isOpen = true;
     this.trigger.nativeElement.focus();
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       this.updatePosition();
       document.addEventListener('mousedown', this._outsideClickHandler);
     });
@@ -249,9 +289,15 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   writeValue(value: any): void {
     this.value = value;
     this.updateItemSelection();
-    if (this.items) {
+    if (this.items && this.items.length > 0) {
       const found = this.items.find(i => i.value === value);
-      if (found) this.selectedLabel = found.getLabel();
+      if (found) {
+        this.selectedLabel = found.getLabel();
+        this.cdr.markForCheck();
+      }
+    } else {
+      // Queue the value for when items become available
+      this.pendingValue = value;
     }
   }
 
@@ -261,6 +307,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.itemsChangeSub?.unsubscribe();
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
     document.removeEventListener('mousedown', this._outsideClickHandler);
   }
