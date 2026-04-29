@@ -12,9 +12,10 @@ export class Modal<T = any> {
    * - sm: 425px (Standard dialogs)
    * - default: 544px (Forms)
    * - lg: 90% / 1024px (Data tables)
+   * - xl: 1280px (Large forms, dashboards)
    * - fullscreen: 100vw/100vh (Complex workflows)
    */
-  size?: 'xs' | 'sm' | 'default' | 'lg' | 'fullscreen' = 'default';
+  size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl' | 'fullscreen' = 'default';
 
   /** * If true (default), clicking the backdrop closes the modal.
    * Set to false for "blocking" modals (e.g., Terms of Service).
