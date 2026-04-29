@@ -66,7 +66,8 @@ export class ModalComponent implements OnInit {
       size === 'xs' && 'max-w-[320px]',
       size === 'sm' && 'max-w-[425px]',
       size === 'default' && 'max-w-[544px]',
-      size === 'lg' && 'max-w-[1024px]'
+      size === 'lg' && 'max-w-[1024px]',
+      size === 'xl' && 'max-w-[1280px]'
     );
   }
 
