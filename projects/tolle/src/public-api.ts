@@ -84,3 +84,5 @@ export * from './lib/country-selector.component';
 export * from './lib/phone-number-input.component';
 export * from './lib/phone-number.service';
 export * from './lib/country-codes.service';
+export * from './lib/resizable-panel.component';
+export * from './lib/resizable-panel-item.component';
