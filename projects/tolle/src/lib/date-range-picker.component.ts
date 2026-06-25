@@ -22,21 +22,24 @@ import { DateRange } from './types/date-range';
     }
   ],
   template: `
-    <div class="relative w-full" #triggerContainer>
+    <div class="relative w-full">
       <tolle-input
         [placeholder]="placeholder"
         [disabled]="disabled"
         [ngModel]="displayValue"
         [class]="class"
       >
-        <div suffix class="flex items-center gap-1.5 cursor-pointer">
-          <i
+        <div suffix class="flex items-center gap-1.5">
+          <button
+            type="button"
+            tabindex="-1"
             *ngIf="(value.start || value.end) && !disabled"
             (click)="clear($event)"
             class="ri-close-line cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
-          ></i>
+          ></button>
 
           <i
+            #trigger
             (click)="togglePopover($event)"
             class="ri-calendar-line cursor-pointer text-muted-foreground hover:text-primary transition-colors"
           ></i>
@@ -65,7 +68,7 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
   @Input() disablePastDates = false;
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
 
-  @ViewChild('triggerContainer') triggerContainer!: ElementRef;
+  @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
 
   value: DateRange = { start: null, end: null };
@@ -73,7 +76,7 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
   cleanupAutoUpdate?: () => void;
 
   private _outsideClickHandler = (event: MouseEvent) => {
-    if (!this.triggerContainer.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+    if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
       this.close();
     }
   };
@@ -108,7 +111,11 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
 
   open() {
     this.isOpen = true;
-    setTimeout(() => {
+    if (this.trigger?.nativeElement) {
+      this.trigger.nativeElement.focus();
+    }
+    const schedule = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : (fn: FrameRequestCallback) => setTimeout(fn, 0);
+    schedule(() => {
       this.updatePosition();
       document.addEventListener('mousedown', this._outsideClickHandler);
     });
@@ -132,13 +139,13 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
 
   // --- Floating UI Positioning with Fixed Strategy ---
   private updatePosition() {
-    if (!this.triggerContainer || !this.popover) return;
+    if (!this.trigger || !this.popover) return;
 
     this.cleanupAutoUpdate = autoUpdate(
-      this.triggerContainer.nativeElement,
+      this.trigger.nativeElement,
       this.popover.nativeElement,
       () => {
-        computePosition(this.triggerContainer.nativeElement, this.popover.nativeElement, {
+        computePosition(this.trigger.nativeElement, this.popover.nativeElement, {
           placement: 'bottom-end',
           strategy: 'fixed', // Use fixed to escape column layout
           middleware: [

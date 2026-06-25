@@ -30,20 +30,26 @@ import { CalendarComponent, CalendarMode } from './calendar.component';
         [(ngModel)]="inputValue"
         (ngModelChange)="onInputChange($event)"
         [class]="cn(class)">
-        <div suffix class="flex items-center gap-1.5 cursor-pointer">
-          <i
+        <div suffix class="flex items-center gap-1.5">
+          <button
             *ngIf="value && !disabled && showClear"
+            type="button"
             (click)="clear($event)"
             class="ri-close-line cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
-          ></i>
+            tabindex="-1"
+          ></button>
 
-          <i
+          <button
+            type="button"
+            #trigger
             (click)="togglePopover($event)"
+            [disabled]="disabled"
             [class]="cn(
               'cursor-pointer text-muted-foreground transition-colors',
               'ri-calendar-line'
             )"
-          ></i>
+            tabindex="-1"
+          ></button>
         </div>
       </tolle-masked-input>
 
@@ -84,7 +90,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
   // Format functions for display
   @Input() displayFormat?: (date: Date, mode: CalendarMode) => string;
 
-  @ViewChild('triggerContainer') triggerContainer!: ElementRef;
+  @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
 
   value: Date | null = null;
@@ -93,7 +99,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
   cleanupAutoUpdate?: () => void;
 
   private _outsideClickHandler = (event: MouseEvent) => {
-    if (!this.triggerContainer.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+    if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
       this.close();
     }
   };
@@ -182,8 +188,10 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
   }
 
   open() {
+    if (this.disabled) return;
     this.isOpen = true;
-    setTimeout(() => {
+    this.trigger.nativeElement.focus();
+    requestAnimationFrame(() => {
       this.updatePosition();
       document.addEventListener('mousedown', this._outsideClickHandler);
     });
@@ -204,15 +212,15 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
   }
 
   private updatePosition() {
-    if (!this.triggerContainer || !this.popover) return;
+    if (!this.trigger || !this.popover) return;
 
     this.cleanupAutoUpdate = autoUpdate(
-      this.triggerContainer.nativeElement,
+      this.trigger.nativeElement,
       this.popover.nativeElement,
       () => {
-        computePosition(this.triggerContainer.nativeElement, this.popover.nativeElement, {
-          strategy: 'fixed', // ADDED: Fixed strategy
-          placement: 'bottom-start', // Changed to bottom-start to align with input left edge
+        computePosition(this.trigger.nativeElement, this.popover.nativeElement, {
+          strategy: 'fixed',
+          placement: 'bottom-start',
           middleware: [
             offset(4),
             flip(),
