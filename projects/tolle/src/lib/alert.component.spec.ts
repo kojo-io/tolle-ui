@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { AlertComponent } from './alert.component';
 
@@ -8,7 +9,8 @@ describe('AlertComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AlertComponent]
+      imports: [AlertComponent],
+      providers: [provideNoopAnimations()]
     })
     .compileComponents();
 

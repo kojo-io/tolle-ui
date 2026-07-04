@@ -1,4 +1,4 @@
-import { Component, Input, ContentChildren, QueryList, AfterContentInit, ElementRef, inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, Input, ContentChildren, QueryList, AfterContentInit, ElementRef, inject, ChangeDetectorRef, OnDestroy, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 import { ResizablePanelItemComponent } from './resizable-panel-item.component';
@@ -24,7 +24,8 @@ export class ResizablePanelComponent implements AfterContentInit, OnDestroy {
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
   @Input() class: string = '';
 
-  @ContentChildren(ResizablePanelItemComponent) panels!: QueryList<ResizablePanelItemComponent>;
+  // forwardRef breaks the panel <-> item circular import (TDZ at class-decoration time).
+  @ContentChildren(forwardRef(() => ResizablePanelItemComponent)) panels!: QueryList<ResizablePanelItemComponent>;
 
   private el = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);

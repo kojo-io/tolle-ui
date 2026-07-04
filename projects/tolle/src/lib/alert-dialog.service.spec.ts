@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { ApplicationRef } from '@angular/core';
 import { AlertDialogService } from './alert-dialog.service';
 import { AlertDialogConfig } from './alert-dialog.types';
 import { OverlayContainer } from '@angular/cdk/overlay';
@@ -30,6 +31,9 @@ describe('AlertDialogService Sizing', () => {
             description: 'Test description'
         });
 
+        // config is set after the overlay attaches, so flush CD to render the size class.
+        TestBed.inject(ApplicationRef).tick();
+
         const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div');
         expect(dialogContent?.classList.contains('max-w-lg')).toBeTrue();
     });
@@ -41,6 +45,9 @@ describe('AlertDialogService Sizing', () => {
             size: 'xs'
         });
 
+        // config is set after the overlay attaches, so flush CD to render the size class.
+        TestBed.inject(ApplicationRef).tick();
+
         const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div');
         expect(dialogContent?.classList.contains('max-w-xs')).toBeTrue();
     });
@@ -51,6 +58,9 @@ describe('AlertDialogService Sizing', () => {
             description: 'Test description',
             size: 'full'
         });
+
+        // config is set after the overlay attaches, so flush CD to render the size class.
+        TestBed.inject(ApplicationRef).tick();
 
         const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div');
         expect(dialogContent?.classList.contains('max-w-full')).toBeTrue();

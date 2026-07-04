@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 import { AccordionItemComponent } from './accordion-item.component';
 
@@ -8,7 +9,8 @@ describe('AccordionItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccordionItemComponent]
+      imports: [AccordionItemComponent],
+      providers: [provideNoopAnimations()]
     })
     .compileComponents();
 

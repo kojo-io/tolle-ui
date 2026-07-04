@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TolleMaskedInputComponent } from './masked-input.component';
+import { MaskedInputComponent } from './masked-input.component';
 
-describe('TolleMaskedInputComponent', () => {
-  let component: TolleMaskedInputComponent;
-  let fixture: ComponentFixture<TolleMaskedInputComponent>;
+describe('MaskedInputComponent', () => {
+  let component: MaskedInputComponent;
+  let fixture: ComponentFixture<MaskedInputComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TolleMaskedInputComponent]
+      imports: [MaskedInputComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TolleMaskedInputComponent);
+    fixture = TestBed.createComponent(MaskedInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
