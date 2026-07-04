@@ -83,8 +83,9 @@ export class DocLayoutComponent implements OnInit {
     {
       title: "AI Native",
       items: [
-        { title: "LLM Index (txt)", url: "/llm.txt", icon: "ri-robot-line", external: true },
-        { title: "Full Context (txt)", url: "/llm-ctx.txt", icon: "ri-file-list-3-line", external: true }
+        { title: "llms.txt (index)", url: "/llms.txt", icon: "ri-robot-line", external: true },
+        { title: "Full reference (txt)", url: "/llms-full.txt", icon: "ri-file-list-3-line", external: true },
+        { title: "Registry manifest (json)", url: "/registry/manifest.json", icon: "ri-braces-line", external: true }
       ]
     },
     {

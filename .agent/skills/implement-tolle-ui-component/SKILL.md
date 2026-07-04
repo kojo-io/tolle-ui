@@ -72,3 +72,16 @@ Activate this skill when you need to add a Tolle UI component (e.g., Button, Ale
     *   Verify the component renders with the correct styling (checked against the design system).
 3.  **Functionality Test**
     *   Interact with the component (click, toggle, etc.) to ensure expected behavior.
+
+# Authoring or modifying library components
+
+If you are working *inside* this repo on the library itself (not just consuming it), follow
+`projects/tolle/CONTRIBUTING.md`. Tolle UI derives its component registry, docs API tables,
+`llms.txt`, and MCP manifest from the component source via a single ts-morph generator, so the
+source must carry the metadata:
+
+*   Define variants with `cva` + `export type XProps = VariantProps<typeof xVariants>` (see `button.component.ts`).
+*   Put one-line JSDoc on every `@Input()` / `@Output()` (with `@default` where relevant).
+*   Keep selectors `tolle-*`; name projected slots via `<ng-content select="[slot]">`.
+*   Put anything un-inferrable (title, description, category, curated examples) in a typed
+    `<name>.registry.ts` sidecar beside the component.

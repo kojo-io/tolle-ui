@@ -1,5 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { BaseService } from '../../shared/base.service';
+import { RegistryDocsService } from '../../shared/registry-docs.service';
 import { NgIf } from '@angular/common';
 import { SegmentedComponent } from '../../../../../tolle/src/lib/segment.component';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +9,6 @@ import { BaseEditorComponent } from '../../shared/base-editor/base-editor.compon
 import { AnalyticsService } from '../../../../../showcase/src/app/analytics.service';
 import { PropTableComponent } from '../../shared/prop-table/prop-table.component';
 import { PlaygroundComponent } from '../../shared/playground/playground.component';
-import { PropEntry } from '../../shared/types';
 import { SourceCodeService } from '../../shared/source-code.service';
 import { Observable } from 'rxjs';
 import { SelectComponent } from '../../../../../tolle/src/lib/select.component';
@@ -66,16 +66,11 @@ export class AlertDocsComponent implements OnInit {
 </tolle-alert>`;
   }
 
-  alertProps: PropEntry[] = [
-    { name: 'variant', type: "'default' | 'destructive' | 'success' | 'warning' | 'info'", default: "'default'", description: 'The visual style of the alert.' },
-    { name: 'title', type: 'string', description: 'The title displayed at the top of the alert.' },
-    { name: 'dismissible', type: 'boolean', default: 'false', description: 'Whether the alert can be dismissed by the user.' },
-    { name: 'class', type: 'string', description: 'Additional CSS classes for the container.' }
-  ];
-
-  alertOutputs: PropEntry[] = [
-    { name: 'onClose', type: 'EventEmitter<void>', description: 'Fired when the alert is dismissed.' }
-  ];
+  // API tables are sourced from the generated registry (single source of truth),
+  // not hand-written — so they can't drift from the component. See RegistryDocsService.
+  registry = inject(RegistryDocsService);
+  alertProps = computed(() => this.registry.inputs('alert'));
+  alertOutputs = computed(() => this.registry.outputs('alert'));
 
   selectedTab = "preview";
   basicTab = "preview";

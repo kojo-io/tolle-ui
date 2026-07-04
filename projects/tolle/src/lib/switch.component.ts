@@ -1,7 +1,60 @@
 import { Component, Input, forwardRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
+
+const switchTrackVariants = cva(
+  'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
+  {
+    variants: {
+      size: {
+        xs: 'h-4 w-7',
+        sm: 'h-5 w-9',
+        default: 'h-6 w-11',
+        lg: 'h-7 w-[3.25rem]',
+      },
+      checked: {
+        true: 'bg-primary',
+        false: 'bg-input',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+      checked: false,
+    },
+  }
+);
+
+const switchThumbVariants = cva(
+  'pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform',
+  {
+    variants: {
+      size: {
+        xs: 'h-3 w-3',
+        sm: 'h-4 w-4',
+        default: 'h-5 w-5',
+        lg: 'h-6 w-6',
+      },
+      checked: {
+        true: '',
+        false: 'translate-x-0',
+      },
+    },
+    compoundVariants: [
+      { size: 'xs', checked: true, class: 'translate-x-3' },
+      { size: 'sm', checked: true, class: 'translate-x-4' },
+      { size: 'default', checked: true, class: 'translate-x-5' },
+      { size: 'lg', checked: true, class: 'translate-x-6' },
+    ],
+    defaultVariants: {
+      size: 'default',
+      checked: false,
+    },
+  }
+);
+
+export type SwitchProps = VariantProps<typeof switchTrackVariants>;
 
 @Component({
   selector: 'tolle-switch',
@@ -21,27 +74,19 @@ import { cn } from './utils/cn';
       [attr.aria-checked]="checked"
       [disabled]="disabled"
       (click)="toggle()"
-      [class]="cn(
-    'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50',
-    sizeClasses.track,
-    checked ? 'bg-primary' : 'bg-input',
-    class
-  )"
+      [class]="trackClass"
     >
-  <span
-    [class]="cn(
-      'pointer-events-none block rounded-full bg-background shadow-lg ring-0 transition-transform',
-      sizeClasses.thumb,
-      checked ? sizeClasses.translate : 'translate-x-0'
-    )"
-  ></span>
+      <span [class]="thumbClass"></span>
     </button>
   `
 })
 export class SwitchComponent implements ControlValueAccessor {
+  /** Extra Tailwind classes merged onto the switch track via `cn()` (last-wins). */
   @Input() class = '';
+  /** Disables the switch and blocks toggling. @default false */
   @Input() disabled = false;
-  @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  /** Size of the switch. @default 'default' */
+  @Input() size: SwitchProps['size'] = 'default';
 
   checked = false;
 
@@ -50,33 +95,16 @@ export class SwitchComponent implements ControlValueAccessor {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  get sizeClasses() {
-    const sizes = {
-      xs: {
-        track: 'h-4 w-7',
-        thumb: 'h-3 w-3',
-        translate: 'translate-x-3'
-      },
-      sm: {
-        track: 'h-5 w-9',
-        thumb: 'h-4 w-4',
-        translate: 'translate-x-4'
-      },
-      default: {
-        track: 'h-6 w-11',
-        thumb: 'h-5 w-5',
-        translate: 'translate-x-5'
-      },
-      lg: {
-        track: 'h-7 w-[3.25rem]',
-        thumb: 'h-6 w-6',
-        translate: 'translate-x-6'
-      }
-    };
-    return sizes[this.size];
+  get trackClass() {
+    return cn(
+      switchTrackVariants({ size: this.size, checked: this.checked }),
+      this.class
+    );
   }
 
-  protected cn = cn;
+  get thumbClass() {
+    return cn(switchThumbVariants({ size: this.size, checked: this.checked }));
+  }
 
   toggle() {
     if (this.disabled) return;

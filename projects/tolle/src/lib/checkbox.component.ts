@@ -1,7 +1,32 @@
 import { Component, Input, forwardRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
+
+const checkboxVariants = cva(
+  'group flex shrink-0 cursor-pointer items-center justify-center rounded-sm border border-primary ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+  {
+    variants: {
+      size: {
+        xs: 'h-3.5 w-3.5',
+        sm: 'h-4 w-4',
+        default: 'h-5 w-5',
+        lg: 'h-6 w-6',
+      },
+      checked: {
+        true: 'bg-primary text-primary-foreground',
+        false: 'bg-transparent',
+      },
+    },
+    defaultVariants: {
+      size: 'default',
+      checked: false,
+    },
+  }
+);
+
+export type CheckboxProps = VariantProps<typeof checkboxVariants>;
 
 @Component({
   selector: 'tolle-checkbox',
@@ -17,12 +42,7 @@ import { cn } from './utils/cn';
   template: `
     <div
       (click)="toggle()"
-      [class]="cn(
-        'group flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-primary ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-        checked ? 'bg-primary text-primary-foreground' : 'bg-transparent',
-        sizeClasses,
-        class
-      )"
+      [class]="computedClass"
     >
       <i
         *ngIf="checked"
@@ -33,9 +53,12 @@ import { cn } from './utils/cn';
   `
 })
 export class CheckboxComponent implements ControlValueAccessor {
+  /** Extra Tailwind classes merged onto the checkbox via `cn()` (last-wins). */
   @Input() class = '';
+  /** Disables the checkbox and blocks toggling. @default false */
   @Input() disabled = false;
-  @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  /** Size of the checkbox. @default 'default' */
+  @Input() size: CheckboxProps['size'] = 'default';
 
   checked = false;
 
@@ -44,14 +67,10 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  protected cn = cn;
-
-  get sizeClasses() {
+  get computedClass() {
     return cn(
-      this.size === 'xs' && 'h-3.5 w-3.5',
-      this.size === 'sm' && 'h-4 w-4',
-      this.size === 'default' && 'h-5 w-5',
-      this.size === 'lg' && 'h-6 w-6'
+      checkboxVariants({ size: this.size, checked: this.checked }),
+      this.class
     );
   }
 

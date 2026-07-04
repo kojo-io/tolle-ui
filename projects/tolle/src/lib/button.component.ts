@@ -13,7 +13,7 @@ const buttonVariants = cva(
         outline: "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground text-foreground",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary-foreground underline-offset-4 hover:underline",
+        link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2",
@@ -63,10 +63,15 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
   }
 })
 export class ButtonComponent {
+  /** Extra Tailwind classes merged onto the button via `cn()` (last-wins). */
   @Input() class: string = '';
+  /** Visual style of the button. @default 'default' */
   @Input() variant: ButtonProps['variant'] = 'default';
+  /** Size of the button, including icon-only sizes. @default 'default' */
   @Input() size: ButtonProps['size'] = 'default';
+  /** Disables the button and blocks pointer events. @default false */
   @Input() disabled: boolean = false;
+  /** Shows a spinner, sets `aria-busy`, and prevents interaction while a task runs. @default false */
   @Input() busy: boolean = false;
 
   get computedClass() {

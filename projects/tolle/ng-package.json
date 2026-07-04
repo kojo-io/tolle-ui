@@ -9,6 +9,11 @@
   "inlineStyleLanguage": "css",
   "assets": [
     "theme.css",
-    "preset.js"
+    "preset.js",
+    {
+      "glob": "**/*",
+      "input": "registry",
+      "output": "registry"
+    }
   ]
 }

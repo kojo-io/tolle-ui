@@ -1,6 +1,6 @@
 {
   "name": "@tolle_/tolle-ui",
-  "version": "18.2.23",
+  "version": "18.2.24",
   "publishConfig": {
     "access": "public"
   },
@@ -10,6 +10,9 @@
     },
     "./preset": {
       "default": "./preset.js"
+    },
+    "./registry/*": {
+      "default": "./registry/*"
     }
   },
   "description": "A high-performance Angular UI library.",

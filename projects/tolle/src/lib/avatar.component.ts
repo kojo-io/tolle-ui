@@ -1,6 +1,31 @@
 import { ChangeDetectorRef, Component, Input, HostBinding } from '@angular/core';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 import { NgIf } from '@angular/common';
+
+const avatarVariants = cva(
+  'relative flex shrink-0 overflow-hidden bg-muted',
+  {
+    variants: {
+      shape: {
+        circle: 'rounded-full',
+        square: 'rounded-md',
+      },
+      size: {
+        sm: 'h-8 w-8 text-xs',
+        default: 'h-10 w-10',
+        lg: 'h-16 w-16 text-lg',
+        xl: 'h-24 w-24 text-xl',
+      },
+    },
+    defaultVariants: {
+      shape: 'circle',
+      size: 'default',
+    },
+  }
+);
+
+export type AvatarProps = VariantProps<typeof avatarVariants>;
 
 @Component({
   selector: 'tolle-avatar',
@@ -23,10 +48,14 @@ import { NgIf } from '@angular/common';
   `
 })
 export class AvatarComponent {
+  /** Image URL. When absent or failed to load, projected fallback content is shown. */
   @Input() src?: string;
+  /** Alternative text for the avatar image. @default '' */
   @Input() alt: string = '';
-  @Input() size: 'sm' | 'default' | 'lg' | 'xl' = 'default';
-  @Input() shape: 'circle' | 'square' = 'circle';
+  /** Size of the avatar. @default 'default' */
+  @Input() size: AvatarProps['size'] = 'default';
+  /** Shape of the avatar. @default 'circle' */
+  @Input() shape: AvatarProps['shape'] = 'circle';
 
   // We remove @Input() class because standard class="" attributes
   // on the tag will now work automatically with the host bindings.
@@ -50,16 +79,6 @@ export class AvatarComponent {
   // Apply styles directly to the <tolle-avatar> tag
   @HostBinding('class')
   get hostClasses() {
-    return cn(
-      // Layout & Shape
-      "relative flex shrink-0 overflow-hidden bg-muted",
-      this.shape === 'circle' ? 'rounded-full' : 'rounded-md',
-
-      // Sizes
-      this.size === 'sm' && "h-8 w-8 text-xs",
-      this.size === 'default' && "h-10 w-10",
-      this.size === 'lg' && "h-16 w-16 text-lg",
-      this.size === 'xl' && "h-24 w-24 text-xl"
-    );
+    return cn(avatarVariants({ shape: this.shape, size: this.size }));
   }
 }

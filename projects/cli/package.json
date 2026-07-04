@@ -1,0 +1,24 @@
+{
+  "name": "@tolle_/cli",
+  "version": "0.1.0",
+  "description": "Add Tolle UI components to your Angular app — copy the source you own.",
+  "bin": {
+    "tolle": "./dist/index.js"
+  },
+  "type": "commonjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "angular",
+    "tolle",
+    "ui",
+    "shadcn",
+    "components",
+    "cli"
+  ],
+  "license": "MIT"
+}

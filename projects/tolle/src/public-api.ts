@@ -3,6 +3,7 @@
  */
 
 export * from './lib/utils/cn';
+export * from './lib/utils/color';
 export * from './lib/button.component';
 export * from './lib/input.component';
 export * from './lib/card.component';

@@ -8,9 +8,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:web": "ng build showcase --configuration production",
-    "build:lib": "ng build tolle --configuration production",
-    "build:docs": "npm run generate:llms && ng build docs --configuration production",
-    "generate:llms": "npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/extract-docs.ts && npx ts-node -P projects/docs/scripts/tsconfig.json projects/docs/scripts/generate-llms.ts"
+    "build:lib": "npm run generate:registry && ng build tolle --configuration production",
+    "build:docs": "npm run generate:registry && ng build docs --configuration production",
+    "generate:registry": "npx ts-node -P projects/registry/tsconfig.json projects/registry/src/generate.ts"
   },
   "private": false,
   "dependencies": {

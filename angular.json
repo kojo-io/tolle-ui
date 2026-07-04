@@ -157,6 +157,16 @@
               },
               {
                 "glob": "**/*",
+                "input": "projects/tolle/registry",
+                "output": "/registry"
+              },
+              {
+                "glob": "llms*.txt",
+                "input": "projects/tolle/registry",
+                "output": "/"
+              },
+              {
+                "glob": "**/*",
                 "input": "projects/docs/src/app/docs-examples",
                 "output": "/source-code"
               },
@@ -164,11 +174,6 @@
                 "glob": "**/*",
                 "input": "projects/tolle/src/lib",
                 "output": "/source-code"
-              },
-              {
-                "glob": "**/*",
-                "input": "projects/docs/src/content",
-                "output": "assets/content"
               },
               {
                 "glob": "**/*",
