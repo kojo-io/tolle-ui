@@ -90,4 +90,4 @@ child component's `@Input()` from a parent — coordinate through a signal or a 
 
 - `npm run build:lib` — the library compiles.
 - `npm test` — component specs pass.
-- `ng serve showcase` — the component renders correctly in **light and dark**.
+- `ng serve docs` (or `npm start`) — the component renders correctly in **light and dark**.

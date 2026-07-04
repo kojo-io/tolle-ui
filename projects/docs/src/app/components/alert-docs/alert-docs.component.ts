@@ -6,7 +6,7 @@ import { SegmentedComponent } from '../../../../../tolle/src/lib/segment.compone
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from '../../../../../tolle/src/lib/alert.component';
 import { BaseEditorComponent } from '../../shared/base-editor/base-editor.component';
-import { AnalyticsService } from '../../../../../showcase/src/app/analytics.service';
+import { AnalyticsService } from '../../analytics.service';
 import { PropTableComponent } from '../../shared/prop-table/prop-table.component';
 import { PlaygroundComponent } from '../../shared/playground/playground.component';
 import { SourceCodeService } from '../../shared/source-code.service';

@@ -3,6 +3,12 @@ import { DocLayoutComponent } from './layout/doc-layout/doc-layout.component';
 
 export const routes: Routes = [
   {
+    // Landing page — full-width, outside the docs shell.
+    path: '',
+    pathMatch: 'full',
+    loadComponent: () => import('./landing/landing.component').then(m => m.LandingComponent),
+  },
+  {
     path: '',
     component: DocLayoutComponent,
     children: [
@@ -223,11 +229,6 @@ export const routes: Routes = [
           },
         ]
       },
-      {
-        path: '',
-        redirectTo: 'getting-started',
-        pathMatch: 'full'
-      }
     ]
   }
 ];

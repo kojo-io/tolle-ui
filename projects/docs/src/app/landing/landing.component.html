@@ -7,8 +7,8 @@
       <span class="rounded-full border border-border px-1.5 py-px font-mono text-[11px] font-normal text-muted-foreground">v18.2</span>
     </a>
     <nav class="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
-      <a routerLink="/demo" class="transition-colors hover:text-foreground">Docs</a>
-      <a routerLink="/demo" class="transition-colors hover:text-foreground">Components</a>
+      <a routerLink="/components" class="transition-colors hover:text-foreground">Docs</a>
+      <a routerLink="/components" class="transition-colors hover:text-foreground">Components</a>
       <a class="cursor-pointer transition-colors hover:text-foreground">Blocks</a>
       <a class="cursor-pointer transition-colors hover:text-foreground">Themes</a>
     </nav>
@@ -45,8 +45,8 @@
       with the CLI — then own every line. Config-first theming, agent-friendly by design.
     </p>
     <div class="mt-8 flex flex-wrap items-center gap-3">
-      <tolle-button routerLink="/demo" variant="default" size="lg">Get started</tolle-button>
-      <tolle-button routerLink="/demo" variant="outline" size="lg">Browse components</tolle-button>
+      <tolle-button routerLink="/getting-started" variant="default" size="lg">Get started</tolle-button>
+      <tolle-button routerLink="/components" variant="outline" size="lg">Browse components</tolle-button>
     </div>
 
     <!-- CLI terminal -->
@@ -238,7 +238,7 @@
           <span class="ml-auto rounded-full border border-border px-1.5 font-mono text-[11px] text-muted-foreground">{{ c.count }}</span>
         </div>
         <div class="flex flex-wrap gap-1.5">
-          <a *ngFor="let item of c.items" routerLink="/demo"
+          <a *ngFor="let item of c.items" routerLink="/components"
              class="cursor-pointer rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">{{ item }}</a>
         </div>
       </div>
@@ -252,7 +252,7 @@
     <h2 class="mx-auto max-w-[20ch] text-[clamp(1.8rem,3.6vw,2.6rem)] font-semibold tracking-[-0.035em]">Own your components. Ship faster.</h2>
     <p class="mx-auto mt-4 max-w-[54ch] text-muted-foreground">Add a component and its source lands in your repo — edit it, theme it, keep it. No black box.</p>
     <div class="mt-7 flex flex-wrap justify-center gap-3">
-      <tolle-button routerLink="/demo" variant="default" size="lg">Get started</tolle-button>
+      <tolle-button routerLink="/getting-started" variant="default" size="lg">Get started</tolle-button>
       <tolle-button (click)="copyCli('npx tolle init')" variant="outline" size="lg" class="font-mono">npx tolle init</tolle-button>
     </div>
   </div>
@@ -263,8 +263,8 @@
   <div class="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-5">
     <p class="text-[13px] text-muted-foreground">Tolle&nbsp;UI — MIT licensed. Built for Angular.</p>
     <nav class="flex gap-5 text-[13px] text-muted-foreground">
-      <a routerLink="/demo" class="hover:text-foreground">Docs</a>
-      <a routerLink="/demo" class="hover:text-foreground">Components</a>
+      <a routerLink="/components" class="hover:text-foreground">Docs</a>
+      <a routerLink="/components" class="hover:text-foreground">Components</a>
       <a class="cursor-pointer hover:text-foreground">GitHub</a>
       <a class="cursor-pointer hover:text-foreground">npm</a>
     </nav>
