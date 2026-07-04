@@ -1,0 +1,272 @@
+<!-- ================= NAV ================= -->
+<header class="sticky top-0 z-50 h-14 border-b border-border bg-background/80 backdrop-blur-md">
+  <div class="mx-auto flex h-full max-w-[1180px] items-center gap-6 px-6">
+    <a routerLink="/" class="flex items-center gap-2 text-[15px] font-bold tracking-tight">
+      <span class="grid h-[22px] w-[22px] place-items-center rounded-md bg-foreground text-[13px] font-extrabold text-background">T</span>
+      Tolle&nbsp;UI
+      <span class="rounded-full border border-border px-1.5 py-px font-mono text-[11px] font-normal text-muted-foreground">v18.2</span>
+    </a>
+    <nav class="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
+      <a routerLink="/demo" class="transition-colors hover:text-foreground">Docs</a>
+      <a routerLink="/demo" class="transition-colors hover:text-foreground">Components</a>
+      <a class="cursor-pointer transition-colors hover:text-foreground">Blocks</a>
+      <a class="cursor-pointer transition-colors hover:text-foreground">Themes</a>
+    </nav>
+    <div class="flex-1"></div>
+    <div class="flex items-center gap-2">
+      <button class="hidden h-[34px] min-w-[190px] items-center gap-2 rounded-md border border-border bg-muted px-2.5 text-[13px] text-muted-foreground sm:flex">
+        <i class="ri-search-line"></i><span>Search components…</span>
+        <kbd class="ml-auto rounded border border-border bg-background px-1.5 font-mono text-[11px]">⌘K</kbd>
+      </button>
+      <button (click)="toggleTheme()" aria-label="Toggle theme"
+              class="grid h-[34px] w-[34px] place-items-center rounded-md border border-border text-foreground transition-colors hover:bg-muted">
+        <i class="ri-sun-line" *ngIf="theme.isDark"></i>
+        <i class="ri-moon-line" *ngIf="!theme.isDark"></i>
+      </button>
+      <a class="grid h-[34px] w-[34px] cursor-pointer place-items-center rounded-md border border-border text-foreground transition-colors hover:bg-muted" aria-label="GitHub">
+        <i class="ri-github-fill"></i>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="px-6 pb-16 pt-20 md:pt-24">
+  <div class="mx-auto max-w-[1180px]">
+    <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-[12.5px] text-muted-foreground">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_3px_rgba(16,185,129,.22)]"></span>
+      <b class="font-semibold text-foreground">v18.2</b> · now with a copy-the-source CLI
+    </div>
+    <h1 class="max-w-[15ch] text-[clamp(2.4rem,5.6vw,3.9rem)] font-semibold leading-[1.03] tracking-[-0.035em]">
+      The Angular component library <span class="text-primary">you own.</span>
+    </h1>
+    <p class="mt-5 max-w-[58ch] text-[clamp(1rem,1.6vw,1.2rem)] text-muted-foreground">
+      Beautifully designed, accessible components for Angular 18. Install the package, or copy the source into your app
+      with the CLI — then own every line. Config-first theming, agent-friendly by design.
+    </p>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <tolle-button routerLink="/demo" variant="default" size="lg">Get started</tolle-button>
+      <tolle-button routerLink="/demo" variant="outline" size="lg">Browse components</tolle-button>
+    </div>
+
+    <!-- CLI terminal -->
+    <div class="mt-8 max-w-[460px] overflow-hidden rounded-lg border border-border bg-card shadow-sm">
+      <div class="flex items-center gap-1.5 border-b border-border px-3 py-2.5">
+        <i class="h-2.5 w-2.5 rounded-full bg-border"></i>
+        <i class="h-2.5 w-2.5 rounded-full bg-border"></i>
+        <i class="h-2.5 w-2.5 rounded-full bg-border"></i>
+        <span class="ml-1.5 font-mono text-[11px] text-muted-foreground">your-app — zsh</span>
+      </div>
+      <div class="flex items-center gap-2.5 px-3.5 py-3.5 font-mono text-[13.5px]">
+        <span class="text-primary">$</span>
+        <code class="flex-1">npx tolle add <b class="font-semibold text-foreground">button</b></code>
+        <button (click)="copyCli()" aria-label="Copy"
+                class="grid h-[30px] w-[30px] place-items-center rounded-md border border-border bg-muted text-muted-foreground transition-colors hover:text-foreground">
+          <i [class]="copied ? 'ri-check-line' : 'ri-file-copy-line'"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-[13px] text-muted-foreground">
+      <span>◆ 70+ components</span><span>◆ Copy-paste or npm</span><span>◆ Light &amp; dark</span><span>◆ llms.txt + MCP</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMPONENT BENTO ================= -->
+<section class="border-t border-border px-6 py-[72px]">
+  <div class="mx-auto max-w-[1180px]">
+    <div class="mb-10 max-w-[60ch]">
+      <span class="text-xs font-semibold uppercase tracking-[0.09em] text-muted-foreground">Components</span>
+      <h2 class="mt-2.5 text-[clamp(1.6rem,3vw,2.1rem)] font-semibold tracking-[-0.03em]">Everything you need to build.</h2>
+      <p class="mt-3 text-muted-foreground">Buttons, forms, overlays, data — accessible and themeable out of the box. A taste below; the full set lives in the browser.</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-6">
+      <!-- Button -->
+      <div class="col-span-2 flex flex-col gap-3.5 rounded-lg border border-border bg-card p-5 transition hover:border-border/60 hover:shadow-md">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Button</span>
+        <div class="flex flex-1 flex-col justify-center gap-2">
+          <div class="flex flex-wrap gap-2">
+            <tolle-button variant="default" size="sm">Default</tolle-button>
+            <tolle-button variant="secondary" size="sm">Secondary</tolle-button>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <tolle-button variant="outline" size="sm">Outline</tolle-button>
+            <tolle-button variant="ghost" size="sm">Ghost</tolle-button>
+            <tolle-button variant="link" size="sm">Link</tolle-button>
+          </div>
+          <div><tolle-button variant="destructive" size="sm">Delete</tolle-button></div>
+        </div>
+      </div>
+
+      <!-- Badge -->
+      <div class="col-span-2 flex flex-col gap-3.5 rounded-lg border border-border bg-card p-5 transition hover:border-border/60 hover:shadow-md">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Badge</span>
+        <div class="flex flex-1 flex-col justify-center gap-2">
+          <div class="flex flex-wrap gap-2">
+            <tolle-badge variant="default">Default</tolle-badge>
+            <tolle-badge variant="secondary">Secondary</tolle-badge>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <tolle-badge variant="outline">Outline</tolle-badge>
+            <tolle-badge variant="destructive">Error</tolle-badge>
+          </div>
+        </div>
+      </div>
+
+      <!-- Avatar -->
+      <div class="col-span-2 flex flex-col gap-3.5 rounded-lg border border-border bg-card p-5 transition hover:border-border/60 hover:shadow-md">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Avatar</span>
+        <div class="flex flex-1 items-center">
+          <div class="flex">
+            <tolle-avatar class="-ml-0 ring-2 ring-card"><span class="text-xs font-semibold text-primary-foreground">BK</span></tolle-avatar>
+            <tolle-avatar class="-ml-2 ring-2 ring-card"><span class="text-xs font-semibold">AO</span></tolle-avatar>
+            <tolle-avatar class="-ml-2 ring-2 ring-card"><span class="text-xs font-semibold">TT</span></tolle-avatar>
+            <span class="-ml-2 grid h-10 w-10 place-items-center rounded-full border-2 border-card bg-muted text-xs font-semibold text-muted-foreground">+5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card -->
+      <div class="col-span-2 flex flex-col gap-3.5 rounded-lg border border-border bg-card p-5 transition hover:border-border/60 hover:shadow-md">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Card</span>
+        <div class="flex flex-1 items-center">
+          <tolle-card class="w-full">
+            <tolle-card-header>
+              <tolle-card-title>Create project</tolle-card-title>
+            </tolle-card-header>
+            <tolle-card-content>
+              <p class="text-sm text-muted-foreground">Ship your Angular app with owned components.</p>
+            </tolle-card-content>
+            <tolle-card-footer class="flex gap-2">
+              <tolle-button variant="outline" size="sm">Cancel</tolle-button>
+              <tolle-button variant="default" size="sm">Deploy</tolle-button>
+            </tolle-card-footer>
+          </tolle-card>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="col-span-2 flex flex-col gap-3.5 rounded-lg border border-border bg-card p-5 transition hover:border-border/60 hover:shadow-md">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Form</span>
+        <div class="flex flex-1 flex-col justify-center gap-3">
+          <tolle-input label="Email" placeholder="you@example.com" [(ngModel)]="email"></tolle-input>
+          <div class="flex items-center justify-between">
+            <span class="text-[13px] font-medium">Notifications</span>
+            <tolle-switch [(ngModel)]="notif"></tolle-switch>
+          </div>
+          <div class="flex items-center gap-2">
+            <tolle-checkbox [(ngModel)]="terms"></tolle-checkbox>
+            <span class="text-[13px] font-medium">Accept terms</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="col-span-2 flex flex-col gap-3.5 rounded-lg border border-border bg-card p-5 transition hover:border-border/60 hover:shadow-md">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Tabs</span>
+        <div class="flex flex-1 flex-col justify-center gap-3">
+          <tolle-tabs defaultValue="account">
+            <tolle-tabs-list>
+              <tolle-tabs-trigger value="account">Account</tolle-tabs-trigger>
+              <tolle-tabs-trigger value="password">Password</tolle-tabs-trigger>
+            </tolle-tabs-list>
+            <tolle-tabs-content value="account">
+              <div class="pt-3"><tolle-input label="Name" placeholder="Bernard"></tolle-input></div>
+            </tolle-tabs-content>
+            <tolle-tabs-content value="password">
+              <div class="pt-3"><tolle-input label="Password" type="password" placeholder="••••••"></tolle-input></div>
+            </tolle-tabs-content>
+          </tolle-tabs>
+        </div>
+      </div>
+
+      <!-- Calendar -->
+      <div class="col-span-2 flex flex-col gap-3.5 rounded-lg border border-border bg-card p-5 transition hover:border-border/60 hover:shadow-md md:col-span-3">
+        <div class="flex items-center justify-between">
+          <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Calendar / Date picker</span>
+        </div>
+        <div class="flex flex-1 items-center justify-center">
+          <tolle-calendar></tolle-calendar>
+        </div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="col-span-2 flex flex-col gap-3.5 rounded-lg border border-border bg-card p-5 transition hover:border-border/60 hover:shadow-md md:col-span-3">
+        <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Feedback</span>
+        <div class="flex flex-1 flex-col justify-center gap-3">
+          <tolle-alert title="Heads up">
+            <i icon class="ri-information-line"></i>
+            Components are copied into your app.
+          </tolle-alert>
+          <div class="flex items-start gap-3 rounded-lg border border-border bg-card p-3 shadow-md">
+            <span class="mt-0.5 grid h-5 w-5 place-items-center rounded-full bg-emerald-500/20 text-emerald-500"><i class="ri-check-line text-xs"></i></span>
+            <div>
+              <h5 class="text-[13px] font-semibold">Added button</h5>
+              <p class="text-xs text-muted-foreground">2 files written to /components/ui</p>
+            </div>
+          </div>
+          <div>
+            <div class="mb-1.5 flex items-center justify-between">
+              <span class="text-[13px] font-medium">Deploying…</span>
+              <span class="text-xs text-muted-foreground">66%</span>
+            </div>
+            <div class="h-2 w-full overflow-hidden rounded-full bg-muted">
+              <div class="h-full w-[66%] rounded-full bg-primary"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CATEGORY MAP ================= -->
+<section class="border-t border-border px-6 py-[72px]">
+  <div class="mx-auto max-w-[1180px]">
+    <div class="mb-10 max-w-[60ch]">
+      <span class="text-xs font-semibold uppercase tracking-[0.09em] text-muted-foreground">Browse by category</span>
+      <h2 class="mt-2.5 text-[clamp(1.6rem,3vw,2.1rem)] font-semibold tracking-[-0.03em]">The whole library, organized.</h2>
+      <p class="mt-3 text-muted-foreground">The sidebar menu is generated from the component registry, so it always matches what ships.</p>
+    </div>
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div *ngFor="let c of categories" class="rounded-lg border border-border bg-card p-5">
+        <div class="mb-3 flex items-center gap-2.5">
+          <span class="grid h-[30px] w-[30px] place-items-center rounded-lg bg-muted text-foreground"><i [class]="c.icon"></i></span>
+          <h3 class="text-sm font-semibold tracking-[-0.01em]">{{ c.name }}</h3>
+          <span class="ml-auto rounded-full border border-border px-1.5 font-mono text-[11px] text-muted-foreground">{{ c.count }}</span>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <a *ngFor="let item of c.items" routerLink="/demo"
+             class="cursor-pointer rounded-full border border-border px-2.5 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">{{ item }}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA BAND ================= -->
+<section class="border-t border-border px-6 py-[84px] text-center">
+  <div class="mx-auto max-w-[1180px]">
+    <h2 class="mx-auto max-w-[20ch] text-[clamp(1.8rem,3.6vw,2.6rem)] font-semibold tracking-[-0.035em]">Own your components. Ship faster.</h2>
+    <p class="mx-auto mt-4 max-w-[54ch] text-muted-foreground">Add a component and its source lands in your repo — edit it, theme it, keep it. No black box.</p>
+    <div class="mt-7 flex flex-wrap justify-center gap-3">
+      <tolle-button routerLink="/demo" variant="default" size="lg">Get started</tolle-button>
+      <tolle-button (click)="copyCli('npx tolle init')" variant="outline" size="lg" class="font-mono">npx tolle init</tolle-button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="border-t border-border px-6 py-10">
+  <div class="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-5">
+    <p class="text-[13px] text-muted-foreground">Tolle&nbsp;UI — MIT licensed. Built for Angular.</p>
+    <nav class="flex gap-5 text-[13px] text-muted-foreground">
+      <a routerLink="/demo" class="hover:text-foreground">Docs</a>
+      <a routerLink="/demo" class="hover:text-foreground">Components</a>
+      <a class="cursor-pointer hover:text-foreground">GitHub</a>
+      <a class="cursor-pointer hover:text-foreground">npm</a>
+    </nav>
+  </div>
+</footer>
