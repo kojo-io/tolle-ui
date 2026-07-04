@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { SidebarComponent } from '../../../../../tolle/src/lib/sidebar.component';
 import { ThemeService } from '../../../../../tolle/src/lib/theme.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,7 +17,7 @@ import { Observable } from 'rxjs';
   standalone: true,
   imports: [
     RouterOutlet,
-    ButtonComponent,
+    RouterLink,
     SidebarComponent,
     TooltipDirective,
     ReactiveFormsModule,
