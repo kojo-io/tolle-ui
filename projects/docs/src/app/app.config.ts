@@ -11,8 +11,8 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideAnimations(),
     provideTolleConfig({
-      primaryColor: '#353535', // Custom brand color
-      radius: '0.7rem',          // Super rounded design
+      primaryColor: '#2563eb', // Tolle brand blue (matches theme.css + the design)
+      radius: '0.5rem',        // shadcn-style radius
       darkByDefault: false
     }),
     provideRouter(routes),
