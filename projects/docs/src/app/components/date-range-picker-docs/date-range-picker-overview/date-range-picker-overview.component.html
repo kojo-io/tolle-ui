@@ -25,6 +25,24 @@
     </div>
 </section>
 
+<section class="mb-16">
+    <h2 class="text-2xl font-bold mb-6 text-foreground">Two months</h2>
+    <p class="mb-6 text-muted-foreground">
+        Set <code>[numberOfMonths]="2"</code> to render two consecutive months side by side — ideal for booking
+        and reservation flows where the range often spans a month boundary. A single set of prev/next controls
+        moves both months together.
+    </p>
+    <div
+        class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden">
+        <div class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[300px]">
+            <app-two-month-range class="w-full"></app-two-month-range>
+        </div>
+        <div class="border-t border-neutral-200 dark:border-neutral-800">
+            <app-base-editor [code]="(twoMonthCode$ | async) || ''" language="typescript"></app-base-editor>
+        </div>
+    </div>
+</section>
+
 <section id="installation" class="mb-16">
     <h2 class="text-2xl font-bold mb-6 text-foreground">
         Import

@@ -56,6 +56,7 @@ import { DateRange } from './types/date-range';
           [ngModel]="value"
           (rangeSelect)="onCalendarSelect($event)"
           [disablePastDates]="disablePastDates"
+          [numberOfMonths]="numberOfMonths"
         ></tolle-range-calendar>
       </div>
     </div>
@@ -67,6 +68,8 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
   @Input() class = '';
   @Input() disablePastDates = false;
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  /** Consecutive months shown in the popover (e.g. `2` for a two-month picker). @default 1 */
+  @Input() numberOfMonths = 1;
 
   @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;

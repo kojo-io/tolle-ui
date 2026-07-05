@@ -5,7 +5,7 @@ import {
   addMonths, subMonths, startOfMonth, endOfMonth,
   startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth,
   isSameDay, isToday, setMonth, setYear, addYears, subYears,
-  isBefore, startOfDay, isWithinInterval
+  isBefore, startOfDay, isWithinInterval, format
 } from 'date-fns';
 import { cn } from './utils/cn';
 import {DateRange} from './types/date-range';
@@ -22,63 +22,105 @@ import {DateRange} from './types/date-range';
     }
   ],
   template: `
-    <div [class]="cn('p-3 border rounded-md bg-background text-popover-foreground shadow-sm inline-block min-w-fit', class)">
+    <div [class]="cn('text-popover-foreground inline-block min-w-fit', bordered ? 'p-3 border rounded-md bg-background shadow-sm' : '', class)">
 
-      <div class="flex items-center justify-between pt-1 pb-4 gap-2">
-        <div class="flex items-center gap-1">
-          <button type="button" (click)="setView('month')"
-            [class]="cn('text-sm font-semibold px-2 py-1 rounded transition-colors', currentView === 'month' ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground')">
-            {{ viewDate | date: 'MMMM' }}
+      <!-- ===== Multi-month view (side-by-side, shared range) ===== -->
+      <div *ngIf="numberOfMonths > 1" class="flex flex-col gap-4 sm:flex-row">
+        <div *ngFor="let m of visibleMonths; let idx = index" class="space-y-2">
+          <div class="flex items-center justify-between pt-1 pb-2">
+            <button *ngIf="idx === 0" type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous month">
+              <i class="ri-arrow-left-s-line text-lg"></i>
+            </button>
+            <span *ngIf="idx !== 0" class="h-7 w-7"></span>
+
+            <div class="text-sm font-semibold">{{ m.label }}</div>
+
+            <button *ngIf="idx === visibleMonths.length - 1" type="button" (click)="next()" [class]="navBtnClass" aria-label="Next month">
+              <i class="ri-arrow-right-s-line text-lg"></i>
+            </button>
+            <span *ngIf="idx !== visibleMonths.length - 1" class="h-7 w-7"></span>
+          </div>
+
+          <div class="grid grid-cols-7 gap-y-1">
+            <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">{{ day }}</span>
+          </div>
+          <div class="grid grid-cols-7 gap-y-1">
+            <button
+              *ngFor="let date of m.days"
+              type="button"
+              (click)="selectDate(date)"
+              [disabled]="isDateDisabled(date)"
+              [class]="getDayClass(date, m.date)"
+            >
+              {{ date | date: 'd' }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Single-month view (with month / year quick pickers) ===== -->
+      <ng-container *ngIf="numberOfMonths <= 1">
+        <div class="flex items-center justify-between pt-1 pb-4 gap-2">
+          <div class="flex items-center gap-1">
+            <button type="button" (click)="setView('month')"
+              [class]="cn('text-sm font-semibold px-2 py-1 rounded transition-colors', currentView === 'month' ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground')">
+              {{ viewDate | date: 'MMMM' }}
+            </button>
+            <button type="button" (click)="setView('year')"
+              [class]="cn('text-sm font-semibold px-2 py-1 rounded transition-colors', currentView === 'year' ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground')">
+              {{ viewDate | date: 'yyyy' }}
+            </button>
+          </div>
+          <div class="flex items-center space-x-1">
+            <button type="button" (click)="prev()" [class]="navBtnClass"><i class="ri-arrow-left-s-line text-lg"></i></button>
+            <button type="button" (click)="next()" [class]="navBtnClass"><i class="ri-arrow-right-s-line text-lg"></i></button>
+          </div>
+        </div>
+
+        <div *ngIf="currentView === 'date'" class="space-y-2 animate-in fade-in zoom-in-95 duration-200">
+          <div class="grid grid-cols-7 gap-y-1 w-full">
+            <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">
+              {{ day }}
+            </span>
+          </div>
+          <div class="grid grid-cols-7 gap-y-1 w-full">
+            <button
+              *ngFor="let date of daysInMonth"
+              type="button"
+              (click)="selectDate(date)"
+              [disabled]="isDateDisabled(date)"
+              [class]="getDayClass(date)"
+            >
+              {{ date | date: 'd' }}
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="currentView === 'month'" class="grid grid-cols-3 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
+          <button *ngFor="let month of months; let i = index" type="button" (click)="selectMonth(i)"
+            [class]="cn('text-sm py-2.5 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', i === viewDate.getMonth() ? 'bg-primary text-primary-foreground' : '')">
+            {{ month }}
           </button>
-          <button type="button" (click)="setView('year')"
-            [class]="cn('text-sm font-semibold px-2 py-1 rounded transition-colors', currentView === 'year' ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground')">
-            {{ viewDate | date: 'yyyy' }}
+        </div>
+
+        <div *ngIf="currentView === 'year'" class="grid grid-cols-4 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
+          <button *ngFor="let year of years" type="button" (click)="selectYear(year)"
+            [class]="cn('text-sm py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', year === viewDate.getFullYear() ? 'bg-primary text-primary-foreground' : '')">
+            {{ year }}
           </button>
         </div>
-        <div class="flex items-center space-x-1">
-          <button type="button" (click)="prev()" [class]="navBtnClass"><i class="ri-arrow-left-s-line text-lg"></i></button>
-          <button type="button" (click)="next()" [class]="navBtnClass"><i class="ri-arrow-right-s-line text-lg"></i></button>
-        </div>
-      </div>
-
-      <div *ngIf="currentView === 'date'" class="space-y-2 animate-in fade-in zoom-in-95 duration-200">
-        <div class="grid grid-cols-7 gap-y-1 w-full">
-          <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">
-            {{ day }}
-          </span>
-        </div>
-        <div class="grid grid-cols-7 gap-y-1 w-full">
-          <button
-            *ngFor="let date of daysInMonth"
-            type="button"
-            (click)="selectDate(date)"
-            [disabled]="isDateDisabled(date)"
-            [class]="getDayClass(date)"
-          >
-            {{ date | date: 'd' }}
-          </button>
-        </div>
-      </div>
-
-      <div *ngIf="currentView === 'month'" class="grid grid-cols-3 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
-        <button *ngFor="let month of months; let i = index" type="button" (click)="selectMonth(i)"
-          [class]="cn('text-sm py-2.5 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', i === viewDate.getMonth() ? 'bg-primary text-primary-foreground' : '')">
-          {{ month }}
-        </button>
-      </div>
-
-      <div *ngIf="currentView === 'year'" class="grid grid-cols-4 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
-        <button *ngFor="let year of years" type="button" (click)="selectYear(year)"
-          [class]="cn('text-sm py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', year === viewDate.getFullYear() ? 'bg-primary text-primary-foreground' : '')">
-          {{ year }}
-        </button>
-      </div>
+      </ng-container>
     </div>
   `
 })
 export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
   @Input() class = '';
   @Input() disablePastDates = false;
+  /** Renders the calendar's own border/background/shadow. Set `false` inside a
+   * card/popover that already provides chrome. @default true */
+  @Input() bordered = true;
+  /** Number of consecutive months rendered side by side. @default 1 */
+  @Input() numberOfMonths = 1;
   @Output() rangeSelect = new EventEmitter<DateRange>(); // Emits whenever selection changes
 
   currentView: 'date' | 'month' | 'year' = 'date';
@@ -89,6 +131,8 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
 
   weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
   daysInMonth: Date[] = [];
+  /** Grids for each visible month (multi-month view). */
+  visibleMonths: { date: Date; days: Date[]; label: string }[] = [];
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   years: number[] = [];
 
@@ -108,6 +152,17 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
     const start = startOfWeek(startOfMonth(this.viewDate));
     const end = endOfWeek(endOfMonth(this.viewDate));
     this.daysInMonth = eachDayOfInterval({ start, end });
+
+    // Multi-month grids: viewDate is the leftmost month, then N-1 consecutive.
+    const count = Math.max(1, this.numberOfMonths);
+    this.visibleMonths = Array.from({ length: count }, (_, i) => {
+      const monthDate = addMonths(this.viewDate, i);
+      return {
+        date: monthDate,
+        days: eachDayOfInterval({ start: startOfWeek(startOfMonth(monthDate)), end: endOfWeek(endOfMonth(monthDate)) }),
+        label: format(monthDate, 'MMMM yyyy'),
+      };
+    });
   }
 
   generateYears() {
@@ -166,8 +221,11 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
       this.value = { start: date, end: null };
     }
 
-    if (!isSameMonth(date, this.viewDate)) {
-      this.viewDate = date;
+    // Only re-anchor the view when the clicked day isn't already on a visible month
+    // (so clicking the right-hand month in a 2-month view doesn't jump the calendar).
+    const onVisibleMonth = this.visibleMonths.some((m) => isSameMonth(date, m.date));
+    if (!onVisibleMonth) {
+      this.viewDate = startOfMonth(date);
       this.generateDays();
     }
 
@@ -190,9 +248,9 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
 
   // --- Visual Styling for Range ---
 
-  getDayClass(date: Date) {
+  getDayClass(date: Date, refMonth: Date = this.viewDate) {
     const { start, end } = this.value;
-    const isOutside = !isSameMonth(date, this.viewDate);
+    const isOutside = !isSameMonth(date, refMonth);
     const isDisabled = this.isDateDisabled(date);
 
     // Range Checks
