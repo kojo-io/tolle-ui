@@ -279,7 +279,7 @@ export class ThemesComponent implements OnInit, AfterViewInit {
   }
 
   get shareUrl(): string {
-    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://tolle-ui.dev';
+    const origin = typeof window !== 'undefined' ? window.location.origin : 'https://tolle-ui.com';
     return `${origin}/themes?preset=${encodePreset(this.preset)}`;
   }
 
