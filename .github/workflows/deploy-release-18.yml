@@ -34,5 +34,5 @@ jobs:
           username: ${{ secrets.AWS_USER }}
           key: ${{ secrets.AWS_SSH_KEY }}
           source: dist/docs/browser/*
-          target: /var/www/tolle-ui-docs
+          target: /var/www/tolle-ui
           strip_components: 3
