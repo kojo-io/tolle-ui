@@ -4,13 +4,17 @@ import { DropdownMenuComponent } from './dropdown-menu.component';
 
 @Directive({
   selector: '[tolleDropdownTrigger]',
-  standalone: true
+  standalone: true,
+  host: {
+    '[attr.aria-haspopup]': "'menu'",
+    '[attr.aria-expanded]': 'isOpen'
+  }
 })
 export class DropdownTriggerDirective implements OnDestroy {
   @Input('tolleDropdownTrigger') menu!: DropdownMenuComponent;
 
   private cleanup?: () => void;
-  private isOpen = false;
+  protected isOpen = false;
   private menuElement?: HTMLElement;
 
   constructor(

@@ -42,6 +42,7 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
   imports: [CommonModule],
   template: `
     <button
+      [type]="type"
       [class]="computedClass"
       [disabled]="disabled || busy"
       [attr.aria-busy]="busy"
@@ -69,6 +70,8 @@ export class ButtonComponent {
   @Input() variant: ButtonProps['variant'] = 'default';
   /** Size of the button, including icon-only sizes. @default 'default' */
   @Input() size: ButtonProps['size'] = 'default';
+  /** Native button type. Defaults to 'button' so it never submits a form unexpectedly. @default 'button' */
+  @Input() type: 'button' | 'submit' | 'reset' = 'button';
   /** Disables the button and blocks pointer events. @default false */
   @Input() disabled: boolean = false;
   /** Shows a spinner, sets `aria-busy`, and prevents interaction while a task runs. @default false */

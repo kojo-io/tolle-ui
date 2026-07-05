@@ -12,11 +12,11 @@ import { cn } from './utils/cn';
       role="progressbar"
       [attr.aria-valuemin]="0"
       [attr.aria-valuemax]="100"
-      [attr.aria-valuenow]="value"
+      [attr.aria-valuenow]="clampedValue"
     >
       <div
         class="h-full w-full flex-1 bg-primary transition-all duration-300 ease-in-out"
-        [style.transform]="'translateX(-' + (100 - (value || 0)) + '%)'"
+        [style.transform]="'translateX(-' + (100 - clampedValue) + '%)'"
       ></div>
     </div>
   `
@@ -24,6 +24,10 @@ import { cn } from './utils/cn';
 export class ProgressComponent {
     @Input() value: number | null = 0;
     @Input() class: string = '';
+
+    get clampedValue(): number {
+        return Math.min(100, Math.max(0, this.value ?? 0));
+    }
 
     get computedClass() {
         return cn(

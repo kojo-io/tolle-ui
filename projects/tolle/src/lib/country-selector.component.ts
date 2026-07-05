@@ -44,6 +44,9 @@ import { cn } from './utils/cn';
           <button
             type="button"
             [id]="id"
+            role="combobox"
+            aria-haspopup="listbox"
+            [attr.aria-expanded]="popover?.isOpen"
             [disabled]="disabled"
             [class]="computedTriggerClass"
             (blur)="onBlur()"
@@ -68,7 +71,7 @@ import { cn } from './utils/cn';
         </div>
 
         <div
-          class="flex min-w-[300px] max-w-[400px] flex-col overflow-hidden rounded-md border border-border bg-popover shadow-md"
+          class="flex min-w-[300px] max-w-[400px] flex-col overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md"
           (mousedown)="$event.stopPropagation()">
           <div class="sticky top-0 z-10 border-b border-border bg-popover p-2 shadow-sm">
             <tolle-input
@@ -82,9 +85,11 @@ import { cn } from './utils/cn';
             </tolle-input>
           </div>
 
-          <div class="max-h-[300px] overflow-y-auto p-1">
+          <div role="listbox" class="max-h-[300px] overflow-y-auto p-1">
             <div
               *ngFor="let country of shadowCountries"
+              role="option"
+              [attr.aria-selected]="selectedCountry?.isoAlpha2 === country.isoAlpha2"
               (click)="selectCountry(country)"
               [class]="getItemClass(country)">
               <div class="flex w-full items-center gap-3">
@@ -190,12 +195,12 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
       'rounded-md',
       // Focus state
       !(this.readonly || this.disabled) && [
-        'focus:outline-none',
-        'focus:ring-4',
-        'focus:ring-ring/30',
-        'focus:ring-offset-0',
+        'focus-visible:outline-none',
+        'focus-visible:ring-4',
+        'focus-visible:ring-ring/30',
+        'focus-visible:ring-offset-0',
         'shadow-none',
-        this.error ? 'focus:border-destructive/80' : 'focus:border-primary/80',
+        this.error ? 'focus-visible:border-destructive/80' : 'focus-visible:border-primary/80',
       ],
       // External focus state (when controlled by parent)
       !(this.readonly || this.disabled) &&

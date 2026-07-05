@@ -42,9 +42,11 @@ export type BadgeProps = VariantProps<typeof badgeVariants>;
 
       <button
         *ngIf="removable"
+        type="button"
+        [attr.aria-label]="removeLabel"
         (click)="onRemove.emit($event)"
-        class="ml-1 -mr-1 rounded-md hover:bg-foreground/20 transition-colors outline-none">
-        <i class="ri-close-line"></i>
+        class="ml-1 -mr-1 rounded-md transition-colors hover:bg-foreground/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1">
+        <i class="ri-close-line" aria-hidden="true"></i>
       </button>
     </div>
   `,
@@ -56,6 +58,8 @@ export class BadgeComponent {
   @Input() size: BadgeProps['size'] = 'default';
   /** Shows a trailing dismiss (×) button that emits `onRemove`. @default false */
   @Input() removable = false;
+  /** Accessible label for the dismiss button. @default 'Remove' */
+  @Input() removeLabel = 'Remove';
   /** Extra Tailwind classes merged onto the badge via `cn()` (last-wins). */
   @Input() class = '';
 

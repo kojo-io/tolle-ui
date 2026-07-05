@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, Injectable, inject } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Injectable, inject, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -87,6 +87,7 @@ export class TabsComponent {
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: {
+        'role': 'tablist',
         '[class]': 'computedClass'
     }
 })
@@ -109,8 +110,12 @@ export class TabsListComponent {
     host: {
         'role': 'tab',
         '[attr.aria-selected]': 'isActive',
+        '[attr.tabindex]': 'isActive ? 0 : -1',
+        '[attr.id]': "'tab-'+value",
+        '[attr.aria-controls]': "'tabpanel-'+value",
         '[attr.data-state]': 'isActive ? "active" : "inactive"',
         '(click)': 'onActivate()',
+        '(keydown)': 'onKeydown($event)',
         '[class]': 'computedClass'
     }
 })
@@ -120,6 +125,7 @@ export class TabsTriggerComponent {
 
     private tabsService = inject(TabsService);
     private tabsList = inject(TabsListComponent, { optional: true });
+    private el = inject(ElementRef) as ElementRef<HTMLElement>;
     isActive = false;
 
     constructor() {
@@ -130,6 +136,46 @@ export class TabsTriggerComponent {
 
     onActivate() {
         this.tabsService.setActiveTab(this.value);
+    }
+
+    onKeydown(event: KeyboardEvent) {
+        const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+        if (!keys.includes(event.key)) return;
+
+        const host = this.el.nativeElement;
+        const list = host.closest('[role=tablist]');
+        if (!list) return;
+
+        const triggers = Array.from(list.querySelectorAll('tolle-tabs-trigger')) as HTMLElement[];
+        if (!triggers.length) return;
+
+        const currentIndex = triggers.indexOf(host);
+        let nextIndex = currentIndex;
+
+        switch (event.key) {
+            case 'ArrowLeft':
+                nextIndex = currentIndex <= 0 ? triggers.length - 1 : currentIndex - 1;
+                break;
+            case 'ArrowRight':
+                nextIndex = currentIndex >= triggers.length - 1 ? 0 : currentIndex + 1;
+                break;
+            case 'Home':
+                nextIndex = 0;
+                break;
+            case 'End':
+                nextIndex = triggers.length - 1;
+                break;
+        }
+
+        const target = triggers[nextIndex];
+        if (!target) return;
+
+        event.preventDefault();
+        const targetValue = target.id.replace(/^tab-/, '');
+        if (targetValue) {
+            this.tabsService.setActiveTab(targetValue);
+        }
+        target.focus();
     }
 
     get computedClass() {
@@ -145,6 +191,9 @@ export class TabsTriggerComponent {
     template: `<div *ngIf="isActive"><ng-content></ng-content></div>`,
     host: {
         'role': 'tabpanel',
+        '[attr.id]': "'tabpanel-'+value",
+        '[attr.aria-labelledby]': "'tab-'+value",
+        '[attr.tabindex]': '0',
         '[attr.data-state]': 'isActive ? "active" : "inactive"',
         '[class]': 'computedClass'
     }

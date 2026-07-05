@@ -25,9 +25,9 @@ import {NgIf, NgTemplateOutlet} from '@angular/common';
     </ng-container>
 
     <ng-template #linkTemplate>
-      <div class="transition-colors hover:text-foreground cursor-pointer">
+      <a class="transition-colors hover:text-foreground cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
         <ng-container *ngTemplateOutlet="content"></ng-container>
-      </div>
+      </a>
     </ng-template>
   `,
   styles: ``

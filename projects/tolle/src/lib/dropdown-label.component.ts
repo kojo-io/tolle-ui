@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `
-    <div class="px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+    <div class="px-2 py-1.5 text-sm font-semibold text-muted-foreground">
       <ng-content></ng-content>
     </div>
   `,

@@ -53,10 +53,10 @@ export type CalendarMode = 'date' | 'month' | 'year';
 
         <!-- Navigation Buttons -->
         <div class="flex items-center space-x-1">
-          <button type="button" (click)="prev()" [class]="navBtnClass">
+          <button type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous month">
             <i class="ri-arrow-left-s-line text-lg"></i>
           </button>
-          <button type="button" (click)="next()" [class]="navBtnClass">
+          <button type="button" (click)="next()" [class]="navBtnClass" aria-label="Next month">
             <i class="ri-arrow-right-s-line text-lg"></i>
           </button>
         </div>
@@ -69,10 +69,13 @@ export type CalendarMode = 'date' | 'month' | 'year';
             {{ day }}
           </span>
         </div>
-        <div class="grid grid-cols-7 gap-1 w-full">
+        <div role="grid" class="grid grid-cols-7 gap-1 w-full">
           <button
             *ngFor="let date of daysInMonth"
             type="button"
+            role="gridcell"
+            [attr.aria-selected]="isSelected(date)"
+            [attr.aria-label]="(date | date:'fullDate')"
             (click)="selectDate(date)"
             [disabled]="isDateDisabled(date)"
             [class]="getDayClass(date)"
@@ -157,7 +160,7 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
   years: number[] = [];
   yearRangeStart: number;
 
-  navBtnClass = cn('h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 border border-input rounded-md flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all');
+  navBtnClass = cn('h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 border border-input rounded-md flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring');
   quickActionBtnClass = cn('px-3 py-1.5 text-sm rounded hover:bg-accent text-muted-foreground hover:text-foreground transition-colors');
 
   onTouched: () => void = () => {};
@@ -325,6 +328,10 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
     }
   }
 
+  isSelected(date: Date): boolean {
+    return !!(this.selectedDate && isSameDay(date, this.selectedDate));
+  }
+
   getDayClass(date: Date) {
     const isSelected = this.selectedDate && isSameDay(date, this.selectedDate);
     const isTodayDate = isToday(date);
@@ -332,7 +339,7 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
     const isDisabled = this.isDateDisabled(date);
 
     return cn(
-      'h-9 w-9 p-0 font-normal text-sm rounded-md transition-all flex items-center justify-center',
+      'h-9 w-9 p-0 font-normal text-sm rounded-md transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
       !isSelected && !isDisabled && 'hover:bg-accent hover:text-accent-foreground',
       isSelected && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground',
       !isSelected && isTodayDate && 'bg-accent text-accent-foreground',

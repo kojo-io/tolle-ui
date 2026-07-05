@@ -31,10 +31,16 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
   onChange: any = () => {};
   onTouched: any = () => {};
 
+  /** Suppresses onChange while applying a programmatic writeValue(). */
+  private suppress = false;
+
   constructor(private radioService: RadioService) {
     this.radioService.selectedValue$.subscribe(val => {
       this.value = val;
-      this.onChange(val);
+      if (!this.suppress) {
+        this.onChange(val);
+        this.onTouched();
+      }
     });
   }
 
@@ -49,7 +55,9 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
 
   writeValue(value: any): void {
     this.value = value;
+    this.suppress = true;
     this.radioService.select(value);
+    this.suppress = false;
   }
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }

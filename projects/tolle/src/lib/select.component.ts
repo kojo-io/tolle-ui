@@ -38,10 +38,14 @@ import { InputComponent } from './input.component';
     }
   `],
   template: `
-    <div [class]="cn('relative w-full', 'size-' + size)" #container>
+    <div class="relative w-full" #container>
       <button
         type="button"
         #trigger
+        role="combobox"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="isOpen"
+        [attr.data-state]="isOpen ? 'open' : 'closed'"
         (click)="toggle()"
         [disabled]="disabled"
         [class]="computedTriggerClass"
@@ -68,7 +72,7 @@ import { InputComponent } from './input.component';
           </tolle-input>
         </div>
 
-        <div class="p-1 overflow-y-auto grow h-full w-full">
+        <div role="listbox" class="p-1 overflow-y-auto grow h-full w-full">
           <ng-content></ng-content>
           <div *ngIf="noResults" class="py-6 text-center text-sm text-muted-foreground">
             No results found.
@@ -137,12 +141,12 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       this.size === 'default' && 'h-10 px-3 text-sm',
       this.size === 'lg' && 'h-11 px-4 text-base',
       !(this.readonly || this.disabled) && [
-        'focus:outline-none',
-        'focus:ring-4',
-        'focus:ring-ring/30',
-        'focus:ring-offset-0',
-        'focus:shadow-none',
-        'focus:border-primary/80'
+        'focus-visible:outline-none',
+        'focus-visible:ring-4',
+        'focus-visible:ring-ring/30',
+        'focus-visible:ring-offset-0',
+        'focus-visible:shadow-none',
+        'focus-visible:border-primary/80'
       ],
       !(this.readonly || this.disabled) && 'hover:border-accent',
       this.disabled && [
@@ -152,7 +156,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       this.readonly && [
         'cursor-default',
         'border-dashed',
-        !this.disabled && 'focus:ring-0 focus:border-opacity-100'
+        !this.disabled && 'focus-visible:ring-0 focus-visible:border-opacity-100'
       ],
       this.class
     );

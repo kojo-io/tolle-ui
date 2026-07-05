@@ -19,12 +19,13 @@ import { cn } from './utils/cn';
         type="text"
         inputmode="numeric"
         autocomplete="one-time-code"
+        aria-label="One-time code"
         [maxLength]="length"
         class="absolute inset-0 opacity-0 cursor-default z-20"
         [(ngModel)]="value"
         (input)="onInputChange($event)"
         (focus)="isFocused = true"
-        (blur)="isFocused = false"
+        (blur)="isFocused = false; onTouched()"
         [disabled]="disabled"
       />
 
@@ -92,4 +93,5 @@ export class OtpComponent implements ControlValueAccessor {
   writeValue(value: any): void { this.value = value || ''; this.cdr.markForCheck(); }
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
+  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; this.cdr.markForCheck(); }
 }

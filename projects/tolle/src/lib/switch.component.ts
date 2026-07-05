@@ -72,6 +72,7 @@ export type SwitchProps = VariantProps<typeof switchTrackVariants>;
       type="button"
       role="switch"
       [attr.aria-checked]="checked"
+      [attr.data-state]="checked ? 'checked' : 'unchecked'"
       [disabled]="disabled"
       (click)="toggle()"
       [class]="trackClass"
@@ -121,5 +122,5 @@ export class SwitchComponent implements ControlValueAccessor {
 
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; this.cdr.markForCheck(); }
 }

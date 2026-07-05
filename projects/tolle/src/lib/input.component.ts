@@ -43,8 +43,8 @@ import { cn } from './utils/cn';
           (focus)="onFocus()"
           (input)="onInputChange($event)"
           [class]="computedInputClass"
-          [attr.aria-invalid]="error"
-          [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
+          [attr.aria-invalid]="error || null"
+          [attr.aria-describedby]="error && errorMessage ? id + '-error' : (hint ? id + '-hint' : null)"
         />
 
         <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
@@ -55,6 +55,7 @@ import { cn } from './utils/cn';
       <ng-container *ngIf="!disabled">
         <p
           *ngIf="hint && !error"
+          [id]="id + '-hint'"
           class="text-xs text-muted-foreground px-1 transition-opacity duration-200"
           [class.opacity-0]="isFocused && hideHintOnFocus"
         >

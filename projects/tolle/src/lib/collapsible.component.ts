@@ -58,8 +58,13 @@ export class CollapsibleComponent {
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: {
+        'role': 'button',
+        '[attr.tabindex]': '0',
+        '[attr.aria-expanded]': 'isOpen',
         '[attr.data-state]': 'isOpen ? "open" : "closed"',
         '(click)': 'onToggle()',
+        '(keydown.enter)': 'onToggle()',
+        '(keydown.space)': 'onToggle(); $event.preventDefault()',
         '[class]': 'computedClass'
     }
 })
@@ -80,7 +85,7 @@ export class CollapsibleTriggerComponent {
     }
 
     get computedClass() {
-        return cn("cursor-pointer", this.class);
+        return cn("cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring", this.class);
     }
 }
 
@@ -102,6 +107,9 @@ export class CollapsibleTriggerComponent {
     ],
     host: {
         '[attr.data-state]': 'isOpen ? "open" : "closed"',
+        // `inert` (not `hidden`) so the height/opacity collapse animation still runs
+        // while removing collapsed content from the tab order + pointer interaction.
+        '[attr.inert]': 'isOpen ? null : ""',
         '[class]': 'computedClass'
     }
 })

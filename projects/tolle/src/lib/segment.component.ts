@@ -44,7 +44,7 @@ export type SegmentItem = {
         'relative flex items-center p-1 bg-muted rounded-lg select-none w-full gap-1',
         class
       )"
-      role="tablist"
+      role="radiogroup"
     >
       <div
         class="absolute top-1 bottom-1 bg-primary shadow-sm rounded-md transition-all duration-300 ease-[cubic-bezier(0.2,0.0,0.2,1)]"
@@ -57,9 +57,9 @@ export type SegmentItem = {
         *ngFor="let item of items"
         #itemEls
         type="button"
-        role="tab"
+        role="radio"
         [disabled]="item.disabled || disabled"
-        [attr.aria-selected]="value === item.value"
+        [attr.aria-checked]="value === item.value"
         (click)="select(item.value)"
         [class]="cn(
           'relative z-10 flex-1 px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-md text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',

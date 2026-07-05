@@ -10,18 +10,25 @@ import { cn } from './utils/cn';
   template: `
     <div [class]="modalClasses" class="pointer-events-auto" (mousedown)="$event.stopPropagation()">
 
-      <div *ngIf="ref.modal.showCloseButton || ref.modal.title" class="flex items-center justify-between px-6 pt-6">
-        <h3 *ngIf="ref.modal.title" class="text-lg font-semibold text-foreground tracking-tight">
+      <!-- Header -->
+      <div *ngIf="hasHeader" class="flex shrink-0 items-start justify-between gap-4 px-6 pt-6 pb-4">
+        <h2 *ngIf="ref.modal.title" class="text-lg font-semibold leading-none tracking-tight text-foreground">
           {{ ref.modal.title }}
-        </h3>
-        <button *ngIf="ref.modal.showCloseButton" (click)="ref.close()" class="ml-auto p-1 text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors">
-          <i class="ri-close-line text-2xl"></i>
+        </h2>
+        <button
+          *ngIf="ref.modal.showCloseButton"
+          type="button"
+          (click)="ref.close()"
+          aria-label="Close"
+          class="-mr-2 -mt-2 ml-auto grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <i class="ri-close-line text-xl"></i>
         </button>
       </div>
 
-      <div class="overflow-y-auto max-h-[100vh] text-foreground">
+      <!-- Body -->
+      <div class="min-h-0 flex-1 overflow-y-auto">
         <ng-container [ngSwitch]="contentType">
-          <div *ngSwitchCase="'string'">{{ content }}</div>
+          <p *ngSwitchCase="'string'" [class]="hasHeader ? 'px-6 pb-6 text-sm leading-relaxed text-muted-foreground' : 'p-6 text-sm leading-relaxed text-muted-foreground'">{{ content }}</p>
 
           <ng-container *ngSwitchCase="'template'">
             <ng-container *ngTemplateOutlet="asTemplate; context: ref.modal.context"></ng-container>
@@ -53,19 +60,24 @@ export class ModalComponent implements OnInit {
     this.determineContentType();
   }
 
+  /** Whether the auto-rendered header (title and/or close button) is shown. */
+  get hasHeader(): boolean {
+    return !!(this.ref.modal.showCloseButton || this.ref.modal.title);
+  }
+
   private getModalSizeCss(): string {
     const { size } = this.ref.modal;
 
     return cn(
-      // Base classes: Added 'w-full' and 'mx-auto'
-      'bg-background border border-border shadow-lg relative flex flex-col w-full mx-auto ',
+      // Surface: overlay card that never exceeds the viewport (header stays, body scrolls).
+      'bg-background text-foreground border border-border shadow-lg relative flex flex-col w-full mx-auto',
 
-      size === 'fullscreen' ? 'h-screen w-screen rounded-none' : 'rounded-md',
+      size === 'fullscreen' ? 'h-screen w-screen rounded-none' : 'rounded-lg max-h-[85vh]',
 
       // Sizing scale with explicit max-widths
       size === 'xs' && 'max-w-[320px]',
       size === 'sm' && 'max-w-[425px]',
-      size === 'default' && 'max-w-[544px]',
+      size === 'default' && 'max-w-[512px]',
       size === 'lg' && 'max-w-[1024px]',
       size === 'xl' && 'max-w-[1280px]'
     );

@@ -1,5 +1,5 @@
 import {
-  Component, Input, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy
+  Component, Input, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy, HostListener
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
@@ -34,6 +34,7 @@ import { CalendarComponent, CalendarMode } from './calendar.component';
           <button
             *ngIf="value && !disabled && showClear"
             type="button"
+            aria-label="Clear date"
             (click)="clear($event)"
             class="ri-close-line cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
             tabindex="-1"
@@ -42,6 +43,9 @@ import { CalendarComponent, CalendarMode } from './calendar.component';
           <button
             type="button"
             #trigger
+            aria-label="Open calendar"
+            aria-haspopup="dialog"
+            [attr.aria-expanded]="isOpen"
             (click)="togglePopover($event)"
             [disabled]="disabled"
             [class]="cn(
@@ -56,6 +60,7 @@ import { CalendarComponent, CalendarMode } from './calendar.component';
       <div
         #popover
         *ngIf="isOpen"
+        role="dialog"
         class="fixed z-[50]"
         style="visibility: hidden; top: 0; left: 0;"
       >
@@ -186,6 +191,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
     if (this.disabled) return;
     this.isOpen ? this.close() : this.open();
   }
+
+  @HostListener('keydown.escape') onEscape() { if (this.isOpen) this.close(); }
 
   open() {
     if (this.disabled) return;

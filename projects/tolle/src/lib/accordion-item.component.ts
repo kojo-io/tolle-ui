@@ -32,16 +32,22 @@ import { cn } from './utils/cn';
       <button
         type="button"
         (click)="toggle()"
+        [id]="'acc-trigger-'+id"
+        [attr.aria-controls]="'acc-content-'+id"
         [attr.aria-expanded]="isOpen"
         [attr.data-state]="isOpen ? 'open' : 'closed'"
-        class="flex flex-1 items-center justify-between py-4 font-medium transition-all group [&[data-state=open]>i]:rotate-180"
+        class="flex flex-1 items-center justify-between py-4 font-medium transition-all group [&[data-state=open]>i]:rotate-180 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background"
       >
         <span class="text-left group-hover:underline">{{ title }}</span>
-        <i class="ri-arrow-down-s-line text-muted-foreground text-lg transition-transform duration-200 hover:no-underline"></i>
+        <i class="ri-arrow-down-s-line text-muted-foreground text-lg transition-transform duration-200"></i>
       </button>
 
       <div
         [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'"
+        [id]="'acc-content-'+id"
+        role="region"
+        [attr.aria-labelledby]="'acc-trigger-'+id"
+        [attr.data-state]="isOpen ? 'open' : 'closed'"
         class="overflow-hidden">
         <div class="pb-4 pt-0 text-sm text-muted-foreground">
           <ng-content></ng-content>

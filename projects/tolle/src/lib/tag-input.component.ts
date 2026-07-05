@@ -283,9 +283,9 @@ export class TagInputComponent implements ControlValueAccessor {
       "text-foreground",
 
       // Selection color
-      "selection:bg-primary/20 selection:text-foreground",
-
-      this.class
+      "selection:bg-primary/20 selection:text-foreground"
+      // NOTE: consumer `class` is applied to the container only (computedContainerClass),
+      // not duplicated onto the inner <input>.
     );
   }
 }

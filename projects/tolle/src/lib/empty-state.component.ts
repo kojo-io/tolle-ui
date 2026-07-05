@@ -32,7 +32,7 @@ type EmptyStateVariants = VariantProps<typeof emptyStateVariants>;
         variant === 'minimal' ? 'h-12 w-12' : 'h-20 w-20'
       )">
         <ng-content select="[icon]">
-          <i [class]="cn(
+          <i aria-hidden="true" [class]="cn(
             'ri-inbox-line text-muted-foreground/60',
             variant === 'minimal' ? 'text-xl' : 'text-3xl'
           )"></i>

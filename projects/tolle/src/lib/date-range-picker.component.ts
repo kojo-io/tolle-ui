@@ -33,22 +33,28 @@ import { DateRange } from './types/date-range';
           <button
             type="button"
             tabindex="-1"
+            aria-label="Clear date range"
             *ngIf="(value.start || value.end) && !disabled"
             (click)="clear($event)"
             class="ri-close-line cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
           ></button>
 
-          <i
+          <button
             #trigger
+            type="button"
             (click)="togglePopover($event)"
-            class="ri-calendar-line cursor-pointer text-muted-foreground hover:text-primary transition-colors"
-          ></i>
+            aria-label="Open calendar"
+            aria-haspopup="dialog"
+            [attr.aria-expanded]="isOpen"
+            class="ri-calendar-line cursor-pointer text-muted-foreground hover:text-primary transition-colors bg-transparent border-0 p-0"
+          ></button>
         </div>
       </tolle-input>
 
       <div
         #popover
         *ngIf="isOpen"
+        role="dialog"
         class="fixed z-50"
         style="visibility: hidden;"
       >
@@ -111,6 +117,8 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
     if (this.disabled) return;
     this.isOpen ? this.close() : this.open();
   }
+
+  @HostListener('keydown.escape') onEscape() { if (this.isOpen) this.close(); }
 
   open() {
     this.isOpen = true;

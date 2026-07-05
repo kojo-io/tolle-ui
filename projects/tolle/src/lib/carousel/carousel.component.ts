@@ -70,6 +70,8 @@ export class CarouselContext {
       class="relative"
       role="region"
       aria-roledescription="carousel"
+      tabindex="0"
+      (keydown)="onKeydown($event)"
       [class.flex-col]="orientation === 'vertical'"
     >
       <ng-content></ng-content>
@@ -103,6 +105,16 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit() {
         // We expect tolleCarouselContent to provide the viewport element
+    }
+
+    onKeydown(event: KeyboardEvent) {
+        if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            this.carouselContext.scrollPrev();
+        } else if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            this.carouselContext.scrollNext();
+        }
     }
 
     initApi(viewport: HTMLElement) {
@@ -164,6 +176,7 @@ export class CarouselItemDirective {
     selector: '[tolleCarouselPrevious]',
     standalone: true,
     host: {
+        'aria-label': 'Previous slide',
         '[attr.disabled]': '!carouselContext.canScrollPrev ? true : null',
         '(click)': 'carouselContext.scrollPrev()',
     }
@@ -176,6 +189,7 @@ export class CarouselPreviousDirective {
     selector: '[tolleCarouselNext]',
     standalone: true,
     host: {
+        'aria-label': 'Next slide',
         '[attr.disabled]': '!carouselContext.canScrollNext ? true : null',
         '(click)': 'carouselContext.scrollNext()',
     }

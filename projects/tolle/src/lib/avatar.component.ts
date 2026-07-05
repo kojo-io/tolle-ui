@@ -56,9 +56,8 @@ export class AvatarComponent {
   @Input() size: AvatarProps['size'] = 'default';
   /** Shape of the avatar. @default 'circle' */
   @Input() shape: AvatarProps['shape'] = 'circle';
-
-  // We remove @Input() class because standard class="" attributes
-  // on the tag will now work automatically with the host bindings.
+  /** Extra Tailwind classes merged onto the avatar via `cn()` (last-wins). */
+  @Input() class = '';
 
   isLoading = true;
   hasError = false;
@@ -79,6 +78,6 @@ export class AvatarComponent {
   // Apply styles directly to the <tolle-avatar> tag
   @HostBinding('class')
   get hostClasses() {
-    return cn(avatarVariants({ shape: this.shape, size: this.size }));
+    return cn(avatarVariants({ shape: this.shape, size: this.size }), this.class);
   }
 }

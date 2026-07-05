@@ -12,7 +12,7 @@ import { cn } from './utils/cn';
       [style.height]="height"
     >
       <div 
-        class="h-full w-full rounded-[inherit] overflow-auto scrollbar-hide select-none"
+        class="h-full w-full rounded-[inherit] overflow-auto scrollbar-hide"
         [class.overflow-x-hidden]="orientation === 'vertical'"
         [class.overflow-y-hidden]="orientation === 'horizontal'"
       >
@@ -33,20 +33,12 @@ import { cn } from './utils/cn';
     }
     
     .scrollbar-hide::-webkit-scrollbar-thumb {
-      background: #e5e5e5; /* neutral-200 */
+      background: rgb(var(--border));
       border-radius: 10px;
-    }
-    
-    :host-context(.dark) .scrollbar-hide::-webkit-scrollbar-thumb {
-      background: #262626; /* neutral-800 */
     }
 
     .scrollbar-hide::-webkit-scrollbar-thumb:hover {
-      background: #d4d4d4; /* neutral-300 */
-    }
-
-    :host-context(.dark) .scrollbar-hide::-webkit-scrollbar-thumb:hover {
-      background: #404040; /* neutral-700 */
+      background: rgb(var(--muted-foreground));
     }
   `]
 })

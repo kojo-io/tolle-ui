@@ -21,6 +21,7 @@ import {SelectItemComponent} from './select-item.component';
   standalone: true,
   imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
   template: `
+    <nav role="navigation" aria-label="pagination">
     <div [class]="cn('flex items-center justify-between px-2 py-4', class)">
 
       <div *ngIf="showCurrentPageInfo" class="text-sm text-muted-foreground">
@@ -57,16 +58,18 @@ import {SelectItemComponent} from './select-item.component';
             <button
               (click)="previousPage()"
               [disabled]="currentPage === 1"
+              aria-label="Go to previous page"
               [class]="navBtnClass"
             >
-              <i class="ri-arrow-left-s-line"></i>
+              <i aria-hidden="true" class="ri-arrow-left-s-line"></i>
             </button>
 
             <button
               *ngFor="let page of displayPageIndex"
               (click)="selectPage(page)"
+              [attr.aria-current]="currentPage === page ? 'page' : null"
               [class]="cn(
-                'h-8 w-8 text-sm rounded-md flex items-center justify-center transition-colors',
+                'h-8 w-8 text-sm rounded-md flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer',
                 currentPage === page
                   ? 'bg-primary text-primary-foreground font-medium'
                   : 'hover:bg-accent hover:text-accent-foreground'
@@ -78,14 +81,16 @@ import {SelectItemComponent} from './select-item.component';
             <button
               (click)="nextPage()"
               [disabled]="currentPage === totalPages || totalPages === 0"
+              aria-label="Go to next page"
               [class]="navBtnClass"
             >
-              <i class="ri-arrow-right-s-line"></i>
+              <i aria-hidden="true" class="ri-arrow-right-s-line"></i>
             </button>
           </div>
         </div>
       </div>
     </div>
+    </nav>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -114,7 +119,7 @@ export class PaginationComponent implements OnInit, OnChanges {
   private cd = inject(ChangeDetectorRef);
   protected cn = cn;
 
-  navBtnClass = 'h-8 w-8 p-0 flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed';
+  navBtnClass = 'h-8 w-8 p-0 flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer';
 
   ngOnInit(): void {
     if (this.pageSizeOptions.length === 0) {

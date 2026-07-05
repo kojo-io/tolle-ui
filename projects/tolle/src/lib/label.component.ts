@@ -21,7 +21,7 @@ export class LabelComponent {
 
     get computedClass() {
         return cn(
-            "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+            "inline-flex items-center gap-2 select-none text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
             this.class
         );
     }

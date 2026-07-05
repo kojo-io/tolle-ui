@@ -46,6 +46,7 @@ export interface TableColumn {
           <tolle-input
             [size]="size === 'lg' ? 'default' : 'sm'"
             class="w-full"
+            aria-label="Filter records"
             placeholder="Filter records..."
             [(ngModel)]="searchTerm"
             (ngModelChange)="onSearch()">
@@ -84,17 +85,20 @@ export interface TableColumn {
           <table class="w-full table-auto border-collapse">
             <thead class="border-b border-border bg-background">
             <tr>
-              <th *ngIf="expandable" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]', stickyHeader ? 'sticky top-0 z-10 bg-background' : '')"></th>
+              <th *ngIf="expandable" scope="col" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]', stickyHeader ? 'sticky top-0 z-10 bg-background' : '')"></th>
 
               <th *ngFor="let col of activeColumns"
+                  scope="col"
+                  [attr.aria-sort]="sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : (sortDir === 'desc' ? 'descending' : 'none')) : 'none'"
                   [class]="cn('text-left font-medium text-foreground',headerPaddingClass,fontSizeClass, col.class, stickyHeader ? 'sticky top-0 z-10 bg-background shadow-sm' : '')">
 
-                <div *ngIf="col.sortable; else plainHeader"
+                <button *ngIf="col.sortable; else plainHeader"
+                     type="button"
                      (click)="toggleSort(col.key)"
-                     class="flex items-center gap-1 cursor-pointer select-none">
+                     class="flex items-center gap-1 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
                   {{ col.label }}
-                  <i [class]="getSortIcon(col.key)"></i>
-                </div>
+                  <i [class]="getSortIcon(col.key)" aria-hidden="true"></i>
+                </button>
 
                 <ng-template #plainHeader>
                   {{ col.label }}
@@ -108,13 +112,15 @@ export interface TableColumn {
               <tr class="hover:bg-muted/50 transition-colors">
                 <td *ngIf="expandable" class="px-4">
                   <button (click)="toggleRow(i)"
+                          [attr.aria-label]="expandedRows.has(i) ? 'Collapse row' : 'Expand row'"
+                          [attr.aria-expanded]="expandedRows.has(i)"
                           [class]="cn(
-                      'rounded-md hover:bg-accent transition-colors',
+                      'rounded-md hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                       size === 'xs' ? 'h-6 w-6' : 'h-8 w-8'
                     )">
                     <i [class]="expandedRows.has(i)
                 ? 'ri-arrow-down-s-line'
-                : 'ri-arrow-right-s-line'">
+                : 'ri-arrow-right-s-line'" aria-hidden="true">
                     </i>
                   </button>
                 </td>
@@ -309,7 +315,6 @@ export class DataTableComponent implements OnInit, OnChanges {
   }
 
   handlePageChange(newPage: number) {
-    console.log('Page Change Event Triggered:', newPage); // <--- Add this
     this.currentPage = newPage;
     this.updatePage();
   }

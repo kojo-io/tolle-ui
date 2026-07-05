@@ -39,8 +39,8 @@ import { cn } from './utils/cn';
           [class]="textareaClasses"
           [style.resize]="(autoGrow || readonly || disabled) ? 'none' : 'vertical'"
           [style.overflow]="autoGrow ? 'hidden' : 'auto'"
-          [attr.aria-invalid]="error"
-          [attr.aria-describedby]="error && errorMessage ? id + '-error' : null"
+          [attr.aria-invalid]="error || null"
+          [attr.aria-describedby]="error && errorMessage ? id + '-error' : (hint ? id + '-hint' : null)"
           [attr.maxlength]="maxLength"
         ></textarea>
       </div>
@@ -48,6 +48,7 @@ import { cn } from './utils/cn';
       <div *ngIf="(showCharacterCount || hint || errorMessage) && !disabled" class="flex justify-between items-center px-1">
         <p
           *ngIf="hint && !error"
+          [id]="id + '-hint'"
           class="text-xs text-muted-foreground transition-opacity duration-200"
           [class.opacity-0]="isFocused && hideHintOnFocus"
         >
@@ -74,7 +75,7 @@ import { cn } from './utils/cn';
 export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild('textareaElement') textareaElement!: ElementRef<HTMLTextAreaElement>;
 
-  @Input() id = `textarea-${Math.random().toString(36).substr(2, 9)}`;
+  @Input() id = `textarea-${Math.random().toString(36).substring(2, 9)}`;
   @Input() label = '';
   @Input() placeholder = '';
   @Input() hint = '';
@@ -187,7 +188,7 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   writeValue(value: any): void {
-    this.value = value;
+    this.value = value ?? '';
     if (this.autoGrow) setTimeout(() => this.resize());
   }
 

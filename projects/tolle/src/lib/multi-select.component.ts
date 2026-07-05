@@ -17,10 +17,13 @@ import { BadgeComponent } from './badge.component';
     { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true }
   ],
   template: `
-    <div [class]="cn('relative w-full', 'size-' + size)" #container>
+    <div class="relative w-full" #container>
       <button
         #trigger
         type="button"
+        role="combobox"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="isOpen"
         (click)="toggle()"
         [disabled]="disabled"
         [class]="computedTriggerClass">
@@ -43,7 +46,9 @@ import { BadgeComponent } from './badge.component';
       </button>
 
       <div #popover *ngIf="isOpen"
-           class="fixed bg-popover z-[999] rounded-md border border-border shadow-md overflow-hidden"
+           role="listbox"
+           aria-multiselectable="true"
+           class="fixed bg-popover text-popover-foreground z-[999] rounded-md border border-border shadow-md overflow-hidden"
            style="visibility: hidden; top: 0; left: 0;">
 
         <div class="p-2 border-b border-border space-y-2 bg-popover">
@@ -64,7 +69,7 @@ import { BadgeComponent } from './badge.component';
           <div class="flex items-center justify-between px-1">
             <button type="button"
                     (click)="selectAll()"
-                    [disabled]="maxSelections && selectableItems.length > maxSelections"
+                    [disabled]="!!(maxSelections && selectableItems.length > maxSelections)"
                     [class]="cn(
                       'text-[10px] font-bold uppercase transition-colors',
                       maxSelections && selectableItems.length > maxSelections
@@ -141,12 +146,12 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
 
       // Focus state - ZARDUI STYLE (Soft ring, no offset)
       !this.disabled && [
-        'focus:outline-none',
-        'focus:ring-4',
-        'focus:ring-ring/30',
-        'focus:ring-offset-0',
-        'focus:shadow-none',
-        'focus:border-primary/80' // Darkens border on focus
+        'focus-visible:outline-none',
+        'focus-visible:ring-4',
+        'focus-visible:ring-ring/30',
+        'focus-visible:ring-offset-0',
+        'focus-visible:shadow-none',
+        'focus-visible:border-primary/80' // Darkens border on focus
       ],
 
       // Hover state
@@ -156,8 +161,8 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
       this.error && [
         'border-destructive',
         !this.disabled && [
-          'focus:border-destructive/80',
-          'focus:ring-destructive/30'
+          'focus-visible:border-destructive/80',
+          'focus-visible:ring-destructive/30'
         ]
       ],
 

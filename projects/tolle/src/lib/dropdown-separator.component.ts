@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'tolle-dropdown-separator',
   standalone: true,
   imports: [],
-  template: `<div class="-mx-1 my-1 h-px bg-border"></div>`,
+  template: `<div role="separator" aria-hidden="true" class="-mx-1 my-1 h-px bg-border"></div>`,
   styles: ``
 })
 export class DropdownSeparatorComponent {

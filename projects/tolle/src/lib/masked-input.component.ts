@@ -47,7 +47,7 @@ import { cn } from './utils/cn';
           (blur)="onBlur()"
           (focus)="onFocus()"
           [class]="computedInputClass"
-          [attr.aria-invalid]="error"
+          [attr.aria-invalid]="error || null"
           [attr.aria-describedby]="error && errorMessage ? id + '-error' : null" />
 
         <!-- Suffix Icon -->

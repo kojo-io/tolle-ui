@@ -16,9 +16,17 @@ import { Subscription } from 'rxjs';
         isEffectiveDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
       )"
     >
-      <div [class]="cn(
+      <div
+        role="radio"
+        [attr.aria-checked]="isSelected"
+        [attr.aria-disabled]="isEffectiveDisabled || null"
+        [attr.data-state]="isSelected ? 'checked' : 'unchecked'"
+        [attr.tabindex]="isEffectiveDisabled ? -1 : 0"
+        (keydown.enter)="isEffectiveDisabled ? null : select()"
+        (keydown.space)="isEffectiveDisabled ? null : select(); $event.preventDefault()"
+        [class]="cn(
         'aspect-square h-4 w-4 rounded-full border border-primary text-primary transition-all flex items-center justify-center',
-        'ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        'outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
         !isEffectiveDisabled && 'group-hover:border-primary/70',
         isSelected ? 'bg-background' : 'bg-transparent',
         class

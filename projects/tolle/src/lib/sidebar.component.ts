@@ -58,13 +58,13 @@ export type SidebarGroup = {
                       [disabled]="collapsed"
                       [attr.aria-expanded]="isParentExpanded(group, item, gIndex, i)"
                       [class]="cn(
-                        'group w-full relative flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                        'group w-full relative flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                         'hover:bg-accent hover:text-accent-foreground',
                         isParentExpanded(group, item, gIndex, i) ? 'text-foreground bg-accent/50' : 'text-muted-foreground',
                         collapsed ? 'justify-center' : 'justify-start'
                       )"
                     >
-                      <i [class]="cn(
+                      <i aria-hidden="true" [class]="cn(
                           item.icon || 'ri-circle-fill',
                           'h-4 w-4 text-lg shrink-0 transition-transform',
                           !collapsed && 'group-hover:scale-110'
@@ -100,8 +100,9 @@ export type SidebarGroup = {
                                 <button
                                   type="button"
                                   (click)="toggleChild(group, item, subItem, gIndex, i, j); $event.stopPropagation()"
+                                  [attr.aria-expanded]="isChildExpanded(group, item, subItem, gIndex, i, j)"
                                   [class]="cn(
-                                    'group w-full relative flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                                    'group w-full relative flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                                     'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
                                     isChildExpanded(group, item, subItem, gIndex, i, j) ? 'text-foreground bg-accent/30' : ''
                                   )"
@@ -125,7 +126,7 @@ export type SidebarGroup = {
                                           [routerLink]="grandChild.url"
                                           [routerLinkActive]="activeClasses"
                                           [routerLinkActiveOptions]="{ exact: true }"
-                                          class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
+                                          class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                                         >
                                           <span class="w-1.5 h-1.5 rounded-full bg-border/70 shrink-0"></span>
                                           <span class="truncate">{{ grandChild.title }}</span>
@@ -142,7 +143,7 @@ export type SidebarGroup = {
                                 [routerLink]="subItem.url"
                                 [routerLinkActive]="activeClasses"
                                 [routerLinkActiveOptions]="{ exact: true }"
-                                class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap"
+                                class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                               >
                                 <span class="w-1.5 h-1.5 rounded-full bg-border shrink-0"></span>
                                 <span class="truncate">{{ subItem.title }}</span>
@@ -161,12 +162,12 @@ export type SidebarGroup = {
                     [routerLinkActive]="activeClasses"
                     [routerLinkActiveOptions]="{ exact: true }"
                     [class]="cn(
-                      'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                      'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
                       'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
                       collapsed ? 'justify-center' : 'justify-start'
                     )"
                   >
-                    <i [class]="cn(
+                    <i aria-hidden="true" [class]="cn(
                         item.icon || 'ri-circle-fill',
                         'h-4 w-4 text-lg shrink-0 transition-transform',
                         !collapsed && 'group-hover:scale-110'

@@ -13,9 +13,10 @@ import { cn } from './utils/cn';
         #menu
         role="menu"
         aria-orientation="vertical"
+        tabindex="-1"
         [attr.data-state]="isOpen ? 'open' : 'closed'"
         class="fixed z-50 min-w-[12rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md
-               data-[state=closed]:animate-out
+               data-[state=closed]:animate-out data-[state=open]:animate-in
                data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
                data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95
                slide-in-from-top-2"
@@ -201,6 +202,8 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
       await this.contextMenuService.positionMenu(this.menuElement.nativeElement);
       this.isPositioned = true;
       this.cdr.detectChanges();
+      // Focus the menu container so Arrow/Enter/Escape keydown handlers fire.
+      this.menuElement.nativeElement.focus();
     }
   }
 

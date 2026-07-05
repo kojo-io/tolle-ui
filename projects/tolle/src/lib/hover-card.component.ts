@@ -76,6 +76,8 @@ export class HoverCardComponent implements OnDestroy {
     host: {
         '(mouseenter)': 'onMouseEnter()',
         '(mouseleave)': 'onMouseLeave()',
+        '(focusin)': 'onMouseEnter()',
+        '(focusout)': 'onMouseLeave()',
         '[class]': '"cursor-default inline-block"'
     }
 })

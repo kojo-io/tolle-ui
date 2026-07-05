@@ -12,6 +12,9 @@ import { cn } from './utils/cn';
     <div [class]="cn('fixed z-[100] flex flex-col gap-2 w-full max-w-[380px] p-4', positionClasses)">
       <div
         *ngFor="let toast of toasts$ | async"
+        role="status"
+        [attr.aria-live]="toast.variant === 'destructive' ? 'assertive' : 'polite'"
+        aria-atomic="true"
         (mouseenter)="toastService.setPaused(toast.id, true)"
         (mouseleave)="toastService.setPaused(toast.id, false)"
         [class]="cn(
@@ -28,11 +31,13 @@ import { cn } from './utils/cn';
           </div>
         </div>
 
-        <button (click)="toastService.remove(toast.id)" class="opacity-50 hover:opacity-100 transition-opacity">
+        <button type="button" aria-label="Close" (click)="toastService.remove(toast.id)" class="opacity-50 hover:opacity-100 transition-opacity">
+          <span class="sr-only">Close</span>
           <i class="ri-close-line text-lg"></i>
         </button>
 
         <div
+          aria-hidden="true"
           class="absolute bottom-0 left-0 h-1 transition-all duration-100 ease-linear"
           [style.width.%]="(toast.remainingTime / (toast.duration || 3000)) * 100"
           [class]="getProgressClasses(toast.variant)"
@@ -47,17 +52,17 @@ export class ToastContainerComponent {
   toasts$ = this.toastService.toasts$;
 
   icons = {
-    destructive: 'ri-error-warning-line text-destructive dark:text-red-400',
-    success: 'ri-checkbox-circle-line text-emerald-600 dark:text-emerald-400',
+    destructive: 'ri-error-warning-line text-destructive',
+    success: 'ri-checkbox-circle-line text-success',
     default: 'ri-information-line text-primary'
   };
 
   getVariantClasses(variant: string = 'default') {
     switch (variant) {
       case 'destructive':
-        return 'border-destructive/50 bg-destructive/5 dark:bg-red-950 text-destructive dark:text-red-400';
+        return 'border-destructive/50 bg-destructive/10 text-destructive';
       case 'success':
-        return 'border-emerald-500/50 bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400';
+        return 'border-success/50 bg-success/10 text-success';
       default:
         return 'bg-background text-foreground border-border';
     }
@@ -66,9 +71,9 @@ export class ToastContainerComponent {
   getProgressClasses(variant: string = 'default') {
     switch (variant) {
       case 'destructive':
-        return 'bg-destructive dark:bg-red-400';
+        return 'bg-destructive';
       case 'success':
-        return 'bg-emerald-600 dark:bg-emerald-400';
+        return 'bg-success';
       default:
         return 'bg-primary';
     }

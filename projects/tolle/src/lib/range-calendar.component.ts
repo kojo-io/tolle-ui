@@ -44,10 +44,13 @@ import {DateRange} from './types/date-range';
           <div class="grid grid-cols-7 gap-y-1">
             <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">{{ day }}</span>
           </div>
-          <div class="grid grid-cols-7 gap-y-1">
+          <div role="grid" class="grid grid-cols-7 gap-y-1">
             <button
               *ngFor="let date of m.days"
               type="button"
+              role="gridcell"
+              [attr.aria-selected]="isSelected(date)"
+              [attr.aria-label]="(date | date:'fullDate')"
               (click)="selectDate(date)"
               [disabled]="isDateDisabled(date)"
               [class]="getDayClass(date, m.date)"
@@ -72,8 +75,8 @@ import {DateRange} from './types/date-range';
             </button>
           </div>
           <div class="flex items-center space-x-1">
-            <button type="button" (click)="prev()" [class]="navBtnClass"><i class="ri-arrow-left-s-line text-lg"></i></button>
-            <button type="button" (click)="next()" [class]="navBtnClass"><i class="ri-arrow-right-s-line text-lg"></i></button>
+            <button type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous month"><i class="ri-arrow-left-s-line text-lg"></i></button>
+            <button type="button" (click)="next()" [class]="navBtnClass" aria-label="Next month"><i class="ri-arrow-right-s-line text-lg"></i></button>
           </div>
         </div>
 
@@ -83,10 +86,13 @@ import {DateRange} from './types/date-range';
               {{ day }}
             </span>
           </div>
-          <div class="grid grid-cols-7 gap-y-1 w-full">
+          <div role="grid" class="grid grid-cols-7 gap-y-1 w-full">
             <button
               *ngFor="let date of daysInMonth"
               type="button"
+              role="gridcell"
+              [attr.aria-selected]="isSelected(date)"
+              [attr.aria-label]="(date | date:'fullDate')"
               (click)="selectDate(date)"
               [disabled]="isDateDisabled(date)"
               [class]="getDayClass(date)"
@@ -136,7 +142,7 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   years: number[] = [];
 
-  navBtnClass = cn('h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 border border-input rounded-md flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all');
+  navBtnClass = cn('h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 border border-input rounded-md flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring');
 
   onTouched: () => void = () => {};
   onChange: (value: DateRange) => void = () => {};
@@ -248,6 +254,11 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
 
   // --- Visual Styling for Range ---
 
+  isSelected(date: Date): boolean {
+    const { start, end } = this.value;
+    return !!((start && isSameDay(date, start)) || (end && isSameDay(date, end)));
+  }
+
   getDayClass(date: Date, refMonth: Date = this.viewDate) {
     const { start, end } = this.value;
     const isOutside = !isSameMonth(date, refMonth);
@@ -261,7 +272,7 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
 
     return cn(
       // Base: h-9 w-9, but we remove margins/rounding for the 'strip' effect
-      'h-9 w-9 p-0 font-normal text-sm transition-all flex items-center justify-center relative z-10',
+      'h-9 w-9 p-0 font-normal text-sm transition-all flex items-center justify-center relative z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
 
       // Default State (Not selected, Not disabled)
       !isInside && !isStart && !isEnd && !isDisabled && 'hover:bg-accent hover:text-accent-foreground rounded-md',

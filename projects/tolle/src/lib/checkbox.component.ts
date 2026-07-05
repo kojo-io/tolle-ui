@@ -5,7 +5,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
 const checkboxVariants = cva(
-  'group flex shrink-0 cursor-pointer items-center justify-center rounded-sm border border-primary ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+  'group flex shrink-0 cursor-pointer items-center justify-center p-0 rounded-sm border border-primary ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       size: {
@@ -40,7 +40,12 @@ export type CheckboxProps = VariantProps<typeof checkboxVariants>;
     }
   ],
   template: `
-    <div
+    <button
+      type="button"
+      role="checkbox"
+      [attr.aria-checked]="checked"
+      [attr.data-state]="checked ? 'checked' : 'unchecked'"
+      [disabled]="disabled"
       (click)="toggle()"
       [class]="computedClass"
     >
@@ -48,8 +53,9 @@ export type CheckboxProps = VariantProps<typeof checkboxVariants>;
         *ngIf="checked"
         class="ri-check-line font-bold"
         [class]="size === 'xs' ? 'text-[10px]' : 'text-[14px]'"
+        aria-hidden="true"
       ></i>
-    </div>
+    </button>
   `
 })
 export class CheckboxComponent implements ControlValueAccessor {
@@ -89,5 +95,5 @@ export class CheckboxComponent implements ControlValueAccessor {
 
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; this.cdr.markForCheck(); }
 }
