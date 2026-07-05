@@ -45,6 +45,7 @@ export type SegmentItem = {
         class
       )"
       role="radiogroup"
+      (keydown)="onKeydown($event)"
     >
       <div
         class="absolute top-1 bottom-1 bg-primary shadow-sm rounded-md transition-all duration-300 ease-[cubic-bezier(0.2,0.0,0.2,1)]"
@@ -60,6 +61,7 @@ export type SegmentItem = {
         role="radio"
         [disabled]="item.disabled || disabled"
         [attr.aria-checked]="value === item.value"
+        [attr.tabindex]="getTabIndex(item)"
         (click)="select(item.value)"
         [class]="cn(
           'relative z-10 flex-1 px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-md text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
@@ -143,6 +145,67 @@ export class SegmentedComponent implements ControlValueAccessor, AfterViewInit, 
     this.onChange(val);
     this.onTouched();
     this.updateGlider();
+  }
+
+  /** True when the current value matches one of the items. */
+  private hasSelectedValue(): boolean {
+    return this.items.some(i => i.value === this.value);
+  }
+
+  private firstEnabledItem(): SegmentItem | undefined {
+    if (this.disabled) return undefined;
+    return this.items.find(i => !i.disabled);
+  }
+
+  /**
+   * Roving tabindex: the selected item is tab-reachable, or - when nothing is
+   * selected - the first enabled item. All other items get -1.
+   */
+  getTabIndex(item: SegmentItem): number {
+    if (this.disabled || item.disabled) return -1;
+    if (this.value === item.value) return 0;
+    if (!this.hasSelectedValue() && this.firstEnabledItem() === item) return 0;
+    return -1;
+  }
+
+  /**
+   * WAI-ARIA radio group keyboard nav: Arrow Left/Right (and Home/End) move
+   * selection + focus across the enabled items, wrapping and skipping disabled.
+   */
+  onKeydown(event: KeyboardEvent) {
+    if (this.disabled) return;
+
+    const key = event.key;
+    const forward = key === 'ArrowRight';
+    const backward = key === 'ArrowLeft';
+    const home = key === 'Home';
+    const end = key === 'End';
+    if (!forward && !backward && !home && !end) return;
+
+    const enabled = this.items.map((it, i) => ({ it, i })).filter(x => !x.it.disabled);
+    if (!enabled.length) return;
+
+    event.preventDefault();
+
+    const buttons = this.itemElements?.toArray().map(r => r.nativeElement) ?? [];
+    const focusedIndex = buttons.indexOf(event.target as HTMLElement);
+    let pos = enabled.findIndex(x => x.i === focusedIndex);
+    if (pos < 0) pos = enabled.findIndex(x => x.it.value === this.value);
+
+    let targetPos: number;
+    if (home) {
+      targetPos = 0;
+    } else if (end) {
+      targetPos = enabled.length - 1;
+    } else if (forward) {
+      targetPos = pos < 0 ? 0 : (pos + 1) % enabled.length;
+    } else {
+      targetPos = pos < 0 ? enabled.length - 1 : (pos - 1 + enabled.length) % enabled.length;
+    }
+
+    const target = enabled[targetPos];
+    this.select(target.it.value);
+    this.itemElements.get(target.i)?.nativeElement.focus();
   }
 
   updateGlider() {

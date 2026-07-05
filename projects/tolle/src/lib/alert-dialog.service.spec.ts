@@ -34,7 +34,7 @@ describe('AlertDialogService Sizing', () => {
         // config is set after the overlay attaches, so flush CD to render the size class.
         TestBed.inject(ApplicationRef).tick();
 
-        const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div');
+        const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div[role="alertdialog"]');
         expect(dialogContent?.classList.contains('max-w-lg')).toBeTrue();
     });
 
@@ -48,7 +48,7 @@ describe('AlertDialogService Sizing', () => {
         // config is set after the overlay attaches, so flush CD to render the size class.
         TestBed.inject(ApplicationRef).tick();
 
-        const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div');
+        const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div[role="alertdialog"]');
         expect(dialogContent?.classList.contains('max-w-xs')).toBeTrue();
     });
 
@@ -62,7 +62,7 @@ describe('AlertDialogService Sizing', () => {
         // config is set after the overlay attaches, so flush CD to render the size class.
         TestBed.inject(ApplicationRef).tick();
 
-        const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div');
+        const dialogContent = overlayContainerElement.querySelector('tolle-alert-dialog-content div[role="alertdialog"]');
         expect(dialogContent?.classList.contains('max-w-full')).toBeTrue();
     });
 });

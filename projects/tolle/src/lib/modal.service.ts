@@ -15,6 +15,9 @@ export class ModalService {
   ) {}
 
   open<R = any>(config: Modal): ModalRef<R> {
+    // 0. Remember what was focused so we can restore it after the modal closes.
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
     // 1. Create the Overlay (DOM placeholder)
     const overlayRef = this.createOverlay();
 
@@ -26,6 +29,18 @@ export class ModalService {
       parent: this.injector,
       providers: [{ provide: ModalRef, useValue: modalRef }]
     });
+
+    // Escape-to-close: mirror the backdrop close path, but only for
+    // non-blocking modals (backdropClose !== false).
+    overlayRef.keydownEvents().subscribe((event: KeyboardEvent) => {
+      if (event.key === 'Escape' && config.backdropClose !== false) {
+        event.preventDefault();
+        modalRef.close();
+      }
+    });
+
+    // Restore focus to the trigger once the overlay is torn down.
+    overlayRef.detachments().subscribe(() => previouslyFocused?.focus?.());
 
     // 4. Attach the UI Component to the Overlay
     const portal = new ComponentPortal(ModalComponent, null, injector);

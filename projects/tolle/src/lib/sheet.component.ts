@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, inject, TemplateRef, ViewChild,
 import { CommonModule } from '@angular/common';
 import { Overlay, OverlayRef, OverlayConfig, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
+import { A11yModule } from '@angular/cdk/a11y';
 import { cn } from './utils/cn';
 
 @Component({
@@ -20,6 +21,8 @@ export class SheetComponent {
   private scrollStrategy = inject(ScrollStrategyOptions);
 
   private overlayRef?: OverlayRef;
+  /** Element focused before the sheet opened, restored on close. */
+  private previouslyFocused?: HTMLElement | null;
 
   @ContentChild(forwardRef(() => SheetContentComponent)) contentComponent?: any;
 
@@ -40,6 +43,9 @@ export class SheetComponent {
   private show() {
     if (this.overlayRef || !this.contentComponent?.contentTemplate) return;
 
+    // Remember the trigger so focus can be restored when the sheet closes.
+    this.previouslyFocused = document.activeElement as HTMLElement | null;
+
     const overlayConfig = new OverlayConfig({
       hasBackdrop: this.hasBackdrop,
       backdropClass: 'tolle-modal-backdrop',
@@ -55,16 +61,27 @@ export class SheetComponent {
     if (this.hasBackdrop) {
       this.overlayRef.backdropClick().subscribe(() => this.close());
     }
+
+    // Escape-to-close.
+    this.overlayRef.keydownEvents().subscribe((event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        this.close();
+      }
+    });
   }
 
   private hide() {
     if (this.overlayRef) {
+      const toRestore = this.previouslyFocused;
       setTimeout(() => {
         if (this.overlayRef) {
           this.overlayRef.detach();
           this.overlayRef.dispose();
           this.overlayRef = undefined;
         }
+        // Restore focus to the trigger after the exit animation.
+        toRestore?.focus?.();
       }, 300);
     }
   }
@@ -98,15 +115,20 @@ export class SheetTriggerComponent {
 @Component({
   selector: 'tolle-sheet-content',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, A11yModule],
   template: `
     <ng-template #sheetContent>
-      <div 
-        [class]="computedClass" 
+      <div
+        [class]="computedClass"
         [attr.data-state]="sheet.isOpen ? 'open' : 'closed'"
+        role="dialog"
+        aria-modal="true"
+        [attr.aria-labelledby]="titleCmp?.id || null"
+        [attr.aria-describedby]="descriptionCmp?.id || null"
+        cdkTrapFocus cdkTrapFocusAutoCapture
         (mousedown)="$event.stopPropagation()">
-        <button 
-          (click)="close()" 
+        <button
+          (click)="close()"
           class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none"
         >
           <i class="ri-close-line text-xl"></i>
@@ -123,6 +145,10 @@ export class SheetContentComponent {
   @Input() class: string = '';
 
   @ViewChild('sheetContent', { static: true }) contentTemplate!: TemplateRef<any>;
+
+  /** Projected title/description used to build the dialog's accessible name. */
+  @ContentChild(forwardRef(() => SheetTitleComponent)) titleCmp?: SheetTitleComponent;
+  @ContentChild(forwardRef(() => SheetDescriptionComponent)) descriptionCmp?: SheetDescriptionComponent;
 
   public sheet = inject(SheetComponent);
 
@@ -183,9 +209,13 @@ export class SheetFooterComponent { }
     <h3 class="text-lg font-semibold text-foreground">
       <ng-content></ng-content>
     </h3>
-  `
+  `,
+  host: { '[attr.id]': 'id' }
 })
-export class SheetTitleComponent { }
+export class SheetTitleComponent {
+  /** Stable id referenced by the sheet's `aria-labelledby`. */
+  readonly id = `tolle-sheet-title-${Math.random().toString(36).substr(2, 9)}`;
+}
 
 @Component({
   selector: 'tolle-sheet-description',
@@ -194,6 +224,10 @@ export class SheetTitleComponent { }
     <p class="text-sm text-muted-foreground">
       <ng-content></ng-content>
     </p>
-  `
+  `,
+  host: { '[attr.id]': 'id' }
 })
-export class SheetDescriptionComponent { }
+export class SheetDescriptionComponent {
+  /** Stable id referenced by the sheet's `aria-describedby`. */
+  readonly id = `tolle-sheet-description-${Math.random().toString(36).substr(2, 9)}`;
+}

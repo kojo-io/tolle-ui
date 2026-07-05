@@ -45,8 +45,10 @@ import { InputComponent } from './input.component';
         role="combobox"
         aria-haspopup="listbox"
         [attr.aria-expanded]="isOpen"
+        [attr.aria-activedescendant]="isOpen ? activeDescendantId : null"
         [attr.data-state]="isOpen ? 'open' : 'closed'"
         (click)="toggle()"
+        (keydown)="onTriggerKeyDown($event)"
         [disabled]="disabled"
         [class]="computedTriggerClass"
       >
@@ -63,10 +65,12 @@ import { InputComponent } from './input.component';
         style="visibility: hidden; top: 0; left: 0;">
         <div *ngIf="searchable" class="p-2 border-b border-border bg-popover h-auto">
           <tolle-input
+            #searchInput
             size="xs"
             placeholder="Search..."
             [(ngModel)]="searchQuery"
             (ngModelChange)="onSearchChange($event)"
+            (keydown)="onSearchKeyDown($event)"
             class="w-full">
             <i prefix class="ri-search-line"></i>
           </tolle-input>
@@ -93,6 +97,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
   @ViewChild('container') container!: ElementRef;
+  @ViewChild('searchInput', { read: ElementRef }) searchInput?: ElementRef<HTMLElement>;
   @ContentChildren(SelectItemComponent, { descendants: true }) items!: QueryList<SelectItemComponent>;
 
   private sub = new Subscription();
@@ -105,6 +110,12 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   value: any = null;
   selectedLabel = '';
   cleanupAutoUpdate?: () => void;
+
+  // Keyboard navigation (active-descendant) state
+  activeIndex = -1;
+  private typeaheadBuffer = '';
+  private typeaheadTime = 0;
+  private pendingTypeaheadChar = '';
 
   onChange: any = () => { };
   onTouched: any = () => { };
@@ -229,6 +240,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     requestAnimationFrame(() => {
       this.updatePosition();
       document.addEventListener('mousedown', this._outsideClickHandler);
+      this.initActiveAfterOpen();
     });
   }
 
@@ -236,6 +248,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     this.isOpen = false;
     this.searchQuery = '';
     this.onSearchChange('');
+    this.resetActive();
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
     document.removeEventListener('mousedown', this._outsideClickHandler);
   }
@@ -288,6 +301,174 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     });
 
     this.noResults = visibleCount === 0 && filter !== '';
+
+    // Re-anchor the active option to the first visible match while open.
+    if (this.isOpen) this.setActive(0);
+  }
+
+  // ---- Keyboard navigation (WAI-ARIA listbox pattern) ----
+
+  private get navigableItems(): SelectItemComponent[] {
+    return this.items ? this.items.filter(i => !i.hidden && !i.disabled) : [];
+  }
+
+  get activeDescendantId(): string | null {
+    const list = this.navigableItems;
+    return this.activeIndex >= 0 && this.activeIndex < list.length
+      ? list[this.activeIndex].id
+      : null;
+  }
+
+  private updateActiveStates() {
+    const list = this.navigableItems;
+    const activeItem = this.activeIndex >= 0 ? list[this.activeIndex] ?? null : null;
+    this.items?.forEach(i => (i.active = i === activeItem));
+    this.syncActiveDescendant();
+  }
+
+  private syncActiveDescendant() {
+    const input = this.searchInput?.nativeElement?.querySelector('input');
+    if (!input) return;
+    const id = this.activeDescendantId;
+    if (id) input.setAttribute('aria-activedescendant', id);
+    else input.removeAttribute('aria-activedescendant');
+  }
+
+  private setActive(index: number) {
+    const list = this.navigableItems;
+    if (!list.length) {
+      this.activeIndex = -1;
+      this.updateActiveStates();
+      return;
+    }
+    this.activeIndex = Math.max(0, Math.min(index, list.length - 1));
+    this.updateActiveStates();
+    list[this.activeIndex]?.scrollIntoActiveView();
+  }
+
+  private setActiveItem(item: SelectItemComponent) {
+    const idx = this.navigableItems.indexOf(item);
+    if (idx >= 0) this.setActive(idx);
+  }
+
+  private moveActive(delta: number) {
+    const list = this.navigableItems;
+    if (!list.length) return;
+    const next = this.activeIndex < 0 ? (delta > 0 ? 0 : list.length - 1) : this.activeIndex + delta;
+    this.setActive(next); // setActive clamps (no wrap, matching shadcn)
+  }
+
+  private setActiveToSelectedOrFirst() {
+    const list = this.navigableItems;
+    if (!list.length) {
+      this.activeIndex = -1;
+      this.updateActiveStates();
+      return;
+    }
+    const selIdx = list.findIndex(i => i.value === this.value);
+    this.setActive(selIdx >= 0 ? selIdx : 0);
+  }
+
+  private initActiveAfterOpen() {
+    if (this.pendingTypeaheadChar) {
+      const c = this.pendingTypeaheadChar;
+      this.pendingTypeaheadChar = '';
+      this.setActiveToSelectedOrFirst();
+      this.typeahead(c);
+    } else {
+      this.setActiveToSelectedOrFirst();
+    }
+  }
+
+  private resetActive() {
+    this.activeIndex = -1;
+    this.typeaheadBuffer = '';
+    this.pendingTypeaheadChar = '';
+    this.items?.forEach(i => (i.active = false));
+  }
+
+  private isTypeaheadChar(event: KeyboardEvent): boolean {
+    return event.key.length === 1 && event.key !== ' ' && !event.ctrlKey && !event.metaKey && !event.altKey;
+  }
+
+  private typeahead(char: string) {
+    const now = Date.now();
+    // Reset the buffer based on elapsed time (correctness is not timer-driven).
+    if (now - this.typeaheadTime > 500) this.typeaheadBuffer = '';
+    this.typeaheadTime = now;
+    this.typeaheadBuffer += char.toLowerCase();
+    const match = this.navigableItems.find(i =>
+      i.getLabel().toLowerCase().startsWith(this.typeaheadBuffer)
+    );
+    if (match) this.setActiveItem(match);
+  }
+
+  private selectActive() {
+    const item = this.navigableItems[this.activeIndex];
+    if (!item) return;
+    // Single-select: notify parent (which closes and syncs the label).
+    this.selectService.registerClick(item.value, item.getLabel());
+    this.trigger.nativeElement.focus();
+  }
+
+  onTriggerKeyDown(event: KeyboardEvent) {
+    if (this.disabled || this.readonly) return;
+    const key = event.key;
+
+    if (!this.isOpen) {
+      if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === ' ' || key === 'Home' || key === 'End') {
+        event.preventDefault();
+        this.open();
+        return;
+      }
+      if (this.isTypeaheadChar(event)) {
+        event.preventDefault();
+        this.pendingTypeaheadChar = key;
+        this.open();
+      }
+      return;
+    }
+
+    switch (key) {
+      case 'ArrowDown': event.preventDefault(); this.moveActive(1); break;
+      case 'ArrowUp': event.preventDefault(); this.moveActive(-1); break;
+      case 'Home': event.preventDefault(); this.setActive(0); break;
+      case 'End': event.preventDefault(); this.setActive(this.navigableItems.length - 1); break;
+      case 'Enter':
+      case ' ':
+        event.preventDefault();
+        this.selectActive();
+        break;
+      case 'Escape':
+        event.preventDefault();
+        this.close();
+        this.trigger.nativeElement.focus();
+        break;
+      case 'Tab':
+        this.close();
+        break;
+      default:
+        if (this.isTypeaheadChar(event)) {
+          event.preventDefault();
+          this.typeahead(key);
+        }
+    }
+  }
+
+  // Keydown while the (optional) search input is focused. Arrows/Enter/Escape
+  // drive the list; other keys fall through so the user can type to filter.
+  onSearchKeyDown(event: KeyboardEvent) {
+    if (!this.isOpen) return;
+    switch (event.key) {
+      case 'ArrowDown': event.preventDefault(); this.moveActive(1); break;
+      case 'ArrowUp': event.preventDefault(); this.moveActive(-1); break;
+      case 'Enter': event.preventDefault(); this.selectActive(); break;
+      case 'Escape':
+        event.preventDefault();
+        this.close();
+        this.trigger.nativeElement.focus();
+        break;
+    }
   }
 
   writeValue(value: any): void {

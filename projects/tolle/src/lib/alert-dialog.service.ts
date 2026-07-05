@@ -12,6 +12,9 @@ export class AlertDialogService {
     private injector = inject(Injector);
 
     open(config: AlertDialogConfig): AlertDialogRef {
+        // Remember the trigger so focus can be restored on close.
+        const previouslyFocused = document.activeElement as HTMLElement | null;
+
         const overlayConfig = new OverlayConfig({
             hasBackdrop: true,
             backdropClass: ['cdk-overlay-backdrop', 'bg-black/80', 'backdrop-blur-sm'],
@@ -31,9 +34,18 @@ export class AlertDialogService {
         dialogRef.afterClosed$.subscribe(() => {
             overlayRef.detach();
             overlayRef.dispose();
+            // Restore focus to the trigger.
+            previouslyFocused?.focus?.();
         });
 
-        overlayRef.backdropClick().subscribe(() => dialogRef.close(false));
+        // Alert-dialog semantics: backdrop clicks must NOT dismiss.
+        // Escape still closes the dialog.
+        overlayRef.keydownEvents().subscribe((event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                dialogRef.close(false);
+            }
+        });
 
         return dialogRef;
     }

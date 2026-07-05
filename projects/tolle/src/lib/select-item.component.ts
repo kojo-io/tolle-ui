@@ -10,6 +10,7 @@ import {SelectService} from './select.service';
   template: `
     <div
       *ngIf="!hidden"
+      [id]="id"
       [class]="cn(
         'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors',
         getItemClasses(),
@@ -17,6 +18,7 @@ import {SelectService} from './select.service';
       )"
       [attr.aria-disabled]="disabled"
       [attr.aria-selected]="selected"
+      [attr.data-highlighted]="active ? '' : null"
       role="option"
     >
       <!-- Single Select: Checkmark -->
@@ -55,6 +57,10 @@ export class SelectItemComponent {
   @Input() selected = false;
   @Input() disabled = false;
   @Input() multiSelect = false; // Will be set by parent component
+  // Stable option id used by the parent for aria-activedescendant wiring.
+  @Input() id = `select-item-${Math.random().toString(36).substr(2, 9)}`;
+  // Active-descendant highlight state, driven by the parent by index.
+  @Input() active = false;
 
   hidden = false;
 
@@ -68,10 +74,18 @@ export class SelectItemComponent {
     return this.el.nativeElement.textContent?.trim() || '';
   }
 
+  // Scroll this option into view when it becomes the active descendant.
+  scrollIntoActiveView(): void {
+    this.el.nativeElement.scrollIntoView({ block: 'nearest' });
+  }
+
   getItemClasses(): string {
     return cn(
       // Base state
       'focus:bg-accent focus:text-accent-foreground',
+
+      // Active-descendant (keyboard) highlight
+      'data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground',
 
       // Hover states (only if not disabled)
       !this.disabled && [

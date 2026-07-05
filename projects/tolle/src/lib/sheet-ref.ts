@@ -15,6 +15,14 @@ export class SheetRef<R = any> {
                 this.close();
             });
         }
+
+        // Escape-to-close, unless this is a blocking sheet (backdropClose === false).
+        this.overlay.keydownEvents().subscribe((event: KeyboardEvent) => {
+            if (event.key === 'Escape' && this.config.backdropClose !== false) {
+                event.preventDefault();
+                this.close();
+            }
+        });
     }
 
     /**

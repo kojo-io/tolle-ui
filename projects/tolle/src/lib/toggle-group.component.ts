@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ContentChildren, QueryList, AfterContentInit, inject, ChangeDetectorRef, HostBinding } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ContentChildren, QueryList, AfterContentInit, AfterViewInit, inject, ChangeDetectorRef, ElementRef, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cn } from './utils/cn';
@@ -18,7 +18,9 @@ import { ToggleComponent } from './toggle.component';
     ],
     host: {
         '[class]': 'computedClass',
-        'role': 'group'
+        'role': 'group',
+        '(keydown)': 'onKeydown($event)',
+        '(focusin)': 'onFocusIn($event)'
     },
     styles: [`
         :host {
@@ -48,7 +50,7 @@ import { ToggleComponent } from './toggle.component';
         }
     `]
 })
-export class ToggleGroupComponent implements AfterContentInit, ControlValueAccessor {
+export class ToggleGroupComponent implements AfterContentInit, AfterViewInit, ControlValueAccessor {
     @Input() type: 'single' | 'multiple' = 'single';
     @Input() variant: 'default' | 'outline' = 'default';
     @Input() size: 'default' | 'sm' | 'lg' = 'default';
@@ -61,6 +63,10 @@ export class ToggleGroupComponent implements AfterContentInit, ControlValueAcces
 
     private _value: any;
     private cdr = inject(ChangeDetectorRef);
+    private host = inject(ElementRef<HTMLElement>);
+
+    /** Index (into the full button list) of the current roving tab stop. */
+    private activeIndex = 0;
 
     onChange: any = () => { };
     onTouched: any = () => { };
@@ -80,11 +86,83 @@ export class ToggleGroupComponent implements AfterContentInit, ControlValueAcces
         this.items.changes.subscribe(() => {
             this.updateItemsState();
             this.cdr.markForCheck();
+            // Re-apply roving tabindex once the new toggle views have rendered.
+            Promise.resolve().then(() => this.applyRovingTabindex());
         });
+    }
+
+    ngAfterViewInit() {
+        this.applyRovingTabindex();
     }
 
     get computedClass() {
         return cn("inline-flex items-center justify-center -space-x-px rounded-md", this.class);
+    }
+
+    /** All toggle button elements in DOM order. */
+    private get toggleButtons(): HTMLButtonElement[] {
+        return Array.from(
+            this.host.nativeElement.querySelectorAll('tolle-toggle button')
+        ) as HTMLButtonElement[];
+    }
+
+    /**
+     * Roving tabindex: exactly one toggle button is tab-reachable at a time.
+     * Defaults to the current active button, falling back to the first enabled.
+     */
+    private applyRovingTabindex() {
+        const btns = this.toggleButtons;
+        if (!btns.length) return;
+
+        let active = this.activeIndex;
+        if (active < 0 || active >= btns.length || btns[active].disabled) {
+            active = btns.findIndex(b => !b.disabled);
+            if (active < 0) active = 0;
+        }
+        this.activeIndex = active;
+        btns.forEach((b, i) => { b.tabIndex = i === active ? 0 : -1; });
+    }
+
+    /**
+     * Toolbar keyboard nav: Arrow Left/Right (and Home/End) move focus between
+     * toggle buttons without activating them (toggles activate on Enter/Space/click).
+     */
+    onKeydown(event: KeyboardEvent) {
+        const key = event.key;
+        if (key !== 'ArrowRight' && key !== 'ArrowLeft' && key !== 'Home' && key !== 'End') return;
+
+        const btns = this.toggleButtons;
+        const enabled = btns.map((b, i) => ({ b, i })).filter(x => !x.b.disabled);
+        if (!enabled.length) return;
+
+        event.preventDefault();
+
+        const active = (typeof document !== 'undefined' ? document.activeElement : null) as HTMLButtonElement | null;
+        const focusedIndex = active ? btns.indexOf(active) : -1;
+        let pos = enabled.findIndex(x => x.i === focusedIndex);
+
+        let targetPos: number;
+        if (key === 'Home') {
+            targetPos = 0;
+        } else if (key === 'End') {
+            targetPos = enabled.length - 1;
+        } else if (key === 'ArrowRight') {
+            targetPos = pos < 0 ? 0 : (pos + 1) % enabled.length;
+        } else {
+            targetPos = pos < 0 ? enabled.length - 1 : (pos - 1 + enabled.length) % enabled.length;
+        }
+
+        // Focusing the button triggers focusin, which updates the roving tab stop.
+        enabled[targetPos].b.focus();
+    }
+
+    /** Keep the roving tab stop in sync when a button gains focus (tab/click). */
+    onFocusIn(event: FocusEvent) {
+        const btns = this.toggleButtons;
+        const idx = btns.indexOf(event.target as HTMLButtonElement);
+        if (idx < 0) return;
+        this.activeIndex = idx;
+        btns.forEach((b, i) => { b.tabIndex = i === idx ? 0 : -1; });
     }
 
     writeValue(value: any): void {

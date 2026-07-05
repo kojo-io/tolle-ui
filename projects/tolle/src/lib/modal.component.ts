@@ -1,18 +1,25 @@
 import { Component, OnInit, TemplateRef, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { A11yModule } from '@angular/cdk/a11y';
 import { ModalRef } from './modal-ref';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-modal',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, A11yModule],
   template: `
-    <div [class]="modalClasses" class="pointer-events-auto" (mousedown)="$event.stopPropagation()">
+    <div [class]="modalClasses" class="pointer-events-auto"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="ref.modal.title ? titleId : null"
+      [attr.aria-describedby]="contentType === 'string' ? descId : null"
+      cdkTrapFocus cdkTrapFocusAutoCapture
+      (mousedown)="$event.stopPropagation()">
 
       <!-- Header -->
       <div *ngIf="hasHeader" class="flex shrink-0 items-start justify-between gap-4 px-6 pt-6 pb-4">
-        <h2 *ngIf="ref.modal.title" class="text-lg font-semibold leading-none tracking-tight text-foreground">
+        <h2 *ngIf="ref.modal.title" [id]="titleId" class="text-lg font-semibold leading-none tracking-tight text-foreground">
           {{ ref.modal.title }}
         </h2>
         <button
@@ -28,7 +35,7 @@ import { cn } from './utils/cn';
       <!-- Body -->
       <div class="min-h-0 flex-1 overflow-y-auto">
         <ng-container [ngSwitch]="contentType">
-          <p *ngSwitchCase="'string'" [class]="hasHeader ? 'px-6 pb-6 text-sm leading-relaxed text-muted-foreground' : 'p-6 text-sm leading-relaxed text-muted-foreground'">{{ content }}</p>
+          <p *ngSwitchCase="'string'" [id]="descId" [class]="hasHeader ? 'px-6 pb-6 text-sm leading-relaxed text-muted-foreground' : 'p-6 text-sm leading-relaxed text-muted-foreground'">{{ content }}</p>
 
           <ng-container *ngSwitchCase="'template'">
             <ng-container *ngTemplateOutlet="asTemplate; context: ref.modal.context"></ng-container>
@@ -51,6 +58,11 @@ export class ModalComponent implements OnInit {
   contentType: 'template' | 'string' | 'component' = 'string';
   content: any;
   modalClasses = '';
+
+  /** Stable, per-instance ids used to wire dialog ARIA relationships. */
+  private readonly _uid = Math.random().toString(36).substr(2, 9);
+  readonly titleId = `tolle-modal-title-${this._uid}`;
+  readonly descId = `tolle-modal-desc-${this._uid}`;
 
   constructor(public ref: ModalRef) {}
 

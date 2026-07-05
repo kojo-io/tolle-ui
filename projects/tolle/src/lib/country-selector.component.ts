@@ -47,10 +47,12 @@ import { cn } from './utils/cn';
             role="combobox"
             aria-haspopup="listbox"
             [attr.aria-expanded]="popover?.isOpen"
+            [attr.aria-activedescendant]="popover?.isOpen ? activeDescendantId : null"
             [disabled]="disabled"
             [class]="computedTriggerClass"
             (blur)="onBlur()"
             (focus)="onFocus()"
+            (keydown)="onTriggerKeyDown($event)"
             [attr.aria-invalid]="error"
             [attr.aria-describedby]="error && errorMessage ? id + '-error' : null">
             <div class="flex items-center gap-2 truncate">
@@ -79,6 +81,7 @@ import { cn } from './utils/cn';
               placeholder="Search country..."
               [(ngModel)]="searchQuery"
               (ngModelChange)="filterCountries($event)"
+              (keydown)="onSearchKeyDown($event)"
               class="w-full"
               #searchInput>
               <i prefix class="ri-search-line"></i>
@@ -87,11 +90,13 @@ import { cn } from './utils/cn';
 
           <div role="listbox" class="max-h-[300px] overflow-y-auto p-1">
             <div
-              *ngFor="let country of shadowCountries"
+              *ngFor="let country of shadowCountries; let i = index"
+              [id]="id + '-option-' + i"
               role="option"
               [attr.aria-selected]="selectedCountry?.isoAlpha2 === country.isoAlpha2"
+              [attr.data-highlighted]="i === activeIndex ? '' : null"
               (click)="selectCountry(country)"
-              [class]="getItemClass(country)">
+              [class]="getItemClass(country, i)">
               <div class="flex w-full items-center gap-3">
                 <img
                   [src]="getFlagUrl(country.flag)"
@@ -152,7 +157,7 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   @Output() onBlurChange = new EventEmitter<void>();
 
   @ViewChild('popover') popover!: PopoverComponent;
-  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+  @ViewChild('searchInput', { read: ElementRef }) searchInput?: ElementRef<HTMLElement>;
 
   private countryCodesService = inject(CountryCodesService);
   private sanitizer = inject(DomSanitizer);
@@ -163,6 +168,9 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   searchQuery = '';
   shadowCountries: any[] = [];
   isFocused = false;
+
+  // Keyboard navigation (active-descendant) state over the filtered rows
+  activeIndex = -1;
 
   onChange: any = () => {};
   onTouched: any = () => {};
@@ -239,12 +247,21 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  getItemClass(country: any) {
+  getItemClass(country: any, index: number) {
     const isSelected = this.selectedCountry?.isoAlpha2 === country.isoAlpha2;
+    const isActive = index === this.activeIndex;
     return cn(
       'flex items-center justify-between px-3 py-2 cursor-pointer transition-colors duration-150 rounded-sm w-full',
-      isSelected ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 text-foreground'
+      isSelected ? 'bg-accent text-accent-foreground' : 'hover:bg-accent/50 text-foreground',
+      // Active-descendant (keyboard) highlight
+      isActive && 'bg-accent text-accent-foreground'
     );
+  }
+
+  get activeDescendantId(): string | null {
+    return this.activeIndex >= 0 && this.activeIndex < this.shadowCountries.length
+      ? `${this.id}-option-${this.activeIndex}`
+      : null;
   }
 
   getFlagUrl(flagBase64: string): SafeResourceUrl {
@@ -259,6 +276,9 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
         c.dialCode.includes(filter) ||
         c.isoAlpha2.toLowerCase().includes(filter)
     );
+    // Re-anchor the active row to the first match after filtering.
+    this.activeIndex = this.shadowCountries.length ? 0 : -1;
+    this.syncActiveDescendant();
   }
 
   selectCountry(country: any) {
@@ -296,15 +316,91 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   }
 
   onPopoverOpen() {
+    // Anchor the active row to the currently selected country (or the first).
+    const selIdx = this.selectedCountry
+      ? this.shadowCountries.findIndex(c => c.isoAlpha2 === this.selectedCountry.isoAlpha2)
+      : -1;
+    this.activeIndex = selIdx >= 0 ? selIdx : (this.shadowCountries.length ? 0 : -1);
     setTimeout(() => {
-      this.searchInput?.nativeElement?.focus();
+      this.getSearchInputEl()?.focus();
+      this.syncActiveDescendant();
+      this.scrollActiveIntoView();
     }, 0);
   }
 
   onPopoverClose() {
     this.searchQuery = '';
     this.filterCountries('');
+    this.activeIndex = -1;
     this.onBlur();
+  }
+
+  // ---- Keyboard navigation (WAI-ARIA listbox/combobox pattern) ----
+
+  private getSearchInputEl(): HTMLInputElement | null {
+    return this.searchInput?.nativeElement?.querySelector('input') ?? null;
+  }
+
+  private syncActiveDescendant() {
+    const input = this.getSearchInputEl();
+    if (!input) return;
+    const id = this.activeDescendantId;
+    if (id) input.setAttribute('aria-activedescendant', id);
+    else input.removeAttribute('aria-activedescendant');
+  }
+
+  private scrollActiveIntoView() {
+    if (this.activeIndex < 0) return;
+    document
+      .getElementById(`${this.id}-option-${this.activeIndex}`)
+      ?.scrollIntoView({ block: 'nearest' });
+  }
+
+  private moveActive(delta: number) {
+    if (!this.shadowCountries.length) return;
+    const next = this.activeIndex < 0
+      ? (delta > 0 ? 0 : this.shadowCountries.length - 1)
+      : this.activeIndex + delta;
+    // Clamp (no wrap, matching shadcn).
+    this.activeIndex = Math.max(0, Math.min(next, this.shadowCountries.length - 1));
+    this.syncActiveDescendant();
+    this.scrollActiveIntoView();
+  }
+
+  private selectActive() {
+    const country = this.shadowCountries[this.activeIndex];
+    if (!country) return;
+    this.selectCountry(country); // closes the popover
+    document.getElementById(this.id)?.focus();
+  }
+
+  onTriggerKeyDown(event: KeyboardEvent) {
+    if (this.disabled || this.readonly) return;
+    if (this.popover?.isOpen) return; // once open, focus moves to the search input
+    const key = event.key;
+    if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === ' ' || key === 'Home' || key === 'End') {
+      event.preventDefault();
+      this.popover.open();
+    } else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+      // Any printable character opens the popover (focus moves to the search box).
+      this.popover.open();
+    }
+  }
+
+  // Keydown while the search input is focused. Arrows/Enter/Escape drive the
+  // list; other keys (incl. Home/End for caret) fall through to text editing.
+  onSearchKeyDown(event: KeyboardEvent) {
+    if (!this.popover?.isOpen) return;
+    switch (event.key) {
+      case 'ArrowDown': event.preventDefault(); this.moveActive(1); break;
+      case 'ArrowUp': event.preventDefault(); this.moveActive(-1); break;
+      case 'Enter': event.preventDefault(); this.selectActive(); break;
+      case 'Escape':
+        event.preventDefault();
+        this.popover.close();
+        document.getElementById(this.id)?.focus();
+        break;
+    }
   }
 
   writeValue(value: any): void {

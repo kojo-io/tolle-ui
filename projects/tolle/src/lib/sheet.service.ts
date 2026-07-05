@@ -11,8 +11,14 @@ export class SheetService {
     private injector = inject(Injector);
 
     open<R = any>(config: SheetConfig): SheetRef<R> {
+        // Remember the trigger so focus can be restored once the sheet is disposed.
+        const previouslyFocused = document.activeElement as HTMLElement | null;
+
         const overlayRef = this.createOverlay(config);
         const sheetRef = new SheetRef<R>(overlayRef, config);
+
+        // Restore focus to the trigger after the overlay tears down.
+        overlayRef.detachments().subscribe(() => previouslyFocused?.focus?.());
 
         const customInjector = Injector.create({
             parent: this.injector,

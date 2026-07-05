@@ -1,22 +1,28 @@
 import { Component, OnInit, TemplateRef, Type, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { A11yModule } from '@angular/cdk/a11y';
 import { SheetRef } from './sheet-ref';
 import { cn } from './utils/cn';
 
 @Component({
     selector: 'tolle-sheet-wrapper',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, A11yModule],
     template: `
-    <div 
-      [class]="computedClass" 
+    <div
+      [class]="computedClass"
       [attr.data-state]="isOpen ? 'open' : 'closed'"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-labelledby]="ref.config.title ? titleId : null"
+      [attr.aria-describedby]="ref.config.description ? descId : null"
+      cdkTrapFocus cdkTrapFocusAutoCapture
       (mousedown)="$event.stopPropagation()"
     >
       <!-- Header -->
       <div *ngIf="ref.config.showCloseButton !== false || ref.config.title" class="flex flex-col space-y-2 mb-4">
         <div class="flex items-center justify-between">
-          <h3 *ngIf="ref.config.title" class="text-lg font-semibold text-foreground tracking-tight">
+          <h3 *ngIf="ref.config.title" [id]="titleId" class="text-lg font-semibold text-foreground tracking-tight">
             {{ ref.config.title }}
           </h3>
           <button 
@@ -28,7 +34,7 @@ import { cn } from './utils/cn';
             <span class="sr-only">Close</span>
           </button>
         </div>
-        <p *ngIf="ref.config.description" class="text-sm text-muted-foreground">
+        <p *ngIf="ref.config.description" [id]="descId" class="text-sm text-muted-foreground">
           {{ ref.config.description }}
         </p>
       </div>
@@ -59,6 +65,11 @@ export class SheetWrapperComponent implements OnInit {
     contentType: 'template' | 'string' | 'component' = 'string';
     content: any;
     isOpen = false;
+
+    /** Stable, per-instance ids used to wire dialog ARIA relationships. */
+    private readonly _uid = Math.random().toString(36).substr(2, 9);
+    readonly titleId = `tolle-sheet-title-${this._uid}`;
+    readonly descId = `tolle-sheet-description-${this._uid}`;
 
     public ref = inject(SheetRef);
 

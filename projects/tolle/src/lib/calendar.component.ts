@@ -1,10 +1,10 @@
 import {
-  Component, Input, OnInit, forwardRef, Output, EventEmitter
+  Component, Input, OnInit, forwardRef, Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import {
-  addMonths, subMonths, startOfMonth, endOfMonth,
+  addDays, addMonths, subMonths, startOfMonth, endOfMonth,
   startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth,
   isSameDay, isToday, setMonth, setYear, addYears, subYears,
   isBefore, startOfDay, format
@@ -69,7 +69,7 @@ export type CalendarMode = 'date' | 'month' | 'year';
             {{ day }}
           </span>
         </div>
-        <div role="grid" class="grid grid-cols-7 gap-1 w-full">
+        <div role="grid" class="grid grid-cols-7 gap-1 w-full" (keydown)="onGridKeydown($event)">
           <button
             *ngFor="let date of daysInMonth"
             type="button"
@@ -168,7 +168,7 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
 
   protected cn = cn;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
     this.yearRangeStart = new Date().getFullYear() - 6;
   }
 
@@ -298,6 +298,59 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
     this.onChange(date);
     this.onTouched();
     this.dateSelect.emit(date);
+  }
+
+  /**
+   * Grid keyboard navigation for the day view (react-day-picker semantics).
+   * Arrows move by day/week, Home/End to week edges, PageUp/PageDown by month.
+   * Enter/Space are left to the native day <button> (which selects on click and
+   * does not scroll the page).
+   */
+  onGridKeydown(event: KeyboardEvent) {
+    if (this.currentView !== 'date' || this.mode !== 'date') return;
+
+    const gridEl = event.currentTarget as HTMLElement;
+    const buttons = Array.from(gridEl.querySelectorAll('button')) as HTMLElement[];
+    const idx = buttons.indexOf(event.target as HTMLElement);
+    if (idx < 0) return;
+
+    const current = this.daysInMonth[idx];
+    if (!current) return;
+
+    let next: Date | null = null;
+    switch (event.key) {
+      case 'ArrowLeft': next = addDays(current, -1); break;
+      case 'ArrowRight': next = addDays(current, 1); break;
+      case 'ArrowUp': next = addDays(current, -7); break;
+      case 'ArrowDown': next = addDays(current, 7); break;
+      case 'Home': next = startOfWeek(current); break;
+      case 'End': next = endOfWeek(current); break;
+      case 'PageUp': next = subMonths(current, 1); break;
+      case 'PageDown': next = addMonths(current, 1); break;
+      default: return;
+    }
+
+    event.preventDefault();
+    this.focusDay(next, gridEl);
+  }
+
+  /**
+   * Moves focus to the day button matching `date`. If the day is not present in
+   * the current grid, the view advances/retreats to its month, regenerates and
+   * then focuses it.
+   */
+  private focusDay(date: Date, gridEl: HTMLElement) {
+    let idx = this.daysInMonth.findIndex(d => isSameDay(d, date));
+    if (idx < 0) {
+      this.viewDate = startOfMonth(date);
+      this.generateDays();
+      this.cdr.detectChanges(); // re-render the grid synchronously
+      idx = this.daysInMonth.findIndex(d => isSameDay(d, date));
+    }
+    if (idx < 0) return;
+
+    const buttons = Array.from(gridEl.querySelectorAll('button')) as HTMLElement[];
+    buttons[idx]?.focus();
   }
 
   selectMonth(monthIndex: number) {

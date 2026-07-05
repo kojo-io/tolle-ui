@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, forwardRef, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
-  addMonths, subMonths, startOfMonth, endOfMonth,
+  addDays, addMonths, subMonths, startOfMonth, endOfMonth,
   startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth,
   isSameDay, isToday, setMonth, setYear, addYears, subYears,
   isBefore, startOfDay, isWithinInterval, format
@@ -44,7 +44,7 @@ import {DateRange} from './types/date-range';
           <div class="grid grid-cols-7 gap-y-1">
             <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">{{ day }}</span>
           </div>
-          <div role="grid" class="grid grid-cols-7 gap-y-1">
+          <div role="grid" class="grid grid-cols-7 gap-y-1" (keydown)="onGridKeydown($event, idx)">
             <button
               *ngFor="let date of m.days"
               type="button"
@@ -86,7 +86,7 @@ import {DateRange} from './types/date-range';
               {{ day }}
             </span>
           </div>
-          <div role="grid" class="grid grid-cols-7 gap-y-1 w-full">
+          <div role="grid" class="grid grid-cols-7 gap-y-1 w-full" (keydown)="onGridKeydown($event)">
             <button
               *ngFor="let date of daysInMonth"
               type="button"
@@ -147,6 +147,8 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
   onTouched: () => void = () => {};
   onChange: (value: DateRange) => void = () => {};
   protected cn = cn;
+
+  constructor(private cdr: ChangeDetectorRef, private el: ElementRef<HTMLElement>) {}
 
   ngOnInit() {
     this.generateDays();
@@ -238,6 +240,89 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
     this.onChange(this.value);
     this.rangeSelect.emit(this.value);
     this.onTouched();
+  }
+
+  // --- Grid keyboard navigation (date view only) ---
+
+  /**
+   * Arrow keys move by day/week, Home/End to week edges, PageUp/PageDown by
+   * month. Enter/Space are left to the native day <button>. `gridIndex` is the
+   * visible-month index in the multi-month view (undefined for single month).
+   */
+  onGridKeydown(event: KeyboardEvent, gridIndex?: number) {
+    const multi = this.numberOfMonths > 1;
+    if (!multi && this.currentView !== 'date') return;
+
+    const gridEl = event.currentTarget as HTMLElement;
+    const buttons = Array.from(gridEl.querySelectorAll('button')) as HTMLElement[];
+    const idx = buttons.indexOf(event.target as HTMLElement);
+    if (idx < 0) return;
+
+    const dates = (multi && gridIndex != null)
+      ? (this.visibleMonths[gridIndex]?.days ?? [])
+      : this.daysInMonth;
+    const current = dates[idx];
+    if (!current) return;
+
+    let next: Date | null = null;
+    switch (event.key) {
+      case 'ArrowLeft': next = addDays(current, -1); break;
+      case 'ArrowRight': next = addDays(current, 1); break;
+      case 'ArrowUp': next = addDays(current, -7); break;
+      case 'ArrowDown': next = addDays(current, 7); break;
+      case 'Home': next = startOfWeek(current); break;
+      case 'End': next = endOfWeek(current); break;
+      case 'PageUp': next = subMonths(current, 1); break;
+      case 'PageDown': next = addMonths(current, 1); break;
+      default: return;
+    }
+
+    event.preventDefault();
+    this.focusDay(next);
+  }
+
+  private focusDay(date: Date) {
+    if (this.numberOfMonths > 1) {
+      if (this.focusInVisibleGrids(date)) return;
+      // Target is outside the visible window: shift by one month toward it.
+      if (isBefore(date, this.visibleMonths[0].date)) {
+        this.viewDate = subMonths(this.viewDate, 1);
+      } else {
+        this.viewDate = addMonths(this.viewDate, 1);
+      }
+      this.generateDays();
+      this.cdr.detectChanges();
+      this.focusInVisibleGrids(date);
+      return;
+    }
+
+    // Single-month view
+    let idx = this.daysInMonth.findIndex(d => isSameDay(d, date));
+    if (idx < 0) {
+      this.viewDate = startOfMonth(date);
+      this.generateDays();
+      this.cdr.detectChanges();
+      idx = this.daysInMonth.findIndex(d => isSameDay(d, date));
+    }
+    if (idx < 0) return;
+
+    const grid = this.el.nativeElement.querySelector('[role="grid"]') as HTMLElement | null;
+    const buttons = grid ? Array.from(grid.querySelectorAll('button')) as HTMLElement[] : [];
+    buttons[idx]?.focus();
+  }
+
+  /** Focuses `date` in whichever currently-visible month grid contains it. */
+  private focusInVisibleGrids(date: Date): boolean {
+    const grids = Array.from(this.el.nativeElement.querySelectorAll('[role="grid"]')) as HTMLElement[];
+    for (let k = 0; k < this.visibleMonths.length; k++) {
+      const i = this.visibleMonths[k].days.findIndex(d => isSameDay(d, date));
+      if (i >= 0 && grids[k]) {
+        const buttons = Array.from(grids[k].querySelectorAll('button')) as HTMLElement[];
+        buttons[i]?.focus();
+        return true;
+      }
+    }
+    return false;
   }
 
   selectMonth(monthIndex: number) {
