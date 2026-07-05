@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { runInit } from './init';
 import { runAdd } from './add';
-import { log } from './util';
+import { log, INVOKE } from './util';
 
 function parseFlags(args: string[]): { flags: Record<string, string | boolean>; positionals: string[] } {
   const flags: Record<string, string | boolean> = {};
@@ -28,13 +28,13 @@ function printHelp(): void {
   log.info(`tolle — add Tolle UI components to your Angular app (copy the source you own)
 
 Usage:
-  tolle init [--ui <dir>] [--registry <url>] [--force] [--skip-install]
-  tolle add <component> [...more] [--registry <url|path>] [--overwrite] [--skip-install]
+  ${INVOKE} init [--ui <dir>] [--registry <url>] [--force] [--skip-install]
+  ${INVOKE} add <component> [...more] [--registry <url|path>] [--overwrite] [--skip-install]
 
 Examples:
-  tolle init
-  tolle add button
-  tolle add select data-table
+  ${INVOKE} init
+  ${INVOKE} add button
+  ${INVOKE} add select data-table
 `);
 }
 

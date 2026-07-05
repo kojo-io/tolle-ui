@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
-import { readConfig, log } from './util';
+import { readConfig, log, INVOKE } from './util';
 import { resolveSource, loadPayload, Payload } from './registry';
 
 /**
@@ -11,7 +11,7 @@ import { resolveSource, loadPayload, Payload } from './registry';
  * resolve as-is — no import rewriting required.
  */
 export async function runAdd(names: string[], flags: Record<string, string | boolean>): Promise<void> {
-  if (!names.length) throw new Error('Usage: tolle add <component> [...more]');
+  if (!names.length) throw new Error(`Usage: ${INVOKE} add <component> [...more]`);
   const cwd = process.cwd();
   const config = readConfig(cwd);
   const source = resolveSource(config.registry, flags.registry as string);

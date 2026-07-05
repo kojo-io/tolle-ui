@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
-import { configPath, writeJson, log, TolleConfig } from './util';
+import { configPath, writeJson, log, TolleConfig, INVOKE } from './util';
 
 const DEFAULT: TolleConfig = {
   style: 'default',
@@ -40,7 +40,7 @@ export async function runInit(flags: Record<string, string | boolean>): Promise<
     }
   }
 
-  log.info('\nDone. Next: tolle add button');
+  log.info(`\nDone. Next: ${INVOKE} add button`);
 }
 
 function ensureTailwindPreset(cwd: string, config: TolleConfig): void {

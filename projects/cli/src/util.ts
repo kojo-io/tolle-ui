@@ -3,6 +3,13 @@ import * as path from 'path';
 
 export const CONFIG_FILE = 'components.json';
 
+/**
+ * How users invoke this CLI in messages/help. `npx @tolle_/cli` works whether or
+ * not the package is installed globally (the `tolle` bin only exists on PATH
+ * after a global install), so it's the universally-correct instruction to show.
+ */
+export const INVOKE = 'npx @tolle_/cli';
+
 export interface TolleConfig {
   /** Reserved for future style variants. */
   style: string;
@@ -20,7 +27,7 @@ export function configPath(cwd = process.cwd()): string {
 
 export function readConfig(cwd = process.cwd()): TolleConfig {
   const p = configPath(cwd);
-  if (!fs.existsSync(p)) throw new Error(`No ${CONFIG_FILE} found. Run "tolle init" first.`);
+  if (!fs.existsSync(p)) throw new Error(`No ${CONFIG_FILE} found. Run "${INVOKE} init" first.`);
   return JSON.parse(fs.readFileSync(p, 'utf8')) as TolleConfig;
 }
 
