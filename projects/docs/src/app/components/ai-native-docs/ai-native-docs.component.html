@@ -1,0 +1,96 @@
+<!-- ================= HEADER ================= -->
+<header class="mb-12 border-b border-border pb-8">
+  <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-[12.5px] text-muted-foreground">
+    <i class="ri-sparkling-2-line text-primary"></i> Built for agents
+  </div>
+  <h1 class="mb-4 text-4xl font-extrabold tracking-tight text-foreground">AI Native</h1>
+  <p class="mb-6 text-xl text-muted-foreground">Machine-readable by design.</p>
+  <div class="space-y-4 text-muted-foreground">
+    <p>
+      Tolle UI ships a set of <strong class="font-semibold text-foreground">machine-readable artifacts</strong> generated
+      straight from the component source. Coding agents — Claude Code, Cursor, Copilot — can discover components,
+      read their full API, and install the source into your app without scraping a single HTML page.
+    </p>
+  </div>
+</header>
+
+<!-- ================= ARTIFACTS ================= -->
+<section class="mb-16" id="artifacts">
+  <h2 class="mb-2 text-2xl font-bold text-foreground">Artifacts</h2>
+  <p class="mb-6 text-muted-foreground">Every artifact is served at the site root and regenerated on each build, so it always matches what ships.</p>
+
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    <div *ngFor="let a of artifacts" class="flex flex-col rounded-xl border border-border bg-card p-5">
+      <div class="mb-3 flex items-center gap-2.5">
+        <span class="grid h-9 w-9 place-items-center rounded-lg bg-muted text-foreground"><i [class]="a.icon + ' text-lg'"></i></span>
+        <h3 class="font-mono text-sm font-semibold text-foreground">{{ a.title }}</h3>
+      </div>
+      <p class="flex-1 text-sm text-muted-foreground">{{ a.desc }}</p>
+      <div class="mt-4 flex items-center gap-2">
+        <a [href]="a.path" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-[13px] font-medium text-foreground transition-colors hover:bg-muted hover:no-underline">
+          <i class="ri-external-link-line"></i> Open
+        </a>
+        <button (click)="copy(origin + a.path, a.title)"
+                class="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground">
+          <i [class]="copied === a.title ? 'ri-check-line text-emerald-500' : 'ri-file-copy-line'"></i>
+          {{ copied === a.title ? 'Copied' : 'Copy URL' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLI ================= -->
+<section class="mb-16" id="cli">
+  <h2 class="mb-2 text-2xl font-bold text-foreground">Own the source with the CLI</h2>
+  <p class="mb-6 text-muted-foreground">
+    Point your agent at the manifest and let it install exactly what it needs. The CLI copies component source
+    <strong class="font-semibold text-foreground">into your repo</strong> — no black box, every line is yours to edit.
+  </p>
+
+  <div class="w-full overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900">
+    <div class="flex items-center justify-between border-b border-neutral-800 px-4 py-2">
+      <div class="flex items-center gap-2 text-sm font-medium text-neutral-300">
+        <span class="text-neutral-400">&gt;_</span><span>Terminal</span>
+      </div>
+      <button (click)="copy('npx @tolle_/cli add button card input', 'cli')" class="text-neutral-400 transition hover:text-neutral-200" aria-label="Copy">
+        <i [class]="copied === 'cli' ? 'ri-check-line text-emerald-400' : 'ri-file-copy-line'"></i>
+      </button>
+    </div>
+    <div class="px-4 py-5 font-mono text-sm text-neutral-100">
+      <span class="text-neutral-400">$</span>
+      <span class="ml-2">npx &#64;tolle_/cli add button card input</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= AGENT BRIEFING ================= -->
+<section class="mb-16" id="briefing">
+  <h2 class="mb-2 text-2xl font-bold text-foreground">Point your agent at it</h2>
+  <p class="mb-6 text-muted-foreground">
+    Paste this into your agent’s system prompt or a rules file (e.g. <span class="font-mono text-foreground">.cursor/rules</span>,
+    <span class="font-mono text-foreground">CLAUDE.md</span>) so it reads the index before writing any UI.
+  </p>
+
+  <div class="w-full overflow-hidden rounded-xl border border-border bg-card">
+    <div class="flex items-center justify-between border-b border-border px-4 py-2">
+      <span class="text-sm font-medium text-muted-foreground">Agent briefing</span>
+      <button (click)="copy(agentBriefing, 'briefing')" class="text-muted-foreground transition hover:text-foreground" aria-label="Copy">
+        <i [class]="copied === 'briefing' ? 'ri-check-line text-emerald-500' : 'ri-file-copy-line'"></i>
+      </button>
+    </div>
+    <pre class="overflow-x-auto px-4 py-4 font-mono text-[13px] leading-relaxed text-foreground">{{ agentBriefing }}</pre>
+  </div>
+</section>
+
+<!-- ================= THEMING ================= -->
+<section class="mb-8" id="theming">
+  <h2 class="mb-2 text-2xl font-bold text-foreground">Themes are agent-friendly too</h2>
+  <p class="text-muted-foreground">
+    The theme generator encodes color, radius, appearance, fonts and icon set into a single
+    <span class="font-mono text-foreground">?preset=</span> token — a compact, shareable link you can hand to a teammate
+    or a coding agent, decoded with <span class="font-mono text-foreground">decodePreset()</span> from the theme registry.
+    <a routerLink="/themes" class="text-primary hover:underline">Open the theme generator →</a>
+  </p>
+</section>

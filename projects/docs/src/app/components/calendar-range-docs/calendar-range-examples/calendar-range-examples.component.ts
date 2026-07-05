@@ -2,13 +2,15 @@ import { Component, inject } from '@angular/core';
 import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BasicRangeCalendarComponent } from '../../../docs-examples/calendar-range/basic-range-calendar.component';
+import { TwoMonthRangeCalendarComponent } from '../../../docs-examples/calendar-range/two-month-range-calendar.component';
 
 @Component({
   selector: 'app-calendar-range-examples',
   standalone: true,
   imports: [
     ComponentPreviewComponent,
-    BasicRangeCalendarComponent
+    BasicRangeCalendarComponent,
+    TwoMonthRangeCalendarComponent
   ],
   template: `
     <section class="mb-16" id="examples">
@@ -22,6 +24,17 @@ import { BasicRangeCalendarComponent } from '../../../docs-examples/calendar-ran
             <app-basic-range-calendar />
           </app-preview>
         </div>
+
+        <div class="space-y-3" id="two-months">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Two Months</h3>
+          <p class="text-muted-foreground">
+            Set <code>[numberOfMonths]="2"</code> to render two consecutive months side by side. A single set of
+            prev/next controls moves both months together — ideal for ranges that span a month boundary.
+          </p>
+          <app-preview [code]="twoMonthCode" language="typescript">
+            <app-two-month-range-calendar />
+          </app-preview>
+        </div>
       </div>
     </section>
   `
@@ -30,8 +43,10 @@ export class CalendarRangeExamplesComponent {
   sourceService = inject(SourceCodeService);
 
   basicCode = '';
+  twoMonthCode = '';
 
   constructor() {
     this.sourceService.getFile('calendar-range/basic-range-calendar.component.ts').subscribe(code => this.basicCode = code);
+    this.sourceService.getFile('calendar-range/two-month-range-calendar.component.ts').subscribe(code => this.twoMonthCode = code);
   }
 }

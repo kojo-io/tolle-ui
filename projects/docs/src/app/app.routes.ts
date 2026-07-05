@@ -26,6 +26,10 @@ export const routes: Routes = [
         loadComponent: () => import('./components/theming-docs/theming-docs.component').then(m => m.ThemingDocsComponent),
       },
       {
+        path: 'ai-native',
+        loadComponent: () => import('./components/ai-native-docs/ai-native-docs.component').then(m => m.AiNativeDocsComponent),
+      },
+      {
         path: 'components',
         children: [
           {

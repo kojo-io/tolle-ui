@@ -264,10 +264,10 @@ export class ThemesComponent implements OnInit, AfterViewInit {
   get cliCode(): string {
     return [
       `# 1 · Add Tolle UI to your Angular app`,
-      `npx tolle init`,
+      `npx @tolle_/cli init`,
       ``,
       `# 2 · Generate the components you need (source you own)`,
-      `npx tolle add button card input select tabs calendar data-table`,
+      `npx @tolle_/cli add button card input select tabs calendar data-table`,
       ``,
       `# 3 · Apply this theme — paste the CSS from the "CSS variables" tab`,
       `#     into your global stylesheet, or pass the values to`,

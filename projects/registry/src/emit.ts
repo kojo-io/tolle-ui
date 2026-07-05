@@ -124,7 +124,7 @@ function writeDocsContent(items: RegistryItem[], outDir: string) {
       title: i.title ?? titleCase(i.name),
       selector: i.selector,
       import: importLine(i),
-      install: `npx tolle add ${i.name}`,
+      install: `npx @tolle_/cli add ${i.name}`,
       components: i.components.map((c) => ({
         name: c.className,
         selector: c.selector,
@@ -145,7 +145,7 @@ function buildLlms(items: RegistryItem[]): string {
   const lines = [
     '# Tolle UI',
     '',
-    '> A high-performance Angular 18 UI library. shadcn-style components you can install from npm (`@tolle_/tolle-ui`) or own via the CLI (`npx tolle add <component>`). Config-first theming with CSS variables.',
+    '> A high-performance Angular 18 UI library. shadcn-style components you can install from npm (`@tolle_/tolle-ui`) or own via the CLI (`npx @tolle_/cli add <component>`). Config-first theming with CSS variables.',
     '',
     '## Components',
     '',
@@ -161,12 +161,12 @@ function buildLlmsFull(items: RegistryItem[]): string {
   const out: string[] = [
     '# Tolle UI — Full Component Reference',
     '',
-    'Angular 18 standalone components. Install the package (`npm i @tolle_/tolle-ui`) and import, or own the source (`npx tolle add <component>`).',
+    'Angular 18 standalone components. Install the package (`npm i @tolle_/tolle-ui`) and import, or own the source (`npx @tolle_/cli add <component>`).',
     '',
   ];
   for (const i of items) {
     out.push(`## ${i.title ?? titleCase(i.name)}`, '');
-    out.push(`- Install: \`npx tolle add ${i.name}\``);
+    out.push(`- Install: \`npx @tolle_/cli add ${i.name}\``);
     out.push(`- Import: \`${importLine(i)}\``);
     out.push('');
     for (const c of i.components) {
@@ -213,7 +213,7 @@ function writeManifest(items: RegistryItem[], payloads: Payload[], outDir: strin
         category: p.category,
         selector: i.selector,
         import: importLine(i),
-        install: `npx tolle add ${i.name}`,
+        install: `npx @tolle_/cli add ${i.name}`,
         registryDependencies: p.registryDependencies,
         dependencies: p.dependencies,
         files: p.files.map((f) => f.path),

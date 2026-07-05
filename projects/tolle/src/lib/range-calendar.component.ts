@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, forwardRef, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, forwardRef, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
@@ -44,19 +44,25 @@ import {DateRange} from './types/date-range';
           <div class="grid grid-cols-7 gap-y-1">
             <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">{{ day }}</span>
           </div>
-          <div role="grid" class="grid grid-cols-7 gap-y-1" (keydown)="onGridKeydown($event, idx)">
-            <button
-              *ngFor="let date of m.days"
-              type="button"
-              role="gridcell"
-              [attr.aria-selected]="isSelected(date)"
-              [attr.aria-label]="(date | date:'fullDate')"
-              (click)="selectDate(date)"
-              [disabled]="isDateDisabled(date)"
-              [class]="getDayClass(date, m.date)"
-            >
-              {{ date | date: 'd' }}
-            </button>
+          <div role="grid" class="grid grid-cols-7 gap-y-1" (keydown)="onGridKeydown($event)">
+            <ng-container *ngFor="let date of m.days">
+              <!-- Only the month's own days are rendered; adjacent-month days are
+                   blank spacers so each calendar in a multi-month view is self-contained. -->
+              <button
+                *ngIf="isCurrentMonth(date, m.date); else pad"
+                type="button"
+                role="gridcell"
+                [attr.data-date]="fmtKey(date)"
+                [attr.aria-selected]="isSelected(date)"
+                [attr.aria-label]="(date | date:'fullDate')"
+                (click)="selectDate(date)"
+                [disabled]="isDateDisabled(date)"
+                [class]="getDayClass(date, m.date)"
+              >
+                {{ date | date: 'd' }}
+              </button>
+              <ng-template #pad><span class="h-9 w-9" aria-hidden="true"></span></ng-template>
+            </ng-container>
           </div>
         </div>
       </div>
@@ -91,6 +97,7 @@ import {DateRange} from './types/date-range';
               *ngFor="let date of daysInMonth"
               type="button"
               role="gridcell"
+              [attr.data-date]="fmtKey(date)"
               [attr.aria-selected]="isSelected(date)"
               [attr.aria-label]="(date | date:'fullDate')"
               (click)="selectDate(date)"
@@ -119,7 +126,7 @@ import {DateRange} from './types/date-range';
     </div>
   `
 })
-export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
+export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() class = '';
   @Input() disablePastDates = false;
   /** Renders the calendar's own border/background/shadow. Set `false` inside a
@@ -153,6 +160,14 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
     this.generateDays();
     this.generateYears();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Rebuild the month grids when the visible-month count changes after init
+    // (e.g. a `[numberOfMonths]` toggle), so single ⇄ multi-month is reactive.
+    if (changes['numberOfMonths'] && !changes['numberOfMonths'].firstChange) {
+      this.generateDays();
+    }
   }
 
   // --- Date Generation Logic (Same as Calendar) ---
@@ -246,23 +261,16 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
 
   /**
    * Arrow keys move by day/week, Home/End to week edges, PageUp/PageDown by
-   * month. Enter/Space are left to the native day <button>. `gridIndex` is the
-   * visible-month index in the multi-month view (undefined for single month).
+   * month. Enter/Space are left to the native day <button>. The focused day is
+   * read from its `data-date` key, so navigation is independent of grid layout
+   * (adjacent-month days aren't rendered in the multi-month view).
    */
-  onGridKeydown(event: KeyboardEvent, gridIndex?: number) {
-    const multi = this.numberOfMonths > 1;
-    if (!multi && this.currentView !== 'date') return;
+  onGridKeydown(event: KeyboardEvent) {
+    if (this.numberOfMonths <= 1 && this.currentView !== 'date') return;
 
-    const gridEl = event.currentTarget as HTMLElement;
-    const buttons = Array.from(gridEl.querySelectorAll('button')) as HTMLElement[];
-    const idx = buttons.indexOf(event.target as HTMLElement);
-    if (idx < 0) return;
-
-    const dates = (multi && gridIndex != null)
-      ? (this.visibleMonths[gridIndex]?.days ?? [])
-      : this.daysInMonth;
-    const current = dates[idx];
-    if (!current) return;
+    const key = (event.target as HTMLElement).getAttribute('data-date');
+    if (!key) return;
+    const current = this.keyToDate(key);
 
     let next: Date | null = null;
     switch (event.key) {
@@ -282,47 +290,22 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   private focusDay(date: Date) {
+    const selector = `[data-date="${this.fmtKey(date)}"]`;
+    let btn = this.el.nativeElement.querySelector(selector) as HTMLElement | null;
+    if (btn) { btn.focus(); return; }
+
+    // Target day isn't currently rendered → page the view toward it, then retry.
     if (this.numberOfMonths > 1) {
-      if (this.focusInVisibleGrids(date)) return;
-      // Target is outside the visible window: shift by one month toward it.
-      if (isBefore(date, this.visibleMonths[0].date)) {
-        this.viewDate = subMonths(this.viewDate, 1);
-      } else {
-        this.viewDate = addMonths(this.viewDate, 1);
-      }
-      this.generateDays();
-      this.cdr.detectChanges();
-      this.focusInVisibleGrids(date);
-      return;
-    }
-
-    // Single-month view
-    let idx = this.daysInMonth.findIndex(d => isSameDay(d, date));
-    if (idx < 0) {
+      this.viewDate = isBefore(date, this.visibleMonths[0].date)
+        ? subMonths(this.viewDate, 1)
+        : addMonths(this.viewDate, 1);
+    } else {
       this.viewDate = startOfMonth(date);
-      this.generateDays();
-      this.cdr.detectChanges();
-      idx = this.daysInMonth.findIndex(d => isSameDay(d, date));
     }
-    if (idx < 0) return;
-
-    const grid = this.el.nativeElement.querySelector('[role="grid"]') as HTMLElement | null;
-    const buttons = grid ? Array.from(grid.querySelectorAll('button')) as HTMLElement[] : [];
-    buttons[idx]?.focus();
-  }
-
-  /** Focuses `date` in whichever currently-visible month grid contains it. */
-  private focusInVisibleGrids(date: Date): boolean {
-    const grids = Array.from(this.el.nativeElement.querySelectorAll('[role="grid"]')) as HTMLElement[];
-    for (let k = 0; k < this.visibleMonths.length; k++) {
-      const i = this.visibleMonths[k].days.findIndex(d => isSameDay(d, date));
-      if (i >= 0 && grids[k]) {
-        const buttons = Array.from(grids[k].querySelectorAll('button')) as HTMLElement[];
-        buttons[i]?.focus();
-        return true;
-      }
-    }
-    return false;
+    this.generateDays();
+    this.cdr.detectChanges();
+    btn = this.el.nativeElement.querySelector(selector) as HTMLElement | null;
+    btn?.focus();
   }
 
   selectMonth(monthIndex: number) {
@@ -342,6 +325,21 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
   isSelected(date: Date): boolean {
     const { start, end } = this.value;
     return !!((start && isSameDay(date, start)) || (end && isSameDay(date, end)));
+  }
+
+  /** True when `date` belongs to `refMonth` (used to blank out adjacent-month cells). */
+  isCurrentMonth(date: Date, refMonth: Date): boolean {
+    return isSameMonth(date, refMonth);
+  }
+
+  /** Stable, timezone-safe `data-date` key used to locate day buttons for focus. */
+  fmtKey(date: Date): string {
+    return format(date, 'yyyy-MM-dd');
+  }
+
+  private keyToDate(key: string): Date {
+    const [y, m, d] = key.split('-').map(Number);
+    return new Date(y, m - 1, d);
   }
 
   getDayClass(date: Date, refMonth: Date = this.viewDate) {

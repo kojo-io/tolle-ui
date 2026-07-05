@@ -23,14 +23,19 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
         <div preview>
           <div class="flex flex-col items-center gap-4">
             <pre class="text-xs bg-muted p-2 rounded w-full overflow-auto">{{ range | json }}</pre>
-            <tolle-range-calendar 
+            <tolle-range-calendar
               [(ngModel)]="range"
+              [numberOfMonths]="twoMonths ? 2 : 1"
               [disablePastDates]="disablePastDates">
             </tolle-range-calendar>
           </div>
         </div>
 
         <div controls class="space-y-5">
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Two Months</span>
+            <tolle-switch [(ngModel)]="twoMonths" size="sm" />
+          </label>
           <label class="flex items-center justify-between text-sm font-medium">
             <span>Disable Past Dates</span>
             <tolle-switch [(ngModel)]="disablePastDates" size="sm" />
@@ -43,9 +48,11 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 export class CalendarRangeInteractiveComponent {
     range = { start: null, end: null };
     disablePastDates = false;
+    twoMonths = false;
 
     get playgroundCode() {
+        const monthsAttr = this.twoMonths ? ` [numberOfMonths]="2"` : '';
         const disablePastAttr = this.disablePastDates ? ` [disablePastDates]="true"` : '';
-        return `<tolle-range-calendar [(ngModel)]="dateRange"${disablePastAttr}></tolle-range-calendar>`;
+        return `<tolle-range-calendar [(ngModel)]="dateRange"${monthsAttr}${disablePastAttr}></tolle-range-calendar>`;
     }
 }
