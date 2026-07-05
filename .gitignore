@@ -50,6 +50,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Agent files
+.agent/
 
 # NgDoc files
 /ng-doc

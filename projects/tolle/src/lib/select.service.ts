@@ -1,18 +1,15 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable()
 export class SelectService {
-  // Emits the value of the clicked item
-  private selectedValueSource = new Subject<any>();
-  selectedValue$ = this.selectedValueSource.asObservable();
+  // Stores the currently selected value
+  selectedValue = signal<any>(null);
 
-  // Emits the label/text of the clicked item
-  private selectedLabelSource = new Subject<string>();
-  selectedLabel$ = this.selectedLabelSource.asObservable();
+  // Stores the label/text of the selected item
+  selectedLabel = signal<string>('');
 
   registerClick(value: any, label: string) {
-    this.selectedValueSource.next(value);
-    this.selectedLabelSource.next(label);
+    this.selectedValue.set(value);
+    this.selectedLabel.set(label);
   }
 }

@@ -3,10 +3,9 @@ import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
 import { ButtonGroupComponent } from '../../../../../tolle/src/lib/button-group.component';
 
 @Component({
-  selector: 'app-basic-button-group',
-  standalone: true,
-  imports: [ButtonComponent, ButtonGroupComponent],
-  template: `
+    selector: 'app-basic-button-group',
+    imports: [ButtonComponent, ButtonGroupComponent],
+    template: `
     <tolle-button-group>
       <tolle-button variant="outline">Year</tolle-button>
       <tolle-button variant="outline">Month</tolle-button>

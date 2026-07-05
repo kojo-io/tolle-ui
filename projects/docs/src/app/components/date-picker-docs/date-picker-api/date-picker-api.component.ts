@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-date-picker-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './date-picker-api.component.html'
 })

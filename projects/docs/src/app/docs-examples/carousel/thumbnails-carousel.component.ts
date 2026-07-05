@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { EmblaCarouselType } from 'embla-carousel';
 import {
   CarouselComponent,
@@ -11,38 +11,38 @@ import {
 } from '../../../../../tolle/src/lib/carousel';
 
 @Component({
-  selector: 'app-thumbnails-carousel',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-thumbnails-carousel',
+    imports: [
     CarouselComponent,
     CarouselContentDirective,
     CarouselContainerDirective,
     CarouselItemDirective,
     CarouselPreviousDirective,
     CarouselNextDirective
-  ],
-  template: `
+],
+    template: `
     <div class="space-y-4 max-w-3xl mx-auto group">
       <!-- Main Carousel -->
       <tolle-carousel (api)="onMainApi($event)" class="w-full">
         <div tolleCarouselContent>
           <div tolleCarouselContainer>
-            <div *ngFor="let item of images; let i = index" tolleCarouselItem class="basis-full">
-              <div class="p-1">
-                <div class="relative flex aspect-[16/9] items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 overflow-hidden shadow-sm dark:border-neutral-800 dark:bg-neutral-900 transition-all duration-500">
-                  <img [src]="item" class="absolute inset-0 w-full h-full object-cover">
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
-                  <div class="absolute bottom-6 left-6 right-6">
-                    <h4 class="text-white text-xl font-bold mb-1">Slide {{ i + 1 }}</h4>
-                    <p class="text-white/80 text-sm">Description for beautiful landscape {{ i + 1 }}</p>
+            @for (item of images; track item; let i = $index) {
+              <div tolleCarouselItem class="basis-full">
+                <div class="p-1">
+                  <div class="relative flex aspect-[16/9] items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 overflow-hidden shadow-sm dark:border-neutral-800 dark:bg-neutral-900 transition-all duration-500">
+                    <img [src]="item" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent pointer-events-none"></div>
+                    <div class="absolute bottom-6 left-6 right-6">
+                      <h4 class="text-white text-xl font-bold mb-1">Slide {{ i + 1 }}</h4>
+                      <p class="text-white/80 text-sm">Description for beautiful landscape {{ i + 1 }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            }
           </div>
         </div>
-
+    
         <button tolleCarouselPrevious class="absolute left-6 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center rounded-full border border-neutral-200 bg-white/90 backdrop-blur-md text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/90 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-xl transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30 -translate-x-2 group-hover:translate-x-0">
           <i class="ri-arrow-left-s-line text-2xl"></i>
         </button>
@@ -50,27 +50,31 @@ import {
           <i class="ri-arrow-right-s-line text-2xl"></i>
         </button>
       </tolle-carousel>
-
+    
       <!-- Thumbnails Carousel -->
       <div class="px-1">
         <tolle-carousel (api)="onThumbApi($event)" [opts]="{ containScroll: 'keepSnaps', dragFree: true }" class="w-full">
           <div tolleCarouselContent>
             <div tolleCarouselContainer class="flex -ml-2">
-              <div *ngFor="let item of images; let i = index"
+              @for (item of images; track item; let i = $index) {
+                <div
                   tolleCarouselItem
                   class="basis-1/4 md:basis-[18%] pl-2 cursor-pointer"
                   (click)="onThumbClick(i)">
-                <div [class]="'relative flex aspect-[4/3] items-center justify-center rounded-xl overflow-hidden border-2 transition-all duration-300 ' + (selectedIndex === i ? 'border-primary ring-2 ring-primary/20 scale-[1.02]' : 'border-transparent opacity-60 hover:opacity-100')">
-                  <img [src]="item" class="absolute inset-0 w-full h-full object-cover">
-                  <div *ngIf="selectedIndex === i" class="absolute inset-0 bg-primary/10"></div>
+                  <div [class]="'relative flex aspect-[4/3] items-center justify-center rounded-xl overflow-hidden border-2 transition-all duration-300 ' + (selectedIndex === i ? 'border-primary ring-2 ring-primary/20 scale-[1.02]' : 'border-transparent opacity-60 hover:opacity-100')">
+                    <img [src]="item" class="absolute inset-0 w-full h-full object-cover">
+                    @if (selectedIndex === i) {
+                      <div class="absolute inset-0 bg-primary/10"></div>
+                    }
+                  </div>
                 </div>
-              </div>
+              }
             </div>
           </div>
         </tolle-carousel>
       </div>
     </div>
-  `
+    `
 })
 export class ThumbnailsCarouselComponent {
   mainApi?: EmblaCarouselType;

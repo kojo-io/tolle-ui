@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-multi-select-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './multi-select-api.component.html'
 })

@@ -5,10 +5,9 @@ import { CalendarComponent } from '../../../../../tolle/src/lib/calendar.compone
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-basic-calendar',
-  standalone: true,
-  imports: [CalendarComponent, FormsModule, DatePipe],
-  template: `
+    selector: 'app-basic-calendar',
+    imports: [CalendarComponent, FormsModule, DatePipe],
+    template: `
     <div class="flex flex-col items-center gap-4 p-4 border rounded-lg bg-card">
       <p class="text-sm text-muted-foreground">Selected: {{ date | date:'fullDate' }}</p>
       <tolle-calendar [(ngModel)]="date"></tolle-calendar>

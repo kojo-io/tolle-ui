@@ -4,7 +4,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-basic-modal',
-    standalone: true,
     imports: [ButtonComponent],
     template: `
     <tolle-button (click)="openModal()">Open Simple Modal</tolle-button>

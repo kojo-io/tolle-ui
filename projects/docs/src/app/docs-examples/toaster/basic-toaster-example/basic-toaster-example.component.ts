@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ToastService } from '../../../../../../tolle/src/lib/toast.service';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
     selector: 'app-basic-toaster-example',
-    standalone: true,
-    imports: [CommonModule, ButtonComponent],
+    imports: [ButtonComponent],
     template: `
     <div class="flex flex-wrap gap-2">
       <tolle-button (click)="showDefault()">Default Toast</tolle-button>

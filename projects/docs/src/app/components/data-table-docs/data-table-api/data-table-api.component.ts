@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-data-table-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './data-table-api.component.html'
 })
@@ -74,6 +73,18 @@ export class DataTableApiComponent {
             name: 'expandedTemplate',
             description: 'The template to render when a row is expanded.',
             type: 'TemplateRef<any>',
+            default: 'undefined'
+        },
+        {
+            name: 'stickyHeader',
+            description: 'If true, the table header stays fixed at the top while scrolling.',
+            type: 'boolean',
+            default: 'false'
+        },
+        {
+            name: 'maxHeight',
+            description: 'Sets the maximum height of the table container, enabling vertical scrolling if content exceeds this value.',
+            type: 'string',
             default: 'undefined'
         }
     ];

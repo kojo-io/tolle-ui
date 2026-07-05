@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ToastService, ToastPosition } from '../../../../../../tolle/src/lib/toast.service';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
@@ -12,10 +12,8 @@ import { ToastContainerComponent } from '../../../../../../tolle/src/lib/toaster
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
-  selector: 'app-toaster-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-toaster-interactive',
+    imports: [
     FormsModule,
     PlaygroundComponent,
     ButtonComponent,
@@ -25,8 +23,8 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
     TextareaComponent,
     LabelComponent,
     ToastContainerComponent
-  ],
-  templateUrl: './toaster-interactive.component.html'
+],
+    templateUrl: './toaster-interactive.component.html'
 })
 export class ToasterInteractiveComponent {
   private toastService = inject(ToastService);

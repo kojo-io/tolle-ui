@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 
 @Component({
-  selector: 'app-toaster-api',
-  standalone: true,
-  imports: [CommonModule, PropTableComponent],
-  templateUrl: './toaster-api.component.html'
+    selector: 'app-toaster-api',
+    imports: [PropTableComponent],
+    templateUrl: './toaster-api.component.html'
 })
 export class ToasterApiComponent {
   serviceProps = [

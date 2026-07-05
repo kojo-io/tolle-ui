@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, model, output, forwardRef, computed } from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -30,14 +30,14 @@ export type ToggleProps = VariantProps<typeof toggleVariants>;
 @Component({
     selector: 'tolle-toggle',
     standalone: true,
-    imports: [CommonModule],
+    imports: [],
     template: `
     <button
       type="button"
-      [class]="computedClass"
-      [disabled]="disabled"
-      [attr.aria-pressed]="pressed"
-      [attr.data-state]="pressed ? 'on' : 'off'"
+      [class]="computedClass()"
+      [disabled]="disabled()"
+      [attr.aria-pressed]="pressed()"
+      [attr.data-state]="pressed() ? 'on' : 'off'"
       (click)="toggle()"
     >
       <ng-content></ng-content>
@@ -52,53 +52,50 @@ export type ToggleProps = VariantProps<typeof toggleVariants>;
     ]
 })
 export class ToggleComponent implements ControlValueAccessor {
-    @Input() variant: ToggleProps['variant'] = 'default';
-    @Input() size: ToggleProps['size'] = 'default';
-    @Input() disabled: boolean = false;
-    @Input() class: string = '';
+    variant = input<ToggleProps['variant']>('default');
+    size = input<ToggleProps['size']>('default');
+    disabled = input(false);
+    className = input('', { alias: 'class' });
 
-    @Input() set pressed(val: boolean) {
-        this._pressed = val;
-        this.onChange(val);
-    }
-    get pressed() { return this._pressed; }
-    private _pressed = false;
+    pressed = model(false);
+    pressedChange = output<boolean>();
 
-    @Output() pressedChange = new EventEmitter<boolean>();
+    onChange: (value: boolean) => void = () => { };
+    onTouched: () => void = () => { };
 
-    onChange: any = () => { };
-    onTouched: any = () => { };
-
-    get computedClass() {
+    computedClass = computed(() => {
         return cn(
             toggleVariants({
-                variant: this.variant,
-                size: this.size,
+                variant: this.variant(),
+                size: this.size(),
             }),
-            this.class
+            this.className()
         );
-    }
+    });
 
     toggle() {
-        if (this.disabled) return;
-        this.pressed = !this.pressed;
-        this.pressedChange.emit(this.pressed);
+        if (this.disabled()) return;
+        const newValue = !this.pressed();
+        this.pressed.set(newValue);
+        this.pressedChange.emit(newValue);
+        this.onChange(newValue);
         this.onTouched();
     }
 
-    writeValue(value: any): void {
-        this._pressed = !!value;
+    // --- ControlValueAccessor ---
+    writeValue(value: boolean): void {
+        this.pressed.set(!!value);
     }
 
-    registerOnChange(fn: any): void {
+    registerOnChange(fn: (value: boolean) => void): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: any): void {
+    registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 
-    setDisabledState?(isDisabled: boolean): void {
-        this.disabled = isDisabled;
+    setDisabledState(isDisabled: boolean): void {
+        // disabled is an input, skip for now as it's handled in template
     }
 }

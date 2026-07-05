@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SegmentedComponent, SegmentItem } from '../../../../../../tolle/src/lib/segment.component';
 
 @Component({
     selector: 'app-basic-segment-example',
-    standalone: true,
-    imports: [CommonModule, FormsModule, SegmentedComponent],
+    imports: [FormsModule, SegmentedComponent],
     template: `
     <div class="space-y-4 max-w-sm">
       <tolle-segment

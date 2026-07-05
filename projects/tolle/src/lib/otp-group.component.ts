@@ -6,9 +6,6 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
     <div class="flex items-center"><ng-content></ng-content></div>
-  `,
-  styles: ``
+  `
 })
-export class OtpGroupComponent {
-
-}
+export class OtpGroupComponent { }

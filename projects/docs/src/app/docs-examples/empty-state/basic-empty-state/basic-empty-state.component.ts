@@ -3,10 +3,9 @@ import { EmptyStateComponent } from '../../../../../../tolle/src/lib/empty-state
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
-  selector: 'app-basic-empty-state',
-  standalone: true,
-  imports: [EmptyStateComponent, ButtonComponent],
-  template: `
+    selector: 'app-basic-empty-state',
+    imports: [EmptyStateComponent, ButtonComponent],
+    template: `
     <tolle-empty-state 
       title="No projects found" 
       description="You haven't created any projects yet. Get started by creating your first project.">

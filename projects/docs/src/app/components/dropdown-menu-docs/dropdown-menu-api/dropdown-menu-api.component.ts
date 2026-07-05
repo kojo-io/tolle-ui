@@ -3,10 +3,9 @@ import { PropEntry } from '../../../shared/types';
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 
 @Component({
-  selector: 'app-dropdown-menu-api',
-  standalone: true,
-  imports: [PropTableComponent],
-  templateUrl: './dropdown-menu-api.component.html'
+    selector: 'app-dropdown-menu-api',
+    imports: [PropTableComponent],
+    templateUrl: './dropdown-menu-api.component.html'
 })
 export class DropdownMenuApiComponent {
   directiveProps: PropEntry[] = [

@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-segment-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './segment-api.component.html'
 })

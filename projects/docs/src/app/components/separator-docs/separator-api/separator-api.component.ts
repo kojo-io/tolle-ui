@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-separator-api',
-    standalone: true,
     imports: [PropTableComponent],
     template: `
     <section class="mb-16" id="api-reference">

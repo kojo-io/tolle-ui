@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-modal-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './modal-api.component.html'
 })

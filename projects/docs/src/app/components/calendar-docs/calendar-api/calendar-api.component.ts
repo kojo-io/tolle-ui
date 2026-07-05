@@ -3,7 +3,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-calendar-api',
-    standalone: true,
     imports: [PropTableComponent],
     template: `
     <section class="mb-16" id="api">

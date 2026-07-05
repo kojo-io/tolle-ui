@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-popover-docs',
-    standalone: true,
     imports: [
         PopoverOverviewComponent,
         PopoverInteractiveComponent,
         PopoverApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './popover-docs.component.html',
     styleUrl: './popover-docs.component.css'

@@ -1,6 +1,4 @@
-// projects/tolle/src/lib/toast.service.ts
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 export interface Toast {
   id: number;
@@ -13,15 +11,15 @@ export interface Toast {
 }
 
 export type ToastPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center';
+
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  private toasts: Toast[] = [];
-  private toastSubject = new Subject<Toast[]>();
-  toasts$ = this.toastSubject.asObservable();
+  toasts = signal<Toast[]>([]);
 
   constructor() {
     setInterval(() => this.tick(), 100);
   }
+
   show(toast: Omit<Toast, 'id' | 'remainingTime' | 'isPaused'>) {
     const duration = toast.duration || 3000;
     const newToast: Toast = {
@@ -31,41 +29,33 @@ export class ToastService {
       remainingTime: duration,
       isPaused: false
     };
-    this.toasts.push(newToast);
-    this.notify();
+    this.toasts.update((current: Toast[]) => [...current, newToast]);
   }
 
   private tick() {
     let changed = false;
-    this.toasts.forEach(t => {
+    const currentToasts = this.toasts();
+
+    const nextToasts = currentToasts.map(t => {
       if (!t.isPaused) {
-        t.remainingTime -= 100;
         changed = true;
+        return { ...t, remainingTime: t.remainingTime - 100 };
       }
-    });
+      return t;
+    }).filter((t: Toast) => t.remainingTime > 0);
 
-    const initialCount = this.toasts.length;
-    this.toasts = this.toasts.filter(t => t.remainingTime > 0);
-
-    if (changed || this.toasts.length !== initialCount) {
-      this.notify();
+    if (changed || nextToasts.length !== currentToasts.length) {
+      this.toasts.set(nextToasts);
     }
   }
 
   setPaused(id: number, paused: boolean) {
-    const toast = this.toasts.find(t => t.id === id);
-    if (toast) {
-      toast.isPaused = paused;
-      this.notify();
-    }
+    this.toasts.update(current =>
+      current.map(t => t.id === id ? { ...t, isPaused: paused } : t)
+    );
   }
 
   remove(id: number) {
-    this.toasts = this.toasts.filter(t => t.id !== id);
-    this.notify();
-  }
-
-  private notify() {
-    this.toastSubject.next([...this.toasts]);
+    this.toasts.update((current: Toast[]) => current.filter((t: Toast) => t.id !== id));
   }
 }

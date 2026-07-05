@@ -4,7 +4,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-user-form',
-    standalone: true,
     imports: [ButtonComponent],
     template: `
     <div class="space-y-4">

@@ -9,18 +9,16 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-calendar-docs',
-  standalone: true,
-  imports: [
-    CalendarOverviewComponent,
-    CalendarInteractiveComponent,
-    CalendarExamplesComponent,
-    CalendarApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './calendar-docs.component.html',
-  styleUrl: './calendar-docs.component.css'
+    selector: 'app-calendar-docs',
+    imports: [
+        CalendarOverviewComponent,
+        CalendarInteractiveComponent,
+        CalendarExamplesComponent,
+        CalendarApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './calendar-docs.component.html',
+    styleUrl: './calendar-docs.component.css'
 })
 export class CalendarDocsComponent implements OnInit {
   baseService = inject(BaseService);

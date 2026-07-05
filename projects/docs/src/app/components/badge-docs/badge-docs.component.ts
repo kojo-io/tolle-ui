@@ -8,18 +8,16 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-badge-docs',
-  standalone: true,
-  imports: [
-    BadgeOverviewComponent,
-    BadgeInteractiveComponent,
-    BadgeExamplesComponent,
-    BadgeApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './badge-docs.component.html',
-  styleUrl: './badge-docs.component.css'
+    selector: 'app-badge-docs',
+    imports: [
+        BadgeOverviewComponent,
+        BadgeInteractiveComponent,
+        BadgeExamplesComponent,
+        BadgeApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './badge-docs.component.html',
+    styleUrl: './badge-docs.component.css'
 })
 export class BadgeDocsComponent {
   baseService = inject(BaseService);

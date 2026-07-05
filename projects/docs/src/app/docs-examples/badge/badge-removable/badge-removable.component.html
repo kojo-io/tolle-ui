@@ -1,5 +1,7 @@
 <div class="flex flex-wrap gap-2">
-    <tolle-badge *ngFor="let badge of badges" [removable]="true" (onRemove)="remove(badge.id)">
-        {{ badge.label }}
+  @for (badge of badges; track badge) {
+    <tolle-badge [removable]="true" (onRemove)="remove(badge.id)">
+      {{ badge.label }}
     </tolle-badge>
+  }
 </div>

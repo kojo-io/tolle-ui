@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, input } from '@angular/core';
 import { cn } from "./utils/cn";
 
 @Component({
@@ -6,15 +6,14 @@ import { cn } from "./utils/cn";
   standalone: true,
   imports: [],
   template: `
-    <nav aria-label="breadcrumb" [class]="cn('flex flex-wrap items-center break-words text-sm text-muted-foreground', class)">
+    <nav aria-label="breadcrumb" [class]="cn('flex flex-wrap items-center break-words text-sm text-muted-foreground', className())">
       <ol class="flex flex-wrap items-center gap-1.5 break-words">
         <ng-content></ng-content>
       </ol>
     </nav>
-  `,
-  styles: ``
+  `
 })
 export class BreadcrumbComponent {
-  @Input() class: string = '';
+  className = input('', { alias: 'class' });
   protected cn = cn;
 }

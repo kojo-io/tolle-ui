@@ -3,10 +3,9 @@ import { ModalService } from '../../../../../../tolle/src/lib/modal.service';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
-  selector: 'app-template-modal',
-  standalone: true,
-  imports: [ButtonComponent],
-  template: `
+    selector: 'app-template-modal',
+    imports: [ButtonComponent],
+    template: `
     <tolle-button variant="outline" (click)="openTemplateModal(modalTemp)">
       Open Template Modal
     </tolle-button>

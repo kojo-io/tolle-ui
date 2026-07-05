@@ -5,18 +5,16 @@ import { SliderOverviewComponent } from './slider-overview/slider-overview.compo
 import { SliderInteractiveComponent } from './slider-interactive/slider-interactive.component';
 import { SliderApiComponent } from './slider-api/slider-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-slider-docs',
-    standalone: true,
     imports: [
-        CommonModule,
-        SliderOverviewComponent,
-        SliderInteractiveComponent,
-        SliderApiComponent,
-        DocsWrapperComponent
-    ],
+    SliderOverviewComponent,
+    SliderInteractiveComponent,
+    SliderApiComponent,
+    DocsWrapperComponent
+],
     templateUrl: './slider-docs.component.html'
 })
 export class SliderDocsComponent implements OnInit {

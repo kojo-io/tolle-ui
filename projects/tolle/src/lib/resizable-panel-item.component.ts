@@ -1,26 +1,27 @@
-import { Component, Input, inject, HostBinding } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, input, computed, inject, HostBinding, model, signal } from '@angular/core';
+
 import { ResizablePanelComponent } from './resizable-panel.component';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-resizable-panel-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div [class]="computedContainerClass">
+    <div [class]="computedContainerClass()">
       <ng-content></ng-content>
     </div>
-
-    <div
-      *ngIf="resizable && !isLast"
-      [class]="computedHandleClass"
-      (mousedown)="onHandleMouseDown($event)"
-    >
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div [class]="computedHandleIndicatorClass"></div>
+    
+    @if (resizable() && !isLast()) {
+      <div
+        [class]="computedHandleClass()"
+        (mousedown)="onHandleMouseDown($event)"
+        >
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div [class]="computedHandleIndicatorClass()"></div>
+        </div>
       </div>
-    </div>
+    }
   `,
   styles: [`
     :host {
@@ -31,24 +32,29 @@ import { cn } from './utils/cn';
   `]
 })
 export class ResizablePanelItemComponent {
-  @Input() @HostBinding('style.flex') size: number = 1;
-  @Input() minSize: number = 10; // percentage or pixels
-  @Input() maxSize?: number;
-  @Input() resizable: boolean = true;
-  @Input() class: string = '';
+  size = model<number>(1);
+  minSize = input<number>(10);
+  maxSize = input<number>();
+  resizable = input(true);
+  class = input('');
 
-  isLast: boolean = false;
+  isLast = signal(false);
   private container = inject(ResizablePanelComponent);
 
-  get computedContainerClass() {
-    return cn(
-      'relative h-full w-full overflow-hidden',
-      this.class
-    );
+  @HostBinding('style.flex')
+  get flexStyle() {
+    return this.size();
   }
 
-  get computedHandleClass() {
-    const isHorizontal = this.container?.direction === 'horizontal';
+  computedContainerClass = computed(() => {
+    return cn(
+      'relative h-full w-full overflow-hidden',
+      this.class()
+    );
+  });
+
+  computedHandleClass = computed(() => {
+    const isHorizontal = this.container?.direction() === 'horizontal';
     return cn(
       'absolute z-20',
       isHorizontal
@@ -56,15 +62,15 @@ export class ResizablePanelItemComponent {
         : 'left-0 right-0 -bottom-2 h-4 cursor-row-resize',
       'hover:bg-primary/5 active:bg-primary/10'
     );
-  }
+  });
 
-  get computedHandleIndicatorClass() {
-    const isHorizontal = this.container?.direction === 'horizontal';
+  computedHandleIndicatorClass = computed(() => {
+    const isHorizontal = this.container?.direction() === 'horizontal';
     return cn(
       'bg-muted-foreground/40 rounded-full',
       isHorizontal ? 'w-1 h-6' : 'h-1 w-6'
     );
-  }
+  });
 
   onHandleMouseDown(event: MouseEvent) {
     this.container.startResize(this, event);

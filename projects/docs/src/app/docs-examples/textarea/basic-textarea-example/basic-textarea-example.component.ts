@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { TextareaComponent } from '../../../../../../tolle/src/lib/textarea.component';
 
 @Component({
     selector: 'app-basic-textarea-example',
-    standalone: true,
-    imports: [CommonModule, FormsModule, TextareaComponent],
+    imports: [FormsModule, TextareaComponent],
     template: `
     <div class="w-full max-w-sm space-y-4">
       <tolle-textarea

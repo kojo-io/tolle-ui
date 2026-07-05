@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-pagination-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './pagination-api.component.html'
 })

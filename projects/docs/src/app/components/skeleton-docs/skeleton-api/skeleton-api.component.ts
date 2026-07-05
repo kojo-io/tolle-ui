@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-skeleton-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './skeleton-api.component.html'
 })

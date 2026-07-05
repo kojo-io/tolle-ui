@@ -6,7 +6,6 @@ import { BreadcrumbSeparatorComponent } from '../../../../../tolle/src/lib/bread
 
 @Component({
     selector: 'app-basic-breadcrumb',
-    standalone: true,
     imports: [
         BreadcrumbComponent,
         BreadcrumbItemComponent,

@@ -1,25 +1,30 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { ModalRef } from './modal-ref';
 
 @Injectable({ providedIn: 'root' })
 export class ModalStackService {
-  private _stack = new Set<ModalRef>();
+  private _stack = signal<Set<ModalRef>>(new Set<ModalRef>());
 
   register(ref: ModalRef): void {
-    this._stack.add(ref);
+    this._stack.update((s: Set<ModalRef>) => {
+      s.add(ref);
+      return new Set(s);
+    });
   }
 
   unregister(ref: ModalRef): void {
-    this._stack.delete(ref);
+    this._stack.update((s: Set<ModalRef>) => {
+      s.delete(ref);
+      return new Set(s);
+    });
   }
 
   /** Instantly closes all open modals */
   closeAll(): void {
-    this._stack.forEach(ref => ref.close());
-    this._stack.clear();
+    const s = this._stack();
+    s.forEach((ref: ModalRef) => ref.close());
+    this._stack.set(new Set());
   }
 
-  get activeCount(): number {
-    return this._stack.size;
-  }
+  activeCount = computed(() => this._stack().size);
 }

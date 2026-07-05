@@ -10,7 +10,6 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
     selector: 'app-avatar-interactive',
-    standalone: true,
     imports: [
         FormsModule,
         AvatarComponent,

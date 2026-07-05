@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild} from '@angular/core';
+import { Component, TemplateRef, viewChild } from '@angular/core';
 
 @Component({
   selector: 'tolle-dropdown-menu',
@@ -10,9 +10,13 @@ import {Component, TemplateRef, ViewChild} from '@angular/core';
         <ng-content></ng-content>
       </div>
     </ng-template>
-  `,
-  styles: ``
+  `
 })
 export class DropdownMenuComponent {
-  @ViewChild('menuTemplate') templateRef!: TemplateRef<any>;
+  menuTemplate = viewChild<TemplateRef<any>>('menuTemplate');
+
+  // For compatibility with the directive which expects it
+  get templateRef(): TemplateRef<any> | undefined {
+    return this.menuTemplate();
+  }
 }

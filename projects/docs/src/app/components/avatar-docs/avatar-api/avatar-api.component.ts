@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-avatar-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './avatar-api.component.html'
 })

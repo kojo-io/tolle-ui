@@ -4,7 +4,6 @@ import { AccordionItemComponent } from '../../../../../../tolle/src/lib/accordio
 
 @Component({
     selector: 'app-multiple-accordion',
-    standalone: true,
     imports: [AccordionComponent, AccordionItemComponent],
     templateUrl: './multiple-accordion.component.html'
 })

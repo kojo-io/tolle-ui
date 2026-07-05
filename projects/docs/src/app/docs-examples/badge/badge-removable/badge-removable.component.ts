@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { BadgeComponent } from '../../../../../../tolle/src/lib/badge.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-badge-removable',
-    standalone: true,
-    imports: [BadgeComponent, CommonModule],
+    imports: [BadgeComponent],
     templateUrl: './badge-removable.component.html'
 })
 export class BadgeRemovableComponent {

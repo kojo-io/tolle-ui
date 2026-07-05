@@ -4,7 +4,6 @@ import { CalendarComponent } from '../../../../../tolle/src/lib/calendar.compone
 
 @Component({
     selector: 'app-mode-calendar',
-    standalone: true,
     imports: [CalendarComponent, FormsModule],
     template: `
     <div class="flex flex-wrap gap-8 justify-center p-4 border rounded-lg bg-card">

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SliderComponent } from '../../../../../../tolle/src/lib/slider.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -8,18 +8,16 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 
 @Component({
-  selector: 'app-slider-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: 'app-slider-interactive',
+    imports: [
     FormsModule,
     SliderComponent,
     PlaygroundComponent,
     LabelComponent,
     InputComponent,
     SwitchComponent
-  ],
-  template: `
+],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

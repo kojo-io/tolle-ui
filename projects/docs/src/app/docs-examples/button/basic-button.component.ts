@@ -2,10 +2,9 @@ import { Component } from '@angular/core';
 import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
 
 @Component({
-  selector: 'app-basic-button',
-  standalone: true,
-  imports: [ButtonComponent],
-  template: `
+    selector: 'app-basic-button',
+    imports: [ButtonComponent],
+    template: `
     <div class="flex flex-wrap gap-4">
       <tolle-button>Primary (Auto)</tolle-button>
       <tolle-button variant="secondary">Secondary (Derived)</tolle-button>
