@@ -27,12 +27,14 @@ jobs:
         run: |
           npm run build:docs
 
-      - name: Deploy Documentation to AWS
+      - name: Deploy site to AWS (apex domain — tolle-ui.com)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USER }}
           key: ${{ secrets.AWS_SSH_KEY }}
+          # Consolidated app (landing + docs + /registry) now serves the apex domain.
+          # tolle-ui.com serves /var/www/tolle-ui; the old /tolle-ui-docs path held Storybook.
           source: dist/docs/browser/*
           target: /var/www/tolle-ui
           strip_components: 3

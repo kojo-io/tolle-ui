@@ -96,7 +96,7 @@ function writeRegistryIndex(items: RegistryItem[], payloads: Payload[], outDir: 
   const index = {
     $schema: 'https://ui.shadcn.com/schema/registry.json',
     name: 'tolle-ui',
-    homepage: 'https://tolle-ui.dev',
+    homepage: 'https://tolle-ui.com',
     items: items.map((i) => {
       const p = byName.get(i.name)!;
       return {

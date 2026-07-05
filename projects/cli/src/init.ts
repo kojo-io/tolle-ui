@@ -7,7 +7,7 @@ const DEFAULT: TolleConfig = {
   style: 'default',
   ui: 'src/app/components/ui',
   tailwind: { config: 'tailwind.config.js', css: 'src/styles.css' },
-  registry: 'https://tolle-ui.dev/registry',
+  registry: 'https://tolle-ui.com/registry',
   aliases: { ui: '@/components/ui' },
 };
 
