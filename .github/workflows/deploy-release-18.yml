@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - release-18
+      - master
 
 jobs:
   deploy:
@@ -33,5 +34,5 @@ jobs:
           username: ${{ secrets.AWS_USER }}
           key: ${{ secrets.AWS_SSH_KEY }}
           source: dist/docs/browser/*
-          target: /var/www/v18-tolle-docs
+          target: /var/www/tolle-ui-docs
           strip_components: 3
