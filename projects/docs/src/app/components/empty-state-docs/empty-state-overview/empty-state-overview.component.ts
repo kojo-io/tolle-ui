@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicEmptyStateComponent } from '../../../docs-examples/empty-state/basic-empty-state/basic-empty-state.component';
 
 @Component({
     selector: 'app-empty-state-overview',
     standalone: true,
-    imports: [CommonModule, AsyncPipe, BaseEditorComponent, BasicEmptyStateComponent],
+    imports: [CommonModule, AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicEmptyStateComponent],
     templateUrl: './empty-state-overview.component.html'
 })
 export class EmptyStateOverviewComponent {

@@ -1,70 +1,48 @@
 <section class="mb-16" id="examples">
-    <h2 class="text-2xl font-bold mb-6">Examples</h2>
+    <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
 
     <!-- Basic -->
-    <div class="space-y-4 mb-12" id="basic">
-        <h3 class="text-xl font-semibold">Basic</h3>
+    <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
         <p class="text-muted-foreground">Standard usage with an image source and a text fallback.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
-        </div>
-        <div *ngIf="basicTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-preview [code]="basicCode" language="angular">
             <app-basic-avatar />
-        </div>
-        <div *ngIf="basicTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="basicCode" language="angular" />
-        </div>
+        </app-preview>
     </div>
 
     <!-- Sizes -->
-    <div class="space-y-4 mb-12" id="sizes">
-        <h3 class="text-xl font-semibold">Sizes</h3>
-        <p class="text-muted-foreground">Four standardized size variants are supported: <code>sm</code>,
-            <code>default</code>, <code>lg</code>, and <code>xl</code>.
+    <div class="mb-12 space-y-3" id="sizes">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Sizes</h3>
+        <p class="text-muted-foreground">Four standardized size variants are supported:
+            <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">sm</code>,
+            <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">default</code>,
+            <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">lg</code>, and
+            <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">xl</code>.
         </p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="sizesTab" />
-        </div>
-        <div *ngIf="sizesTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-preview [code]="sizesCode" language="html">
             <app-avatar-sizes />
-        </div>
-        <div *ngIf="sizesTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="sizesCode" language="html" />
-        </div>
+        </app-preview>
     </div>
 
     <!-- Shapes -->
-    <div class="space-y-4 mb-12" id="shapes">
-        <h3 class="text-xl font-semibold">Shapes</h3>
-        <p class="text-muted-foreground">Avatars can be <code>circle</code> (default) or <code>square</code>.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="shapesTab" />
-        </div>
-        <div *ngIf="shapesTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+    <div class="mb-12 space-y-3" id="shapes">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Shapes</h3>
+        <p class="text-muted-foreground">Avatars can be
+            <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">circle</code> (default) or
+            <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">square</code>.
+        </p>
+        <app-preview [code]="shapesCode" language="html">
             <app-avatar-shapes />
-        </div>
-        <div *ngIf="shapesTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="shapesCode" language="html" />
-        </div>
+        </app-preview>
     </div>
 
     <!-- Fallback -->
-    <div class="space-y-4" id="fallback">
-        <h3 class="text-xl font-semibold">Fallback</h3>
+    <div class="space-y-3" id="fallback">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Fallback</h3>
         <p class="text-muted-foreground">The fallback is shown when the image fails to load or no source is provided. It
             accepts text or icons.</p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="fallbackTab" />
-        </div>
-        <div *ngIf="fallbackTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-preview [code]="fallbackCode" language="html">
             <app-avatar-fallback-example />
-        </div>
-        <div *ngIf="fallbackTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="fallbackCode" language="html" />
-        </div>
+        </app-preview>
     </div>
 </section>

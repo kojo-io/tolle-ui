@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
-import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BasicCheckboxComponent } from '../../../docs-examples/check-box/basic-checkbox.component';
 import { CheckboxWithDescriptionComponent } from '../../../docs-examples/check-box/checkbox-with-description.component';
@@ -13,9 +11,7 @@ import { CheckboxDisabledComponent } from '../../../docs-examples/check-box/chec
     standalone: true,
     imports: [
         CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
+        ComponentPreviewComponent,
         BasicCheckboxComponent,
         CheckboxWithDescriptionComponent,
         CheckboxDisabledComponent
@@ -24,15 +20,6 @@ import { CheckboxDisabledComponent } from '../../../docs-examples/check-box/chec
 })
 export class CheckBoxExamplesComponent {
     sourceService = inject(SourceCodeService);
-
-    basicView = 'preview';
-    descriptionView = 'preview';
-    disabledView = 'preview';
-
-    viewOptions = [
-        { label: 'Preview', value: 'preview' },
-        { label: 'Code', value: 'code' }
-    ];
 
     basicCode = '';
     descriptionCode = '';

@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseService } from '../../../shared/base.service';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,8 +11,8 @@ import { Observable } from 'rxjs';
     standalone: true,
     imports: [
         BaseEditorComponent,
-        NgIf,
-        AsyncPipe
+        AsyncPipe,
+        DocHeroComponent
     ],
     templateUrl: './data-table-overview.component.html'
 })

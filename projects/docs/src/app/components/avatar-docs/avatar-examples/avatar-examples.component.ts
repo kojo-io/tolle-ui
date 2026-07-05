@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
-import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicAvatarComponent } from '../../../docs-examples/avatar/basic-avatar/basic-avatar.component';
 import { AvatarSizesComponent } from '../../../docs-examples/avatar/avatar-sizes/avatar-sizes.component';
 import { AvatarShapesComponent } from '../../../docs-examples/avatar/avatar-shapes/avatar-shapes.component';
@@ -13,9 +11,7 @@ import { AvatarFallbackExampleComponent } from '../../../docs-examples/avatar/av
     standalone: true,
     imports: [
         CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
+        ComponentPreviewComponent,
         BasicAvatarComponent,
         AvatarSizesComponent,
         AvatarShapesComponent,
@@ -24,16 +20,6 @@ import { AvatarFallbackExampleComponent } from '../../../docs-examples/avatar/av
     templateUrl: './avatar-examples.component.html'
 })
 export class AvatarExamplesComponent {
-    basicTab = 'preview';
-    sizesTab = 'preview';
-    shapesTab = 'preview';
-    fallbackTab = 'preview';
-
-    viewOptions = [
-        { label: 'Preview', value: 'preview' },
-        { label: 'Code', value: 'code' }
-    ];
-
     basicCode = `<tolle-avatar src="https://github.com/nutlope.png">
   <tolle-avatar-fallback>JD</tolle-avatar-fallback>
 </tolle-avatar>`;

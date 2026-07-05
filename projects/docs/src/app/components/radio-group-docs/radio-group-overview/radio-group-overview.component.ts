@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BasicRadioGroupExampleComponent } from '../../../docs-examples/radio-group/basic-radio-group-example/basic-radio-group-example.component';
 import { AsyncPipe } from '@angular/common';
-import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-radio-group-overview',
@@ -10,7 +11,8 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
     imports: [
         BasicRadioGroupExampleComponent,
         AsyncPipe,
-        BaseEditorComponent
+        ComponentPreviewComponent,
+        DocHeroComponent
     ],
     templateUrl: './radio-group-overview.component.html'
 })

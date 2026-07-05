@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicModalComponent } from '../../../docs-examples/modal/basic-modal/basic-modal.component';
 import { TemplateModalComponent } from '../../../docs-examples/modal/template-modal/template-modal.component';
 import { ComponentModalComponent } from '../../../docs-examples/modal/component-modal/component-modal.component';
@@ -13,6 +15,8 @@ import { ComponentModalComponent } from '../../../docs-examples/modal/component-
         CommonModule,
         AsyncPipe,
         BaseEditorComponent,
+        DocHeroComponent,
+        ComponentPreviewComponent,
         BasicModalComponent,
         TemplateModalComponent,
         ComponentModalComponent

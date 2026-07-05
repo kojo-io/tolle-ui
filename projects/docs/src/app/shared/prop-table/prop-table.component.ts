@@ -7,37 +7,35 @@ import { PropEntry } from '../types';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div class="overflow-x-auto rounded-lg border border-neutral-200 dark:border-neutral-800 my-6">
+    <div class="my-6 overflow-x-auto rounded-lg border border-border">
       <table class="w-full text-left text-sm">
-        <thead class="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800">
+        <thead class="border-b border-border bg-muted/50 text-xs uppercase tracking-wide text-muted-foreground">
           <tr>
-            <th class="px-6 py-3 font-semibold">Name</th>
-            <th class="px-6 py-3 font-semibold">Type</th>
-            <th class="px-6 py-3 font-semibold">Default</th>
-            <th class="px-6 py-3 font-semibold">Description</th>
+            <th scope="col" class="px-5 py-3 font-semibold">Name</th>
+            <th scope="col" class="px-5 py-3 font-semibold">Type</th>
+            <th scope="col" class="px-5 py-3 font-semibold">Default</th>
+            <th scope="col" class="px-5 py-3 font-semibold">Description</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-neutral-200 dark:divide-neutral-800 bg-white dark:bg-transparent">
+        <tbody class="divide-y divide-border">
           @for (prop of props; track prop.name) {
-            <tr class="hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors">
-              <td class="px-6 py-4 font-mono font-medium text-foreground">
+            <tr class="align-top transition-colors hover:bg-muted/40">
+              <td class="whitespace-nowrap px-5 py-3.5 font-mono text-[13px] font-medium text-foreground">
                 {{ prop.name }}
               </td>
-              <td class="px-6 py-4">
-                <code class="text-xs bg-neutral-100 dark:bg-neutral-800 px-1.5 py-0.5 rounded text-foreground">
-                  {{ prop.type }}
-                </code>
+              <td class="px-5 py-3.5">
+                <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{{ prop.type }}</code>
               </td>
-              <td class="px-6 py-4 font-mono text-xs text-muted-foreground">
-                {{ prop.default || '-' }}
+              <td class="whitespace-nowrap px-5 py-3.5 font-mono text-xs text-muted-foreground">
+                {{ prop.default || '—' }}
               </td>
-              <td class="px-6 py-4 text-muted-foreground">
+              <td class="px-5 py-3.5 text-muted-foreground">
                 {{ prop.description }}
               </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="4" class="px-6 py-8 text-center text-muted-foreground">
+              <td colspan="4" class="px-5 py-8 text-center text-muted-foreground">
                 No properties defined.
               </td>
             </tr>

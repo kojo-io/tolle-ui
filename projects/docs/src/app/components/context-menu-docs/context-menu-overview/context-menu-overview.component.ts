@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { CommonModule, AsyncPipe } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicContextMenuExampleComponent } from '../../../docs-examples/context-menu/basic-context-menu/basic-context-menu.component';
 
 @Component({
     selector: 'app-context-menu-overview',
     standalone: true,
-    imports: [CommonModule, AsyncPipe, BaseEditorComponent, BasicContextMenuExampleComponent],
+    imports: [CommonModule, AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicContextMenuExampleComponent],
     templateUrl: './context-menu-overview.component.html'
 })
 export class ContextMenuOverviewComponent {

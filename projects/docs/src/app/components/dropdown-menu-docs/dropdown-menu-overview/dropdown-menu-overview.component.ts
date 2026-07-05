@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicDropdownComponent } from '../../../docs-examples/dropdown-menu/basic-dropdown/basic-dropdown.component';
 
 @Component({
   selector: 'app-dropdown-menu-overview',
   standalone: true,
-  imports: [CommonModule, AsyncPipe, BaseEditorComponent, BasicDropdownComponent],
+  imports: [CommonModule, AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicDropdownComponent],
   templateUrl: './dropdown-menu-overview.component.html'
 })
 export class DropdownMenuOverviewComponent {

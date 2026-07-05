@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 import { BasicSegmentExampleComponent } from '../../../docs-examples/segment/basic-segment-example/basic-segment-example.component';
 
 @Component({
     selector: 'app-segment-overview',
     standalone: true,
-    imports: [AsyncPipe, BaseEditorComponent, BasicSegmentExampleComponent],
+    imports: [AsyncPipe, BaseEditorComponent, ComponentPreviewComponent, DocHeroComponent, BasicSegmentExampleComponent],
     templateUrl: './segment-overview.component.html'
 })
 export class SegmentOverviewComponent {

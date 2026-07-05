@@ -2,10 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { BaseService } from '../../../shared/base.service';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
-import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { DataTableStickyComponent } from '../../../docs-examples/data-table/data-table-sticky/data-table-sticky.component';
 
 @Component({
@@ -15,29 +14,16 @@ import { DataTableStickyComponent } from '../../../docs-examples/data-table/data
         CommonModule,
         FormsModule,
         SegmentedComponent,
-        BaseEditorComponent,
+        ComponentPreviewComponent,
         DataTableStickyComponent
     ],
     templateUrl: './data-table-sticky.component.html'
 })
 export class DataTableStickyDocsComponent implements OnInit {
-    baseService = inject(BaseService);
     sourceService = inject(SourceCodeService);
 
     htmlCode!: Observable<string>;
     tsCode!: Observable<string>;
-
-    tab = 'preview';
-    viewOptions = [
-        { label: 'Preview', value: 'preview' },
-        { label: 'Code', value: 'code' }
-    ];
-
-    codeTab = 'html';
-    codeViewOptions = [
-        { label: 'HTML', value: 'html' },
-        { label: 'Typescript', value: 'typescript' }
-    ];
 
     selectedHeight = '400px';
     heightOptions = [

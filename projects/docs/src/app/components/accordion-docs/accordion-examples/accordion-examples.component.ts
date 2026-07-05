@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
-import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicAccordionComponent } from '../../../docs-examples/accordion/basic-accordion/basic-accordion.component';
 import { MultipleAccordionComponent } from '../../../docs-examples/accordion/multiple-accordion/multiple-accordion.component';
 
@@ -11,23 +9,13 @@ import { MultipleAccordionComponent } from '../../../docs-examples/accordion/mul
     standalone: true,
     imports: [
         CommonModule,
-        FormsModule,
-        SegmentedComponent,
-        BaseEditorComponent,
+        ComponentPreviewComponent,
         BasicAccordionComponent,
         MultipleAccordionComponent
     ],
     templateUrl: './accordion-examples.component.html'
 })
 export class AccordionExamplesComponent {
-    basicTab = 'preview';
-    multiTab = 'preview';
-
-    viewOptions = [
-        { label: 'Preview', value: 'preview' },
-        { label: 'Code', value: 'code' }
-    ];
-
     basicCode = `<tolle-accordion>
   <tolle-accordion-item title="Can I open many at once?">
     Yes, because the type is set to multiple by default or explicitly.

@@ -1,11 +1,4 @@
-<header class="mb-12 border-b border-slate-200 pb-8 text-foreground">
-    <h1 class="text-4xl font-extrabold tracking-tight mb-4">
-        Country Selector
-    </h1>
-    <p class="text-lg text-muted-foreground">
-        A searchable dropdown component for selecting countries, featuring flags and dial codes.
-    </p>
-</header>
+<app-doc-hero slug="country-selector" description="A searchable dropdown component for selecting countries, featuring flags and dial codes." id="overview" />
 
 <section class="mb-16">
     <h2 class="text-2xl font-bold mb-6 text-foreground">Basic Usage</h2>
@@ -13,22 +6,16 @@
         The country selector provides a consistent way to pick countries from a predefined list. It supports searching
         by name, ISO code, or dial code.
     </p>
-    <div
-        class="rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/30 overflow-hidden">
-        <div class="p-8 flex items-center justify-center bg-white dark:bg-neutral-950 min-h-[200px]">
-            <app-basic-country-selector-example></app-basic-country-selector-example>
-        </div>
-        <div class="border-t border-neutral-200 dark:border-neutral-800">
-            <app-base-editor [code]="(basicCode$ | async) || ''" language="typescript"></app-base-editor>
-        </div>
-    </div>
+    <app-preview [code]="(basicCode$ | async) ?? ''" language="typescript">
+        <app-basic-country-selector-example />
+    </app-preview>
 </section>
 
 <section id="installation" class="mb-16">
     <h2 class="text-2xl font-bold mb-6 text-foreground">
         Import
     </h2>
-    <div class="rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800">
+    <div class="overflow-hidden rounded-lg border border-border">
         <app-base-editor code="import { CountrySelectorComponent } from 'tolle';"
             language="typescript"></app-base-editor>
     </div>

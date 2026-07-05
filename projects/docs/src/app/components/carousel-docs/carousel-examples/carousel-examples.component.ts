@@ -1,8 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
-import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BasicCarouselComponent } from '../../../docs-examples/carousel/basic-carousel.component';
 import { MultipleCarouselComponent } from '../../../docs-examples/carousel/multiple-carousel.component';
@@ -27,10 +24,7 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
   selector: 'app-carousel-examples',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    SegmentedComponent,
-    BaseEditorComponent,
+    ComponentPreviewComponent,
     BasicCarouselComponent,
     MultipleCarouselComponent,
     VerticalCarouselComponent,
@@ -52,279 +46,143 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
   ],
   template: `
     <section class="mb-16" id="examples">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
 
       <div class="space-y-12">
-        <div id="basic">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Basic</h3>
-          <p class="text-muted-foreground mb-4">A simple carousel with navigation buttons.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="basicView" />
-          </div>
-          <div *ngIf="basicView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="basic">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+          <p class="text-muted-foreground">A simple carousel with navigation buttons.</p>
+          <app-preview [code]="basicCode" language="typescript">
             <app-basic-carousel />
-          </div>
-          <div *ngIf="basicView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="basicCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="multiple">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Multiple Slides</h3>
-          <p class="text-muted-foreground mb-4">Display multiple slides per view and scroll multiple items at once.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="multipleView" />
-          </div>
-          <div *ngIf="multipleView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="multiple">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Multiple Slides</h3>
+          <p class="text-muted-foreground">Display multiple slides per view and scroll multiple items at once.</p>
+          <app-preview [code]="multipleCode" language="typescript">
             <app-multiple-carousel />
-          </div>
-          <div *ngIf="multipleView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="multipleCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="alignment">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Alignment</h3>
-          <p class="text-muted-foreground mb-4">Change the alignment of slides (start, center, end).</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="alignmentView" />
-          </div>
-          <div *ngIf="alignmentView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="alignment">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Alignment</h3>
+          <p class="text-muted-foreground">Change the alignment of slides (start, center, end).</p>
+          <app-preview [code]="alignmentCode" language="typescript">
             <app-alignment-carousel />
-          </div>
-          <div *ngIf="alignmentView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="alignmentCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="variable-width">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Variable Widths</h3>
-          <p class="text-muted-foreground mb-4">Slides can have different widths defined in CSS.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="variableWidthView" />
-          </div>
-          <div *ngIf="variableWidthView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="variable-width">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Variable Widths</h3>
+          <p class="text-muted-foreground">Slides can have different widths defined in CSS.</p>
+          <app-preview [code]="variableWidthCode" language="typescript">
             <app-variable-width-carousel />
-          </div>
-          <div *ngIf="variableWidthView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="variableWidthCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="rtl">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Right To Left</h3>
-          <p class="text-muted-foreground mb-4">Support for Right-to-Left directions.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="rtlView" />
-          </div>
-          <div *ngIf="rtlView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="rtl">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Right To Left</h3>
+          <p class="text-muted-foreground">Support for Right-to-Left directions.</p>
+          <app-preview [code]="rtlCode" language="typescript">
             <app-rtl-carousel />
-          </div>
-          <div *ngIf="rtlView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="rtlCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="autoplay">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Autoplay</h3>
-          <p class="text-muted-foreground mb-4">Automatically advance slides using the Autoplay plugin.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="autoplayView" />
-          </div>
-          <div *ngIf="autoplayView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="autoplay">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Autoplay</h3>
+          <p class="text-muted-foreground">Automatically advance slides using the Autoplay plugin.</p>
+          <app-preview [code]="autoplayCode" language="typescript">
             <app-autoplay-carousel />
-          </div>
-          <div *ngIf="autoplayView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="autoplayCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="auto-scroll">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Auto Scroll</h3>
-          <p class="text-muted-foreground mb-4">Continuous auto-scrolling using the Auto Scroll plugin.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="autoScrollView" />
-          </div>
-          <div *ngIf="autoScrollView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="auto-scroll">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Auto Scroll</h3>
+          <p class="text-muted-foreground">Continuous auto-scrolling using the Auto Scroll plugin.</p>
+          <app-preview [code]="autoScrollCode" language="typescript">
             <app-auto-scroll-carousel />
-          </div>
-          <div *ngIf="autoScrollView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="autoScrollCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="fade">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Fade</h3>
-          <p class="text-muted-foreground mb-4">Cross-fade transition effect using the Fade plugin.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="fadeView" />
-          </div>
-          <div *ngIf="fadeView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="fade">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Fade</h3>
+          <p class="text-muted-foreground">Cross-fade transition effect using the Fade plugin.</p>
+          <app-preview [code]="fadeCode" language="typescript">
             <app-fade-carousel />
-          </div>
-          <div *ngIf="fadeView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="fadeCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="class-names">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Class Names</h3>
-          <p class="text-muted-foreground mb-4">Automatically add classes to slides using the Class Names plugin.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="classNamesView" />
-          </div>
-          <div *ngIf="classNamesView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="class-names">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Class Names</h3>
+          <p class="text-muted-foreground">Automatically add classes to slides using the Class Names plugin.</p>
+          <app-preview [code]="classNamesCode" language="typescript">
             <app-class-names-carousel />
-          </div>
-          <div *ngIf="classNamesView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="classNamesCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="loop">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Loop & Drag Free</h3>
-          <p class="text-muted-foreground mb-4">Infinite looping scrolling with free drag behavior.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="loopView" />
-          </div>
-          <div *ngIf="loopView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="loop">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Loop & Drag Free</h3>
+          <p class="text-muted-foreground">Infinite looping scrolling with free drag behavior.</p>
+          <app-preview [code]="loopCode" language="typescript">
             <app-loop-carousel />
-          </div>
-          <div *ngIf="loopView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="loopCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="parallax">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Parallax</h3>
-          <p class="text-muted-foreground mb-4">Parallax scrolling effect calculated via the Embla API events.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="parallaxView" />
-          </div>
-          <div *ngIf="parallaxView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="parallax">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Parallax</h3>
+          <p class="text-muted-foreground">Parallax scrolling effect calculated via the Embla API events.</p>
+          <app-preview [code]="parallaxCode" language="typescript">
             <app-parallax-carousel />
-          </div>
-          <div *ngIf="parallaxView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="parallaxCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="scale">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Scale Tween</h3>
-          <p class="text-muted-foreground mb-4">Slides scale based on their proximity to the center.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="scaleView" />
-          </div>
-          <div *ngIf="scaleView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="scale">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Scale Tween</h3>
+          <p class="text-muted-foreground">Slides scale based on their proximity to the center.</p>
+          <app-preview [code]="scaleCode" language="typescript">
             <app-scale-carousel />
-          </div>
-          <div *ngIf="scaleView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="scaleCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="opacity">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Opacity Tween</h3>
-          <p class="text-muted-foreground mb-4">Slides fade out as they move away from the center.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="opacityView" />
-          </div>
-          <div *ngIf="opacityView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="opacity">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Opacity Tween</h3>
+          <p class="text-muted-foreground">Slides fade out as they move away from the center.</p>
+          <app-preview [code]="opacityCode" language="typescript">
             <app-opacity-carousel />
-          </div>
-          <div *ngIf="opacityView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="opacityCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="thumbnails">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Thumbnails</h3>
-          <p class="text-muted-foreground mb-4">Synchronize two carousels to create a main gallery with thumbnails.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="thumbnailsView" />
-          </div>
-          <div *ngIf="thumbnailsView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="thumbnails">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Thumbnails</h3>
+          <p class="text-muted-foreground">Synchronize two carousels to create a main gallery with thumbnails.</p>
+          <app-preview [code]="thumbnailsCode" language="typescript">
             <app-thumbnails-carousel />
-          </div>
-          <div *ngIf="thumbnailsView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="thumbnailsCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="progress">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Progress Bar</h3>
-          <p class="text-muted-foreground mb-4">A visual progress bar reflecting the scroll position.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="progressView" />
-          </div>
-          <div *ngIf="progressView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="progress">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Progress Bar</h3>
+          <p class="text-muted-foreground">A visual progress bar reflecting the scroll position.</p>
+          <app-preview [code]="progressCode" language="typescript">
             <app-progress-carousel />
-          </div>
-          <div *ngIf="progressView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="progressCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="lazy-load">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Lazy Loading</h3>
-          <p class="text-muted-foreground mb-4">Optimize performance by loading slide content only when in view.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="lazyLoadView" />
-          </div>
-          <div *ngIf="lazyLoadView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="lazy-load">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Lazy Loading</h3>
+          <p class="text-muted-foreground">Optimize performance by loading slide content only when in view.</p>
+          <app-preview [code]="lazyLoadCode" language="typescript">
             <app-lazy-load-carousel />
-          </div>
-          <div *ngIf="lazyLoadView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="lazyLoadCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
 
-        <div id="infinite-scroll">
-          <h3 class="text-xl font-semibold mb-4 text-foreground/80">Infinite Scroll</h3>
-          <p class="text-muted-foreground mb-4">Dynamically load and append more slides as the user scrolls.</p>
-          <div class="w-full md:w-1/4 mb-4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="infiniteScrollView" />
-          </div>
-          <div *ngIf="infiniteScrollView === 'preview'"
-               class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 shadow-sm">
+        <div class="space-y-3" id="infinite-scroll">
+          <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Infinite Scroll</h3>
+          <p class="text-muted-foreground">Dynamically load and append more slides as the user scrolls.</p>
+          <app-preview [code]="infiniteScrollCode" language="typescript">
             <app-infinite-scroll-carousel />
-          </div>
-          <div *ngIf="infiniteScrollView === 'code'"
-               class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden shadow-sm">
-            <app-base-editor [code]="infiniteScrollCode" language="typescript" />
-          </div>
+          </app-preview>
         </div>
       </div>
     </section>
@@ -332,25 +190,6 @@ import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel
 })
 export class CarouselExamplesComponent {
   sourceService = inject(SourceCodeService);
-
-  basicView = 'preview';
-  multipleView = 'preview';
-  verticalView = 'preview';
-  autoplayView = 'preview';
-  loopView = 'preview';
-  thumbnailsView = 'preview';
-  alignmentView = 'preview';
-  variableWidthView = 'preview';
-  rtlView = 'preview';
-  autoScrollView = 'preview';
-  fadeView = 'preview';
-  classNamesView = 'preview';
-  parallaxView = 'preview';
-  scaleView = 'preview';
-  opacityView = 'preview';
-  progressView = 'preview';
-  lazyLoadView = 'preview';
-  infiniteScrollView = 'preview';
 
   basicCode = '';
   multipleCode = '';
@@ -370,11 +209,6 @@ export class CarouselExamplesComponent {
   progressCode = '';
   lazyLoadCode = '';
   infiniteScrollCode = '';
-
-  viewOptions = [
-    { label: 'Preview', value: 'preview' },
-    { label: 'Code', value: 'code' }
-  ];
 
   constructor() {
     this.sourceService.getFile('carousel/basic-carousel.component.ts').subscribe(code => this.basicCode = code);

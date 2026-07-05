@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit } from '@angular/core';
 import { BaseService } from '../../shared/base.service';
 import { RegistryDocsService } from '../../shared/registry-docs.service';
 import { NgIf } from '@angular/common';
-import { SegmentedComponent } from '../../../../../tolle/src/lib/segment.component';
+import { DocHeroComponent } from '../../shared/doc-hero/doc-hero.component';
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from '../../../../../tolle/src/lib/alert.component';
 import { BaseEditorComponent } from '../../shared/base-editor/base-editor.component';
@@ -33,8 +33,8 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
     SelectItemComponent,
     InputComponent,
     CheckboxComponent,
-    DocsWrapperComponent
-
+    DocsWrapperComponent,
+    DocHeroComponent
   ],
   templateUrl: './alert-docs.component.html',
   styleUrl: './alert-docs.component.css'

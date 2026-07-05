@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicResizableExampleComponent } from '../../../docs-examples/resizable/basic-resizable-example/basic-resizable-example.component';
 
 @Component({
     selector: 'app-resizable-overview',
     standalone: true,
-    imports: [AsyncPipe, BaseEditorComponent, BasicResizableExampleComponent],
+    imports: [AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicResizableExampleComponent],
     templateUrl: './resizable-overview.component.html'
 })
 export class ResizableOverviewComponent {

@@ -1,43 +1,25 @@
 <section class="mb-16">
-    <h2 class="text-2xl font-bold mb-6">Examples</h2>
+    <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
 
     <!-- Basic Example -->
-    <div class="space-y-4 mb-12" id="basic">
-        <h3 class="text-xl font-semibold">Basic</h3>
+    <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
         <p class="text-muted-foreground">
             The default accordion allows only one item to be open at a time.
         </p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="basicTab" />
-        </div>
-
-        <div *ngIf="basicTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-preview [code]="basicCode" language="html">
             <app-basic-accordion />
-        </div>
-
-        <div *ngIf="basicTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="basicCode" language="angular" />
-        </div>
+        </app-preview>
     </div>
 
     <!-- Multiple Example -->
-    <div class="space-y-4" id="multiple">
-        <h3 class="text-xl font-semibold">Multiple</h3>
+    <div class="space-y-3" id="multiple">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Multiple</h3>
         <p class="text-muted-foreground">
             Set the <code>type</code> prop to <code>multiple</code> to allow multiple items to be open at once.
         </p>
-        <div class="w-full md:w-1/4">
-            <tolle-segment [items]="viewOptions" [(ngModel)]="multiTab" />
-        </div>
-
-        <div *ngIf="multiTab === 'preview'"
-            class="p-10 rounded-xl bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800">
+        <app-preview [code]="multiCode" language="html">
             <app-multiple-accordion />
-        </div>
-
-        <div *ngIf="multiTab === 'code'" class="rounded-xl bg-neutral-900 border border-neutral-800 overflow-hidden">
-            <app-base-editor [code]="multiCode" language="html" />
-        </div>
+        </app-preview>
     </div>
 </section>

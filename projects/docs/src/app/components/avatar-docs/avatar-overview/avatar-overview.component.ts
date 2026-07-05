@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-avatar-overview',
     standalone: true,
-    imports: [BaseEditorComponent],
+    imports: [BaseEditorComponent, DocHeroComponent],
     templateUrl: './avatar-overview.component.html'
 })
 export class AvatarOverviewComponent {

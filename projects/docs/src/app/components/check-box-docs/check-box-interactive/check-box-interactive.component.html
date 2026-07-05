@@ -2,7 +2,7 @@
     <h2 class="text-2xl font-bold mb-6 text-foreground/90">Interactive Playground</h2>
     <app-playground [code]="playgroundCode">
         <div preview
-            class="w-full h-full flex items-center justify-center p-8 bg-neutral-50 border border-neutral-200 dark:bg-neutral-900/50 dark:border-neutral-800 rounded-lg">
+            class="w-full h-full flex items-center justify-center p-8 bg-muted border border-border rounded-lg">
             <div class="flex items-start space-x-2">
                 <tolle-checkbox [(ngModel)]="playgroundChecked" [size]="playgroundSize"
                     [disabled]="playgroundDisabled" />

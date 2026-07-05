@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
-import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BasicBreadcrumbComponent } from '../../../docs-examples/breadcrumb/basic-breadcrumb.component';
 import { CustomSeparatorBreadcrumbComponent } from '../../../docs-examples/breadcrumb/custom-separator-breadcrumb.component';
@@ -12,9 +10,7 @@ import { CustomSeparatorBreadcrumbComponent } from '../../../docs-examples/bread
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
-    SegmentedComponent,
-    BaseEditorComponent,
+    ComponentPreviewComponent,
     BasicBreadcrumbComponent,
     CustomSeparatorBreadcrumbComponent
   ],
@@ -22,14 +18,6 @@ import { CustomSeparatorBreadcrumbComponent } from '../../../docs-examples/bread
 })
 export class BreadcrumbExamplesComponent {
   sourceService = inject(SourceCodeService);
-
-  viewOptions = [
-    { label: 'Preview', value: 'preview' },
-    { label: 'Code', value: 'code' }
-  ];
-
-  basicTab = 'preview';
-  separatorTab = 'preview';
 
   basicCode = '';
   separatorCode = '';

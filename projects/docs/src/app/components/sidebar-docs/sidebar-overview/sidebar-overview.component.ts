@@ -2,12 +2,14 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.component';
+import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
+import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicSidebarExampleComponent } from '../../../docs-examples/sidebar/basic-sidebar-example/basic-sidebar-example.component';
 
 @Component({
     selector: 'app-sidebar-overview',
     standalone: true,
-    imports: [AsyncPipe, BaseEditorComponent, BasicSidebarExampleComponent],
+    imports: [AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicSidebarExampleComponent],
     templateUrl: './sidebar-overview.component.html'
 })
 export class SidebarOverviewComponent {
