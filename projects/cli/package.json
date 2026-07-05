@@ -1,6 +1,6 @@
 {
   "name": "@tolle_/cli",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Add Tolle UI components to your Angular app — copy the source you own.",
   "bin": {
     "tolle": "./dist/index.js"
