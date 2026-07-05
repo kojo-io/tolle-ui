@@ -12,20 +12,20 @@
         </div>
     </div>
 
-    <div controls class="grid gap-6">
-        <div class="space-y-2">
-            <label class="text-sm font-medium">Label</label>
+    <div controls class="space-y-5">
+        <div class="space-y-1.5">
+            <tolle-label>Label</tolle-label>
             <tolle-input [(ngModel)]="label" size="sm"></tolle-input>
         </div>
 
-        <div class="space-y-2">
-            <label class="text-sm font-medium">Hint</label>
+        <div class="space-y-1.5">
+            <tolle-label>Hint</tolle-label>
             <tolle-input [(ngModel)]="hint" size="sm"></tolle-input>
         </div>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Size</h3>
-            <tolle-select [(ngModel)]="size">
+        <div class="space-y-1.5">
+            <tolle-label>Size</tolle-label>
+            <tolle-select [(ngModel)]="size" size="sm">
                 <tolle-select-item value="xs">Extra Small (xs)</tolle-select-item>
                 <tolle-select-item value="sm">Small (sm)</tolle-select-item>
                 <tolle-select-item value="default">Default</tolle-select-item>
@@ -33,37 +33,37 @@
             </tolle-select>
         </div>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Data Type</h3>
-            <tolle-select [(ngModel)]="dataType">
+        <div class="space-y-1.5">
+            <tolle-label>Data Type</tolle-label>
+            <tolle-select [(ngModel)]="dataType" size="sm">
                 <tolle-select-item value="FullObject">Full Object</tolle-select-item>
                 <tolle-select-item value="NumberOnly">Number Only</tolle-select-item>
             </tolle-select>
         </div>
 
-        <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Error State</label>
-            <tolle-switch [(ngModel)]="error"></tolle-switch>
-        </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Error State</span>
+            <tolle-switch [(ngModel)]="error" size="sm" />
+        </label>
 
-        <div class="space-y-2" *ngIf="error">
-            <label class="text-sm font-medium">Error Message</label>
+        <div class="space-y-1.5" *ngIf="error">
+            <tolle-label>Error Message</tolle-label>
             <tolle-input [(ngModel)]="errorMessage" size="sm"></tolle-input>
         </div>
 
-        <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Enable Country Selector</label>
-            <tolle-switch [(ngModel)]="enableCountrySelector"></tolle-switch>
-        </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Enable Country Selector</span>
+            <tolle-switch [(ngModel)]="enableCountrySelector" size="sm" />
+        </label>
 
-        <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Disabled</label>
-            <tolle-switch [(ngModel)]="disabled"></tolle-switch>
-        </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disabled</span>
+            <tolle-switch [(ngModel)]="disabled" size="sm" />
+        </label>
 
-        <div class="flex items-center justify-between">
-            <label class="text-sm font-medium">Readonly</label>
-            <tolle-switch [(ngModel)]="readonly"></tolle-switch>
-        </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Readonly</span>
+            <tolle-switch [(ngModel)]="readonly" size="sm" />
+        </label>
     </div>
 </app-playground>

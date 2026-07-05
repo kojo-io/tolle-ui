@@ -19,27 +19,24 @@
         </tolle-otp>
     </div>
 
-    <div controls class="grid gap-4">
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Length</h3>
-            <tolle-input type="number" [(ngModel)]="length"></tolle-input>
+    <div controls class="space-y-5">
+        <div class="space-y-1.5">
+            <tolle-label>Length</tolle-label>
+            <tolle-input type="number" [(ngModel)]="length" size="sm"></tolle-input>
         </div>
 
-        <div class="space-y-4">
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="auto" [(ngModel)]="auto"></tolle-checkbox>
-                <label for="auto" class="text-sm font-medium leading-none cursor-pointer select-none">
-                    Auto Mode
-                    <span class="text-muted-foreground ml-1 font-normal">(Generates slots automatically)</span>
-                </label>
-            </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>
+                Auto Mode
+                <span class="text-muted-foreground ml-1 font-normal">(Generates slots automatically)</span>
+            </span>
+            <tolle-switch [(ngModel)]="auto" size="sm" />
+        </label>
 
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="disabled" [(ngModel)]="disabled"></tolle-checkbox>
-                <label for="disabled"
-                    class="text-sm font-medium leading-none cursor-pointer select-none">Disabled</label>
-            </div>
-        </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disabled</span>
+            <tolle-switch [(ngModel)]="disabled" size="sm" />
+        </label>
 
         <div class="pt-4 border-t">
             <p class="text-sm text-muted-foreground">

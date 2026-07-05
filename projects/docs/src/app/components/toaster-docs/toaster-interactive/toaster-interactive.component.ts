@@ -5,6 +5,9 @@ import { ToastService, ToastPosition } from '../../../../../../tolle/src/lib/toa
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { TextareaComponent } from '../../../../../../tolle/src/lib/textarea.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { ToastContainerComponent } from '../../../../../../tolle/src/lib/toaster.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
@@ -18,6 +21,9 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
     ButtonComponent,
     SelectComponent,
     SelectItemComponent,
+    InputComponent,
+    TextareaComponent,
+    LabelComponent,
     ToastContainerComponent
   ],
   templateUrl: './toaster-interactive.component.html'

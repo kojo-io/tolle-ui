@@ -5,6 +5,7 @@ import { ResizablePanelComponent } from '../../../../../../tolle/src/lib/resizab
 import { ResizablePanelItemComponent } from '../../../../../../tolle/src/lib/resizable-panel-item.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
@@ -17,6 +18,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         ResizablePanelItemComponent,
         SelectComponent,
         SelectItemComponent,
+        LabelComponent,
         PlaygroundComponent
     ],
     templateUrl: './resizable-interactive.component.html'

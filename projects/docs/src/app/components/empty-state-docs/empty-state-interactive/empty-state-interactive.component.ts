@@ -6,6 +6,9 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { TextareaComponent } from '../../../../../../tolle/src/lib/textarea.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
   selector: 'app-empty-state-interactive',
@@ -17,7 +20,10 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
     ButtonComponent,
     PlaygroundComponent,
     SelectComponent,
-    SelectItemComponent
+    SelectItemComponent,
+    InputComponent,
+    TextareaComponent,
+    LabelComponent
   ],
   template: `
     <section class="space-y-6">
@@ -38,35 +44,27 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
           </tolle-empty-state>
         </div>
 
-        <div controls class="grid gap-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium leading-none text-foreground">Title</label>
-            <input 
-              type="text" 
-              [(ngModel)]="title" 
-              class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            />
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Title</tolle-label>
+            <tolle-input [(ngModel)]="title" size="sm" placeholder="No results found" />
           </div>
 
-          <div class="space-y-2">
-            <label class="text-sm font-medium leading-none text-foreground">Description</label>
-            <textarea 
-              [(ngModel)]="description" 
-              rows="3"
-              class="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            ></textarea>
+          <div class="space-y-1.5">
+            <tolle-label>Description</tolle-label>
+            <tolle-textarea [(ngModel)]="description" [rows]="3" placeholder="Description text" />
           </div>
 
-          <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none text-foreground">Variant</h3>
+          <div class="space-y-1.5">
+            <tolle-label>Variant</tolle-label>
             <tolle-select [(ngModel)]="variant" size="sm">
               <tolle-select-item value="default">Default (Bordered)</tolle-select-item>
               <tolle-select-item value="minimal">Minimal</tolle-select-item>
             </tolle-select>
           </div>
 
-          <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none text-foreground">Icon Context</h3>
+          <div class="space-y-1.5">
+            <tolle-label>Icon Context</tolle-label>
             <tolle-select [(ngModel)]="iconType" size="sm">
               <tolle-select-item value="inbox">Inbox</tolle-select-item>
               <tolle-select-item value="search">Search</tolle-select-item>

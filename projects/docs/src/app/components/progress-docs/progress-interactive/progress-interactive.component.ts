@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProgressComponent } from '../../../../../../tolle/src/lib/progress.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-progress-interactive',
@@ -11,7 +12,8 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         CommonModule,
         FormsModule,
         ProgressComponent,
-        PlaygroundComponent
+        PlaygroundComponent,
+        LabelComponent
     ],
     template: `
     <section class="mb-16" id="playground">
@@ -23,11 +25,11 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
           </div>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Value ({{ value }}%)</label>
-            <input 
-              type="range" 
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Value ({{ value }}%)</tolle-label>
+            <input
+              type="range"
               [(ngModel)]="value" 
               min="0" 
               max="100"

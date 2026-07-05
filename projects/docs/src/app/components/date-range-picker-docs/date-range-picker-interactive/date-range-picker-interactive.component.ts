@@ -6,6 +6,8 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
 
 @Component({
@@ -18,7 +20,9 @@ import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
         PlaygroundComponent,
         SelectComponent,
         SelectItemComponent,
-        SwitchComponent
+        SwitchComponent,
+        InputComponent,
+        LabelComponent
     ],
     template: `
     <section class="space-y-6">
@@ -37,28 +41,24 @@ import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
           </div>
         </div>
 
-        <div controls class="grid gap-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium leading-none text-foreground">Placeholder</label>
-            <input 
-              type="text" 
-              [(ngModel)]="placeholder" 
-              class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            />
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Placeholder</tolle-label>
+            <tolle-input [(ngModel)]="placeholder" size="sm" placeholder="Select a range" />
           </div>
 
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium leading-none text-foreground">Disabled</span>
-            <tolle-switch [(ngModel)]="disabled"></tolle-switch>
-          </div>
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disabled</span>
+            <tolle-switch [(ngModel)]="disabled" size="sm" />
+          </label>
 
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium leading-none text-foreground">Disable Past Dates</span>
-            <tolle-switch [(ngModel)]="disablePastDates"></tolle-switch>
-          </div>
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disable Past Dates</span>
+            <tolle-switch [(ngModel)]="disablePastDates" size="sm" />
+          </label>
 
-          <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none text-foreground">Size</h3>
+          <div class="space-y-1.5">
+            <tolle-label>Size</tolle-label>
             <tolle-select [(ngModel)]="size" size="sm">
               <tolle-select-item value="xs">Extra Small</tolle-select-item>
               <tolle-select-item value="sm">Small</tolle-select-item>

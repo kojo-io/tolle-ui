@@ -7,16 +7,15 @@
         </tolle-button>
     </div>
 
-    <div controls class="space-y-6">
-        <div class="space-y-2">
-            <label class="text-sm font-medium text-foreground">Tooltip Content</label>
-            <input type="text" [(ngModel)]="content"
-                class="w-full h-10 px-3 rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
+    <div controls class="space-y-5">
+        <div class="space-y-1.5">
+            <tolle-label>Tooltip Content</tolle-label>
+            <tolle-input [(ngModel)]="content" size="sm" placeholder="Hover over me!" />
         </div>
 
-        <div class="space-y-2">
-            <label class="text-sm font-medium text-foreground">Placement</label>
-            <tolle-select [(ngModel)]="placement">
+        <div class="space-y-1.5">
+            <tolle-label>Placement</tolle-label>
+            <tolle-select [(ngModel)]="placement" size="sm">
                 <tolle-select-item value="top">Top</tolle-select-item>
                 <tolle-select-item value="bottom">Bottom</tolle-select-item>
                 <tolle-select-item value="left">Left</tolle-select-item>

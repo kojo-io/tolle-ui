@@ -6,7 +6,8 @@ import { CalendarComponent, CalendarMode } from '../../../../../../tolle/src/lib
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
   selector: 'app-calendar-interactive',
@@ -18,7 +19,8 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
     PlaygroundComponent,
     SelectComponent,
     SelectItemComponent,
-    CheckboxComponent
+    SwitchComponent,
+    LabelComponent
   ],
   template: `
     <section class="mb-16" id="playground">
@@ -36,25 +38,25 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
           </div>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Mode</label>
-            <tolle-select [(ngModel)]="mode">
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Mode</tolle-label>
+            <tolle-select [(ngModel)]="mode" size="sm">
               <tolle-select-item value="date">Date</tolle-select-item>
               <tolle-select-item value="month">Month</tolle-select-item>
               <tolle-select-item value="year">Year</tolle-select-item>
             </tolle-select>
           </div>
 
-          <div class="flex items-center gap-2 py-2">
-            <tolle-checkbox [(ngModel)]="disablePastDates" size="sm"></tolle-checkbox>
-            <label class="text-sm font-medium cursor-pointer" (click)="disablePastDates = !disablePastDates">Disable Past Dates</label>
-          </div>
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disable Past Dates</span>
+            <tolle-switch [(ngModel)]="disablePastDates" size="sm" />
+          </label>
 
-          <div class="flex items-center gap-2 py-2">
-            <tolle-checkbox [(ngModel)]="showQuickActions" size="sm"></tolle-checkbox>
-            <label class="text-sm font-medium cursor-pointer" (click)="showQuickActions = !showQuickActions">Show Quick Actions</label>
-          </div>
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Show Quick Actions</span>
+            <tolle-switch [(ngModel)]="showQuickActions" size="sm" />
+          </label>
         </div>
       </app-playground>
     </section>

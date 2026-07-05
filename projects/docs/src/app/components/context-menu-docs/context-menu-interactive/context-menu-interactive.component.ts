@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { ContextMenuItem } from '../../../../../../tolle/src/lib/context-menu.service';
 import { ContextMenuTriggerDirective } from '../../../../../../tolle/src/lib/context-menu-trigger.directive';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-context-menu-interactive',
     standalone: true,
-    imports: [CommonModule, FormsModule, ContextMenuTriggerDirective, PlaygroundComponent, CheckboxComponent],
+    imports: [CommonModule, FormsModule, ContextMenuTriggerDirective, PlaygroundComponent, SwitchComponent, LabelComponent],
     templateUrl: './context-menu-interactive.component.html'
 })
 export class ContextMenuInteractiveComponent {

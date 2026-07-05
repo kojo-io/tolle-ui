@@ -6,6 +6,7 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
@@ -19,6 +20,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         SelectComponent,
         SelectItemComponent,
         SwitchComponent,
+        LabelComponent,
         PlaygroundComponent
     ],
     templateUrl: './phone-number-input-interactive.component.html'

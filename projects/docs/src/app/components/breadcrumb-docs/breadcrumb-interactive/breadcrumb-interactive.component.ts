@@ -7,7 +7,8 @@ import { BreadcrumbLinkComponent } from '../../../../../../tolle/src/lib/breadcr
 import { BreadcrumbSeparatorComponent } from '../../../../../../tolle/src/lib/breadcrumb-separator.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
   selector: 'app-breadcrumb-interactive',
@@ -21,7 +22,8 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
     BreadcrumbSeparatorComponent,
     PlaygroundComponent,
     InputComponent,
-    CheckboxComponent
+    SwitchComponent,
+    LabelComponent
   ],
   templateUrl: './breadcrumb-interactive.component.html'
 })

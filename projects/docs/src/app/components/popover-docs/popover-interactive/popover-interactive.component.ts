@@ -6,6 +6,7 @@ import { PopoverContentComponent } from '../../../../../../tolle/src/lib/popover
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
@@ -19,6 +20,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         ButtonComponent,
         SelectComponent,
         SelectItemComponent,
+        LabelComponent,
         PlaygroundComponent
     ],
     templateUrl: './popover-interactive.component.html'

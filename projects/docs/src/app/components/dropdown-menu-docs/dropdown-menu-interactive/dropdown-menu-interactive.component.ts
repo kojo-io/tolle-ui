@@ -8,6 +8,8 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
   selector: 'app-dropdown-menu-interactive',
@@ -21,7 +23,9 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
     PlaygroundComponent,
     SwitchComponent,
     SelectComponent,
-    SelectItemComponent
+    SelectItemComponent,
+    InputComponent,
+    LabelComponent
   ],
   template: `
     <section class="space-y-6">
@@ -53,23 +57,19 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
           </tolle-dropdown-menu>
         </div>
 
-        <div controls class="grid gap-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium leading-none">Button Label</label>
-            <input 
-              type="text" 
-              [(ngModel)]="label" 
-              class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-            />
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Button Label</tolle-label>
+            <tolle-input [(ngModel)]="label" size="sm" placeholder="Menu" />
           </div>
 
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium leading-none text-foreground">Disabled</span>
-            <tolle-switch [(ngModel)]="disabled"></tolle-switch>
-          </div>
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disabled</span>
+            <tolle-switch [(ngModel)]="disabled" size="sm" />
+          </label>
 
-          <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none text-foreground">Variant</h3>
+          <div class="space-y-1.5">
+            <tolle-label>Variant</tolle-label>
             <tolle-select [(ngModel)]="variant" size="sm">
               <tolle-select-item value="default">Default</tolle-select-item>
               <tolle-select-item value="secondary">Secondary</tolle-select-item>
@@ -80,8 +80,8 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
             </tolle-select>
           </div>
 
-          <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none text-foreground">Size</h3>
+          <div class="space-y-1.5">
+            <tolle-label>Size</tolle-label>
             <tolle-select [(ngModel)]="size" size="sm">
               <tolle-select-item value="xs">Extra Small</tolle-select-item>
               <tolle-select-item value="sm">Small</tolle-select-item>

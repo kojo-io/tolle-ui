@@ -9,15 +9,15 @@
         </p>
     </div>
 
-    <div controls class="grid gap-4">
-        <div class="flex items-center justify-between">
-            <span class="text-sm font-medium">Disabled</span>
-            <tolle-switch [(ngModel)]="disabled"></tolle-switch>
-        </div>
+    <div controls class="space-y-5">
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disabled</span>
+            <tolle-switch [(ngModel)]="disabled" size="sm" />
+        </label>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Content Type</h3>
-            <tolle-select [(ngModel)]="dataSet" (ngModelChange)="currentValue = items[0].value">
+        <div class="space-y-1.5">
+            <tolle-label>Content Type</tolle-label>
+            <tolle-select [(ngModel)]="dataSet" (ngModelChange)="currentValue = items[0].value" size="sm">
                 <tolle-select-item value="text">Text Only</tolle-select-item>
                 <tolle-select-item value="icons">With Icons</tolle-select-item>
             </tolle-select>

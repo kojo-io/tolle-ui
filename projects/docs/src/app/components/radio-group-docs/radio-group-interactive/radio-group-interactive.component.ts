@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { RadioGroupComponent } from '../../../../../../tolle/src/lib/radio-group.component';
 import { RadioItemComponent } from '../../../../../../tolle/src/lib/radio-item.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
@@ -16,7 +17,8 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         RadioGroupComponent,
         RadioItemComponent,
         InputComponent,
-        CheckboxComponent,
+        SwitchComponent,
+        LabelComponent,
         PlaygroundComponent
     ],
     templateUrl: './radio-group-interactive.component.html'

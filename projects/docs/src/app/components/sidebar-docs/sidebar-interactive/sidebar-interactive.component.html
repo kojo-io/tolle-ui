@@ -9,15 +9,15 @@
         </div>
     </div>
 
-    <div controls class="grid gap-4">
-        <div class="flex items-center justify-between">
-            <span class="text-sm font-medium leading-none">Collapsed</span>
-            <tolle-switch [(ngModel)]="collapsed"></tolle-switch>
-        </div>
+    <div controls class="space-y-5">
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Collapsed</span>
+            <tolle-switch [(ngModel)]="collapsed" size="sm" />
+        </label>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Variant</h3>
-            <tolle-select [(ngModel)]="variant">
+        <div class="space-y-1.5">
+            <tolle-label>Variant</tolle-label>
+            <tolle-select [(ngModel)]="variant" size="sm">
                 <tolle-select-item value="default">Default (Solid)</tolle-select-item>
                 <tolle-select-item value="secondary">Secondary</tolle-select-item>
                 <tolle-select-item value="ghost">Ghost (Standard)</tolle-select-item>

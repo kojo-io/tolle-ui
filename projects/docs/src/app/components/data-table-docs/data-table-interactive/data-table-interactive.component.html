@@ -40,10 +40,10 @@
             </tolle-data-table>
         </div>
 
-        <div controls class="space-y-4">
-            <div class="space-y-2">
-                <label class="text-sm font-medium">Size</label>
-                <tolle-select [(ngModel)]="size" placeholder="Select size">
+        <div controls class="space-y-5">
+            <div class="space-y-1.5">
+                <tolle-label>Size</tolle-label>
+                <tolle-select [(ngModel)]="size" size="sm">
                     <tolle-select-item value="xs">Extra Small</tolle-select-item>
                     <tolle-select-item value="sm">Small</tolle-select-item>
                     <tolle-select-item value="default">Default</tolle-select-item>
@@ -51,28 +51,25 @@
                 </tolle-select>
             </div>
 
-            <div class="flex items-center gap-2 py-2">
-                <tolle-checkbox [(ngModel)]="searchable" size="sm"></tolle-checkbox>
-                <label class="text-sm font-medium cursor-pointer" (click)="searchable = !searchable">Searchable</label>
-            </div>
+            <label class="flex items-center justify-between text-sm font-medium">
+                <span>Searchable</span>
+                <tolle-switch [(ngModel)]="searchable" size="sm" />
+            </label>
 
-            <div class="flex items-center gap-2 py-2">
-                <tolle-checkbox [(ngModel)]="paginate" size="sm"></tolle-checkbox>
-                <label class="text-sm font-medium cursor-pointer" (click)="paginate = !paginate">Paginate</label>
-            </div>
+            <label class="flex items-center justify-between text-sm font-medium">
+                <span>Paginate</span>
+                <tolle-switch [(ngModel)]="paginate" size="sm" />
+            </label>
 
-            <div class="flex items-center gap-2 py-2">
-                <tolle-checkbox [(ngModel)]="allowColumnHiding" size="sm"></tolle-checkbox>
-                <label class="text-sm font-medium cursor-pointer" (click)="allowColumnHiding = !allowColumnHiding">
-                    Column Hiding
-                </label>
-            </div>
+            <label class="flex items-center justify-between text-sm font-medium">
+                <span>Column Hiding</span>
+                <tolle-switch [(ngModel)]="allowColumnHiding" size="sm" />
+            </label>
 
-            <div class="flex items-center gap-2 py-2">
-                <tolle-checkbox [(ngModel)]="expandable" size="sm"></tolle-checkbox>
-                <label class="text-sm font-medium cursor-pointer" (click)="expandable = !expandable">Expandable
-                    Rows</label>
-            </div>
+            <label class="flex items-center justify-between text-sm font-medium">
+                <span>Expandable Rows</span>
+                <tolle-switch [(ngModel)]="expandable" size="sm" />
+            </label>
         </div>
     </app-playground>
 </section>

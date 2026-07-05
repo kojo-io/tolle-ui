@@ -8,31 +8,31 @@
         </tolle-masked-input>
     </div>
 
-    <div controls class="grid gap-4">
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Label</h3>
-            <tolle-input [(ngModel)]="label"></tolle-input>
+    <div controls class="space-y-5">
+        <div class="space-y-1.5">
+            <tolle-label>Label</tolle-label>
+            <tolle-input [(ngModel)]="label" size="sm"></tolle-input>
         </div>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Mask</h3>
-            <tolle-input [(ngModel)]="mask"></tolle-input>
+        <div class="space-y-1.5">
+            <tolle-label>Mask</tolle-label>
+            <tolle-input [(ngModel)]="mask" size="sm"></tolle-input>
             <p class="text-[0.8rem] text-muted-foreground">0=digit, a=letter, *=alphanumeric</p>
         </div>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Placeholder</h3>
-            <tolle-input [(ngModel)]="placeholder"></tolle-input>
+        <div class="space-y-1.5">
+            <tolle-label>Placeholder</tolle-label>
+            <tolle-input [(ngModel)]="placeholder" size="sm"></tolle-input>
         </div>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Hint</h3>
-            <tolle-input [(ngModel)]="hint"></tolle-input>
+        <div class="space-y-1.5">
+            <tolle-label>Hint</tolle-label>
+            <tolle-input [(ngModel)]="hint" size="sm"></tolle-input>
         </div>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Size</h3>
-            <tolle-select [(ngModel)]="size">
+        <div class="space-y-1.5">
+            <tolle-label>Size</tolle-label>
+            <tolle-select [(ngModel)]="size" size="sm">
                 <tolle-select-item value="xs">xs</tolle-select-item>
                 <tolle-select-item value="sm">sm</tolle-select-item>
                 <tolle-select-item value="default">default</tolle-select-item>
@@ -40,39 +40,32 @@
             </tolle-select>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="prefix" [(ngModel)]="showPrefix"></tolle-checkbox>
-                <label for="prefix" class="text-sm font-medium leading-none cursor-pointer select-none">Prefix
-                    Icon</label>
-            </div>
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="suffix" [(ngModel)]="showSuffix"></tolle-checkbox>
-                <label for="suffix" class="text-sm font-medium leading-none cursor-pointer select-none">Suffix
-                    Icon</label>
-            </div>
-        </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Prefix Icon</span>
+            <tolle-switch [(ngModel)]="showPrefix" size="sm" />
+        </label>
 
-        <div class="grid grid-cols-2 gap-4">
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="disabled" [(ngModel)]="disabled"></tolle-checkbox>
-                <label for="disabled"
-                    class="text-sm font-medium leading-none cursor-pointer select-none">Disabled</label>
-            </div>
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="readonly" [(ngModel)]="readonly"></tolle-checkbox>
-                <label for="readonly"
-                    class="text-sm font-medium leading-none cursor-pointer select-none">Readonly</label>
-            </div>
-        </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Suffix Icon</span>
+            <tolle-switch [(ngModel)]="showSuffix" size="sm" />
+        </label>
+
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disabled</span>
+            <tolle-switch [(ngModel)]="disabled" size="sm" />
+        </label>
+
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Readonly</span>
+            <tolle-switch [(ngModel)]="readonly" size="sm" />
+        </label>
 
         <div class="space-y-2 pt-2 border-t">
-            <div class="flex items-center space-x-2 mb-2">
-                <tolle-checkbox id="error" [(ngModel)]="error"></tolle-checkbox>
-                <label for="error" class="text-sm font-medium leading-none cursor-pointer select-none">Error
-                    State</label>
-            </div>
-            <tolle-input *ngIf="error" [(ngModel)]="errorMessage" placeholder="Error message"></tolle-input>
+            <label class="flex items-center justify-between text-sm font-medium">
+                <span>Error State</span>
+                <tolle-switch [(ngModel)]="error" size="sm" />
+            </label>
+            <tolle-input *ngIf="error" [(ngModel)]="errorMessage" placeholder="Error message" size="sm"></tolle-input>
         </div>
 
         <div class="pt-4 border-t">

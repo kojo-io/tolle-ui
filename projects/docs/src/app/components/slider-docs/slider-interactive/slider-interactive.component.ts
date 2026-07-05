@@ -38,30 +38,27 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
           </div>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="flex items-center justify-between">
-             <tolle-label>Range Mode</tolle-label>
-             <tolle-switch 
-               [ngModel]="isRange" 
-               (ngModelChange)="toggleRangeMode($event)"
-             ></tolle-switch>
-          </div>
-          <div class="space-y-2">
+        <div controls class="space-y-5">
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Range Mode</span>
+            <tolle-switch [ngModel]="isRange" (ngModelChange)="toggleRangeMode($event)" size="sm" />
+          </label>
+          <div class="space-y-1.5">
             <tolle-label>Min</tolle-label>
-            <tolle-input type="number" [(ngModel)]="min" />
+            <tolle-input type="number" [(ngModel)]="min" size="sm" />
           </div>
-          <div class="space-y-2">
+          <div class="space-y-1.5">
             <tolle-label>Max</tolle-label>
-            <tolle-input type="number" [(ngModel)]="max" />
+            <tolle-input type="number" [(ngModel)]="max" size="sm" />
           </div>
-          <div class="space-y-2">
+          <div class="space-y-1.5">
             <tolle-label>Step</tolle-label>
-            <tolle-input type="number" [(ngModel)]="step" />
+            <tolle-input type="number" [(ngModel)]="step" size="sm" />
           </div>
-          <div class="flex items-center justify-between">
-             <tolle-label>Disabled</tolle-label>
-             <tolle-switch [(ngModel)]="isDisabled"></tolle-switch>
-          </div>
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disabled</span>
+            <tolle-switch [(ngModel)]="isDisabled" size="sm" />
+          </label>
         </div>
       </app-playground>
     </section>

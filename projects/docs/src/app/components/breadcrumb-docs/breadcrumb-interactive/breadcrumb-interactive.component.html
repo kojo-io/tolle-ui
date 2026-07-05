@@ -16,14 +16,15 @@
             </tolle-breadcrumb>
         </div>
 
-        <div controls class="space-y-6">
-            <div class="space-y-2">
-                <tolle-input label="Label" [(ngModel)]="label" size="sm"></tolle-input>
+        <div controls class="space-y-5">
+            <div class="space-y-1.5">
+                <tolle-label>Label</tolle-label>
+                <tolle-input [(ngModel)]="label" size="sm" />
             </div>
-            <div class="flex items-center gap-2 py-2">
-                <tolle-checkbox [(ngModel)]="isActive" size="sm"></tolle-checkbox>
-                <label class="text-sm font-medium text-foreground">Active (Current Page)</label>
-            </div>
+            <label class="flex items-center justify-between text-sm font-medium">
+                <span>Active (Current Page)</span>
+                <tolle-switch [(ngModel)]="isActive" size="sm" />
+            </label>
         </div>
     </app-playground>
 </section>

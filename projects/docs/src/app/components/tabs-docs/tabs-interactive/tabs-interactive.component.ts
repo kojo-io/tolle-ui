@@ -86,10 +86,10 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
           </tolle-tabs>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Variant</label>
-            <tolle-select [(ngModel)]="variant">
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Variant</tolle-label>
+            <tolle-select [(ngModel)]="variant" size="sm">
               <tolle-select-item value="default">Default</tolle-select-item>
               <tolle-select-item value="underline">Underline</tolle-select-item>
             </tolle-select>

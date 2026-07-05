@@ -3,7 +3,7 @@ import { CommonModule, JsonPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RangeCalendarComponent } from '../../../../../../tolle/src/lib/range-calendar.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 
 @Component({
     selector: 'app-calendar-range-interactive',
@@ -13,7 +13,7 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
         FormsModule,
         RangeCalendarComponent,
         PlaygroundComponent,
-        CheckboxComponent,
+        SwitchComponent,
         JsonPipe
     ],
     template: `
@@ -30,11 +30,11 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
           </div>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="flex items-center gap-2 py-2">
-            <tolle-checkbox [(ngModel)]="disablePastDates" size="sm"></tolle-checkbox>
-            <label class="text-sm font-medium cursor-pointer" (click)="disablePastDates = !disablePastDates">Disable Past Dates</label>
-          </div>
+        <div controls class="space-y-5">
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disable Past Dates</span>
+            <tolle-switch [(ngModel)]="disablePastDates" size="sm" />
+          </label>
         </div>
       </app-playground>
     </section>

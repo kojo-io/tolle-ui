@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent } from '../../../../../../tolle/src/lib/card.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
   selector: 'app-card-interactive',
@@ -19,7 +20,8 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
     CardFooterComponent,
     PlaygroundComponent,
     InputComponent,
-    CheckboxComponent
+    SwitchComponent,
+    LabelComponent
   ],
   template: `
     <section class="mb-16" id="playground">
@@ -40,28 +42,29 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
           </tolle-card>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Title</label>
-            <tolle-input [(ngModel)]="title" placeholder="Card Title" />
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Title</tolle-label>
+            <tolle-input [(ngModel)]="title" size="sm" placeholder="Card Title" />
           </div>
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Description</label>
-            <tolle-input [(ngModel)]="description" placeholder="Card Description" />
+          <div class="space-y-1.5">
+            <tolle-label>Description</tolle-label>
+            <tolle-input [(ngModel)]="description" size="sm" placeholder="Card Description" />
           </div>
-          <div class="flex items-center gap-4 py-2">
-            <div class="flex items-center gap-2">
-              <tolle-checkbox [(ngModel)]="showHeader" size="sm"></tolle-checkbox>
-              <label class="text-sm font-medium cursor-pointer" (click)="showHeader = !showHeader">Header</label>
-            </div>
-            <div class="flex items-center gap-2">
-              <tolle-checkbox [(ngModel)]="showFooter" size="sm"></tolle-checkbox>
-              <label class="text-sm font-medium cursor-pointer" (click)="showFooter = !showFooter">Footer</label>
-            </div>
-          </div>
-           <div class="space-y-2">
-            <label class="text-sm font-medium">Custom Class (width)</label>
-            <tolle-input [(ngModel)]="customClass" placeholder="e.g., max-w-sm" />
+
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Header</span>
+            <tolle-switch [(ngModel)]="showHeader" size="sm" />
+          </label>
+
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Footer</span>
+            <tolle-switch [(ngModel)]="showFooter" size="sm" />
+          </label>
+
+          <div class="space-y-1.5">
+            <tolle-label>Custom Class (width)</tolle-label>
+            <tolle-input [(ngModel)]="customClass" size="sm" placeholder="e.g., max-w-sm" />
           </div>
         </div>
       </app-playground>

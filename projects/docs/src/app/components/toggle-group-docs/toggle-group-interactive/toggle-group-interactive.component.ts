@@ -5,6 +5,7 @@ import { ToggleGroupComponent, ToggleGroupItemComponent } from '../../../../../.
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-toggle-group-interactive',
@@ -16,7 +17,8 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
         ToggleGroupItemComponent,
         PlaygroundComponent,
         SelectComponent,
-        SelectItemComponent
+        SelectItemComponent,
+        LabelComponent
     ],
     template: `
     <section class="mb-16" id="playground">
@@ -35,24 +37,24 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
           </tolle-toggle-group>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Type</label>
-            <tolle-select [(ngModel)]="type">
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Type</tolle-label>
+            <tolle-select [(ngModel)]="type" size="sm">
               <tolle-select-item value="single">Single</tolle-select-item>
               <tolle-select-item value="multiple">Multiple</tolle-select-item>
             </tolle-select>
           </div>
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Variant</label>
-            <tolle-select [(ngModel)]="variant">
+          <div class="space-y-1.5">
+            <tolle-label>Variant</tolle-label>
+            <tolle-select [(ngModel)]="variant" size="sm">
               <tolle-select-item value="default">Default</tolle-select-item>
               <tolle-select-item value="outline">Outline</tolle-select-item>
             </tolle-select>
           </div>
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Size</label>
-            <tolle-select [(ngModel)]="size">
+          <div class="space-y-1.5">
+            <tolle-label>Size</tolle-label>
+            <tolle-select [(ngModel)]="size" size="sm">
               <tolle-select-item value="sm">Small</tolle-select-item>
               <tolle-select-item value="default">Default</tolle-select-item>
               <tolle-select-item value="lg">Large</tolle-select-item>

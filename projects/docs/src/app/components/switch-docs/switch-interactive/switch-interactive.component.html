@@ -9,13 +9,13 @@
             </label>
         </div>
 
-        <div class="space-y-6" controls>
+        <div class="space-y-5" controls>
             <div class="space-y-4">
                 <h3 class="text-sm font-medium leading-none mb-4">Properties</h3>
 
-                <div class="space-y-2">
-                    <label class="text-sm font-medium">Size</label>
-                    <tolle-select [(ngModel)]="size" placeholder="Select size">
+                <div class="space-y-1.5">
+                    <tolle-label>Size</tolle-label>
+                    <tolle-select [(ngModel)]="size" size="sm" placeholder="Select size">
                         <tolle-select-item value="xs">Extra Small</tolle-select-item>
                         <tolle-select-item value="sm">Small</tolle-select-item>
                         <tolle-select-item value="default">Default</tolle-select-item>
@@ -28,11 +28,10 @@
                 <h3 class="text-sm font-medium leading-none mb-4">Options</h3>
 
                 <div class="flex flex-col space-y-2">
-                    <div class="flex items-center gap-2">
-                        <tolle-checkbox [(ngModel)]="disabled" size="sm"></tolle-checkbox>
-                        <label class="text-sm font-medium cursor-pointer"
-                            (click)="disabled = !disabled">Disabled</label>
-                    </div>
+                    <label class="flex items-center justify-between text-sm font-medium">
+                        <span>Disabled</span>
+                        <tolle-switch [(ngModel)]="disabled" size="sm" />
+                    </label>
                 </div>
             </div>
         </div>

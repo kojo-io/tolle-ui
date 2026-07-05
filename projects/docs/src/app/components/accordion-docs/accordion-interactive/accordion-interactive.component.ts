@@ -5,6 +5,7 @@ import { AccordionItemComponent } from '../../../../../../tolle/src/lib/accordio
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-accordion-interactive',
@@ -15,7 +16,8 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
         AccordionItemComponent,
         PlaygroundComponent,
         SelectComponent,
-        SelectItemComponent
+        SelectItemComponent,
+        LabelComponent
     ],
     templateUrl: './accordion-interactive.component.html'
 })

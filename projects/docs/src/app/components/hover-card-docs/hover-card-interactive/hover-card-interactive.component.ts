@@ -5,6 +5,8 @@ import { HoverCardComponent, HoverCardTriggerComponent, HoverCardContentComponen
 import { AvatarComponent } from '../../../../../../tolle/src/lib/avatar.component';
 import { AvatarFallbackComponent } from '../../../../../../tolle/src/lib/avatar-fallback.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
+import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-hover-card-interactive',
@@ -17,7 +19,9 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         HoverCardContentComponent,
         AvatarComponent,
         AvatarFallbackComponent,
-        PlaygroundComponent
+        PlaygroundComponent,
+        InputComponent,
+        LabelComponent
     ],
     template: `
     <section class="mb-16" id="playground">
@@ -47,14 +51,14 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
           </tolle-hover-card>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Open Delay (ms)</label>
-            <input type="number" [(ngModel)]="openDelay" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Open Delay (ms)</tolle-label>
+            <tolle-input type="number" [(ngModel)]="openDelay" size="sm" />
           </div>
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Close Delay (ms)</label>
-            <input type="number" [(ngModel)]="closeDelay" class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50" />
+          <div class="space-y-1.5">
+            <tolle-label>Close Delay (ms)</tolle-label>
+            <tolle-input type="number" [(ngModel)]="closeDelay" size="sm" />
           </div>
         </div>
       </app-playground>

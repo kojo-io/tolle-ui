@@ -5,7 +5,8 @@ import { DatePickerComponent } from '../../../../../../tolle/src/lib/date-picker
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { CalendarMode } from '../../../../../../tolle/src/lib/calendar.component';
 
 @Component({
@@ -18,7 +19,8 @@ import { CalendarMode } from '../../../../../../tolle/src/lib/calendar.component
         PlaygroundComponent,
         SelectComponent,
         SelectItemComponent,
-        CheckboxComponent
+        SwitchComponent,
+        LabelComponent
     ],
     templateUrl: './date-picker-interactive.component.html'
 })

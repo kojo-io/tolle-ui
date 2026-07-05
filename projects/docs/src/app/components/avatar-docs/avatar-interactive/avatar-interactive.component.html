@@ -7,9 +7,9 @@
             </tolle-avatar>
         </div>
 
-        <div controls class="space-y-4">
-            <div class="space-y-2">
-                <label class="text-sm font-medium">Size</label>
+        <div controls class="space-y-5">
+            <div class="space-y-1.5">
+                <tolle-label>Size</tolle-label>
                 <tolle-select [(ngModel)]="size" size="sm">
                     <tolle-select-item value="sm">Small</tolle-select-item>
                     <tolle-select-item value="default">Default</tolle-select-item>
@@ -18,22 +18,23 @@
                 </tolle-select>
             </div>
 
-            <div class="space-y-2">
-                <label class="text-sm font-medium">Shape</label>
+            <div class="space-y-1.5">
+                <tolle-label>Shape</tolle-label>
                 <tolle-select [(ngModel)]="shape" size="sm">
                     <tolle-select-item value="circle">Circle</tolle-select-item>
                     <tolle-select-item value="square">Square</tolle-select-item>
                 </tolle-select>
             </div>
 
-            <div class="space-y-2">
-                <tolle-input label="Source URL" [(ngModel)]="src" size="sm" placeholder="Image URL"
-                    hint="Clear the URL to see the fallback state."></tolle-input>
+            <div class="space-y-1.5">
+                <tolle-label>Source URL</tolle-label>
+                <tolle-input [(ngModel)]="src" size="sm" placeholder="Image URL" />
+                <p class="text-xs text-muted-foreground">Clear the URL to see the fallback state.</p>
             </div>
 
-            <div class="space-y-2">
-                <tolle-input label="Fallback Initials" [(ngModel)]="fallbackText" size="sm"
-                    placeholder="Initials"></tolle-input>
+            <div class="space-y-1.5">
+                <tolle-label>Fallback Initials</tolle-label>
+                <tolle-input [(ngModel)]="fallbackText" size="sm" placeholder="Initials" />
             </div>
         </div>
     </app-playground>

@@ -7,6 +7,8 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-modal-interactive',
@@ -18,7 +20,9 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
         PlaygroundComponent,
         SelectComponent,
         SelectItemComponent,
-        SwitchComponent
+        SwitchComponent,
+        InputComponent,
+        LabelComponent
     ],
     template: `
     <section class="space-y-6">
@@ -34,18 +38,14 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
           </div>
         </div>
 
-        <div controls class="grid gap-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium leading-none text-foreground">Title</label>
-            <input 
-              type="text" 
-              [(ngModel)]="title" 
-              class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
-            />
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Title</tolle-label>
+            <tolle-input [(ngModel)]="title" size="sm" placeholder="Modal title" />
           </div>
 
-          <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none text-foreground">Size</h3>
+          <div class="space-y-1.5">
+            <tolle-label>Size</tolle-label>
             <tolle-select [(ngModel)]="size" size="sm">
               <tolle-select-item value="xs">XS (320px)</tolle-select-item>
               <tolle-select-item value="sm">SM (425px)</tolle-select-item>
@@ -55,15 +55,15 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
             </tolle-select>
           </div>
 
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium leading-none text-foreground">Close Button</span>
-            <tolle-switch [(ngModel)]="showCloseButton"></tolle-switch>
-          </div>
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Close Button</span>
+            <tolle-switch [(ngModel)]="showCloseButton" size="sm" />
+          </label>
 
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium leading-none text-foreground">Backdrop Close</span>
-            <tolle-switch [(ngModel)]="backdropClose"></tolle-switch>
-          </div>
+          <label class="flex items-center justify-between text-sm font-medium">
+            <span>Backdrop Close</span>
+            <tolle-switch [(ngModel)]="backdropClose" size="sm" />
+          </label>
         </div>
       </app-playground>
     </section>

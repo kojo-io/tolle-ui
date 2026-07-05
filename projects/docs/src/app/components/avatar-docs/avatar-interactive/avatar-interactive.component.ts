@@ -6,6 +6,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-avatar-interactive',
@@ -17,7 +18,8 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
         PlaygroundComponent,
         SelectComponent,
         SelectItemComponent,
-        InputComponent
+        InputComponent,
+        LabelComponent
     ],
     templateUrl: './avatar-interactive.component.html'
 })

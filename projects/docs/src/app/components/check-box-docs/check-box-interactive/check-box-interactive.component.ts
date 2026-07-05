@@ -6,6 +6,8 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-check-box-interactive',
@@ -17,7 +19,9 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
         PlaygroundComponent,
         SelectComponent,
         SelectItemComponent,
-        InputComponent
+        InputComponent,
+        SwitchComponent,
+        LabelComponent
     ],
     templateUrl: './check-box-interactive.component.html'
 })

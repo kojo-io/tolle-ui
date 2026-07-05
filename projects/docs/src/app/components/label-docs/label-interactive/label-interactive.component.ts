@@ -26,13 +26,10 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
           </div>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="space-y-2">
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
             <tolle-label>Label Text</tolle-label>
-            <tolle-input 
-              type="text" 
-              [(ngModel)]="label" 
-            />
+            <tolle-input [(ngModel)]="label" size="sm" placeholder="Label text" />
           </div>
         </div>
       </app-playground>

@@ -11,24 +11,24 @@
             </div>
         </div>
 
-        <div controls class="space-y-6">
+        <div controls class="space-y-5">
             <div class="space-y-3">
-                <label class="text-sm font-medium text-foreground">Configuration</label>
+                <tolle-label>Configuration</tolle-label>
 
-                <div class="flex items-center gap-2">
-                    <tolle-checkbox [(ngModel)]="showIcons" size="sm"></tolle-checkbox>
-                    <label class="text-sm text-foreground">Show Icons</label>
-                </div>
+                <label class="flex items-center justify-between text-sm font-medium">
+                    <span>Show Icons</span>
+                    <tolle-switch [(ngModel)]="showIcons" size="sm" />
+                </label>
 
-                <div class="flex items-center gap-2">
-                    <tolle-checkbox [(ngModel)]="includeSubmenu" size="sm"></tolle-checkbox>
-                    <label class="text-sm text-foreground">Include Submenu</label>
-                </div>
+                <label class="flex items-center justify-between text-sm font-medium">
+                    <span>Include Submenu</span>
+                    <tolle-switch [(ngModel)]="includeSubmenu" size="sm" />
+                </label>
 
-                <div class="flex items-center gap-2">
-                    <tolle-checkbox [(ngModel)]="disableDelete" size="sm"></tolle-checkbox>
-                    <label class="text-sm text-foreground">Disable "Delete"</label>
-                </div>
+                <label class="flex items-center justify-between text-sm font-medium">
+                    <span>Disable "Delete"</span>
+                    <tolle-switch [(ngModel)]="disableDelete" size="sm" />
+                </label>
             </div>
         </div>
     </app-playground>

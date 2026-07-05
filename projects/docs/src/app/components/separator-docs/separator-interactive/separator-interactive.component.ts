@@ -5,6 +5,7 @@ import { SeparatorComponent } from '../../../../../../tolle/src/lib/separator.co
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-separator-interactive',
@@ -15,7 +16,8 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
         SeparatorComponent,
         PlaygroundComponent,
         SelectComponent,
-        SelectItemComponent
+        SelectItemComponent,
+        LabelComponent
     ],
     template: `
     <section class="mb-16" id="playground">
@@ -42,10 +44,10 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
           </div>
         </div>
 
-        <div controls class="space-y-4">
-          <div class="space-y-2">
-            <label class="text-sm font-medium">Orientation</label>
-            <tolle-select [(ngModel)]="orientation">
+        <div controls class="space-y-5">
+          <div class="space-y-1.5">
+            <tolle-label>Orientation</tolle-label>
+            <tolle-select [(ngModel)]="orientation" size="sm">
               <tolle-select-item value="horizontal">Horizontal</tolle-select-item>
               <tolle-select-item value="vertical">Vertical</tolle-select-item>
             </tolle-select>

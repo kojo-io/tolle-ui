@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SkeletonComponent } from '../../../../../../tolle/src/lib/skeleton.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
@@ -15,6 +16,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         SkeletonComponent,
         SelectComponent,
         SelectItemComponent,
+        LabelComponent,
         PlaygroundComponent
     ],
     templateUrl: './skeleton-interactive.component.html'

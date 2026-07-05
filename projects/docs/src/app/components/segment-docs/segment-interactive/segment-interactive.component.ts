@@ -5,6 +5,7 @@ import { SegmentedComponent, SegmentItem } from '../../../../../../tolle/src/lib
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
@@ -17,6 +18,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         SwitchComponent,
         SelectComponent,
         SelectItemComponent,
+        LabelComponent,
         PlaygroundComponent
     ],
     templateUrl: './segment-interactive.component.html'

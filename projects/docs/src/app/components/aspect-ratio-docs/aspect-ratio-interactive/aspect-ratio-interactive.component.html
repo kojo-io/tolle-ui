@@ -12,11 +12,10 @@
             </div>
         </div>
 
-        <div controls class="space-y-6">
-            <div class="space-y-2">
-                <label class="text-sm font-medium text-foreground">Aspect Ratio</label>
-                <input type="text" [(ngModel)]="ratio" placeholder="e.g. 16 / 9, 1, 4 / 3"
-                    class="w-full h-10 px-3 rounded-md border border-input bg-background text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
+        <div controls class="space-y-5">
+            <div class="space-y-1.5">
+                <tolle-label>Aspect Ratio</tolle-label>
+                <tolle-input [(ngModel)]="ratio" size="sm" placeholder="e.g. 16 / 9, 1, 4 / 3" />
                 <p class="text-[11px] text-muted-foreground">Accepts string (e.g. "16 / 9") or number (e.g. 1.7777).</p>
             </div>
 
@@ -35,8 +34,8 @@
                     9</button>
             </div>
 
-            <div class="space-y-2 pt-4 border-t border-border">
-                <label class="text-sm font-medium text-foreground">Image Source</label>
+            <div class="space-y-1.5 pt-4 border-t border-border">
+                <tolle-label>Image Source</tolle-label>
                 <div class="flex gap-2">
                     <button (click)="refreshImage()"
                         class="w-full h-9 text-xs rounded-md bg-secondary text-secondary-foreground hover:bg-secondary/80 flex items-center justify-center gap-2 transition-colors">

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         SwitchComponent,
         SelectComponent,
         SelectItemComponent,
-        CheckboxComponent,
+        LabelComponent,
         PlaygroundComponent
     ],
     templateUrl: './switch-interactive.component.html'

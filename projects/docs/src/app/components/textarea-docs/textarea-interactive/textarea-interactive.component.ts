@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TextareaComponent } from '../../../../../../tolle/src/lib/textarea.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
@@ -13,8 +14,9 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
         CommonModule,
         FormsModule,
         TextareaComponent,
-        CheckboxComponent,
+        SwitchComponent,
         InputComponent,
+        LabelComponent,
         PlaygroundComponent
     ],
     templateUrl: './textarea-interactive.component.html'

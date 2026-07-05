@@ -10,15 +10,15 @@
         </tolle-select>
     </div>
 
-    <div controls class="grid gap-4">
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Placeholder</h3>
-            <tolle-input [(ngModel)]="placeholder"></tolle-input>
+    <div controls class="space-y-5">
+        <div class="space-y-1.5">
+            <tolle-label>Placeholder</tolle-label>
+            <tolle-input [(ngModel)]="placeholder" size="sm" placeholder="Select an option" />
         </div>
 
-        <div class="space-y-2">
-            <h3 class="text-sm font-medium leading-none">Size</h3>
-            <tolle-select [(ngModel)]="size">
+        <div class="space-y-1.5">
+            <tolle-label>Size</tolle-label>
+            <tolle-select [(ngModel)]="size" size="sm">
                 <tolle-select-item value="xs">xs</tolle-select-item>
                 <tolle-select-item value="sm">sm</tolle-select-item>
                 <tolle-select-item value="default">default</tolle-select-item>
@@ -26,25 +26,20 @@
             </tolle-select>
         </div>
 
-        <div class="space-y-4 pt-2">
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="searchable" [(ngModel)]="searchable"></tolle-checkbox>
-                <label for="searchable"
-                    class="text-sm font-medium leading-none cursor-pointer select-none">Searchable</label>
-            </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Searchable</span>
+            <tolle-switch [(ngModel)]="searchable" size="sm" />
+        </label>
 
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="disabled" [(ngModel)]="disabled"></tolle-checkbox>
-                <label for="disabled"
-                    class="text-sm font-medium leading-none cursor-pointer select-none">Disabled</label>
-            </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Disabled</span>
+            <tolle-switch [(ngModel)]="disabled" size="sm" />
+        </label>
 
-            <div class="flex items-center space-x-2">
-                <tolle-checkbox id="readonly" [(ngModel)]="readonly"></tolle-checkbox>
-                <label for="readonly"
-                    class="text-sm font-medium leading-none cursor-pointer select-none">Readonly</label>
-            </div>
-        </div>
+        <label class="flex items-center justify-between text-sm font-medium">
+            <span>Readonly</span>
+            <tolle-switch [(ngModel)]="readonly" size="sm" />
+        </label>
 
         <div class="pt-4 border-t">
             <p class="text-sm text-muted-foreground">

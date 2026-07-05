@@ -5,7 +5,8 @@ import { DataTableComponent, TableColumn } from '../../../../../../tolle/src/lib
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
-import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
+import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 import { TolleCellDirective } from '../../../../../../tolle/src/lib/tolle-cell.directive';
 
@@ -19,7 +20,8 @@ import { TolleCellDirective } from '../../../../../../tolle/src/lib/tolle-cell.d
         PlaygroundComponent,
         SelectComponent,
         SelectItemComponent,
-        CheckboxComponent
+        SwitchComponent,
+        LabelComponent
     ],
     templateUrl: './data-table-interactive.component.html'
 })

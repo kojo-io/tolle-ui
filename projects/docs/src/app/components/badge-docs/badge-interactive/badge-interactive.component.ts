@@ -7,6 +7,7 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
+import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
     selector: 'app-badge-interactive',
@@ -18,7 +19,9 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
         PlaygroundComponent,
         SelectComponent,
         SelectItemComponent,
-        SwitchComponent
+        SwitchComponent,
+        InputComponent,
+        LabelComponent
     ],
     templateUrl: './badge-interactive.component.html'
 })
