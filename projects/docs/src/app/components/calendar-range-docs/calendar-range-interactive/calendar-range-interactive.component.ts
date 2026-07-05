@@ -18,7 +18,7 @@ import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.comp
     ],
     template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-2xl font-bold mb-6">Interactive Playground</h2>
+      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <div class="flex flex-col items-center gap-4">

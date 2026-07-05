@@ -22,7 +22,7 @@ import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
     ],
     template: `
     <section class="space-y-6">
-      <h2 class="text-2xl font-bold text-foreground">Interactive Playground</h2>
+      <h2 class="text-xl font-semibold tracking-tight text-foreground">Interactive Playground</h2>
       
       <app-playground [code]="codeSnippet">
         <div preview class="flex items-center justify-center min-h-[400px] w-full">

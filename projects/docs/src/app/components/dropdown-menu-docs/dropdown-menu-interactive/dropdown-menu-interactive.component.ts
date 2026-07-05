@@ -25,7 +25,7 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
   ],
   template: `
     <section class="space-y-6">
-      <h2 class="text-2xl font-bold text-foreground">Interactive Playground</h2>
+      <h2 class="text-xl font-semibold tracking-tight text-foreground">Interactive Playground</h2>
       
       <app-playground [code]="codeSnippet">
         <div preview class="flex items-center justify-center min-h-[300px]">

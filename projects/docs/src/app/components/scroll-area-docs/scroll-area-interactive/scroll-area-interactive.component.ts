@@ -17,7 +17,7 @@ import { SeparatorComponent } from '../../../../../../tolle/src/lib/separator.co
     ],
     template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <tolle-scroll-area class="h-72 w-48 rounded-md border border-neutral-200 dark:border-neutral-800">

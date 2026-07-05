@@ -38,7 +38,7 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
   ],
   template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-2xl font-bold mb-6 text-foreground">Interactive Playground</h2>
+      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview class="flex flex-col gap-4">
           <tolle-alert-dialog #templateDialog>
