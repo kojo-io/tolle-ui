@@ -88,7 +88,7 @@ export class DocHeroComponent {
     return this.selector ?? this.reg?.selector;
   }
   get resolvedInstall(): string | undefined {
-    return this.install ?? this.reg?.install ?? (this.slug ? `npx tolle add ${this.slug}` : undefined);
+    return this.install ?? this.reg?.install ?? (this.slug ? `npx @tolle_/cli add ${this.slug}` : undefined);
   }
 
   copyInstall(): void {

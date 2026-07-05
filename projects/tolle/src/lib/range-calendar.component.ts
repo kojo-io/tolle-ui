@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, forwardRef, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges, forwardRef, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
@@ -119,7 +119,7 @@ import {DateRange} from './types/date-range';
     </div>
   `
 })
-export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
+export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() class = '';
   @Input() disablePastDates = false;
   /** Renders the calendar's own border/background/shadow. Set `false` inside a
@@ -153,6 +153,14 @@ export class RangeCalendarComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
     this.generateDays();
     this.generateYears();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // Rebuild the month grids when the visible-month count changes after init
+    // (e.g. a `[numberOfMonths]` toggle), so single ⇄ multi-month is reactive.
+    if (changes['numberOfMonths'] && !changes['numberOfMonths'].firstChange) {
+      this.generateDays();
+    }
   }
 
   // --- Date Generation Logic (Same as Calendar) ---

@@ -93,6 +93,7 @@ export class RegistryNavService {
       {
         title: 'AI Native',
         items: [
+          { title: 'Overview', url: '/ai-native', icon: 'ri-sparkling-2-line' },
           { title: 'llms.txt', url: '/llms.txt', icon: 'ri-robot-line', external: true },
           { title: 'Full reference', url: '/llms-full.txt', icon: 'ri-file-list-3-line', external: true },
           { title: 'Registry manifest', url: '/registry/manifest.json', icon: 'ri-braces-line', external: true },

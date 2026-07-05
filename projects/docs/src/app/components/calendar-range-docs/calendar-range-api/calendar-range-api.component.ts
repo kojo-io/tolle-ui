@@ -25,7 +25,9 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 })
 export class CalendarRangeApiComponent {
     rangeProps = [
+        { name: 'numberOfMonths', type: 'number', default: '1', description: 'Number of consecutive months rendered side by side. Set to 2 for a two-month view.' },
         { name: 'disablePastDates', type: 'boolean', default: 'false', description: 'Prevents selection of dates before today.' },
+        { name: 'bordered', type: 'boolean', default: 'true', description: 'Renders the calendar\'s own border, background and shadow. Set false inside a card or popover that already provides chrome.' },
         { name: 'class', type: 'string', default: "''", description: 'Additional CSS classes for the container.' }
     ];
 

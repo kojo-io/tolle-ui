@@ -85,7 +85,7 @@ export class LandingComponent {
     this.theme.toggleTheme();
   }
 
-  protected copyCli(cmd = 'npx tolle add button'): void {
+  protected copyCli(cmd = 'npx @tolle_/cli add button'): void {
     navigator.clipboard?.writeText(cmd);
     this.copied = true;
     setTimeout(() => (this.copied = false), 1200);

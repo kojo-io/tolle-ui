@@ -61,7 +61,7 @@
       </div>
       <div class="flex items-center gap-2.5 px-3.5 py-3.5 font-mono text-[13.5px]">
         <span class="text-primary">$</span>
-        <code class="flex-1">npx tolle add <b class="font-semibold text-foreground">button</b></code>
+        <code class="flex-1">npx &#64;tolle_/cli add <b class="font-semibold text-foreground">button</b></code>
         <button (click)="copyCli()" aria-label="Copy"
                 class="grid h-[30px] w-[30px] place-items-center rounded-md border border-border bg-muted text-muted-foreground transition-colors hover:text-foreground">
           <i [class]="copied ? 'ri-check-line' : 'ri-file-copy-line'"></i>
@@ -255,7 +255,7 @@
     <p class="mx-auto mt-4 max-w-[54ch] text-muted-foreground">Add a component and its source lands in your repo — edit it, theme it, keep it. No black box.</p>
     <div class="mt-7 flex flex-wrap justify-center gap-3">
       <tolle-button routerLink="/getting-started" variant="default" size="lg">Get started</tolle-button>
-      <tolle-button (click)="copyCli('npx tolle init')" variant="outline" size="lg" class="font-mono">npx tolle init</tolle-button>
+      <tolle-button (click)="copyCli('npx @tolle_/cli init')" variant="outline" size="lg" class="font-mono">npx &#64;tolle_/cli init</tolle-button>
     </div>
   </div>
 </section>

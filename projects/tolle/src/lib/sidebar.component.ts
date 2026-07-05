@@ -12,6 +12,8 @@ export type SidebarItem = {
   items?: SidebarItem[];
   id?: string;
   expanded?: boolean;
+  /** Render as a plain anchor to an external URL / static file (opens in a new tab) instead of a router link. */
+  external?: boolean;
 }
 
 export type SidebarGroup = {
@@ -154,6 +156,34 @@ export type SidebarGroup = {
                       </div>
                     </div>
                   </div>
+                }
+                @else if (item.external) {
+                  <!-- External / static-file Item (opens in a new tab) -->
+                  <a
+                    [href]="item.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    [class]="cn(
+                      'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                      'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
+                      collapsed ? 'justify-center' : 'justify-start'
+                    )"
+                  >
+                    <i aria-hidden="true" [class]="cn(
+                        item.icon || 'ri-circle-fill',
+                        'h-4 w-4 text-lg shrink-0 transition-transform',
+                        !collapsed && 'group-hover:scale-110'
+                      )"></i>
+                    <span [class]="cn(
+                      'truncate transition-all duration-300',
+                      collapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'
+                    )">
+                      {{ item.title }}
+                    </span>
+                    @if (!collapsed) {
+                      <i aria-hidden="true" class="ri-external-link-line ml-auto text-xs opacity-50 transition-opacity group-hover:opacity-100"></i>
+                    }
+                  </a>
                 }
                 @else {
                   <!-- Standard Top-Level Item -->
