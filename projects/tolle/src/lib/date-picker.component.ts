@@ -190,6 +190,11 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
   open() {
     if (this.disabled) return;
     this.isOpen = true;
+    // Render the popover synchronously so its DOM node + @ViewChild('popover') exist
+    // before we position it. Otherwise, with zone eventCoalescing (Angular defers change
+    // detection to the next animation frame), updatePosition() can run first, find no
+    // popover, and the calendar stays hidden — regardless of where the picker is used.
+    this.cdr.detectChanges();
     this.trigger.nativeElement.focus();
     requestAnimationFrame(() => {
       this.updatePosition();
