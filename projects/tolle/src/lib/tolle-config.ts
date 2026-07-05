@@ -6,6 +6,14 @@ export interface TolleConfig {
   radius?: string;
   defaultToastDuration?: number;
   darkByDefault?: boolean;
+  /** Neutral base-color family: `zinc` | `slate` | `gray` | `neutral` | `stone`. */
+  baseColor?: string;
+  /** Chart base color (hex); derives `--chart-1…5`. */
+  chartColor?: string;
+  /** Typography stacks applied to `--font-sans` / `--font-serif` / `--font-mono`. */
+  fontSans?: string;
+  fontSerif?: string;
+  fontMono?: string;
 }
 
 export const TOLLE_CONFIG = new InjectionToken<TolleConfig>('TolleConfig');

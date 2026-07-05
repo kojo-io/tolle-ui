@@ -11,8 +11,7 @@
     <nav class="hidden items-center gap-5 text-sm text-muted-foreground md:flex">
       <a routerLink="/components" class="transition-colors hover:text-foreground">Docs</a>
       <a routerLink="/components" class="transition-colors hover:text-foreground">Components</a>
-      <a class="cursor-pointer transition-colors hover:text-foreground">Blocks</a>
-      <a class="cursor-pointer transition-colors hover:text-foreground">Themes</a>
+      <a routerLink="/themes" class="cursor-pointer transition-colors hover:text-foreground">Themes</a>
     </nav>
     <div class="flex-1"></div>
     <div class="flex items-center gap-2">
@@ -49,6 +48,7 @@
     <div class="mt-8 flex flex-wrap items-center gap-3">
       <tolle-button routerLink="/getting-started" variant="default" size="lg">Get started</tolle-button>
       <tolle-button routerLink="/components" variant="outline" size="lg">Browse components</tolle-button>
+      <tolle-button routerLink="/themes" variant="ghost" size="lg"><i class="ri-palette-line mr-1.5"></i> Customize theme</tolle-button>
     </div>
 
     <!-- CLI terminal -->
@@ -190,7 +190,7 @@
           <span class="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">Calendar / Date picker</span>
         </div>
         <div class="flex flex-1 items-center justify-center">
-          <tolle-calendar></tolle-calendar>
+          <tolle-calendar [bordered]="false"></tolle-calendar>
         </div>
       </div>
 

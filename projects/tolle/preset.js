@@ -52,6 +52,22 @@ module.exports = {
           DEFAULT: 'rgb(var(--card) / <alpha-value>)',
           foreground: 'rgb(var(--card-foreground) / <alpha-value>)',
         },
+
+        // Chart palette — driven by --chart-1..5 (theme generator / ThemeService).
+        chart: {
+          1: 'rgb(var(--chart-1) / <alpha-value>)',
+          2: 'rgb(var(--chart-2) / <alpha-value>)',
+          3: 'rgb(var(--chart-3) / <alpha-value>)',
+          4: 'rgb(var(--chart-4) / <alpha-value>)',
+          5: 'rgb(var(--chart-5) / <alpha-value>)',
+        },
+      },
+      fontFamily: {
+        // Driven by the CSS custom properties in theme.css so the theme
+        // generator / ThemeService can re-skin typography at runtime.
+        sans: ['var(--font-sans)'],
+        serif: ['var(--font-serif)'],
+        mono: ['var(--font-mono)'],
       },
       borderRadius: {
         lg: 'var(--radius)',

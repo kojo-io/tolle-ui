@@ -1,0 +1,338 @@
+<div class="flex min-h-screen w-full flex-col bg-background text-foreground">
+
+  <!-- ================= TOP BAR ================= -->
+  <header class="sticky top-0 z-40 flex h-14 shrink-0 items-center gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-md md:px-6">
+    <a routerLink="/" class="flex items-center gap-2 text-[15px] font-bold tracking-tight hover:no-underline">
+      <span class="grid h-6 w-6 place-items-center rounded-md bg-primary text-primary-foreground shadow-sm">
+        <i class="ri-flashlight-fill text-sm"></i>
+      </span>
+      Tolle&nbsp;UI
+    </a>
+    <span class="hidden items-center gap-1.5 text-sm text-muted-foreground sm:flex">
+      <i class="ri-arrow-right-s-line"></i> Theme generator
+    </span>
+
+    <div class="flex-1"></div>
+
+    <nav class="mr-1 hidden items-center gap-5 text-sm text-muted-foreground md:flex">
+      <a routerLink="/getting-started" class="transition-colors hover:text-foreground hover:no-underline">Docs</a>
+      <a routerLink="/components" class="transition-colors hover:text-foreground hover:no-underline">Components</a>
+    </nav>
+
+    <button (click)="toggleAppearance()" tolleTooltip="Toggle appearance" aria-label="Toggle appearance"
+            class="grid h-9 w-9 place-items-center rounded-md border border-border text-foreground transition-colors hover:bg-muted">
+      <i [class]="preset.appearance === 'dark' ? 'ri-sun-line' : 'ri-moon-line'"></i>
+    </button>
+
+    <tolle-button variant="ghost" size="sm" (click)="reset()">
+      <i class="ri-refresh-line mr-1.5"></i> Reset
+    </tolle-button>
+
+    <tolle-button variant="default" size="sm" (click)="copyShare()">
+      <i [class]="(copied === 'share' ? 'ri-check-line' : 'ri-share-line') + ' mr-1.5'"></i>
+      {{ copied === 'share' ? 'Copied link' : 'Share' }}
+    </tolle-button>
+  </header>
+
+  <!-- ================= BODY ================= -->
+  <div class="flex flex-1 flex-col lg:flex-row">
+
+    <!-- ---------- CONTROL RAIL ---------- -->
+    <aside class="w-full shrink-0 space-y-7 border-b border-border p-5 lg:sticky lg:top-14 lg:h-[calc(100vh-3.5rem)] lg:w-80 lg:overflow-y-auto lg:border-b-0 lg:border-r">
+
+      <!-- Presets -->
+      <section class="space-y-3">
+        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Presets</h3>
+        <div class="flex flex-wrap gap-2">
+          @for (n of namedPresets; track n.id) {
+            <button (click)="applyNamed(n)"
+                    [class]="'flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-colors ' +
+                      (isNamed(n) ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground')">
+              <span class="h-2.5 w-2.5 rounded-full" [style.backgroundColor]="n.swatch"></span>
+              {{ n.name }}
+            </button>
+          }
+        </div>
+      </section>
+
+      <tolle-separator></tolle-separator>
+
+      <!-- Base color (neutrals) -->
+      <section class="space-y-3">
+        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Base color</h3>
+        <div class="grid grid-cols-5 gap-1.5">
+          @for (b of baseColors; track b.id) {
+            <button (click)="selectBase(b.id)" [attr.title]="b.name"
+                    [class]="'flex flex-col items-center gap-1.5 rounded-md border px-1 py-2 text-[11px] font-medium transition-colors ' +
+                      (isBase(b.id) ? 'border-primary bg-primary/10 text-foreground' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground')">
+              <span class="h-4 w-4 rounded-full ring-1 ring-inset ring-black/10" [style.backgroundColor]="b.swatch"></span>
+              {{ b.name }}
+            </button>
+          }
+        </div>
+      </section>
+
+      <tolle-separator></tolle-separator>
+
+      <!-- Theme color (accent / primary) -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Theme color</h3>
+          <span class="font-mono text-[11px] uppercase text-muted-foreground">{{ preset.primary }}</span>
+        </div>
+        <div class="grid grid-cols-8 gap-1.5">
+          @for (c of colorPresets; track c.hex) {
+            <button (click)="selectColor(c.hex)" [attr.title]="c.name" [attr.aria-label]="c.name"
+                    [style.backgroundColor]="c.hex"
+                    [class]="'grid aspect-square place-items-center rounded-md ring-offset-2 ring-offset-background transition-transform hover:scale-110 ' +
+                      (isColor(c.hex) ? 'ring-2 ring-ring' : '')">
+              @if (isColor(c.hex)) {
+                <i class="ri-check-line text-[13px] text-white" style="text-shadow: 0 1px 2px rgba(0,0,0,.4)"></i>
+              }
+            </button>
+          }
+        </div>
+        <div class="flex items-center gap-2 rounded-md border border-border p-1.5">
+          <div class="relative h-7 w-7 shrink-0 cursor-pointer overflow-hidden rounded" (click)="customColor.click()">
+            <div class="absolute inset-0 z-[2]" [style.backgroundColor]="preset.primary"></div>
+            <input #customColor type="text" class="themes-coloris absolute inset-0 z-[1] h-7 w-7 bg-transparent"
+                   [ngModel]="preset.primary" (ngModelChange)="onCustomColor($event)">
+          </div>
+          <span class="text-sm text-muted-foreground">Custom color</span>
+          <i class="ri-arrow-right-up-line ml-auto text-muted-foreground"></i>
+        </div>
+      </section>
+
+      <tolle-separator></tolle-separator>
+
+      <!-- Chart color -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Chart color</h3>
+          <span class="font-mono text-[11px] uppercase text-muted-foreground">{{ preset.chart }}</span>
+        </div>
+        <div class="grid grid-cols-8 gap-1.5">
+          @for (c of colorPresets; track c.hex) {
+            <button (click)="selectChart(c.hex)" [attr.title]="c.name" [attr.aria-label]="c.name"
+                    [style.backgroundColor]="c.hex"
+                    [class]="'grid aspect-square place-items-center rounded-md ring-offset-2 ring-offset-background transition-transform hover:scale-110 ' +
+                      (isChart(c.hex) ? 'ring-2 ring-ring' : '')">
+              @if (isChart(c.hex)) {
+                <i class="ri-check-line text-[13px] text-white" style="text-shadow: 0 1px 2px rgba(0,0,0,.4)"></i>
+              }
+            </button>
+          }
+        </div>
+        <div class="flex items-center gap-2 rounded-md border border-border p-1.5">
+          <div class="relative h-7 w-7 shrink-0 cursor-pointer overflow-hidden rounded" (click)="customChart.click()">
+            <div class="absolute inset-0 z-[2]" [style.backgroundColor]="preset.chart"></div>
+            <input #customChart type="text" class="themes-coloris absolute inset-0 z-[1] h-7 w-7 bg-transparent"
+                   [ngModel]="preset.chart" (ngModelChange)="onCustomChart($event)">
+          </div>
+          <div class="flex flex-1 items-center gap-1" title="Derived --chart-1…5">
+            <span class="h-4 flex-1 rounded-sm bg-chart-1"></span>
+            <span class="h-4 flex-1 rounded-sm bg-chart-2"></span>
+            <span class="h-4 flex-1 rounded-sm bg-chart-3"></span>
+            <span class="h-4 flex-1 rounded-sm bg-chart-4"></span>
+            <span class="h-4 flex-1 rounded-sm bg-chart-5"></span>
+          </div>
+        </div>
+      </section>
+
+      <tolle-separator></tolle-separator>
+
+      <!-- Radius -->
+      <section class="space-y-3">
+        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Radius</h3>
+        <div class="grid grid-cols-5 gap-1.5">
+          @for (r of radiusPresets; track r.value) {
+            <button (click)="selectRadius(r.value)"
+                    [class]="'rounded-md border py-1.5 text-xs font-medium tabular-nums transition-colors ' +
+                      (isRadius(r.value) ? 'border-primary bg-primary text-primary-foreground' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground')">
+              {{ r.label }}
+            </button>
+          }
+        </div>
+      </section>
+
+      <tolle-separator></tolle-separator>
+
+      <!-- Appearance -->
+      <section class="space-y-3">
+        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Appearance</h3>
+        <div class="grid grid-cols-2 gap-1.5">
+          <button (click)="setAppearance('light')"
+                  [class]="'flex items-center justify-center gap-2 rounded-md border py-2 text-sm font-medium transition-colors ' +
+                    (preset.appearance === 'light' ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground')">
+            <i class="ri-sun-line"></i> Light
+          </button>
+          <button (click)="setAppearance('dark')"
+                  [class]="'flex items-center justify-center gap-2 rounded-md border py-2 text-sm font-medium transition-colors ' +
+                    (preset.appearance === 'dark' ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground')">
+            <i class="ri-moon-line"></i> Dark
+          </button>
+        </div>
+      </section>
+
+      <tolle-separator></tolle-separator>
+
+      <!-- Typography -->
+      <section class="space-y-3">
+        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Typography</h3>
+        <div class="space-y-2.5">
+          <div class="flex items-center gap-2">
+            <span class="w-12 shrink-0 text-xs text-muted-foreground">Sans</span>
+            <tolle-select size="sm" class="flex-1" [ngModel]="fontValue('sans')" (ngModelChange)="selectFont('sans', $event)">
+              @for (f of fontSans; track f.label) {
+                <tolle-select-item [value]="f.stack">{{ f.label }}</tolle-select-item>
+              }
+            </tolle-select>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-12 shrink-0 text-xs text-muted-foreground">Serif</span>
+            <tolle-select size="sm" class="flex-1" [ngModel]="fontValue('serif')" (ngModelChange)="selectFont('serif', $event)">
+              @for (f of fontSerif; track f.label) {
+                <tolle-select-item [value]="f.stack">{{ f.label }}</tolle-select-item>
+              }
+            </tolle-select>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-12 shrink-0 text-xs text-muted-foreground">Mono</span>
+            <tolle-select size="sm" class="flex-1" [ngModel]="fontValue('mono')" (ngModelChange)="selectFont('mono', $event)">
+              @for (f of fontMono; track f.label) {
+                <tolle-select-item [value]="f.stack">{{ f.label }}</tolle-select-item>
+              }
+            </tolle-select>
+          </div>
+        </div>
+      </section>
+
+      <tolle-separator></tolle-separator>
+
+      <!-- Icon set -->
+      <section class="space-y-3">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Icon set</h3>
+          <i class="ri-information-line text-muted-foreground"
+             tolleTooltip="Component internals ship Remix Icons. This skins the preview + your own markup."></i>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          @for (s of iconSets; track s.id) {
+            <button (click)="selectIcons(s.id)"
+                    [class]="'flex items-center gap-2.5 rounded-md border p-2.5 text-left transition-colors ' +
+                      (isIcons(s.id) ? 'border-primary bg-primary/10' : 'border-border hover:bg-muted')">
+              <span [class]="'grid h-8 w-8 shrink-0 place-items-center rounded-md ' + (isIcons(s.id) ? 'bg-primary/15 text-primary' : 'bg-muted text-foreground')">
+                <app-demo-icon [iconSet]="s.id" name="star" [size]="18" />
+              </span>
+              <span class="min-w-0">
+                <span class="block text-xs font-semibold leading-tight">{{ s.label }}</span>
+                <span class="block truncate text-[11px] text-muted-foreground">{{ s.hint }}</span>
+              </span>
+            </button>
+          }
+        </div>
+      </section>
+    </aside>
+
+    <!-- ---------- PREVIEW / CODE ---------- -->
+    <main class="min-w-0 flex-1 p-4 md:p-6">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-5 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight md:text-3xl">Create your theme</h1>
+            <p class="mt-1 max-w-xl text-sm text-muted-foreground">
+              Pick a color, radius, appearance, and typography — preview it on real components, then copy the
+              tokens or share a preset link. Changes apply live across the docs.
+            </p>
+          </div>
+        </div>
+
+        <tolle-tabs defaultValue="preview">
+          <tolle-tabs-list>
+            <tolle-tabs-trigger value="preview"><i class="ri-layout-2-line mr-1.5"></i> Preview</tolle-tabs-trigger>
+            <tolle-tabs-trigger value="code"><i class="ri-code-s-slash-line mr-1.5"></i> Code</tolle-tabs-trigger>
+          </tolle-tabs-list>
+
+          <!-- Preview -->
+          <tolle-tabs-content value="preview">
+            <div class="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+              <div class="flex items-center gap-1.5 border-b border-border bg-muted/40 px-4 py-2.5">
+                <span class="h-3 w-3 rounded-full bg-red-400"></span>
+                <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+                <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
+                <div class="ml-3 hidden items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground sm:flex">
+                  <i class="ri-lock-line text-[11px]"></i> app.tolle-ui.dev
+                </div>
+              </div>
+              <div class="bg-background">
+                <app-theme-preview [iconSet]="preset.icons" />
+              </div>
+            </div>
+          </tolle-tabs-content>
+
+          <!-- Code -->
+          <tolle-tabs-content value="code">
+            <div class="mt-4">
+              <tolle-tabs defaultValue="css">
+                <tolle-tabs-list variant="underline">
+                  <tolle-tabs-trigger value="css">CSS variables</tolle-tabs-trigger>
+                  <tolle-tabs-trigger value="provider">Provider</tolle-tabs-trigger>
+                  <tolle-tabs-trigger value="cli">CLI</tolle-tabs-trigger>
+                  <tolle-tabs-trigger value="share">Share</tolle-tabs-trigger>
+                </tolle-tabs-list>
+
+                <tolle-tabs-content value="css">
+                  <p class="mb-2 mt-3 text-sm text-muted-foreground">Drop this into your global stylesheet.</p>
+                  <div class="relative">
+                    <button (click)="copy(cssCode, 'css')" class="code-copy">
+                      <i [class]="copied === 'css' ? 'ri-check-line' : 'ri-file-copy-line'"></i>
+                      {{ copied === 'css' ? 'Copied' : 'Copy' }}
+                    </button>
+                    <pre class="code-block"><code>{{ cssCode }}</code></pre>
+                  </div>
+                </tolle-tabs-content>
+
+                <tolle-tabs-content value="provider">
+                  <p class="mb-2 mt-3 text-sm text-muted-foreground">Or configure it at bootstrap in <span class="font-mono text-xs">app.config.ts</span>.</p>
+                  <div class="relative">
+                    <button (click)="copy(providerCode, 'provider')" class="code-copy">
+                      <i [class]="copied === 'provider' ? 'ri-check-line' : 'ri-file-copy-line'"></i>
+                      {{ copied === 'provider' ? 'Copied' : 'Copy' }}
+                    </button>
+                    <pre class="code-block"><code>{{ providerCode }}</code></pre>
+                  </div>
+                </tolle-tabs-content>
+
+                <tolle-tabs-content value="cli">
+                  <p class="mb-2 mt-3 text-sm text-muted-foreground">Scaffold Tolle and add the components you own.</p>
+                  <div class="relative">
+                    <button (click)="copy(cliCode, 'cli')" class="code-copy">
+                      <i [class]="copied === 'cli' ? 'ri-check-line' : 'ri-file-copy-line'"></i>
+                      {{ copied === 'cli' ? 'Copied' : 'Copy' }}
+                    </button>
+                    <pre class="code-block"><code>{{ cliCode }}</code></pre>
+                  </div>
+                </tolle-tabs-content>
+
+                <tolle-tabs-content value="share">
+                  <p class="mb-2 mt-3 text-sm text-muted-foreground">A compact, shareable link that restores this exact theme — hand it to a teammate or a coding agent.</p>
+                  <div class="flex flex-col gap-2 sm:flex-row">
+                    <div class="flex-1 truncate rounded-md border border-border bg-muted/40 px-3 py-2 font-mono text-xs text-muted-foreground">{{ shareUrl }}</div>
+                    <tolle-button variant="default" size="sm" (click)="copyShare()">
+                      <i [class]="(copied === 'share' ? 'ri-check-line' : 'ri-links-line') + ' mr-1.5'"></i>
+                      {{ copied === 'share' ? 'Copied' : 'Copy link' }}
+                    </tolle-button>
+                  </div>
+                  <div class="mt-4 flex items-start gap-2 rounded-md border border-border bg-muted/30 p-3 text-xs text-muted-foreground">
+                    <i class="ri-robot-2-line mt-0.5 text-sm"></i>
+                    <span>Agent-friendly: the <span class="font-mono">?preset=</span> token encodes color, radius, appearance, fonts, and icon set — decode it with <span class="font-mono">decodePreset()</span> from the theme registry.</span>
+                  </div>
+                </tolle-tabs-content>
+              </tolle-tabs>
+            </div>
+          </tolle-tabs-content>
+        </tolle-tabs>
+      </div>
+    </main>
+  </div>
+</div>

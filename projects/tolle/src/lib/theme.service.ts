@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID, Optional, Renderer2, RendererFactory2 
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import { TOLLE_CONFIG, TolleConfig } from './tolle-config';
 import { BehaviorSubject } from 'rxjs';
-import { hexToRgb, radiusScale, generateThemeCss } from './utils/color';
+import { hexToRgb, radiusScale, generateThemeCss, generateBaseCss, generateChartCss } from './utils/color';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
@@ -11,6 +11,8 @@ export class ThemeService {
   public isDark$ = this._isDark.asObservable();
 
   private styleId = 'tolle-dynamic-theme';
+  private baseStyleId = 'tolle-base-theme';
+  private chartStyleId = 'tolle-chart-theme';
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
@@ -61,9 +63,96 @@ export class ThemeService {
       this.setRadius(this.config.radius, false);
     }
 
+    // Apply Base (neutral) color (saved > config > theme.css default = zinc)
+    const savedBase = localStorage.getItem('tolle-base-color');
+    if (savedBase) {
+      this.setBaseColor(savedBase, false);
+    } else if (this.config?.baseColor) {
+      this.setBaseColor(this.config.baseColor, false);
+    }
+
+    // Apply Chart color (saved > config)
+    const savedChart = localStorage.getItem('tolle-chart-color');
+    if (savedChart) {
+      this.setChartColor(savedChart, false);
+    } else if (this.config?.chartColor) {
+      this.setChartColor(this.config.chartColor, false);
+    }
+
+    // Apply Typography (saved preference > config default > theme.css default)
+    for (const kind of ['sans', 'serif', 'mono'] as const) {
+      const saved = localStorage.getItem(`tolle-font-${kind}`);
+      const fromConfig = this.config?.[`font${kind[0].toUpperCase()}${kind.slice(1)}` as 'fontSans' | 'fontSerif' | 'fontMono'];
+      if (saved) {
+        this.setFont(kind, saved, false);
+      } else if (fromConfig) {
+        this.setFont(kind, fromConfig, false);
+      }
+    }
+
     if (!savedTheme) {
       localStorage.setItem('tolle-theme', shouldBeDark ? 'dark' : 'light');
     }
+  }
+
+  /** Set a typography stack (`--font-sans` / `--font-serif` / `--font-mono`). */
+  setFont(kind: 'sans' | 'serif' | 'mono', stack: string, persist = true) {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.renderer.setStyle(this.document.documentElement, `--font-${kind}`, stack);
+    if (persist) {
+      localStorage.setItem(`tolle-font-${kind}`, stack);
+    }
+  }
+
+  /** Read the current stack for a font role from the live document. */
+  getFont(kind: 'sans' | 'serif' | 'mono'): string {
+    if (!isPlatformBrowser(this.platformId)) return '';
+    return getComputedStyle(this.document.documentElement).getPropertyValue(`--font-${kind}`).trim();
+  }
+
+  /** Set light/dark explicitly (a directional companion to `toggleTheme`). */
+  setAppearance(mode: 'light' | 'dark', persist = true) {
+    mode === 'dark' ? this.enableDarkMode(persist) : this.disableDarkMode(persist);
+  }
+
+  /**
+   * Set the neutral base-color family (background/foreground/card/muted/border…).
+   * Accepts a family id: `zinc` | `slate` | `gray` | `neutral` | `stone`.
+   */
+  setBaseColor(baseId: string, persist = true) {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.injectStyleById(this.baseStyleId, generateBaseCss(baseId));
+    if (persist) localStorage.setItem('tolle-base-color', baseId);
+  }
+
+  /** Set the chart palette from a base hex; derives `--chart-1…5`. */
+  setChartColor(hex: string, persist = true) {
+    if (!isPlatformBrowser(this.platformId)) return;
+    this.injectStyleById(this.chartStyleId, generateChartCss(hex));
+    if (persist) localStorage.setItem('tolle-chart-color', hex);
+  }
+
+  /** Read the current base-color family id (persisted), or null. */
+  get baseColor(): string | null {
+    if (!isPlatformBrowser(this.platformId)) return null;
+    return localStorage.getItem('tolle-base-color');
+  }
+
+  /** Read the current chart base color (persisted), or null. */
+  get chartColor(): string | null {
+    if (!isPlatformBrowser(this.platformId)) return null;
+    return localStorage.getItem('tolle-chart-color');
+  }
+
+  /** Upsert a keyed <style> element in <head> with the given CSS text. */
+  private injectStyleById(id: string, css: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
+    const existing = this.document.getElementById(id);
+    if (existing) existing.remove();
+    const el = this.document.createElement('style');
+    el.id = id;
+    el.textContent = css;
+    this.renderer.appendChild(this.document.head, el);
   }
 
   setRadius(radius: string, persist = true) {
@@ -224,9 +313,12 @@ export class ThemeService {
   resetToConfigDefaults() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    localStorage.removeItem('tolle-theme');
-    localStorage.removeItem('tolle-primary-color');
-    localStorage.removeItem('tolle-radius');
+    ['tolle-theme', 'tolle-primary-color', 'tolle-radius', 'tolle-base-color', 'tolle-chart-color',
+     'tolle-font-sans', 'tolle-font-serif', 'tolle-font-mono']
+      .forEach((k) => localStorage.removeItem(k));
+
+    this.document.getElementById(this.baseStyleId)?.remove();
+    this.document.getElementById(this.chartStyleId)?.remove();
 
     this.initializeTheme();
   }
@@ -244,9 +336,12 @@ export class ThemeService {
   clearUserPreferences() {
     if (!isPlatformBrowser(this.platformId)) return;
 
-    localStorage.removeItem('tolle-theme');
-    localStorage.removeItem('tolle-primary-color');
-    localStorage.removeItem('tolle-radius');
+    ['tolle-theme', 'tolle-primary-color', 'tolle-radius', 'tolle-base-color', 'tolle-chart-color',
+     'tolle-font-sans', 'tolle-font-serif', 'tolle-font-mono']
+      .forEach((k) => localStorage.removeItem(k));
+
+    this.document.getElementById(this.baseStyleId)?.remove();
+    this.document.getElementById(this.chartStyleId)?.remove();
 
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     if (systemPrefersDark) {

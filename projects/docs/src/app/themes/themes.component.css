@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.code-block {
+  max-height: 460px;
+  overflow: auto;
+  border-radius: var(--radius, 0.5rem);
+  border: 1px solid rgb(var(--border));
+  background-color: rgb(var(--muted) / 0.4);
+  padding: 1rem 1.1rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: rgb(var(--foreground));
+  white-space: pre;
+  tab-size: 2;
+}
+
+.code-copy {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: calc(var(--radius, 0.5rem) - 2px);
+  border: 1px solid rgb(var(--border));
+  background-color: rgb(var(--background));
+  padding: 0.25rem 0.6rem;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgb(var(--muted-foreground));
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.code-copy:hover {
+  color: rgb(var(--foreground));
+  background-color: rgb(var(--muted));
+}

@@ -9,6 +9,11 @@ export const routes: Routes = [
     loadComponent: () => import('./landing/landing.component').then(m => m.LandingComponent),
   },
   {
+    // Theme generator — full-width configurator, outside the docs shell.
+    path: 'themes',
+    loadComponent: () => import('./themes/themes.component').then(m => m.ThemesComponent),
+  },
+  {
     path: '',
     component: DocLayoutComponent,
     children: [

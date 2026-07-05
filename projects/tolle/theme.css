@@ -42,6 +42,18 @@
   /* derives from primary color */
   --radius: 0.5rem;
 
+  /* --- Typography (themeable via the theme generator / ThemeService) --- */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* --- Charts (themeable via the theme generator / ThemeService) --- */
+  --chart-1: 37 99 235;
+  --chart-2: 20 184 166;
+  --chart-3: 234 88 12;
+  --chart-4: 139 92 246;
+  --chart-5: 236 72 153;
+
   /* --- Shadows --- */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
@@ -79,6 +91,12 @@
   --input: 39 39 42;
   --ring: var(--primary);
   /* derives from primary color */
+
+  --chart-1: 59 130 246;
+  --chart-2: 45 212 191;
+  --chart-3: 251 146 60;
+  --chart-4: 167 139 250;
+  --chart-5: 244 114 182;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
@@ -126,6 +144,7 @@ html {
 body {
   background-color: var(--background, #ffffff);
   color: var(--foreground, #0a0a0a);
+  font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: "rlig" 1, "calt" 1;

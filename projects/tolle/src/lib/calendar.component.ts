@@ -25,7 +25,7 @@ export type CalendarMode = 'date' | 'month' | 'year';
     }
   ],
   template: `
-    <div [class]="cn('p-3 border rounded-md bg-background text-popover-foreground shadow-sm inline-block min-w-fit', class)">
+    <div [class]="cn('text-popover-foreground inline-block min-w-fit', bordered ? 'p-3 border rounded-md bg-background shadow-sm' : '', class)">
       <!-- Header with Navigation -->
       <div class="flex items-center justify-between pt-1 pb-4 gap-2">
         <!-- View Selector -->
@@ -133,6 +133,9 @@ export type CalendarMode = 'date' | 'month' | 'year';
 })
 export class CalendarComponent implements OnInit, ControlValueAccessor {
   @Input() class = '';
+  /** Renders the calendar's own border, background and shadow. Set `false` when
+   * nesting inside a card/popover that already provides the chrome. @default true */
+  @Input() bordered = true;
   @Input() mode: CalendarMode = 'date';
   @Input() disablePastDates = false;
   @Input() showQuickActions = true;
