@@ -10,7 +10,7 @@
     "build:web": "npm run build:docs",
     "build:lib": "npm run generate:registry && ng build tolle --configuration production",
     "build:docs": "npm run generate:registry && ng build docs --configuration production",
-    "generate:registry": "npx ts-node -P projects/registry/tsconfig.json projects/registry/src/generate.ts"
+    "generate:registry": "ts-node -P projects/registry/tsconfig.json projects/registry/src/generate.ts"
   },
   "private": false,
   "dependencies": {
@@ -62,6 +62,7 @@
     "@angular/cli": "^18.2.21",
     "@angular/compiler-cli": "^18.2.0",
     "@types/jasmine": "~5.1.0",
+    "@types/node": "^22.19.3",
     "autoprefixer": "^10.4.23",
     "css-loader": "^7.1.2",
     "jasmine-core": "~5.2.0",
@@ -78,6 +79,7 @@
     "style-loader": "^4.0.0",
     "tailwindcss": "^3.4.19",
     "ts-morph": "^27.0.2",
+    "ts-node": "^10.9.2",
     "typescript": "~5.5.2"
   }
 }
