@@ -79,7 +79,7 @@ export interface TableColumn {
         </tolle-popover>
       </div>
 
-      <div class="flex-1 min-h-0 overflow-hidden relative w-full">
+      <div [class]="cn('flex-1 min-h-0 overflow-hidden relative w-full', bordered ? 'rounded-md border border-border' : '')">
         <div class="overflow-auto w-full h-full" [style.max-height]="maxHeight">
 
           <table class="w-full table-auto border-collapse">
@@ -197,6 +197,9 @@ export class DataTableComponent implements OnInit, OnChanges {
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
   @Input() stickyHeader = false;
   @Input() maxHeight?: string;
+
+  // Draws a physical border around the table itself (not the whole component).
+  @Input() bordered = true;
 
   // --- Column Hiding Settings ---
   @Input() allowColumnHiding = true;
