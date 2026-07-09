@@ -54,7 +54,7 @@ export interface TableColumn {
           </tolle-input>
         </div>
 
-        <tolle-popover *ngIf="allowColumnHiding && showSettings">
+        <tolle-popover *ngIf="allowColumnHiding && showSettings" class="ml-auto">
           <button trigger
                   [class]="cn(
               'ml-auto flex items-center gap-2 rounded-md border border-input bg-background px-3 hover:bg-accent hover:text-accent-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
@@ -79,7 +79,7 @@ export interface TableColumn {
         </tolle-popover>
       </div>
 
-      <div class="flex-1 min-h-0 rounded-md border border-border overflow-hidden shadow-sm relative w-full">
+      <div class="flex-1 min-h-0 overflow-hidden relative w-full">
         <div class="overflow-auto w-full h-full" [style.max-height]="maxHeight">
 
           <table class="w-full table-auto border-collapse">
@@ -171,7 +171,7 @@ export interface TableColumn {
         </div>
       </div>
 
-      <div class="flex-none py-2">
+      <div class="flex-none">
         <tolle-pagination
           *ngIf="paginate && filteredData.length > 0"
           [totalRecords]="filteredData.length"

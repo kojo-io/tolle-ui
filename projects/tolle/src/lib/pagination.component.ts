@@ -22,7 +22,7 @@ import {SelectItemComponent} from './select-item.component';
   imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
   template: `
     <nav role="navigation" aria-label="pagination">
-    <div [class]="cn('flex items-center justify-between px-2 py-4', class)">
+    <div [class]="cn('flex items-center justify-between px-2 py-1', class)">
 
       <div *ngIf="showCurrentPageInfo" class="text-sm text-muted-foreground">
         <ng-container *ngIf="currentPageInfoTemplate; else defaultReport">
