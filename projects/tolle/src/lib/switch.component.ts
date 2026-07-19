@@ -58,6 +58,7 @@ export type SwitchProps = VariantProps<typeof switchTrackVariants>;
 
 @Component({
   selector: 'tolle-switch',
+  styles: [':host { display: inline-flex; }'],
   standalone: true,
   imports: [CommonModule],
   providers: [

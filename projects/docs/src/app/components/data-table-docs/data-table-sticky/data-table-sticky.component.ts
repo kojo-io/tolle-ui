@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { SourceCodeService } from '../../../shared/source-code.service';
-import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
+import { SegmentComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { DataTableStickyComponent } from '../../../docs-examples/data-table/data-table-sticky/data-table-sticky.component';
 
@@ -13,7 +13,7 @@ import { DataTableStickyComponent } from '../../../docs-examples/data-table/data
     imports: [
         CommonModule,
         FormsModule,
-        SegmentedComponent,
+        SegmentComponent,
         ComponentPreviewComponent,
         DataTableStickyComponent
     ],

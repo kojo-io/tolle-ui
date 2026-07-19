@@ -12,7 +12,7 @@ import { cn } from "./utils/cn";
       </ol>
     </nav>
   `,
-  styles: ``
+  styles: `:host { display: block; }`
 })
 export class BreadcrumbComponent {
   @Input() class: string = '';

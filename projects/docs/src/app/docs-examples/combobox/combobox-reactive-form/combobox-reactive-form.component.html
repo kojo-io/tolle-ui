@@ -1,0 +1,17 @@
+<form [formGroup]="form" class="flex w-full max-w-xs flex-col gap-3">
+    <span class="text-sm font-medium text-foreground">Currency</span>
+
+    <tolle-combobox formControlName="currency" [options]="currencies" placeholder="Select a currency…"
+        searchPlaceholder="Search currencies…" ariaLabel="Currency" />
+
+    <div class="flex items-center gap-2">
+        <tolle-button variant="outline" size="sm" (click)="toggleDisabled()">
+            {{ currencyControl.disabled ? 'Enable' : 'Disable' }}
+        </tolle-button>
+        <span class="text-xs text-muted-foreground">
+            calls <code class="font-mono">control.disable()</code>
+        </span>
+    </div>
+
+    <pre class="rounded-md border border-border bg-muted/40 p-3 font-mono text-xs text-foreground">{{ form.value | json }}</pre>
+</form>

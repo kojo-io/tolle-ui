@@ -15,6 +15,7 @@ import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
 
 @Component({
   selector: 'tolle-alert-dialog-dynamic',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [
     CommonModule,

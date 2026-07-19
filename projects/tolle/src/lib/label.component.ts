@@ -4,6 +4,7 @@ import { cn } from './utils/cn';
 
 @Component({
     selector: 'tolle-label',
+  styles: [':host { display: inline-flex; }'],
     standalone: true,
     imports: [CommonModule],
     template: `

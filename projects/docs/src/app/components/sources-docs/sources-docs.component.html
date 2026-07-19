@@ -1,0 +1,154 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="sources"
+      description="A collapsible list of the citations behind a response — the trigger counts the sources for you."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        Compose the list from a trigger, its content and one
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">tolle-source</code> per citation. The list owns the
+        shared state and every source registers itself, so the trigger's “Used N sources” label needs no bindings — and
+        is correct before the list has ever been opened.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomy" language="html" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          Collapsed by default. Each citation is numbered in DOM order and opens in a new tab; the title falls back to
+          the href when you leave it empty.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-sources />
+        </app-preview>
+      </div>
+
+      <!-- Variants -->
+      <div class="mb-12 space-y-3" id="variants">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Variants and favicons</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">card</code> and
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">muted</code> give the list a surface of its own.
+          Pass a <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">favicon</code> and it replaces the
+          numbered chip; <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">size="sm"</code> tightens a long
+          list.
+        </p>
+        <app-preview [code]="variantsCode" language="html">
+          <app-sources-variants />
+        </app-preview>
+      </div>
+
+      <!-- Controlled -->
+      <div class="space-y-3" id="controlled">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Controlled</h3>
+        <p class="text-muted-foreground">
+          Bind <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">[(open)]</code> to drive the list from
+          outside — expand it automatically once a response finishes streaming, for instance.
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">openChange</code> reports user toggles only.
+        </p>
+        <app-preview [code]="controlledCode" language="html">
+          <app-sources-controlled />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="controlledTs" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">SourcesComponent Inputs</h3>
+      <app-prop-table [props]="sourcesProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">SourcesComponent Outputs</h3>
+        <app-prop-table [props]="sourcesOutputs" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">SourcesTriggerComponent Inputs</h3>
+        <app-prop-table [props]="triggerProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">SourcesContentComponent Inputs</h3>
+        <app-prop-table [props]="contentProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">SourceComponent Inputs</h3>
+        <app-prop-table [props]="sourceProps" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('variants')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Variants and favicons
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('controlled')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Controlled
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

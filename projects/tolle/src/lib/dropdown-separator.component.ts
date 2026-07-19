@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   template: `<div role="separator" aria-hidden="true" class="-mx-1 my-1 h-px bg-border"></div>`,
-  styles: ``
+  styles: `:host { display: block; }`
 })
 export class DropdownSeparatorComponent {
 

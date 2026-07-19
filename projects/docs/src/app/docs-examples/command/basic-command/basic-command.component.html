@@ -1,0 +1,39 @@
+<div class="flex w-full flex-col items-center gap-3">
+    <tolle-command ariaLabel="Quick actions" class="w-full max-w-md rounded-lg border border-border"
+        (selected)="onSelected($event)">
+        <tolle-command-input placeholder="Type a command or search…" />
+        <tolle-command-list>
+            <tolle-command-empty>No results found.</tolle-command-empty>
+
+            <tolle-command-group heading="Suggestions">
+                <tolle-command-item value="new-project" label="New project">
+                    <i class="ri-add-line" aria-hidden="true"></i>
+                    New project
+                    <tolle-command-shortcut>⌘P</tolle-command-shortcut>
+                </tolle-command-item>
+                <tolle-command-item value="search-docs" label="Search docs">
+                    <i class="ri-book-2-line" aria-hidden="true"></i>
+                    Search docs
+                    <tolle-command-shortcut>⌘K</tolle-command-shortcut>
+                </tolle-command-item>
+            </tolle-command-group>
+
+            <tolle-command-separator />
+
+            <tolle-command-group heading="Settings">
+                <tolle-command-item value="profile" label="Profile">
+                    <i class="ri-user-3-line" aria-hidden="true"></i>
+                    Profile
+                    <tolle-command-shortcut>⌘⇧P</tolle-command-shortcut>
+                </tolle-command-item>
+                <tolle-command-item value="appearance" label="Appearance">
+                    <i class="ri-palette-line" aria-hidden="true"></i>
+                    Appearance
+                    <tolle-command-shortcut>⌘T</tolle-command-shortcut>
+                </tolle-command-item>
+            </tolle-command-group>
+        </tolle-command-list>
+    </tolle-command>
+
+    <p class="text-sm text-muted-foreground">Selected: {{ chosen ?? 'nothing yet' }}</p>
+</div>

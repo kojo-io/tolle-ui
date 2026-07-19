@@ -1,0 +1,17 @@
+<div class="flex w-full max-w-xl flex-col gap-4">
+    <tolle-reasoning size="sm" [open]="open" [duration]="12" (openChange)="onOpenChange($event)">
+        <tolle-reasoning-trigger icon="ri-sparkling-2-line" thinkingLabel="Working on it…"
+            fallbackLabel="Thought about the request" />
+
+        <tolle-reasoning-content>
+            <p class="mb-2">Projected markup renders instead of a plain paragraph, so the trace can be structured:</p>
+            <ul class="list-disc space-y-1 pl-5">
+                <li>Read the failing test and the component under it.</li>
+                <li>Reproduced the timing bug with a fake clock.</li>
+                <li>Traced it to a subscription that outlived the component.</li>
+            </ul>
+        </tolle-reasoning-content>
+    </tolle-reasoning>
+
+    <p class="text-sm text-muted-foreground">Trace is {{ open ? 'expanded' : 'collapsed' }}.</p>
+</div>

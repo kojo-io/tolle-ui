@@ -1,0 +1,14 @@
+<div class="w-full max-w-xl space-y-4">
+  <p class="text-sm text-muted-foreground">Renamed the config file and re-ran the build.</p>
+
+  <tolle-checkpoint
+    label="Before refactor"
+    timestamp="14:32"
+    (restore)="onRestore('Before refactor')" />
+
+  <p class="text-sm text-muted-foreground">Extracted the parser into its own module.</p>
+
+  @if (restored) {
+    <p class="text-xs text-primary">Restored to: {{ restored }}</p>
+  }
+</div>

@@ -1,0 +1,47 @@
+<div class="flex w-full max-w-md flex-col gap-3">
+    <div
+        class="flex h-80 w-full flex-col overflow-hidden rounded-lg border border-border [&>tolle-message-scroller]:flex [&>tolle-message-scroller]:min-h-0 [&>tolle-message-scroller]:flex-1">
+        <tolle-message-scroller startPosition="bottom" [threshold]="32" (atBottomChange)="atBottom = $event">
+            <tolle-message-scroller-viewport>
+                <tolle-message-scroller-content>
+                    @for (turn of turns; track turn.id) {
+                    <div tolleMessageScrollerItem [scrollAnchor]="turn.startsTurn">
+                        <tolle-message [align]="turn.align">
+                            <tolle-message-avatar>{{ turn.align === 'end' ? 'ME' : 'AI' }}</tolle-message-avatar>
+                            <tolle-message-content>
+                                <tolle-bubble [variant]="turn.align === 'end' ? 'primary' : 'default'"
+                                    [align]="turn.align">
+                                    {{ turn.text }}
+                                </tolle-bubble>
+                            </tolle-message-content>
+                        </tolle-message>
+                    </div>
+                    }
+
+                    @if (streaming) {
+                    <tolle-marker variant="status" icon="ri-loader-4-line" label="Streaming…" [shimmer]="true" />
+                    }
+                </tolle-message-scroller-content>
+            </tolle-message-scroller-viewport>
+
+            <tolle-message-scroller-button>Jump to latest</tolle-message-scroller-button>
+        </tolle-message-scroller>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2">
+        <button type="button" (click)="streaming ? stop() : stream()"
+            class="rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent">
+            {{ streaming ? 'Stop streaming' : 'Stream a reply' }}
+        </button>
+        <button type="button" (click)="reset()"
+            class="rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent">
+            Reset
+        </button>
+        <span class="text-xs text-muted-foreground">at the live edge: {{ atBottom }}</span>
+    </div>
+
+    <p class="text-xs text-muted-foreground">
+        Start the stream, then scroll up a line or two. The transcript stops following immediately and the jump
+        button appears — the text keeps arriving, but it no longer moves the page under you.
+    </p>
+</div>

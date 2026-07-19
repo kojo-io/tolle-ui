@@ -1,0 +1,46 @@
+<tolle-menubar>
+    <tolle-menubar-menu>
+        <tolle-menubar-trigger>File</tolle-menubar-trigger>
+        <tolle-menubar-content class="min-w-[16rem]">
+            <tolle-menubar-label>Document</tolle-menubar-label>
+            <tolle-menubar-item>
+                <i prefix class="ri-file-add-line"></i>
+                New File
+                <span shortcut class="ml-auto text-xs text-muted-foreground">⌘N</span>
+            </tolle-menubar-item>
+            <tolle-menubar-item>
+                <i prefix class="ri-folder-open-line"></i>
+                Open…
+                <span shortcut class="ml-auto text-xs text-muted-foreground">⌘O</span>
+            </tolle-menubar-item>
+            <tolle-menubar-item>
+                <i prefix class="ri-save-line"></i>
+                Save
+                <span shortcut class="ml-auto text-xs text-muted-foreground">⌘S</span>
+            </tolle-menubar-item>
+            <tolle-menubar-separator />
+            <tolle-menubar-item [inset]="true">Save As…</tolle-menubar-item>
+            <tolle-menubar-item [disabled]="true">
+                <i prefix class="ri-printer-line"></i>
+                Print
+                <span shortcut class="ml-auto text-xs text-muted-foreground">⌘P</span>
+            </tolle-menubar-item>
+        </tolle-menubar-content>
+    </tolle-menubar-menu>
+
+    <tolle-menubar-menu>
+        <tolle-menubar-trigger>Edit</tolle-menubar-trigger>
+        <tolle-menubar-content class="min-w-[16rem]">
+            <tolle-menubar-item>
+                <i prefix class="ri-arrow-go-back-line"></i>
+                Undo
+                <span shortcut class="ml-auto text-xs text-muted-foreground">⌘Z</span>
+            </tolle-menubar-item>
+            <tolle-menubar-item>
+                <i prefix class="ri-arrow-go-forward-line"></i>
+                Redo
+                <span shortcut class="ml-auto text-xs text-muted-foreground">⇧⌘Z</span>
+            </tolle-menubar-item>
+        </tolle-menubar-content>
+    </tolle-menubar-menu>
+</tolle-menubar>

@@ -12,6 +12,7 @@ import { DateRange } from './types/date-range';
 
 @Component({
   selector: 'tolle-date-range-picker',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule, RangeCalendarComponent, InputComponent],
   providers: [
@@ -133,7 +134,7 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
     const schedule = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : (fn: FrameRequestCallback) => setTimeout(fn, 0);
     schedule(() => {
       this.updatePosition();
-      document.addEventListener('mousedown', this._outsideClickHandler);
+      document.addEventListener('pointerdown', this._outsideClickHandler, true);
     });
   }
 
@@ -143,7 +144,7 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
       this.cleanupAutoUpdate();
       this.cleanupAutoUpdate = undefined;
     }
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
   }
 
   clear(event: MouseEvent) {
@@ -202,7 +203,7 @@ export class DateRangePickerComponent implements ControlValueAccessor, OnDestroy
 
   ngOnDestroy() {
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
   }
 
   @HostListener('window:resize')

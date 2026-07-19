@@ -1,0 +1,9 @@
+<div class="flex w-full flex-col gap-4">
+    <tolle-suggestions ariaLabel="Follow-up prompts" (selected)="onSelected($event)">
+        @for (prompt of prompts; track prompt) {
+        <tolle-suggestion [value]="prompt">{{ prompt }}</tolle-suggestion>
+        }
+    </tolle-suggestions>
+
+    <p class="text-sm text-muted-foreground">Picked: {{ picked || 'nothing yet' }}</p>
+</div>

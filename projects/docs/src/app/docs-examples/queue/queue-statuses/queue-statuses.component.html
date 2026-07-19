@@ -1,0 +1,9 @@
+<div class="w-full max-w-md space-y-6">
+  <tolle-queue title="Batch run" size="sm">
+    <tolle-queue-item label="Fetch changelog" status="done" [removable]="false" />
+    <tolle-queue-item label="Generate release notes" status="running" [removable]="false" />
+    <tolle-queue-item label="Post to Slack" status="queued" />
+  </tolle-queue>
+
+  <tolle-queue title="Empty queue" emptyMessage="Nothing queued — send a prompt to get started." />
+</div>

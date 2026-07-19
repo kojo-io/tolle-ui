@@ -1,0 +1,31 @@
+<div class="w-full max-w-md space-y-3">
+    <tolle-input-group [stacked]="true" [invalid]="tooLong">
+        <tolle-input-group-textarea
+            id="review-comment"
+            [rows]="4"
+            placeholder="Leave a comment"
+            ariaDescribedby="review-comment-hint"
+            class="px-3"
+            [(ngModel)]="comment" />
+
+        <tolle-input-group-addon align="block-end" class="justify-between">
+            <tolle-input-group-text id="review-comment-hint">
+                {{ remaining }} characters left
+            </tolle-input-group-text>
+
+            <tolle-input-group-button
+                variant="default"
+                size="sm"
+                ariaLabel="Send comment"
+                [disabled]="!comment.trim() || tooLong"
+                (clicked)="send()">
+                <i class="ri-send-plane-line"></i>
+                Send
+            </tolle-input-group-button>
+        </tolle-input-group-addon>
+    </tolle-input-group>
+
+    @if (sent) {
+        <p class="text-xs text-muted-foreground">Comment sent.</p>
+    }
+</div>

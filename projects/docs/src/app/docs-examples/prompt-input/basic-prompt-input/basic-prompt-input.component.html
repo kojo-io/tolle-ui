@@ -1,0 +1,30 @@
+<div class="flex w-full max-w-xl flex-col gap-4">
+    @if (sent.length) {
+    <ul class="flex flex-col gap-2">
+        @for (item of sent; track $index) {
+        <li class="w-fit self-end rounded-lg bg-primary px-3 py-1.5 text-sm text-primary-foreground">{{ item }}</li>
+        }
+    </ul>
+    }
+
+    <tolle-prompt-input [(ngModel)]="message" placeholder="Ask anything…" (submitted)="onSubmitted($event)">
+        <tolle-prompt-input-toolbar>
+            <tolle-prompt-input-tools>
+                <tolle-button variant="ghost" size="icon-xs">
+                    <i class="ri-attachment-2" aria-hidden="true"></i>
+                    <span class="sr-only">Attach a file</span>
+                </tolle-button>
+                <tolle-button variant="ghost" size="icon-xs">
+                    <i class="ri-image-line" aria-hidden="true"></i>
+                    <span class="sr-only">Add an image</span>
+                </tolle-button>
+            </tolle-prompt-input-tools>
+
+            <tolle-prompt-input-submit />
+        </tolle-prompt-input-toolbar>
+    </tolle-prompt-input>
+
+    <p class="text-xs text-muted-foreground">
+        Enter sends, Shift+Enter starts a new line. The textarea grows with the message.
+    </p>
+</div>

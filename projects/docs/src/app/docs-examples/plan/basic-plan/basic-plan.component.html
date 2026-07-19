@@ -1,0 +1,19 @@
+<div class="w-full max-w-lg">
+  <tolle-plan title="Migration plan">
+    <tolle-plan-step
+      label="Read the existing schema"
+      description="Inspect the tables the migration will touch."
+      status="done" />
+    <tolle-plan-step
+      label="Generate migration files"
+      description="One file per table, reversible."
+      status="active" />
+    <tolle-plan-step
+      label="Run against staging"
+      status="pending" />
+    <tolle-plan-step
+      label="Backfill legacy rows"
+      description="Skipped — no legacy rows found."
+      status="skipped" />
+  </tolle-plan>
+</div>

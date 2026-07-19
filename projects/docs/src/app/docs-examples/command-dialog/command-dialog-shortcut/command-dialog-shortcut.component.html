@@ -1,0 +1,50 @@
+<div class="flex w-full max-w-sm flex-col items-start gap-3">
+    <tolle-button variant="outline" (click)="paletteOpen = true">
+        <i class="ri-flashlight-line mr-2"></i>
+        Quick actions
+        <tolle-kbd-group class="ml-4">
+            <tolle-kbd size="sm">&#8984;</tolle-kbd>
+            <tolle-kbd size="sm">J</tolle-kbd>
+        </tolle-kbd-group>
+    </tolle-button>
+
+    <p class="text-sm text-muted-foreground">
+        Status: <span class="font-mono text-foreground">{{ status }}</span>
+        <span class="ml-2">Last action: <span class="font-mono text-foreground">{{ lastAction || 'none yet' }}</span></span>
+    </p>
+
+    <tolle-command-dialog [(open)]="paletteOpen" shortcut="mod+j" [closeOnBackdrop]="false"
+        ariaLabel="Quick actions" (opened)="status = 'opened'" (closed)="status = 'closed'">
+        <tolle-command (selected)="onSelected($event)">
+            <tolle-command-input placeholder="Search actions…" />
+
+            <tolle-command-list>
+                <tolle-command-empty>Nothing matches that.</tolle-command-empty>
+
+                <tolle-command-group heading="Actions">
+                    <tolle-command-item value="deploy" label="Deploy to production">
+                        <i class="ri-rocket-line"></i>
+                        <span>Deploy to production</span>
+                        <tolle-command-shortcut>
+                            <tolle-kbd size="sm">&#8984;</tolle-kbd>
+                            <tolle-kbd size="sm">D</tolle-kbd>
+                        </tolle-command-shortcut>
+                    </tolle-command-item>
+                    <tolle-command-item value="invite" label="Invite teammate">
+                        <i class="ri-user-add-line"></i>
+                        <span>Invite teammate</span>
+                    </tolle-command-item>
+                    <tolle-command-item value="rotate-keys" label="Rotate API keys">
+                        <i class="ri-key-2-line"></i>
+                        <span>Rotate API keys</span>
+                    </tolle-command-item>
+                </tolle-command-group>
+            </tolle-command-list>
+        </tolle-command>
+
+        <div class="flex items-center justify-between border-t border-border px-3 py-2">
+            <span class="text-xs text-muted-foreground">Backdrop clicks are ignored.</span>
+            <tolle-button variant="ghost" size="sm" (click)="paletteOpen = false">Close</tolle-button>
+        </div>
+    </tolle-command-dialog>
+</div>

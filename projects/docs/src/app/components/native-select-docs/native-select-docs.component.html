@@ -1,0 +1,116 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="native-select" title="Native Select"
+      description="A styled native select that uses the platform dropdown — no portal, great on mobile." id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">Pass options through the
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">options</code> input, or project
+          your own <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;option&gt;</code>
+          elements.
+        </p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-native-select />
+        </app-preview>
+      </div>
+
+      <!-- Sizes and states -->
+      <div class="mb-12 space-y-3" id="sizes">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Sizes and states</h3>
+        <p class="text-muted-foreground">Four heights, plus invalid and disabled states.</p>
+        <app-preview [code]="sizesCode" language="html" align="start">
+          <app-native-select-sizes />
+        </app-preview>
+      </div>
+
+      <!-- Forms -->
+      <div class="space-y-3" id="forms">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Forms</h3>
+        <p class="text-muted-foreground">
+          The component implements
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">ControlValueAccessor</code>, so it
+          works with <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">ngModel</code> and
+          reactive forms. Non-string option values keep their type — a numeric option comes back as a number, not the
+          DOM's stringified value.
+        </p>
+        <app-preview [code]="formsTemplateCode" language="html" align="start">
+          <app-native-select-forms />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="formsCode" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Props</h3>
+      <app-prop-table [props]="nativeSelectProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Events</h3>
+        <app-prop-table [props]="nativeSelectEvents" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('sizes')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Sizes and states
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('forms')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Forms
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

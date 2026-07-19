@@ -1,0 +1,17 @@
+<div class="flex w-full max-w-xl flex-col gap-4">
+    <tolle-suggestions ariaLabel="Follow-up prompts">
+        @for (item of followUps; track item.value) {
+        <tolle-suggestion [value]="item.value" [icon]="item.icon" (selected)="onPicked($event)">
+            {{ item.label }}
+        </tolle-suggestion>
+        }
+    </tolle-suggestions>
+
+    <div class="text-sm text-muted-foreground">
+        @if (sent.length) {
+        <span>Recently picked: {{ sent.join(', ') }}</span>
+        } @else {
+        <span>Scroll the row sideways, then pick a prompt.</span>
+        }
+    </div>
+</div>

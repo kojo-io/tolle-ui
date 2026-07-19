@@ -1,0 +1,20 @@
+<div class="w-full max-w-lg rounded-lg border border-border p-2">
+    <tolle-item-group>
+        @for (notification of notifications; track notification.title) {
+        <tolle-item size="sm">
+            <tolle-item-media>
+                <i [class]="notification.icon + ' text-lg'"></i>
+            </tolle-item-media>
+
+            <tolle-item-content>
+                <tolle-item-title>{{ notification.title }}</tolle-item-title>
+                <tolle-item-description>{{ notification.description }}</tolle-item-description>
+            </tolle-item-content>
+
+            <tolle-item-actions>
+                <tolle-badge variant="secondary" size="xs">{{ notification.status }}</tolle-badge>
+            </tolle-item-actions>
+        </tolle-item>
+        }
+    </tolle-item-group>
+</div>

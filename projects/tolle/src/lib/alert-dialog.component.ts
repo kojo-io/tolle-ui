@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, Injectable, inject, TemplateRef, ViewChild, ViewContainerRef, OnDestroy, OnInit, ContentChild, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, Injectable, inject, TemplateRef, ViewChild, ViewContainerRef, OnDestroy, OnInit, ContentChild, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Overlay, OverlayRef, OverlayConfig } from '@angular/cdk/overlay';
 import { TemplatePortal, ComponentPortal } from '@angular/cdk/portal';
@@ -27,6 +27,7 @@ class AlertDialogInternalService {
 
 @Component({
     selector: 'tolle-alert-dialog',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     providers: [AlertDialogInternalService],
@@ -49,6 +50,7 @@ export class AlertDialogComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-trigger',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -66,6 +68,7 @@ export class AlertDialogTriggerComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-portal',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `
@@ -138,6 +141,7 @@ export class AlertDialogPortalComponent implements OnInit, OnDestroy {
 
 @Component({
     selector: 'tolle-alert-dialog-content',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule, A11yModule],
     template: `<div [class]="computedClass" [attr.data-state]="isOpen ? 'open' : 'closed'"
@@ -187,6 +191,7 @@ export class AlertDialogContentComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-header',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -199,6 +204,7 @@ export class AlertDialogHeaderComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-footer',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -211,6 +217,7 @@ export class AlertDialogFooterComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-title',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -225,6 +232,7 @@ export class AlertDialogTitleComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-description',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -239,18 +247,40 @@ export class AlertDialogDescriptionComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-action',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`
 })
 export class AlertDialogActionComponent {
+    private alertDialogService = inject(AlertDialogInternalService, { optional: true });
+
+    /** Fires before the dialog closes, so consumers can run the confirmed action. */
+    @Output() confirmed = new EventEmitter<MouseEvent>();
+
+    @HostListener('click', ['$event'])
+    handleClick(event: MouseEvent) {
+        this.confirmed.emit(event);
+        this.alertDialogService?.setOpen(false);
+    }
 }
 
 @Component({
     selector: 'tolle-alert-dialog-cancel',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`
 })
 export class AlertDialogCancelComponent {
+    private alertDialogService = inject(AlertDialogInternalService, { optional: true });
+
+    /** Fires before the dialog closes, so consumers can react to a dismissal. */
+    @Output() cancelled = new EventEmitter<MouseEvent>();
+
+    @HostListener('click', ['$event'])
+    handleClick(event: MouseEvent) {
+        this.cancelled.emit(event);
+        this.alertDialogService?.setOpen(false);
+    }
 }

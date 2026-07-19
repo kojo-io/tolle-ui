@@ -1,0 +1,137 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="bubble"
+      description="The visible surface of a chat message — the rounded panel the text sits in, with hover actions and reactions."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Variants and sizes</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">align</code> squares the bottom
+          corner nearest the sender, so the bubble reads as having a tail. Match it to the enclosing
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-message</code>.
+        </p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-bubble />
+        </app-preview>
+      </div>
+
+      <!-- Actions and reactions -->
+      <div class="mb-12 space-y-3" id="actions">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Actions and reactions</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-bubble-actions</code> stays
+          hidden until the bubble is hovered or something inside it takes focus — so a transcript is not a wall of
+          buttons, but the controls are still reachable by keyboard. Clicks are stopped inside the row, so an
+          interactive bubble does not fire as well.
+        </p>
+        <app-preview [code]="actionsCode" language="html" align="start">
+          <app-bubble-actions />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="actionsTsCode" language="typescript" />
+        </div>
+      </div>
+
+      <!-- Collapsible -->
+      <div class="space-y-3" id="collapsible">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Long answers and interactive bubbles</h3>
+        <p class="text-muted-foreground">
+          A long generated answer can bury the rest of the transcript. Set
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">collapsible</code> to clamp it to
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">collapsedHeight</code> behind a
+          toggle. Setting <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">interactive</code>
+          makes the whole surface a focusable trigger for jump-to-thread or open-detail.
+        </p>
+        <app-preview [code]="collapsibleCode" language="html" align="start">
+          <app-collapsible-bubble />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Bubble Props</h3>
+      <app-prop-table [props]="bubbleProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Bubble Events</h3>
+        <app-prop-table [props]="bubbleEvents" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Bubble Actions Props</h3>
+        <app-prop-table [props]="actionsProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Bubble Reactions Props</h3>
+        <app-prop-table [props]="reactionsProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">BubbleReaction</h3>
+        <app-prop-table [props]="reactionType" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Variants and sizes
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('actions')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Actions and reactions
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('collapsible')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Long answers
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

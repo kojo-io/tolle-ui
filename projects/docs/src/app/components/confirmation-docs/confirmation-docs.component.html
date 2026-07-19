@@ -1,0 +1,91 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="confirmation"
+      description="An inline approve or deny prompt for an agent action that needs a human decision."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          The prompt lives in the transcript rather than in a modal, so the surrounding context stays
+          readable while the user decides. Once resolved it collapses to a compact row — the decision stays
+          visible in the history instead of vanishing.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-confirmation />
+        </app-preview>
+      </div>
+
+      <div class="space-y-3" id="states">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">States</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">state</code> is controlled by you, so a
+          decision made in a previous session renders correctly when the transcript is replayed.
+        </p>
+        <app-preview [code]="statesCode" language="html">
+          <app-confirmation-resolved />
+        </app-preview>
+      </div>
+    </section>
+
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Props</h3>
+      <app-prop-table [props]="confirmationProps" />
+
+      <h3 class="mt-8 text-lg font-semibold mb-4">Events</h3>
+      <app-prop-table [props]="confirmationEvents" />
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('states')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              States
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

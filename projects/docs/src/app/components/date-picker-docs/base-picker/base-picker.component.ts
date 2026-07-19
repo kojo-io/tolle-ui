@@ -4,7 +4,7 @@ import {SourceCodeService} from '../../../shared/source-code.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe, NgIf} from '@angular/common';
 import {BaseEditorComponent} from '../../../shared/base-editor/base-editor.component';
-import {SegmentedComponent} from '../../../../../../tolle/src/lib/segment.component';
+import {SegmentComponent} from '../../../../../../tolle/src/lib/segment.component';
 import {FormsModule} from '@angular/forms';
 import {BaseDatePickerComponent} from '../../../docs-examples/date-picker/base-date-picker/base-date-picker.component';
 
@@ -15,7 +15,7 @@ import {BaseDatePickerComponent} from '../../../docs-examples/date-picker/base-d
     AsyncPipe,
     BaseEditorComponent,
     NgIf,
-    SegmentedComponent,
+    SegmentComponent,
     FormsModule,
     BaseDatePickerComponent
   ],

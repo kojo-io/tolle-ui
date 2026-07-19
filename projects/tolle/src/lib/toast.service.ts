@@ -2,11 +2,13 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
+export type ToastVariant = 'default' | 'destructive' | 'success' | 'warning' | 'info';
+
 export interface Toast {
   id: number;
   title?: string;
   description: string;
-  variant?: 'default' | 'destructive' | 'success';
+  variant?: ToastVariant;
   duration?: number; // Custom duration in ms
   remainingTime: number;
   isPaused: boolean;
@@ -16,6 +18,7 @@ export type ToastPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-
 @Injectable({ providedIn: 'root' })
 export class ToastService {
   private toasts: Toast[] = [];
+  private nextId = 0;
   private toastSubject = new Subject<Toast[]>();
   toasts$ = this.toastSubject.asObservable();
 
@@ -26,7 +29,7 @@ export class ToastService {
     const duration = toast.duration || 3000;
     const newToast: Toast = {
       ...toast,
-      id: Date.now(),
+      id: ++this.nextId,
       duration,
       remainingTime: duration,
       isPaused: false

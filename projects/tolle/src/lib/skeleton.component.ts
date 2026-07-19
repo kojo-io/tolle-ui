@@ -24,6 +24,7 @@ export type SkeletonProps = VariantProps<typeof skeletonVariants>;
 
 @Component({
   selector: 'tolle-skeleton',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   template: `

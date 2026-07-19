@@ -1,0 +1,21 @@
+<div class="flex w-full max-w-xl flex-col gap-3">
+    <tolle-tool state="pending">
+        <tolle-tool-header name="read_file" icon="ri-file-text-line" />
+        <tolle-tool-input [payload]="{ path: 'src/app/app.config.ts' }" />
+    </tolle-tool>
+
+    <tolle-tool state="running">
+        <tolle-tool-header name="run_tests" icon="ri-flask-line" />
+        <tolle-tool-input [payload]="{ project: 'tolle' }" />
+    </tolle-tool>
+
+    <tolle-tool state="success" [open]="true">
+        <tolle-tool-header name="write_file" icon="ri-quill-pen-line" />
+        <tolle-tool-output payload="Wrote 42 lines to src/app/app.config.ts" />
+    </tolle-tool>
+
+    <tolle-tool state="error" [open]="true">
+        <tolle-tool-header name="fetch_url" icon="ri-global-line" />
+        <tolle-tool-output [error]="true" payload="TimeoutError: request exceeded 30s" />
+    </tolle-tool>
+</div>

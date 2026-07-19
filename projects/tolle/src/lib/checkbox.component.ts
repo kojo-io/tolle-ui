@@ -30,6 +30,7 @@ export type CheckboxProps = VariantProps<typeof checkboxVariants>;
 
 @Component({
   selector: 'tolle-checkbox',
+  styles: [':host { display: inline-flex; }'],
   standalone: true,
   imports: [CommonModule],
   providers: [

@@ -87,3 +87,70 @@ export * from './lib/phone-number.service';
 export * from './lib/country-codes.service';
 export * from './lib/resizable-panel.component';
 export * from './lib/resizable-panel-item.component';
+export * from './lib/aspect-ratio.component';
+export * from './lib/resizable.component';
+export * from './lib/context-menu.component';
+export * from './lib/context-menu-trigger.directive';
+export * from './lib/context-menu.service';
+export * from './lib/select.service';
+export * from './lib/radio-service';
+export * from './lib/types/date-range';
+
+/* --- shadcn parity: phase 1 --- */
+export * from './lib/spinner.component';
+export * from './lib/kbd.component';
+export * from './lib/item.component';
+export * from './lib/native-select.component';
+export * from './lib/typography.component';
+
+/* --- shadcn parity: phase 2 --- */
+export * from './lib/field.component';
+export * from './lib/input-group.component';
+
+/* --- shadcn parity: phase 3 --- */
+export * from './lib/table.component';
+export * from './lib/menubar.component';
+export * from './lib/navigation-menu.component';
+
+
+/* --- shadcn parity: phase 4 --- */
+export * from './lib/command.service';
+export * from './lib/command.component';
+export * from './lib/command-dialog.component';
+export * from './lib/combobox.component';
+
+/* --- AI & chat: transcript surface --- */
+export * from './lib/message-scroller.service';
+export * from './lib/message-scroller.component';
+export * from './lib/message.component';
+export * from './lib/bubble.component';
+export * from './lib/marker.component';
+export * from './lib/attachment.component';
+export * from './lib/conversation.component';
+
+/* --- AI & chat: composer and response parts --- */
+export * from './lib/prompt-input.component';
+export * from './lib/reasoning.component';
+export * from './lib/tool.component';
+export * from './lib/sources.component';
+export * from './lib/suggestion.component';
+export * from './lib/inline-citation.component';
+export * from './lib/shimmer.component';
+
+/* --- AI & chat: agent workflow --- */
+export * from './lib/task.component';
+export * from './lib/chain-of-thought.component';
+export * from './lib/plan.component';
+export * from './lib/queue.component';
+export * from './lib/checkpoint.component';
+export * from './lib/confirmation.component';
+export * from './lib/context.component';
+export * from './lib/model-selector.component';
+
+/* --- Charts --- */
+export * from './lib/chart.service';
+export * from './lib/chart.component';
+export * from './lib/chart-pie.component';
+
+/* --- Internationalisation --- */
+export * from './lib/direction.component';

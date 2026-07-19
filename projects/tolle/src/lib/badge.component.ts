@@ -30,6 +30,7 @@ export type BadgeProps = VariantProps<typeof badgeVariants>;
 
 @Component({
   selector: 'tolle-badge',
+  styles: [':host { display: inline-flex; }'],
   standalone: true,
   imports: [CommonModule],
   template: `

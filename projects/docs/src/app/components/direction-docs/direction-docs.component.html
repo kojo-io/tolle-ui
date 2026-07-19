@@ -1,0 +1,111 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="direction"
+      description="Sets the writing direction for a subtree and publishes it so components can mirror correctly."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the directive if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          This is a directive on your own element, not a wrapper component — it sets
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">dir</code> on the host and adds no
+          extra DOM.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-direction />
+        </app-preview>
+      </div>
+
+      <div class="mb-12 space-y-3" id="toggle">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Switching at runtime</h3>
+        <p class="text-muted-foreground">
+          Because the direction is a binding, a locale switch flips the whole subtree without a reload.
+          Prefer logical CSS properties (<code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">ms-*</code>,
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">me-*</code>,
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">ps-*</code>) over
+          left/right ones in your own markup so it mirrors with the container.
+        </p>
+        <app-preview [code]="toggleCode" language="html">
+          <app-direction-toggle />
+        </app-preview>
+      </div>
+
+      <div class="space-y-3" id="service">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Reading the direction</h3>
+        <p class="text-muted-foreground">
+          Components that need to flip an icon or an animation can read the published value instead of
+          re-deriving it from the DOM.
+        </p>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="serviceCode" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Props</h3>
+      <app-prop-table [props]="directionProps" />
+
+      <h3 class="mt-8 text-lg font-semibold mb-4">Events</h3>
+      <app-prop-table [props]="directionEvents" />
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('toggle')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Switching at runtime
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('service')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Reading the direction
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

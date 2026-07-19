@@ -33,7 +33,7 @@ export type SegmentItem = {
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SegmentedComponent),
+      useExisting: forwardRef(() => SegmentComponent),
       multi: true
     }
   ],
@@ -91,7 +91,7 @@ export type SegmentItem = {
     }
   `]
 })
-export class SegmentedComponent implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy {
+export class SegmentComponent implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy {
   @Input() items: SegmentItem[] = [];
   @Input() class = '';
   @Input() disabled = false;
@@ -245,3 +245,14 @@ export class SegmentedComponent implements ControlValueAccessor, AfterViewInit, 
 
   protected cn = cn;
 }
+
+/**
+ * Back-compat alias: the class was renamed to match its `tolle-segment` selector.
+ *
+ * A re-export binding rather than `const SegmentedComponent = SegmentComponent`,
+ * because Angular's AOT compiler resolves an aliased export straight back to the
+ * class declaration — so it still works in a consumer's `imports: []` array.
+ *
+ * @deprecated Use `SegmentComponent`. This alias will be removed in a future major.
+ */
+export { SegmentComponent as SegmentedComponent };

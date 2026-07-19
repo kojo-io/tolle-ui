@@ -1,0 +1,10 @@
+<div class="w-full max-w-xl space-y-4">
+  @for (point of checkpoints; track point.label) {
+    <tolle-checkpoint
+      [label]="point.label"
+      [timestamp]="point.timestamp"
+      [active]="point.label === activeLabel"
+      size="sm"
+      (restore)="restore(point.label)" />
+  }
+</div>

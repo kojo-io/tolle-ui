@@ -1,0 +1,135 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="table"
+      description="Unstyled table primitives you compose yourself, for full control over the markup." id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        Only <code class="rounded bg-muted px-1 py-0.5 text-sm">&lt;tolle-table&gt;</code> is a custom element.
+        Everything below it is a <strong>directive applied to the native element</strong> —
+        <code class="rounded bg-muted px-1 py-0.5 text-sm">&lt;thead tolleTableHeader&gt;</code>,
+        <code class="rounded bg-muted px-1 py-0.5 text-sm">&lt;tr tolleTableRow&gt;</code>,
+        <code class="rounded bg-muted px-1 py-0.5 text-sm">&lt;td tolleTableCell&gt;</code>. There is no
+        <code class="rounded bg-muted px-1 py-0.5 text-sm">&lt;tolle-table-row&gt;</code> element: a wrapper sitting
+        between <code class="rounded bg-muted px-1 py-0.5 text-sm">&lt;tbody&gt;</code> and
+        <code class="rounded bg-muted px-1 py-0.5 text-sm">&lt;tr&gt;</code> would break the CSS table layout, so the
+        directives style the real elements in place and add no DOM of their own.
+      </p>
+      <p class="text-muted-foreground">
+        This is the low-level building block. If you need sorting, paging, selection and column definitions out of the
+        box, reach for <code class="rounded bg-muted px-1 py-0.5 text-sm">tolle-data-table</code> instead.
+      </p>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">A caption, a header row, and a right-aligned amount column.</p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-table />
+        </app-preview>
+      </div>
+
+      <!-- Footer -->
+      <div class="mb-12 space-y-3" id="footer">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">With a footer</h3>
+        <p class="text-muted-foreground">
+          Rows come from a typed array in the component, and a <code
+            class="rounded bg-muted px-1 py-0.5 text-sm">&lt;tfoot tolleTableFooter&gt;</code> carries the total.
+        </p>
+        <app-preview [code]="footerCode" language="html">
+          <app-table-with-footer />
+        </app-preview>
+      </div>
+
+      <!-- Selectable rows -->
+      <div class="space-y-3" id="selectable">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Selectable rows</h3>
+        <p class="text-muted-foreground">
+          Bind <code class="rounded bg-muted px-1 py-0.5 text-sm">selected</code> on the row directive to highlight the
+          active record, and set <code class="rounded bg-muted px-1 py-0.5 text-sm">sort</code> on a header cell to
+          publish the current sort direction as <code class="rounded bg-muted px-1 py-0.5 text-sm">aria-sort</code>.
+        </p>
+        <app-preview [code]="selectableCode" language="html">
+          <app-selectable-rows />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Table Props</h3>
+      <app-prop-table [props]="tableProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Directives</h3>
+        <app-prop-table [props]="subComponents" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('footer')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              With a footer
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('selectable')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Selectable rows
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

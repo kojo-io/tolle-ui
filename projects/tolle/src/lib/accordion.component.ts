@@ -5,6 +5,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-accordion',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule], // No AccordionItemComponent import needed here if projected via ng-content
   template: `

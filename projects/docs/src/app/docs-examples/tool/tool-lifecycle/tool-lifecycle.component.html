@@ -1,0 +1,11 @@
+<div class="flex w-full max-w-xl flex-col gap-4">
+    <tolle-button variant="outline" size="sm" class="w-fit" (click)="run()">
+        {{ state === 'running' ? 'Running…' : 'Run the tool call' }}
+    </tolle-button>
+
+    <tolle-tool [state]="state" [(open)]="open">
+        <tolle-tool-header name="query_database" icon="ri-database-2-line" />
+        <tolle-tool-input [payload]="input" />
+        <tolle-tool-output *ngIf="output" [payload]="output" label="Rows" />
+    </tolle-tool>
+</div>

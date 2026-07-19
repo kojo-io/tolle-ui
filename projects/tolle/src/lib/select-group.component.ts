@@ -3,6 +3,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-select-group',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `
     <div [class]="cn('px-2 py-1.5 text-sm font-semibold text-muted-foreground', class)">

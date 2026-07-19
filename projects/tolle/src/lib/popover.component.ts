@@ -5,6 +5,7 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChil
 
 @Component({
   selector: 'tolle-popover',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   template: `
@@ -34,9 +35,13 @@ export class PopoverComponent implements OnDestroy {
   private cleanup?: () => void;
 
   private _outsideClickHandler = (event: MouseEvent) => {
-    if (!this.triggerEl.nativeElement.contains(event.target) && !this.popoverEl?.nativeElement.contains(event.target)) {
+    if (!this.triggerEl?.nativeElement.contains(event.target) && !this.popoverEl?.nativeElement.contains(event.target)) {
       this.close();
     }
+  };
+
+  private _escapeHandler = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') this.close();
   };
 
   toggle() {
@@ -48,7 +53,8 @@ export class PopoverComponent implements OnDestroy {
     this.onOpen.emit();
     setTimeout(() => {
       this.updatePosition();
-      document.addEventListener('mousedown', this._outsideClickHandler);
+      document.addEventListener('pointerdown', this._outsideClickHandler, true);
+      document.addEventListener('keydown', this._escapeHandler, true);
     });
   }
 
@@ -56,7 +62,8 @@ export class PopoverComponent implements OnDestroy {
     this.isOpen = false;
     this.onClose.emit();
     if (this.cleanup) this.cleanup();
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
+    document.removeEventListener('keydown', this._escapeHandler, true);
   }
 
   private updatePosition() {
@@ -83,6 +90,7 @@ export class PopoverComponent implements OnDestroy {
 
   ngOnDestroy() {
     if (this.cleanup) this.cleanup();
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
+    document.removeEventListener('keydown', this._escapeHandler, true);
   }
 }

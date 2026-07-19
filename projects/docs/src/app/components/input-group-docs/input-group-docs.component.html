@@ -1,0 +1,136 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="input-group"
+      description="Wraps an input with leading or trailing addons — icons, text, and buttons — inside one bordered control."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Search -->
+      <div class="mb-12 space-y-3" id="search">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Search</h3>
+        <p class="text-muted-foreground">
+          A leading
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-input-group-addon</code>
+          holds the icon; the group owns the border and the shared focus ring.
+        </p>
+        <app-preview [code]="searchCode" language="html" align="start">
+          <app-input-group-search />
+        </app-preview>
+      </div>
+
+      <!-- Addons and buttons -->
+      <div class="mb-12 space-y-3" id="addons">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Addons and buttons</h3>
+        <p class="text-muted-foreground">
+          Use <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">align="inline-end"</code> for a
+          trailing unit or action. Icon-only buttons need an
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">ariaLabel</code>.
+        </p>
+        <app-preview [code]="addonsCode" language="html" align="start">
+          <app-input-group-addons />
+        </app-preview>
+      </div>
+
+      <!-- Stacked -->
+      <div class="space-y-3" id="stacked">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Stacked</h3>
+        <p class="text-muted-foreground">
+          Set <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">stacked</code> on the group to
+          place a <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">block-end</code> addon
+          under a textarea.
+        </p>
+        <app-preview [code]="stackedCode" language="html" align="start">
+          <app-input-group-stacked />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">InputGroup Props</h3>
+      <app-prop-table [props]="groupProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">InputGroupAddon Props</h3>
+        <app-prop-table [props]="addonProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">InputGroupButton Props</h3>
+        <app-prop-table [props]="buttonProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">InputGroupText Props</h3>
+        <app-prop-table [props]="textProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">InputGroupInput Props</h3>
+        <app-prop-table [props]="inputProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">InputGroupTextarea Props</h3>
+        <app-prop-table [props]="textareaProps" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('search')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Search
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('addons')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Addons and buttons
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('stacked')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Stacked
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

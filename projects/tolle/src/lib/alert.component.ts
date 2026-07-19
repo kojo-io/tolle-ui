@@ -26,6 +26,7 @@ type AlertVariants = VariantProps<typeof alertVariants>;
 
 @Component({
   selector: 'tolle-alert',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   animations: [

@@ -1,0 +1,19 @@
+<div class="w-full max-w-xl space-y-3">
+  <tolle-confirmation
+    title="Delete 3 files?"
+    description="src/legacy/parser.ts, src/legacy/lexer.ts and src/legacy/index.ts will be removed."
+    confirmLabel="Delete"
+    cancelLabel="Keep"
+    confirmedLabel="Deleted"
+    cancelledLabel="Kept"
+    [state]="state"
+    (confirmed)="approve()"
+    (cancelled)="deny()" />
+
+  @if (state !== 'pending') {
+    <button type="button" (click)="reset()"
+      class="text-xs text-muted-foreground underline underline-offset-4 hover:text-foreground">
+      Reset demo
+    </button>
+  }
+</div>

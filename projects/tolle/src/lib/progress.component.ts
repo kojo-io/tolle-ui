@@ -4,6 +4,7 @@ import { cn } from './utils/cn';
 
 @Component({
     selector: 'tolle-progress',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `

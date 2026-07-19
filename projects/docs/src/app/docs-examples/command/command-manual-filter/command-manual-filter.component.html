@@ -1,0 +1,17 @@
+<tolle-command ariaLabel="Repository search" [shouldFilter]="false"
+    class="w-full max-w-md rounded-lg border border-border" (queryChange)="onQueryChange($event)">
+    <tolle-command-input placeholder="Search repositories…" />
+    <tolle-command-list>
+        <div *ngIf="results.length === 0" class="py-6 text-center text-sm text-muted-foreground">
+            No repositories found.
+        </div>
+
+        <tolle-command-group heading="Repositories">
+            <tolle-command-item *ngFor="let repo of results" [value]="repo.owner + '/' + repo.name"
+                [label]="repo.name">
+                <i class="ri-git-repository-line" aria-hidden="true"></i>
+                <span>{{ repo.owner }}/{{ repo.name }}</span>
+            </tolle-command-item>
+        </tolle-command-group>
+    </tolle-command-list>
+</tolle-command>

@@ -5,6 +5,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-accordion-item',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   animations: [

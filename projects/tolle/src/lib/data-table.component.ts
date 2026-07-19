@@ -79,18 +79,18 @@ export interface TableColumn {
         </tolle-popover>
       </div>
 
-      <div [class]="cn('flex-1 min-h-0 overflow-hidden relative w-full', bordered ? 'rounded-md border border-border' : '')">
+      <div [class]="cn('flex-1 min-h-0 overflow-hidden relative w-full', bordered ? 'rounded-md border border-border' : '', tableBackground)">
         <div class="overflow-auto w-full h-full" [style.max-height]="maxHeight">
 
           <table class="w-full table-auto border-collapse">
-            <thead class="border-b border-border bg-background">
+            <thead [class]="cn('border-b border-border', resolvedHeaderBackground)">
             <tr>
-              <th *ngIf="expandable" scope="col" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]', stickyHeader ? 'sticky top-0 z-10 bg-background' : '')"></th>
+              <th *ngIf="expandable" scope="col" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]', stickyHeader ? 'sticky top-0 z-10 ' + resolvedHeaderBackground : '')"></th>
 
               <th *ngFor="let col of activeColumns"
                   scope="col"
                   [attr.aria-sort]="sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : (sortDir === 'desc' ? 'descending' : 'none')) : 'none'"
-                  [class]="cn('text-left font-medium text-foreground',headerPaddingClass,fontSizeClass, col.class, stickyHeader ? 'sticky top-0 z-10 bg-background shadow-sm' : '')">
+                  [class]="cn('text-left font-medium text-foreground',headerPaddingClass,fontSizeClass, col.class, stickyHeader ? 'sticky top-0 z-10 shadow-sm ' + resolvedHeaderBackground : '')">
 
                 <button *ngIf="col.sortable; else plainHeader"
                      type="button"
@@ -109,7 +109,7 @@ export interface TableColumn {
 
             <tbody class="divide-y divide-border">
             <ng-container *ngFor="let row of pagedData; let i = index">
-              <tr class="hover:bg-muted/50 transition-colors">
+              <tr [class]="cn('transition-colors', getRowBackground(row, i), 'hover:bg-muted/50')">
                 <td *ngIf="expandable" class="px-4">
                   <button (click)="toggleRow(i)"
                           [attr.aria-label]="expandedRows.has(i) ? 'Collapse row' : 'Expand row'"
@@ -200,6 +200,49 @@ export class DataTableComponent implements OnInit, OnChanges {
 
   // Draws a physical border around the table itself (not the whole component).
   @Input() bordered = true;
+
+  // --- Background Colors ---
+  // All of these take Tailwind class strings (e.g. 'bg-card', 'bg-muted/40') so
+  // they stay theme-token aware and follow dark mode, matching `col.class`.
+
+  /** Background for the table surface, behind both header and rows. */
+  @Input() tableBackground = '';
+
+  /**
+   * Background for the header row. Must be opaque when `stickyHeader` is on,
+   * otherwise rows scroll visibly through the header — hence the default
+   * `bg-background` rather than transparent.
+   */
+  @Input() headerBackground = 'bg-background';
+
+  /** Alternating row backgrounds. Applied to odd rows only. */
+  @Input() striped = false;
+
+  /** Background applied to odd rows when `striped` is on. */
+  @Input() stripeBackground = 'bg-muted/30';
+
+  /**
+   * Per-row background, resolved against the row's own data — e.g.
+   * `[rowBackground]="r => r.overdue ? 'bg-destructive/10' : ''"`.
+   * Takes precedence over `striped`.
+   */
+  @Input() rowBackground?: (row: any, index: number) => string;
+
+  /**
+   * A sticky header with no background lets rows scroll visibly through it, so
+   * fall back to an opaque default if a consumer clears `headerBackground`.
+   */
+  get resolvedHeaderBackground(): string {
+    if (this.stickyHeader && !this.headerBackground) return 'bg-background';
+    return this.headerBackground;
+  }
+
+  /** Resolves the background for a body row: per-row callback wins over striping. */
+  getRowBackground(row: any, index: number): string {
+    const custom = this.rowBackground?.(row, index);
+    if (custom) return custom;
+    return this.striped && index % 2 === 1 ? this.stripeBackground : '';
+  }
 
   // --- Column Hiding Settings ---
   @Input() allowColumnHiding = true;

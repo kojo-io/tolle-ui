@@ -1,0 +1,22 @@
+<tolle-command ariaLabel="Workspace settings" class="w-full max-w-md rounded-lg border border-border">
+    <tolle-command-input placeholder="Try typing “invoice”…" />
+    <tolle-command-list>
+        <tolle-command-empty>No results found.</tolle-command-empty>
+
+        <tolle-command-group heading="Workspace">
+            <tolle-command-item value="billing" label="Billing" [keywords]="billingKeywords">
+                <i class="ri-bank-card-line" aria-hidden="true"></i>
+                Billing
+            </tolle-command-item>
+            <tolle-command-item value="members" label="Members" [keywords]="membersKeywords">
+                <i class="ri-team-line" aria-hidden="true"></i>
+                Members
+            </tolle-command-item>
+            <tolle-command-item value="audit-log" label="Audit log" [disabled]="true">
+                <i class="ri-file-list-3-line" aria-hidden="true"></i>
+                Audit log
+                <span class="ml-auto text-xs text-muted-foreground">Enterprise</span>
+            </tolle-command-item>
+        </tolle-command-group>
+    </tolle-command-list>
+</tolle-command>

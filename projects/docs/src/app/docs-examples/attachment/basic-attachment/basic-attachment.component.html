@@ -1,0 +1,9 @@
+<div class="flex w-full max-w-md flex-col gap-3">
+    <tolle-attachment name="quarterly-report.pdf" [size]="284160" type="application/pdf" />
+    <tolle-attachment name="migration-plan.md" [size]="4820" type="text/markdown" />
+    <tolle-attachment name="build-artifacts.zip" [size]="18874368" type="application/zip" density="sm" />
+    <tolle-attachment name="revenue.csv" [size]="912" type="text/csv" [removable]="true" (remove)="removed = removed + 1"
+        (open)="opened = opened + 1" />
+
+    <p class="text-xs text-muted-foreground">Opened {{ opened }}× · removed {{ removed }}×</p>
+</div>

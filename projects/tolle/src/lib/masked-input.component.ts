@@ -13,6 +13,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-masked-input',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule],
   providers: [

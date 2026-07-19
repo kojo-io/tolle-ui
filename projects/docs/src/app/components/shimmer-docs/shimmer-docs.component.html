@@ -1,0 +1,133 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="shimmer"
+      description="Shimmering text for a live, in-progress status — “Thinking…”, “Generating response…”." id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          The projected text sweeps with the <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">.shimmer</code>
+          utility from the theme, so it picks up your foreground and muted tokens.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-shimmer />
+        </app-preview>
+      </div>
+
+      <!-- Sizes -->
+      <div class="mb-12 space-y-3" id="sizes">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Sizes</h3>
+        <p class="text-muted-foreground">Five text sizes, so the status can sit inline or lead a panel.</p>
+        <app-preview [code]="sizesCode" language="html">
+          <app-shimmer-sizes />
+        </app-preview>
+      </div>
+
+      <!-- Settling -->
+      <div class="space-y-3" id="settling">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Settling to plain text</h3>
+        <p class="text-muted-foreground">
+          Set <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">[active]="false"</code> once the work is done
+          and the same label renders plain and static — no unmount, no layout shift. While it is active the label is a
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">role="status"</code> live region.
+        </p>
+        <app-preview [code]="settledCode" language="html">
+          <app-shimmer-settled />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="settledTs" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessibility -->
+    <section class="mb-16" id="accessibility">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Accessibility</h2>
+      <ul class="list-disc space-y-2 pl-6 text-muted-foreground">
+        <li>
+          The sweep is a purely decorative motion, so it is disabled under
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">prefers-reduced-motion: reduce</code> — the label
+          falls back to flat muted text rather than a paused, half-transparent gradient.
+        </li>
+        <li>
+          While <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">active</code> the label carries
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">role="status"</code> and
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">aria-live="polite"</code>, so screen readers
+          announce the status change without interrupting. Both attributes are dropped once it settles.
+        </li>
+        <li>Keep the label short and meaningful — it is read aloud verbatim each time it changes.</li>
+      </ul>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">ShimmerComponent Inputs</h3>
+      <app-prop-table [props]="shimmerProps" />
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('sizes')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Sizes
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('settling')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Settling to plain text
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('accessibility')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Accessibility
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

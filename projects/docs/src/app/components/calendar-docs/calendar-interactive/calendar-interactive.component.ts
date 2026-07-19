@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SegmentedComponent } from '../../../../../../tolle/src/lib/segment.component';
+import { SegmentComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CalendarComponent, CalendarMode } from '../../../../../../tolle/src/lib/calendar.component';

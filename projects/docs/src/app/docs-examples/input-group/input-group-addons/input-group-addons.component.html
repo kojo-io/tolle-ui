@@ -1,0 +1,46 @@
+<div class="w-full max-w-sm space-y-4">
+    <tolle-input-group>
+        <tolle-input-group-addon>
+            <tolle-input-group-text>$</tolle-input-group-text>
+        </tolle-input-group-addon>
+
+        <tolle-input-group-input
+            id="invoice-amount"
+            type="text"
+            placeholder="0.00"
+            ariaDescribedby="invoice-amount-hint"
+            [(ngModel)]="amount" />
+
+        <tolle-input-group-addon align="inline-end">
+            <tolle-input-group-text>USD</tolle-input-group-text>
+            <tolle-input-group-button
+                variant="ghost"
+                size="icon-sm"
+                ariaLabel="Clear amount"
+                (clicked)="clear()">
+                <i class="ri-close-line"></i>
+            </tolle-input-group-button>
+        </tolle-input-group-addon>
+    </tolle-input-group>
+
+    <tolle-input-group>
+        <tolle-input-group-input
+            id="invite-link"
+            [readonly]="true"
+            [(ngModel)]="inviteLink" />
+
+        <tolle-input-group-addon align="inline-end">
+            <tolle-input-group-button
+                variant="outline"
+                size="sm"
+                ariaLabel="Copy invite link"
+                (clicked)="copy()">
+                {{ copied ? 'Copied' : 'Copy' }}
+            </tolle-input-group-button>
+        </tolle-input-group-addon>
+    </tolle-input-group>
+
+    <p id="invoice-amount-hint" class="text-xs text-muted-foreground">
+        Billed once per month. Current amount: {{ amount || '0.00' }} USD.
+    </p>
+</div>

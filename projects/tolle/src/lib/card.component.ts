@@ -4,6 +4,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-card',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   // Card owns the vertical rhythm: `flex-col` + `gap-6` spaces the sections and
@@ -20,6 +21,7 @@ export class CardComponent { @Input() class = ''; protected cn = cn; }
 
 @Component({
   selector: 'tolle-card-header',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `<div [class]="cn('flex flex-col gap-1.5 px-6', class)"><ng-content></ng-content></div>`,
 })
@@ -27,6 +29,7 @@ export class CardHeaderComponent { @Input() class = ''; protected cn = cn; }
 
 @Component({
   selector: 'tolle-card-title',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `<h3 [class]="cn('font-semibold leading-none tracking-tight', class)"><ng-content></ng-content></h3>`,
 })
@@ -34,6 +37,7 @@ export class CardTitleComponent { @Input() class = ''; protected cn = cn; }
 
 @Component({
   selector: 'tolle-card-description',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `<p [class]="cn('text-sm text-muted-foreground', class)"><ng-content></ng-content></p>`,
 })
@@ -41,6 +45,7 @@ export class CardDescriptionComponent { @Input() class = ''; protected cn = cn; 
 
 @Component({
   selector: 'tolle-card-content',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `<div [class]="cn('px-6', class)"><ng-content></ng-content></div>`,
 })
@@ -48,6 +53,7 @@ export class CardContentComponent { @Input() class = ''; protected cn = cn; }
 
 @Component({
   selector: 'tolle-card-footer',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `<div [class]="cn('flex items-center px-6', class)"><ng-content></ng-content></div>`,
 })

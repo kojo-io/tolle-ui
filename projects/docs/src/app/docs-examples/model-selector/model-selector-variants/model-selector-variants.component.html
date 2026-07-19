@@ -1,0 +1,21 @@
+<div class="flex w-full max-w-sm flex-col gap-4">
+    <div class="flex items-center gap-3">
+        <span class="w-20 shrink-0 text-xs text-muted-foreground">ghost / xs</span>
+        <tolle-model-selector class="w-auto" variant="ghost" size="xs" [models]="models" [searchable]="false"
+            [(ngModel)]="modelId" (modelChange)="onModelChange($event)" />
+    </div>
+
+    <div class="flex items-center gap-3">
+        <span class="w-20 shrink-0 text-xs text-muted-foreground">default / sm</span>
+        <tolle-model-selector size="sm" [models]="models" [(ngModel)]="modelId" icon="ri-cpu-line" />
+    </div>
+
+    <div class="flex items-center gap-3">
+        <span class="w-20 shrink-0 text-xs text-muted-foreground">disabled</span>
+        <tolle-model-selector [models]="models" [disabled]="true" [ngModel]="modelId" />
+    </div>
+
+    <p class="text-sm text-muted-foreground">
+        {{ lastChange || 'Pick a model — modelChange hands back the whole ModelOption.' }}
+    </p>
+</div>

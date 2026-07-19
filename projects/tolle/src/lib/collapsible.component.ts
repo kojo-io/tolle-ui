@@ -24,6 +24,7 @@ class CollapsibleService {
 
 @Component({
     selector: 'tolle-collapsible',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     providers: [CollapsibleService],
@@ -54,6 +55,7 @@ export class CollapsibleComponent {
 
 @Component({
     selector: 'tolle-collapsible-trigger',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -91,6 +93,7 @@ export class CollapsibleTriggerComponent {
 
 @Component({
     selector: 'tolle-collapsible-content',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `

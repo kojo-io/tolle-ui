@@ -1,0 +1,93 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="plan"
+      description="An ordered set of steps an agent intends to take, with progress through them."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          Step numbers are assigned automatically from document order, and the connecting rail stops at the
+          last step — you never pass an index or a "last" flag.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-plan />
+        </app-preview>
+      </div>
+
+      <div class="space-y-3" id="collapsed">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Collapsed</h3>
+        <p class="text-muted-foreground">
+          Collapsing hides the steps but keeps them registered, so the "Step N of M" summary stays accurate
+          instead of reading zero.
+        </p>
+        <app-preview [code]="collapsedCode" language="html">
+          <app-plan-collapsed />
+        </app-preview>
+      </div>
+    </section>
+
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Plan</h3>
+      <app-prop-table [props]="planProps" />
+
+      <h4 class="mt-6 text-base font-semibold mb-3">Events</h4>
+      <app-prop-table [props]="planEvents" />
+
+      <h3 class="mt-10 text-lg font-semibold mb-4">Plan Step</h3>
+      <app-prop-table [props]="stepProps" />
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('collapsed')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Collapsed
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

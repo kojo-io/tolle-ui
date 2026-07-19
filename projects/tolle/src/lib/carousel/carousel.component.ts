@@ -62,6 +62,7 @@ export class CarouselContext {
 
 @Component({
     selector: 'tolle-carousel',
+    styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     providers: [CarouselContext],

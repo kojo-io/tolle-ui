@@ -1,0 +1,119 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="field"
+      description="Wraps a label, a control, and its help or error text into one accessible form field."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          Point the label's
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">for</code> at the control's
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">id</code>, and the control's
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">ariaDescribedby</code> at the
+          description's id.
+        </p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-field />
+        </app-preview>
+      </div>
+
+      <!-- Field set -->
+      <div class="mb-12 space-y-3" id="field-set">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Field set</h3>
+        <p class="text-muted-foreground">
+          Group related fields in a
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-field-set</code> with a
+          legend, and stack them with
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-field-group</code>.
+        </p>
+        <app-preview [code]="fieldSetCode" language="html" align="start">
+          <app-field-set />
+        </app-preview>
+      </div>
+
+      <!-- Validation -->
+      <div class="space-y-3" id="validation">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Validation</h3>
+        <p class="text-muted-foreground">
+          Set <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">invalid</code> on the field and
+          feed the reactive form's errors into
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-field-error</code>.
+        </p>
+        <app-preview [code]="validationCode" language="html" align="start">
+          <app-field-validation />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Field Props</h3>
+      <app-prop-table [props]="fieldProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Sub-components</h3>
+        <app-prop-table [props]="subComponents" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('field-set')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Field set
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('validation')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Validation
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

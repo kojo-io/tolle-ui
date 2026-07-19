@@ -1,0 +1,18 @@
+<div class="flex w-full max-w-md flex-col gap-4">
+    <div class="flex items-center gap-3">
+        <tolle-button variant="outline" size="sm" (click)="send()">Send a turn</tolle-button>
+        <tolle-button variant="ghost" size="sm" (click)="reset()">Reset</tolle-button>
+    </div>
+
+    <div class="flex items-center gap-3 rounded-md border border-border bg-card px-3 py-2">
+        <span class="text-sm text-muted-foreground">Session</span>
+        <span class="ml-auto">
+            <tolle-context [used]="used" [total]="total" [inputTokens]="inputTokens" [outputTokens]="outputTokens"
+                [cost]="cost" [warningThreshold]="0.6" [criticalThreshold]="0.85" placement="bottom" />
+        </span>
+    </div>
+
+    <p class="text-sm text-muted-foreground">
+        Thresholds lowered to 0.6 and 0.85, so the colour shifts sooner than the defaults.
+    </p>
+</div>

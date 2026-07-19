@@ -1,0 +1,22 @@
+<div class="flex w-full flex-col gap-4">
+    <div class="flex flex-wrap gap-2">
+        <tolle-button size="sm" [variant]="stacked ? 'secondary' : 'outline'" (click)="stacked = true">
+            Stacked
+        </tolle-button>
+        <tolle-button size="sm" [variant]="stacked ? 'outline' : 'secondary'" (click)="stacked = false">
+            Grouped
+        </tolle-button>
+    </div>
+
+    <tolle-chart [data]="quarters" [series]="series" xKey="quarter" [stacked]="stacked" [height]="280"
+        xHeader="Quarter" ariaLabel="Sessions by device and quarter"
+        description="Mobile sessions overtake desktop in Q3 and lead by Q4, while tablet stays a small and steady share.">
+        <svg:g tolle-chart-grid></svg:g>
+        <svg:g tolle-chart-y-axis></svg:g>
+        <svg:g tolle-chart-x-axis></svg:g>
+        <!-- Bars switch the whole chart to a band scale and force zero into the domain. -->
+        <svg:g tolle-chart-bar seriesKey="desktop"></svg:g>
+        <svg:g tolle-chart-bar seriesKey="mobile"></svg:g>
+        <svg:g tolle-chart-bar seriesKey="tablet"></svg:g>
+    </tolle-chart>
+</div>

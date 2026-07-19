@@ -1,0 +1,27 @@
+<div class="flex w-full max-w-xl flex-col gap-3">
+    <tolle-chain-of-thought size="sm" [open]="open" (openChange)="onOpenChange($event)">
+        <tolle-chain-of-thought-header label="Chain of Thought" />
+
+        <tolle-chain-of-thought-content>
+            <tolle-chain-of-thought-step label="Looked up three sources" icon="ri-search-line" status="complete">
+                <tolle-chain-of-thought-search-results>
+                    @for (source of sources; track source) {
+                    <tolle-chain-of-thought-search-result icon="ri-links-line">
+                        {{ source }}
+                    </tolle-chain-of-thought-search-result>
+                    }
+                </tolle-chain-of-thought-search-results>
+            </tolle-chain-of-thought-step>
+
+            <tolle-chain-of-thought-step label="Reconciled the conflicting advice" icon="ri-git-merge-line"
+                status="complete" />
+
+            <tolle-chain-of-thought-step label="Verifying the snippet compiles" icon="ri-terminal-box-line"
+                status="active" />
+
+            <tolle-chain-of-thought-step label="Write the answer" icon="ri-quill-pen-line" status="pending" />
+        </tolle-chain-of-thought-content>
+    </tolle-chain-of-thought>
+
+    <p class="text-sm text-muted-foreground">Trace is {{ open ? 'expanded' : 'collapsed' }}.</p>
+</div>

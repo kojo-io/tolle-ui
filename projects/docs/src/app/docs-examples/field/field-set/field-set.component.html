@@ -1,0 +1,63 @@
+<form class="w-full max-w-md">
+    <tolle-field-set>
+        <tolle-field-legend>Profile</tolle-field-legend>
+
+        <tolle-field-group>
+            <tolle-field>
+                <tolle-field-label for="profile-first-name" [required]="true">First name</tolle-field-label>
+                <tolle-input-group>
+                    <tolle-input-group-input
+                        id="profile-first-name"
+                        placeholder="Ada"
+                        ariaDescribedby="profile-first-name-description"
+                        [(ngModel)]="firstName"
+                        name="firstName" />
+                </tolle-input-group>
+                <tolle-field-description id="profile-first-name-description">
+                    Shown on your public profile.
+                </tolle-field-description>
+            </tolle-field>
+
+            <tolle-field>
+                <tolle-field-label for="profile-last-name">Last name</tolle-field-label>
+                <tolle-input-group>
+                    <tolle-input-group-input
+                        id="profile-last-name"
+                        placeholder="Lovelace"
+                        ariaDescribedby="profile-last-name-description"
+                        [(ngModel)]="lastName"
+                        name="lastName" />
+                </tolle-input-group>
+                <tolle-field-description id="profile-last-name-description">
+                    Optional — leave it blank to show only your first name.
+                </tolle-field-description>
+            </tolle-field>
+
+            <tolle-field-separator />
+
+            <tolle-field-title>Workspace</tolle-field-title>
+
+            <tolle-field>
+                <tolle-field-label for="profile-workspace" [required]="true">Slug</tolle-field-label>
+                <tolle-input-group>
+                    <tolle-input-group-addon>
+                        <tolle-input-group-text>tolle.dev/</tolle-input-group-text>
+                    </tolle-input-group-addon>
+                    <tolle-input-group-input
+                        id="profile-workspace"
+                        placeholder="analytical-engine"
+                        ariaDescribedby="profile-workspace-description"
+                        [(ngModel)]="workspace"
+                        name="workspace" />
+                </tolle-input-group>
+                <tolle-field-description id="profile-workspace-description">
+                    Lowercase letters, numbers, and dashes.
+                </tolle-field-description>
+            </tolle-field>
+        </tolle-field-group>
+    </tolle-field-set>
+
+    <p class="mt-6 text-xs text-muted-foreground">
+        {{ firstName }} {{ lastName }} — tolle.dev/{{ workspace }}
+    </p>
+</form>

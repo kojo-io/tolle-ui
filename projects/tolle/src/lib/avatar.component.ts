@@ -29,6 +29,7 @@ export type AvatarProps = VariantProps<typeof avatarVariants>;
 
 @Component({
   selector: 'tolle-avatar',
+  styles: [':host { display: inline-flex; }'],
   standalone: true,
   imports: [NgIf],
   template: `

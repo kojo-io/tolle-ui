@@ -1,0 +1,21 @@
+<div class="flex w-full max-w-lg flex-col gap-4">
+    <tolle-message align="end">
+        <tolle-message-avatar>ME</tolle-message-avatar>
+        <tolle-message-content>
+            <tolle-bubble variant="primary" align="end">Here are the files from the audit.</tolle-bubble>
+
+            <tolle-attachment-group>
+                @for (file of files; track file.name) {
+                <tolle-attachment [name]="file.name" [size]="file.size" [type]="file.type" class="max-w-[15rem]">
+                    <tolle-attachment-actions>
+                        <button type="button" aria-label="Download"
+                            class="rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+                            <i class="ri-download-2-line" aria-hidden="true"></i>
+                        </button>
+                    </tolle-attachment-actions>
+                </tolle-attachment>
+                }
+            </tolle-attachment-group>
+        </tolle-message-content>
+    </tolle-message>
+</div>

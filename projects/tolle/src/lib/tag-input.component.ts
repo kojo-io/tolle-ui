@@ -6,6 +6,7 @@ import { BadgeComponent } from './badge.component';
 
 @Component({
   selector: 'tolle-tag-input',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule, BadgeComponent],
   providers: [

@@ -38,6 +38,7 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
 
 @Component({
   selector: 'tolle-button',
+  styles: [':host { display: inline-flex; }'],
   standalone: true,
   imports: [CommonModule],
   template: `

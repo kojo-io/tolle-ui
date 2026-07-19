@@ -1,0 +1,11 @@
+<div class="flex flex-col gap-4">
+    <p *ngFor="let variant of variants" class="max-w-xl text-sm leading-relaxed text-foreground">
+        <span class="mr-2 inline-block w-16 font-mono text-xs text-muted-foreground">{{ variant }}</span>
+        A marker in running prose<tolle-inline-citation [index]="3" [variant]="variant" size="sm" placement="right"
+            ariaLabel="Source for the marker example">
+            <tolle-inline-citation-card title="MDN — sup element"
+                url="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/sup"
+                snippet="The sup element specifies inline text to be displayed as superscript." />
+        </tolle-inline-citation> stays out of the way until you hover it.
+    </p>
+</div>

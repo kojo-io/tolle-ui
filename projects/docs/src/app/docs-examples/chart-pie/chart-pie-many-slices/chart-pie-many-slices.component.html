@@ -1,0 +1,25 @@
+<div class="flex w-full flex-col items-center gap-4">
+    <div class="w-full max-w-sm">
+        <tolle-chart-pie
+            [data]="data"
+            labelKey="region"
+            valueKey="users"
+            [donut]="true"
+            labelHeader="Region"
+            valueHeader="Active users"
+            ariaLabel="Active users by region"
+            description="Active users split across six regions. North America and Europe together account for more than half." />
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2">
+        <tolle-button *ngFor="let row of regions" size="sm"
+            [variant]="isHidden(row.region) ? 'outline' : 'secondary'" (click)="toggle(row.region)">
+            {{ isHidden(row.region) ? 'Show' : 'Hide' }} {{ row.region }}
+        </tolle-button>
+    </div>
+
+    <p class="max-w-md text-center text-xs text-muted-foreground">
+        Hide any slice and the survivors keep the colour they already had — the palette is keyed by label, not by
+        position. The sixth region renders in a neutral grey because the palette stops at five steps.
+    </p>
+</div>

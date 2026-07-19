@@ -1,0 +1,257 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="chart-pie"
+      description="A pie or donut drawn from hand-written SVG arcs, with its own legend, tooltip and accessible table."
+      id="overview" />
+
+    <!-- The problem -->
+    <section class="mb-14" id="problem">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">When a pie is the right shape</h2>
+      <p class="mb-4 text-muted-foreground">
+        A pie answers exactly one question well: <strong class="font-semibold text-foreground">what share of a whole is
+        each part?</strong> It is a poor instrument for anything else. Comparing two slices of similar size is harder
+        than comparing two bars, and comparing across two pies is harder still, because the reader has to judge angles
+        rather than lengths.
+      </p>
+      <p class="mb-4 text-muted-foreground">
+        Use it when the parts genuinely sum to a meaningful total and there are few enough of them to name. Reach for
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;tolle-chart&gt;</code> with bars
+        when you are ranking things, and with a line when you are showing change over time.
+      </p>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold">
+            <i class="ri-check-line text-primary" aria-hidden="true"></i>
+            Parts of one whole
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            Traffic by source, revenue by plan, storage by bucket. Values are positive and the total means something.
+          </p>
+        </div>
+
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold">
+            <i class="ri-close-line text-destructive" aria-hidden="true"></i>
+            Not a ranking, not a trend
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            Twelve near-equal slices, or two pies side by side asking &ldquo;did this grow?&rdquo;. Both are questions a
+            reader cannot answer from angles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <!-- Anatomy -->
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        Unlike <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;tolle-chart&gt;</code>,
+        the pie has no projected parts. It is a single element, and the
+        <strong class="font-semibold text-foreground">legend, the hover tooltip and the accessible data table are
+        rendered by the component itself</strong> — you never add them as children.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomyCode" language="html" />
+      </div>
+      <p class="mt-4 text-muted-foreground">
+        Rows are plain objects. Point
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">labelKey</code> and
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">valueKey</code> at whichever
+        properties hold the name and the number:
+      </p>
+      <div class="mt-4 overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="dataCode" language="typescript" />
+      </div>
+      <p class="mt-4 text-muted-foreground">
+        Slices are separated by a real angular gap rather than a stroke, so what divides them is surface showing
+        through rather than added ink. A sliver never disappears into the gap — it keeps a hairline of itself.
+      </p>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Pie</h3>
+        <p class="text-muted-foreground">
+          Four sources, one whole. Hover a slice for its value and its percentage; the legend below is rendered
+          automatically because there is more than one slice.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-chart-pie />
+        </app-preview>
+      </div>
+
+      <!-- Donut -->
+      <div class="mb-12 space-y-3" id="donut">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Donut</h3>
+        <p class="text-muted-foreground">
+          Set <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[donut]="true"</code> to cut a
+          hole, and <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">innerRadius</code> to
+          size it. The hole is not decoration — it is the one place on a pie where a total can sit without competing
+          with the slices, so put the number the parts add up to there.
+        </p>
+        <app-preview [code]="donutCode" language="html">
+          <app-chart-pie-donut />
+        </app-preview>
+      </div>
+
+      <!-- Many slices -->
+      <div class="space-y-3" id="many-slices">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Many slices and the palette limit</h3>
+        <p class="text-muted-foreground">
+          The palette has five steps,
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">--chart-1</code> through
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">--chart-5</code>, validated
+          together for lightness, chroma and colour-blind separation. A sixth slice does not get a generated colour: it
+          renders in a neutral grey, because inventing a step would land outside that validation and wrapping back to
+          step 1 would give two slices the same identity.
+        </p>
+        <p class="text-muted-foreground">
+          Colour is assigned by <strong class="font-semibold text-foreground">slice label, not by array position</strong>.
+          Hide a region below and the remaining slices keep exactly the colour they had — re-sorting or filtering never
+          repaints the survivors, which is what lets a reader carry a colour between this chart and the next.
+        </p>
+        <app-preview [code]="manySlicesCode" language="html" align="start">
+          <app-chart-pie-many-slices />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="manySlicesTsCode" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessibility -->
+    <section class="mb-16" id="accessibility">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Accessibility</h2>
+      <p class="mb-4 text-muted-foreground">
+        A pie encodes every value in an angle and an identity in a colour, so on its own it is unreadable to anyone who
+        cannot see it or cannot hover it. Three things carry the data instead, and all three are automatic:
+      </p>
+      <ul class="mb-4 list-disc space-y-2 pl-5 text-muted-foreground">
+        <li>
+          The <strong class="font-semibold text-foreground">legend</strong>, rendered whenever there are two or more
+          slices, so identity is never carried by colour alone.
+        </li>
+        <li>
+          A <strong class="font-semibold text-foreground">real <code
+            class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;table&gt;</code></strong> of every
+          label and value. It is <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">sr-only</code>
+          by default and always pointed at by the svg's
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">aria-describedby</code>, so the
+          numbers stay reachable without seeing or hovering the chart. Set
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[showTable]="true"</code> to show
+          it to everyone.
+        </li>
+        <li>
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">ariaLabel</code> becomes the svg
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;title&gt;</code> and
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">description</code> the
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;desc&gt;</code>. Write the
+          description as the sentence you would say out loud about the chart, not as a restatement of its title.
+        </li>
+      </ul>
+      <p class="mb-4 text-muted-foreground">
+        Name the table's columns with
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">labelHeader</code> and
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">valueHeader</code> — the defaults
+        are &ldquo;Category&rdquo; and &ldquo;Value&rdquo;, which tell a screen-reader user nothing.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="a11yCode" language="html" />
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Chart Pie Props</h3>
+      <app-prop-table [props]="pieProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Chart Pie Events</h3>
+        <app-prop-table [props]="pieOutputs" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Exported types and helpers</h3>
+        <app-prop-table [props]="pieExports" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('problem')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          When a pie is right
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Pie
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('donut')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Donut
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('many-slices')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Many slices
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('accessibility')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Accessibility
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

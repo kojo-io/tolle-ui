@@ -1,0 +1,7 @@
+<div class="flex w-full max-w-xs flex-col gap-3">
+    <tolle-model-selector [models]="models" [(ngModel)]="modelId" />
+
+    <p class="text-sm text-muted-foreground">
+        Bound value: <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">{{ modelId || 'null' }}</code>
+    </p>
+</div>

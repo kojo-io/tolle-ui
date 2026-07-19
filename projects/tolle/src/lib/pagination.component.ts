@@ -18,6 +18,7 @@ import {SelectItemComponent} from './select-item.component';
 
 @Component({
   selector: 'tolle-pagination',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
   template: `

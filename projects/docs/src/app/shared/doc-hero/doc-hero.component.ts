@@ -29,9 +29,14 @@ import { RegistryDocsService } from '../registry-docs.service';
       }
 
       <div class="mt-5 flex flex-wrap items-center gap-2">
-        @if (resolvedCategory) {
-          <span class="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-xs font-medium capitalize text-muted-foreground">
-            {{ resolvedCategory }}
+        @if (isNew) {
+          <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+            New
+          </span>
+        }
+        @if (categoryLabel) {
+          <span class="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+            {{ categoryLabel }}
           </span>
         }
         @if (resolvedSelector) {
@@ -84,8 +89,33 @@ export class DocHeroComponent {
   get resolvedCategory(): string | undefined {
     return this.category ?? this.reg?.category;
   }
+
+  /**
+   * Display form of the registry category slug. Title-cased explicitly rather
+   * than via CSS `capitalize`, which renders 'ai' as "Ai" and 'date-time' as
+   * "Date-time".
+   */
+  get categoryLabel(): string | undefined {
+    const slug = this.resolvedCategory;
+    if (!slug) return undefined;
+    const special: Record<string, string> = {
+      ai: 'AI',
+      'date-time': 'Date & Time',
+    };
+    return (
+      special[slug] ??
+      slug.split(/[-_]/).map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+    );
+  }
   get resolvedSelector(): string | undefined {
     return this.selector ?? this.reg?.selector;
+  }
+  /**
+   * Whether to show the "New" pill. Comes from the `@new` JSDoc tag on the
+   * component source, carried through the generated registry.
+   */
+  get isNew(): boolean {
+    return this.reg?.isNew === true;
   }
   get resolvedInstall(): string | undefined {
     return this.install ?? this.reg?.install ?? (this.slug ? `npx @tolle_/cli add ${this.slug}` : undefined);

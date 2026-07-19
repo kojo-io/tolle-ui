@@ -105,6 +105,7 @@ function writeRegistryIndex(items: RegistryItem[], payloads: Payload[], outDir: 
         title: p.title,
         description: p.description,
         category: p.category,
+        isNew: i.isNew,
         files: p.files.map((f) => ({ path: f.path, type: 'registry:ui' })),
         registryDependencies: p.registryDependencies,
         dependencies: p.dependencies,
@@ -123,6 +124,7 @@ function writeDocsContent(items: RegistryItem[], outDir: string) {
       category: i.category ?? categorize(i.name),
       title: i.title ?? titleCase(i.name),
       selector: i.selector,
+      isNew: i.isNew,
       import: importLine(i),
       install: `npx @tolle_/cli add ${i.name}`,
       components: i.components.map((c) => ({
@@ -212,6 +214,7 @@ function writeManifest(items: RegistryItem[], payloads: Payload[], outDir: strin
         description: p.description,
         category: p.category,
         selector: i.selector,
+        isNew: i.isNew,
         import: importLine(i),
         install: `npx @tolle_/cli add ${i.name}`,
         registryDependencies: p.registryDependencies,
@@ -239,6 +242,28 @@ function describe(i: RegistryItem): string {
 }
 
 const CATEGORY: [RegExp, string][] = [
+  // Anchored entries come first so they win outright. Matching these loosely
+  // would shadow existing names further down — an unanchored /item/ would
+  // steal `breadcrumb-item` from navigation, /select/ would steal it from forms.
+  // AI & chat. Anchored and listed before the generic rules so `prompt-input`
+  // isn't captured by /input/ → forms, `context` by /context/ → overlays, or
+  // `message-scroller` by /scroll/ → layout.
+  [
+    /^(message|message-scroller|bubble|marker|attachment|conversation|prompt-input|reasoning|tool|sources|suggestion|inline-citation|shimmer|task|chain-of-thought|plan|queue|checkpoint|confirmation|context|model-selector)$/,
+    'ai',
+  ],
+  [/^direction$/, 'utilities'],
+  [/^chart/, 'data'],
+
+  [/^spinner/, 'feedback'],
+  [/^kbd/, 'actions'],
+  [/^item/, 'layout'],
+  [/^typography/, 'layout'],
+  [/^field/, 'forms'],
+  [/^combobox/, 'forms'],
+  [/^command/, 'overlays'],
+  [/^menubar|^navigation-menu/, 'navigation'],
+
   [/^button|toggle/, 'actions'],
   [/input|textarea|checkbox|switch|radio|select|slider|segment|tag|otp|country|phone|masked|label/, 'forms'],
   [/calendar|date/, 'date-time'],

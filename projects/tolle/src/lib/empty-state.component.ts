@@ -22,6 +22,7 @@ type EmptyStateVariants = VariantProps<typeof emptyStateVariants>;
 
 @Component({
   selector: 'tolle-empty-state',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   template: `

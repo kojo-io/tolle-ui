@@ -1,0 +1,162 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="chain-of-thought"
+      description="A collapsible reasoning trace — the numbered steps an agent worked through before answering, connected by a vertical rail."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        A header that toggles the trace, content that only renders while expanded, and one step per thing the agent did.
+        A step can project search-result chips for what it found.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomy" language="html" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          A finished trace. The rail connects the step markers and stops at the last one, so the list never trails off
+          the bottom.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-chain-of-thought />
+        </app-preview>
+      </div>
+
+      <!-- Progress -->
+      <div class="mb-12 space-y-3" id="progress">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Live progress</h3>
+        <p class="text-muted-foreground">
+          Drive <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">status</code> per step as the agent works:
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">complete</code> behind it,
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">active</code> for the step running now (emphasised
+          label, info-coloured marker), and
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">pending</code> ahead of it.
+        </p>
+        <app-preview [code]="progressCode" language="html">
+          <app-chain-of-thought-progress />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="progressTs" language="typescript" />
+        </div>
+      </div>
+
+      <!-- Collapsed -->
+      <div class="space-y-3" id="collapsed">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Collapsed with search results</h3>
+        <p class="text-muted-foreground">
+          The trace is collapsed by default, which is what you want under a finished answer. Chips summarise what a
+          search step turned up, and <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">size="sm"</code> keeps
+          the whole thing quiet next to the message it belongs to.
+        </p>
+        <app-preview [code]="collapsedCode" language="html">
+          <app-chain-of-thought-collapsed />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">ChainOfThoughtComponent Inputs</h3>
+      <app-prop-table [props]="rootProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ChainOfThoughtComponent Outputs</h3>
+        <app-prop-table [props]="rootOutputs" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ChainOfThoughtHeaderComponent Inputs</h3>
+        <app-prop-table [props]="headerProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ChainOfThoughtContentComponent Inputs</h3>
+        <app-prop-table [props]="contentProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ChainOfThoughtStepComponent Inputs</h3>
+        <app-prop-table [props]="stepProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ChainOfThoughtSearchResultComponent Inputs</h3>
+        <app-prop-table [props]="searchResultProps" />
+        <p class="mt-3 text-sm text-muted-foreground">
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">tolle-chain-of-thought-search-results</code> only
+          takes <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">class</code>; it wraps the chips in a
+          wrapping row.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('progress')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Live progress
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('collapsed')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Collapsed with search results
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

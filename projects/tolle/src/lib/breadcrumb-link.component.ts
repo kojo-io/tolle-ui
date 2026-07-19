@@ -30,7 +30,7 @@ import {NgIf, NgTemplateOutlet} from '@angular/common';
       </a>
     </ng-template>
   `,
-  styles: ``
+  styles: `:host { display: inline-flex; }`
 })
 export class BreadcrumbLinkComponent {
   @Input() active: boolean = false;

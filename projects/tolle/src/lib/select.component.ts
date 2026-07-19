@@ -32,7 +32,8 @@ import { InputComponent } from './input.component';
       multi: true
     }
   ],
-  styles: [`
+  styles: [
+    ':host { display: block; }',`
     .hidden-dropdown {
       display: none !important;
     }
@@ -239,7 +240,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     this.trigger.nativeElement.focus();
     requestAnimationFrame(() => {
       this.updatePosition();
-      document.addEventListener('mousedown', this._outsideClickHandler);
+      document.addEventListener('pointerdown', this._outsideClickHandler, true);
       this.initActiveAfterOpen();
     });
   }
@@ -250,7 +251,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     this.onSearchChange('');
     this.resetActive();
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
   }
 
   private updatePosition() {
@@ -494,6 +495,6 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     this.sub.unsubscribe();
     this.itemsChangeSub?.unsubscribe();
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
   }
 }

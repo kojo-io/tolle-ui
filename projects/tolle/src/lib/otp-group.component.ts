@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   template: `
     <div class="flex items-center"><ng-content></ng-content></div>
   `,
-  styles: ``
+  styles: `:host { display: block; }`
 })
 export class OtpGroupComponent {
 

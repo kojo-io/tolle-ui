@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
       <ng-content></ng-content>
     </div>
   `,
-  styles: ``
+  styles: `:host { display: inline-flex; }`
 })
 export class AvatarFallbackComponent {
 

@@ -1,0 +1,12 @@
+<div class="w-full">
+    <tolle-chart [data]="weeks" [series]="series" xKey="week" [stacked]="true" [height]="280" [showTable]="true"
+        xHeader="Week" variant="card" ariaLabel="Active accounts by week"
+        description="Total active accounts grow from 500 in week 1 to 1,055 in week 8, with paid accounts more than doubling over the same period.">
+        <svg:g tolle-chart-grid></svg:g>
+        <svg:g tolle-chart-y-axis></svg:g>
+        <svg:g tolle-chart-x-axis></svg:g>
+        <!-- An area is anchored to a baseline, so it forces zero into the y domain. -->
+        <svg:g tolle-chart-area seriesKey="trial" curve="smooth"></svg:g>
+        <svg:g tolle-chart-area seriesKey="paid" curve="smooth"></svg:g>
+    </tolle-chart>
+</div>

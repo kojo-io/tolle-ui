@@ -1,0 +1,15 @@
+<form [formGroup]="form" class="flex w-full max-w-sm flex-col gap-3">
+    <span class="text-sm font-medium text-foreground">Model</span>
+
+    <tolle-model-selector formControlName="model" [models]="models" [showProviderOnTrigger]="true"
+        searchPlaceholder="Search all providers…" ariaLabel="Model" />
+
+    <p class="text-sm text-muted-foreground">
+        Control value: <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">{{ form.value.model || 'null' }}</code>
+        · {{ form.controls.model.touched ? 'touched' : 'untouched' }}
+    </p>
+
+    <tolle-button variant="outline" size="sm" class="w-fit" (click)="form.reset({ model: null })">
+        Reset the control
+    </tolle-button>
+</form>

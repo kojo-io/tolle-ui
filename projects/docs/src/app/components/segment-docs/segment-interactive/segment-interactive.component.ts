@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SegmentedComponent, SegmentItem } from '../../../../../../tolle/src/lib/segment.component';
+import { SegmentComponent, SegmentItem } from '../../../../../../tolle/src/lib/segment.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
@@ -14,7 +14,7 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
     imports: [
         CommonModule,
         FormsModule,
-        SegmentedComponent,
+        SegmentComponent,
         SwitchComponent,
         SelectComponent,
         SelectItemComponent,

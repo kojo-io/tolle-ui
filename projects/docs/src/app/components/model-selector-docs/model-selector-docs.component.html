@@ -1,0 +1,162 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="model-selector"
+      description="A compact picker for choosing which model a conversation should use — searchable, grouped by provider, and bindable as a form control."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package. Bring
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">FormsModule</code> or
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">ReactiveFormsModule</code> along, depending on how
+        you bind it.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        One element. It implements
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">ControlValueAccessor</code> and round-trips the
+        chosen model's <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">id</code>, so it binds like any
+        native control. Searching, keyboard navigation and positioning are reused from
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">tolle-command</code> and
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">tolle-popover</code>.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomy" language="html" />
+      </div>
+
+      <p class="mb-4 mt-6 text-muted-foreground">
+        Each entry in <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">models</code> is a
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">ModelOption</code>. Only
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">id</code> and
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">name</code> are required; everything else refines
+        how the option reads.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="optionType" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">With ngModel</h3>
+        <p class="text-muted-foreground">
+          The simplest binding: <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">[(ngModel)]</code> holds
+          the selected model's id. Type to filter — the search matches the name, the provider and the description.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-model-selector />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="basicTs" language="typescript" />
+        </div>
+      </div>
+
+      <!-- Grouped / reactive forms -->
+      <div class="mb-12 space-y-3" id="reactive-forms">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Reactive forms and grouping</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">formControlName</code> works the same way, and
+          the control is marked touched when the list closes. Options carrying a
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">provider</code> are bucketed under a heading in
+          first-appearance order; <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">badge</code> adds a pill
+          and <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">disabled</code> takes an option out of play.
+        </p>
+        <app-preview [code]="groupedCode" language="html">
+          <app-model-selector-grouped />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="groupedTs" language="typescript" />
+        </div>
+      </div>
+
+      <!-- Variants -->
+      <div class="space-y-3" id="variants">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Sizes, variants and disabled</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">variant="ghost"</code> at
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">size="xs"</code> is the one to reach for inside
+          a composer toolbar; drop the search box with
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">[searchable]="false"</code> for a short list.
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">modelChange</code> hands back the whole
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">ModelOption</code> when the id alone is not
+          enough.
+        </p>
+        <app-preview [code]="variantsCode" language="html">
+          <app-model-selector-variants />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">ModelSelectorComponent Inputs</h3>
+      <app-prop-table [props]="selectorProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ModelSelectorComponent Outputs</h3>
+        <app-prop-table [props]="selectorOutputs" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              With ngModel
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('reactive-forms')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Reactive forms and grouping
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('variants')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Sizes, variants and disabled
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

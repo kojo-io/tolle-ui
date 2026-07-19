@@ -1,0 +1,29 @@
+<tolle-navigation-menu align="start" ariaLabel="Workspace">
+    <tolle-navigation-menu-list>
+        <tolle-navigation-menu-item id="overview">
+            <tolle-navigation-menu-link href="#overview" [active]="true">
+                <span label class="text-sm font-medium">Overview</span>
+            </tolle-navigation-menu-link>
+        </tolle-navigation-menu-item>
+
+        <tolle-navigation-menu-item id="reports">
+            <tolle-navigation-menu-trigger>Reports</tolle-navigation-menu-trigger>
+            <tolle-navigation-menu-content class="w-[320px]" placement="bottom-start">
+                <tolle-navigation-menu-link href="#revenue">
+                    <span label class="text-sm font-medium">Revenue</span>
+                    <span description class="text-xs text-muted-foreground">Monthly recurring revenue.</span>
+                </tolle-navigation-menu-link>
+                <tolle-navigation-menu-link href="#churn">
+                    <span label class="text-sm font-medium">Churn</span>
+                    <span description class="text-xs text-muted-foreground">Cancellations by cohort.</span>
+                </tolle-navigation-menu-link>
+            </tolle-navigation-menu-content>
+        </tolle-navigation-menu-item>
+
+        <tolle-navigation-menu-item id="settings">
+            <tolle-navigation-menu-link href="#settings" variant="muted">
+                <span label class="text-sm font-medium">Settings</span>
+            </tolle-navigation-menu-link>
+        </tolle-navigation-menu-item>
+    </tolle-navigation-menu-list>
+</tolle-navigation-menu>

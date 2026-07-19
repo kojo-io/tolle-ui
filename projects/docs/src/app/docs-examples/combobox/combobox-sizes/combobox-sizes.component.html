@@ -1,0 +1,26 @@
+<div class="flex w-full max-w-xs flex-col gap-4">
+    <div class="flex flex-col gap-2">
+        <span class="text-sm font-medium text-foreground">Small</span>
+        <tolle-combobox size="sm" [options]="statuses" [(ngModel)]="small" placeholder="Status…"
+            searchPlaceholder="Try “wip” or “shipped”…" emptyMessage="No status matches that." ariaLabel="Status (small)" />
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <span class="text-sm font-medium text-foreground">Default</span>
+        <tolle-combobox size="default" [options]="statuses" [(ngModel)]="medium" placeholder="Status…"
+            searchPlaceholder="Try “wip” or “shipped”…" emptyMessage="No status matches that." ariaLabel="Status (default)" />
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <span class="text-sm font-medium text-foreground">Large</span>
+        <tolle-combobox size="lg" [options]="statuses" [(ngModel)]="large" placeholder="Status…"
+            searchPlaceholder="Try “wip” or “shipped”…" emptyMessage="No status matches that." ariaLabel="Status (large)" />
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <span class="text-sm font-medium text-foreground">Invalid</span>
+        <tolle-combobox [invalid]="true" [options]="statuses" [(ngModel)]="required" placeholder="Status…"
+            searchPlaceholder="Try “wip” or “shipped”…" emptyMessage="No status matches that." ariaLabel="Status (invalid)" />
+        <p class="text-xs text-destructive">Pick a status before saving.</p>
+    </div>
+</div>

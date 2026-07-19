@@ -1,0 +1,25 @@
+<div class="w-full max-w-sm">
+    <tolle-field>
+        <tolle-field-label for="account-email" [required]="true">Email</tolle-field-label>
+
+        <tolle-input-group>
+            <tolle-input-group-addon>
+                <i class="ri-mail-line"></i>
+            </tolle-input-group-addon>
+            <tolle-input-group-input
+                id="account-email"
+                type="email"
+                placeholder="ada@example.com"
+                ariaDescribedby="account-email-description"
+                [(ngModel)]="email" />
+        </tolle-input-group>
+
+        <tolle-field-description id="account-email-description">
+            We only use this address to send receipts. Clicking the label focuses the input.
+        </tolle-field-description>
+    </tolle-field>
+
+    <p class="mt-4 text-xs text-muted-foreground">
+        Bound value: <span class="font-medium text-foreground">{{ email || 'empty' }}</span>
+    </p>
+</div>

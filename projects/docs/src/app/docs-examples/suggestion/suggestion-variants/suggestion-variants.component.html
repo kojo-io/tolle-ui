@@ -1,0 +1,29 @@
+<div class="flex w-full flex-col gap-5">
+    <div class="flex flex-col gap-2">
+        <span class="text-xs font-medium text-muted-foreground">Variants</span>
+        <tolle-suggestions ariaLabel="Suggestion variants">
+            <tolle-suggestion value="outline" variant="outline">Outline</tolle-suggestion>
+            <tolle-suggestion value="secondary" variant="secondary">Secondary</tolle-suggestion>
+            <tolle-suggestion value="ghost" variant="ghost">Ghost</tolle-suggestion>
+            <tolle-suggestion value="disabled" [disabled]="true">Disabled</tolle-suggestion>
+        </tolle-suggestions>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <span class="text-xs font-medium text-muted-foreground">Sizes</span>
+        <tolle-suggestions ariaLabel="Suggestion sizes">
+            <tolle-suggestion value="sm" size="sm">Small</tolle-suggestion>
+            <tolle-suggestion value="default" size="default">Default</tolle-suggestion>
+            <tolle-suggestion value="lg" size="lg">Large</tolle-suggestion>
+        </tolle-suggestions>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <span class="text-xs font-medium text-muted-foreground">With icons</span>
+        <tolle-suggestions ariaLabel="Suggestions with icons" gap="lg">
+            <tolle-suggestion value="search" icon="ri-search-line">Search the docs</tolle-suggestion>
+            <tolle-suggestion value="code" icon="ri-code-s-slash-line" variant="secondary">Write a test</tolle-suggestion>
+            <tolle-suggestion value="chart" icon="ri-bar-chart-2-line" variant="ghost">Chart the results</tolle-suggestion>
+        </tolle-suggestions>
+    </div>
+</div>

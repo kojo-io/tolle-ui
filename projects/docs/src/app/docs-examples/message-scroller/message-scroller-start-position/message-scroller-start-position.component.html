@@ -1,0 +1,51 @@
+<div class="flex w-full max-w-md flex-col gap-3">
+    <div class="flex flex-wrap items-center gap-2">
+        @for (option of options; track option) {
+        <button type="button" (click)="startPosition = option"
+            [class]="option === startPosition
+                ? 'rounded-md border border-primary bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary'
+                : 'rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent'">
+            {{ option }}
+        </button>
+        }
+
+        <label class="ml-1 flex items-center gap-1.5 text-xs text-muted-foreground">
+            peek
+            <input type="range" min="0" max="160" step="8" [value]="peek"
+                (input)="setPeek($event)" class="w-24" />
+            {{ peek }}px
+        </label>
+    </div>
+
+    <!-- Tracking the mount by its start position re-creates the scroller when it
+         changes, so the new position is applied on a fresh mount. -->
+    @for (mount of [startPosition]; track mount) {
+    <div
+        class="flex h-80 w-full flex-col overflow-hidden rounded-lg border border-border [&>tolle-message-scroller]:flex [&>tolle-message-scroller]:min-h-0 [&>tolle-message-scroller]:flex-1">
+        <tolle-message-scroller [startPosition]="mount" [scrollPreviousItemPeek]="peek">
+            <tolle-message-scroller-viewport>
+                <tolle-message-scroller-content>
+                    @for (turn of turns; track turn.id) {
+                    <div tolleMessageScrollerItem [scrollAnchor]="turn.startsTurn">
+                        <tolle-message [align]="turn.align">
+                            <tolle-message-avatar>{{ turn.align === 'end' ? 'ME' : 'AI' }}</tolle-message-avatar>
+                            <tolle-message-content>
+                                @if (turn.startsTurn) {
+                                <tolle-message-header>Turn start</tolle-message-header>
+                                }
+                                <tolle-bubble [variant]="turn.align === 'end' ? 'primary' : 'default'"
+                                    [align]="turn.align">
+                                    {{ turn.text }}
+                                </tolle-bubble>
+                            </tolle-message-content>
+                        </tolle-message>
+                    </div>
+                    }
+                </tolle-message-scroller-content>
+            </tolle-message-scroller-viewport>
+
+            <tolle-message-scroller-button>Jump to latest</tolle-message-scroller-button>
+        </tolle-message-scroller>
+    </div>
+    }
+</div>

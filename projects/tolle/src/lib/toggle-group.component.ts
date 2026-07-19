@@ -213,6 +213,7 @@ export class ToggleGroupComponent implements AfterContentInit, AfterViewInit, Co
 
 @Component({
     selector: 'tolle-toggle-group-item',
+  styles: [':host { display: inline-flex; }'],
     standalone: true,
     imports: [CommonModule, ToggleComponent],
     template: `

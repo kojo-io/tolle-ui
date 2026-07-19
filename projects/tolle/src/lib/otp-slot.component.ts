@@ -4,6 +4,7 @@ import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'tolle-otp-slot',
+  styles: [':host { display: inline-flex; }'],
   standalone: true,
   imports: [NgIf],
   template: `

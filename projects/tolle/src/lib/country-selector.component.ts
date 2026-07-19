@@ -20,6 +20,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-country-selector',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule, PopoverComponent, InputComponent],
   providers: [

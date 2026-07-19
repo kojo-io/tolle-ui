@@ -1,0 +1,156 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="tool"
+      description="A collapsible record of one tool call — what was invoked, the arguments it received and the result it returned."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        Compose the call from a header and its two payload panels. The tool owns the shared open state and the
+        lifecycle <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">state</code>, so the header renders its
+        chip and the panels show and hide themselves without bindings of their own.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomy" language="html" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          A completed call. Hand the panels any value: objects are pretty-printed as JSON, strings render as they are.
+          Both panels only exist in the DOM while the call is expanded.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-tool />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="basicTs" language="typescript" />
+        </div>
+      </div>
+
+      <!-- States -->
+      <div class="mb-12 space-y-3" id="states">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">States</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">state</code> colours the header chip and the
+          tool's border: muted while pending, info while running (the chip icon spins), and destructive on failure.
+          Set <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">error</code> on the output to style the
+          payload itself as a failure.
+        </p>
+        <app-preview [code]="statesCode" language="html">
+          <app-tool-states />
+        </app-preview>
+      </div>
+
+      <!-- Lifecycle -->
+      <div class="space-y-3" id="lifecycle">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Driving the lifecycle</h3>
+        <p class="text-muted-foreground">
+          Move <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">state</code> from pending through running
+          to success as the call resolves, and expand the tool with
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">[(open)]</code> so the result is visible the
+          moment it lands.
+        </p>
+        <app-preview [code]="lifecycleCode" language="html">
+          <app-tool-lifecycle />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="lifecycleTs" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">ToolComponent Inputs</h3>
+      <app-prop-table [props]="toolProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ToolComponent Outputs</h3>
+        <app-prop-table [props]="toolOutputs" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ToolHeaderComponent Inputs</h3>
+        <app-prop-table [props]="headerProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ToolInputComponent Inputs</h3>
+        <app-prop-table [props]="inputProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">ToolOutputComponent Inputs</h3>
+        <app-prop-table [props]="outputProps" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('states')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              States
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('lifecycle')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Driving the lifecycle
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

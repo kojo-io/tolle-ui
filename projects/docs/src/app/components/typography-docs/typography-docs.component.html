@@ -1,0 +1,105 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="typography"
+      description="Applies the theme's type scale while rendering the semantically correct tag." id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">Headings and body copy on the theme's type scale.</p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-typography />
+        </app-preview>
+      </div>
+
+      <!-- Variants -->
+      <div class="mb-12 space-y-3" id="variants">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Variants</h3>
+        <p class="text-muted-foreground">Supporting styles for captions, emphasis, and inline code.</p>
+        <app-preview [code]="variantsCode" language="html" align="start">
+          <app-typography-variants />
+        </app-preview>
+      </div>
+
+      <!-- Blockquote -->
+      <div class="space-y-3" id="blockquote">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Blockquote</h3>
+        <p class="text-muted-foreground">Renders a real
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;blockquote&gt;</code> element.
+        </p>
+        <app-preview [code]="blockquoteCode" language="html" align="start">
+          <app-typography-blockquote />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Props</h3>
+      <app-prop-table [props]="typographyProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Rendered tags</h3>
+        <app-prop-table [props]="tagMapping" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('variants')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Variants
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('blockquote')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Blockquote
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

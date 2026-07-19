@@ -1,0 +1,26 @@
+<form class="w-full max-w-sm">
+    <tolle-field [invalid]="showError">
+        <tolle-field-label for="signup-username" [required]="true">Username</tolle-field-label>
+
+        <tolle-input-group [invalid]="showError">
+            <tolle-input-group-addon>
+                <i class="ri-at-line"></i>
+            </tolle-input-group-addon>
+            <tolle-input-group-input
+                id="signup-username"
+                placeholder="ada"
+                ariaDescribedby="signup-username-description signup-username-error"
+                [formControl]="username" />
+        </tolle-input-group>
+
+        <tolle-field-description id="signup-username-description">
+            This is how teammates will find you.
+        </tolle-field-description>
+
+        <tolle-field-error id="signup-username-error" [errors]="usernameError" />
+    </tolle-field>
+
+    <p class="mt-4 text-xs text-muted-foreground">
+        Clear the input or type one character, then blur it to see the error.
+    </p>
+</form>

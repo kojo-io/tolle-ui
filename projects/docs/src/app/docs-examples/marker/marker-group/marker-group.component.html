@@ -1,0 +1,10 @@
+<div class="flex w-full max-w-md flex-col gap-2">
+    <tolle-marker-group class="rounded-lg border border-border bg-muted/30 p-3">
+        <tolle-marker variant="status" icon="ri-search-line" label="Searching the codebase for “parseHeader”" />
+        <tolle-marker variant="status" icon="ri-file-list-2-line" label="Read 3 files" />
+        <tolle-marker variant="status" icon="ri-terminal-box-line" label="Ran the parser test suite" />
+        <tolle-marker variant="default" icon="ri-check-line" label="Done in 4.1s" />
+    </tolle-marker-group>
+
+    <tolle-marker variant="status" icon="ri-loader-4-line" label="Writing the fix…" [shimmer]="true" />
+</div>

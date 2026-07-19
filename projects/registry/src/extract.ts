@@ -47,13 +47,22 @@ export function extractItem(sf: SourceFile, versions: Record<string, string>): R
   const primary =
     components.find((c) => c.selector === `tolle-${name}`) ?? components[0];
 
-  return {
+  return clean({
     name,
     file,
     selector: primary.selector,
+    // `@new` on any exported class in the file marks the whole item as new.
+    isNew: sf.getClasses().some(hasNewTag) || undefined,
     components,
     dependencies: classifyDeps(sf, name, versions),
-  };
+  });
+}
+
+/** True when a class carries a `@new` JSDoc tag. */
+function hasNewTag(clazz: ClassDeclaration): boolean {
+  return clazz
+    .getJsDocs()
+    .some((doc) => doc.getTags().some((tag) => tag.getTagName() === 'new'));
 }
 
 function extractClass(

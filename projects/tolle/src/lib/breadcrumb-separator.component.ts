@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
       </ng-content>
     </li>
   `,
-  styles: ``
+  styles: `:host { display: inline-flex; }`
 })
 export class BreadcrumbSeparatorComponent {
 

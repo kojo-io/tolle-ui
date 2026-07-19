@@ -1,5 +1,15 @@
 # Contributing to Tolle UI
 
+> [!IMPORTANT]
+> **We are not accepting outside contributions at the moment.**
+>
+> Pull requests from outside the core team will be closed without review. Bug reports
+> and feature requests are still welcome as GitHub issues — they help us prioritise
+> even when we can't take patches.
+>
+> This document remains the authoring contract for the core team, and is worth reading
+> if you maintain a fork or vendor components via the CLI.
+
 This library is moving to a **single-source-of-truth** model: the component source under
 `projects/tolle/src/lib/**` is the one place metadata lives, and a ts-morph generator
 (`projects/registry/`, see the project plan) derives everything downstream from it —
@@ -78,16 +88,50 @@ export const buttonRegistry: RegistryMeta = {
 
 Sidecars are optional — only add fields the generator can't infer from source.
 
-## 6. Modern Angular (rolling out in Phase 4)
+## 6. Modern Angular — but NOT signal inputs (yet)
 
-New/edited components should trend toward: `input()` / `model()` / `output()` signals,
-`computed()` for derived classes, `changeDetection: OnPush`, and `@if` / `@for` control flow.
-Form controls keep the standard `ControlValueAccessor` contract. Don't imperatively mutate a
-child component's `@Input()` from a parent — coordinate through a signal or a small service
-(see `select.service.ts` / `radio-service.ts`).
+> [!WARNING]
+> **Use `@Input()` / `@Output()` decorators. Do not use `input()` / `output()` / `model()`.**
+>
+> The registry generator reads component metadata from the AST by looking for `Input` and
+> `Output` **decorators** (`projects/registry/src/extract.ts`). It has no signal support. A
+> component authored with signal inputs compiles and its tests pass, but it silently ships an
+> **empty props table** — no docs API table, no `llms.txt` entry, no MCP metadata. That is
+> exactly the drift this generator exists to prevent.
+>
+> Signal inputs can only land after `extract.ts` learns to parse them. Until then, decorators
+> are mandatory.
+
+Everything else about modern Angular does apply: `changeDetection: OnPush`, getters (or
+`computed()` for non-input state) for derived classes, and `@if` / `@for` control flow.
+Form controls keep the standard `ControlValueAccessor` contract.
+
+Don't imperatively mutate a child component's `@Input()` from a parent, and — just as
+important — **don't read a parent component's property from an OnPush child's getter**.
+Nothing marks the child dirty when that property changes, so it renders stale forever. This
+has bitten us more than once. Coordinate through a small parent-provided service that exposes
+an observable, and `markForCheck()` when it emits — see `menubar.component.ts`,
+`command.service.ts`, `select.service.ts`.
+
+## 7. Charts consume validated colour tokens
+
+Chart marks use `--chart-1` … `--chart-5`. Those steps are validated for perceptual lightness,
+chroma, colour-blind separation and contrast against each surface — light and dark are stepped
+**separately**, because dark's usable lightness band is lower and narrower, not a mirror of
+light's. Assign them **by series key, never by array index**, so filtering a series out doesn't
+repaint the survivors. Cap at five; a sixth series is not a generated colour.
+
+`generateChartRamp()` derives a ramp from an arbitrary brand hue and is explicitly best-effort
+— five separable hues rotated from one starting point cannot be guaranteed colour-blind-safe
+for every base. Prefer the shipped defaults, and always keep the legend and a table fallback so
+colour is never the only channel carrying identity.
 
 ## Before you push
 
 - `npm run build:lib` — the library compiles.
-- `npm test` — component specs pass.
+  Note: `ng build tolle` only walks what's reachable from `public-api.ts`. A new component that
+  isn't exported yet **is not type-checked by that build** — its specs are what actually compile
+  it. Export it, then build.
+- `npm test` — component specs pass. Locally:
+  `CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ng test tolle --watch=false --browsers=ChromeHeadless`
 - `ng serve docs` (or `npm start`) — the component renders correctly in **light and dark**.

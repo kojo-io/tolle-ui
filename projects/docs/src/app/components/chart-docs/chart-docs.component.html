@@ -1,0 +1,411 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="chart"
+      description="A responsive SVG chart container with shared scales, composable marks, an automatic legend and a real data table underneath."
+      id="overview" />
+
+    <!-- The problem -->
+    <section class="mb-14" id="problem">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">The problem</h2>
+      <p class="mb-4 text-muted-foreground">
+        Most chart libraries hand you a picture. A picture is the one part of a chart that some of your readers will
+        never get: colour-blind readers cannot separate the series, screen-reader users get an
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;svg&gt;</code> with nothing in
+        it, and anyone on a touch device cannot hover for the value.
+      </p>
+      <p class="mb-6 text-muted-foreground">
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;tolle-chart&gt;</code> treats
+        those as part of the chart, not as an add-on. The container renders the plot, and alongside it a
+        <strong class="font-semibold text-foreground">legend</strong> and a
+        <strong class="font-semibold text-foreground">real
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;table&gt;</code> of the
+        numbers</strong> — always, without you asking. You compose the marks; you do not have to remember the rest.
+      </p>
+
+      <div class="grid gap-4 md:grid-cols-3">
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold">
+            <i class="ri-layout-grid-line text-primary" aria-hidden="true"></i>
+            Shared scales
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            Every mark draws into one coordinate space, owned by a per-chart service. Adding a bar switches the whole
+            chart to a band scale; adding an area forces zero into the domain.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold">
+            <i class="ri-palette-line text-primary" aria-hidden="true"></i>
+            Colour by identity
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            A series keeps its palette step for the life of the chart, keyed by its
+            <code class="font-mono text-xs">key</code>. Filtering one out never repaints the others.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold">
+            <i class="ri-eye-line text-primary" aria-hidden="true"></i>
+            Readable without the picture
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            The legend and the <code class="font-mono text-xs">sr-only</code> table are rendered by the container, so
+            the values survive colour blindness, a screen reader and a device with no pointer.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the parts if you use the package. Import only the marks you
+        actually draw.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <!-- Anatomy -->
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+
+      <div class="mb-6 rounded-lg border border-destructive/40 bg-destructive/5 p-4">
+        <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
+          <i class="ri-error-warning-line text-destructive" aria-hidden="true"></i>
+          Read this first: the marks are attribute directives on <code class="font-mono text-xs">svg:g</code>
+        </h3>
+        <p class="mb-3 text-sm text-muted-foreground">
+          Every part is written as
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;svg:g tolle-chart-line
+            seriesKey="revenue"&gt;</code>, never as
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;tolle-chart-line&gt;</code>.
+        </p>
+        <p class="text-sm text-muted-foreground">
+          This is not a style preference. A custom element is created in the HTML namespace, and an HTML element inside
+          an <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;svg&gt;</code> never
+          renders its SVG subtree. Get it wrong and you get a
+          <strong class="font-semibold text-foreground">blank chart with no error</strong> — no console warning, no
+          template failure, just an empty frame.
+        </p>
+      </div>
+
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomyCode" language="html" />
+      </div>
+
+      <p class="mb-3 mt-6 text-muted-foreground">The form that silently renders nothing:</p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="wrongCode" language="html" />
+      </div>
+
+      <p class="mt-6 text-muted-foreground">
+        The second rule is what you <em>do not</em> put inside. The
+        <strong class="font-semibold text-foreground">legend, the hover tooltip and the accessible table are rendered by
+        the container itself</strong>. They are not projected content — adding them as children gives you two of each.
+      </p>
+
+      <h3 class="mb-3 mt-8 scroll-m-20 text-lg font-semibold tracking-tight">Data and series</h3>
+      <p class="mb-4 text-muted-foreground">
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">data</code> is an array of plain
+        rows in x order. <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">xKey</code> names
+        the property holding the category label, and each
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">ChartSeries</code> names a property
+        to read as a value:
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="dataCode" language="typescript" />
+      </div>
+      <p class="mt-4 text-muted-foreground">
+        A missing or non-numeric value is a <strong class="font-semibold text-foreground">gap, not a zero</strong> — the
+        line skips it rather than diving to the baseline and inventing a collapse that never happened. Y ticks are
+        snapped to the next 1 / 2 / 5 × 10<sup>n</sup> step, so the axis reads 0 / 10 / 20 rather than 0 / 19.4 / 38.8.
+      </p>
+    </section>
+
+    <!-- No dual axis -->
+    <section class="mb-14" id="one-scale">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">One y scale, deliberately</h2>
+      <p class="mb-4 text-muted-foreground">
+        There is <strong class="font-semibold text-foreground">no secondary y-axis</strong>, and this is a decision
+        rather than a gap. Two measures on two scales in one frame let the author choose where the lines cross, so the
+        reader sees a relationship that the data does not contain. Shift one axis by a factor and a correlation appears;
+        shift it back and it is gone.
+      </p>
+      <p class="text-muted-foreground">
+        When you need to compare two things measured in different units, use two charts stacked as small multiples, or
+        index both series to a common base (say, 100 at the first period) and plot them on one honest scale.
+      </p>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Line -->
+      <div class="mb-12 space-y-3" id="line">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Line</h3>
+        <p class="text-muted-foreground">
+          Two series over time. Hover anywhere in a column — the hit area is the whole band, so you aim at a month, not
+          at a 2px stroke — and the tooltip lists every series at that x at once.
+        </p>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">curve="smooth"</code> is monotone
+          cubic, not a Catmull-Rom spline: it is constrained never to overshoot the data, so the curve cannot bulge past
+          a measured point and imply a peak that was never recorded.
+        </p>
+        <app-preview [code]="lineCode" language="html" align="stretch">
+          <app-chart-line />
+        </app-preview>
+      </div>
+
+      <!-- Bar -->
+      <div class="mb-12 space-y-3" id="bar">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Bars, grouped and stacked</h3>
+        <p class="text-muted-foreground">
+          Adding a <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-chart-bar</code>
+          switches the whole chart to a band scale and forces zero into the y domain — a bar encodes its value as a
+          length, so a truncated baseline would misstate every comparison on the chart.
+        </p>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">stacked</code> lives on the
+          container, not on the mark, because stacking is a property of the frame that all the marks share. Stacked
+          answers &ldquo;how big is the total, and how is it composed?&rdquo;; grouped answers &ldquo;how do these
+          compare within each period?&rdquo;. Toggle between them below.
+        </p>
+        <app-preview [code]="barCode" language="html" align="stretch">
+          <app-chart-stacked-bar />
+        </app-preview>
+      </div>
+
+      <!-- Area -->
+      <div class="space-y-3" id="area">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Area</h3>
+        <p class="text-muted-foreground">
+          An area is a line with a low-opacity wash down to its baseline, so it also pulls zero into the domain. Stacked,
+          each series sits on the top of the one below and the whole shape reads as a total.
+        </p>
+        <p class="text-muted-foreground">
+          This one sets <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[showTable]="true"</code>
+          so you can see the fallback that is normally
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">sr-only</code>. It is rendered on
+          every chart whether or not you show it.
+        </p>
+        <app-preview [code]="areaCode" language="html" align="stretch">
+          <app-chart-area />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- Colour -->
+    <section class="mb-16" id="colour">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Colour</h2>
+      <p class="mb-4 text-muted-foreground">
+        Series take the theme's chart steps,
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">--chart-1</code> through
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">--chart-5</code>. The dark-mode
+        steps are chosen independently rather than derived by lightening the light ones, because a mechanical flip
+        wrecks the separation the palette was picked for.
+      </p>
+
+      <div class="mb-6 grid gap-4 md:grid-cols-2">
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 text-sm font-semibold">Assigned by key, not by position</h3>
+          <p class="text-sm text-muted-foreground">
+            A key claims a slot the first time it is seen and keeps it. Filter a series out of the array and back in, or
+            drop an earlier one, and the survivors do not move a step — so a colour a reader has learnt stays attached to
+            the same thing.
+          </p>
+        </div>
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 text-sm font-semibold">Five steps, then a neutral</h3>
+          <p class="text-sm text-muted-foreground">
+            A sixth series does <em>not</em> get a generated colour — it renders in
+            <code class="font-mono text-xs">--muted-foreground</code>. Generating a step would land outside the
+            palette's validation, and wrapping back to
+            <code class="font-mono text-xs">--chart-1</code> would give two series one identity. Both are worse than
+            being visibly uncoloured.
+          </p>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="colourCode" language="typescript" />
+      </div>
+      <p class="mt-4 text-muted-foreground">
+        If you have more than five things to plot, that is a signal about the chart rather than about the palette: group
+        the tail into an &ldquo;Other&rdquo; series, or split into small multiples.
+      </p>
+    </section>
+
+    <!-- Accessibility -->
+    <section class="mb-16" id="accessibility">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Accessibility</h2>
+      <p class="mb-4 text-muted-foreground">
+        The palette is optimised for hue separation across the common forms of colour blindness, and one of its five
+        steps sits <strong class="font-semibold text-foreground">below 3:1 contrast against the surface</strong>. That
+        is a deliberate trade — pushing every step to 3:1 would collapse the hues toward each other and make the series
+        harder to tell apart, which is the failure the palette exists to avoid.
+      </p>
+      <p class="mb-4 text-muted-foreground">
+        The trade only holds because colour is never the sole carrier of meaning. Two things guarantee that, and the
+        container renders both for you:
+      </p>
+      <ul class="mb-4 list-disc space-y-2 pl-5 text-muted-foreground">
+        <li>
+          The <strong class="font-semibold text-foreground">legend</strong>, rendered automatically whenever there are
+          <strong class="font-semibold text-foreground">two or more series</strong>, so every series is named as well as
+          coloured. A single series gets no legend, because the chart's own label already names it.
+        </li>
+        <li>
+          The <strong class="font-semibold text-foreground">table fallback</strong>: a real
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;table&gt;</code> of every x
+          position and every series value, <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">sr-only</code>
+          by default and always pointed at by the svg's
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">aria-describedby</code>. Anything
+          the chart encodes in colour or position stays reachable without seeing it and without hovering it.
+        </li>
+      </ul>
+      <p class="mb-4 text-muted-foreground">
+        Two inputs are on you.
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">ariaLabel</code> becomes the svg
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;title&gt;</code> and is the
+        chart's accessible name.
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">description</code> becomes the
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;desc&gt;</code> — write the
+        sentence you would say to someone looking over your shoulder, the finding rather than a restatement of the
+        title. Set <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">xHeader</code> too; the
+        default &ldquo;Category&rdquo; tells a screen-reader user nothing about what the rows are.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="a11yCode" language="html" />
+      </div>
+      <p class="mt-4 text-muted-foreground">
+        Hover targets are sized for people, not for pixels: the pointer catchment for each x position is the whole band,
+        so a reader aims at a category rather than at a 2px line or an 8px dot. Dots are 8px across at the default
+        radius for the same reason.
+      </p>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">tolle-chart (container)</h3>
+      <app-prop-table [props]="chartProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">tolle-chart events</h3>
+        <app-prop-table [props]="chartOutputs" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">svg:g[tolle-chart-line]</h3>
+        <app-prop-table [props]="lineProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">svg:g[tolle-chart-area]</h3>
+        <app-prop-table [props]="areaProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">svg:g[tolle-chart-bar]</h3>
+        <app-prop-table [props]="barProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">svg:g[tolle-chart-grid]</h3>
+        <app-prop-table [props]="gridProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">svg:g[tolle-chart-x-axis]</h3>
+        <app-prop-table [props]="xAxisProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">svg:g[tolle-chart-y-axis]</h3>
+        <app-prop-table [props]="yAxisProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Exported types and constants</h3>
+        <app-prop-table [props]="chartTypes" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('problem')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          The problem
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('one-scale')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          One y scale
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('line')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Line
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('bar')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Bars
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('area')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Area
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('colour')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Colour
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('accessibility')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Accessibility
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

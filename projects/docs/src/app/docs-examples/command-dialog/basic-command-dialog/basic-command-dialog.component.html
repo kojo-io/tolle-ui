@@ -1,0 +1,73 @@
+<div class="flex w-full max-w-sm flex-col items-start gap-3">
+    <tolle-button variant="outline" (click)="paletteOpen = true">
+        <i class="ri-search-line mr-2"></i>
+        Search&hellip;
+        <tolle-kbd-group class="ml-4">
+            <tolle-kbd size="sm">&#8984;</tolle-kbd>
+            <tolle-kbd size="sm">K</tolle-kbd>
+        </tolle-kbd-group>
+    </tolle-button>
+
+    <p class="text-sm text-muted-foreground">
+        Last command:
+        <span class="font-mono text-foreground">{{ lastCommand || 'none yet' }}</span>
+    </p>
+
+    <tolle-command-dialog [(open)]="paletteOpen">
+        <tolle-command (selected)="onSelected($event)">
+            <tolle-command-input placeholder="Type a command or search…" />
+
+            <tolle-command-list>
+                <tolle-command-empty>No results found.</tolle-command-empty>
+
+                <tolle-command-group heading="Suggestions">
+                    <tolle-command-item value="calendar" label="Calendar">
+                        <i class="ri-calendar-line"></i>
+                        <span>Calendar</span>
+                    </tolle-command-item>
+                    <tolle-command-item value="search-emoji" label="Search emoji">
+                        <i class="ri-emotion-line"></i>
+                        <span>Search emoji</span>
+                    </tolle-command-item>
+                    <tolle-command-item value="new-document" label="New document">
+                        <i class="ri-file-add-line"></i>
+                        <span>New document</span>
+                        <tolle-command-shortcut>
+                            <tolle-kbd size="sm">&#8984;</tolle-kbd>
+                            <tolle-kbd size="sm">N</tolle-kbd>
+                        </tolle-command-shortcut>
+                    </tolle-command-item>
+                </tolle-command-group>
+
+                <tolle-command-separator />
+
+                <tolle-command-group heading="Settings">
+                    <tolle-command-item value="profile" label="Profile">
+                        <i class="ri-user-3-line"></i>
+                        <span>Profile</span>
+                        <tolle-command-shortcut>
+                            <tolle-kbd size="sm">&#8984;</tolle-kbd>
+                            <tolle-kbd size="sm">P</tolle-kbd>
+                        </tolle-command-shortcut>
+                    </tolle-command-item>
+                    <tolle-command-item value="billing" label="Billing">
+                        <i class="ri-bank-card-line"></i>
+                        <span>Billing</span>
+                        <tolle-command-shortcut>
+                            <tolle-kbd size="sm">&#8984;</tolle-kbd>
+                            <tolle-kbd size="sm">B</tolle-kbd>
+                        </tolle-command-shortcut>
+                    </tolle-command-item>
+                    <tolle-command-item value="settings" label="Settings">
+                        <i class="ri-settings-3-line"></i>
+                        <span>Settings</span>
+                        <tolle-command-shortcut>
+                            <tolle-kbd size="sm">&#8984;</tolle-kbd>
+                            <tolle-kbd size="sm">S</tolle-kbd>
+                        </tolle-command-shortcut>
+                    </tolle-command-item>
+                </tolle-command-group>
+            </tolle-command-list>
+        </tolle-command>
+    </tolle-command-dialog>
+</div>

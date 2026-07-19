@@ -1,0 +1,23 @@
+<div class="w-full max-w-sm space-y-4">
+    <tolle-input-group>
+        <tolle-input-group-addon>
+            <i class="ri-search-line"></i>
+        </tolle-input-group-addon>
+        <tolle-input-group-input
+            id="component-search"
+            type="search"
+            placeholder="Search components"
+            [(ngModel)]="query" />
+    </tolle-input-group>
+
+    <tolle-input-group size="sm">
+        <tolle-input-group-addon>
+            <i class="ri-search-line"></i>
+        </tolle-input-group-addon>
+        <tolle-input-group-input type="search" placeholder="Small" />
+    </tolle-input-group>
+
+    <p class="text-xs text-muted-foreground">
+        Searching for: <span class="font-medium text-foreground">{{ query || 'nothing yet' }}</span>
+    </p>
+</div>

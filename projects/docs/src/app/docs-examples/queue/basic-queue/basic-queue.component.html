@@ -1,0 +1,7 @@
+<div class="w-full max-w-md">
+  <tolle-queue title="Queued prompts">
+    @for (item of items; track item.id) {
+      <tolle-queue-item [label]="item.label" (remove)="remove(item.id)" />
+    }
+  </tolle-queue>
+</div>

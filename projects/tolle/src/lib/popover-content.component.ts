@@ -7,6 +7,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-popover-content',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   template: `

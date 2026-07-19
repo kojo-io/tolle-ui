@@ -1,0 +1,25 @@
+<div class="flex w-full max-w-md flex-col gap-2">
+    <tolle-bubble align="start">
+        The parser now short-circuits on the first unbalanced brace, so a malformed file fails in
+        milliseconds instead of walking the whole tree.
+
+        <tolle-bubble-actions>
+            <button type="button" (click)="copy()"
+                class="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+                <i [class]="copied ? 'ri-check-line' : 'ri-file-copy-line'" aria-hidden="true"></i>
+                {{ copied ? 'Copied' : 'Copy' }}
+            </button>
+            <button type="button"
+                class="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+                <i class="ri-refresh-line" aria-hidden="true"></i>
+                Retry
+            </button>
+        </tolle-bubble-actions>
+    </tolle-bubble>
+
+    <tolle-bubble-reactions [reactions]="reactions" (react)="toggle($event)" />
+
+    <p class="text-xs text-muted-foreground">
+        Hover the bubble to reveal its actions. Last reaction: {{ lastReaction || 'none' }}
+    </p>
+</div>

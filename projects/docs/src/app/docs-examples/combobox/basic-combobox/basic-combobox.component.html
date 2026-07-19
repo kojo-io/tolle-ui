@@ -1,0 +1,10 @@
+<div class="flex w-full max-w-xs flex-col gap-2">
+    <span class="text-sm font-medium text-foreground">Framework</span>
+
+    <tolle-combobox [options]="frameworks" [(ngModel)]="framework" placeholder="Select a framework…"
+        searchPlaceholder="Search frameworks…" ariaLabel="Framework" />
+
+    <p class="text-sm text-muted-foreground">
+        Selected: <span class="font-mono text-foreground">{{ framework || 'none' }}</span>
+    </p>
+</div>

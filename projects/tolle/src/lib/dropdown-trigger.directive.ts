@@ -53,9 +53,11 @@ export class DropdownTriggerDirective implements OnDestroy {
       });
     });
 
-    // Close on outside click
+    // Close on outside click. Capture phase so container components that call
+    // stopPropagation() on their root (modal, sheet, country-selector) cannot
+    // prevent the event from reaching us.
     setTimeout(() => {
-      document.addEventListener('click', this.outsideClick);
+      document.addEventListener('pointerdown', this.outsideClick, true);
     });
   }
 
@@ -63,7 +65,7 @@ export class DropdownTriggerDirective implements OnDestroy {
     this.isOpen = false;
     this.cleanup?.();
     this.menuElement?.remove();
-    document.removeEventListener('click', this.outsideClick);
+    document.removeEventListener('pointerdown', this.outsideClick, true);
   }
 
   private outsideClick = (event: MouseEvent) => {

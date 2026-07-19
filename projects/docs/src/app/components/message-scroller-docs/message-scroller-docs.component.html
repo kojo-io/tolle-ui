@@ -1,0 +1,235 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="message-scroller"
+      description="A scroll container for conversations, where content streams in while the reader is still reading."
+      id="overview" />
+
+    <!-- The problem -->
+    <section class="mb-14" id="problem">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">The problem</h2>
+      <p class="mb-4 text-muted-foreground">
+        A plain <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">overflow-y: auto</code> div
+        gets a streaming transcript wrong in one of two ways, and you have to pick which:
+      </p>
+
+      <div class="mb-6 grid gap-4 md:grid-cols-2">
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold">
+            <i class="ri-arrow-down-line text-destructive" aria-hidden="true"></i>
+            Pin to the bottom on every change
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            The reader scrolls up to re-read a paragraph, a token arrives, and the view yanks them back down
+            mid-sentence. They fight the scrollbar for the rest of the reply.
+          </p>
+        </div>
+
+        <div class="rounded-lg border border-border p-4">
+          <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold">
+            <i class="ri-eye-off-line text-destructive" aria-hidden="true"></i>
+            Never follow
+          </h3>
+          <p class="text-sm text-muted-foreground">
+            The reply streams in below the fold and the reader watches a static screen, with no signal that anything
+            is happening until they scroll down and find it finished.
+          </p>
+        </div>
+      </div>
+
+      <p class="mb-3 text-muted-foreground">
+        The governing rule here is <strong class="font-semibold text-foreground">never move the reader against their
+        intent</strong>. Every automatic scroll is gated on the reader already being at the live edge. The moment they
+        scroll up, following switches off and stays off until they come back down or press the jump button.
+      </p>
+      <p class="text-muted-foreground">
+        It also handles the two cases that are easy to forget: opening a saved thread at the newest
+        <em>turn</em> rather than at the absolute end of a wall of text, and holding position when older history loads
+        in above the viewport instead of letting the transcript lurch downward.
+      </p>
+    </section>
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the parts if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <!-- Anatomy -->
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        Note that
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolleMessageScrollerItem</code> is a
+        <strong class="font-semibold text-foreground">directive, not a wrapper component</strong> — you put it on your
+        own element, so it adds no extra box to your layout.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomyCode" language="html" />
+      </div>
+      <p class="mt-4 text-muted-foreground">
+        The scroller frame is
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">flex-1</code> with
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">min-h-0</code>, so it fills a parent
+        that has a definite height. Give that parent the height — the scroller does not set one for you.
+      </p>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          Scroll up and the jump button appears; scroll back to within
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">threshold</code> px of the bottom
+          and it disappears again, because following has resumed.
+        </p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-message-scroller />
+        </app-preview>
+      </div>
+
+      <!-- Start position -->
+      <div class="mb-12 space-y-3" id="start-position">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Start position and anchors</h3>
+        <p class="text-muted-foreground">
+          Where should a reopened thread land? <code
+            class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">'bottom'</code> drops the reader at
+          the last line of the last answer — the end of something they never read the start of.
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">'last-anchor'</code> instead opens
+          at the newest <em>turn</em>, so a long reply starts from its first line, with
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">scrollPreviousItemPeek</code> px
+          of the previous turn left visible so the reader can see what is being answered.
+        </p>
+        <p class="text-muted-foreground">
+          Turns are marked by you: set
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[scrollAnchor]="true"</code> on
+          the row that begins one. With no anchors marked,
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">'last-anchor'</code> quietly falls
+          back to <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">'bottom'</code>.
+        </p>
+        <p class="text-muted-foreground">
+          The start position applies once, on mount — switch it below and the scroller is re-created so you can see the
+          difference.
+        </p>
+        <app-preview [code]="startPositionCode" language="html" align="start">
+          <app-message-scroller-start-position />
+        </app-preview>
+      </div>
+
+      <!-- Streaming -->
+      <div class="space-y-3" id="streaming">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Streaming</h3>
+        <p class="text-muted-foreground">
+          This is the case the component exists for. Press <strong class="font-semibold text-foreground">Stream a
+          reply</strong> and let it run: while you are at the bottom, the view follows each word. Now scroll up a line
+          or two — following stops instantly, the jump button appears, and the text keeps arriving without moving
+          anything under you. Press the button (or scroll back down) and it picks up again.
+        </p>
+        <p class="text-muted-foreground">
+          Streamed tokens use an instant scroll rather than a smooth one, so a hundred chunks do not queue a hundred
+          animations.
+        </p>
+        <app-preview [code]="streamingCode" language="html" align="start">
+          <app-message-scroller-streaming />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="streamingTsCode" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Message Scroller Props</h3>
+      <app-prop-table [props]="scrollerProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Message Scroller Events and Methods</h3>
+        <app-prop-table [props]="scrollerEvents" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">tolleMessageScrollerItem (directive)</h3>
+        <p class="mb-4 text-muted-foreground">
+          Applied to your own element, e.g.
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">&lt;div tolleMessageScrollerItem
+            [scrollAnchor]="true"&gt;</code>.
+        </p>
+        <app-prop-table [props]="itemProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Message Scroller Button Props</h3>
+        <app-prop-table [props]="buttonProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Sub-components</h3>
+        <app-prop-table [props]="subComponents" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('problem')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          The problem
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('start-position')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Start position and anchors
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('streaming')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Streaming
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

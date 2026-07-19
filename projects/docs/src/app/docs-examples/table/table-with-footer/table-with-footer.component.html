@@ -1,0 +1,24 @@
+<tolle-table>
+    <thead tolleTableHeader>
+        <tr tolleTableRow>
+            <th tolleTableHead>SKU</th>
+            <th tolleTableHead>Description</th>
+            <th tolleTableHead class="text-right">Qty</th>
+            <th tolleTableHead class="text-right">Total</th>
+        </tr>
+    </thead>
+    <tbody tolleTableBody>
+        <tr tolleTableRow *ngFor="let item of items">
+            <td tolleTableCell class="font-medium">{{ item.sku }}</td>
+            <td tolleTableCell>{{ item.description }}</td>
+            <td tolleTableCell class="text-right">{{ item.quantity }}</td>
+            <td tolleTableCell class="text-right">{{ item.total | currency }}</td>
+        </tr>
+    </tbody>
+    <tfoot tolleTableFooter>
+        <tr tolleTableRow>
+            <td tolleTableCell colspan="3">Total</td>
+            <td tolleTableCell class="text-right">{{ grandTotal | currency }}</td>
+        </tr>
+    </tfoot>
+</tolle-table>

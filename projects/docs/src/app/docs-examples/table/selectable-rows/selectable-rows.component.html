@@ -1,0 +1,17 @@
+<tolle-table>
+    <thead tolleTableHeader>
+        <tr tolleTableRow>
+            <th tolleTableHead sort="ascending">Name</th>
+            <th tolleTableHead>Role</th>
+            <th tolleTableHead>Email</th>
+        </tr>
+    </thead>
+    <tbody tolleTableBody>
+        <tr tolleTableRow *ngFor="let row of rows" [selected]="row.id === selectedId" class="cursor-pointer"
+            (click)="toggle(row)">
+            <td tolleTableCell class="font-medium">{{ row.name }}</td>
+            <td tolleTableCell>{{ row.role }}</td>
+            <td tolleTableCell>{{ row.email }}</td>
+        </tr>
+    </tbody>
+</tolle-table>

@@ -5,6 +5,7 @@ import {SelectService} from './select.service';
 
 @Component({
   selector: 'tolle-select-item',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   template: `

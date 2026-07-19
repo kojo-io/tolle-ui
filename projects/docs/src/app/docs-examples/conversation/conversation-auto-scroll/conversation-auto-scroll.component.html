@@ -1,0 +1,39 @@
+<div class="flex w-full max-w-md flex-col gap-3">
+    <tolle-conversation size="sm" [autoScroll]="autoScroll" [threshold]="32" (atBottomChange)="atBottom = $event"
+        class="w-full rounded-lg border border-border">
+        <tolle-conversation-content>
+            @for (turn of turns; track turn.id) {
+            <tolle-message [align]="turn.id % 2 === 0 ? 'start' : 'end'">
+                <tolle-message-avatar>{{ turn.id % 2 === 0 ? 'AL' : 'ME' }}</tolle-message-avatar>
+                <tolle-message-content>
+                    <tolle-bubble [variant]="turn.id % 2 === 0 ? 'default' : 'primary'"
+                        [align]="turn.id % 2 === 0 ? 'start' : 'end'">
+                        {{ turn.text }}
+                    </tolle-bubble>
+                </tolle-message-content>
+            </tolle-message>
+            }
+        </tolle-conversation-content>
+
+        <tolle-conversation-scroll-button label="Jump to latest" (jumped)="jumps = jumps + 1" />
+    </tolle-conversation>
+
+    <div class="flex flex-wrap items-center gap-2">
+        <button type="button" (click)="running ? stop() : start()"
+            class="rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent">
+            {{ running ? 'Stop the feed' : 'Start a live feed' }}
+        </button>
+        <label class="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <input type="checkbox" [checked]="autoScroll" (change)="autoScroll = !autoScroll" />
+            autoScroll
+        </label>
+        <span class="text-xs text-muted-foreground">
+            at bottom: {{ atBottom }} · jumps: {{ jumps }}
+        </span>
+    </div>
+
+    <p class="text-xs text-muted-foreground">
+        Scroll up while the feed runs — the transcript stops following and the jump button appears.
+        Scroll back down and it resumes.
+    </p>
+</div>

@@ -5,6 +5,7 @@ import { cn } from './utils/cn';
 
 @Component({
     selector: 'tolle-hover-card',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`
@@ -70,6 +71,7 @@ export class HoverCardComponent implements OnDestroy {
 
 @Component({
     selector: 'tolle-hover-card-trigger',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -96,6 +98,7 @@ export class HoverCardTriggerComponent {
 
 @Component({
     selector: 'tolle-hover-card-content',
+  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `

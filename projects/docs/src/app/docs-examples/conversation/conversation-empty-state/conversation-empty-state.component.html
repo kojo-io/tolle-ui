@@ -1,0 +1,36 @@
+<div class="flex w-full max-w-md flex-col gap-3">
+    <tolle-conversation size="sm" [empty]="messages.length === 0"
+        class="w-full rounded-lg border border-border">
+        <tolle-conversation-empty-state icon="ri-chat-smile-2-line" title="No messages yet"
+            description="Ask a question and the transcript will start here.">
+            <button type="button" (click)="send()"
+                class="mt-2 rounded-md border border-border px-3 py-1.5 text-xs font-medium transition-colors hover:bg-accent">
+                Send the first message
+            </button>
+        </tolle-conversation-empty-state>
+
+        <tolle-conversation-content>
+            @for (text of messages; track text) {
+            <tolle-message align="end">
+                <tolle-message-avatar>ME</tolle-message-avatar>
+                <tolle-message-content>
+                    <tolle-bubble variant="primary" align="end">{{ text }}</tolle-bubble>
+                </tolle-message-content>
+            </tolle-message>
+            }
+        </tolle-conversation-content>
+
+        <tolle-conversation-scroll-button />
+    </tolle-conversation>
+
+    <div class="flex gap-2">
+        <button type="button" (click)="send()"
+            class="rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent">
+            Add a message
+        </button>
+        <button type="button" (click)="clear()"
+            class="rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent">
+            Clear
+        </button>
+    </div>
+</div>

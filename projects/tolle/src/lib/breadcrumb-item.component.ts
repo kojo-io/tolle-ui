@@ -9,7 +9,7 @@ import {Component, inject, OnInit} from '@angular/core';
       <ng-content></ng-content>
     </li>
   `,
-  styles: ``
+  styles: `:host { display: inline-flex; }`
 })
 export class BreadcrumbItemComponent {
 

@@ -1,0 +1,12 @@
+<div class="w-full max-w-lg space-y-4">
+  <tolle-button size="sm" variant="outline" (click)="toggle()">
+    Switch to {{ dir === 'ltr' ? 'RTL' : 'LTR' }}
+  </tolle-button>
+
+  <div [tolleDirection]="dir" class="space-y-3 rounded-lg border border-border p-4">
+    <tolle-input label="Full name" placeholder="Type here" />
+    <p class="text-xs text-muted-foreground">
+      The subtree reports dir="{{ dir }}" — labels, padding and icon placement mirror with it.
+    </p>
+  </div>
+</div>

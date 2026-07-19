@@ -1,0 +1,16 @@
+<div class="flex w-full max-w-md flex-col gap-6">
+    <tolle-sources variant="card" [open]="true">
+        <tolle-sources-trigger />
+        <tolle-sources-content>
+            <tolle-source *ngFor="let source of sources" [href]="source.href" [title]="source.title"
+                [favicon]="source.favicon" />
+        </tolle-sources-content>
+    </tolle-sources>
+
+    <tolle-sources variant="muted" [open]="true">
+        <tolle-sources-trigger />
+        <tolle-sources-content>
+            <tolle-source *ngFor="let source of sources" size="sm" [href]="source.href" [title]="source.title" />
+        </tolle-sources-content>
+    </tolle-sources>
+</div>

@@ -1,0 +1,15 @@
+<div class="flex w-full max-w-xl flex-col gap-4">
+    <tolle-chain-of-thought [open]="true">
+        <tolle-chain-of-thought-header [label]="headerLabel" />
+
+        <tolle-chain-of-thought-content>
+            @for (step of steps; track step.label; let i = $index) {
+            <tolle-chain-of-thought-step [label]="step.label" [icon]="step.icon" [status]="statusFor(i)" />
+            }
+        </tolle-chain-of-thought-content>
+    </tolle-chain-of-thought>
+
+    <tolle-button variant="outline" size="sm" class="w-fit" (click)="advance()">
+        {{ done ? 'Start over' : 'Advance a step' }}
+    </tolle-button>
+</div>

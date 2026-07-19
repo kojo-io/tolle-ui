@@ -7,6 +7,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-sheet',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   template: `<ng-content></ng-content>`
@@ -21,6 +22,8 @@ export class SheetComponent {
   private scrollStrategy = inject(ScrollStrategyOptions);
 
   private overlayRef?: OverlayRef;
+  /** Pending teardown scheduled by `hide()` for the exit animation. */
+  private disposeTimer?: ReturnType<typeof setTimeout>;
   /** Element focused before the sheet opened, restored on close. */
   private previouslyFocused?: HTMLElement | null;
 
@@ -30,7 +33,19 @@ export class SheetComponent {
     if (this.isOpen) return;
     this.isOpen = true;
     this.isOpenChange.emit(true);
+    // Re-opening inside the 300ms exit window: cancel the pending teardown so the
+    // still-attached overlay is reused. Without this the timer disposes the overlay
+    // after `show()` has already bailed out, leaving isOpen=true with no overlay —
+    // and every later open() short-circuits on the guard above.
+    this.cancelPendingDispose();
     this.show();
+  }
+
+  private cancelPendingDispose() {
+    if (this.disposeTimer !== undefined) {
+      clearTimeout(this.disposeTimer);
+      this.disposeTimer = undefined;
+    }
   }
 
   close() {
@@ -74,7 +89,9 @@ export class SheetComponent {
   private hide() {
     if (this.overlayRef) {
       const toRestore = this.previouslyFocused;
-      setTimeout(() => {
+      this.cancelPendingDispose();
+      this.disposeTimer = setTimeout(() => {
+        this.disposeTimer = undefined;
         if (this.overlayRef) {
           this.overlayRef.detach();
           this.overlayRef.dispose();
@@ -88,6 +105,7 @@ export class SheetComponent {
 
   ngOnDestroy() {
     // Immediate cleanup on destroy
+    this.cancelPendingDispose();
     if (this.overlayRef) {
       this.overlayRef.dispose();
     }
@@ -96,6 +114,7 @@ export class SheetComponent {
 
 @Component({
   selector: 'tolle-sheet-trigger',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   template: `<ng-content></ng-content>`,
@@ -114,6 +133,7 @@ export class SheetTriggerComponent {
 
 @Component({
   selector: 'tolle-sheet-content',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, A11yModule],
   template: `
@@ -182,6 +202,7 @@ export class SheetContentComponent {
 
 @Component({
   selector: 'tolle-sheet-header',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `
     <div class="flex flex-col space-y-2 text-center sm:text-left">
@@ -193,6 +214,7 @@ export class SheetHeaderComponent { }
 
 @Component({
   selector: 'tolle-sheet-footer',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `
     <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
@@ -204,6 +226,7 @@ export class SheetFooterComponent { }
 
 @Component({
   selector: 'tolle-sheet-title',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `
     <h3 class="text-lg font-semibold text-foreground">
@@ -219,6 +242,7 @@ export class SheetTitleComponent {
 
 @Component({
   selector: 'tolle-sheet-description',
+  styles: [':host { display: block; }'],
   standalone: true,
   template: `
     <p class="text-sm text-muted-foreground">

@@ -26,6 +26,8 @@ interface RegItem {
   category: string;
   title: string;
   selector?: string;
+  /** Set from a `@new` JSDoc tag on the component source. Drives the "New" badge. */
+  isNew?: boolean;
   import: string;
   install: string;
   components: RegComponent[];

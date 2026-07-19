@@ -105,3 +105,17 @@ These are the variables you define in your `provideTolleConfig()` function:
 |------------|-------|-----------|------------------------------------|
 | `--primary` | Color | `#2563eb` | The primary brand color (blue-600) |
 | `--radius`  | Size  | `0.5rem`  | Global border radius for components |
+
+---
+
+## Contributing
+
+**We are not accepting outside contributions at the moment.** Pull requests from outside
+the core team will be closed without review.
+
+Bug reports and feature requests are still very welcome as
+[GitHub issues](https://github.com/kojo-io/tolle-ui/issues) — they help us prioritise even
+when we can't take patches.
+
+If you need a change now, `npx @tolle_/cli add <component>` copies the source into your
+project, so you own it and can modify it freely.

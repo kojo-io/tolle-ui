@@ -1,0 +1,6 @@
+<div class="flex w-full flex-col gap-3">
+    <div *ngFor="let level of levels" class="flex items-center gap-4">
+        <span class="w-24 shrink-0 text-sm text-muted-foreground">{{ level.label }}</span>
+        <tolle-context [used]="level.used" [total]="total" [inputTokens]="level.used" placement="right" />
+    </div>
+</div>

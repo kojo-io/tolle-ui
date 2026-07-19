@@ -1,0 +1,25 @@
+<form [formGroup]="form" class="flex w-full max-w-xl flex-col gap-4">
+    <tolle-prompt-input formControlName="message" [status]="status" [submitOnEnter]="false" [clearOnSubmit]="false"
+        [maxRows]="4" placeholder="Enter starts a new line here…" (submitted)="onSubmitted($event)">
+        <tolle-prompt-input-toolbar>
+            <tolle-prompt-input-tools>
+                <span class="text-xs" [class.text-destructive]="remaining < 0">{{ remaining }} characters left</span>
+            </tolle-prompt-input-tools>
+
+            <tolle-prompt-input-submit [showLabel]="true" size="sm" submitLabel="Send" />
+        </tolle-prompt-input-toolbar>
+    </tolle-prompt-input>
+
+    <div class="flex flex-wrap items-center gap-3">
+        <tolle-button variant="outline" size="sm" (click)="toggleDisabled()">
+            {{ messageControl.disabled ? 'Enable' : 'Disable' }}
+        </tolle-button>
+        <span class="text-xs text-muted-foreground">
+            Control is {{ messageControl.disabled ? 'disabled' : messageControl.valid ? 'valid' : 'invalid' }}.
+        </span>
+    </div>
+
+    @if (lastSubmitted) {
+    <p class="text-sm text-muted-foreground">Last submitted: {{ lastSubmitted }}</p>
+    }
+</form>

@@ -1,0 +1,10 @@
+<div class="flex w-full max-w-xs flex-col gap-3">
+    <label for="seats" class="text-sm font-medium">Seats</label>
+    <tolle-native-select id="seats" [options]="quantities" [(ngModel)]="seats" placeholder="How many seats?" />
+
+    <p class="text-sm text-muted-foreground">
+        Value: <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{{ seats }}</code>
+        <span class="ml-2">typeof: <code
+                class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">{{ valueType }}</code></span>
+    </p>
+</div>

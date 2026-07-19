@@ -1,0 +1,20 @@
+<div class="w-full max-w-sm">
+    <div class="relative">
+        <tolle-chart-pie
+            [data]="plans"
+            labelKey="plan"
+            valueKey="revenue"
+            [donut]="true"
+            [innerRadius]="0.62"
+            labelHeader="Plan"
+            valueHeader="Revenue"
+            ariaLabel="Monthly recurring revenue by plan"
+            description="Pro contributes the largest share of monthly recurring revenue, followed by Team, Starter and Enterprise." />
+
+        <!-- The hole is yours to fill: overlay a total on the plot area. -->
+        <div class="pointer-events-none absolute inset-x-0 top-0 flex h-[240px] flex-col items-center justify-center">
+            <span class="text-xs text-muted-foreground">MRR</span>
+            <span class="text-xl font-semibold tabular-nums text-foreground">{{ total }}</span>
+        </div>
+    </div>
+</div>

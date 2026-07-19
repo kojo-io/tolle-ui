@@ -11,7 +11,7 @@ import {Component, TemplateRef, ViewChild} from '@angular/core';
       </div>
     </ng-template>
   `,
-  styles: ``
+  styles: `:host { display: block; }`
 })
 export class DropdownMenuComponent {
   @ViewChild('menuTemplate') templateRef!: TemplateRef<any>;

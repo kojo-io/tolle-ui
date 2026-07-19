@@ -1,0 +1,13 @@
+<div class="w-full">
+    <tolle-chart [data]="months" [series]="series" xKey="month" [height]="280" xHeader="Month"
+        ariaLabel="Revenue and expenses by month"
+        description="Revenue climbs from 18,400 in January to 28,400 in August, while expenses rise more slowly from 12,100 to 16,700.">
+        <!-- Parts are attribute directives on svg:g. An element selector here would
+             land in the HTML namespace and render nothing at all. -->
+        <svg:g tolle-chart-grid></svg:g>
+        <svg:g tolle-chart-y-axis></svg:g>
+        <svg:g tolle-chart-x-axis></svg:g>
+        <svg:g tolle-chart-line seriesKey="revenue" curve="smooth" [showDots]="true"></svg:g>
+        <svg:g tolle-chart-line seriesKey="expenses" curve="smooth" [showDots]="true"></svg:g>
+    </tolle-chart>
+</div>

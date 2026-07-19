@@ -6,6 +6,7 @@ import {RadioService} from './radio-service';
 
 @Component({
   selector: 'tolle-radio-group',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   providers: [

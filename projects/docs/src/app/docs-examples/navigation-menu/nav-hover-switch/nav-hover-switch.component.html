@@ -1,0 +1,35 @@
+<div class="flex flex-col items-center gap-3">
+    <tolle-navigation-menu ariaLabel="Resources" [closeDelay]="300" (openChange)="onOpenChange($event)">
+        <tolle-navigation-menu-list>
+            <tolle-navigation-menu-item id="learn">
+                <tolle-navigation-menu-trigger>Learn</tolle-navigation-menu-trigger>
+                <tolle-navigation-menu-content class="w-[320px]">
+                    <tolle-navigation-menu-link href="#guides">
+                        <span label class="text-sm font-medium">Guides</span>
+                        <span description class="text-xs text-muted-foreground">Step-by-step walkthroughs.</span>
+                    </tolle-navigation-menu-link>
+                    <tolle-navigation-menu-link href="#tutorials">
+                        <span label class="text-sm font-medium">Tutorials</span>
+                        <span description class="text-xs text-muted-foreground">Build something end to end.</span>
+                    </tolle-navigation-menu-link>
+                </tolle-navigation-menu-content>
+            </tolle-navigation-menu-item>
+
+            <tolle-navigation-menu-item id="community">
+                <tolle-navigation-menu-trigger>Community</tolle-navigation-menu-trigger>
+                <tolle-navigation-menu-content class="w-[320px]">
+                    <tolle-navigation-menu-link href="#discord">
+                        <span label class="text-sm font-medium">Discord</span>
+                        <span description class="text-xs text-muted-foreground">Ask questions, share builds.</span>
+                    </tolle-navigation-menu-link>
+                    <tolle-navigation-menu-link href="#changelog">
+                        <span label class="text-sm font-medium">Changelog</span>
+                        <span description class="text-xs text-muted-foreground">What shipped this month.</span>
+                    </tolle-navigation-menu-link>
+                </tolle-navigation-menu-content>
+            </tolle-navigation-menu-item>
+        </tolle-navigation-menu-list>
+    </tolle-navigation-menu>
+
+    <p class="text-sm text-muted-foreground">Open item: {{ openId ?? 'none' }}</p>
+</div>

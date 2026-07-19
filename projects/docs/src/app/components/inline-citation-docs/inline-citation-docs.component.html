@@ -1,0 +1,142 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="inline-citation"
+      description="A superscript citation marker for prose. Hovering it reveals the source card, positioned by the existing hover card."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        The marker sits directly against the word it cites — no space before the opening tag, or the superscript
+        detaches from the sentence. Whatever you project renders inside the hover card; a
+        <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">tolle-inline-citation-card</code> is the usual
+        choice.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomy" language="html" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          Number each claim in reading order. The card shows the title, the URL without its scheme, and a snippet
+          clamped to three lines — hover a marker to see it.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-inline-citation />
+        </app-preview>
+      </div>
+
+      <!-- Quote -->
+      <div class="mb-12 space-y-3" id="quote">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Pulled quote</h3>
+        <p class="text-muted-foreground">
+          Project a <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">tolle-inline-citation-quote</code>
+          into the card when the exact wording is the point. It renders as a
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">blockquote</code> with an optional attribution
+          footer.
+        </p>
+        <app-preview [code]="quoteCode" language="html">
+          <app-inline-citation-quote />
+        </app-preview>
+      </div>
+
+      <!-- Variants -->
+      <div class="space-y-3" id="variants">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Variants and sizes</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">muted</code> and
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">subtle</code> keep markers from speckling a
+          heavily cited answer, and
+          <code class="rounded bg-muted px-1 py-0.5 font-mono text-xs">placement</code> moves the card when the marker
+          sits near the top of the viewport.
+        </p>
+        <app-preview [code]="variantsCode" language="html">
+          <app-inline-citation-variants />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">InlineCitationComponent Inputs</h3>
+      <app-prop-table [props]="citationProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">InlineCitationCardComponent Inputs</h3>
+        <app-prop-table [props]="cardProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">InlineCitationQuoteComponent Inputs</h3>
+        <app-prop-table [props]="quoteProps" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('quote')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Pulled quote
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('variants')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Variants and sizes
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

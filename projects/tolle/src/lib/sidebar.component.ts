@@ -14,6 +14,8 @@ export type SidebarItem = {
   expanded?: boolean;
   /** Render as a plain anchor to an external URL / static file (opens in a new tab) instead of a router link. */
   external?: boolean;
+  /** Short trailing pill, e.g. 'New' or 'Beta'. Hidden while the sidebar is collapsed. */
+  badge?: string;
 }
 
 export type SidebarGroup = {
@@ -208,6 +210,11 @@ export type SidebarGroup = {
                     )">
                       {{ item.title }}
                     </span>
+                    @if (item.badge && !collapsed) {
+                      <span class="ml-auto shrink-0 rounded-full border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium leading-none text-primary">
+                        {{ item.badge }}
+                      </span>
+                    }
                   </a>
                 }
               }

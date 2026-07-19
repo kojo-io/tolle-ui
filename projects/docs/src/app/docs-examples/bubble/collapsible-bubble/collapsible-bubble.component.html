@@ -1,0 +1,15 @@
+<div class="flex w-full max-w-md flex-col gap-3">
+    <tolle-bubble align="start" [collapsible]="true" [collapsed]="collapsed" collapsedHeight="5rem"
+        expandLabel="Read the full answer" collapseLabel="Collapse" (collapsedChange)="collapsed = $event">
+        A migration runs in three phases. First the schema is copied to a shadow table, which is cheap
+        because nothing is written yet. Then rows are backfilled in batches, with the batch size tuned
+        down whenever replication lag crosses a threshold. Finally the tables are swapped inside a
+        transaction, which is the only moment writes are blocked, and it lasts a few milliseconds.
+        If the swap fails, the shadow table is dropped and the original is untouched.
+    </tolle-bubble>
+
+    <tolle-bubble variant="primary" align="end" [interactive]="true" (bubbleClick)="opened = opened + 1"
+        class="self-end">
+        Interactive — click or press Enter ({{ opened }})
+    </tolle-bubble>
+</div>

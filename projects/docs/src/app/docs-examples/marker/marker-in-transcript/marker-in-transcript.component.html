@@ -1,0 +1,23 @@
+<div class="flex w-full max-w-md flex-col gap-3">
+    <tolle-marker variant="separator" label="Today" />
+
+    <tolle-message align="start">
+        <tolle-message-avatar>AL</tolle-message-avatar>
+        <tolle-message-content>
+            <tolle-bubble align="start">Why is the import failing on line 40?</tolle-bubble>
+        </tolle-message-content>
+    </tolle-message>
+
+    <tolle-marker variant="default" icon="ri-tools-line" label="Inspected import-resolver.ts" />
+
+    <tolle-message align="end">
+        <tolle-message-avatar>AI</tolle-message-avatar>
+        <tolle-message-content>
+            <tolle-bubble variant="primary" align="end">
+                The path is resolved relative to the config file, not the source file.
+            </tolle-bubble>
+        </tolle-message-content>
+    </tolle-message>
+
+    <tolle-marker variant="status" icon="ri-loader-4-line" label="Preparing a patch…" [shimmer]="true" />
+</div>

@@ -15,7 +15,7 @@ import { cn } from './utils/cn';
       <ng-content></ng-content>
     </div>
   `,
-  styles: ``
+  styles: `:host { display: block; }`
 })
 export class DropdownItemComponent {
   @Input() class: string = '';

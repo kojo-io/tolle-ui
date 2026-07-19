@@ -1,0 +1,12 @@
+<div class="w-full max-w-lg space-y-3">
+  <tolle-plan title="Release checklist" size="sm" [(collapsed)]="collapsed">
+    <tolle-plan-step label="Bump version" status="done" />
+    <tolle-plan-step label="Build the library" status="done" />
+    <tolle-plan-step label="Publish to npm" status="active" />
+    <tolle-plan-step label="Tag the release" status="pending" />
+  </tolle-plan>
+
+  <p class="text-xs text-muted-foreground">
+    collapsed = {{ collapsed }} — the summary stays accurate because the steps remain registered while hidden.
+  </p>
+</div>

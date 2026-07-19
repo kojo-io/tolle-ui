@@ -1,0 +1,18 @@
+<div class="flex w-full max-w-md flex-col gap-4">
+    <tolle-button variant="outline" size="sm" class="w-fit" (click)="open = !open">
+        {{ open ? 'Collapse' : 'Expand' }} from outside
+    </tolle-button>
+
+    <tolle-sources variant="card" [(open)]="open" (openChange)="onOpenChange($event)">
+        <tolle-sources-trigger />
+        <tolle-sources-content>
+            <tolle-source href="https://angular.dev/guide/forms" title="Angular — Forms overview" />
+            <tolle-source href="https://angular.dev/api/forms/ControlValueAccessor"
+                title="Angular — ControlValueAccessor" />
+        </tolle-sources-content>
+    </tolle-sources>
+
+    <p class="text-sm text-muted-foreground">
+        {{ lastEvent || 'Toggle the list — mounting never emits openChange.' }}
+    </p>
+</div>

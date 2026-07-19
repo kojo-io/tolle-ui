@@ -12,6 +12,7 @@ import {DateRange} from './types/date-range';
 
 @Component({
   selector: 'tolle-range-calendar',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   providers: [

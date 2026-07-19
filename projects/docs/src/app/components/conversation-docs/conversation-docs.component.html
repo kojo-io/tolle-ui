@@ -1,0 +1,142 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="conversation"
+      description="A scrollable chat transcript that stays pinned to the newest message — but only while the reader is already there."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          Messages go inside
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-conversation-content</code>,
+          which lives in the scrolling viewport. The scroll button is projected into its own slot outside that viewport,
+          so it stays fixed to the frame while the transcript moves under it.
+        </p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-conversation />
+        </app-preview>
+      </div>
+
+      <!-- Empty state -->
+      <div class="mb-12 space-y-3" id="empty-state">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Empty state</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-conversation-empty-state</code>
+          renders nothing once the transcript reports content, so you can leave it in the template permanently and just
+          drive <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[empty]</code> from your
+          message list. Anything you project into it renders under the description — a suggested prompt, say.
+        </p>
+        <app-preview [code]="emptyCode" language="html" align="start">
+          <app-conversation-empty-state />
+        </app-preview>
+      </div>
+
+      <!-- Auto scroll -->
+      <div class="space-y-3" id="auto-scroll">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Following a live transcript</h3>
+        <p class="text-muted-foreground">
+          The rule is: never move the reader against their intent. New messages pull the view along only while the
+          reader is within <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">threshold</code>
+          px of the bottom. The moment they scroll up to re-read something, following stops and the jump button appears;
+          scrolling back down resumes it.
+        </p>
+        <p class="text-muted-foreground">
+          New messages arrive as projected DOM rather than as inputs, so the transcript watches its own subtree with a
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">MutationObserver</code> — it works
+          whatever renders the messages.
+        </p>
+        <app-preview [code]="autoScrollCode" language="html" align="start">
+          <app-conversation-auto-scroll />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="autoScrollTsCode" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Conversation Props</h3>
+      <app-prop-table [props]="conversationProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Conversation Events and Methods</h3>
+        <app-prop-table [props]="conversationEvents" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Empty State Props</h3>
+        <app-prop-table [props]="emptyStateProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Scroll Button Props</h3>
+        <app-prop-table [props]="scrollButtonProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Sub-components</h3>
+        <app-prop-table [props]="subComponents" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('empty-state')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Empty state
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('auto-scroll')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Following a live transcript
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

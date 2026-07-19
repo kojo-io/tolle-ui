@@ -1,0 +1,27 @@
+<div class="w-full max-w-xl">
+    <tolle-chain-of-thought [open]="true">
+        <tolle-chain-of-thought-header label="Thought for 6 seconds" />
+
+        <tolle-chain-of-thought-content>
+            <tolle-chain-of-thought-step label="Read the request" icon="ri-chat-1-line" />
+
+            <tolle-chain-of-thought-step label="Searched the documentation" icon="ri-search-line">
+                <tolle-chain-of-thought-search-results>
+                    <tolle-chain-of-thought-search-result icon="ri-file-text-line">
+                        theme.css
+                    </tolle-chain-of-thought-search-result>
+                    <tolle-chain-of-thought-search-result icon="ri-file-text-line">
+                        tailwind.config.js
+                    </tolle-chain-of-thought-search-result>
+                    <tolle-chain-of-thought-search-result icon="ri-file-text-line">
+                        spacing tokens
+                    </tolle-chain-of-thought-search-result>
+                </tolle-chain-of-thought-search-results>
+            </tolle-chain-of-thought-step>
+
+            <tolle-chain-of-thought-step label="Compared the spacing scales" icon="ri-scales-3-line" />
+
+            <tolle-chain-of-thought-step label="Wrote the answer" icon="ri-quill-pen-line" />
+        </tolle-chain-of-thought-content>
+    </tolle-chain-of-thought>
+</div>

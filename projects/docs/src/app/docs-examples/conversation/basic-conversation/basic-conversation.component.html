@@ -1,0 +1,16 @@
+<tolle-conversation size="sm" ariaLabel="Support conversation" class="w-full max-w-md rounded-lg border border-border">
+    <tolle-conversation-content>
+        @for (turn of turns; track turn.text) {
+        <tolle-message [align]="turn.align">
+            <tolle-message-avatar>{{ turn.align === 'end' ? 'ME' : 'AL' }}</tolle-message-avatar>
+            <tolle-message-content>
+                <tolle-bubble [variant]="turn.align === 'end' ? 'primary' : 'default'" [align]="turn.align">
+                    {{ turn.text }}
+                </tolle-bubble>
+            </tolle-message-content>
+        </tolle-message>
+        }
+    </tolle-conversation-content>
+
+    <tolle-conversation-scroll-button />
+</tolle-conversation>

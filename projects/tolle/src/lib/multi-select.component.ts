@@ -10,6 +10,7 @@ import { BadgeComponent } from './badge.component';
 
 @Component({
   selector: 'tolle-multi-select',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule, BadgeComponent, InputComponent],
   providers: [
@@ -222,7 +223,7 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
     this.isOpen = true;
     setTimeout(() => {
       this.updatePosition();
-      document.addEventListener('mousedown', this._outsideClickHandler);
+      document.addEventListener('pointerdown', this._outsideClickHandler, true);
       this.initActiveAfterOpen();
     });
   }
@@ -233,7 +234,7 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
     this.onSearchChange('');
     this.resetActive();
     if (this.cleanup) this.cleanup();
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
   }
 
   private updatePosition() {
@@ -506,7 +507,7 @@ export class MultiSelectComponent implements ControlValueAccessor, AfterContentI
   }
 
   ngOnDestroy() {
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
     if (this.cleanup) this.cleanup();
   }
 

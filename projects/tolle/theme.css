@@ -114,11 +114,17 @@
   --ring: var(--primary);
   /* derives from primary color */
 
-  --chart-1: 59 130 246;
-  --chart-2: 45 212 191;
-  --chart-3: 251 146 60;
-  --chart-4: 167 139 250;
-  --chart-5: 244 114 182;
+  /* Dark chart steps are SELECTED, not a lightened flip of the light ones: the
+     Tailwind-400 steps previously used here sat at OKLCH L 0.71–0.79, too bright
+     to read as distinct marks on a dark surface. These keep each series' hue
+     (blue, teal, orange, violet, pink) so a series holds its identity across
+     themes, re-stepped into the dark lightness band. Validated for lightness,
+     chroma, CVD separation and contrast. */
+  --chart-1: 85 140 255;
+  --chart-2: 14 169 152;
+  --chart-3: 235 97 36;
+  --chart-4: 153 115 254;
+  --chart-5: 234 79 154;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
@@ -178,8 +184,8 @@ html {
 }
 
 body {
-  background-color: var(--background, #ffffff);
-  color: var(--foreground, #0a0a0a);
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
   font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -188,7 +194,7 @@ body {
 
 /* Links */
 a {
-  color: var(--primary, #2563eb);
+  color: rgb(var(--primary));
   text-underline-offset: 4px;
 }
 
@@ -381,6 +387,101 @@ a:hover {
   .dark .glass {
     background-color: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* 5b. CHAT / TRANSCRIPT UTILITIES                                            */
+/* -------------------------------------------------------------------------- */
+/*
+ * Deliberately OUTSIDE `@layer utilities`. Anything inside that layer is subject
+ * to Tailwind's content scan, and these classes are applied from library source
+ * (or by consumers in their own markup) that a consuming app's `content` globs
+ * may not cover — inside the layer they would be silently purged.
+ */
+
+/*
+ * Scroll-aware edge fades.
+ *
+ * The fade is a `mask-image` on the scroll container itself, so the container's
+ * own pixels dissolve as they approach its padding-box edge. Long transcripts
+ * and chip rows therefore hint at more content with no overlay elements, no
+ * gradient pseudo-elements sitting on top of the background, and no scroll
+ * listeners to keep in sync. Because the mask travels with the scroller, it
+ * works the same in light and dark, and over any backdrop.
+ *
+ * Tune the fade depth per-element with `--scroll-fade-size`.
+ */
+.scroll-fade,
+.scroll-fade-y {
+  --scroll-fade-size: 1.5rem;
+  -webkit-mask-image: linear-gradient(to bottom,
+      transparent 0,
+      #000 var(--scroll-fade-size),
+      #000 calc(100% - var(--scroll-fade-size)),
+      transparent 100%);
+  mask-image: linear-gradient(to bottom,
+      transparent 0,
+      #000 var(--scroll-fade-size),
+      #000 calc(100% - var(--scroll-fade-size)),
+      transparent 100%);
+}
+
+.scroll-fade-x {
+  --scroll-fade-size: 1.5rem;
+  -webkit-mask-image: linear-gradient(to right,
+      transparent 0,
+      #000 var(--scroll-fade-size),
+      #000 calc(100% - var(--scroll-fade-size)),
+      transparent 100%);
+  mask-image: linear-gradient(to right,
+      transparent 0,
+      #000 var(--scroll-fade-size),
+      #000 calc(100% - var(--scroll-fade-size)),
+      transparent 100%);
+}
+
+/*
+ * Text shimmer for live status — "Thinking…", "Searching…".
+ *
+ * A gradient sweeps across the text itself via `background-clip: text`, rather
+ * than animating opacity, so the wording stays legible throughout. The gradient
+ * is built from the theme's own foreground tokens, so it tracks light and dark.
+ */
+.shimmer {
+  background-image: linear-gradient(90deg,
+      rgb(var(--muted-foreground)) 0%,
+      rgb(var(--muted-foreground)) 40%,
+      rgb(var(--foreground)) 50%,
+      rgb(var(--muted-foreground)) 60%,
+      rgb(var(--muted-foreground)) 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: tolle-shimmer 2.4s linear infinite;
+}
+
+@keyframes tolle-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* A sweeping highlight is exactly the motion this query exists to suppress: fall
+   back to flat muted text rather than a paused, half-transparent gradient. */
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+    background-image: none;
+    color: rgb(var(--muted-foreground));
+    -webkit-text-fill-color: currentColor;
   }
 }
 

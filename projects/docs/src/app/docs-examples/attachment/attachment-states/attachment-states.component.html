@@ -1,0 +1,18 @@
+<div class="flex w-full max-w-md flex-col gap-3">
+    <tolle-attachment name="design-system.fig" [size]="7340032" type="application/octet-stream" [state]="state"
+        [progress]="progress" errorLabel="Upload failed — connection lost" />
+
+    <tolle-attachment name="onboarding.mp4" [size]="52428800" type="video/mp4" state="error"
+        errorLabel="Too large — 50 MB limit" [removable]="true" />
+
+    <div class="flex gap-2">
+        <button type="button" (click)="start()"
+            class="rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent">
+            Simulate upload
+        </button>
+        <button type="button" (click)="fail()"
+            class="rounded-md border border-border px-2.5 py-1 text-xs font-medium transition-colors hover:bg-accent">
+            Simulate failure
+        </button>
+    </div>
+</div>

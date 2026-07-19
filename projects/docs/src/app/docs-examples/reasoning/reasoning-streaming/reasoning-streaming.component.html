@@ -1,0 +1,10 @@
+<div class="flex w-full max-w-xl flex-col gap-4">
+    <tolle-button variant="outline" size="sm" class="w-fit" (click)="start()">
+        {{ streaming ? 'Streaming…' : 'Stream a reasoning trace' }}
+    </tolle-button>
+
+    <tolle-reasoning [(open)]="open" [streaming]="streaming" [duration]="duration">
+        <tolle-reasoning-trigger />
+        <tolle-reasoning-content [text]="text || 'Waiting for the first chunk…'" />
+    </tolle-reasoning>
+</div>

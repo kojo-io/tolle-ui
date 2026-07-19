@@ -11,6 +11,7 @@ import { CalendarComponent, CalendarMode } from './calendar.component';
 
 @Component({
   selector: 'tolle-date-picker',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule, MaskedInputComponent, CalendarComponent],
   providers: [
@@ -205,14 +206,14 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
     this.trigger.nativeElement.focus();
     requestAnimationFrame(() => {
       this.updatePosition();
-      document.addEventListener('mousedown', this._outsideClickHandler);
+      document.addEventListener('pointerdown', this._outsideClickHandler, true);
     });
   }
 
   close() {
     this.isOpen = false;
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
   }
 
   clear(event: MouseEvent) {
@@ -252,7 +253,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
 
   ngOnDestroy() {
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
-    document.removeEventListener('mousedown', this._outsideClickHandler);
+    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
   }
 
   // CVA Implementation

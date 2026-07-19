@@ -91,6 +91,12 @@ export interface RegistryItem {
   title?: string;
   description?: string;
   category?: string;
+  /**
+   * Set by a `@new` JSDoc tag on the component class. Surfaces a "New" badge in
+   * the docs sidebar, the components index and the component page hero.
+   * Remove the tag when the component is no longer newly released.
+   */
+  isNew?: boolean;
   examples?: { title: string; code: string }[];
   a11yNotes?: string;
   components: ComponentClassMeta[];

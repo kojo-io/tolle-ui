@@ -5,6 +5,7 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-textarea',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule],
   providers: [

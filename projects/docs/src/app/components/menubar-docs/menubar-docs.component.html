@@ -1,0 +1,130 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="menubar"
+      description="A desktop-application style menu bar: a row of triggers, each opening its own dropdown of commands."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="behaviour">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Behaviour</h2>
+      <p class="mb-4 text-muted-foreground">
+        A menu bar behaves differently from a row of independent dropdowns. Once <em>any</em> menu is open, hovering a
+        different trigger switches straight to it — no second click. Hovering while everything is closed does nothing.
+      </p>
+      <p class="text-muted-foreground">
+        Keyboard support comes for free: <strong>Arrow Left / Right</strong> move between menus,
+        <strong>Arrow Up / Down</strong> move between the items of the open menu, and <strong>Escape</strong> closes the
+        menu and returns focus to its trigger. Clicking outside the bar closes it too.
+      </p>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          A classic File / Edit / View bar with a label, separators, and a destructive item. Each item reports itself
+          through <code class="rounded bg-muted px-1 py-0.5 text-sm">(select)</code>.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-menubar />
+        </app-preview>
+      </div>
+
+      <!-- Sizes -->
+      <div class="mb-12 space-y-3" id="sizes">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Sizes</h3>
+        <p class="text-muted-foreground">Three scales. Every trigger inherits the bar's size unless it sets its own.</p>
+        <app-preview [code]="sizesCode" language="html">
+          <app-menubar-sizes />
+        </app-preview>
+      </div>
+
+      <!-- Icons and shortcuts -->
+      <div class="space-y-3" id="icons-shortcuts">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Icons and shortcuts</h3>
+        <p class="text-muted-foreground">
+          Items project a <code class="rounded bg-muted px-1 py-0.5 text-sm">prefix</code> slot before the label and a
+          <code class="rounded bg-muted px-1 py-0.5 text-sm">shortcut</code> slot after it. Use
+          <code class="rounded bg-muted px-1 py-0.5 text-sm">inset</code> to line up items that have no icon.
+        </p>
+        <app-preview [code]="iconsCode" language="html">
+          <app-menubar-with-icons />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Menubar Props</h3>
+      <app-prop-table [props]="menubarProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Sub-components</h3>
+        <app-prop-table [props]="subComponents" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('behaviour')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Behaviour
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('sizes')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Sizes
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('icons-shortcuts')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Icons and shortcuts
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

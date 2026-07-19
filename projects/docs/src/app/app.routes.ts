@@ -53,6 +53,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/aspect-ratio-docs/aspect-ratio-docs.component').then(m => m.AspectRatioDocsComponent),
           },
           {
+            path: 'attachment',
+            loadComponent: () => import('./components/attachment-docs/attachment-docs.component').then(m => m.AttachmentDocsComponent),
+          },
+          {
             path: 'avatar',
             loadComponent: () => import('./components/avatar-docs/avatar-docs.component').then(m => m.AvatarDocsComponent),
           },
@@ -63,6 +67,10 @@ export const routes: Routes = [
           {
             path: 'breadcrumb',
             loadComponent: () => import('./components/breadcrumb-docs/breadcrumb-docs.component').then(m => m.BreadcrumbDocsComponent),
+          },
+          {
+            path: 'bubble',
+            loadComponent: () => import('./components/bubble-docs/bubble-docs.component').then(m => m.BubbleDocsComponent),
           },
           {
             path: 'button',
@@ -85,16 +93,56 @@ export const routes: Routes = [
             loadComponent: () => import('./components/carousel-docs/carousel-docs.component').then(m => m.CarouselDocsComponent),
           },
           {
+            path: 'chart',
+            loadComponent: () => import('./components/chart-docs/chart-docs.component').then(m => m.ChartDocsComponent),
+          },
+          {
+            path: 'chart-pie',
+            loadComponent: () => import('./components/chart-pie-docs/chart-pie-docs.component').then(m => m.ChartPieDocsComponent),
+          },
+          {
             path: 'checkbox',
             loadComponent: () => import('./components/check-box-docs/check-box-docs.component').then(m => m.CheckBoxDocsComponent),
+          },
+          {
+            path: 'checkpoint',
+            loadComponent: () => import('./components/checkpoint-docs/checkpoint-docs.component').then(m => m.CheckpointDocsComponent),
           },
           {
             path: 'collapsible',
             loadComponent: () => import('./components/collapsible-docs/collapsible-docs.component').then(m => m.CollapsibleDocsComponent),
           },
           {
+            path: 'chain-of-thought',
+            loadComponent: () => import('./components/chain-of-thought-docs/chain-of-thought-docs.component').then(m => m.ChainOfThoughtDocsComponent),
+          },
+          {
+            path: 'combobox',
+            loadComponent: () => import('./components/combobox-docs/combobox-docs.component').then(m => m.ComboboxDocsComponent),
+          },
+          {
+            path: 'command',
+            loadComponent: () => import('./components/command-docs/command-docs.component').then(m => m.CommandDocsComponent),
+          },
+          {
+            path: 'command-dialog',
+            loadComponent: () => import('./components/command-dialog-docs/command-dialog-docs.component').then(m => m.CommandDialogDocsComponent),
+          },
+          {
+            path: 'confirmation',
+            loadComponent: () => import('./components/confirmation-docs/confirmation-docs.component').then(m => m.ConfirmationDocsComponent),
+          },
+          {
+            path: 'context',
+            loadComponent: () => import('./components/context-docs/context-docs.component').then(m => m.ContextDocsComponent),
+          },
+          {
             path: 'context-menu',
             loadComponent: () => import('./components/context-menu-docs/context-menu-docs.component').then(m => m.ContextMenuDocsComponent),
+          },
+          {
+            path: 'conversation',
+            loadComponent: () => import('./components/conversation-docs/conversation-docs.component').then(m => m.ConversationDocsComponent),
           },
           {
             path: 'data-table',
@@ -113,6 +161,30 @@ export const routes: Routes = [
             loadComponent: () => import('./components/country-selector-docs/country-selector-docs.component').then(m => m.CountrySelectorDocsComponent),
           },
           {
+            path: 'direction',
+            loadComponent: () => import('./components/direction-docs/direction-docs.component').then(m => m.DirectionDocsComponent),
+          },
+          {
+            path: 'inline-citation',
+            loadComponent: () => import('./components/inline-citation-docs/inline-citation-docs.component').then(m => m.InlineCitationDocsComponent),
+          },
+          {
+            path: 'marker',
+            loadComponent: () => import('./components/marker-docs/marker-docs.component').then(m => m.MarkerDocsComponent),
+          },
+          {
+            path: 'message',
+            loadComponent: () => import('./components/message-docs/message-docs.component').then(m => m.MessageDocsComponent),
+          },
+          {
+            path: 'message-scroller',
+            loadComponent: () => import('./components/message-scroller-docs/message-scroller-docs.component').then(m => m.MessageScrollerDocsComponent),
+          },
+          {
+            path: 'model-selector',
+            loadComponent: () => import('./components/model-selector-docs/model-selector-docs.component').then(m => m.ModelSelectorDocsComponent),
+          },
+          {
             path: 'phone-number-input',
             loadComponent: () => import('./components/phone-number-input-docs/phone-number-input-docs.component').then(m => m.PhoneNumberInputDocsComponent),
           },
@@ -125,12 +197,28 @@ export const routes: Routes = [
             loadComponent: () => import('./components/empty-state-docs/empty-state-docs.component').then(m => m.EmptyStateDocsComponent),
           },
           {
+            path: 'field',
+            loadComponent: () => import('./components/field-docs/field-docs.component').then(m => m.FieldDocsComponent),
+          },
+          {
             path: 'hover-card',
             loadComponent: () => import('./components/hover-card-docs/hover-card-docs.component').then(m => m.HoverCardDocsComponent),
           },
           {
             path: 'input',
             loadComponent: () => import('./components/input-docs/input-docs.component').then(m => m.InputDocsComponent),
+          },
+          {
+            path: 'input-group',
+            loadComponent: () => import('./components/input-group-docs/input-group-docs.component').then(m => m.InputGroupDocsComponent),
+          },
+          {
+            path: 'item',
+            loadComponent: () => import('./components/item-docs/item-docs.component').then(m => m.ItemDocsComponent),
+          },
+          {
+            path: 'kbd',
+            loadComponent: () => import('./components/kbd-docs/kbd-docs.component').then(m => m.KbdDocsComponent),
           },
           {
             path: 'label',
@@ -141,12 +229,24 @@ export const routes: Routes = [
             loadComponent: () => import('./components/masked-input-docs/masked-input-docs.component').then(m => m.MaskedInputDocsComponent),
           },
           {
+            path: 'menubar',
+            loadComponent: () => import('./components/menubar-docs/menubar-docs.component').then(m => m.MenubarDocsComponent),
+          },
+          {
             path: 'modal',
             loadComponent: () => import('./components/modal-docs/modal-docs.component').then(m => m.ModalDocsComponent),
           },
           {
             path: 'multi-select',
             loadComponent: () => import('./components/multi-select-docs/multi-select-docs.component').then(m => m.MultiSelectDocsComponent),
+          },
+          {
+            path: 'native-select',
+            loadComponent: () => import('./components/native-select-docs/native-select-docs.component').then(m => m.NativeSelectDocsComponent),
+          },
+          {
+            path: 'navigation-menu',
+            loadComponent: () => import('./components/navigation-menu-docs/navigation-menu-docs.component').then(m => m.NavigationMenuDocsComponent),
           },
           {
             path: 'otp',
@@ -157,6 +257,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/pagination-docs/pagination-docs.component').then(m => m.PaginationDocsComponent),
           },
           {
+            path: 'plan',
+            loadComponent: () => import('./components/plan-docs/plan-docs.component').then(m => m.PlanDocsComponent),
+          },
+          {
             path: 'popover',
             loadComponent: () => import('./components/popover-docs/popover-docs.component').then(m => m.PopoverDocsComponent),
           },
@@ -165,12 +269,24 @@ export const routes: Routes = [
             loadComponent: () => import('./components/progress-docs/progress-docs.component').then(m => m.ProgressDocsComponent),
           },
           {
+            path: 'prompt-input',
+            loadComponent: () => import('./components/prompt-input-docs/prompt-input-docs.component').then(m => m.PromptInputDocsComponent),
+          },
+          {
+            path: 'queue',
+            loadComponent: () => import('./components/queue-docs/queue-docs.component').then(m => m.QueueDocsComponent),
+          },
+          {
             path: 'radio-group',
             loadComponent: () => import('./components/radio-group-docs/radio-group-docs.component').then(m => m.RadioGroupDocsComponent),
           },
           {
             path: 'range-calendar',
             loadComponent: () => import('./components/calendar-range-docs/calendar-range-docs.component').then(m => m.CalendarRangeDocsComponent),
+          },
+          {
+            path: 'reasoning',
+            loadComponent: () => import('./components/reasoning-docs/reasoning-docs.component').then(m => m.ReasoningDocsComponent),
           },
           {
             path: 'resizable',
@@ -197,6 +313,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/sheet-docs/sheet-docs.component').then(m => m.SheetDocsComponent),
           },
           {
+            path: 'shimmer',
+            loadComponent: () => import('./components/shimmer-docs/shimmer-docs.component').then(m => m.ShimmerDocsComponent),
+          },
+          {
             path: 'sidebar',
             loadComponent: () => import('./components/sidebar-docs/sidebar-docs.component').then(m => m.SidebarDocsComponent),
           },
@@ -209,12 +329,32 @@ export const routes: Routes = [
             loadComponent: () => import('./components/slider-docs/slider-docs.component').then(m => m.SliderDocsComponent),
           },
           {
+            path: 'sources',
+            loadComponent: () => import('./components/sources-docs/sources-docs.component').then(m => m.SourcesDocsComponent),
+          },
+          {
+            path: 'spinner',
+            loadComponent: () => import('./components/spinner-docs/spinner-docs.component').then(m => m.SpinnerDocsComponent),
+          },
+          {
+            path: 'suggestion',
+            loadComponent: () => import('./components/suggestion-docs/suggestion-docs.component').then(m => m.SuggestionDocsComponent),
+          },
+          {
             path: 'switch',
             loadComponent: () => import('./components/switch-docs/switch-docs.component').then(m => m.SwitchDocsComponent),
           },
           {
+            path: 'table',
+            loadComponent: () => import('./components/table-docs/table-docs.component').then(m => m.TableDocsComponent),
+          },
+          {
             path: 'tabs',
             loadComponent: () => import('./components/tabs-docs/tabs-docs.component').then(m => m.TabsDocsComponent),
+          },
+          {
+            path: 'task',
+            loadComponent: () => import('./components/task-docs/task-docs.component').then(m => m.TaskDocsComponent),
           },
           {
             path: 'textarea',
@@ -233,8 +373,16 @@ export const routes: Routes = [
             loadComponent: () => import('./components/toggle-group-docs/toggle-group-docs.component').then(m => m.ToggleGroupDocsComponent)
           },
           {
+            path: 'tool',
+            loadComponent: () => import('./components/tool-docs/tool-docs.component').then(m => m.ToolDocsComponent),
+          },
+          {
             path: 'tooltip',
             loadComponent: () => import('./components/tooltip-docs/tooltip-docs.component').then(m => m.TooltipDocsComponent),
+          },
+          {
+            path: 'typography',
+            loadComponent: () => import('./components/typography-docs/typography-docs.component').then(m => m.TypographyDocsComponent),
           },
         ]
       },

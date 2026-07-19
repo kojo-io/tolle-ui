@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'tolle-radio-item',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   template: `

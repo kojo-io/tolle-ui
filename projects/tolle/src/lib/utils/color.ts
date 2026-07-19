@@ -349,34 +349,168 @@ export function generateBaseCss(baseId: string): string {
 /* Chart palette                                                              */
 /* -------------------------------------------------------------------------- */
 
-/**
- * Derive 5 harmonious chart colors from one base hex — the base hue plus
- * analogous hues at ±30°/±60°, with paired lightness shifts for separation.
- * Returns RGB triplets for `--chart-1`…`--chart-5`.
- */
-export function generateChartRamp(hex: string): string[] {
-  const hsl = hexToHsl(hex) ?? { h: 220, s: 70, l: 55 };
-  const defs = [
-    { dh: 0, s: hsl.s, l: hsl.l },
-    { dh: 32, s: hsl.s * 0.9, l: clamp(hsl.l + 8, 32, 74) },
-    { dh: -28, s: hsl.s * 0.95, l: clamp(hsl.l - 8, 28, 70) },
-    { dh: 64, s: hsl.s * 0.82, l: clamp(hsl.l + 15, 38, 80) },
-    { dh: -58, s: hsl.s, l: clamp(hsl.l - 16, 24, 66) },
-  ];
-  return defs.map((d) => rgbTriplet(hslToHex(hsl.h + d.dh, clamp(d.s, 24, 92), d.l)));
+/* --- OKLab/OKLCH helpers -----------------------------------------------------
+ * Chart steps are placed in OKLCH, not HSL. HSL "lightness" is not perceptual:
+ * HSL 71% on a yellow reads as OKLab L 0.86 while the same 71% on a blue reads
+ * ~0.55, so an HSL-based ramp silently produces steps that are far too light to
+ * sit alongside the others. Working in OKLCH lets us set perceived lightness and
+ * colourfulness directly.
+ * -------------------------------------------------------------------------- */
+
+const srgbToLinear = (c: number) => (c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+const linearToSrgb = (c: number) => (c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(c, 1 / 2.4) - 0.055);
+
+/** sRGB hex → OKLCH (L 0–1, C chroma, h degrees). */
+function hexToOklch(hex: string): { L: number; C: number; h: number } {
+  const r = srgbToLinear(parseInt(hex.slice(1, 3), 16) / 255);
+  const g = srgbToLinear(parseInt(hex.slice(3, 5), 16) / 255);
+  const b = srgbToLinear(parseInt(hex.slice(5, 7), 16) / 255);
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+  const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+  const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  const A = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
+  const B = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+  return {
+    L: 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+    C: Math.hypot(A, B),
+    h: (Math.atan2(B, A) * 180) / Math.PI,
+  };
 }
 
-/** Emit the `:root` + `.dark` `--chart-1…5` block for a chart base color. */
+function oklchToLinearRgb(L: number, C: number, hDeg: number): [number, number, number] {
+  const h = (hDeg * Math.PI) / 180;
+  const A = C * Math.cos(h);
+  const B = C * Math.sin(h);
+  const l = (L + 0.3963377774 * A + 0.2158037573 * B) ** 3;
+  const m = (L - 0.1055613458 * A - 0.0638541728 * B) ** 3;
+  const s = (L - 0.0894841775 * A - 1.291485548 * B) ** 3;
+  return [
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s,
+  ];
+}
+
+const inSrgbGamut = (rgb: number[]) => rgb.every((c) => c >= -0.0001 && c <= 1.0001);
+
+/** Largest chroma this lightness/hue can carry inside sRGB. */
+function maxChroma(L: number, h: number): number {
+  let c = 0.4;
+  while (c > 0.001 && !inSrgbGamut(oklchToLinearRgb(L, c, h))) c -= 0.004;
+  return c;
+}
+
+/** OKLCH → hex, reducing chroma to fit sRGB while preserving lightness and hue. */
+function oklchToHex(L: number, C: number, h: number): string {
+  const c = Math.min(C, maxChroma(L, h));
+  const [r, g, b] = oklchToLinearRgb(L, c, h).map((v) =>
+    Math.round(Math.min(1, Math.max(0, linearToSrgb(v))) * 255)
+  );
+  return `#${[r, g, b].map((v) => v.toString(16).padStart(2, '0')).join('')}`;
+}
+
+/**
+ * Perceptual (OKLCH) lightness bands a categorical chart mark must sit inside to
+ * read as a distinct series against each surface. Below the band a mark muddies
+ * into the background; above it, marks wash out and stop being separable. Dark's
+ * band is both lower and narrower than light's — it is not a mirror image.
+ */
+const CHART_BAND = { light: [0.43, 0.77] as const, dark: [0.48, 0.67] as const };
+
+/** Chroma below this reads as gray rather than as a colour. */
+const CHART_CHROMA_FLOOR = 0.115;
+
+/**
+ * Nudges lightness within the band until this hue can carry the chroma floor.
+ * Dark yellows and teals have a narrow sRGB gamut, so a step placed too dark
+ * would be clamped into a muddy near-gray.
+ */
+function snapLightness(targetL: number, h: number, lo: number, hi: number): number {
+  if (maxChroma(targetL, h) >= CHART_CHROMA_FLOOR) return targetL;
+  for (let d = 0.01; d <= hi - lo; d += 0.01) {
+    if (targetL + d <= hi && maxChroma(targetL + d, h) >= CHART_CHROMA_FLOOR) return targetL + d;
+    if (targetL - d >= lo && maxChroma(targetL - d, h) >= CHART_CHROMA_FLOOR) return targetL - d;
+  }
+  // No lightness in the band clears the floor for this hue — take the most
+  // colourful point available rather than the target, which would otherwise be
+  // gamut-clamped into a near-gray.
+  let best = targetL;
+  let bestC = maxChroma(targetL, h);
+  for (let L = lo; L <= hi; L += 0.01) {
+    const c = maxChroma(L, h);
+    if (c > bestC) {
+      bestC = c;
+      best = L;
+    }
+  }
+  return best;
+}
+
+/**
+ * Derive 5 chart colors from one base hex, spreading hues widely and
+ * alternating lightness so adjacent series stay separable — including for
+ * red-green colour blindness, where hue alone carries almost no information and
+ * the lightness difference does the work.
+ *
+ * `mode` re-steps the ramp for the target surface. Dark is NOT a lightened flip
+ * of light: its usable lightness band is both narrower and lower.
+ *
+ * NOTE: a palette derived from an arbitrary brand hue cannot be *guaranteed*
+ * colour-blind-safe — five hues spread from one starting point will, for some
+ * bases, put a confusable pair next to each other. The shipped defaults in
+ * `theme.css` are a fixed, validated palette; prefer those unless brand-matched
+ * charts matter more than guaranteed separation. Whatever you use, keep the
+ * legend and direct labels on, so colour is never the only channel.
+ */
+export function generateChartRamp(hex: string, mode: 'light' | 'dark' = 'light'): string[] {
+  const base = hexToOklch(/^#/.test(hex) ? hex : '#2563eb');
+  const [lo, hi] = CHART_BAND[mode];
+
+  // Hue offsets spread ~72–180° apart rather than the ±30° "analogous" set the
+  // first version used, which left neighbouring series only 32° apart — under
+  // protanopia those collapsed to ΔE 1.5, i.e. the same colour. Lightness also
+  // alternates, so hues that still converge under CVD differ in luminance.
+  const defs =
+    mode === 'light'
+      ? [
+          { dh: 0, L: 0.55 },
+          { dh: 180, L: 0.72 },
+          { dh: 90, L: 0.46 },
+          { dh: 270, L: 0.68 },
+          { dh: 45, L: 0.6 },
+        ]
+      : [
+          { dh: 0, L: 0.58 },
+          { dh: 180, L: 0.66 },
+          { dh: 90, L: 0.5 },
+          { dh: 270, L: 0.63 },
+          { dh: 45, L: 0.54 },
+        ];
+
+  return defs.map((d) => {
+    const h = base.h + d.dh;
+    const L = snapLightness(d.L, h, lo, hi);
+    return rgbTriplet(oklchToHex(L, 0.15, h));
+  });
+}
+
+/**
+ * Emit the `:root` + `.dark` `--chart-1…5` block for a chart base color, with
+ * each mode re-stepped for its own surface.
+ */
 export function generateChartCss(hex: string): string {
-  const ramp = generateChartRamp(hex);
-  const vars = ramp.map((t, i) => `--chart-${i + 1}: ${t};`).join('\n        ');
+  const vars = (mode: 'light' | 'dark') =>
+    generateChartRamp(hex, mode)
+      .map((t, i) => `--chart-${i + 1}: ${t};`)
+      .join('\n        ');
+
   return `
       :root {
-        ${vars}
+        ${vars('light')}
       }
 
       .dark {
-        ${vars}
+        ${vars('dark')}
       }
     `;
 }

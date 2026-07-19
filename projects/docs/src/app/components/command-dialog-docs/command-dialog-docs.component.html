@@ -1,0 +1,147 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="command-dialog"
+      description="The ⌘K command palette — a command menu in a centred modal overlay, opened by a global hotkey."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="how-it-works">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">How it works</h2>
+      <p class="mb-4 text-muted-foreground">
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-command-dialog</code> is only a
+        shell: a backdrop, a centred panel, and the key handling. The menu itself is
+        <em>projected</em> — you put a full
+        <a routerLink="/components/command" class="font-medium text-primary hover:underline">Command</a>
+        menu inside it, with its own input, list, groups and items. Everything you can build with
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-command</code> works here
+        unchanged.
+      </p>
+      <p class="mb-4 text-muted-foreground">
+        The dialog binds a <strong class="text-foreground">global</strong> hotkey. By default
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">shortcut="mod+k"</code> — ⌘K on
+        macOS, Ctrl+K everywhere else — toggles the palette from anywhere on the page.
+        <strong class="text-foreground">Escape always closes it</strong>, regardless of the shortcut, and
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">shortcut=""</code> disables the key
+        binding entirely so you can drive the palette yourself through
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[(open)]</code>.
+      </p>
+      <p class="text-muted-foreground">
+        Because the binding is global, every mounted dialog listens on
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">document</code> — two dialogs sharing
+        a shortcut will both react to it. That is why the second example below uses
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">mod+j</code>: both demos are live on
+        this page at once, and reusing <code
+          class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">mod+k</code> would open them together.
+        In a real app, mount one palette at the root of your layout.
+      </p>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Default ⌘K palette</h3>
+        <p class="text-muted-foreground">
+          Press ⌘K (or Ctrl+K) anywhere on this page, or use the button. Choosing an item emits its
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">value</code> from the menu's
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">selected</code> output — close the
+          palette yourself in that handler.
+        </p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-command-dialog />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="basicTs" language="typescript" />
+        </div>
+      </div>
+
+      <!-- Custom shortcut -->
+      <div class="space-y-3" id="custom-shortcut">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Custom shortcut, no backdrop close</h3>
+        <p class="text-muted-foreground">
+          This palette answers to ⌘J / Ctrl+J and ignores backdrop clicks, so it can only be dismissed with Escape or
+          the close button in its footer. The status line reflects the
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">opened</code> and
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">closed</code> outputs, which fire
+          when the dialog changes state itself — via the hotkey, Escape, or the backdrop — not when you set
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">open</code> from outside.
+        </p>
+        <app-preview [code]="shortcutCode" language="html" align="start">
+          <app-command-dialog-shortcut />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">CommandDialogComponent Inputs</h3>
+      <app-prop-table [props]="dialogProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">CommandDialogComponent Outputs</h3>
+        <app-prop-table [props]="dialogOutputs" />
+      </div>
+
+      <p class="mt-8 text-muted-foreground">
+        The dialog has no list API of its own. For the input, list, group, item, separator and shortcut pieces you
+        project inside it, see the
+        <a routerLink="/components/command" class="font-medium text-primary hover:underline">Command</a> page.
+      </p>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('how-it-works')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          How it works
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Default ⌘K palette
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('custom-shortcut')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Custom shortcut
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

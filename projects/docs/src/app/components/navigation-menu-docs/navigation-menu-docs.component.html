@@ -1,0 +1,114 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="navigation-menu"
+      description="A row of site links where each trigger reveals a floating panel on hover, focus or click." id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Site nav -->
+      <div class="mb-12 space-y-3" id="site-nav">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Site navigation</h3>
+        <p class="text-muted-foreground">
+          A trigger item opens a panel of links; each link projects a <code>[label]</code> and an optional
+          <code>[description]</code> line. Give the panel a fixed width so the grid inside it has something to lay out
+          against.
+        </p>
+        <app-preview [code]="siteNavCode" language="html">
+          <app-site-nav />
+        </app-preview>
+      </div>
+
+      <!-- Flat and dropdown -->
+      <div class="mb-12 space-y-3" id="flat-and-dropdown">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Flat and dropdown entries</h3>
+        <p class="text-muted-foreground">
+          An item does not need a trigger — drop a link straight into it for a flat entry, and mark the current page
+          with <code>[active]="true"</code>. Here <code>align="start"</code> pins the whole row to the left.
+        </p>
+        <app-preview [code]="flatCode" language="html">
+          <app-nav-flat-and-dropdown />
+        </app-preview>
+      </div>
+
+      <!-- Hover to switch -->
+      <div class="space-y-3" id="hover-to-switch">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Hover to switch</h3>
+        <p class="text-muted-foreground">
+          With two triggers side by side, moving the pointer from one to the other swaps panels without closing in
+          between. <code>closeDelay</code> is the grace period that lets the pointer travel diagonally into an open
+          panel; <code>openChange</code> reports which item is open. Escape closes, and so does a click outside.
+        </p>
+        <app-preview [code]="hoverCode" language="html">
+          <app-nav-hover-switch />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">NavigationMenu Props</h3>
+      <app-prop-table [props]="navigationMenuProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Sub-components</h3>
+        <app-prop-table [props]="subComponents" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('site-nav')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Site navigation
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('flat-and-dropdown')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Flat and dropdown entries
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('hover-to-switch')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Hover to switch
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

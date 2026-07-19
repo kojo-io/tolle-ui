@@ -15,6 +15,7 @@ export type CalendarMode = 'date' | 'month' | 'year';
 
 @Component({
   selector: 'tolle-calendar',
+  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule, FormsModule],
   providers: [

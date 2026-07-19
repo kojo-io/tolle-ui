@@ -1,0 +1,144 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="attachment"
+      description="A file or image attached to a chat message, with an upload state, a progress bar, and a hover-revealed action slot."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the components if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          Pass the raw byte count to
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">size</code> — the card formats it.
+          The icon is picked from the MIME type, and an
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">image/*</code> type with a
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">url</code> renders a thumbnail
+          instead.
+        </p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-attachment />
+        </app-preview>
+      </div>
+
+      <!-- States -->
+      <div class="mb-12 space-y-3" id="states">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Upload states</h3>
+        <p class="text-muted-foreground">
+          An upload that fails silently is worse than one that never started. Drive
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">state</code> and
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">progress</code> from your upload
+          task, and give the failure case an
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">errorLabel</code> that says what
+          went wrong rather than just that something did.
+        </p>
+        <app-preview [code]="statesCode" language="html" align="start">
+          <app-attachment-states />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="statesTsCode" language="typescript" />
+        </div>
+      </div>
+
+      <!-- In a message -->
+      <div class="space-y-3" id="in-message">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Attached to a message</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-attachment-group</code> wraps
+          several cards into a row inside
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-message-content</code>.
+          Anything in
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-attachment-actions</code>
+          appears on hover or focus and swallows its own clicks, so the card's
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">open</code> does not fire too.
+        </p>
+        <app-preview [code]="inMessageCode" language="html" align="start">
+          <app-attachment-in-message />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">Attachment Props</h3>
+      <app-prop-table [props]="attachmentProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Attachment Events</h3>
+        <app-prop-table [props]="attachmentEvents" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Attachment Group Props</h3>
+        <app-prop-table [props]="groupProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Attachment Actions Props</h3>
+        <app-prop-table [props]="actionsProps" />
+      </div>
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Icon by MIME type</h3>
+        <app-prop-table [props]="iconMap" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('states')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Upload states
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('in-message')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Attached to a message
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>
