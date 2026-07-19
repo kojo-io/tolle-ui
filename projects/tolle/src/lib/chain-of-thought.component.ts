@@ -1,16 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -117,6 +105,8 @@ export class ChainOfThoughtService {
   template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })
 export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   /** Whether the reasoning steps are expanded. @default false */
   @Input() open = false;
   /** Text scale of the whole trace. @default 'default' */
@@ -138,6 +128,10 @@ export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(): void {
     this.service.setOpen(this.open);
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy(): void {
@@ -174,7 +168,17 @@ export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
     </button>
   `,
 })
-export class ChainOfThoughtHeaderComponent implements OnInit, OnDestroy {
+export class ChainOfThoughtHeaderComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Text shown in the header. @default 'Chain of Thought' */
   @Input() label = 'Chain of Thought';
   /** Extra Tailwind classes merged onto the header via `cn()` (last-wins). */
@@ -225,7 +229,17 @@ export class ChainOfThoughtHeaderComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class ChainOfThoughtContentComponent implements OnInit, OnDestroy {
+export class ChainOfThoughtContentComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the content via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -271,7 +285,18 @@ export class ChainOfThoughtContentComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class ChainOfThoughtStepComponent {
+export class ChainOfThoughtStepComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Text describing what happened in this step. @default '' */
   @Input() label = '';
   /** Progress of this step; drives the marker colour. @default 'complete' */
@@ -303,7 +328,18 @@ export class ChainOfThoughtStepComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('mt-1.5 flex flex-wrap items-center gap-1', class)"><ng-content></ng-content></div>`,
 })
-export class ChainOfThoughtSearchResultsComponent {
+export class ChainOfThoughtSearchResultsComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the results row via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -323,7 +359,18 @@ export class ChainOfThoughtSearchResultsComponent {
     </span>
   `,
 })
-export class ChainOfThoughtSearchResultComponent {
+export class ChainOfThoughtSearchResultComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Optional remixicon class shown before the label. @default '' */
   @Input() icon = '';
   /** Extra Tailwind classes merged onto the chip via `cn()` (last-wins). */

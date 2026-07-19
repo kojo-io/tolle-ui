@@ -1,15 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 import {FormsModule} from '@angular/forms';
@@ -134,6 +123,10 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (changes['totalRecords'] || changes['currentPage'] || changes['currentPageSize']) {
       this.initializePagination();
     }
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cd.markForCheck();
   }
 
   private initializePagination(): void {

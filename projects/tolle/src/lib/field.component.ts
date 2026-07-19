@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -39,7 +39,18 @@ export type FieldProps = VariantProps<typeof fieldVariants>;
     </div>
   `,
 })
-export class FieldComponent {
+export class FieldComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Layout direction; `responsive` goes horizontal at the `@md` container width. @default 'vertical' */
   @Input() orientation: FieldProps['orientation'] = 'vertical';
   /** Marks the field invalid, turning on the destructive styling for descendants. @default false */
@@ -77,7 +88,18 @@ export class FieldComponent {
     </label>
   `,
 })
-export class FieldLabelComponent {
+export class FieldLabelComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Id of the control this label describes; wire it to the control's `id`. @default '' */
   @Input() for = '';
   /** Appends a required marker (*) after the label text. @default false */
@@ -96,7 +118,18 @@ export class FieldLabelComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex flex-1 flex-col gap-1.5', class)"><ng-content></ng-content></div>`,
 })
-export class FieldContentComponent {
+export class FieldContentComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the content column via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -118,7 +151,18 @@ export class FieldContentComponent {
     </p>
   `,
 })
-export class FieldDescriptionComponent {
+export class FieldDescriptionComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Id to reference from the control's `aria-describedby`. @default '' */
   @Input() id = '';
   /** Extra Tailwind classes merged onto the description via `cn()` (last-wins). */
@@ -150,7 +194,18 @@ export class FieldDescriptionComponent {
     </div>
   `,
 })
-export class FieldErrorComponent {
+export class FieldErrorComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /**
    * Validation message(s). Accepts a single string, an array of strings, or an
    * Angular `ValidationErrors`-style object whose values are messages.
@@ -184,7 +239,18 @@ export class FieldErrorComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex w-full flex-col gap-6', class)"><ng-content></ng-content></div>`,
 })
-export class FieldGroupComponent {
+export class FieldGroupComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the group via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -199,7 +265,18 @@ export class FieldGroupComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<fieldset [class]="cn('flex w-full flex-col gap-4 border-0 p-0', class)"><ng-content></ng-content></fieldset>`,
 })
-export class FieldSetComponent {
+export class FieldSetComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the fieldset via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -226,7 +303,18 @@ export type FieldLegendProps = VariantProps<typeof fieldLegendVariants>;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<legend [class]="computedClass"><ng-content></ng-content></legend>`,
 })
-export class FieldLegendComponent {
+export class FieldLegendComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Type scale of the legend. @default 'legend' */
   @Input() variant: FieldLegendProps['variant'] = 'legend';
   /** Extra Tailwind classes merged onto the legend via `cn()` (last-wins). */
@@ -246,7 +334,18 @@ export class FieldLegendComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div role="separator" [class]="cn('h-px w-full bg-border', class)"></div>`,
 })
-export class FieldSeparatorComponent {
+export class FieldSeparatorComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the separator via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -261,7 +360,18 @@ export class FieldSeparatorComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('text-sm font-medium leading-none text-foreground', class)"><ng-content></ng-content></div>`,
 })
-export class FieldTitleComponent {
+export class FieldTitleComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the title via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;

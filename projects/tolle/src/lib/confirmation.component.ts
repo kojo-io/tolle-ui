@@ -1,12 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -113,6 +105,8 @@ const CONFIRMATION_ICONS: Record<ConfirmationState, string> = {
   `,
 })
 export class ConfirmationComponent implements OnChanges {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   /** Headline describing the action awaiting approval. @default '' */
   @Input() title = '';
   /** Supporting detail shown under the title. @default '' */
@@ -145,6 +139,10 @@ export class ConfirmationComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['state']) this.answer = null;
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   /** The state actually rendered: the user's answer if there is one, else `state`. */

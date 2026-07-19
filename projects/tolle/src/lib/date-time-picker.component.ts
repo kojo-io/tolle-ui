@@ -1,16 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  ElementRef,
-  ViewChild,
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
-  OnChanges,
-  OnDestroy,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy, OnChanges, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
@@ -219,6 +207,10 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnChanges,
   ngOnChanges(): void {
     this.calendarMin = this.min ? startOfDay(this.min) : undefined;
     this.calendarMax = this.max ? startOfDay(this.max) : undefined;
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   private readonly outsideClickHandler = (event: MouseEvent) => {

@@ -1,4 +1,4 @@
-import { Component, Directive, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Directive, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 
@@ -41,7 +41,18 @@ import { cn } from './utils/cn';
     </div>
   `,
 })
-export class TableComponent {
+export class TableComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the scrolling container via `cn()` (last-wins). */
   @Input() containerClass = '';
   /** Extra Tailwind classes merged onto the `<table>` via `cn()` (last-wins). */

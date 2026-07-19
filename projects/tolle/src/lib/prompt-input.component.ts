@@ -1,20 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-  forwardRef,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild, forwardRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
@@ -196,6 +180,10 @@ export class PromptInputComponent
 
   ngOnChanges(): void {
     this.syncService();
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   ngAfterViewInit(): void {
@@ -347,7 +335,18 @@ export class PromptInputComponent
     </div>
   `,
 })
-export class PromptInputToolbarComponent {
+export class PromptInputToolbarComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the toolbar via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -369,7 +368,18 @@ export class PromptInputToolbarComponent {
     </div>
   `,
 })
-export class PromptInputToolsComponent {
+export class PromptInputToolsComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the tool row via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -427,7 +437,17 @@ export type PromptInputSubmitProps = VariantProps<typeof promptInputSubmitVarian
     </button>
   `,
 })
-export class PromptInputSubmitComponent implements OnInit, OnDestroy {
+export class PromptInputSubmitComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Visual style of the button. @default 'default' */
   @Input() variant: PromptInputSubmitProps['variant'] = 'default';
   /** Size of the button. @default 'default' */

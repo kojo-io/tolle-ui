@@ -1,18 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Directive,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Directive, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -171,6 +157,10 @@ export class ToolComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['open']) this.applyInput(this.open);
     this.service.setState(this.state);
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   private applyInput(open: boolean): void {
@@ -226,7 +216,17 @@ export class ToolComponent implements OnInit, OnChanges, OnDestroy {
     </button>
   `,
 })
-export class ToolHeaderComponent implements OnInit, OnDestroy {
+export class ToolHeaderComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Name of the tool that was called. @default '' */
   @Input() name = '';
   /** Remixicon class shown before the tool name. @default 'ri-tools-line' */
@@ -297,7 +297,17 @@ export class ToolHeaderComponent implements OnInit, OnDestroy {
  * features (DI and lifecycle hooks) on behalf of its subclasses.
  */
 @Directive()
-export abstract class ToolPayloadBase implements OnInit, OnDestroy {
+export abstract class ToolPayloadBase implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook subclasses keep
+   * rendering the class they were born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Payload to render; objects are pretty-printed as JSON, strings are shown as-is. */
   payload: unknown = null;
 

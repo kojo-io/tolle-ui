@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -50,7 +50,18 @@ export type MarkerProps = VariantProps<typeof markerVariants>;
     </div>
   `,
 })
-export class MarkerComponent {
+export class MarkerComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Kind of transcript marker this row represents. @default 'default' */
   @Input() variant: MarkerProps['variant'] = 'default';
   /** Text for the marker — the date on a separator, or the status wording. */
@@ -96,7 +107,18 @@ export class MarkerComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex w-full flex-col gap-0.5', class)" role="group"><ng-content></ng-content></div>`,
 })
-export class MarkerGroupComponent {
+export class MarkerGroupComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the group via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;

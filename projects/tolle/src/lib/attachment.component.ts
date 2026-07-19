@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -95,7 +89,18 @@ export type AttachmentProps = VariantProps<typeof attachmentVariants>;
     </div>
   `,
 })
-export class AttachmentComponent {
+export class AttachmentComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** File name shown as the card's title. */
   @Input() name = '';
   /** File size in bytes; rendered as B / KB / MB. @default 0 */
@@ -201,7 +206,18 @@ export class AttachmentComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex flex-wrap items-start gap-2', class)"><ng-content></ng-content></div>`,
 })
-export class AttachmentGroupComponent {
+export class AttachmentGroupComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the row via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -223,7 +239,18 @@ export class AttachmentGroupComponent {
     </div>
   `,
 })
-export class AttachmentActionsComponent {
+export class AttachmentActionsComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Keeps the actions visible instead of revealing them on hover or focus. @default false */
   @Input() alwaysVisible = false;
   /** Extra Tailwind classes merged onto the slot via `cn()` (last-wins). */

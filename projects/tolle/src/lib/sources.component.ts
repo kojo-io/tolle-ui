@@ -1,17 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -141,6 +128,10 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['open']) this.applyInput(this.open);
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   private applyInput(open: boolean): void {
@@ -191,7 +182,17 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
     </button>
   `,
 })
-export class SourcesTriggerComponent implements OnInit, OnDestroy {
+export class SourcesTriggerComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Overrides the counted number of sources. @default null */
   @Input() count: number | null = null;
   /** Extra Tailwind classes merged onto the trigger via `cn()` (last-wins). */
@@ -270,7 +271,17 @@ export class SourcesTriggerComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class SourcesContentComponent implements OnInit, OnDestroy {
+export class SourcesContentComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the content via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -357,7 +368,17 @@ export type SourceProps = VariantProps<typeof sourceVariants>;
     </a>
   `,
 })
-export class SourceComponent implements OnInit, OnDestroy {
+export class SourceComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** URL the citation points at. @default '' */
   @Input() href = '';
   /** Human-readable title; falls back to the href when empty. @default '' */

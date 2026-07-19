@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -61,7 +61,18 @@ export type CheckpointProps = VariantProps<typeof checkpointPillVariants>;
     </div>
   `,
 })
-export class CheckpointComponent {
+export class CheckpointComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Name of the checkpoint shown in the pill. @default 'Checkpoint' */
   @Input() label = 'Checkpoint';
   /** Pre-formatted time shown after the label. @default '' */

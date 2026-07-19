@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -36,7 +36,18 @@ export type KbdProps = VariantProps<typeof kbdVariants>;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<kbd [class]="computedClass"><ng-content></ng-content></kbd>`,
 })
-export class KbdComponent {
+export class KbdComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Size of the key cap. @default 'default' */
   @Input() size: KbdProps['size'] = 'default';
   /** Visual style of the key cap. @default 'default' */
@@ -60,7 +71,18 @@ export class KbdComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<span [class]="cn('inline-flex items-center gap-1', class)"><ng-content></ng-content></span>`,
 })
-export class KbdGroupComponent {
+export class KbdGroupComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the group via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;

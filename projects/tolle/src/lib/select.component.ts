@@ -1,6 +1,8 @@
 import {
   Component,
   Input,
+  Output,
+  EventEmitter,
   forwardRef,
   ElementRef,
   ViewChild,
@@ -8,36 +10,96 @@ import {
   ContentChildren,
   QueryList,
   AfterContentInit,
-  ChangeDetectorRef
+  OnChanges,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-// 1. Import 'size' middleware
 import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 import { SelectItemComponent } from './select-item.component';
 import { Subscription } from 'rxjs';
 import { SelectService } from './select.service';
 import { InputComponent } from './input.component';
 
+const selectTriggerVariants = cva(
+  'flex w-full items-center justify-between rounded-md border border-input bg-background text-foreground shadow-sm transition-all duration-200',
+  {
+    variants: {
+      size: {
+        xs: 'h-8 px-2 text-xs',
+        sm: 'h-9 px-3 text-sm',
+        default: 'h-10 px-3 text-sm',
+        lg: 'h-11 px-4 text-base',
+      },
+      disabled: {
+        true: 'cursor-not-allowed border-opacity-50 opacity-50',
+        false: '',
+      },
+      readonly: {
+        true: 'cursor-default border-dashed',
+        false: '',
+      },
+    },
+    compoundVariants: [
+      // Only an interactive trigger gets the hover border and the focus ring.
+      {
+        disabled: false,
+        readonly: false,
+        class:
+          'hover:border-accent focus-visible:border-primary/80 focus-visible:shadow-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ring/30 focus-visible:ring-offset-0',
+      },
+      // Readonly still takes focus, but without the emphasis ring.
+      {
+        disabled: false,
+        readonly: true,
+        class: 'focus-visible:border-opacity-100 focus-visible:ring-0',
+      },
+    ],
+    defaultVariants: { size: 'default', disabled: false, readonly: false },
+  }
+);
+
+const selectIconVariants = cva(
+  'ri-arrow-down-s-line ml-2 text-muted-foreground transition-transform duration-200',
+  {
+    variants: {
+      size: {
+        xs: 'text-[14px]',
+        sm: 'text-[14px]',
+        default: 'text-[18px]',
+        lg: 'text-[18px]',
+      },
+      open: { true: 'rotate-180', false: '' },
+      muted: { true: 'opacity-30', false: '' },
+    },
+    defaultVariants: { size: 'default', open: false, muted: false },
+  }
+);
+
+export type SelectProps = VariantProps<typeof selectTriggerVariants>;
+
+/**
+ * A single-select listbox: a trigger that opens a floating panel of
+ * `tolle-select-item` options, with optional inline search. Implements
+ * `ControlValueAccessor`, so it works with `ngModel` and reactive forms.
+ */
 @Component({
   selector: 'tolle-select',
   standalone: true,
   imports: [CommonModule, FormsModule, InputComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     SelectService,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SelectComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  styles: [
-    ':host { display: block; }',`
-    .hidden-dropdown {
-      display: none !important;
-    }
-  `],
+  styles: [':host { display: block; }', '.hidden-dropdown { display: none !important; }'],
   template: `
     <div class="relative w-full" #container>
       <button
@@ -87,13 +149,27 @@ import { InputComponent } from './input.component';
     </div>
   `,
 })
-export class SelectComponent implements ControlValueAccessor, AfterContentInit, OnDestroy {
+export class SelectComponent
+  implements ControlValueAccessor, AfterContentInit, OnChanges, OnDestroy {
+  /** Text shown on the trigger when nothing is selected. @default 'Select an option' */
   @Input() placeholder = 'Select an option';
+  /** Extra Tailwind classes merged onto the trigger via `cn()` (last-wins). @default '' */
   @Input() class = '';
+  /** Disables the control and blocks opening the panel. @default false */
   @Input() disabled = false;
+  /** Adds a search box that filters the projected options. @default false */
   @Input() searchable = false;
-  @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  /** Height and text size of the trigger. @default 'default' */
+  @Input() size: SelectProps['size'] = 'default';
+  /** Shows the current value but blocks opening the panel. @default false */
   @Input() readonly = false;
+
+  /** Emitted with the chosen value whenever the selection changes. */
+  @Output() valueChange = new EventEmitter<any>();
+  /** Emitted when the panel opens. */
+  @Output() opened = new EventEmitter<void>();
+  /** Emitted when the panel closes. */
+  @Output() closed = new EventEmitter<void>();
 
   @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
@@ -131,7 +207,9 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       this.selectService.selectedValue$.subscribe(val => {
         this.value = val;
         this.onChange(val);
+        this.valueChange.emit(val);
         this.updateItemSelection();
+        this.cdr.markForCheck();
       })
     );
 
@@ -139,48 +217,41 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       this.selectService.selectedLabel$.subscribe(label => {
         this.selectedLabel = label;
         this.close();
+        this.cdr.markForCheck();
       })
     );
   }
 
   get computedTriggerClass() {
     return cn(
-      'flex w-full items-center justify-between rounded-md border transition-all duration-200',
-      'bg-background text-foreground',
-      'border-input shadow-sm',
-      this.size === 'xs' && 'h-8 px-2 text-xs',
-      this.size === 'sm' && 'h-9 px-3 text-sm',
-      this.size === 'default' && 'h-10 px-3 text-sm',
-      this.size === 'lg' && 'h-11 px-4 text-base',
-      !(this.readonly || this.disabled) && [
-        'focus-visible:outline-none',
-        'focus-visible:ring-4',
-        'focus-visible:ring-ring/30',
-        'focus-visible:ring-offset-0',
-        'focus-visible:shadow-none',
-        'focus-visible:border-primary/80'
-      ],
-      !(this.readonly || this.disabled) && 'hover:border-accent',
-      this.disabled && [
-        'cursor-not-allowed opacity-50',
-        'border-opacity-50'
-      ],
-      this.readonly && [
-        'cursor-default',
-        'border-dashed',
-        !this.disabled && 'focus-visible:ring-0 focus-visible:border-opacity-100'
-      ],
+      selectTriggerVariants({
+        size: this.size,
+        disabled: this.disabled,
+        readonly: this.readonly,
+      }),
       this.class
     );
   }
 
   get iconClass() {
     return cn(
-      'ri-arrow-down-s-line text-muted-foreground ml-2 transition-transform duration-200',
-      this.isOpen ? 'rotate-180' : '',
-      (this.size === 'xs' || this.size === 'sm') ? 'text-[14px]' : 'text-[18px]',
-      (this.disabled || this.readonly) && 'opacity-30'
+      selectIconVariants({
+        size: this.size,
+        open: this.isOpen,
+        muted: this.disabled || this.readonly,
+      })
     );
+  }
+
+  /**
+   * Under OnPush a `[class]` binding is applied through Angular's *styling*
+   * path, which writes the input but — unlike a plain property binding — never
+   * marks the component dirty. Without this the trigger would keep rendering
+   * the class it was born with. Covering every input here is cheap and leaves
+   * no second instance of that trap.
+   */
+  ngOnChanges() {
+    this.cdr.markForCheck();
   }
 
   ngAfterContentInit() {
@@ -188,6 +259,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     this.itemsChangeSub = this.items.changes.subscribe(() => {
       this.updateItemSelection();
       this.applyPendingValue();
+      this.cdr.markForCheck();
     });
 
     // Apply initial selection if items are already available
@@ -214,16 +286,6 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     }
   }
 
-  private syncSelectedLabel(): void {
-    if (this.items) {
-      const found = this.items.find(i => i.value === this.value);
-      if (found) {
-        this.selectedLabel = found.getLabel();
-        this.cdr.markForCheck();
-      }
-    }
-  }
-
   private _outsideClickHandler = (event: MouseEvent) => {
     if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
       this.close();
@@ -236,22 +298,29 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
   }
 
   open() {
+    const wasOpen = this.isOpen;
     this.isOpen = true;
     this.trigger.nativeElement.focus();
+    if (!wasOpen) this.opened.emit();
+    this.cdr.markForCheck();
     requestAnimationFrame(() => {
       this.updatePosition();
       document.addEventListener('pointerdown', this._outsideClickHandler, true);
       this.initActiveAfterOpen();
+      this.cdr.markForCheck();
     });
   }
 
   close() {
+    const wasOpen = this.isOpen;
     this.isOpen = false;
     this.searchQuery = '';
     this.onSearchChange('');
     this.resetActive();
     if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
     document.removeEventListener('pointerdown', this._outsideClickHandler, true);
+    if (wasOpen) this.closed.emit();
+    this.cdr.markForCheck();
   }
 
   private updatePosition() {
@@ -262,27 +331,29 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       this.popover.nativeElement,
       () => {
         computePosition(this.trigger.nativeElement, this.popover.nativeElement, {
-          strategy: 'fixed', // 3. Use fixed strategy
+          strategy: 'fixed',
           placement: 'bottom-start',
           middleware: [
             offset(4),
             flip(),
             shift({ padding: 8 }),
-            // 4. Use size middleware to sync width and handle constraints
+            // Match the panel to the trigger width and cap its height to the
+            // space actually available, so the list scrolls instead of
+            // overflowing.
             size({
               apply({ rects, elements, availableHeight }) {
                 Object.assign(elements.floating.style, {
-                  width: `${rects.reference.width}px`,
-                  maxHeight: `${availableHeight}px`
+                  width: rects.reference.width + 'px',
+                  maxHeight: availableHeight + 'px'
                 });
               },
             }),
           ],
         }).then(({ x, y, strategy }) => {
           Object.assign(this.popover.nativeElement.style, {
-            position: strategy, // 5. Apply strategy to style
-            left: `${x}px`,
-            top: `${y}px`,
+            position: strategy,
+            left: x + 'px',
+            top: y + 'px',
             visibility: 'visible',
           });
         });
@@ -305,6 +376,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
 
     // Re-anchor the active option to the first visible match while open.
     if (this.isOpen) this.setActive(0);
+    this.cdr.markForCheck();
   }
 
   // ---- Keyboard navigation (WAI-ARIA listbox pattern) ----
@@ -325,6 +397,7 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
     const activeItem = this.activeIndex >= 0 ? list[this.activeIndex] ?? null : null;
     this.items?.forEach(i => (i.active = i === activeItem));
     this.syncActiveDescendant();
+    this.cdr.markForCheck();
   }
 
   private syncActiveDescendant() {
@@ -479,17 +552,20 @@ export class SelectComponent implements ControlValueAccessor, AfterContentInit, 
       const found = this.items.find(i => i.value === value);
       if (found) {
         this.selectedLabel = found.getLabel();
-        this.cdr.markForCheck();
       }
     } else {
       // Queue the value for when items become available
       this.pendingValue = value;
     }
+    this.cdr.markForCheck();
   }
 
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.cdr.markForCheck();
+  }
 
   ngOnDestroy() {
     this.sub.unsubscribe();

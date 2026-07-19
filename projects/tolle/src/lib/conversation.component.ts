@@ -1,19 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -118,6 +103,8 @@ export type ConversationProps = VariantProps<typeof conversationVariants>;
   `,
 })
 export class ConversationComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   /** Height preset for the scroll region. @default 'default' */
   @Input() size: ConversationProps['size'] = 'default';
   /** Keeps the newest message in view while the reader is already at the bottom. @default true */
@@ -151,6 +138,10 @@ export class ConversationComponent implements OnInit, OnChanges, AfterViewInit, 
 
   ngOnChanges(): void {
     this.service.setEmpty(this.empty);
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   ngAfterViewInit(): void {
@@ -232,7 +223,18 @@ export class ConversationComponent implements OnInit, OnChanges, AfterViewInit, 
     </div>
   `,
 })
-export class ConversationContentComponent {
+export class ConversationContentComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the stack via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -267,7 +269,17 @@ export class ConversationContentComponent {
     </div>
   `,
 })
-export class ConversationEmptyStateComponent implements OnInit, OnDestroy {
+export class ConversationEmptyStateComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Remixicon class for the illustration. @default 'ri-chat-3-line' */
   @Input() icon = 'ri-chat-3-line';
   /** Headline shown above the description. @default 'No messages yet' */
@@ -352,7 +364,17 @@ export type ConversationScrollButtonProps = VariantProps<typeof conversationScro
     </button>
   `,
 })
-export class ConversationScrollButtonComponent implements OnInit, OnDestroy {
+export class ConversationScrollButtonComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Visual style of the button. @default 'outline' */
   @Input() variant: ConversationScrollButtonProps['variant'] = 'outline';
   /** Size of the button; 'icon' drops the text label. @default 'default' */

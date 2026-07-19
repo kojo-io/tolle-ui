@@ -1,19 +1,4 @@
-import {
-  Component,
-  Directive,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  ElementRef,
-  ViewChild,
-  OnInit,
-  OnChanges,
-  OnDestroy,
-  AfterViewInit,
-  inject,
-} from '@angular/core';
+import { Component, Directive, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, ViewChild, OnInit, OnChanges, OnDestroy, AfterViewInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -30,7 +15,16 @@ let chartId = 0;
  * so an OnPush child still updates when the container's inputs or width change.
  */
 @Directive()
-export abstract class ChartChild implements OnInit, OnDestroy {
+export abstract class ChartChild implements OnChanges, OnInit, OnDestroy {
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook subclasses keep
+   * rendering the class they were born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   protected readonly chart = inject(ChartService);
   protected readonly cdr = inject(ChangeDetectorRef);
   protected readonly subscriptions = new Subscription();
@@ -85,7 +79,17 @@ export abstract class ChartChild implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class ChartTooltipComponent implements OnInit, OnDestroy {
+export class ChartTooltipComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
   trackByIndex = (index: number): number => index;
 
@@ -187,7 +191,17 @@ export type ChartLegendProps = VariantProps<typeof chartLegendVariants>;
     </ul>
   `,
 })
-export class ChartLegendComponent implements OnInit, OnDestroy {
+export class ChartLegendComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
   trackByIndex = (index: number): number => index;
 
@@ -281,7 +295,17 @@ export type ChartTableProps = VariantProps<typeof chartTableVariants>;
     </div>
   `,
 })
-export class ChartTableComponent implements OnInit, OnDestroy {
+export class ChartTableComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
   trackByIndex = (index: number): number => index;
 
@@ -490,6 +514,10 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
 
   ngOnChanges(): void {
     this.push();
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   ngAfterViewInit(): void {

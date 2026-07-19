@@ -18,13 +18,13 @@ export class DatePickerApiComponent {
         },
         {
             name: 'placeholder',
-            description: 'Placeholder text for the input.',
+            description: 'Text shown on the trigger when no date is selected.',
             type: 'string',
-            default: "'MM/DD/YYYY' (varies by mode)"
+            default: "'Pick a date'"
         },
         {
             name: 'disabled',
-            description: 'Disables the input and prevents popup opening.',
+            description: 'Disables the trigger and prevents the panel opening.',
             type: 'boolean',
             default: 'false'
         },
@@ -36,13 +36,13 @@ export class DatePickerApiComponent {
         },
         {
             name: 'showClear',
-            description: 'Shows a clear button when a value is selected.',
+            description: "Shows the panel footer's Clear button.",
             type: 'boolean',
             default: 'true'
         },
         {
             name: 'showQuickActions',
-            description: 'Shows quick action buttons (Today, Yesterday, etc.) in the calendar.',
+            description: "Shows the panel's Clear / Done footer.",
             type: 'boolean',
             default: 'true'
         },
@@ -78,9 +78,39 @@ export class DatePickerApiComponent {
         },
         {
             name: 'displayFormat',
-            description: 'Custom function to format the displayed value in the input.',
+            description: 'Overrides how the selected date is rendered on the trigger.',
             type: '(date: Date, mode: CalendarMode) => string',
             default: 'undefined'
+        },
+        {
+            name: 'size',
+            description: 'Height and text size of the trigger.',
+            type: "'xs' | 'sm' | 'default' | 'lg'",
+            default: "'default'"
+        },
+        {
+            name: 'invalid',
+            description: 'Applies the destructive border and focus ring.',
+            type: 'boolean',
+            default: 'false'
+        },
+        {
+            name: 'ariaLabel',
+            description: 'Accessible name when there is no associated visible label.',
+            type: 'string',
+            default: "''"
+        },
+        {
+            name: 'class',
+            description: 'Extra Tailwind classes merged onto the trigger.',
+            type: 'string',
+            default: "''"
         }
+    ];
+
+    datePickerOutputs: PropEntry[] = [
+        { name: 'valueChange', type: 'EventEmitter<Date | null>', description: 'Emitted with the chosen date, or null when the value is cleared.' },
+        { name: 'opened', type: 'EventEmitter<void>', description: 'Emitted when the calendar panel opens.' },
+        { name: 'closed', type: 'EventEmitter<void>', description: 'Emitted when the calendar panel closes.' }
     ];
 }

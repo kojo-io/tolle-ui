@@ -1,14 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Injectable, Input, OnDestroy, OnInit, Output, inject, ChangeDetectorRef, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -67,7 +57,18 @@ export type SuggestionsProps = VariantProps<typeof suggestionsVariants>;
     </div>
   `,
 })
-export class SuggestionsComponent implements OnInit, OnDestroy {
+export class SuggestionsComponent implements OnChanges, OnInit, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Spacing between the pills. @default 'default' */
   @Input() gap: SuggestionsProps['gap'] = 'default';
   /** Accessible name for the row. @default 'Suggestions' */
@@ -147,7 +148,18 @@ export type SuggestionProps = VariantProps<typeof suggestionVariants>;
     </button>
   `,
 })
-export class SuggestionComponent {
+export class SuggestionComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Value emitted when the pill is picked. @default '' */
   @Input() value = '';
   /** Visual style of the pill. @default 'outline' */

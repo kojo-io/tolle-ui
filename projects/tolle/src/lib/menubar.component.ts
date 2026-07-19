@@ -1,18 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -409,7 +395,17 @@ export class MenubarMenuComponent implements MenubarMenuRef, OnInit, OnDestroy {
     </button>
   `,
 })
-export class MenubarTriggerComponent implements OnDestroy {
+export class MenubarTriggerComponent implements OnChanges, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Prevents the menu from opening. @default false */
   @Input() disabled = false;
   /** Overrides the size inherited from `tolle-menubar`. */
@@ -480,7 +476,17 @@ export class MenubarTriggerComponent implements OnDestroy {
     }
   `,
 })
-export class MenubarContentComponent implements OnDestroy {
+export class MenubarContentComponent implements OnChanges, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Preferred side of the trigger to render on; flips when space is tight. @default 'bottom-start' */
   @Input() placement: 'bottom-start' | 'bottom-end' | 'top-start' | 'top-end' = 'bottom-start';
   /** Gap in pixels between the trigger and the panel. @default 4 */
@@ -566,7 +572,18 @@ export class MenubarContentComponent implements OnDestroy {
     </div>
   `,
 })
-export class MenubarItemComponent {
+export class MenubarItemComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Visual style of the item. @default 'default' */
   @Input() variant: MenubarItemProps['variant'] = 'default';
   /** Adds left padding so the label lines up with items that have icons. @default false */
@@ -611,7 +628,18 @@ export class MenubarItemComponent {
     </div>
   `,
 })
-export class MenubarLabelComponent {
+export class MenubarLabelComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Adds left padding so the label lines up with items that have icons. @default false */
   @Input() inset = false;
   /** Extra Tailwind classes merged onto the label via `cn()` (last-wins). */
@@ -628,7 +656,18 @@ export class MenubarLabelComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div role="separator" aria-orientation="horizontal" [class]="cn('-mx-1 my-1 h-px bg-border', class)"></div>`,
 })
-export class MenubarSeparatorComponent {
+export class MenubarSeparatorComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the separator via `cn()` (last-wins). */
   @Input() class = '';
   protected readonly cn = cn;

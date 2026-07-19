@@ -1,17 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -139,6 +126,10 @@ export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
     if (changes['open']) this.applyInput(this.open);
     this.service.setStreaming(this.streaming);
     this.service.setDuration(this.duration);
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   private applyInput(open: boolean): void {
@@ -202,7 +193,17 @@ export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
     </button>
   `,
 })
-export class ReasoningTriggerComponent implements OnInit, OnDestroy {
+export class ReasoningTriggerComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Remixicon class shown before the label. @default 'ri-brain-line' */
   @Input() icon = 'ri-brain-line';
   /** Label shown while the trace is streaming. @default 'Thinking…' */
@@ -280,7 +281,17 @@ export class ReasoningTriggerComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class ReasoningContentComponent implements OnInit, OnDestroy {
+export class ReasoningContentComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Reasoning text to render; project your own markup instead when richer. @default '' */
   @Input() text = '';
   /** Extra Tailwind classes merged onto the content via `cn()` (last-wins). */

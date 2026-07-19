@@ -1,15 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  OnInit,
-  OnChanges,
-  OnDestroy,
-  inject,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnChanges, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { cn } from './utils/cn';
@@ -203,7 +192,18 @@ export class CommandInputComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class CommandListComponent {
+export class CommandListComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Accessible name for the list. @default '' */
   @Input() ariaLabel = '';
   /** Extra Tailwind classes merged onto the list via `cn()` (last-wins). */
@@ -437,7 +437,18 @@ export class CommandItemComponent implements OnInit, OnChanges, OnDestroy {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div role="separator" [class]="cn('-mx-1 h-px bg-border', class)"></div>`,
 })
-export class CommandSeparatorComponent {
+export class CommandSeparatorComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the separator via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -452,7 +463,18 @@ export class CommandSeparatorComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<span [class]="cn('ml-auto flex items-center gap-1 text-xs tracking-widest text-muted-foreground', class)"><ng-content></ng-content></span>`,
 })
-export class CommandShortcutComponent {
+export class CommandShortcutComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the shortcut via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;

@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -38,7 +38,18 @@ export type ItemProps = VariantProps<typeof itemVariants>;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })
-export class ItemComponent {
+export class ItemComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Visual style of the row. @default 'default' */
   @Input() variant: ItemProps['variant'] = 'default';
   /** Padding and gap density of the row. @default 'default' */
@@ -60,7 +71,18 @@ export class ItemComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div role="list" [class]="cn('flex flex-col', class)"><ng-content></ng-content></div>`,
 })
-export class ItemGroupComponent {
+export class ItemGroupComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the group via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -75,7 +97,18 @@ export class ItemGroupComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex shrink-0 items-center justify-center text-muted-foreground', class)"><ng-content></ng-content></div>`,
 })
-export class ItemMediaComponent {
+export class ItemMediaComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the media slot via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -90,7 +123,18 @@ export class ItemMediaComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex min-w-0 flex-1 flex-col gap-0.5', class)"><ng-content></ng-content></div>`,
 })
-export class ItemContentComponent {
+export class ItemContentComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the content column via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -105,7 +149,18 @@ export class ItemContentComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<p [class]="cn('truncate font-medium leading-none text-foreground', class)"><ng-content></ng-content></p>`,
 })
-export class ItemTitleComponent {
+export class ItemTitleComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the title via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -120,7 +175,18 @@ export class ItemTitleComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<p [class]="cn('truncate text-sm text-muted-foreground', class)"><ng-content></ng-content></p>`,
 })
-export class ItemDescriptionComponent {
+export class ItemDescriptionComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the description via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -135,7 +201,18 @@ export class ItemDescriptionComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex shrink-0 items-center gap-2', class)"><ng-content></ng-content></div>`,
 })
-export class ItemActionsComponent {
+export class ItemActionsComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the actions slot via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -150,7 +227,18 @@ export class ItemActionsComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex w-full items-center justify-between gap-2', class)"><ng-content></ng-content></div>`,
 })
-export class ItemHeaderComponent {
+export class ItemHeaderComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the header via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -165,7 +253,18 @@ export class ItemHeaderComponent {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="cn('flex w-full items-center justify-between gap-2', class)"><ng-content></ng-content></div>`,
 })
-export class ItemFooterComponent {
+export class ItemFooterComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the footer via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;

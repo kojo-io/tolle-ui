@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnDestroy,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, inject, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -79,7 +72,17 @@ export type InlineCitationProps = VariantProps<typeof inlineCitationVariants>;
     </tolle-hover-card>
   `,
 })
-export class InlineCitationComponent implements OnDestroy {
+export class InlineCitationComponent implements OnChanges, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Number rendered in the superscript marker. @default 1 */
   @Input() index: number | string = 1;
   /** Colour treatment of the marker. @default 'default' */
@@ -150,7 +153,18 @@ export class InlineCitationComponent implements OnDestroy {
     </div>
   `,
 })
-export class InlineCitationCardComponent {
+export class InlineCitationCardComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Title of the cited source. @default '' */
   @Input() title = '';
   /** Link to the cited source. @default '' */
@@ -184,7 +198,18 @@ export class InlineCitationCardComponent {
     </blockquote>
   `,
 })
-export class InlineCitationQuoteComponent {
+export class InlineCitationQuoteComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Attribution shown beneath the quote. @default '' */
   @Input() cite = '';
   /** Extra Tailwind classes merged onto the quote via `cn()` (last-wins). */

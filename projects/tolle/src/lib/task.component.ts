@@ -1,16 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
@@ -133,6 +121,8 @@ export class TaskService {
   template: `<div [class]="computedClass" [attr.data-status]="status"><ng-content></ng-content></div>`,
 })
 export class TaskComponent implements OnInit, OnChanges, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   /** Lifecycle state of the task; drives the icon and border colour. @default 'pending' */
   @Input() status: TaskStatus = 'pending';
   /** Title shown by `tolle-task-trigger`. @default '' */
@@ -157,6 +147,10 @@ export class TaskComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(): void {
     this.push();
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   ngOnDestroy(): void {
@@ -199,7 +193,17 @@ export class TaskComponent implements OnInit, OnChanges, OnDestroy {
     </button>
   `,
 })
-export class TaskTriggerComponent implements OnInit, OnDestroy {
+export class TaskTriggerComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the trigger via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -266,7 +270,17 @@ export class TaskTriggerComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class TaskContentComponent implements OnInit, OnDestroy {
+export class TaskContentComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the content via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -308,7 +322,18 @@ export class TaskContentComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class TaskItemComponent {
+export class TaskItemComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the item via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -331,7 +356,18 @@ export class TaskItemComponent {
     </span>
   `,
 })
-export class TaskItemFileComponent {
+export class TaskItemFileComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Remixicon class for the leading file glyph. @default 'ri-file-line' */
   @Input() icon = 'ri-file-line';
   /** Extra Tailwind classes merged onto the chip via `cn()` (last-wins). */

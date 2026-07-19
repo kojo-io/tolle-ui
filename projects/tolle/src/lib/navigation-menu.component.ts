@@ -1,17 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
-  Injectable,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Injectable, Input, OnDestroy, OnInit, Output, ViewChild, inject, OnChanges } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { computePosition, flip, shift, offset, size, autoUpdate } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -182,7 +169,18 @@ export type NavigationMenuLinkProps = VariantProps<typeof navigationMenuLinkVari
     </nav>
   `,
 })
-export class NavigationMenuComponent implements OnInit, OnDestroy {
+export class NavigationMenuComponent implements OnChanges, OnInit, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Horizontal alignment of the list within the nav. @default 'center' */
   @Input() align: NavigationMenuProps['align'] = 'center';
   /** Accessible name for the `<nav>` landmark. @default 'Main' */
@@ -267,7 +265,18 @@ export class NavigationMenuComponent implements OnInit, OnDestroy {
     </ul>
   `,
 })
-export class NavigationMenuListComponent {
+export class NavigationMenuListComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the `<ul>` via `cn()` (last-wins). */
   @Input() class = '';
   protected readonly cn = cn;
@@ -286,7 +295,18 @@ export class NavigationMenuListComponent {
     </li>
   `,
 })
-export class NavigationMenuItemComponent implements OnDestroy {
+export class NavigationMenuItemComponent implements OnChanges, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Explicit id for the item; one is generated when omitted. */
   @Input() id = `tolle-navigation-menu-item-${navigationMenuItemCounter++}`;
   /** Extra Tailwind classes merged onto the `<li>` via `cn()` (last-wins). */
@@ -347,7 +367,17 @@ export class NavigationMenuItemComponent implements OnDestroy {
     </button>
   `,
 })
-export class NavigationMenuTriggerComponent implements OnDestroy {
+export class NavigationMenuTriggerComponent implements OnChanges, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Prevents the panel from opening. @default false */
   @Input() disabled = false;
   /** Height/padding scale of the trigger. @default 'default' */
@@ -427,7 +457,17 @@ export class NavigationMenuTriggerComponent implements OnDestroy {
     }
   `,
 })
-export class NavigationMenuContentComponent implements OnDestroy {
+export class NavigationMenuContentComponent implements OnChanges, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Preferred side of the trigger to render on; flips when space is tight. @default 'bottom' */
   @Input() placement: 'bottom' | 'bottom-start' | 'bottom-end' | 'top' | 'top-start' | 'top-end' =
     'bottom';
@@ -534,7 +574,18 @@ export class NavigationMenuContentComponent implements OnDestroy {
     </a>
   `,
 })
-export class NavigationMenuLinkComponent {
+export class NavigationMenuLinkComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Destination URL. Omit to render a non-navigating item. */
   @Input() href = '';
   /** Anchor target; `_blank` also sets a safe `rel`. */

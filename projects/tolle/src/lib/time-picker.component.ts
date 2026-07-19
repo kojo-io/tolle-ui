@@ -1,19 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  ElementRef,
-  ViewChild,
-  ViewChildren,
-  QueryList,
-  ChangeDetectorRef,
-  ChangeDetectionStrategy,
-  OnDestroy,
-  OnInit,
-  OnChanges,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ElementRef, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy, OnInit, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
@@ -247,6 +232,10 @@ export class TimeColumnsComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.rebuild();
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   get heightClass(): string {
@@ -652,7 +641,17 @@ export type TimePickerProps = VariantProps<typeof timePickerTriggerVariants>;
     </div>
   `,
 })
-export class TimePickerComponent implements ControlValueAccessor, OnDestroy {
+export class TimePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Text shown on the trigger when no time is selected. @default 'Select a time' */
   @Input() placeholder = 'Select a time';
   /** Disables the control. @default false */

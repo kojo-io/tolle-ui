@@ -1,11 +1,12 @@
-<app-doc-hero slug="date-range-picker" description="A combined input and calendar component that allows users to select a start and end date." id="overview" />
+<app-doc-hero slug="date-range-picker" description="A trigger button paired with a range calendar that allows users to select a start and end date." id="overview" />
 
 <section class="mb-14">
     <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Basic Usage</h2>
     <p class="mb-4 text-muted-foreground">
-        The <code>tolle-date-range-picker</code> component provides a text input that opens a range calendar when
-        clicked.
-        It supports keyboard input, clearing the selection, and visual feedback for the selected range.
+        The <code>tolle-date-range-picker</code> component is a button trigger — the same shape as
+        <code>tolle-date-time-picker</code> — that opens a range calendar in a floating panel. It supports
+        opening from the keyboard (Enter, Space or an arrow key), a Clear / Done footer, and visual feedback
+        for the selected range.
     </p>
     <app-preview [code]="(basicCode$ | async) || ''" language="typescript" align="stretch">
         <app-basic-range class="w-full"></app-basic-range>

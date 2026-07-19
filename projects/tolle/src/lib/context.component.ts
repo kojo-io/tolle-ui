@@ -1,15 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Injectable,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  forwardRef,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injectable, Input, OnChanges, OnDestroy, OnInit, forwardRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -243,7 +232,17 @@ export class ContextComponent implements OnInit, OnChanges, OnDestroy {
     </span>
   `,
 })
-export class ContextTriggerComponent implements OnInit, OnDestroy {
+export class ContextTriggerComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the trigger via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -311,7 +310,17 @@ export class ContextTriggerComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class ContextContentComponent implements OnInit, OnDestroy {
+export class ContextContentComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Symbol prefixed to the cost figure. @default '$' */
   @Input() currency = '$';
   /** Extra Tailwind classes merged onto the breakdown via `cn()` (last-wins). */

@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -41,7 +41,13 @@ export type SpinnerProps = VariantProps<typeof spinnerVariants>;
     </span>
   `,
 })
-export class SpinnerComponent {
+export class SpinnerComponent implements OnChanges {
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Diameter of the spinner. @default 'default' */
   @Input() size: SpinnerProps['size'] = 'default';
   /** Colour of the spinner, inherited from the theme tokens. @default 'default' */

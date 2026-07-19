@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -85,7 +79,18 @@ export interface BubbleReaction {
     </div>
   `,
 })
-export class BubbleComponent {
+export class BubbleComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Visual style of the surface. @default 'default' */
   @Input() variant: BubbleProps['variant'] = 'default';
   /** Which edge the bubble hangs off; squares the matching bottom corner. @default 'start' */
@@ -166,7 +171,18 @@ export class BubbleComponent {
     </div>
   `,
 })
-export class BubbleActionsComponent {
+export class BubbleActionsComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Keeps the row permanently visible instead of revealing it on hover or focus. @default false */
   @Input() alwaysVisible = false;
   /** Extra Tailwind classes merged onto the row via `cn()` (last-wins). */
@@ -211,7 +227,18 @@ export class BubbleActionsComponent {
     </div>
   `,
 })
-export class BubbleReactionsComponent {
+export class BubbleReactionsComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Reaction chips to render, in display order. @default [] */
   @Input() reactions: BubbleReaction[] = [];
   /** Extra Tailwind classes merged onto the row via `cn()` (last-wins). */

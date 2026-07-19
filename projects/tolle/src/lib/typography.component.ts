@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -51,7 +51,18 @@ export type TypographyProps = VariantProps<typeof typographyVariants>;
     <p *ngIf="isParagraph" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></p>
   `,
 })
-export class TypographyComponent {
+export class TypographyComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Type scale step; also selects the rendered HTML tag. @default 'p' */
   @Input() variant: TypographyProps['variant'] = 'p';
   /** Extra Tailwind classes merged onto the element via `cn()` (last-wins). */

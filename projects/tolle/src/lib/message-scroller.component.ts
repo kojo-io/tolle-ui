@@ -1,18 +1,4 @@
-import {
-  Component,
-  Directive,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  NgZone,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  AfterViewInit,
-  OnInit,
-  OnDestroy,
-  inject,
-} from '@angular/core';
+import { Component, Directive, Input, Output, EventEmitter, ElementRef, NgZone, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, OnInit, OnDestroy, inject, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { cn } from './utils/cn';
@@ -56,7 +42,18 @@ import { MessageScrollerService, ScrollStartPosition } from './message-scroller.
     </div>
   `,
 })
-export class MessageScrollerComponent implements OnInit, OnDestroy {
+export class MessageScrollerComponent implements OnChanges, OnInit, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /**
    * Where to land when the transcript first renders. `last-anchor` opens at the
    * newest turn so a long answer starts from its first line.
@@ -114,7 +111,18 @@ export class MessageScrollerComponent implements OnInit, OnDestroy {
     </div>
   `,
 })
-export class MessageScrollerViewportComponent implements AfterViewInit, OnDestroy {
+export class MessageScrollerViewportComponent implements OnChanges, AfterViewInit, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the viewport via `cn()` (last-wins). */
   @Input() class = '';
 
@@ -217,7 +225,18 @@ export class MessageScrollerViewportComponent implements AfterViewInit, OnDestro
     </div>
   `,
 })
-export class MessageScrollerContentComponent {
+export class MessageScrollerContentComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Extra Tailwind classes merged onto the transcript via `cn()` (last-wins). */
   @Input() class = '';
   protected cn = cn;
@@ -279,7 +298,17 @@ export class MessageScrollerItemDirective implements OnInit, OnDestroy {
     </button>
   `,
 })
-export class MessageScrollerButtonComponent implements OnInit, OnDestroy {
+export class MessageScrollerButtonComponent implements OnChanges, OnInit, OnDestroy {
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Accessible name for the jump control. @default 'Jump to latest messages' */
   @Input() ariaLabel = 'Jump to latest messages';
   /** Extra Tailwind classes merged onto the button via `cn()` (last-wins). */

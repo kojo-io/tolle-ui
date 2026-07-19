@@ -1,19 +1,60 @@
-import {
-  Component, Input, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy, HostListener
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy, HostListener, OnChanges, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
-import { format, parse, isValid, startOfDay } from 'date-fns';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { format, isValid, startOfDay } from 'date-fns';
 import { cn } from './utils/cn';
-import { MaskedInputComponent } from './masked-input.component';
 import { CalendarComponent, CalendarMode } from './calendar.component';
 
+/**
+ * The trigger button — same shape as `tolle-date-time-picker`'s, so the two
+ * controls read as siblings: a bordered field that opens a floating panel,
+ * not a typeable text input.
+ */
+const datePickerTriggerVariants = cva(
+  'flex w-full items-center justify-between gap-2 rounded-md border border-input bg-background text-foreground shadow-sm transition-colors ' +
+    'focus:outline-none focus-visible:border-primary/80 focus-visible:ring-4 focus-visible:ring-ring/30 ' +
+    'disabled:cursor-not-allowed disabled:opacity-50',
+  {
+    variants: {
+      size: {
+        xs: 'h-8 px-2 text-xs',
+        sm: 'h-9 px-3 text-sm',
+        default: 'h-10 px-3 text-sm',
+        lg: 'h-11 px-4 text-base',
+      },
+      invalid: {
+        true: 'border-destructive focus-visible:border-destructive/80 focus-visible:ring-destructive/30',
+        false: '',
+      },
+    },
+    defaultVariants: { size: 'default', invalid: false },
+  }
+);
+
+/** Variant props for the date picker. */
+export type DatePickerProps = VariantProps<typeof datePickerTriggerVariants>;
+
+/**
+ * A button trigger paired with a `tolle-calendar` in a floating panel.
+ *
+ * The value is a `Date` normalised to the start of its day — a calendar date
+ * has no time, and carrying one would make two selections of the same day
+ * compare unequal. `mode` switches the whole control between picking a day, a
+ * month or a year, taking the calendar's own quick-actions row with it.
+ *
+ * Implements `ControlValueAccessor`, so it works with `ngModel` and reactive
+ * forms. Use `tolle-date-range-picker` for a span and `tolle-date-time-picker`
+ * when a time is needed alongside — this trigger is deliberately the same
+ * shape as that one, not a typeable masked field.
+ */
 @Component({
   selector: 'tolle-date-picker',
   styles: [':host { display: block; }'],
   standalone: true,
-  imports: [CommonModule, FormsModule, MaskedInputComponent, CalendarComponent],
+  imports: [CommonModule, FormsModule, CalendarComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -22,87 +63,141 @@ import { CalendarComponent, CalendarMode } from './calendar.component';
     }
   ],
   template: `
-    <div class="relative w-full" #triggerContainer>
-      <tolle-masked-input
-        #maskInput
-        [mask]="getMask()"
-        [placeholder]="getPlaceholder()"
-        [disabled]="disabled"
-        [(ngModel)]="inputValue"
-        (ngModelChange)="onInputChange($event)"
-        [class]="cn(class)">
-        <div suffix class="flex items-center gap-1.5">
-          <button
-            *ngIf="value && !disabled && showClear"
-            type="button"
-            aria-label="Clear date"
-            (click)="clear($event)"
-            class="ri-close-line cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
-            tabindex="-1"
-          ></button>
+    <button
+      #trigger
+      type="button"
+      aria-haspopup="dialog"
+      [attr.aria-expanded]="isOpen"
+      [attr.aria-label]="ariaLabel || null"
+      [attr.data-state]="isOpen ? 'open' : 'closed'"
+      [disabled]="disabled"
+      [class]="computedTriggerClass"
+      (click)="toggle()"
+      (keydown)="onTriggerKeyDown($event)"
+    >
+      <span [class]="cn('truncate', displayValue ? 'text-foreground' : 'text-muted-foreground')">
+        {{ displayValue || placeholder }}
+      </span>
+      <i class="ri-calendar-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
+    </button>
 
-          <button
-            type="button"
-            #trigger
-            aria-label="Open calendar"
-            aria-haspopup="dialog"
-            [attr.aria-expanded]="isOpen"
-            (click)="togglePopover($event)"
-            [disabled]="disabled"
-            [class]="cn(
-              'cursor-pointer text-muted-foreground transition-colors',
-              'ri-calendar-line'
-            )"
-            tabindex="-1"
-          ></button>
+    <div
+      #popover
+      *ngIf="isOpen"
+      role="dialog"
+      [attr.aria-label]="'Choose a date'"
+      class="fixed left-0 top-0 z-[50]"
+      style="visibility: hidden"
+    >
+      <div class="rounded-md border border-border bg-popover text-popover-foreground shadow-md">
+        <div class="p-3">
+          <tolle-calendar
+            [bordered]="false"
+            [showQuickActions]="false"
+            [(ngModel)]="value"
+            (ngModelChange)="onCalendarChange($event)"
+            [mode]="mode"
+            [disablePastDates]="disablePastDates"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [formatMonthFn]="formatMonthFn"
+            [formatYearFn]="formatYearFn"
+          ></tolle-calendar>
         </div>
-      </tolle-masked-input>
 
-      <div
-        #popover
-        *ngIf="isOpen"
-        role="dialog"
-        class="fixed z-[50]"
-        style="visibility: hidden; top: 0; left: 0;"
-      >
-        <tolle-calendar class="shadow-lg"
-          [(ngModel)]="value"
-          (ngModelChange)="onCalendarChange($event)"
-          [mode]="mode"
-          [disablePastDates]="disablePastDates"
-          [minDate]="minDate"
-          [maxDate]="maxDate"
-          [showQuickActions]="showQuickActions"
-          [formatMonthFn]="formatMonthFn"
-          [formatYearFn]="formatYearFn"
-        ></tolle-calendar>
+        <div
+          *ngIf="showQuickActions"
+          class="flex items-center justify-between gap-2 border-t border-border px-3 py-2"
+        >
+          <button *ngIf="showClear" type="button" [class]="footerButtonClass" (click)="clearFromFooter()">
+            Clear
+          </button>
+          <button
+            type="button"
+            [class]="cn(footerButtonClass, 'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground', !showClear && 'ml-auto')"
+            (click)="done()"
+          >
+            Done
+          </button>
+        </div>
       </div>
     </div>
   `
 })
-export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
-  @Input() placeholder = 'MM/DD/YYYY';
-  @Input() disabled = false;
-  @Input() class = '';
-  @Input() disablePastDates = false;
-  @Input() showClear = true;
-  @Input() showQuickActions = true;
-  @Input() minDate?: Date;
-  @Input() maxDate?: Date;
-  @Input() mode: CalendarMode = 'date';
-  @Input() formatMonthFn?: (date: Date) => string;
-  @Input() formatYearFn?: (date: Date) => string;
+export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
 
-  // Format functions for display
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
+  /** Text shown on the trigger when no date is selected. @default 'Pick a date' */
+  @Input() placeholder = 'Pick a date';
+  /** Disables the control. @default false */
+  @Input() disabled = false;
+  /** Extra Tailwind classes merged onto the trigger via `cn()` (last-wins). @default '' */
+  @Input() class = '';
+  /** Disables every day before today in the calendar. @default false */
+  @Input() disablePastDates = false;
+  /** Shows the footer's Clear button. @default true */
+  @Input() showClear = true;
+  /** Shows the panel's Clear / Done footer. @default true */
+  @Input() showQuickActions = true;
+  /** Earliest selectable date; earlier days are disabled. */
+  @Input() minDate?: Date;
+  /** Latest selectable date; later days are disabled. */
+  @Input() maxDate?: Date;
+  /** Whether the control picks a day, a month or a year. @default 'date' */
+  @Input() mode: CalendarMode = 'date';
+  /** Overrides how a month is labelled in the calendar header. */
+  @Input() formatMonthFn?: (date: Date) => string;
+  /** Overrides how a year is labelled in the calendar header. */
+  @Input() formatYearFn?: (date: Date) => string;
+  /** Overrides how the selected date is rendered on the trigger. */
   @Input() displayFormat?: (date: Date, mode: CalendarMode) => string;
+  /** Height and text size of the trigger. @default 'default' */
+  @Input() size: DatePickerProps['size'] = 'default';
+  /** Applies the destructive border and focus ring. @default false */
+  @Input() invalid = false;
+  /** Accessible name when there is no associated visible label. @default '' */
+  @Input() ariaLabel = '';
+
+  /** Emitted with the chosen date, or `null` when the value is cleared. */
+  @Output() valueChange = new EventEmitter<Date | null>();
+  /** Emitted when the calendar panel opens. */
+  @Output() opened = new EventEmitter<void>();
+  /** Emitted when the calendar panel closes. */
+  @Output() closed = new EventEmitter<void>();
 
   @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
 
   value: Date | null = null;
-  inputValue: string = '';
   isOpen = false;
   cleanupAutoUpdate?: () => void;
+
+  /** Footer buttons, styled exactly as the date-time picker's. */
+  readonly footerButtonClass = cn(
+    'rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors',
+    'hover:bg-accent hover:text-accent-foreground',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
+  );
+
+  /** Footer Clear — empties the value and leaves the panel open, like the reference. */
+  clearFromFooter(): void {
+    this.value = null;
+    this.emit();
+    this.cdr.markForCheck();
+  }
+
+  /** Footer Done — commits what is already selected and closes. */
+  done(): void {
+    this.close();
+  }
 
   private _outsideClickHandler = (event: MouseEvent) => {
     if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
@@ -112,31 +207,12 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  getMask(): string {
-    switch (this.mode) {
-      case 'date': return '00/00/0000';
-      case 'month': return '00/0000';
-      case 'year': return '0000';
-      default: return '00/00/0000';
-    }
+  get computedTriggerClass(): string {
+    return cn(datePickerTriggerVariants({ size: this.size, invalid: this.invalid }), this.class);
   }
 
-  getPlaceholder(): string {
-    switch (this.mode) {
-      case 'date': return 'MM/DD/YYYY';
-      case 'month': return 'MM/YYYY';
-      case 'year': return 'YYYY';
-      default: return 'MM/DD/YYYY';
-    }
-  }
-
-  getFormatString(): string {
-    switch (this.mode) {
-      case 'date': return 'MM/dd/yyyy';
-      case 'month': return 'MM/yyyy';
-      case 'year': return 'yyyy';
-      default: return 'MM/dd/yyyy';
-    }
+  get displayValue(): string {
+    return this.value ? this.formatDate(this.value) : '';
   }
 
   formatDate(date: Date): string {
@@ -145,59 +221,37 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
     }
 
     switch (this.mode) {
-      case 'date': return format(date, 'MM/dd/yyyy');
-      case 'month': return format(date, 'MM/yyyy');
+      case 'date': return format(date, 'MMM d, yyyy');
+      case 'month': return format(date, 'MMMM yyyy');
       case 'year': return format(date, 'yyyy');
-      default: return format(date, 'MM/dd/yyyy');
-    }
-  }
-
-  parseDate(str: string): Date | null {
-    try {
-      const parsed = parse(str, this.getFormatString(), new Date());
-      return isValid(parsed) ? startOfDay(parsed) : null;
-    } catch {
-      return null;
-    }
-  }
-
-  onInputChange(str: string) {
-    const expectedLength = this.getFormatString().replace(/[^0]/g, '').length;
-
-    if (str?.length === expectedLength) {
-      const parsed = this.parseDate(str);
-      if (parsed) {
-        this.value = parsed;
-        this.onChange(this.value);
-      }
-    } else if (!str) {
-      this.value = null;
-      this.onChange(null);
+      default: return format(date, 'MMM d, yyyy');
     }
   }
 
   onCalendarChange(date: Date | null) {
     this.value = date;
-    if (date) {
-      this.inputValue = this.formatDate(date);
-    } else {
-      this.inputValue = '';
-    }
-    this.onChange(this.value);
+    this.emit();
     this.close();
+    this.cdr.markForCheck();
   }
 
-  togglePopover(event: MouseEvent) {
-    event.stopPropagation();
-    if (this.disabled) return;
+  toggle(): void {
     this.isOpen ? this.close() : this.open();
+  }
+
+  onTriggerKeyDown(event: KeyboardEvent): void {
+    if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key) && !this.isOpen) {
+      event.preventDefault();
+      this.open();
+    }
   }
 
   @HostListener('keydown.escape') onEscape() { if (this.isOpen) this.close(); }
 
   open() {
-    if (this.disabled) return;
+    if (this.disabled || this.isOpen) return;
     this.isOpen = true;
+    this.opened.emit();
     // Render the popover synchronously so its DOM node + @ViewChild('popover') exist
     // before we position it. Otherwise, with zone eventCoalescing (Angular defers change
     // detection to the next animation frame), updatePosition() can run first, find no
@@ -211,17 +265,19 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
   }
 
   close() {
+    if (!this.isOpen) return;
     this.isOpen = false;
-    if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
-    document.removeEventListener('pointerdown', this._outsideClickHandler, true);
+    this.closed.emit();
+    this.teardown();
+    // The outside-click handler is a raw document listener, so nothing else
+    // marks this OnPush view dirty when it fires.
+    this.cdr.markForCheck();
   }
 
-  clear(event: MouseEvent) {
-    event.stopPropagation();
-    this.value = null;
-    this.inputValue = '';
-    this.onChange(null);
-    this.cdr.markForCheck();
+  /** Reports the current value to the form and to `valueChange`. */
+  private emit() {
+    this.onChange(this.value);
+    this.valueChange.emit(this.value);
   }
 
   private updatePosition() {
@@ -251,9 +307,16 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
-    if (this.cleanupAutoUpdate) this.cleanupAutoUpdate();
+  private teardown() {
+    if (this.cleanupAutoUpdate) {
+      this.cleanupAutoUpdate();
+      this.cleanupAutoUpdate = undefined;
+    }
     document.removeEventListener('pointerdown', this._outsideClickHandler, true);
+  }
+
+  ngOnDestroy() {
+    this.teardown();
   }
 
   // CVA Implementation
@@ -263,19 +326,18 @@ export class DatePickerComponent implements ControlValueAccessor, OnDestroy {
   writeValue(val: any): void {
     if (val) {
       const date = new Date(val);
-      if (isValid(date)) {
-        this.value = startOfDay(date);
-        this.inputValue = this.formatDate(this.value);
-      }
+      this.value = isValid(date) ? startOfDay(date) : null;
     } else {
       this.value = null;
-      this.inputValue = '';
     }
     this.cdr.markForCheck();
   }
 
   registerOnChange(fn: any): void { this.onChange = fn; }
   registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.cdr.markForCheck();
+  }
   protected cn = cn;
 }

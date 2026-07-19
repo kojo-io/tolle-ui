@@ -1,14 +1,4 @@
-import {
-  Component,
-  Directive,
-  Injectable,
-  Input,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  OnChanges,
-  OnDestroy,
-  inject,
-} from '@angular/core';
+import { Component, Directive, Injectable, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -65,13 +55,22 @@ export class MessageAlignService {
  * the parent `tolle-message` and keeps the OnPush view in sync with it.
  */
 @Directive()
-abstract class MessageAlignAware implements OnDestroy {
+abstract class MessageAlignAware implements OnChanges, OnDestroy {
   /** Extra Tailwind classes merged onto the element via `cn()` (last-wins). */
   @Input() class = '';
 
   private readonly service = inject(MessageAlignService, { optional: true });
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly sub = new Subscription();
+
+  /**
+   * A bound `class` input is written through Angular's styling path, which
+   * does not mark an OnPush view dirty — without this every subclass would
+   * keep rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
 
   constructor() {
     // Alignment is not an input of this component, so nothing else would mark it
@@ -109,6 +108,8 @@ abstract class MessageAlignAware implements OnDestroy {
   template: `<div [class]="computedClass" role="listitem"><ng-content></ng-content></div>`,
 })
 export class MessageComponent implements OnChanges {
+  private readonly cdr = inject(ChangeDetectorRef);
+
   /** Which edge the message hangs off — 'start' for incoming, 'end' for outgoing. @default 'start' */
   @Input() align: MessageProps['align'] = 'start';
   /** Gap density of the row. @default 'default' */
@@ -121,6 +122,10 @@ export class MessageComponent implements OnChanges {
   ngOnChanges(): void {
     // Push alignment into the service so OnPush children get told about it.
     this.service.setAlign(this.align ?? 'start');
+  
+    // A bound `class` input is written through Angular's styling path,
+    // which does not mark an OnPush view dirty on its own.
+    this.cdr.markForCheck();
   }
 
   get computedClass(): string {
@@ -157,7 +162,18 @@ export type MessageGroupProps = VariantProps<typeof messageGroupVariants>;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="computedClass" role="group"><ng-content></ng-content></div>`,
 })
-export class MessageGroupComponent {
+export class MessageGroupComponent  implements OnChanges{
+  private readonly cdr = inject(ChangeDetectorRef);
+
+  /**
+   * Angular writes a bound `class` input through its styling path, which does
+   * not mark an OnPush component dirty — without this hook the component keeps
+   * rendering the class it was born with.
+   */
+  ngOnChanges(): void {
+    this.cdr.markForCheck();
+  }
+
   /** Edge the grouped messages hang off. @default 'start' */
   @Input() align: MessageGroupProps['align'] = 'start';
   /** Vertical gap between the grouped messages. @default 'default' */
