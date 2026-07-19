@@ -27,7 +27,12 @@
     <div class="flex-1"></div>
 
     <div class="flex items-center gap-2">
-      <button class="hidden h-9 min-w-[180px] items-center gap-2 rounded-md border border-border bg-muted px-2.5 text-[13px] text-muted-foreground lg:flex">
+      <button type="button" (click)="openCommandPalette()" aria-label="Search"
+              class="grid h-9 w-9 place-items-center rounded-md border border-border text-foreground transition-colors hover:bg-muted lg:hidden">
+        <i class="ri-search-line"></i>
+      </button>
+      <button type="button" (click)="openCommandPalette()"
+              class="hidden h-9 min-w-[180px] items-center gap-2 rounded-md border border-border bg-muted px-2.5 text-[13px] text-muted-foreground transition-colors hover:bg-accent lg:flex">
         <i class="ri-search-line"></i><span>Search…</span>
         <kbd class="ml-auto rounded border border-border bg-background px-1.5 font-mono text-[11px]">⌘K</kbd>
       </button>
@@ -75,4 +80,29 @@
       </div>
     </main>
   </div>
+
+  <!-- ================= ⌘K SEARCH ================= -->
+  <tolle-command-dialog [(open)]="commandPaletteOpen" ariaLabel="Search documentation">
+    @if (commandPaletteOpen) {
+      <tolle-command ariaLabel="Search documentation" (selected)="onCommandSelected($event)">
+        <tolle-command-input placeholder="Search components, guides…"></tolle-command-input>
+        <tolle-command-list ariaLabel="Search results">
+          <tolle-command-empty>No results found.</tolle-command-empty>
+          @for (group of navGroups(); track group.title) {
+            <tolle-command-group [heading]="group.title">
+              @for (item of group.items; track item.url) {
+                <tolle-command-item [value]="item" [label]="item.title" [keywords]="[group.title]">
+                  <i [class]="iconFor(item, group.title) + ' text-muted-foreground'" aria-hidden="true"></i>
+                  <span>{{ item.title }}</span>
+                  @if (item.badge) {
+                    <tolle-command-shortcut>{{ item.badge }}</tolle-command-shortcut>
+                  }
+                </tolle-command-item>
+              }
+            </tolle-command-group>
+          }
+        </tolle-command-list>
+      </tolle-command>
+    }
+  </tolle-command-dialog>
 </div>

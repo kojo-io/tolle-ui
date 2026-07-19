@@ -2,7 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { RegistryNavService, NavItem } from '../shared/registry-nav.service';
+import { RegistryNavService, NavItem, CATEGORY_ICON, NON_COMPONENT_GROUPS } from '../shared/registry-nav.service';
 import { ThemeService } from '../../../../tolle/src/lib/theme.service';
 import { ButtonComponent } from '../../../../tolle/src/lib/button.component';
 import { BadgeComponent } from '../../../../tolle/src/lib/badge.component';
@@ -32,24 +32,6 @@ interface Category {
   icon: string;
   items: NavItem[];
 }
-
-/** Icons per registry category. `RegistryNavService`'s groups don't carry icons. */
-const CATEGORY_ICON: Record<string, string> = {
-  Actions: 'ri-cursor-line',
-  Forms: 'ri-input-method-line',
-  Overlays: 'ri-layout-top-line',
-  Layout: 'ri-layout-grid-line',
-  Feedback: 'ri-notification-3-line',
-  'Date & Time': 'ri-calendar-line',
-  Navigation: 'ri-guide-line',
-  Data: 'ri-table-line',
-  Media: 'ri-image-line',
-  'AI & Chat': 'ri-chat-3-line',
-  Utilities: 'ri-tools-line',
-};
-
-/** Sidebar groups that are navigation chrome, not component categories. */
-const NON_COMPONENT_GROUPS = new Set(['Getting Started', 'AI Native']);
 
 @Component({
   selector: 'app-landing',

@@ -14,6 +14,24 @@ export interface NavGroup {
   items: NavItem[];
 }
 
+/** Icon per registry category, for UI that renders `groups()` without its own mapping. */
+export const CATEGORY_ICON: Record<string, string> = {
+  Actions: 'ri-cursor-line',
+  Forms: 'ri-input-method-line',
+  Overlays: 'ri-layout-top-line',
+  Layout: 'ri-layout-grid-line',
+  Feedback: 'ri-notification-3-line',
+  'Date & Time': 'ri-calendar-line',
+  Navigation: 'ri-guide-line',
+  Data: 'ri-table-line',
+  Media: 'ri-image-line',
+  'AI & Chat': 'ri-chat-3-line',
+  Utilities: 'ri-tools-line',
+};
+
+/** Sidebar groups that are navigation chrome rather than component categories. */
+export const NON_COMPONENT_GROUPS = new Set(['Getting Started', 'AI Native']);
+
 /**
  * Builds the docs sidebar "menu items" grouped by the component registry's
  * categories (Actions, Forms, Overlays, …). The categorized baseline is derived
@@ -90,9 +108,6 @@ export class RegistryNavService {
   /** The sidebar model, consumed by `<tolle-sidebar [items]="groups()">`. */
   readonly groups = signal<NavGroup[]>(this.build());
 
-  /** Groups in `groups()` that are navigation chrome rather than components. */
-  private static readonly NON_COMPONENT_GROUPS = new Set(['Getting Started', 'AI Native']);
-
   /**
    * Every documented component, flattened and sorted by title — the source for
    * the `/components` index, so it can't drift from the sidebar the way a
@@ -100,7 +115,7 @@ export class RegistryNavService {
    */
   readonly allComponents = computed<NavItem[]>(() =>
     this.groups()
-      .filter((g) => !RegistryNavService.NON_COMPONENT_GROUPS.has(g.title))
+      .filter((g) => !NON_COMPONENT_GROUPS.has(g.title))
       .flatMap((g) => g.items)
       .sort((a, b) => a.title.localeCompare(b.title))
   );
