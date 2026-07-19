@@ -31,7 +31,10 @@ import { MessageScrollerService, ScrollStartPosition } from './message-scroller.
  */
 @Component({
   selector: 'tolle-message-scroller',
-  styles: [':host { display: block; }'],
+  // The host sits between a consumer-sized parent and the templated flex
+  // frame below; display:block would drop the parent's height and the
+  // frame's `flex-1 min-h-0` would have nothing to size against.
+  styles: [':host { display: flex; flex-direction: column; height: 100%; min-height: 0; }'],
   standalone: true,
   imports: [CommonModule],
   providers: [MessageScrollerService],
@@ -101,7 +104,9 @@ export class MessageScrollerComponent implements OnChanges, OnInit, OnDestroy {
  */
 @Component({
   selector: 'tolle-message-scroller-viewport',
-  styles: [':host { display: block; }'],
+  // Same reasoning as tolle-message-scroller: this host is the flex item the
+  // scrollable inner div sizes against, so it must join the flex chain itself.
+  styles: [':host { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }'],
   standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,

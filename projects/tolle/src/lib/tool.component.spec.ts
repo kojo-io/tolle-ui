@@ -110,7 +110,8 @@ describe('ToolComponent', () => {
 
     const pre = input()!.querySelector('pre')!;
     expect(pre.textContent).toBe('{\n  "city": "Accra"\n}');
-    expect(pre.className).toContain('overflow-x-auto');
+    expect(pre.className).toContain('overflow-auto');
+    expect(pre.className).toContain('max-h-64');
     expect(pre.className).toContain('bg-muted');
   });
 

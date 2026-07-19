@@ -1,6 +1,5 @@
 <div class="flex w-full max-w-md flex-col gap-3">
-    <div
-        class="flex h-80 w-full flex-col overflow-hidden rounded-lg border border-border [&>tolle-message-scroller]:flex [&>tolle-message-scroller]:min-h-0 [&>tolle-message-scroller]:flex-1">
+    <div class="h-80 w-full overflow-hidden rounded-lg border border-border">
         <tolle-message-scroller startPosition="bottom" [threshold]="32" (atBottomChange)="atBottom = $event">
             <tolle-message-scroller-viewport>
                 <tolle-message-scroller-content>

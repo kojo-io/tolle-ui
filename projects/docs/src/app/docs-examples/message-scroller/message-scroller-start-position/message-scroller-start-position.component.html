@@ -20,8 +20,7 @@
     <!-- Tracking the mount by its start position re-creates the scroller when it
          changes, so the new position is applied on a fresh mount. -->
     @for (mount of [startPosition]; track mount) {
-    <div
-        class="flex h-80 w-full flex-col overflow-hidden rounded-lg border border-border [&>tolle-message-scroller]:flex [&>tolle-message-scroller]:min-h-0 [&>tolle-message-scroller]:flex-1">
+    <div class="h-80 w-full overflow-hidden rounded-lg border border-border">
         <tolle-message-scroller [startPosition]="mount" [scrollPreviousItemPeek]="peek">
             <tolle-message-scroller-viewport>
                 <tolle-message-scroller-content>

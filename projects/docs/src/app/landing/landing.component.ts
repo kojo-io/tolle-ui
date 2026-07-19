@@ -1,7 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { RegistryNavService, NavItem } from '../shared/registry-nav.service';
 import { ThemeService } from '../../../../tolle/src/lib/theme.service';
 import { ButtonComponent } from '../../../../tolle/src/lib/button.component';
 import { BadgeComponent } from '../../../../tolle/src/lib/badge.component';
@@ -29,8 +30,26 @@ interface Category {
   name: string;
   count: number;
   icon: string;
-  items: string[];
+  items: NavItem[];
 }
+
+/** Icons per registry category. `RegistryNavService`'s groups don't carry icons. */
+const CATEGORY_ICON: Record<string, string> = {
+  Actions: 'ri-cursor-line',
+  Forms: 'ri-input-method-line',
+  Overlays: 'ri-layout-top-line',
+  Layout: 'ri-layout-grid-line',
+  Feedback: 'ri-notification-3-line',
+  'Date & Time': 'ri-calendar-line',
+  Navigation: 'ri-guide-line',
+  Data: 'ri-table-line',
+  Media: 'ri-image-line',
+  'AI & Chat': 'ri-chat-3-line',
+  Utilities: 'ri-tools-line',
+};
+
+/** Sidebar groups that are navigation chrome, not component categories. */
+const NON_COMPONENT_GROUPS = new Set(['Getting Started', 'AI Native']);
 
 @Component({
   selector: 'app-landing',
@@ -61,6 +80,7 @@ interface Category {
 })
 export class LandingComponent {
   protected theme = inject(ThemeService);
+  private registryNav = inject(RegistryNavService);
   protected copied = false;
 
   // demo state for the featured component tiles
@@ -68,18 +88,21 @@ export class LandingComponent {
   protected notif = true;
   protected terms = true;
 
-  /** Registry categories → primary components (mirrors the docs sidebar mapping). */
-  protected categories: Category[] = [
-    { name: 'Actions', count: 4, icon: 'ri-cursor-line', items: ['Button', 'Button Group', 'Toggle', 'Toggle Group'] },
-    { name: 'Forms', count: 15, icon: 'ri-input-method-line', items: ['Input', 'Textarea', 'Select', 'Multi-select', 'Checkbox', 'Switch', 'Radio Group', 'Slider', 'Segment', 'Tag Input', 'OTP', 'Label', 'Masked Input', 'Country Selector', 'Phone Number'] },
-    { name: 'Overlays', count: 8, icon: 'ri-layout-top-line', items: ['Dialog', 'Alert Dialog', 'Sheet', 'Popover', 'Hover Card', 'Tooltip', 'Dropdown Menu', 'Context Menu'] },
-    { name: 'Layout', count: 9, icon: 'ri-layout-grid-line', items: ['Card', 'Accordion', 'Tabs', 'Collapsible', 'Sidebar', 'Resizable', 'Scroll Area', 'Separator', 'Aspect Ratio'] },
-    { name: 'Feedback', count: 6, icon: 'ri-notification-3-line', items: ['Alert', 'Badge', 'Progress', 'Skeleton', 'Toast', 'Empty State'] },
-    { name: 'Date & Time', count: 4, icon: 'ri-calendar-line', items: ['Calendar', 'Range Calendar', 'Date Picker', 'Date Range Picker'] },
-    { name: 'Navigation', count: 2, icon: 'ri-guide-line', items: ['Breadcrumb', 'Pagination'] },
-    { name: 'Data', count: 1, icon: 'ri-table-line', items: ['Data Table'] },
-    { name: 'Media', count: 2, icon: 'ri-image-line', items: ['Avatar', 'Carousel'] },
-  ];
+  /** Registry categories → primary components; re-syncs with the shipped registry. */
+  protected categories = computed<Category[]>(() =>
+    this.registryNav
+      .groups()
+      .filter((g) => !NON_COMPONENT_GROUPS.has(g.title))
+      .map((g) => ({
+        name: g.title,
+        count: g.items.length,
+        icon: CATEGORY_ICON[g.title] ?? 'ri-puzzle-line',
+        items: g.items,
+      }))
+  );
+
+  /** Total documented components, for the hero badge. */
+  protected totalComponents = computed(() => this.registryNav.allComponents().length);
 
   protected toggleTheme(): void {
     this.theme.toggleTheme();

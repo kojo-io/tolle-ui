@@ -361,11 +361,11 @@ export abstract class ToolPayloadBase implements OnChanges, OnInit, OnDestroy {
 
       <pre
         *ngIf="hasPayload; else projected"
-        class="overflow-x-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground"
+        class="max-h-64 overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground"
       >{{ formatted }}</pre>
 
       <ng-template #projected>
-        <div class="overflow-x-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground">
+        <div class="max-h-64 overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground">
           <ng-content></ng-content>
         </div>
       </ng-template>
@@ -420,7 +420,7 @@ export class ToolOutputComponent extends ToolPayloadBase {
 
   get payloadClass() {
     return cn(
-      'overflow-x-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground',
+      'max-h-64 overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground',
       this.error && 'bg-destructive/10 text-destructive'
     );
   }
