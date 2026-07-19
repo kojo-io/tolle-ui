@@ -79,7 +79,15 @@ describe('component host display', () => {
 
       if (rendered.el) {
         checked++;
-        if (getComputedStyle(rendered.el).display === 'inline') {
+        // A component may set its display through a class it puts on its own
+        // host (`host: { '[class]': 'computedClass' }`). Karma loads no Tailwind,
+        // so that class produces no computed style here — but it IS a real
+        // display source, and overriding it from a :host rule is what broke tab
+        // triggers into a vertical stack. Accept it.
+        const classDisplay = /(^|\s)(inline-flex|inline-grid|inline-block|flex|grid|contents|table|block)(\s|$)/.test(
+          rendered.el.getAttribute('class') || ''
+        );
+        if (getComputedStyle(rendered.el).display === 'inline' && !classDisplay) {
           inline.push(name + ' <' + selector + '>');
         }
       }

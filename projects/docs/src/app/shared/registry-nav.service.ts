@@ -29,7 +29,7 @@ export class RegistryNavService {
   private readonly CATS: { label: string; slugs: string[] }[] = [
     { label: 'Actions', slugs: ['button', 'button-group', 'toggle', 'toggle-group', 'kbd'] },
     { label: 'Forms', slugs: ['field', 'input', 'input-group', 'textarea', 'label', 'checkbox', 'switch', 'radio-group', 'select', 'multi-select', 'native-select', 'combobox', 'slider', 'segment', 'otp', 'masked-input', 'country-selector', 'phone-number-input'] },
-    { label: 'Date & Time', slugs: ['calendar', 'range-calendar', 'date-picker', 'date-range-picker'] },
+    { label: 'Date & Time', slugs: ['calendar', 'range-calendar', 'date-picker', 'date-range-picker', 'time-picker', 'date-time-picker'] },
     { label: 'Overlays', slugs: ['modal', 'alert-dialog', 'sheet', 'popover', 'hover-card', 'tooltip', 'dropdown-menu', 'context-menu', 'command', 'command-dialog'] },
     { label: 'Layout', slugs: ['card', 'accordion', 'tabs', 'collapsible', 'sidebar', 'resizable', 'scroll-area', 'separator', 'aspect-ratio', 'item', 'typography'] },
     { label: 'Feedback', slugs: ['alert', 'badge', 'progress', 'skeleton', 'spinner', 'toaster', 'empty-state'] },
@@ -66,6 +66,8 @@ export class RegistryNavService {
     'input-group': 'Input Group',
     'navigation-menu': 'Navigation Menu',
     'command-dialog': 'Command Dialog',
+    'time-picker': 'Time Picker',
+    'date-time-picker': 'Date & Time Picker',
     'message-scroller': 'Message Scroller',
     'prompt-input': 'Prompt Input',
     'chain-of-thought': 'Chain of Thought',

@@ -256,7 +256,6 @@ export class ChainOfThoughtContentComponent implements OnInit, OnDestroy {
 /** One reasoning step: a marker on the rail, a label, and any projected detail. */
 @Component({
   selector: 'tolle-chain-of-thought-step',
-  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,

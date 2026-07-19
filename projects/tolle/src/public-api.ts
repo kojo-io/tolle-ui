@@ -154,3 +154,6 @@ export * from './lib/chart-pie.component';
 
 /* --- Internationalisation --- */
 export * from './lib/direction.component';
+/* --- Date & time --- */
+export * from './lib/time-picker.component';
+export * from './lib/date-time-picker.component';

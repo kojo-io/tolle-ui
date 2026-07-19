@@ -161,6 +161,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/country-selector-docs/country-selector-docs.component').then(m => m.CountrySelectorDocsComponent),
           },
           {
+            path: 'date-time-picker',
+            loadComponent: () => import('./components/date-time-picker-docs/date-time-picker-docs.component').then(m => m.DateTimePickerDocsComponent),
+          },
+          {
             path: 'direction',
             loadComponent: () => import('./components/direction-docs/direction-docs.component').then(m => m.DirectionDocsComponent),
           },
@@ -359,6 +363,10 @@ export const routes: Routes = [
           {
             path: 'textarea',
             loadComponent: () => import('./components/textarea-docs/textarea-docs.component').then(m => m.TextareaDocsComponent),
+          },
+          {
+            path: 'time-picker',
+            loadComponent: () => import('./components/time-picker-docs/time-picker-docs.component').then(m => m.TimePickerDocsComponent),
           },
           {
             path: 'toaster',

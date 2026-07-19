@@ -1,0 +1,12 @@
+<div class="flex w-full max-w-xs flex-col gap-2">
+    <span class="text-sm font-medium text-foreground">Publish at</span>
+
+    <tolle-date-time-picker [(ngModel)]="moment" (valueChange)="onValueChange($event)" ariaLabel="Publish at" />
+
+    <p class="text-sm text-muted-foreground">
+        Value: <span class="font-mono text-foreground">{{ moment ? (moment | date: 'medium') : 'null' }}</span>
+    </p>
+    <p class="text-xs text-muted-foreground">
+        Last emitted: <span class="font-mono">{{ lastEmitted }}</span>
+    </p>
+</div>

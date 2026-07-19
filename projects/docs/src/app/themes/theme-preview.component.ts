@@ -37,6 +37,57 @@ import { SeparatorComponent } from '../../../../tolle/src/lib/separator.componen
 import { TooltipDirective } from '../../../../tolle/src/lib/tooltip.directive';
 import { DataTableComponent, TableColumn } from '../../../../tolle/src/lib/data-table.component';
 import { TolleCellDirective } from '../../../../tolle/src/lib/tolle-cell.directive';
+import {
+  FieldComponent,
+  FieldLabelComponent,
+  FieldDescriptionComponent,
+} from '../../../../tolle/src/lib/field.component';
+import {
+  InputGroupComponent,
+  InputGroupAddonComponent,
+  InputGroupInputComponent,
+  InputGroupTextComponent,
+  InputGroupButtonComponent,
+} from '../../../../tolle/src/lib/input-group.component';
+import {
+  ItemComponent,
+  ItemGroupComponent,
+  ItemMediaComponent,
+  ItemContentComponent,
+  ItemTitleComponent,
+  ItemDescriptionComponent,
+  ItemActionsComponent,
+} from '../../../../tolle/src/lib/item.component';
+import { SpinnerComponent } from '../../../../tolle/src/lib/spinner.component';
+import { KbdComponent, KbdGroupComponent } from '../../../../tolle/src/lib/kbd.component';
+import {
+  TableComponent,
+  TableHeaderDirective,
+  TableBodyDirective,
+  TableFooterDirective,
+  TableRowDirective,
+  TableHeadDirective,
+  TableCellDirective,
+} from '../../../../tolle/src/lib/table.component';
+import { TypographyComponent } from '../../../../tolle/src/lib/typography.component';
+import { EmptyStateComponent } from '../../../../tolle/src/lib/empty-state.component';
+import {
+  MessageComponent,
+  MessageAvatarComponent,
+  MessageContentComponent,
+  MessageHeaderComponent,
+  MessageFooterComponent,
+} from '../../../../tolle/src/lib/message.component';
+import { BubbleComponent } from '../../../../tolle/src/lib/bubble.component';
+import {
+  ChartComponent,
+  ChartGridComponent,
+  ChartXAxisComponent,
+  ChartYAxisComponent,
+  ChartAreaComponent,
+  ChartLineComponent,
+} from '../../../../tolle/src/lib/chart.component';
+import type { ChartSeries } from '../../../../tolle/src/lib/chart.service';
 
 interface Member {
   name: string;
@@ -50,6 +101,13 @@ interface Payment {
   customer: string;
   email: string;
   status: 'paid' | 'pending' | 'failed';
+  amount: string;
+}
+
+interface Invoice {
+  id: string;
+  status: 'paid' | 'pending' | 'failed';
+  method: string;
   amount: string;
 }
 
@@ -96,6 +154,45 @@ interface Payment {
     TooltipDirective,
     DataTableComponent,
     TolleCellDirective,
+    FieldComponent,
+    FieldLabelComponent,
+    FieldDescriptionComponent,
+    InputGroupComponent,
+    InputGroupAddonComponent,
+    InputGroupInputComponent,
+    InputGroupTextComponent,
+    InputGroupButtonComponent,
+    ItemComponent,
+    ItemGroupComponent,
+    ItemMediaComponent,
+    ItemContentComponent,
+    ItemTitleComponent,
+    ItemDescriptionComponent,
+    ItemActionsComponent,
+    SpinnerComponent,
+    KbdComponent,
+    KbdGroupComponent,
+    TableComponent,
+    TableHeaderDirective,
+    TableBodyDirective,
+    TableFooterDirective,
+    TableRowDirective,
+    TableHeadDirective,
+    TableCellDirective,
+    TypographyComponent,
+    EmptyStateComponent,
+    MessageComponent,
+    MessageAvatarComponent,
+    MessageContentComponent,
+    MessageHeaderComponent,
+    MessageFooterComponent,
+    BubbleComponent,
+    ChartComponent,
+    ChartGridComponent,
+    ChartXAxisComponent,
+    ChartYAxisComponent,
+    ChartAreaComponent,
+    ChartLineComponent,
   ],
   template: `
     <div class="space-y-6 p-4 text-foreground md:p-6">
@@ -309,21 +406,24 @@ interface Payment {
           <tolle-card>
             <tolle-card-header>
               <tolle-card-title>Overview</tolle-card-title>
-              <p class="text-sm text-muted-foreground">Visitors by channel · last 8 weeks</p>
+              <p class="text-sm text-muted-foreground">Traffic and signups · last 6 months</p>
             </tolle-card-header>
             <tolle-card-content>
-              <div class="flex h-36 items-end gap-1.5">
-                @for (bar of chartBars; track $index) {
-                  <div class="flex-1 rounded-t-sm transition-all" [style.height.%]="bar.h" [class]="'bg-chart-' + bar.c"></div>
-                }
-              </div>
-              <div class="mt-4 flex flex-wrap gap-x-4 gap-y-1.5">
-                @for (l of chartLegend; track l.label) {
-                  <div class="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <span class="h-2.5 w-2.5 rounded-sm" [class]="'bg-chart-' + l.c"></span> {{ l.label }}
-                  </div>
-                }
-              </div>
+              <tolle-chart
+                [data]="traffic"
+                [series]="trafficSeries"
+                xKey="month"
+                [height]="170"
+                xHeader="Month"
+                ariaLabel="Visitors and signups by month"
+                description="An area for visitors with a line for signups, over six months."
+              >
+                <svg:g tolle-chart-grid></svg:g>
+                <svg:g tolle-chart-y-axis></svg:g>
+                <svg:g tolle-chart-x-axis></svg:g>
+                <svg:g tolle-chart-area seriesKey="visitors" curve="smooth"></svg:g>
+                <svg:g tolle-chart-line seriesKey="signups" curve="smooth" [showDots]="true"></svg:g>
+              </tolle-chart>
             </tolle-card-content>
           </tolle-card>
 
@@ -376,6 +476,193 @@ interface Payment {
           </tolle-alert>
         </div>
       </div>
+
+      <!-- ===== Fields, rows & conversation ===== -->
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+
+        <tolle-card class="lg:col-span-2">
+          <tolle-card-header>
+            <tolle-card-title>Workspace settings</tolle-card-title>
+            <p class="text-sm text-muted-foreground">Fields, input groups and content rows.</p>
+          </tolle-card-header>
+          <tolle-card-content class="space-y-5">
+
+            <tolle-field>
+              <tolle-field-label for="pv-project">Project</tolle-field-label>
+              <tolle-input-group size="sm">
+                <tolle-input-group-addon>
+                  <app-demo-icon [iconSet]="iconSet" name="search" [size]="15" />
+                </tolle-input-group-addon>
+                <tolle-input-group-input id="pv-project" class="min-w-0 flex-1"
+                                         placeholder="Search projects" [(ngModel)]="search" />
+                <tolle-input-group-addon align="inline-end">
+                  <tolle-kbd-group>
+                    <tolle-kbd size="sm">⌘</tolle-kbd>
+                    <tolle-kbd size="sm">K</tolle-kbd>
+                  </tolle-kbd-group>
+                </tolle-input-group-addon>
+              </tolle-input-group>
+              <tolle-field-description>Jump to any project without leaving the keyboard.</tolle-field-description>
+            </tolle-field>
+
+            <tolle-field>
+              <tolle-field-label for="pv-repo" [required]="true">Repository</tolle-field-label>
+              <tolle-input-group size="sm">
+                <tolle-input-group-addon>
+                  <tolle-input-group-text>github.com/</tolle-input-group-text>
+                </tolle-input-group-addon>
+                <tolle-input-group-input id="pv-repo" class="min-w-0 flex-1"
+                                         placeholder="acme/tolle-ui" [(ngModel)]="repo" />
+                <tolle-input-group-addon align="inline-end">
+                  <tolle-spinner size="xs" variant="muted" label="Checking availability" />
+                  <tolle-input-group-button variant="ghost" size="sm" ariaLabel="Connect">Connect</tolle-input-group-button>
+                </tolle-input-group-addon>
+              </tolle-input-group>
+            </tolle-field>
+
+            <tolle-separator></tolle-separator>
+
+            <tolle-item-group>
+              @for (r of rows; track r.title) {
+                <tolle-item variant="outline" class="mb-2 last:mb-0">
+                  <tolle-item-media class="h-9 w-9 rounded-md bg-primary/10">
+                    <span class="text-primary">
+                      <app-demo-icon [iconSet]="iconSet" [name]="r.icon" [size]="16" />
+                    </span>
+                  </tolle-item-media>
+                  <tolle-item-content>
+                    <tolle-item-title>{{ r.title }}</tolle-item-title>
+                    <tolle-item-description>{{ r.description }}</tolle-item-description>
+                  </tolle-item-content>
+                  <tolle-item-actions>
+                    <tolle-badge variant="secondary" size="sm">{{ r.badge }}</tolle-badge>
+                    <tolle-switch [(ngModel)]="r.on" />
+                  </tolle-item-actions>
+                </tolle-item>
+              }
+            </tolle-item-group>
+          </tolle-card-content>
+        </tolle-card>
+
+        <tolle-card>
+          <tolle-card-header>
+            <tolle-card-title>Assistant</tolle-card-title>
+            <p class="text-sm text-muted-foreground">Chat surfaces wear the same tokens.</p>
+          </tolle-card-header>
+          <tolle-card-content class="space-y-3">
+            <tolle-message align="start">
+              <tolle-message-avatar>AI</tolle-message-avatar>
+              <tolle-message-content>
+                <tolle-message-header>Tolle · now</tolle-message-header>
+                <tolle-bubble variant="muted">Want me to apply this palette across the workspace?</tolle-bubble>
+              </tolle-message-content>
+            </tolle-message>
+
+            <tolle-message align="end">
+              <tolle-message-avatar>BK</tolle-message-avatar>
+              <tolle-message-content>
+                <tolle-bubble variant="primary" align="end">Yes — and round the corners a little more.</tolle-bubble>
+                <tolle-message-footer>Sent</tolle-message-footer>
+              </tolle-message-content>
+            </tolle-message>
+
+            <tolle-message align="start">
+              <tolle-message-avatar>AI</tolle-message-avatar>
+              <tolle-message-content>
+                <tolle-bubble variant="muted">
+                  <span class="flex items-center gap-2">
+                    <tolle-spinner size="xs" variant="muted" label="Applying preset" />
+                    Applying preset…
+                  </span>
+                </tolle-bubble>
+              </tolle-message-content>
+            </tolle-message>
+          </tolle-card-content>
+        </tolle-card>
+      </div>
+
+      <!-- ===== Table, type scale & empty state ===== -->
+      <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+
+        <tolle-card class="lg:col-span-2">
+          <tolle-card-header>
+            <tolle-card-title>Invoices</tolle-card-title>
+            <p class="text-sm text-muted-foreground">
+              Composed by hand with <span class="font-mono text-xs">tolle-table</span> primitives.
+            </p>
+          </tolle-card-header>
+          <tolle-card-content>
+            <tolle-table>
+              <thead tolleTableHeader>
+                <tr tolleTableRow>
+                  <th tolleTableHead>Invoice</th>
+                  <th tolleTableHead>Status</th>
+                  <th tolleTableHead>Method</th>
+                  <th tolleTableHead><span class="block text-right">Amount</span></th>
+                </tr>
+              </thead>
+              <tbody tolleTableBody>
+                @for (i of invoices; track i.id) {
+                  <tr tolleTableRow>
+                    <td tolleTableCell><span class="font-medium">{{ i.id }}</span></td>
+                    <td tolleTableCell>
+                      <tolle-badge [variant]="statusVariant(i.status)" size="sm">{{ i.status }}</tolle-badge>
+                    </td>
+                    <td tolleTableCell><span class="text-muted-foreground">{{ i.method }}</span></td>
+                    <td tolleTableCell><span class="block text-right tabular-nums">{{ i.amount }}</span></td>
+                  </tr>
+                }
+              </tbody>
+              <tfoot tolleTableFooter>
+                <tr tolleTableRow>
+                  <td tolleTableCell colspan="3">Total</td>
+                  <td tolleTableCell><span class="block text-right tabular-nums">$1,650.00</span></td>
+                </tr>
+              </tfoot>
+            </tolle-table>
+          </tolle-card-content>
+          <tolle-card-footer class="flex items-center gap-2 text-xs text-muted-foreground">
+            Press
+            <tolle-kbd-group>
+              <tolle-kbd size="sm">⌘</tolle-kbd>
+              <tolle-kbd size="sm">⇧</tolle-kbd>
+              <tolle-kbd size="sm">E</tolle-kbd>
+            </tolle-kbd-group>
+            to export.
+          </tolle-card-footer>
+        </tolle-card>
+
+        <div class="space-y-6">
+          <tolle-card>
+            <tolle-card-header>
+              <tolle-card-title>Type scale</tolle-card-title>
+            </tolle-card-header>
+            <tolle-card-content class="space-y-2">
+              <tolle-typography variant="h4">Heading four</tolle-typography>
+              <tolle-typography variant="lead">A lead line sets the tone.</tolle-typography>
+              <tolle-typography variant="p">Body copy picks up the sans stack you chose in the rail.</tolle-typography>
+              <tolle-typography variant="blockquote">Tokens beat hard-coded values.</tolle-typography>
+              <tolle-typography variant="muted">Muted footnote</tolle-typography>
+              <tolle-typography variant="code">--radius</tolle-typography>
+            </tolle-card-content>
+          </tolle-card>
+
+          <tolle-card>
+            <tolle-card-header>
+              <tolle-card-title>Archive</tolle-card-title>
+            </tolle-card-header>
+            <tolle-card-content>
+              <tolle-empty-state
+                variant="minimal"
+                title="Nothing archived"
+                description="Anything you archive shows up here."
+              >
+                <app-demo-icon icon [iconSet]="iconSet" name="check" [size]="20" />
+              </tolle-empty-state>
+            </tolle-card-content>
+          </tolle-card>
+        </div>
+      </div>
     </div>
   `,
 })
@@ -396,6 +683,8 @@ export class ThemePreviewComponent {
   role = 'admin';
   volume = 60;
   date: Date = new Date(2026, 6, 15);
+  search = '';
+  repo = '';
 
   stats = [
     { label: 'Revenue', value: '$45,231', delta: '+20.1%', icon: 'dollar' },
@@ -404,17 +693,36 @@ export class ThemePreviewComponent {
     { label: 'Active now', value: '+573', delta: '+201', icon: 'activity' },
   ];
 
-  chartBars = [
-    { h: 42, c: 1 }, { h: 68, c: 2 }, { h: 55, c: 3 }, { h: 88, c: 4 },
-    { h: 47, c: 5 }, { h: 63, c: 1 }, { h: 79, c: 2 }, { h: 58, c: 3 },
+  /**
+   * Chart inputs are plain fields, never getters: `tolle-chart` diffs `data` and
+   * `series` in ngOnChanges, so an array rebuilt on every read would re-run the
+   * chart's layout on every change-detection pass.
+   */
+  trafficSeries: ChartSeries[] = [
+    { key: 'visitors', label: 'Visitors' },
+    { key: 'signups', label: 'Signups' },
   ];
 
-  chartLegend = [
-    { label: 'Direct', c: 1 },
-    { label: 'Organic', c: 2 },
-    { label: 'Referral', c: 3 },
-    { label: 'Social', c: 4 },
-    { label: 'Email', c: 5 },
+  traffic = [
+    { month: 'Jan', visitors: 420, signups: 96 },
+    { month: 'Feb', visitors: 512, signups: 128 },
+    { month: 'Mar', visitors: 488, signups: 141 },
+    { month: 'Apr', visitors: 604, signups: 172 },
+    { month: 'May', visitors: 671, signups: 205 },
+    { month: 'Jun', visitors: 742, signups: 246 },
+  ];
+
+  rows = [
+    { icon: 'bell', title: 'Deployment alerts', description: 'Ping me when a build fails.', badge: 'Email', on: true },
+    { icon: 'users', title: 'Mentions', description: 'Someone names you in a thread.', badge: 'Push', on: true },
+    { icon: 'card', title: 'Billing receipts', description: 'Monthly invoice summaries.', badge: 'Email', on: false },
+  ];
+
+  invoices: Invoice[] = [
+    { id: 'INV-2401', status: 'paid', method: 'Visa · 4242', amount: '$650.00' },
+    { id: 'INV-2402', status: 'pending', method: 'Bank transfer', amount: '$400.00' },
+    { id: 'INV-2403', status: 'paid', method: 'Mastercard · 8210', amount: '$350.00' },
+    { id: 'INV-2404', status: 'failed', method: 'Visa · 1199', amount: '$250.00' },
   ];
 
   members: Member[] = [

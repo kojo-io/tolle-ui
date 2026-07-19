@@ -141,7 +141,6 @@ export class AlertDialogPortalComponent implements OnInit, OnDestroy {
 
 @Component({
     selector: 'tolle-alert-dialog-content',
-  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule, A11yModule],
     template: `<div [class]="computedClass" [attr.data-state]="isOpen ? 'open' : 'closed'"
@@ -191,7 +190,6 @@ export class AlertDialogContentComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-header',
-  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -204,7 +202,6 @@ export class AlertDialogHeaderComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-footer',
-  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -217,7 +214,7 @@ export class AlertDialogFooterComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-title',
-  styles: [':host { display: block; }'],
+    styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
@@ -232,7 +229,7 @@ export class AlertDialogTitleComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-description',
-  styles: [':host { display: block; }'],
+    styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,

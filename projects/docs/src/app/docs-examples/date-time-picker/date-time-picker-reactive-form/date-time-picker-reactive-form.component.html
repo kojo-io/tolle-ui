@@ -1,0 +1,20 @@
+<form [formGroup]="form" class="flex w-full max-w-xs flex-col gap-3">
+    <span class="text-sm font-medium text-foreground">Session starts at</span>
+
+    <tolle-date-time-picker formControlName="startsAt" [use12Hours]="true" [minuteStep]="15"
+        ariaLabel="Session starts at" />
+
+    <div class="flex items-center gap-2">
+        <tolle-button variant="outline" size="sm" (click)="toggleDisabled()">
+            {{ startsAtControl.disabled ? 'Enable' : 'Disable' }}
+        </tolle-button>
+        <span class="text-xs text-muted-foreground">
+            calls <code class="font-mono">control.disable()</code>
+        </span>
+    </div>
+
+    <p class="text-sm text-muted-foreground">
+        Valid: <span class="font-mono text-foreground">{{ form.valid }}</span>
+    </p>
+    <pre class="rounded-md border border-border bg-muted/40 p-3 font-mono text-xs text-foreground">{{ startsAtControl.value ? (startsAtControl.value | date: 'medium') : 'null' }}</pre>
+</form>

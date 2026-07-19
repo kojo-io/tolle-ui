@@ -1,0 +1,9 @@
+<div class="flex w-full max-w-xs flex-col gap-2">
+    <span class="text-sm font-medium text-foreground">Start time</span>
+
+    <tolle-time-picker [(ngModel)]="time" ariaLabel="Start time" />
+
+    <p class="text-sm text-muted-foreground">
+        Value: <span class="font-mono text-foreground">{{ time || 'null' }}</span>
+    </p>
+</div>

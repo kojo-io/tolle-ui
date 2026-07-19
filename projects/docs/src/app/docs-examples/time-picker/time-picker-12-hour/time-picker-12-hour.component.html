@@ -1,0 +1,13 @@
+<div class="flex w-full max-w-xs flex-col gap-2">
+    <span class="text-sm font-medium text-foreground">Broadcast at</span>
+
+    <tolle-time-picker [(ngModel)]="time" [use12Hours]="true" [showSeconds]="true" [secondStep]="10"
+        ariaLabel="Broadcast at" />
+
+    <p class="text-sm text-muted-foreground">
+        Value: <span class="font-mono text-foreground">{{ time || 'null' }}</span>
+    </p>
+    <p class="text-xs text-muted-foreground">
+        The trigger reads as 12-hour, the value stays 24-hour <code class="font-mono">HH:mm:ss</code>.
+    </p>
+</div>

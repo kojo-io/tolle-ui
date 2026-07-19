@@ -19,10 +19,10 @@
       <a routerLink="/components" class="transition-colors hover:text-foreground hover:no-underline">Components</a>
     </nav>
 
-    <button (click)="toggleAppearance()" tolleTooltip="Toggle appearance" aria-label="Toggle appearance"
-            class="grid h-9 w-9 place-items-center rounded-md border border-border text-foreground transition-colors hover:bg-muted">
+    <tolle-button variant="outline" size="icon-sm" (click)="toggleAppearance()"
+                  tolleTooltip="Toggle appearance" aria-label="Toggle appearance">
       <i [class]="preset.appearance === 'dark' ? 'ri-sun-line' : 'ri-moon-line'"></i>
-    </button>
+    </tolle-button>
 
     <tolle-button variant="ghost" size="sm" (click)="reset()">
       <i class="ri-refresh-line mr-1.5"></i> Reset
@@ -38,11 +38,11 @@
   <div class="flex flex-1 flex-col lg:flex-row">
 
     <!-- ---------- CONTROL RAIL ---------- -->
-    <aside class="w-full shrink-0 space-y-7 border-b border-border p-5 lg:sticky lg:top-14 lg:h-[calc(100vh-3.5rem)] lg:w-80 lg:overflow-y-auto lg:border-b-0 lg:border-r">
+    <aside class="w-full shrink-0 space-y-6 border-b border-border p-5 lg:sticky lg:top-14 lg:h-[calc(100vh-3.5rem)] lg:w-80 lg:overflow-y-auto lg:border-b-0 lg:border-r">
 
       <!-- Presets -->
-      <section class="space-y-3">
-        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Presets</h3>
+      <tolle-field>
+        <tolle-field-label>Presets</tolle-field-label>
         <div class="flex flex-wrap gap-2">
           @for (n of namedPresets; track n.id) {
             <button (click)="applyNamed(n)"
@@ -53,13 +53,14 @@
             </button>
           }
         </div>
-      </section>
+      </tolle-field>
 
       <tolle-separator></tolle-separator>
 
       <!-- Base color (neutrals) -->
-      <section class="space-y-3">
-        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Base color</h3>
+      <tolle-field>
+        <tolle-field-label>Base color</tolle-field-label>
+        <tolle-field-description>The neutral family behind background, muted and border.</tolle-field-description>
         <div class="grid grid-cols-5 gap-1.5">
           @for (b of baseColors; track b.id) {
             <button (click)="selectBase(b.id)" [attr.title]="b.name"
@@ -70,16 +71,16 @@
             </button>
           }
         </div>
-      </section>
+      </tolle-field>
 
       <tolle-separator></tolle-separator>
 
       <!-- Theme color (accent / primary) -->
-      <section class="space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Theme color</h3>
-          <span class="font-mono text-[11px] uppercase text-muted-foreground">{{ preset.primary }}</span>
-        </div>
+      <tolle-field>
+        <tolle-field-label>
+          Theme color
+          <span class="ml-auto font-mono text-[11px] font-normal uppercase text-muted-foreground">{{ preset.primary }}</span>
+        </tolle-field-label>
         <div class="grid grid-cols-8 gap-1.5">
           @for (c of colorPresets; track c.hex) {
             <button (click)="selectColor(c.hex)" [attr.title]="c.name" [attr.aria-label]="c.name"
@@ -92,25 +93,32 @@
             </button>
           }
         </div>
-        <div class="flex items-center gap-2 rounded-md border border-border p-1.5">
-          <div class="relative h-7 w-7 shrink-0 cursor-pointer overflow-hidden rounded" (click)="customColor.click()">
-            <div class="absolute inset-0 z-[2]" [style.backgroundColor]="preset.primary"></div>
-            <input #customColor type="text" class="themes-coloris absolute inset-0 z-[1] h-7 w-7 bg-transparent"
-                   [ngModel]="preset.primary" (ngModelChange)="onCustomColor($event)">
-          </div>
-          <span class="text-sm text-muted-foreground">Custom color</span>
-          <i class="ri-arrow-right-up-line ml-auto text-muted-foreground"></i>
-        </div>
-      </section>
+        <tolle-item variant="outline" size="sm">
+          <tolle-item-media>
+            <span class="relative block h-7 w-7 shrink-0 cursor-pointer overflow-hidden rounded" (click)="customColor.click()">
+              <span class="absolute inset-0 z-[2] block" [style.backgroundColor]="preset.primary"></span>
+              <input #customColor type="text" class="themes-coloris absolute inset-0 z-[1] h-7 w-7 bg-transparent"
+                     [ngModel]="preset.primary" (ngModelChange)="onCustomColor($event)">
+            </span>
+          </tolle-item-media>
+          <tolle-item-content>
+            <tolle-item-title>Custom color</tolle-item-title>
+          </tolle-item-content>
+          <tolle-item-actions>
+            <i class="ri-arrow-right-up-line text-muted-foreground"></i>
+          </tolle-item-actions>
+        </tolle-item>
+      </tolle-field>
 
       <tolle-separator></tolle-separator>
 
       <!-- Chart color -->
-      <section class="space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Chart color</h3>
-          <span class="font-mono text-[11px] uppercase text-muted-foreground">{{ preset.chart }}</span>
-        </div>
+      <tolle-field>
+        <tolle-field-label>
+          Chart color
+          <span class="ml-auto font-mono text-[11px] font-normal uppercase text-muted-foreground">{{ preset.chart }}</span>
+        </tolle-field-label>
+        <tolle-field-description>Derives the five-step chart palette. See it on real charts in the preview.</tolle-field-description>
         <div class="grid grid-cols-8 gap-1.5">
           @for (c of colorPresets; track c.hex) {
             <button (click)="selectChart(c.hex)" [attr.title]="c.name" [attr.aria-label]="c.name"
@@ -123,12 +131,14 @@
             </button>
           }
         </div>
-        <div class="flex items-center gap-2 rounded-md border border-border p-1.5">
-          <div class="relative h-7 w-7 shrink-0 cursor-pointer overflow-hidden rounded" (click)="customChart.click()">
-            <div class="absolute inset-0 z-[2]" [style.backgroundColor]="preset.chart"></div>
-            <input #customChart type="text" class="themes-coloris absolute inset-0 z-[1] h-7 w-7 bg-transparent"
-                   [ngModel]="preset.chart" (ngModelChange)="onCustomChart($event)">
-          </div>
+        <tolle-item variant="outline" size="sm">
+          <tolle-item-media>
+            <span class="relative block h-7 w-7 shrink-0 cursor-pointer overflow-hidden rounded" (click)="customChart.click()">
+              <span class="absolute inset-0 z-[2] block" [style.backgroundColor]="preset.chart"></span>
+              <input #customChart type="text" class="themes-coloris absolute inset-0 z-[1] h-7 w-7 bg-transparent"
+                     [ngModel]="preset.chart" (ngModelChange)="onCustomChart($event)">
+            </span>
+          </tolle-item-media>
           <div class="flex flex-1 items-center gap-1" title="Derived --chart-1…5">
             <span class="h-4 flex-1 rounded-sm bg-chart-1"></span>
             <span class="h-4 flex-1 rounded-sm bg-chart-2"></span>
@@ -136,49 +146,35 @@
             <span class="h-4 flex-1 rounded-sm bg-chart-4"></span>
             <span class="h-4 flex-1 rounded-sm bg-chart-5"></span>
           </div>
-        </div>
-      </section>
+        </tolle-item>
+      </tolle-field>
 
       <tolle-separator></tolle-separator>
 
       <!-- Radius -->
-      <section class="space-y-3">
-        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Radius</h3>
-        <div class="grid grid-cols-5 gap-1.5">
-          @for (r of radiusPresets; track r.value) {
-            <button (click)="selectRadius(r.value)"
-                    [class]="'rounded-md border py-1.5 text-xs font-medium tabular-nums transition-colors ' +
-                      (isRadius(r.value) ? 'border-primary bg-primary text-primary-foreground' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground')">
-              {{ r.label }}
-            </button>
-          }
-        </div>
-      </section>
+      <ng-template #radiusTpl let-item>
+        <span class="truncate text-xs tabular-nums">{{ item.label }}</span>
+      </ng-template>
+      <tolle-field>
+        <tolle-field-label>Radius</tolle-field-label>
+        <tolle-segment [items]="radiusItems" [itemTemplate]="radiusTpl"
+                       [ngModel]="preset.radius" (ngModelChange)="selectRadius($event)"></tolle-segment>
+      </tolle-field>
 
       <tolle-separator></tolle-separator>
 
       <!-- Appearance -->
-      <section class="space-y-3">
-        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Appearance</h3>
-        <div class="grid grid-cols-2 gap-1.5">
-          <button (click)="setAppearance('light')"
-                  [class]="'flex items-center justify-center gap-2 rounded-md border py-2 text-sm font-medium transition-colors ' +
-                    (preset.appearance === 'light' ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground')">
-            <i class="ri-sun-line"></i> Light
-          </button>
-          <button (click)="setAppearance('dark')"
-                  [class]="'flex items-center justify-center gap-2 rounded-md border py-2 text-sm font-medium transition-colors ' +
-                    (preset.appearance === 'dark' ? 'border-primary bg-primary/10 text-primary' : 'border-border text-muted-foreground hover:bg-muted hover:text-foreground')">
-            <i class="ri-moon-line"></i> Dark
-          </button>
-        </div>
-      </section>
+      <tolle-field>
+        <tolle-field-label>Appearance</tolle-field-label>
+        <tolle-segment [items]="appearanceItems"
+                       [ngModel]="preset.appearance" (ngModelChange)="setAppearance($event)"></tolle-segment>
+      </tolle-field>
 
       <tolle-separator></tolle-separator>
 
       <!-- Typography -->
-      <section class="space-y-3">
-        <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Typography</h3>
+      <tolle-field>
+        <tolle-field-label>Typography</tolle-field-label>
         <div class="space-y-2.5">
           <div class="flex items-center gap-2">
             <span class="w-12 shrink-0 text-xs text-muted-foreground">Sans</span>
@@ -205,33 +201,27 @@
             </tolle-select>
           </div>
         </div>
-      </section>
+      </tolle-field>
 
       <tolle-separator></tolle-separator>
 
       <!-- Icon set -->
-      <section class="space-y-3">
-        <div class="flex items-center justify-between">
-          <h3 class="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Icon set</h3>
-          <i class="ri-information-line text-muted-foreground"
+      <ng-template #iconTpl let-item>
+        <span class="flex flex-col items-center gap-1 py-0.5">
+          <app-demo-icon [iconSet]="item.value" name="star" [size]="16" />
+          <span class="text-[10px] font-medium leading-none">{{ item.label }}</span>
+        </span>
+      </ng-template>
+      <tolle-field>
+        <tolle-field-label>
+          Icon set
+          <i class="ml-auto ri-information-line font-normal text-muted-foreground"
              tolleTooltip="Component internals ship Remix Icons. This skins the preview + your own markup."></i>
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          @for (s of iconSets; track s.id) {
-            <button (click)="selectIcons(s.id)"
-                    [class]="'flex items-center gap-2.5 rounded-md border p-2.5 text-left transition-colors ' +
-                      (isIcons(s.id) ? 'border-primary bg-primary/10' : 'border-border hover:bg-muted')">
-              <span [class]="'grid h-8 w-8 shrink-0 place-items-center rounded-md ' + (isIcons(s.id) ? 'bg-primary/15 text-primary' : 'bg-muted text-foreground')">
-                <app-demo-icon [iconSet]="s.id" name="star" [size]="18" />
-              </span>
-              <span class="min-w-0">
-                <span class="block text-xs font-semibold leading-tight">{{ s.label }}</span>
-                <span class="block truncate text-[11px] text-muted-foreground">{{ s.hint }}</span>
-              </span>
-            </button>
-          }
-        </div>
-      </section>
+        </tolle-field-label>
+        <tolle-segment [items]="iconItems" [itemTemplate]="iconTpl"
+                       [ngModel]="preset.icons" (ngModelChange)="selectIcons($event)"></tolle-segment>
+        <tolle-field-description>{{ iconLabel }} · {{ iconHint }}</tolle-field-description>
+      </tolle-field>
     </aside>
 
     <!-- ---------- PREVIEW / CODE ---------- -->
@@ -255,17 +245,74 @@
 
           <!-- Preview -->
           <tolle-tabs-content value="preview">
-            <div class="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
-              <div class="flex items-center gap-1.5 border-b border-border bg-muted/40 px-4 py-2.5">
-                <span class="h-3 w-3 rounded-full bg-red-400"></span>
-                <span class="h-3 w-3 rounded-full bg-amber-400"></span>
-                <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
-                <div class="ml-3 hidden items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground sm:flex">
-                  <i class="ri-lock-line text-[11px]"></i> tolle-ui.com
+            <div class="mt-4 space-y-4">
+
+              <!-- Chart palette: the real thing, not swatches -->
+              <div class="rounded-xl border border-border bg-card p-4 shadow-sm md:p-5">
+                <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
+                  <div>
+                    <h2 class="text-sm font-semibold">Chart palette</h2>
+                    <p class="mt-0.5 text-xs text-muted-foreground">
+                      Painted straight from <span class="font-mono">--chart-1…5</span> — pick a chart color and these repaint.
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-1" title="--chart-1…5">
+                    <span class="h-3 w-7 rounded-sm bg-chart-1"></span>
+                    <span class="h-3 w-7 rounded-sm bg-chart-2"></span>
+                    <span class="h-3 w-7 rounded-sm bg-chart-3"></span>
+                    <span class="h-3 w-7 rounded-sm bg-chart-4"></span>
+                    <span class="h-3 w-7 rounded-sm bg-chart-5"></span>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+                  <div class="min-w-0 md:col-span-2">
+                    <tolle-chart
+                      [data]="chartData"
+                      [series]="chartSeries"
+                      xKey="month"
+                      [height]="220"
+                      xHeader="Month"
+                      ariaLabel="Visitors by channel"
+                      description="Grouped bars showing four acquisition channels over six months."
+                    >
+                      <svg:g tolle-chart-grid></svg:g>
+                      <svg:g tolle-chart-y-axis></svg:g>
+                      <svg:g tolle-chart-x-axis></svg:g>
+                      <svg:g tolle-chart-bar seriesKey="direct"></svg:g>
+                      <svg:g tolle-chart-bar seriesKey="organic"></svg:g>
+                      <svg:g tolle-chart-bar seriesKey="referral"></svg:g>
+                      <svg:g tolle-chart-bar seriesKey="social"></svg:g>
+                    </tolle-chart>
+                  </div>
+
+                  <div class="min-w-0">
+                    <tolle-chart-pie
+                      [data]="pieData"
+                      [donut]="true"
+                      [size]="200"
+                      labelHeader="Channel"
+                      valueHeader="Visitors"
+                      ariaLabel="Traffic share by channel"
+                      description="Five slices, one per step of the chart palette."
+                    />
+                  </div>
                 </div>
               </div>
-              <div class="bg-background">
-                <app-theme-preview [iconSet]="preset.icons" />
+
+              <!-- Component canvas -->
+              <div class="overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+                <div class="flex items-center gap-1.5 border-b border-border bg-muted/40 px-4 py-2.5">
+                  <span class="h-3 w-3 rounded-full bg-red-400"></span>
+                  <span class="h-3 w-3 rounded-full bg-amber-400"></span>
+                  <span class="h-3 w-3 rounded-full bg-emerald-400"></span>
+                  <div class="ml-3 hidden items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground sm:flex">
+                    <i class="ri-lock-line text-[11px]"></i> tolle-ui.com
+                  </div>
+                </div>
+                <div class="bg-background">
+                  <app-theme-preview [iconSet]="preset.icons" />
+                </div>
               </div>
             </div>
           </tolle-tabs-content>
@@ -284,10 +331,12 @@
                 <tolle-tabs-content value="css">
                   <p class="mb-2 mt-3 text-sm text-muted-foreground">Drop this into your global stylesheet.</p>
                   <div class="relative">
-                    <button (click)="copy(cssCode, 'css')" class="code-copy">
-                      <i [class]="copied === 'css' ? 'ri-check-line' : 'ri-file-copy-line'"></i>
-                      {{ copied === 'css' ? 'Copied' : 'Copy' }}
-                    </button>
+                    <div class="absolute right-2 top-2 z-[2]">
+                      <tolle-button variant="outline" size="xs" (click)="copy(cssCode, 'css')">
+                        <i [class]="(copied === 'css' ? 'ri-check-line' : 'ri-file-copy-line') + ' mr-1.5'"></i>
+                        {{ copied === 'css' ? 'Copied' : 'Copy' }}
+                      </tolle-button>
+                    </div>
                     <pre class="code-block"><code>{{ cssCode }}</code></pre>
                   </div>
                 </tolle-tabs-content>
@@ -295,10 +344,12 @@
                 <tolle-tabs-content value="provider">
                   <p class="mb-2 mt-3 text-sm text-muted-foreground">Or configure it at bootstrap in <span class="font-mono text-xs">app.config.ts</span>.</p>
                   <div class="relative">
-                    <button (click)="copy(providerCode, 'provider')" class="code-copy">
-                      <i [class]="copied === 'provider' ? 'ri-check-line' : 'ri-file-copy-line'"></i>
-                      {{ copied === 'provider' ? 'Copied' : 'Copy' }}
-                    </button>
+                    <div class="absolute right-2 top-2 z-[2]">
+                      <tolle-button variant="outline" size="xs" (click)="copy(providerCode, 'provider')">
+                        <i [class]="(copied === 'provider' ? 'ri-check-line' : 'ri-file-copy-line') + ' mr-1.5'"></i>
+                        {{ copied === 'provider' ? 'Copied' : 'Copy' }}
+                      </tolle-button>
+                    </div>
                     <pre class="code-block"><code>{{ providerCode }}</code></pre>
                   </div>
                 </tolle-tabs-content>
@@ -306,10 +357,12 @@
                 <tolle-tabs-content value="cli">
                   <p class="mb-2 mt-3 text-sm text-muted-foreground">Scaffold Tolle and add the components you own.</p>
                   <div class="relative">
-                    <button (click)="copy(cliCode, 'cli')" class="code-copy">
-                      <i [class]="copied === 'cli' ? 'ri-check-line' : 'ri-file-copy-line'"></i>
-                      {{ copied === 'cli' ? 'Copied' : 'Copy' }}
-                    </button>
+                    <div class="absolute right-2 top-2 z-[2]">
+                      <tolle-button variant="outline" size="xs" (click)="copy(cliCode, 'cli')">
+                        <i [class]="(copied === 'cli' ? 'ri-check-line' : 'ri-file-copy-line') + ' mr-1.5'"></i>
+                        {{ copied === 'cli' ? 'Copied' : 'Copy' }}
+                      </tolle-button>
+                    </div>
                     <pre class="code-block"><code>{{ cliCode }}</code></pre>
                   </div>
                 </tolle-tabs-content>

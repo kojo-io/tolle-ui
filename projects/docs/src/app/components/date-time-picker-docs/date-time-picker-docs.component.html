@@ -1,0 +1,220 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="date-time-picker"
+      description="One control for a date and a time: a calendar beside scrollable time columns, in a single floating panel."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="value">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">The value is a Date</h2>
+      <p class="mb-4 text-muted-foreground">
+        Unlike
+        <a routerLink="/components/time-picker" class="font-medium text-primary hover:underline">tolle-time-picker</a>,
+        which exchanges a timezone-free
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">HH:mm</code> string, this control's
+        value is a real <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">Date</code> —
+        because a date-time genuinely is a moment. It emits
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">null</code> when the value is
+        cleared with the panel's Clear button.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="valueContract" language="typescript" />
+      </div>
+      <p class="mt-4 text-muted-foreground">
+        The behaviour worth calling out: <strong class="font-medium text-foreground">changing the date preserves the
+        chosen time, and changing the time preserves the chosen date</strong>. The two halves are only ever recombined,
+        never reset — which is what people assume and rarely get. Picking a day before any time has been chosen starts
+        that day at midnight; picking a time before any day has been chosen lands it on today.
+      </p>
+      <p class="mt-4 text-muted-foreground">
+        Reach for
+        <a routerLink="/components/date-picker" class="font-medium text-primary hover:underline">tolle-date-picker</a>
+        when only a date is needed, and
+        <a routerLink="/components/time-picker" class="font-medium text-primary hover:underline">tolle-time-picker</a>
+        when only a time is.
+      </p>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic with ngModel</h3>
+        <p class="text-muted-foreground">
+          The picker implements
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">ControlValueAccessor</code>, so
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[(ngModel)]</code> is all it takes.
+          Open it and change the day — the 09:30 you started with survives. Press <em>Clear</em> and
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">(valueChange)</code> reports
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">null</code>.
+        </p>
+        <app-preview [code]="basicCode" language="html" align="start">
+          <app-basic-date-time-picker />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="basicTs" language="typescript" />
+        </div>
+      </div>
+
+      <!-- Reactive forms -->
+      <div class="mb-12 space-y-3" id="reactive-forms">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Reactive forms</h3>
+        <p class="text-muted-foreground">
+          Use <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">formControlName</code> like any
+          other control; type the control as
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">FormControl&lt;Date | null&gt;</code>.
+          Calling <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">control.disable()</code>
+          reaches the picker through
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">setDisabledState()</code>, greys
+          out the trigger and closes the panel if it happens to be open.
+        </p>
+        <app-preview [code]="reactiveCode" language="html" align="start">
+          <app-date-time-picker-reactive-form />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="reactiveTs" language="typescript" />
+        </div>
+      </div>
+
+      <!-- Bounded -->
+      <div class="space-y-3" id="bounded">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Bounds, sizes and invalid</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[min]</code> and
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">[max]</code> are
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">Date</code>s carrying both halves.
+          Days outside the window are disabled in the calendar, and the time half of the bound only applies on the
+          boundary day itself — on the min day the columns start at the min time, on any later day they start at
+          midnight.
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">displayFormat</code> is a date-fns
+          pattern for the trigger text.
+        </p>
+        <app-preview [code]="boundedCode" language="html" align="start">
+          <app-date-time-picker-bounded />
+        </app-preview>
+        <div class="overflow-hidden rounded-lg border border-border">
+          <app-base-editor [code]="boundedTs" language="typescript" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Anatomy -->
+    <section class="mb-16" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy and keyboard</h2>
+      <p class="mb-4 text-muted-foreground">
+        The panel is
+        <a routerLink="/components/calendar" class="font-medium text-primary hover:underline">tolle-calendar</a> on the
+        left and the
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-time-columns</code> strip on
+        the right — the same strip
+        <a routerLink="/components/time-picker" class="font-medium text-primary hover:underline">tolle-time-picker</a>
+        uses, so the option generation, bound-disabling and keyboard model are shared rather than written twice. If you
+        want those columns under a trigger of your own, embed
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-time-columns</code> directly;
+        it is documented on the time picker page. The footer holds <em>Clear</em>, which sets the value to
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">null</code> and closes, and
+        <em>Done</em>, which closes and returns focus to the trigger.
+      </p>
+      <ul class="list-inside list-disc space-y-2 text-muted-foreground">
+        <li>
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">Enter</code>,
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">Space</code>,
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">↑</code> or
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">↓</code> on the trigger opens the
+          panel.
+        </li>
+        <li>
+          Inside the time columns,
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">↑</code> /
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">↓</code> move within a column
+          (skipping disabled entries),
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">←</code> /
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">→</code> move between columns, and
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">Enter</code> commits.
+        </li>
+        <li>
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">Escape</code> closes the panel and
+          returns focus to the trigger.
+        </li>
+      </ul>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+
+      <h3 class="text-lg font-semibold mb-4">DateTimePickerComponent Inputs</h3>
+      <app-prop-table [props]="dateTimePickerProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">DateTimePickerComponent Outputs</h3>
+        <app-prop-table [props]="dateTimePickerOutputs" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('value')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          The value
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic with ngModel
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('reactive-forms')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Reactive forms
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('bounded')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Bounds and sizes
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy and keyboard
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

@@ -243,7 +243,6 @@ export type MenubarItemProps = VariantProps<typeof menubarItemVariants>;
  */
 @Component({
   selector: 'tolle-menubar',
-  styles: [':host { display: block; }'],
   standalone: true,
   imports: [],
   providers: [MenubarService],
@@ -349,7 +348,6 @@ export class MenubarComponent implements OnInit, OnChanges, OnDestroy {
 /** A single menu in the bar — wraps one trigger and its content panel. */
 @Component({
   selector: 'tolle-menubar-menu',
-  styles: [':host { display: block; }'],
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,

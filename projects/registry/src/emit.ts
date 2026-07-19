@@ -253,6 +253,7 @@ const CATEGORY: [RegExp, string][] = [
     'ai',
   ],
   [/^direction$/, 'utilities'],
+  [/^time-picker$|^date-time-picker$/, 'date-time'],
   [/^chart/, 'data'],
 
   [/^spinner/, 'feedback'],

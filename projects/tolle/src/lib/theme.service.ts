@@ -1,4 +1,12 @@
-import { Injectable, Inject, PLATFORM_ID, Optional, Renderer2, RendererFactory2 } from '@angular/core';
+import {
+  Injectable,
+  Inject,
+  PLATFORM_ID,
+  Optional,
+  Renderer2,
+  RendererFactory2,
+  RendererStyleFlags2,
+} from '@angular/core';
 import {DOCUMENT, isPlatformBrowser} from '@angular/common';
 import { TOLLE_CONFIG, TolleConfig } from './tolle-config';
 import { BehaviorSubject } from 'rxjs';
@@ -95,10 +103,23 @@ export class ThemeService {
     }
   }
 
+
+  /**
+   * Sets a CSS custom property on an element.
+   *
+   * `Renderer2.setStyle(el, '--x', v)` without `DashCase` compiles to
+   * `el.style['--x'] = v`, which is a silent no-op for custom properties — the
+   * theme control appears to work and simply changes nothing. Every custom
+   * property goes through here so no call site can forget the flag.
+   */
+  private setCssVar(el: HTMLElement, name: string, value: string): void {
+    this.renderer.setStyle(el, name, value, RendererStyleFlags2.DashCase);
+  }
+
   /** Set a typography stack (`--font-sans` / `--font-serif` / `--font-mono`). */
   setFont(kind: 'sans' | 'serif' | 'mono', stack: string, persist = true) {
     if (!isPlatformBrowser(this.platformId)) return;
-    this.renderer.setStyle(this.document.documentElement, `--font-${kind}`, stack);
+    this.setCssVar(this.document.documentElement, `--font-${kind}`, stack);
     if (persist) {
       localStorage.setItem(`tolle-font-${kind}`, stack);
     }
@@ -159,7 +180,7 @@ export class ThemeService {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const root = this.document.documentElement;
-    this.renderer.setStyle(root, '--radius', radius);
+    this.setCssVar(root, '--radius', radius);
     this.updateRadiusInDynamicStyles(radius);
     this.updateAllRadiusVariables(radius);
 
@@ -178,7 +199,7 @@ export class ThemeService {
     // `--radius` itself is set by setRadius(); apply the derived scale here.
     for (const [name, value] of Object.entries(scale)) {
       if (name === '--radius') continue;
-      this.renderer.setStyle(root, name, value);
+      this.setCssVar(root, name, value);
     }
   }
 
@@ -274,11 +295,7 @@ export class ThemeService {
 
     const rgb = hexToRgb(color);
     if (rgb) {
-      this.renderer.setStyle(
-        this.document.documentElement,
-        '--primary',
-        `${rgb.r} ${rgb.g} ${rgb.b}`
-      );
+      this.setCssVar(this.document.documentElement, '--primary', `${rgb.r} ${rgb.g} ${rgb.b}`);
     }
 
     if (persist) {

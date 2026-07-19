@@ -71,7 +71,6 @@ export class HoverCardComponent implements OnDestroy {
 
 @Component({
     selector: 'tolle-hover-card-trigger',
-  styles: [':host { display: block; }'],
     standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,

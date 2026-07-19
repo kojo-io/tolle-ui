@@ -273,7 +273,6 @@ export class PlanComponent implements OnInit, OnChanges, OnDestroy {
 /** One numbered step of a `tolle-plan`. */
 @Component({
   selector: 'tolle-plan-step',
-  styles: [':host { display: block; }'],
   standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,

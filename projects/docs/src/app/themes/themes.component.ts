@@ -10,6 +10,28 @@ import { SelectComponent } from '../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../tolle/src/lib/select-item.component';
 import { SeparatorComponent } from '../../../../tolle/src/lib/separator.component';
 import { TooltipDirective } from '../../../../tolle/src/lib/tooltip.directive';
+import { SegmentComponent, SegmentItem } from '../../../../tolle/src/lib/segment.component';
+import {
+  FieldComponent,
+  FieldLabelComponent,
+  FieldDescriptionComponent,
+} from '../../../../tolle/src/lib/field.component';
+import {
+  ItemComponent,
+  ItemMediaComponent,
+  ItemContentComponent,
+  ItemTitleComponent,
+  ItemActionsComponent,
+} from '../../../../tolle/src/lib/item.component';
+import {
+  ChartComponent,
+  ChartGridComponent,
+  ChartXAxisComponent,
+  ChartYAxisComponent,
+  ChartBarComponent,
+} from '../../../../tolle/src/lib/chart.component';
+import { ChartPieComponent } from '../../../../tolle/src/lib/chart-pie.component';
+import type { ChartSeries } from '../../../../tolle/src/lib/chart.service';
 import {
   TabsComponent,
   TabsListComponent,
@@ -54,6 +76,21 @@ type FontKind = 'sans' | 'serif' | 'mono';
     SelectItemComponent,
     SeparatorComponent,
     TooltipDirective,
+    SegmentComponent,
+    FieldComponent,
+    FieldLabelComponent,
+    FieldDescriptionComponent,
+    ItemComponent,
+    ItemMediaComponent,
+    ItemContentComponent,
+    ItemTitleComponent,
+    ItemActionsComponent,
+    ChartComponent,
+    ChartGridComponent,
+    ChartXAxisComponent,
+    ChartYAxisComponent,
+    ChartBarComponent,
+    ChartPieComponent,
     TabsComponent,
     TabsListComponent,
     TabsTriggerComponent,
@@ -77,6 +114,51 @@ export class ThemesComponent implements OnInit, AfterViewInit {
   fontMono = FONT_MONO;
   iconSets = ICON_SETS;
   namedPresets = NAMED_PRESETS;
+
+  /* --- segmented-control catalogs ---
+   * Built once as fields, never as getters: `tolle-segment` diffs `items` in
+   * ngOnChanges, so a fresh array on every read would re-measure the glider on
+   * every change-detection pass. */
+
+  radiusItems: SegmentItem[] = RADIUS_PRESETS.map((r) => ({ label: r.label, value: r.value }));
+
+  appearanceItems: SegmentItem[] = [
+    { label: 'Light', value: 'light', icon: 'ri-sun-line' },
+    { label: 'Dark', value: 'dark', icon: 'ri-moon-line' },
+  ];
+
+  iconItems: SegmentItem[] = ICON_SETS.map((s) => ({ label: s.label, value: s.id, data: s }));
+
+  /* --- chart palette demo data ---
+   * Plain fields for the same reason: `tolle-chart` reacts to `data`/`series`
+   * identity in ngOnChanges, and a getter that rebuilt the array would fire it
+   * on every pass. The palette itself is read from `--chart-1…5` at paint time,
+   * so the charts recolour with the theme without Angular touching them. */
+
+  chartSeries: ChartSeries[] = [
+    { key: 'direct', label: 'Direct' },
+    { key: 'organic', label: 'Organic' },
+    { key: 'referral', label: 'Referral' },
+    { key: 'social', label: 'Social' },
+  ];
+
+  chartData = [
+    { month: 'Jan', direct: 186, organic: 142, referral: 88, social: 61 },
+    { month: 'Feb', direct: 214, organic: 158, referral: 96, social: 74 },
+    { month: 'Mar', direct: 178, organic: 191, referral: 112, social: 69 },
+    { month: 'Apr', direct: 243, organic: 176, referral: 104, social: 92 },
+    { month: 'May', direct: 262, organic: 208, referral: 131, social: 87 },
+    { month: 'Jun', direct: 295, organic: 226, referral: 148, social: 108 },
+  ];
+
+  /** Five slices — one per palette step, so the whole scale is visible at once. */
+  pieData = [
+    { label: 'Direct', value: 1378 },
+    { label: 'Organic', value: 1101 },
+    { label: 'Referral', value: 679 },
+    { label: 'Social', value: 491 },
+    { label: 'Email', value: 284 },
+  ];
 
   /** The active configuration mirrored from the live theme. */
   preset: ThemePreset = { ...DEFAULT_PRESET };
@@ -185,12 +267,9 @@ export class ThemesComponent implements OnInit, AfterViewInit {
   isChart(hex: string): boolean {
     return this.preset.chart?.toLowerCase() === hex.toLowerCase();
   }
-  isRadius(value: string): boolean {
-    return this.preset.radius === value;
-  }
-  isIcons(id: string): boolean {
-    return this.preset.icons === id;
-  }
+  // Radius / appearance / icon set no longer need an `is*` predicate: they are
+  // `tolle-segment` controls now, and the segment tracks its own selection
+  // through ngModel.
   isNamed(n: NamedPreset): boolean {
     return (
       n.preset.base === this.preset.base &&
@@ -209,6 +288,10 @@ export class ThemesComponent implements OnInit, AfterViewInit {
 
   get iconLabel(): string {
     return this.iconSets.find((s) => s.id === this.preset.icons)?.label ?? 'Remix';
+  }
+
+  get iconHint(): string {
+    return this.iconSets.find((s) => s.id === this.preset.icons)?.hint ?? 'Library default';
   }
 
   /* --- code output --- */

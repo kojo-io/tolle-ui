@@ -276,7 +276,6 @@ export class NavigationMenuListComponent {
 /** One entry in the list — a plain link, or a trigger plus its content panel. */
 @Component({
   selector: 'tolle-navigation-menu-item',
-  styles: [':host { display: block; }'],
   standalone: true,
   imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
