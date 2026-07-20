@@ -456,7 +456,19 @@ a:hover {
       rgb(var(--muted-foreground)) 60%,
       rgb(var(--muted-foreground)) 100%);
   background-size: 200% 100%;
-  background-repeat: no-repeat;
+  /*
+   * `no-repeat` was the actual bug: the gradient image is only 200% wide, so
+   * as `background-position` swept it across the text, whatever fraction of
+   * the text the (finite) image no longer reached had nothing behind the
+   * transparent fill — not dimmed, genuinely invisible. That showed up two
+   * ways: fully blank for a stretch once the image swept completely past
+   * the text, and, on every sweep, part of the text (whichever side the
+   * image had already vacated) rendering as if cut off. The gradient's
+   * first and last stops both resolve to the same muted-foreground colour,
+   * so tiling it seamlessly loops — repeating keeps the text fully covered,
+   * always at least muted, for the entire animation.
+   */
+  background-repeat: repeat;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -466,11 +478,11 @@ a:hover {
 
 @keyframes tolle-shimmer {
   from {
-    background-position: 200% 0;
+    background-position: 100% 0;
   }
 
   to {
-    background-position: -200% 0;
+    background-position: -100% 0;
   }
 }
 

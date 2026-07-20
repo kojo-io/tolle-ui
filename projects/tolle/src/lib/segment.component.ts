@@ -48,7 +48,7 @@ export type SegmentItem = {
       (keydown)="onKeydown($event)"
     >
       <div
-        class="absolute top-1 bottom-1 bg-primary shadow-sm rounded-md transition-all duration-300 ease-[cubic-bezier(0.2,0.0,0.2,1)]"
+        class="absolute top-1 bottom-1 bg-primary shadow-sm rounded-md transition-all duration-300 ease-tolle"
         [style.left.px]="gliderLeft"
         [style.width.px]="gliderWidth"
         [class.opacity-0]="!hasValue"

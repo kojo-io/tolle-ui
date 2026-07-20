@@ -86,6 +86,12 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      transitionTimingFunction: {
+        // Named so components reference `ease-tolle` instead of an inline
+        // `ease-[cubic-bezier(...)]` arbitrary value — Tailwind 3.4 flags
+        // the comma-separated arbitrary form as an ambiguous utility match.
+        tolle: 'cubic-bezier(0.2, 0.0, 0.2, 1)',
+      },
       boxShadow: {
         sm: 'var(--shadow-sm)',
         DEFAULT: 'var(--shadow)',
