@@ -1,6 +1,7 @@
-import { Component, OnInit, TemplateRef, Type } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, TemplateRef, Type } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { A11yModule } from '@angular/cdk/a11y';
+import { Subscription } from 'rxjs';
 import { ModalRef } from './modal-ref';
 import { cn } from './utils/cn';
 
@@ -10,6 +11,7 @@ import { cn } from './utils/cn';
   imports: [CommonModule, A11yModule],
   template: `
     <div [class]="modalClasses" class="pointer-events-auto"
+      [attr.data-state]="closing ? 'closed' : 'open'"
       role="dialog"
       aria-modal="true"
       [attr.aria-labelledby]="ref.modal.title ? titleId : null"
@@ -17,25 +19,26 @@ import { cn } from './utils/cn';
       cdkTrapFocus cdkTrapFocusAutoCapture
       (mousedown)="$event.stopPropagation()">
 
+      <button
+        *ngIf="ref.modal.showCloseButton"
+        type="button"
+        (click)="ref.close()"
+        aria-label="Close"
+        class="absolute right-4 top-4 grid h-6 w-6 place-items-center rounded-sm text-muted-foreground opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+        <i class="ri-close-line text-base" aria-hidden="true"></i>
+      </button>
+
       <!-- Header -->
-      <div *ngIf="hasHeader" class="flex shrink-0 items-start justify-between gap-4 px-6 pt-6 pb-4">
-        <h2 *ngIf="ref.modal.title" [id]="titleId" class="text-lg font-semibold leading-none tracking-tight text-foreground">
+      <div *ngIf="ref.modal.title" class="flex shrink-0 flex-col gap-1.5 pr-8 text-center sm:text-left">
+        <h2 [id]="titleId" class="text-lg font-semibold leading-none tracking-tight text-foreground">
           {{ ref.modal.title }}
         </h2>
-        <button
-          *ngIf="ref.modal.showCloseButton"
-          type="button"
-          (click)="ref.close()"
-          aria-label="Close"
-          class="-mr-2 -mt-2 ml-auto grid h-8 w-8 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-          <i class="ri-close-line text-xl"></i>
-        </button>
       </div>
 
       <!-- Body -->
       <div class="min-h-0 flex-1 overflow-y-auto">
         <ng-container [ngSwitch]="contentType">
-          <p *ngSwitchCase="'string'" [id]="descId" [class]="hasHeader ? 'px-6 pb-6 text-sm leading-relaxed text-muted-foreground' : 'p-6 text-sm leading-relaxed text-muted-foreground'">{{ content }}</p>
+          <p *ngSwitchCase="'string'" [id]="descId" class="text-sm leading-relaxed text-muted-foreground">{{ content }}</p>
 
           <ng-container *ngSwitchCase="'template'">
             <ng-container *ngTemplateOutlet="asTemplate; context: ref.modal.context"></ng-container>
@@ -54,10 +57,15 @@ import { cn } from './utils/cn';
     }
   `]
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, OnDestroy {
+  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly subscription = new Subscription();
+
   contentType: 'template' | 'string' | 'component' = 'string';
   content: any;
   modalClasses = '';
+  /** True while the exit animation plays, just before the overlay is torn down. */
+  closing = false;
 
   /** Stable, per-instance ids used to wire dialog ARIA relationships. */
   private readonly _uid = Math.random().toString(36).substr(2, 9);
@@ -70,11 +78,17 @@ export class ModalComponent implements OnInit {
     this.content = this.ref.modal.content;
     this.modalClasses = this.getModalSizeCss();
     this.determineContentType();
+
+    this.subscription.add(
+      this.ref.closing$.subscribe((closing) => {
+        this.closing = closing;
+        this.cdr.markForCheck();
+      })
+    );
   }
 
-  /** Whether the auto-rendered header (title and/or close button) is shown. */
-  get hasHeader(): boolean {
-    return !!(this.ref.modal.showCloseButton || this.ref.modal.title);
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   private getModalSizeCss(): string {
@@ -82,9 +96,13 @@ export class ModalComponent implements OnInit {
 
     return cn(
       // Surface: overlay card that never exceeds the viewport (header stays, body scrolls).
-      'bg-background text-foreground border border-border shadow-lg relative flex flex-col w-full mx-auto',
+      'relative flex w-full mx-auto flex-col gap-4 rounded-lg border border-border bg-background p-6 text-foreground shadow-lg duration-200',
 
-      size === 'fullscreen' ? 'h-screen w-screen rounded-none' : 'rounded-lg max-h-[85vh]',
+      // Enter/exit animation, driven by `data-state` (see `closing` above).
+      'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+      'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+
+      size === 'fullscreen' ? 'h-screen w-screen rounded-none' : 'max-h-[85vh]',
 
       // Sizing scale with explicit max-widths
       size === 'xs' && 'max-w-[320px]',

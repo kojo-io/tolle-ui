@@ -6,6 +6,17 @@ import { ModalRef } from './modal-ref';
 import { ModalComponent } from './modal.component';
 import { ModalStackService } from './modal-stack.service';
 
+/**
+ * `open()` always receives a plain object literal, never a `new Modal()`
+ * instance, so a class field initializer would never actually apply — these
+ * are the real defaults, merged in explicitly below.
+ */
+const MODAL_DEFAULTS: Required<Pick<Modal, 'size' | 'backdropClose' | 'showCloseButton'>> = {
+  size: 'default',
+  backdropClose: true,
+  showCloseButton: true,
+};
+
 @Injectable({ providedIn: 'root' })
 export class ModalService {
   constructor(
@@ -15,6 +26,8 @@ export class ModalService {
   ) {}
 
   open<R = any>(config: Modal): ModalRef<R> {
+    const resolved: Modal = { ...MODAL_DEFAULTS, ...config };
+
     // 0. Remember what was focused so we can restore it after the modal closes.
     const previouslyFocused = document.activeElement as HTMLElement | null;
 
@@ -22,7 +35,7 @@ export class ModalService {
     const overlayRef = this.createOverlay();
 
     // 2. Create the Controller (Ref)
-    const modalRef = new ModalRef<R>(overlayRef, config, this.stack);
+    const modalRef = new ModalRef<R>(overlayRef, resolved, this.stack);
 
     // 3. Create Injector to allow the Component to access the Ref
     const injector = Injector.create({
@@ -33,7 +46,7 @@ export class ModalService {
     // Escape-to-close: mirror the backdrop close path, but only for
     // non-blocking modals (backdropClose !== false).
     overlayRef.keydownEvents().subscribe((event: KeyboardEvent) => {
-      if (event.key === 'Escape' && config.backdropClose !== false) {
+      if (event.key === 'Escape' && resolved.backdropClose) {
         event.preventDefault();
         modalRef.close();
       }
@@ -45,6 +58,10 @@ export class ModalService {
     // 4. Attach the UI Component to the Overlay
     const portal = new ComponentPortal(ModalComponent, null, injector);
     overlayRef.attach(portal);
+
+    // The backdrop element only exists once attached — setting this any
+    // earlier (e.g. in ModalRef's constructor) would silently no-op.
+    overlayRef.backdropElement?.setAttribute('data-state', 'open');
 
     return modalRef;
   }
@@ -58,7 +75,15 @@ export class ModalService {
   private createOverlay(): OverlayRef {
     const config = new OverlayConfig({
       hasBackdrop: true,
-      backdropClass: ['cdk-overlay-backdrop', 'bg-black/80', 'backdrop-blur-sm'],
+      backdropClass: [
+        'cdk-overlay-backdrop',
+        'bg-black/80',
+        'backdrop-blur-sm',
+        'data-[state=open]:animate-in',
+        'data-[state=open]:fade-in-0',
+        'data-[state=closed]:animate-out',
+        'data-[state=closed]:fade-out-0',
+      ],
       panelClass: [
         'w-full',
         'h-full',

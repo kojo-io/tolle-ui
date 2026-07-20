@@ -1,6 +1,6 @@
 {
   "name": "@tolle_/tolle-ui",
-  "version": "18.2.29",
+  "version": "18.2.30",
   "publishConfig": {
     "access": "public"
   },
@@ -26,7 +26,8 @@
     "tailwind-merge": "^3.4.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "embla-carousel": "^8.5.2"
+    "embla-carousel": "^8.5.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "dependencies": {
     "tslib": "^2.3.0"

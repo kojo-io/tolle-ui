@@ -106,11 +106,16 @@ export class ContextMenuService {
       ]
     });
 
+    // Position via left/top, not transform: the menu's own
+    // data-[state=open]:zoom-in-95/slide-in-from-top-2 enter animation also
+    // drives `transform`, and a CSS animation overrides whatever an inline
+    // transform says for as long as it's running — so a translate() here
+    // would get clobbered by the animation and only "snap" into place once
+    // it finishes, which is exactly the top-left-then-jump flash this avoids.
     Object.assign(menuElement.style, {
       position: 'fixed',
-      left: '0',
-      top: '0',
-      transform: `translate(${Math.round(x)}px, ${Math.round(y)}px)`
+      left: `${Math.round(x)}px`,
+      top: `${Math.round(y)}px`,
     });
   }
 
@@ -141,9 +146,8 @@ export class ContextMenuService {
 
     Object.assign(submenuElement.style, {
       position: 'fixed',
-      left: '0',
-      top: '0',
-      transform: `translate(${Math.round(x)}px, ${Math.round(y)}px)`
+      left: `${Math.round(x)}px`,
+      top: `${Math.round(y)}px`,
     });
   }
 

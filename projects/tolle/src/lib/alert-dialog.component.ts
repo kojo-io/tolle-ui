@@ -7,6 +7,15 @@ import { cn } from './utils/cn';
 import { BehaviorSubject } from 'rxjs';
 import { AlertDialogSize } from './alert-dialog.types';
 
+/**
+ * Safety net if the exit animation's `animationend` never fires — reduced
+ * motion, no matching keyframe, or a panel that never rendered — so an
+ * alert dialog can never get stuck open forever. Also used by
+ * `alert-dialog.service.ts` and `alert-dialog-dynamic.component.ts`, which
+ * animate the same content component through a different overlay wiring.
+ */
+export const CLOSE_FALLBACK_MS = 300;
+
 @Injectable()
 class AlertDialogInternalService {
     private openSubject = new BehaviorSubject<boolean>(false);
@@ -122,15 +131,40 @@ export class AlertDialogPortalComponent implements OnInit, OnDestroy {
 
         const portal = new TemplatePortal(this.portalContent, this.viewContainerRef);
         this.overlayRef.attach(portal);
+
+        // The backdrop element only exists once attached — setting this any
+        // earlier would silently no-op.
+        this.overlayRef.backdropElement?.setAttribute('data-state', 'open');
     }
 
+    /**
+     * Tears the overlay down once its exit animation finishes (or after
+     * `CLOSE_FALLBACK_MS`, whichever comes first) instead of instantly, so
+     * `data-[state=closed]:animate-out` actually gets a chance to play.
+     */
     private hide() {
-        if (this.overlayRef) {
-            this.overlayRef.detach();
-            this.overlayRef.dispose();
-            this.overlayRef = undefined;
+        const ref = this.overlayRef;
+        if (!ref) return;
+
+        ref.backdropElement?.setAttribute('data-state', 'closed');
+
+        let finished = false;
+        const finish = () => {
+            if (finished) return;
+            finished = true;
+            ref.detach();
+            ref.dispose();
+            if (this.overlayRef === ref) this.overlayRef = undefined;
             // Restore focus to the trigger.
             this.previouslyFocused?.focus?.();
+        };
+
+        const panel = ref.overlayElement.querySelector<HTMLElement>('[data-state]');
+        if (panel) {
+            panel.addEventListener('animationend', finish, { once: true });
+            setTimeout(finish, CLOSE_FALLBACK_MS);
+        } else {
+            finish();
         }
     }
 
@@ -172,7 +206,7 @@ export class AlertDialogContentComponent {
 
     get computedClass() {
         return cn(
-            "fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-50 grid w-full gap-4 border border-input bg-background p-6 shadow-lg data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] rounded-lg",
+            "fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-50 grid w-full gap-4 border border-input bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] rounded-lg",
             {
                 'max-w-xs': this.size === 'xs',
                 'max-w-sm': this.size === 'sm',

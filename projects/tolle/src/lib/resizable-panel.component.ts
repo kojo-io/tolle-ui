@@ -9,14 +9,19 @@ import { ResizablePanelItemComponent } from './resizable-panel-item.component';
   imports: [CommonModule],
   template: `
     <div [class]="computedContainerClass">
-      <div class="flex" [class.flex-col]="direction === 'vertical'" [class.flex-row]="direction === 'horizontal'">
+      <div class="flex h-full w-full" [class.flex-col]="direction === 'vertical'" [class.flex-row]="direction === 'horizontal'">
         <ng-content></ng-content>
       </div>
     </div>
   `,
   styles: [`
+    /* Fills its parent by default so consumers don't have to remember a
+       manual h-full — the flex row/col wrapper below only has something to
+       distribute once this and the container div actually have a height. */
     :host {
       display: block;
+      width: 100%;
+      height: 100%;
     }
   `]
 })

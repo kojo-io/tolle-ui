@@ -30,7 +30,7 @@ import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
     ButtonComponent
   ],
   template: `
-    <tolle-alert-dialog [open]="true" (openChange)="onOpenChange($event)">
+    <tolle-alert-dialog [open]="!closing" (openChange)="onOpenChange($event)">
         <tolle-alert-dialog-content [size]="config.size || 'lg'">
           <tolle-alert-dialog-header>
             <tolle-alert-dialog-title>{{ config.title }}</tolle-alert-dialog-title>
@@ -55,6 +55,12 @@ import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
 export class AlertDialogDynamicComponent {
   config!: AlertDialogConfig;
   dialogRef!: AlertDialogRef;
+
+  /**
+   * Set by `AlertDialogService` once the dialog's result is ready, so the
+   * content panel plays its exit animation before the overlay is torn down.
+   */
+  closing = false;
 
   onOpenChange(open: boolean) {
     if (!open) {
