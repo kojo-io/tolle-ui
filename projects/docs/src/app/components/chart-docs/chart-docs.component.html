@@ -178,6 +178,38 @@
         </app-preview>
       </div>
 
+      <!-- Horizontal bar -->
+      <div class="mb-12 space-y-3" id="bar-horizontal">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Bars, horizontal</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">orientation="horizontal"</code>
+          transposes the whole plot: the category axis runs down the left and the value axis runs along the bottom.
+          Only bars support it — line and area marks stay vertical regardless of what the container is set to.
+        </p>
+        <p class="text-muted-foreground">
+          Widen the left margin to fit the category labels; they take the space the bottom axis used to need.
+        </p>
+        <app-preview [code]="barHorizontalCode" language="html" align="stretch">
+          <app-chart-bar-horizontal />
+        </app-preview>
+      </div>
+
+      <!-- Combo -->
+      <div class="mb-12 space-y-3" id="combo">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Combo</h3>
+        <p class="text-muted-foreground">
+          A bar and a line are just two marks projected into the same
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-chart</code> — nothing
+          about combining them is special. What makes it honest is sharing the
+          <a class="cursor-pointer text-primary underline-offset-4 hover:underline"
+            (click)="baseService.scrollTo('one-scale')">one y scale</a>: revenue and target are the same unit here, so overlaying them actually compares them rather
+          than implying a relationship the axes engineered.
+        </p>
+        <app-preview [code]="comboCode" language="html" align="stretch">
+          <app-chart-combo />
+        </app-preview>
+      </div>
+
       <!-- Area -->
       <div class="space-y-3" id="area">
         <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Area</h3>
@@ -378,6 +410,18 @@
             <a (click)="baseService.scrollTo('bar')"
               class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
               Bars
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('bar-horizontal')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Bars, horizontal
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('combo')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Combo
             </a>
           </li>
           <li>

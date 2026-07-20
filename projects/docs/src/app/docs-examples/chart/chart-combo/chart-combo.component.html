@@ -1,0 +1,13 @@
+<div class="w-full">
+    <tolle-chart [data]="months" [series]="series" xKey="month" [height]="280" xHeader="Month"
+        ariaLabel="Revenue against target by month"
+        description="Revenue trails target through February, then overtakes it from March onward.">
+        <!-- Same y-axis for both marks: a bar and a line only combine honestly
+             when they share one scale. -->
+        <svg:g tolle-chart-grid></svg:g>
+        <svg:g tolle-chart-y-axis></svg:g>
+        <svg:g tolle-chart-x-axis></svg:g>
+        <svg:g tolle-chart-bar seriesKey="revenue" [maxWidth]="32"></svg:g>
+        <svg:g tolle-chart-line seriesKey="target" [showDots]="true"></svg:g>
+    </tolle-chart>
+</div>

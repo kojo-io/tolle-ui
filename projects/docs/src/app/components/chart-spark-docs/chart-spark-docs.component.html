@@ -1,0 +1,124 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="chart-spark" title="Spark Chart"
+      description="A minimal inline chart with no grid, axes or legend — sized to sit next to a number, in a table cell or a stat card."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package. It composes
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-chart</code> internally, so
+        that registry dependency comes along with it.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        A thin wrapper, not a second chart engine: it draws one series into a
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-chart</code> with the grid,
+        axes, legend and hover layer left off. It inherits
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">--chart-1</code> the same way any
+        other single-series chart in this library does.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomyCode" language="html" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">
+          <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">valueKey</code> is also the
+          series key, so it has to name a real property on your rows.
+        </p>
+        <app-preview [code]="basicCode" language="html">
+          <app-basic-chart-spark />
+        </app-preview>
+      </div>
+
+      <!-- Types -->
+      <div class="mb-12 space-y-3" id="types">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Line, area, bar</h3>
+        <p class="text-muted-foreground">The same three marks the full chart draws with, just chrome-free.</p>
+        <app-preview [code]="typesCode" language="html">
+          <app-chart-spark-types />
+        </app-preview>
+      </div>
+
+      <!-- In a list -->
+      <div class="space-y-3" id="in-a-list">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">In a list</h3>
+        <p class="text-muted-foreground">
+          The usual home for a spark chart: a trend next to the number it explains.
+        </p>
+        <app-preview [code]="inAListCode" language="html">
+          <app-chart-spark-in-a-list />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+      <app-prop-table [props]="chartSparkProps" />
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('types')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Line, area, bar
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('in-a-list')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              In a list
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

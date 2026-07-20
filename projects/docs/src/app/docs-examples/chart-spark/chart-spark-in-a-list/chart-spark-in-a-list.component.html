@@ -1,0 +1,12 @@
+<div class="w-full max-w-sm divide-y divide-border rounded-lg border border-border">
+    <div *ngFor="let row of rows" class="flex items-center gap-4 p-3">
+        <div class="min-w-0 flex-1">
+            <p class="truncate text-sm font-medium text-foreground">{{ row.product }}</p>
+            <p class="text-xs text-muted-foreground">{{ row.latest }}</p>
+        </div>
+        <div class="w-20">
+            <tolle-chart-spark [data]="row.trend" valueKey="revenue" xKey="week" curve="smooth"
+                [ariaLabel]="row.product + ' revenue trend'" />
+        </div>
+    </div>
+</div>

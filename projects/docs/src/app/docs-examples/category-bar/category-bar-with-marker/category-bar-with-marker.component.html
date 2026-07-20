@@ -1,0 +1,11 @@
+<div class="w-full space-y-2">
+    <div class="flex items-baseline justify-between">
+        <p class="text-sm font-medium text-foreground">Credit score</p>
+        <p class="text-sm font-semibold tabular-nums text-foreground">{{ score }}</p>
+    </div>
+    <tolle-category-bar [values]="values" [labels]="labels" [markerValue]="markerValue"
+        ariaLabel="Credit score band" />
+    <div class="flex justify-between text-xs text-muted-foreground">
+        <span *ngFor="let label of labels">{{ label }}</span>
+    </div>
+</div>

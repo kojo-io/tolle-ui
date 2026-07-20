@@ -32,6 +32,13 @@ export interface ChartBand {
 /** How x positions are resolved: discrete bands (bars) or points (line/area). */
 export type ChartScaleMode = 'point' | 'band';
 
+/**
+ * Which physical axis carries the category vs the value. Only the band scale
+ * (bars) supports 'horizontal' — line/area stay point-scale and vertical,
+ * same as Tremor never offers a horizontal line/area chart either.
+ */
+export type ChartOrientation = 'vertical' | 'horizontal';
+
 /** Number of chart palette steps that exist. A 6th series does not get a colour. */
 export const CHART_COLOR_LIMIT = 5;
 
@@ -111,6 +118,12 @@ export class ChartService {
   margin: ChartMargin = { top: 8, right: 8, bottom: 24, left: 40 };
   /** Fraction of a band's step spent on padding, split either side. */
   bandPadding = 0.2;
+  /**
+   * Which physical axis is the category axis. Bars flip this via `configure()`;
+   * every other geometry getter branches on it internally, defaulting to the
+   * exact vertical formula when unset, so existing vertical charts are unaffected.
+   */
+  orientation: ChartOrientation = 'vertical';
 
   private scaleMode: ChartScaleMode = 'point';
   private zeroRequired = false;
@@ -199,7 +212,7 @@ export class ChartService {
    * Called by the container on input changes and on resize.
    */
   configure(config: Partial<Pick<ChartService,
-    'data' | 'series' | 'xKey' | 'stacked' | 'width' | 'height' | 'margin' | 'bandPadding'>>): void {
+    'data' | 'series' | 'xKey' | 'stacked' | 'width' | 'height' | 'margin' | 'bandPadding' | 'orientation'>>): void {
     Object.assign(this, config);
     if (config.series) this.syncColorSlots(config.series);
     this.recompute();
@@ -267,20 +280,36 @@ export class ChartService {
   }
 
   /**
-   * Maps a data value to an svg y. SVG y grows downward, so the domain maximum
-   * lands on `plotTop` and the minimum on `plotBottom`.
+   * Maps a data value to a position along the *value* axis — svg y when
+   * vertical (svg y grows downward, so the domain maximum lands on `plotTop`),
+   * svg x when horizontal (the domain maximum lands on `plotRight`).
    */
   yFor(value: number): number {
     const span = this.domainMax - this.domainMin;
+    if (this.orientation === 'horizontal') {
+      if (span <= 0) return this.plotLeft;
+      const ratio = (value - this.domainMin) / span;
+      return this.plotLeft + ratio * this.plotWidth;
+    }
     if (span <= 0) return this.plotBottom;
     const ratio = (value - this.domainMin) / span;
     return this.plotBottom - ratio * this.plotHeight;
   }
 
-  /** The svg y of the zero line, clamped into the plot. */
+  /** The value-axis position of the zero line, clamped into the plot. */
   get baselineY(): number {
     const zero = Math.min(Math.max(0, this.domainMin), this.domainMax);
     return this.yFor(zero);
+  }
+
+  /** Length of the plot along the category axis: `plotHeight` when horizontal, else `plotWidth`. */
+  private get categoryAxisLength(): number {
+    return this.orientation === 'horizontal' ? this.plotHeight : this.plotWidth;
+  }
+
+  /** Origin of the plot along the category axis: `plotTop` when horizontal, else `plotLeft`. */
+  private get categoryAxisOrigin(): number {
+    return this.orientation === 'horizontal' ? this.plotTop : this.plotLeft;
   }
 
   /** Width of one band, excluding its padding. Meaningful in band mode. */
@@ -292,14 +321,17 @@ export class ChartService {
   /** Distance between adjacent band starts. Bands tile the plot exactly. */
   get bandStep(): number {
     if (this.count === 0) return 0;
-    return this.plotWidth / this.count;
+    return this.categoryAxisLength / this.count;
   }
 
-  /** Geometry of the band at `index`. */
+  /**
+   * Geometry of the band at `index`, along the category axis — x when
+   * vertical (today's meaning), y when horizontal.
+   */
   bandFor(index: number): ChartBand {
     const step = this.bandStep;
     const width = this.bandWidth;
-    const start = this.plotLeft + index * step + (step - width) / 2;
+    const start = this.categoryAxisOrigin + index * step + (step - width) / 2;
     return { start, centre: start + width / 2, width };
   }
 
@@ -323,7 +355,7 @@ export class ChartService {
   hitBandFor(index: number): ChartBand {
     if (this.scaleMode === 'band') {
       const step = this.bandStep;
-      const start = this.plotLeft + index * step;
+      const start = this.categoryAxisOrigin + index * step;
       return { start, centre: start + step / 2, width: step };
     }
     const x = this.pointX(index);
@@ -403,6 +435,7 @@ export class ChartService {
       this.height,
       this.bandPadding,
       this.scaleMode,
+      this.orientation,
       this.zeroRequired,
       this.margin.top, this.margin.right, this.margin.bottom, this.margin.left,
       this.domainMin, this.domainMax, this.tickStep,

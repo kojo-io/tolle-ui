@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
-import { ChartService, type ChartSeries, type ChartMargin } from './chart.service';
+import { ChartService, type ChartSeries, type ChartMargin, type ChartOrientation } from './chart.service';
 
-export type { ChartSeries, ChartMargin, ChartTick, ChartBand } from './chart.service';
+export type { ChartSeries, ChartMargin, ChartTick, ChartBand, ChartOrientation } from './chart.service';
 
 let chartId = 0;
 
@@ -427,11 +427,11 @@ export type ChartProps = VariantProps<typeof chartVariants>;
           ></svg:line>
 
           <svg:rect
-            *ngFor="let band of hitBands; let i = index; trackBy: trackByIndex"
-            [attr.x]="band.start"
-            [attr.y]="chart.plotTop"
-            [attr.width]="band.width"
-            [attr.height]="chart.plotHeight"
+            *ngFor="let rect of hitRects; let i = index; trackBy: trackByIndex"
+            [attr.x]="rect.x"
+            [attr.y]="rect.y"
+            [attr.width]="rect.width"
+            [attr.height]="rect.height"
             fill="transparent"
             (pointerenter)="onEnterBand(i)"
           ></svg:rect>
@@ -466,6 +466,11 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
   @Input() description = '';
   /** Stacks marks on a shared baseline instead of grouping them. @default false */
   @Input() stacked = false;
+  /**
+   * Which physical axis carries the category vs the value. Only bars support
+   * 'horizontal' — line/area marks stay vertical regardless. @default 'vertical'
+   */
+  @Input() orientation: ChartOrientation = 'vertical';
   /** Renders the crosshair, hit layer and shared tooltip. @default true */
   @Input() hover = true;
   /** Shows the data table instead of leaving it visually hidden. @default false */
@@ -552,6 +557,7 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
       series: this.series ?? [],
       xKey: this.xKey,
       stacked: this.stacked,
+      orientation: this.orientation,
       height: this.height,
       margin: this.margin,
       width: this.chart.width || ChartComponent.fallbackWidth,
@@ -565,10 +571,18 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
   /**
    * One catchment rect per x position, deliberately wider than the marks it
    * covers — readers aim at a category, never at a 2px line or an 8px dot.
+   * Spans the full plot in the cross direction: full height in a vertical
+   * chart, full width in a horizontal one.
    */
-  get hitBands() {
+  get hitRects(): { x: number; y: number; width: number; height: number }[] {
     if (!this.hover) return [];
-    return this.data.map((_, i) => this.chart.hitBandFor(i));
+    const horizontal = this.chart.orientation === 'horizontal';
+    return this.data.map((_, i) => {
+      const band = this.chart.hitBandFor(i);
+      return horizontal
+        ? { x: this.chart.plotLeft, y: band.start, width: this.chart.plotWidth, height: band.width }
+        : { x: band.start, y: this.chart.plotTop, width: band.width, height: this.chart.plotHeight };
+    });
   }
 
   onEnterBand(index: number): void {
@@ -584,7 +598,12 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
   }
 }
 
-/** Horizontal rules at the y ticks, with optional vertical rules at the x positions. */
+/**
+ * Rules at the value ticks, with optional rules at the category positions.
+ * Orientation-aware: in a horizontal chart the value rules run vertically and
+ * the (optional) category rules run horizontally — the transpose of a
+ * vertical chart's grid.
+ */
 @Component({
   selector: 'svg:g[tolle-chart-grid]',
   standalone: true,
@@ -592,34 +611,51 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <svg:line
-      *ngFor="let tick of chart.ticks; trackBy: trackByIndex"
-      [attr.x1]="chart.plotLeft"
-      [attr.x2]="chart.plotRight"
-      [attr.y1]="tick.y"
-      [attr.y2]="tick.y"
+      *ngFor="let line of valueLines; trackBy: trackByIndex"
+      [attr.x1]="line.x1"
+      [attr.x2]="line.x2"
+      [attr.y1]="line.y1"
+      [attr.y2]="line.y2"
       [class]="lineClass"
       stroke-width="1"
     ></svg:line>
     <svg:line
-      *ngFor="let x of verticalXs; trackBy: trackByIndex"
-      [attr.x1]="x"
-      [attr.x2]="x"
-      [attr.y1]="chart.plotTop"
-      [attr.y2]="chart.plotBottom"
+      *ngFor="let line of categoryLines; trackBy: trackByIndex"
+      [attr.x1]="line.x1"
+      [attr.x2]="line.x2"
+      [attr.y1]="line.y1"
+      [attr.y2]="line.y2"
       [class]="lineClass"
       stroke-width="1"
     ></svg:line>
   `,
 })
 export class ChartGridComponent extends ChartChild {
-  /** Also draws a rule at every x position. @default false */
+  /** Also draws a rule at every category position. @default false */
   @Input() vertical = false;
   /** Extra Tailwind classes merged onto each rule via `cn()` (last-wins). */
   @Input() class = '';
 
-  get verticalXs(): number[] {
+  /** Rules at each value tick, spanning the plot in the cross direction. */
+  get valueLines(): { x1: number; y1: number; x2: number; y2: number }[] {
+    const horizontal = this.chart.orientation === 'horizontal';
+    return this.chart.ticks.map((tick) =>
+      horizontal
+        ? { x1: tick.y, x2: tick.y, y1: this.chart.plotTop, y2: this.chart.plotBottom }
+        : { x1: this.chart.plotLeft, x2: this.chart.plotRight, y1: tick.y, y2: tick.y }
+    );
+  }
+
+  /** Rules at each category position, only when `vertical` is set. */
+  get categoryLines(): { x1: number; y1: number; x2: number; y2: number }[] {
     if (!this.vertical) return [];
-    return this.chart.xLabels.map((_, i) => this.chart.xFor(i));
+    const horizontal = this.chart.orientation === 'horizontal';
+    return this.chart.xLabels.map((_, i) => {
+      const pos = this.chart.xFor(i);
+      return horizontal
+        ? { x1: this.chart.plotLeft, x2: this.chart.plotRight, y1: pos, y2: pos }
+        : { x1: pos, x2: pos, y1: this.chart.plotTop, y2: this.chart.plotBottom };
+    });
   }
 
   get lineClass(): string {
@@ -646,7 +682,10 @@ export class ChartGridComponent extends ChartChild {
   `,
 })
 export class ChartXAxisComponent extends ChartChild {
-  /** Approximate px per character, used to decide when labels would collide. @default 7 */
+  /**
+   * Approximate px per character, used to decide when category labels would
+   * collide. Only consulted in the vertical orientation. @default 7
+   */
   @Input() charWidth = 7;
   /** Extra Tailwind classes merged onto each label via `cn()` (last-wins). */
   @Input() class = '';
@@ -665,7 +704,15 @@ export class ChartXAxisComponent extends ChartChild {
     return Math.max(1, Math.ceil(needed / perLabel));
   }
 
+  /**
+   * Vertical orientation: category labels, thinned so they never collide
+   * (today's behaviour). Horizontal orientation: this is the bottom axis'
+   * physical position, which a horizontal chart uses for its value ticks.
+   */
   get visibleTicks(): { x: number; label: string }[] {
+    if (this.chart.orientation === 'horizontal') {
+      return this.chart.ticks.map((tick) => ({ x: tick.y, label: tick.label }));
+    }
     const stride = this.stride;
     return this.chart.xLabels
       .map((label, i) => ({ label, x: this.chart.xFor(i), i }))
@@ -690,7 +737,7 @@ export class ChartXAxisComponent extends ChartChild {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <svg:text
-      *ngFor="let tick of chart.ticks; trackBy: trackByIndex"
+      *ngFor="let tick of visibleTicks; trackBy: trackByIndex"
       [attr.x]="labelX"
       [attr.y]="tick.y"
       text-anchor="end"
@@ -707,6 +754,18 @@ export class ChartYAxisComponent extends ChartChild {
 
   get labelX(): number {
     return this.chart.plotLeft - this.offset;
+  }
+
+  /**
+   * Vertical orientation: value ticks (today's behaviour). Horizontal
+   * orientation: this is the left axis' physical position, which a
+   * horizontal chart uses for its category labels.
+   */
+  get visibleTicks(): { y: number; label: string }[] {
+    if (this.chart.orientation === 'horizontal') {
+      return this.chart.xLabels.map((label, i) => ({ label, y: this.chart.xFor(i) }));
+    }
+    return this.chart.ticks;
   }
 
   get labelClass(): string {
@@ -851,6 +910,34 @@ export function barPath(
 }
 
 /**
+ * `barPath()` transposed for horizontal bars: fixed vertical extent
+ * `[y, y+height]`, variable horizontal extent `[xBase, xValue]`, rounded at
+ * the `xValue` (data) end.
+ */
+export function barPathHorizontal(
+  y: number,
+  height: number,
+  xBase: number,
+  xValue: number,
+  radius: number
+): string {
+  const width = Math.abs(xBase - xValue);
+  const r = Math.max(0, Math.min(radius, height / 2, width));
+  const bottom = y + height;
+  const sign = xValue >= xBase ? 1 : -1;
+  const corner = xValue - sign * r;
+
+  return (
+    'M ' + xBase + ' ' + y +
+    ' L ' + corner + ' ' + y +
+    ' Q ' + xValue + ' ' + y + ' ' + xValue + ' ' + (y + r) +
+    ' L ' + xValue + ' ' + (bottom - r) +
+    ' Q ' + xValue + ' ' + bottom + ' ' + corner + ' ' + bottom +
+    ' L ' + xBase + ' ' + bottom + ' Z'
+  );
+}
+
+/**
  * A bar mark for one series. Grouped beside its siblings by default, stacked
  * when the container's `stacked` is set. The data end carries a 4px radius, the
  * baseline end stays square, and neighbours are separated by surface, not ink.
@@ -903,7 +990,13 @@ export class ChartBarComponent extends ChartChild {
     return this.chart.colorFor(this.seriesKey);
   }
 
-  /** Geometry for every bar this series contributes. */
+  /**
+   * Geometry for every bar this series contributes. `x`/`width` are the bar's
+   * footprint on the category axis and `yBase`/`yValue` its extent on the
+   * value axis — physical x/y when vertical (the original meaning), but
+   * transposed (x holds a vertical footprint, yBase/yValue hold horizontal
+   * positions) when the chart is horizontal, same as `ChartService.yFor()`.
+   */
   get bars(): {
     d: string;
     active: boolean;
@@ -923,6 +1016,7 @@ export class ChartBarComponent extends ChartChild {
     const seriesCount = Math.max(1, this.chart.series.length);
     const found = this.chart.series.findIndex((item) => item.key === this.seriesKey);
     const slotIndex = found < 0 ? 0 : found;
+    const horizontal = this.chart.orientation === 'horizontal';
 
     for (let i = 0; i < this.chart.count; i++) {
       const value = this.chart.valueAt(this.seriesKey, i);
@@ -946,13 +1040,17 @@ export class ChartBarComponent extends ChartChild {
       let yValue = this.chart.yFor(base + value);
 
       // The gap between stacked segments comes off the data end, so what
-      // separates them is surface showing through rather than a stroke.
+      // separates them is surface showing through rather than a stroke. Signed
+      // from the resolved positions (not the raw value) so it holds under
+      // both orientations, whose value axis runs in opposite directions.
       if (this.chart.stacked && Math.abs(yBase - yValue) > this.gap) {
-        yValue += value >= 0 ? this.gap : -this.gap;
+        yValue += Math.sign(yBase - yValue) * this.gap;
       }
 
       out.push({
-        d: barPath(x, width, yBase, yValue, this.radius),
+        d: horizontal
+          ? barPathHorizontal(x, width, yBase, yValue, this.radius)
+          : barPath(x, width, yBase, yValue, this.radius),
         active: this.activeIndex === i,
         x,
         width,

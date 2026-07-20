@@ -1,0 +1,110 @@
+<app-docs-wrapper [tocTemplate]="toc">
+  <div content>
+    <app-doc-hero slug="bar-list" title="Bar List"
+      description="A ranked list of horizontal bars — label left, value right, bar length scaled to the largest value in the list."
+      id="overview" />
+
+    <section class="mb-14">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight" id="installation">Installation</h2>
+      <p class="mb-4 text-muted-foreground">
+        Add it with the CLI (you own the source), or import the component if you use the package.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="installation" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-14" id="anatomy">
+      <h2 class="mb-4 scroll-m-20 text-xl font-semibold tracking-tight">Anatomy</h2>
+      <p class="mb-4 text-muted-foreground">
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">labelKey</code> and
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">valueKey</code> read the same way
+        <code class="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-primary">tolle-chart-pie</code> does. Every
+        bar takes the same accent colour — rank here is carried by length, not by a categorical palette — so rows are
+        drawn in the order you pass them; sort your data first.
+      </p>
+      <div class="overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="anatomyCode" language="html" />
+      </div>
+      <div class="mt-4 overflow-hidden rounded-lg border border-border">
+        <app-base-editor [code]="dataCode" language="typescript" />
+      </div>
+    </section>
+
+    <section class="mb-16" id="examples">
+      <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
+
+      <!-- Basic -->
+      <div class="mb-12 space-y-3" id="basic">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">Basic</h3>
+        <p class="text-muted-foreground">The largest row's bar reaches full width; the rest scale against it.</p>
+        <app-preview [code]="basicCode" language="html" align="stretch">
+          <app-basic-bar-list />
+        </app-preview>
+      </div>
+
+      <!-- In a card -->
+      <div class="space-y-3" id="in-a-card">
+        <h3 class="scroll-m-20 text-lg font-semibold tracking-tight">In a card</h3>
+        <p class="text-muted-foreground">Column headers are your own markup above the list.</p>
+        <app-preview [code]="inACardCode" language="html" align="stretch">
+          <app-bar-list-in-a-card />
+        </app-preview>
+      </div>
+    </section>
+
+    <!-- API Reference -->
+    <section class="mb-16" id="api-reference">
+      <h2 class="text-2xl font-bold mb-6">API Reference</h2>
+      <app-prop-table [props]="barListProps" />
+
+      <div class="mt-12">
+        <h3 class="text-lg font-semibold mb-4">Exported types</h3>
+        <app-prop-table [props]="barListTypes" />
+      </div>
+    </section>
+  </div>
+
+  <ng-template #toc>
+    <ul class="flex flex-col gap-2 text-sm">
+      <li>
+        <a (click)="baseService.scrollTo('overview')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Overview
+        </a>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('anatomy')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Anatomy
+        </a>
+      </li>
+      <li class="flex flex-col gap-2">
+        <a (click)="baseService.scrollTo('examples')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          Examples
+        </a>
+        <ul class="flex flex-col gap-2 text-sm ml-4">
+          <li>
+            <a (click)="baseService.scrollTo('basic')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              Basic
+            </a>
+          </li>
+          <li>
+            <a (click)="baseService.scrollTo('in-a-card')"
+              class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+              In a card
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a (click)="baseService.scrollTo('api-reference')"
+          class="block cursor-pointer text-[0.8rem] text-muted-foreground transition-all duration-200 hover:ml-2 hover:text-foreground">
+          API Reference
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</app-docs-wrapper>

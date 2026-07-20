@@ -254,6 +254,43 @@ describe('ChartService band scale', () => {
   });
 });
 
+describe('ChartService horizontal orientation', () => {
+  it('reproduces the exact vertical formulas when orientation is left at its default', () => {
+    // The whole point of the transpose: an untouched chart must be byte-identical.
+    const service = makeService();
+    service.useBandScale();
+    expect(service.orientation).toBe('vertical');
+    expect(service.bandStep).toBeCloseTo(100, 6);
+    expect(service.yFor(service.domain[1])).toBeCloseTo(service.plotTop, 6);
+  });
+
+  it('lays bands out along plotHeight instead of plotWidth', () => {
+    const service = makeService({ orientation: 'horizontal' });
+    service.useBandScale();
+
+    expect(service.bandStep * service.count).toBeCloseTo(service.plotHeight, 6);
+    const first = service.bandFor(0);
+    expect(first.start).toBeGreaterThanOrEqual(service.plotTop - 1e-6);
+  });
+
+  it('maps yFor onto the x axis instead of the y axis', () => {
+    const service = makeService({ orientation: 'horizontal' });
+    const [min, max] = service.domain;
+
+    expect(service.yFor(min)).toBeCloseTo(service.plotLeft, 6);
+    expect(service.yFor(max)).toBeCloseTo(service.plotRight, 6);
+    // Bigger value, bigger x — the opposite inversion from the vertical axis.
+    expect(service.yFor(max)).toBeGreaterThan(service.yFor(min));
+  });
+
+  it('anchors hit bands to plotTop instead of plotLeft', () => {
+    const service = makeService({ orientation: 'horizontal' });
+    service.useBandScale();
+    const band = service.hitBandFor(0);
+    expect(band.start).toBeCloseTo(service.plotTop, 6);
+  });
+});
+
 describe('ChartService colour assignment', () => {
   it('assigns palette steps in fixed series order', () => {
     const service = makeService({

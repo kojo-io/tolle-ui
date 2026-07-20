@@ -65,6 +65,7 @@ export * from './lib/carousel';
 export * from './lib/label.component';
 export * from './lib/separator.component';
 export * from './lib/progress.component';
+export * from './lib/progress-circle.component';
 export * from './lib/slider.component';
 export * from './lib/toggle.component';
 export * from './lib/toggle-group.component';
@@ -151,6 +152,10 @@ export * from './lib/model-selector.component';
 export * from './lib/chart.service';
 export * from './lib/chart.component';
 export * from './lib/chart-pie.component';
+export * from './lib/chart-spark.component';
+export * from './lib/category-bar.component';
+export * from './lib/tracker.component';
+export * from './lib/bar-list.component';
 
 /* --- Internationalisation --- */
 export * from './lib/direction.component';

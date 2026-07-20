@@ -65,6 +65,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/badge-docs/badge-docs.component').then(m => m.BadgeDocsComponent),
           },
           {
+            path: 'bar-list',
+            loadComponent: () => import('./components/bar-list-docs/bar-list-docs.component').then(m => m.BarListDocsComponent),
+          },
+          {
             path: 'breadcrumb',
             loadComponent: () => import('./components/breadcrumb-docs/breadcrumb-docs.component').then(m => m.BreadcrumbDocsComponent),
           },
@@ -93,12 +97,20 @@ export const routes: Routes = [
             loadComponent: () => import('./components/carousel-docs/carousel-docs.component').then(m => m.CarouselDocsComponent),
           },
           {
+            path: 'category-bar',
+            loadComponent: () => import('./components/category-bar-docs/category-bar-docs.component').then(m => m.CategoryBarDocsComponent),
+          },
+          {
             path: 'chart',
             loadComponent: () => import('./components/chart-docs/chart-docs.component').then(m => m.ChartDocsComponent),
           },
           {
             path: 'chart-pie',
             loadComponent: () => import('./components/chart-pie-docs/chart-pie-docs.component').then(m => m.ChartPieDocsComponent),
+          },
+          {
+            path: 'chart-spark',
+            loadComponent: () => import('./components/chart-spark-docs/chart-spark-docs.component').then(m => m.ChartSparkDocsComponent),
           },
           {
             path: 'checkbox',
@@ -273,6 +285,10 @@ export const routes: Routes = [
             loadComponent: () => import('./components/progress-docs/progress-docs.component').then(m => m.ProgressDocsComponent),
           },
           {
+            path: 'progress-circle',
+            loadComponent: () => import('./components/progress-circle-docs/progress-circle-docs.component').then(m => m.ProgressCircleDocsComponent),
+          },
+          {
             path: 'prompt-input',
             loadComponent: () => import('./components/prompt-input-docs/prompt-input-docs.component').then(m => m.PromptInputDocsComponent),
           },
@@ -387,6 +403,10 @@ export const routes: Routes = [
           {
             path: 'tooltip',
             loadComponent: () => import('./components/tooltip-docs/tooltip-docs.component').then(m => m.TooltipDocsComponent),
+          },
+          {
+            path: 'tracker',
+            loadComponent: () => import('./components/tracker-docs/tracker-docs.component').then(m => m.TrackerDocsComponent),
           },
           {
             path: 'typography',

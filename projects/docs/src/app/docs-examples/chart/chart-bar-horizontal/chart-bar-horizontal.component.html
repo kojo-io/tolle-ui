@@ -1,0 +1,11 @@
+<div class="w-full">
+    <tolle-chart [data]="platforms" [series]="series" xKey="platform" orientation="horizontal" [height]="220"
+        [margin]="{ top: 8, right: 16, bottom: 24, left: 88 }" xHeader="Platform"
+        ariaLabel="Weekly active users by platform"
+        description="Web leads with 31,800 weekly active users, ahead of Android at 24,500, iOS at 18,200, and desktop at 9,600.">
+        <svg:g tolle-chart-grid></svg:g>
+        <svg:g tolle-chart-y-axis></svg:g>
+        <svg:g tolle-chart-x-axis></svg:g>
+        <svg:g tolle-chart-bar seriesKey="users" [maxWidth]="28"></svg:g>
+    </tolle-chart>
+</div>

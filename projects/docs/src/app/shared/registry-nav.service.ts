@@ -50,9 +50,9 @@ export class RegistryNavService {
     { label: 'Date & Time', slugs: ['calendar', 'range-calendar', 'date-picker', 'date-range-picker', 'time-picker', 'date-time-picker'] },
     { label: 'Overlays', slugs: ['modal', 'alert-dialog', 'sheet', 'popover', 'hover-card', 'tooltip', 'dropdown-menu', 'context-menu', 'command', 'command-dialog'] },
     { label: 'Layout', slugs: ['card', 'accordion', 'tabs', 'collapsible', 'sidebar', 'resizable', 'scroll-area', 'separator', 'aspect-ratio', 'item', 'typography'] },
-    { label: 'Feedback', slugs: ['alert', 'badge', 'progress', 'skeleton', 'spinner', 'toaster', 'empty-state'] },
+    { label: 'Feedback', slugs: ['alert', 'badge', 'progress', 'progress-circle', 'skeleton', 'spinner', 'toaster', 'empty-state'] },
     { label: 'Navigation', slugs: ['breadcrumb', 'pagination', 'menubar', 'navigation-menu'] },
-    { label: 'Data', slugs: ['table', 'data-table', 'chart', 'chart-pie'] },
+    { label: 'Data', slugs: ['table', 'data-table', 'chart', 'chart-pie', 'chart-spark', 'category-bar', 'tracker', 'bar-list'] },
     { label: 'Media', slugs: ['avatar', 'carousel'] },
     {
       // Ordered by how a chat UI is assembled — transcript, then composer, then
@@ -103,6 +103,10 @@ export class RegistryNavService {
     'empty-state': 'Empty State',
     toaster: 'Toast',
     modal: 'Dialog',
+    'progress-circle': 'Progress Circle',
+    'chart-spark': 'Spark Chart',
+    'category-bar': 'Category Bar',
+    'bar-list': 'Bar List',
   };
 
   /** The sidebar model, consumed by `<tolle-sidebar [items]="groups()">`. */

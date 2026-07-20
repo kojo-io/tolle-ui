@@ -1,0 +1,11 @@
+<div class="w-full max-w-lg rounded-lg border border-border p-4">
+    <div class="mb-3 flex items-center justify-between">
+        <p class="text-sm font-medium text-foreground">API</p>
+        <p class="text-sm text-muted-foreground">{{ uptime }} uptime</p>
+    </div>
+    <tolle-tracker [data]="days" [blockHeight]="24" ariaLabel="API uptime, last 30 days" />
+    <div class="mt-2 flex justify-between text-xs text-muted-foreground">
+        <span>30 days ago</span>
+        <span>Today</span>
+    </div>
+</div>

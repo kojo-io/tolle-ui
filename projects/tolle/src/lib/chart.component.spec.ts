@@ -15,8 +15,9 @@ import {
   ChartTableComponent,
   ChartTooltipComponent,
   barPath,
+  barPathHorizontal,
 } from './chart.component';
-import { ChartService, type ChartSeries } from './chart.service';
+import { ChartService, type ChartSeries, type ChartOrientation } from './chart.service';
 
 const ROWS = [
   { month: 'Jan', a: 10, b: 5 },
@@ -50,6 +51,7 @@ const TWO_SERIES: ChartSeries[] = [
       ariaLabel="Monthly revenue"
       description="Revenue and cost by month"
       [stacked]="stacked"
+      [orientation]="orientation"
       [showTable]="showTable"
       [hover]="hover"
     >
@@ -68,6 +70,7 @@ class HostComponent {
   data: Record<string, any>[] = ROWS;
   series: ChartSeries[] = TWO_SERIES;
   stacked = false;
+  orientation: ChartOrientation = 'vertical';
   showTable = false;
   hover = true;
   mark: 'line' | 'area' | 'bar' | 'none' = 'line';
@@ -440,6 +443,34 @@ describe('ChartYAxisComponent', () => {
   });
 });
 
+describe('horizontal orientation axis roles', () => {
+  let fixture: ComponentFixture<HostComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [HostComponent] }).compileComponents();
+    fixture = TestBed.createComponent(HostComponent);
+    fixture.componentInstance.mark = 'bar';
+    fixture.componentInstance.orientation = 'horizontal';
+    fixture.detectChanges();
+    pinLayout(fixture);
+    fixture.detectChanges();
+  });
+
+  it('swaps the bottom axis to show value ticks instead of category labels', () => {
+    const axis = fixture.debugElement.query(By.directive(ChartXAxisComponent)).componentInstance;
+    const labels = axis.visibleTicks.map((t: { label: string }) => t.label);
+    // Value ticks are numeric ("nice" round numbers), not the month labels.
+    expect(labels).not.toContain('Jan');
+    expect(labels.every((l: string) => /^-?[\d,.]+$/.test(l))).toBeTrue();
+  });
+
+  it('swaps the left axis to show category labels instead of value ticks', () => {
+    const axis = fixture.debugElement.query(By.directive(ChartYAxisComponent)).componentInstance;
+    const labels = axis.visibleTicks.map((t: { label: string }) => t.label);
+    expect(labels).toEqual(['Jan', 'Feb', 'Mar', 'Apr']);
+  });
+});
+
 describe('ChartGridComponent', () => {
   let fixture: ComponentFixture<HostComponent>;
 
@@ -465,13 +496,46 @@ describe('ChartGridComponent', () => {
     }
   });
 
-  it('adds vertical rules only when asked', () => {
+  it('adds category rules only when asked', () => {
     const grid = fixture.debugElement.query(By.directive(ChartGridComponent));
-    expect(grid.componentInstance.verticalXs.length).toBe(0);
+    expect(grid.componentInstance.categoryLines.length).toBe(0);
 
     grid.componentInstance.vertical = true;
     fixture.detectChanges();
-    expect(grid.componentInstance.verticalXs.length).toBe(ROWS.length);
+    expect(grid.componentInstance.categoryLines.length).toBe(ROWS.length);
+  });
+});
+
+describe('ChartGridComponent horizontal orientation', () => {
+  let fixture: ComponentFixture<HostComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [HostComponent] }).compileComponents();
+    fixture = TestBed.createComponent(HostComponent);
+    fixture.componentInstance.mark = 'bar';
+    fixture.componentInstance.orientation = 'horizontal';
+    fixture.detectChanges();
+    pinLayout(fixture);
+    fixture.detectChanges();
+  });
+
+  it('draws value rules as vertical lines instead of horizontal ones', () => {
+    const grid = fixture.debugElement.query(By.directive(ChartGridComponent)).componentInstance;
+    expect(grid.valueLines.length).toBeGreaterThan(1);
+    for (const line of grid.valueLines) {
+      // Vertical: same x at both ends.
+      expect(line.x1).toBe(line.x2);
+    }
+  });
+
+  it('draws category rules as horizontal lines instead of vertical ones', () => {
+    const grid = fixture.debugElement.query(By.directive(ChartGridComponent)).componentInstance;
+    grid.vertical = true;
+    fixture.detectChanges();
+    expect(grid.categoryLines.length).toBe(ROWS.length);
+    for (const line of grid.categoryLines) {
+      expect(line.y1).toBe(line.y2);
+    }
   });
 });
 
@@ -661,6 +725,78 @@ describe('ChartBarComponent', () => {
     expect(lower.x).toBeCloseTo(upper.x, 6);
     expect(lower.width).toBeCloseTo(upper.width, 6);
   }));
+});
+
+describe('ChartBarComponent horizontal orientation', () => {
+  let fixture: ComponentFixture<HostComponent>;
+  let service: ChartService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({ imports: [HostComponent] }).compileComponents();
+    fixture = TestBed.createComponent(HostComponent);
+    fixture.componentInstance.mark = 'bar';
+    fixture.componentInstance.orientation = 'horizontal';
+    fixture.detectChanges();
+    service = pinLayout(fixture);
+    fixture.detectChanges();
+  });
+
+  function barsFor(key: string) {
+    const index = key === 'a' ? 0 : 1;
+    return fixture.debugElement.queryAll(By.directive(ChartBarComponent))[index].componentInstance
+      .bars as { d: string; x: number; width: number; yBase: number; yValue: number }[];
+  }
+
+  it('still switches onto a band scale and forces zero into the domain', () => {
+    expect(service.mode).toBe('band');
+    expect(service.domain[0]).toBe(0);
+  });
+
+  it('lays bars out along the vertical axis instead of the horizontal one', () => {
+    // In horizontal mode `x`/`width` hold the bar's vertical footprint, so
+    // successive rows should be stacked top-to-bottom rather than side-by-side.
+    const bars = barsFor('a');
+    expect(bars[1].x).toBeGreaterThan(bars[0].x);
+  });
+
+  it('extends bars from the value-axis baseline horizontally', () => {
+    const baseline = service.yFor(0);
+    for (const bar of barsFor('a')) {
+      expect(bar.d.startsWith('M ' + baseline)).toBeTrue();
+    }
+  });
+
+  it('renders hit rects spanning the full plot width instead of full height', () => {
+    // Reads the getter directly rather than the rendered DOM: ChartComponent is
+    // OnPush and pinLayout's direct service.configure() marks it dirty via a
+    // microtask, which a synchronous detectChanges() here would race.
+    const chart = fixture.debugElement.query(By.directive(ChartComponent)).componentInstance as ChartComponent;
+    const rect = chart.hitRects[0];
+    expect(rect.width).toBeCloseTo(service.plotWidth, 6);
+  });
+});
+
+describe('barPathHorizontal', () => {
+  it('rounds the right end when the value sits to the right of the baseline', () => {
+    const d = barPathHorizontal(0, 20, 100, 160, 4);
+    expect(d.startsWith('M 100 0')).toBeTrue();
+    expect(d.trim().endsWith('Z')).toBeTrue();
+    expect((d.match(/Q/g) ?? []).length).toBe(2);
+  });
+
+  it('rounds the left end when the value sits to the left of the baseline', () => {
+    const d = barPathHorizontal(0, 20, 100, 40, 4);
+    // Corner control steps rightward from the data end, mirroring the positive case.
+    expect(d).toContain('L 44 0');
+  });
+
+  it('clamps the radius on a bar shorter or narrower than the radius', () => {
+    const shallow = barPathHorizontal(0, 20, 100, 102, 4);
+    expect(shallow).toContain('Q 102 0 102 2');
+
+    const narrow = barPathHorizontal(0, 4, 100, 160, 4);
+    expect(narrow).toContain('Q 160 0 160 2');
+  });
 });
 
 describe('barPath', () => {

@@ -9,6 +9,8 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 import { ChartLineExampleComponent } from '../../docs-examples/chart/chart-line/chart-line.component';
 import { ChartStackedBarComponent } from '../../docs-examples/chart/chart-stacked-bar/chart-stacked-bar.component';
 import { ChartAreaExampleComponent } from '../../docs-examples/chart/chart-area/chart-area.component';
+import { ChartBarHorizontalExampleComponent } from '../../docs-examples/chart/chart-bar-horizontal/chart-bar-horizontal.component';
+import { ChartComboExampleComponent } from '../../docs-examples/chart/chart-combo/chart-combo.component';
 
 
 @Component({
@@ -22,7 +24,9 @@ import { ChartAreaExampleComponent } from '../../docs-examples/chart/chart-area/
     PropTableComponent,
     ChartLineExampleComponent,
     ChartStackedBarComponent,
-    ChartAreaExampleComponent
+    ChartAreaExampleComponent,
+    ChartBarHorizontalExampleComponent,
+    ChartComboExampleComponent
   ],
   templateUrl: './chart-docs.component.html',
   styleUrl: './chart-docs.component.css'
@@ -98,6 +102,26 @@ series: ChartSeries[] = [
   <svg:g tolle-chart-bar seriesKey="tablet"></svg:g>
 </tolle-chart>`;
 
+  barHorizontalCode = `<tolle-chart [data]="platforms" [series]="series" xKey="platform" orientation="horizontal"
+  [height]="220" [margin]="{ top: 8, right: 16, bottom: 24, left: 88 }" xHeader="Platform"
+  ariaLabel="Weekly active users by platform"
+  description="Web leads with 31,800 weekly active users, ahead of Android, iOS, and desktop.">
+  <svg:g tolle-chart-grid></svg:g>
+  <svg:g tolle-chart-y-axis></svg:g>
+  <svg:g tolle-chart-x-axis></svg:g>
+  <svg:g tolle-chart-bar seriesKey="users" [maxWidth]="28"></svg:g>
+</tolle-chart>`;
+
+  comboCode = `<tolle-chart [data]="months" [series]="series" xKey="month" [height]="280" xHeader="Month"
+  ariaLabel="Revenue against target by month"
+  description="Revenue trails target through February, then overtakes it from March onward.">
+  <svg:g tolle-chart-grid></svg:g>
+  <svg:g tolle-chart-y-axis></svg:g>
+  <svg:g tolle-chart-x-axis></svg:g>
+  <svg:g tolle-chart-bar seriesKey="revenue" [maxWidth]="32"></svg:g>
+  <svg:g tolle-chart-line seriesKey="target" [showDots]="true"></svg:g>
+</tolle-chart>`;
+
   areaCode = `<tolle-chart [data]="weeks" [series]="series" xKey="week" [stacked]="true"
   [height]="280" [showTable]="true" xHeader="Week" variant="card"
   ariaLabel="Active accounts by week"
@@ -139,6 +163,7 @@ visible: ChartSeries[] = [
     { name: 'height', type: 'number', default: '260', description: 'Height of the chart in px. Width is measured from the container with a ResizeObserver.' },
     { name: 'margin', type: 'ChartMargin', default: '{ top: 8, right: 8, bottom: 24, left: 44 }', description: 'Space reserved around the plot for axis labels. Widen left when the y labels are long.' },
     { name: 'stacked', type: 'boolean', default: 'false', description: 'Stacks marks on a shared baseline instead of grouping them. Respected by both bars and areas.' },
+    { name: 'orientation', type: "'vertical' | 'horizontal'", default: "'vertical'", description: 'Which physical axis carries the category vs the value. Only bars support horizontal — line and area marks stay vertical regardless.' },
     { name: 'hover', type: 'boolean', default: 'true', description: 'Renders the crosshair, the pointer hit layer and the shared tooltip.' },
     { name: 'ariaLabel', type: 'string', default: "''", description: 'Accessible name for the chart, used as the svg <title>.' },
     { name: 'description', type: 'string', default: "''", description: 'Longer summary used as the svg <desc>. Falls back to ariaLabel.' },
@@ -154,7 +179,7 @@ visible: ChartSeries[] = [
   ];
 
   gridProps: PropEntry[] = [
-    { name: 'vertical', type: 'boolean', default: 'false', description: 'Also draws a rule at every x position, not just at the y ticks.' },
+    { name: 'vertical', type: 'boolean', default: 'false', description: 'Also draws a rule at every category position, not just at the value ticks.' },
     { name: 'class', type: 'string', description: 'Additional CSS classes merged onto each rule.' }
   ];
 

@@ -1,0 +1,14 @@
+<div class="flex flex-wrap items-center gap-8">
+    <div class="w-32 space-y-1">
+        <p class="text-xs text-muted-foreground">Line</p>
+        <tolle-chart-spark [data]="days" valueKey="visits" xKey="day" type="line" curve="smooth" />
+    </div>
+    <div class="w-32 space-y-1">
+        <p class="text-xs text-muted-foreground">Area</p>
+        <tolle-chart-spark [data]="days" valueKey="visits" xKey="day" type="area" curve="smooth" />
+    </div>
+    <div class="w-32 space-y-1">
+        <p class="text-xs text-muted-foreground">Bar</p>
+        <tolle-chart-spark [data]="days" valueKey="visits" xKey="day" type="bar" />
+    </div>
+</div>

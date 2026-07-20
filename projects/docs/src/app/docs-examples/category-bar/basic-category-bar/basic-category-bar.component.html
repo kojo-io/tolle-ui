@@ -1,0 +1,6 @@
+<div class="w-full">
+    <tolle-category-bar [values]="values" [labels]="labels" ariaLabel="Response time distribution" />
+    <div class="mt-2 flex justify-between text-xs text-muted-foreground">
+        <span *ngFor="let label of labels">{{ label }}</span>
+    </div>
+</div>
