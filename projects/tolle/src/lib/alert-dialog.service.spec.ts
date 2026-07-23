@@ -114,3 +114,75 @@ describe('AlertDialogService animation timing', () => {
         expect(overlayContainerElement.textContent).not.toContain('Delete account');
     }));
 });
+
+describe('AlertDialogService afterClosed$ result', () => {
+    let service: AlertDialogService;
+    let overlayContainer: OverlayContainer;
+    let overlayContainerElement: HTMLElement;
+
+    const flush = () => TestBed.inject(ApplicationRef).tick();
+    const actionButton = () =>
+        overlayContainerElement.querySelector('tolle-alert-dialog-action button') as HTMLButtonElement | null;
+    const cancelButton = () =>
+        overlayContainerElement.querySelector('tolle-alert-dialog-cancel button') as HTMLButtonElement | null;
+
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [NoopAnimationsModule],
+            providers: [AlertDialogService]
+        });
+
+        service = TestBed.inject(AlertDialogService);
+        overlayContainer = TestBed.inject(OverlayContainer);
+        overlayContainerElement = overlayContainer.getContainerElement();
+    });
+
+    afterEach(() => {
+        overlayContainer.ngOnDestroy();
+    });
+
+    // Regression: clicking the action button used to race the button's own
+    // `setOpen(false)` close path and emit `false` instead of `true`, so a
+    // consumer's confirm handler never ran.
+    it('emits true exactly once when the action button is clicked', fakeAsync(() => {
+        const ref = service.open({ title: 'Delete?', description: 'Cannot be undone.', actionText: 'Delete' });
+        flush();
+
+        const emitted: boolean[] = [];
+        ref.afterClosed$.subscribe((r) => emitted.push(r));
+
+        actionButton()!.click();
+        flush();
+        tick(300); // flush the fallback disposal timer so the test ends clean
+
+        expect(emitted).toEqual([true]);
+    }));
+
+    it('emits false exactly once when the cancel button is clicked', fakeAsync(() => {
+        const ref = service.open({ title: 'Delete?', description: 'Cannot be undone.' });
+        flush();
+
+        const emitted: boolean[] = [];
+        ref.afterClosed$.subscribe((r) => emitted.push(r));
+
+        cancelButton()!.click();
+        flush();
+        tick(300);
+
+        expect(emitted).toEqual([false]);
+    }));
+
+    it('close() is idempotent — the first result wins and later closes are ignored', fakeAsync(() => {
+        const ref = service.open({ title: 'Delete?', description: 'Cannot be undone.' });
+        flush();
+
+        const emitted: boolean[] = [];
+        ref.afterClosed$.subscribe((r) => emitted.push(r));
+
+        ref.close(true);
+        ref.close(false);
+        expect(emitted).toEqual([true]);
+
+        tick(300);
+    }));
+});

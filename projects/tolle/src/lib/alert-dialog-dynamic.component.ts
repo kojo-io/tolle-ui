@@ -39,10 +39,10 @@ import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
             </tolle-alert-dialog-description>
           </tolle-alert-dialog-header>
           <tolle-alert-dialog-footer>
-            <tolle-alert-dialog-cancel (click)="close(false)">
+            <tolle-alert-dialog-cancel (cancelled)="result = false">
               <tolle-button variant="outline">{{ config.cancelText || 'Cancel' }}</tolle-button>
             </tolle-alert-dialog-cancel>
-            <tolle-alert-dialog-action (click)="close(true)">
+            <tolle-alert-dialog-action (confirmed)="result = true">
               <tolle-button [variant]="config.variant === 'destructive' ? 'destructive' : 'default'">
                 {{ config.actionText || 'Continue' }}
               </tolle-button>
@@ -62,13 +62,17 @@ export class AlertDialogDynamicComponent {
    */
   closing = false;
 
+  /**
+   * Result recorded by the action/cancel buttons' `confirmed`/`cancelled`
+   * outputs, which fire *before* the button drives the dialog closed. The
+   * single close path (`onOpenChange`) then reads it, so a confirm reports
+   * `true` instead of racing with the button's own `false` close signal.
+   */
+  result = false;
+
   onOpenChange(open: boolean) {
     if (!open) {
-      this.close(false);
+      this.dialogRef.close(this.result);
     }
-  }
-
-  close(result: boolean) {
-    this.dialogRef.close(result);
   }
 }
