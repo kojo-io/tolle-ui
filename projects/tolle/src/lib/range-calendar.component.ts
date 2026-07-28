@@ -25,8 +25,40 @@ import {DateRange} from './types/date-range';
   template: `
     <div [class]="cn('text-popover-foreground inline-block min-w-fit', bordered ? 'p-3 border rounded-md bg-background shadow-sm' : '', class)">
 
+      <!-- ===== Month / year quick pickers (shared by the single- and multi-month views) ===== -->
+      <ng-container *ngIf="currentView !== 'date'">
+        <div class="flex items-center justify-between pt-1 pb-4 gap-2">
+          <div class="flex items-center gap-1">
+            <button type="button" (click)="setView('month', pickerMonthIndex)" [class]="headerBtnClass('month')">
+              {{ pickerDate | date: 'MMMM' }}
+            </button>
+            <button type="button" (click)="setView('year', pickerMonthIndex)" [class]="headerBtnClass('year')">
+              {{ pickerDate | date: 'yyyy' }}
+            </button>
+          </div>
+          <div class="flex items-center space-x-1">
+            <button type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous"><i class="ri-arrow-left-s-line text-lg"></i></button>
+            <button type="button" (click)="next()" [class]="navBtnClass" aria-label="Next"><i class="ri-arrow-right-s-line text-lg"></i></button>
+          </div>
+        </div>
+
+        <div *ngIf="currentView === 'month'" class="grid grid-cols-3 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
+          <button *ngFor="let month of months; let i = index" type="button" (click)="selectMonth(i)"
+            [class]="cn('text-sm py-2.5 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', i === pickerDate.getMonth() ? 'bg-primary text-primary-foreground' : '')">
+            {{ month }}
+          </button>
+        </div>
+
+        <div *ngIf="currentView === 'year'" class="grid grid-cols-4 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
+          <button *ngFor="let year of years" type="button" (click)="selectYear(year)"
+            [class]="cn('text-sm py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', year === pickerDate.getFullYear() ? 'bg-primary text-primary-foreground' : '')">
+            {{ year }}
+          </button>
+        </div>
+      </ng-container>
+
       <!-- ===== Multi-month view (side-by-side, shared range) ===== -->
-      <div *ngIf="numberOfMonths > 1" class="flex flex-col gap-4 sm:flex-row">
+      <div *ngIf="currentView === 'date' && numberOfMonths > 1" class="flex flex-col gap-4 sm:flex-row">
         <div *ngFor="let m of visibleMonths; let idx = index" class="space-y-2">
           <div class="flex items-center justify-between pt-1 pb-2">
             <button *ngIf="idx === 0" type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous month">
@@ -34,7 +66,12 @@ import {DateRange} from './types/date-range';
             </button>
             <span *ngIf="idx !== 0" class="h-7 w-7"></span>
 
-            <div class="text-sm font-semibold">{{ m.label }}</div>
+            <!-- Each panel's month and year open the quick pickers for that panel,
+                 so a two-month view jumps the same way the single-month one does. -->
+            <div class="flex items-center gap-1">
+              <button type="button" (click)="setView('month', idx)" [class]="headerBtnClass('month')">{{ m.date | date: 'MMMM' }}</button>
+              <button type="button" (click)="setView('year', idx)" [class]="headerBtnClass('year')">{{ m.date | date: 'yyyy' }}</button>
+            </div>
 
             <button *ngIf="idx === visibleMonths.length - 1" type="button" (click)="next()" [class]="navBtnClass" aria-label="Next month">
               <i class="ri-arrow-right-s-line text-lg"></i>
@@ -68,16 +105,14 @@ import {DateRange} from './types/date-range';
         </div>
       </div>
 
-      <!-- ===== Single-month view (with month / year quick pickers) ===== -->
-      <ng-container *ngIf="numberOfMonths <= 1">
+      <!-- ===== Single-month view ===== -->
+      <ng-container *ngIf="currentView === 'date' && numberOfMonths <= 1">
         <div class="flex items-center justify-between pt-1 pb-4 gap-2">
           <div class="flex items-center gap-1">
-            <button type="button" (click)="setView('month')"
-              [class]="cn('text-sm font-semibold px-2 py-1 rounded transition-colors', currentView === 'month' ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground')">
+            <button type="button" (click)="setView('month')" [class]="headerBtnClass('month')">
               {{ viewDate | date: 'MMMM' }}
             </button>
-            <button type="button" (click)="setView('year')"
-              [class]="cn('text-sm font-semibold px-2 py-1 rounded transition-colors', currentView === 'year' ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground')">
+            <button type="button" (click)="setView('year')" [class]="headerBtnClass('year')">
               {{ viewDate | date: 'yyyy' }}
             </button>
           </div>
@@ -87,7 +122,7 @@ import {DateRange} from './types/date-range';
           </div>
         </div>
 
-        <div *ngIf="currentView === 'date'" class="space-y-2 animate-in fade-in zoom-in-95 duration-200">
+        <div class="space-y-2 animate-in fade-in zoom-in-95 duration-200">
           <div class="grid grid-cols-7 gap-y-1 w-full">
             <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">
               {{ day }}
@@ -109,20 +144,6 @@ import {DateRange} from './types/date-range';
             </button>
           </div>
         </div>
-
-        <div *ngIf="currentView === 'month'" class="grid grid-cols-3 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
-          <button *ngFor="let month of months; let i = index" type="button" (click)="selectMonth(i)"
-            [class]="cn('text-sm py-2.5 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', i === viewDate.getMonth() ? 'bg-primary text-primary-foreground' : '')">
-            {{ month }}
-          </button>
-        </div>
-
-        <div *ngIf="currentView === 'year'" class="grid grid-cols-4 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
-          <button *ngFor="let year of years" type="button" (click)="selectYear(year)"
-            [class]="cn('text-sm py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', year === viewDate.getFullYear() ? 'bg-primary text-primary-foreground' : '')">
-            {{ year }}
-          </button>
-        </div>
       </ng-container>
     </div>
   `
@@ -139,6 +160,8 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
 
   currentView: 'date' | 'month' | 'year' = 'date';
   viewDate: Date = new Date();
+  /** Which visible month the quick pickers are editing; always 0 in the single-month view. */
+  pickerMonthIndex = 0;
 
   // The Range Value
   value: DateRange = { start: null, end: null };
@@ -146,7 +169,7 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
   weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
   daysInMonth: Date[] = [];
   /** Grids for each visible month (multi-month view). */
-  visibleMonths: { date: Date; days: Date[]; label: string }[] = [];
+  visibleMonths: { date: Date; days: Date[] }[] = [];
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   years: number[] = [];
 
@@ -184,19 +207,32 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
       return {
         date: monthDate,
         days: eachDayOfInterval({ start: startOfWeek(startOfMonth(monthDate)), end: endOfWeek(endOfMonth(monthDate)) }),
-        label: format(monthDate, 'MMMM yyyy'),
       };
     });
   }
 
   generateYears() {
-    const currentYear = this.viewDate.getFullYear();
+    const currentYear = this.pickerDate.getFullYear();
     this.years = Array.from({ length: 16 }, (_, i) => currentYear - 6 + i);
   }
 
-  setView(view: 'date' | 'month' | 'year') {
+  /** The month the quick pickers act on — `viewDate` shifted to the clicked panel. */
+  get pickerDate(): Date {
+    return addMonths(this.viewDate, this.pickerMonthIndex);
+  }
+
+  /** `monthIndex` is the index of the visible month whose header was clicked. */
+  setView(view: 'date' | 'month' | 'year', monthIndex = 0) {
+    this.pickerMonthIndex = view === 'date' ? 0 : monthIndex;
     this.currentView = view;
     if (view === 'year') this.generateYears();
+  }
+
+  headerBtnClass(view: 'month' | 'year') {
+    return cn(
+      'text-sm font-semibold px-2 py-1 rounded transition-colors',
+      this.currentView === view ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground'
+    );
   }
 
   prev() {
@@ -310,13 +346,21 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
   }
 
   selectMonth(monthIndex: number) {
-    this.viewDate = setMonth(this.viewDate, monthIndex);
-    this.currentView = 'date';
-    this.generateDays();
+    this.applyPickerDate(setMonth(this.pickerDate, monthIndex));
   }
 
   selectYear(year: number) {
-    this.viewDate = setYear(this.viewDate, year);
+    this.applyPickerDate(setYear(this.pickerDate, year));
+  }
+
+  /**
+   * Re-anchors the view so the panel the picker was opened from lands on `date`,
+   * then returns to the day grid. In the single-month view the offset is 0, so
+   * this is just "show that month".
+   */
+  private applyPickerDate(date: Date) {
+    this.viewDate = startOfMonth(subMonths(date, this.pickerMonthIndex));
+    this.pickerMonthIndex = 0;
     this.currentView = 'date';
     this.generateDays();
   }
