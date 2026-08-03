@@ -1,22 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ProgressComponent } from '../../../../../../tolle/src/lib/progress.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-progress-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ProgressComponent,
-        PlaygroundComponent,
-        LabelComponent
-    ],
-    template: `
+  selector: 'app-progress-interactive',
+  imports: [FormsModule, ProgressComponent, PlaygroundComponent, LabelComponent],
+  template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <div class="w-full max-w-md">
@@ -27,48 +21,41 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         <div controls class="space-y-5">
           <div class="space-y-1.5">
             <tolle-label>Value ({{ value }}%)</tolle-label>
-            <input
-              type="range"
-              [(ngModel)]="value" 
-              min="0" 
-              max="100"
-              class="w-full"
-            />
+            <input type="range" [(ngModel)]="value" min="0" max="100" class="w-full" />
           </div>
-          <button 
-            (click)="simulateProgress()" 
-            class="w-full px-4 py-2 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors"
-          >
+          <button
+            (click)="simulateProgress()"
+            class="w-full rounded-md bg-secondary px-4 py-2 text-secondary-foreground transition-colors hover:bg-secondary/80">
             Simulate Load
           </button>
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class ProgressInteractiveComponent implements OnInit, OnDestroy {
-    value = 33;
-    timer: any;
+  value = 33;
+  timer: any;
 
-    ngOnInit() { }
+  ngOnInit() {}
 
-    ngOnDestroy() {
-        if (this.timer) clearTimeout(this.timer);
-    }
+  ngOnDestroy() {
+    if (this.timer) clearTimeout(this.timer);
+  }
 
-    simulateProgress() {
-        this.value = 0;
-        const update = () => {
-            if (this.value < 100) {
-                this.value += Math.floor(Math.random() * 10) + 5;
-                if (this.value > 100) this.value = 100;
-                this.timer = setTimeout(update, 500);
-            }
-        };
-        update();
-    }
+  simulateProgress() {
+    this.value = 0;
+    const update = () => {
+      if (this.value < 100) {
+        this.value += Math.floor(Math.random() * 10) + 5;
+        if (this.value > 100) this.value = 100;
+        this.timer = setTimeout(update, 500);
+      }
+    };
+    update();
+  }
 
-    get playgroundCode() {
-        return `<tolle-progress [value]="${this.value}"></tolle-progress>`;
-    }
+  get playgroundCode() {
+    return `<tolle-progress [value]="${this.value}"></tolle-progress>`;
+  }
 }

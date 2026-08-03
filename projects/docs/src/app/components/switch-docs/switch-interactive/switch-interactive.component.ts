@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
@@ -8,31 +8,32 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
-    selector: 'app-switch-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        SwitchComponent,
-        SelectComponent,
-        SelectItemComponent,
-        LabelComponent,
-        PlaygroundComponent
-    ],
-    templateUrl: './switch-interactive.component.html'
+  selector: 'app-switch-interactive',
+  imports: [
+    FormsModule,
+    SwitchComponent,
+    SelectComponent,
+    SelectItemComponent,
+    LabelComponent,
+    PlaygroundComponent,
+  ],
+  templateUrl: './switch-interactive.component.html',
 })
 export class SwitchInteractiveComponent {
-    disabled = false;
-    size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
-    checked = false;
+  disabled = false;
+  size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  checked = false;
 
-    get playgroundCode(): string {
-        const inputs = [
-            this.disabled ? '[disabled]="true"' : '',
-            this.size !== 'default' ? `size="${this.size}"` : '',
-        ].filter(Boolean).join('\n  ');
+  get playgroundCode(): string {
+    const inputs = [
+      this.disabled ? '[disabled]="true"' : '',
+      this.size !== 'default' ? `size="${this.size}"` : '',
+    ]
+      .filter(Boolean)
+      .join('\n  ');
 
-        return `<tolle-switch
+    return `<tolle-switch
   [(ngModel)]="checked"${inputs ? '\n  ' + inputs : ''}
 ></tolle-switch>`;
-    }
+  }
 }

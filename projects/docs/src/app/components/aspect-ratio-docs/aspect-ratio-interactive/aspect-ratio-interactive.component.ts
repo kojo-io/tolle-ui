@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { AspectRatioComponent } from '../../../../../../tolle/src/lib/aspect-ratio.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -7,9 +7,9 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-aspect-ratio-interactive',
-    imports: [CommonModule, FormsModule, AspectRatioComponent, PlaygroundComponent, InputComponent, LabelComponent],
-    templateUrl: './aspect-ratio-interactive.component.html'
+  selector: 'app-aspect-ratio-interactive',
+  imports: [FormsModule, AspectRatioComponent, PlaygroundComponent, InputComponent, LabelComponent],
+  templateUrl: './aspect-ratio-interactive.component.html',
 })
 export class AspectRatioInteractiveComponent {
   ratio = '16 / 9';

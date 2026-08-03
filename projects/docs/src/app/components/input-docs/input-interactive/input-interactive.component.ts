@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -9,37 +9,36 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-input-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        InputComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        SwitchComponent,
-        LabelComponent
-    ],
-    templateUrl: './input-interactive.component.html'
+  selector: 'app-input-interactive',
+  imports: [
+    FormsModule,
+    InputComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    SwitchComponent,
+    LabelComponent,
+  ],
+  templateUrl: './input-interactive.component.html',
 })
 export class InputInteractiveComponent {
-    label = 'Email';
-    placeholder = 'name@example.com';
-    hint = 'This is a hint text.';
-    errorMessage = 'Invalid email address.';
-    value = '';
-    type = 'email';
-    size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
-    disabled = false;
-    readonly = false;
-    error = false;
+  label = 'Email';
+  placeholder = 'name@example.com';
+  hint = 'This is a hint text.';
+  errorMessage = 'Invalid email address.';
+  value = '';
+  type = 'email';
+  size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  disabled = false;
+  readonly = false;
+  error = false;
 
-    get playgroundCode() {
-        return `<tolle-input
+  get playgroundCode() {
+    return `<tolle-input
   label="${this.label}"
   placeholder="${this.placeholder}"
   type="${this.type}"
   ${this.value ? `value="${this.value}"\n` : ''}  ${this.hint && !this.error ? `hint="${this.hint}"\n` : ''}  ${this.error ? `[error]="true"\n  errorMessage="${this.errorMessage}"\n` : ''}  ${this.disabled ? `[disabled]="true"\n` : ''}  ${this.readonly ? `[readonly]="true"\n` : ''}  ${this.size !== 'default' ? `size="${this.size}"` : ''}
 ></tolle-input>`;
-    }
+  }
 }

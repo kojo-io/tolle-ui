@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { RadioGroupComponent } from '../../../../../../tolle/src/lib/radio-group.component';
 import { RadioItemComponent } from '../../../../../../tolle/src/lib/radio-item.component';
@@ -9,31 +9,32 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
-    selector: 'app-radio-group-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        RadioGroupComponent,
-        RadioItemComponent,
-        InputComponent,
-        SwitchComponent,
-        LabelComponent,
-        PlaygroundComponent
-    ],
-    templateUrl: './radio-group-interactive.component.html'
+  selector: 'app-radio-group-interactive',
+  imports: [
+    FormsModule,
+    RadioGroupComponent,
+    RadioItemComponent,
+    InputComponent,
+    SwitchComponent,
+    LabelComponent,
+    PlaygroundComponent,
+  ],
+  templateUrl: './radio-group-interactive.component.html',
 })
 export class RadioGroupInteractiveComponent {
-    disabled = false;
-    name = 'plan';
-    selectedValue = 'default';
+  disabled = false;
+  name = 'plan';
+  selectedValue = 'default';
 
-    get playgroundCode(): string {
-        const inputs = [
-            this.disabled ? '[disabled]="true"' : '',
-            this.name ? `name="${this.name}"` : '',
-        ].filter(Boolean).join('\n  ');
+  get playgroundCode(): string {
+    const inputs = [
+      this.disabled ? '[disabled]="true"' : '',
+      this.name ? `name="${this.name}"` : '',
+    ]
+      .filter(Boolean)
+      .join('\n  ');
 
-        return `<tolle-radio-group
+    return `<tolle-radio-group
   [(ngModel)]="selectedValue"${inputs ? '\n  ' + inputs : ''}
 >
   <tolle-radio-item value="default">Default</tolle-radio-item>
@@ -42,5 +43,5 @@ export class RadioGroupInteractiveComponent {
 </tolle-radio-group>
 
 <!-- Selected: {{ selectedValue }} -->`;
-    }
+  }
 }

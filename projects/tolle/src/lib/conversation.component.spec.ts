@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { By } from '@angular/platform-browser';
 import {
   ConversationComponent,
@@ -10,22 +10,24 @@ import {
 } from './conversation.component';
 
 @Component({
-    imports: [
-        CommonModule,
-        ConversationComponent,
-        ConversationContentComponent,
-        ConversationEmptyStateComponent,
-        ConversationScrollButtonComponent,
-    ],
-    template: `
+  imports: [
+    ConversationComponent,
+    ConversationContentComponent,
+    ConversationEmptyStateComponent,
+    ConversationScrollButtonComponent,
+  ],
+  template: `
     <tolle-conversation [empty]="empty" (atBottomChange)="atBottomEvents.push($event)">
       <tolle-conversation-empty-state title="Nothing here"></tolle-conversation-empty-state>
       <tolle-conversation-content>
-        <div *ngFor="let message of messages" style="height: 100px">{{ message }}</div>
+        @for (message of messages; track message) {
+          <div style="height: 100px">{{ message }}</div>
+        }
       </tolle-conversation-content>
-      <tolle-conversation-scroll-button (jumped)="jumps = jumps + 1"></tolle-conversation-scroll-button>
+      <tolle-conversation-scroll-button
+        (jumped)="jumps = jumps + 1"></tolle-conversation-scroll-button>
     </tolle-conversation>
-  `
+  `,
 })
 class HostComponent {
   empty = false;

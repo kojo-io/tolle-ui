@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { BaseService } from '../../shared/base.service';
 
@@ -12,9 +12,9 @@ interface Artifact {
 }
 
 @Component({
-    selector: 'app-ai-native-docs',
-    imports: [CommonModule, RouterLink],
-    templateUrl: './ai-native-docs.component.html'
+  selector: 'app-ai-native-docs',
+  imports: [RouterLink],
+  templateUrl: './ai-native-docs.component.html',
 })
 export class AiNativeDocsComponent {
   protected baseService = inject(BaseService);

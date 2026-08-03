@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import {
   AlertDialogComponent,
@@ -11,33 +11,32 @@ import {
   AlertDialogTitleComponent,
   AlertDialogDescriptionComponent,
   AlertDialogActionComponent,
-  AlertDialogCancelComponent
+  AlertDialogCancelComponent,
 } from '../../../../../../tolle/src/lib/alert-dialog.component';
 import { AlertDialogService } from '../../../../../../tolle/src/lib/alert-dialog.service';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
-    selector: 'app-alert-dialog-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        AlertDialogComponent,
-        AlertDialogTriggerComponent,
-        AlertDialogPortalComponent,
-        AlertDialogContentComponent,
-        AlertDialogHeaderComponent,
-        AlertDialogFooterComponent,
-        AlertDialogTitleComponent,
-        AlertDialogDescriptionComponent,
-        AlertDialogActionComponent,
-        AlertDialogCancelComponent,
-        PlaygroundComponent,
-        ButtonComponent
-    ],
-    template: `
+  selector: 'app-alert-dialog-interactive',
+  imports: [
+    FormsModule,
+    AlertDialogComponent,
+    AlertDialogTriggerComponent,
+    AlertDialogPortalComponent,
+    AlertDialogContentComponent,
+    AlertDialogHeaderComponent,
+    AlertDialogFooterComponent,
+    AlertDialogTitleComponent,
+    AlertDialogDescriptionComponent,
+    AlertDialogActionComponent,
+    AlertDialogCancelComponent,
+    PlaygroundComponent,
+    ButtonComponent,
+  ],
+  template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview class="flex flex-col gap-4">
           <tolle-alert-dialog #templateDialog>
@@ -49,8 +48,8 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
                 <tolle-alert-dialog-header>
                   <tolle-alert-dialog-title>Are you absolutely sure?</tolle-alert-dialog-title>
                   <tolle-alert-dialog-description>
-                    This action cannot be undone. This will permanently delete your
-                    account and remove your data from our servers.
+                    This action cannot be undone. This will permanently delete your account and
+                    remove your data from our servers.
                   </tolle-alert-dialog-description>
                 </tolle-alert-dialog-header>
                 <tolle-alert-dialog-footer>
@@ -77,25 +76,26 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class AlertDialogInteractiveComponent {
   private alertDialog = inject(AlertDialogService);
 
   openFromService(size: any = 'lg') {
     const dialog = this.alertDialog.open({
-      title: "Delete Project?",
-      description: "This will permanently delete the selected project. This action cannot be undone.",
-      actionText: "Delete",
-      variant: "destructive",
-      size: size
+      title: 'Delete Project?',
+      description:
+        'This will permanently delete the selected project. This action cannot be undone.',
+      actionText: 'Delete',
+      variant: 'destructive',
+      size: size,
     });
 
     dialog.afterClosed$.subscribe({
-      next: (result) => {
+      next: result => {
         alert(result);
-      }
-    })
+      },
+    });
   }
 
   get playgroundCode() {

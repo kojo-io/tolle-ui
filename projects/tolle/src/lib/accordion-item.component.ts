@@ -1,52 +1,56 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-accordion-item',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    animations: [
-        trigger('expandCollapse', [
-            state('collapsed', style({
-                height: '0px',
-                opacity: '0',
-                overflow: 'hidden',
-                visibility: 'hidden'
-            })),
-            state('expanded', style({
-                height: '*', // "Star" means actual content height
-                opacity: '1',
-                overflow: 'hidden',
-                visibility: 'visible'
-            })),
-            // Use cubic-bezier to match Tailwind/shadcn-ui default ease
-            transition('collapsed <=> expanded', [
-                animate('300ms cubic-bezier(0.87, 0, 0.13, 1)')
-            ])
-        ])
-    ],
-    template: `
+  selector: 'tolle-accordion-item',
+  styles: [':host { display: block; }'],
+  imports: [],
+  animations: [
+    trigger('expandCollapse', [
+      state(
+        'collapsed',
+        style({
+          height: '0px',
+          opacity: '0',
+          overflow: 'hidden',
+          visibility: 'hidden',
+        })
+      ),
+      state(
+        'expanded',
+        style({
+          height: '*', // "Star" means actual content height
+          opacity: '1',
+          overflow: 'hidden',
+          visibility: 'visible',
+        })
+      ),
+      // Use cubic-bezier to match Tailwind/shadcn-ui default ease
+      transition('collapsed <=> expanded', [animate('300ms cubic-bezier(0.87, 0, 0.13, 1)')]),
+    ]),
+  ],
+  template: `
     <div [class]="cn('flex flex-col border-b border-border', class)">
       <button
         type="button"
         (click)="toggle()"
-        [id]="'acc-trigger-'+id"
-        [attr.aria-controls]="'acc-content-'+id"
+        [id]="'acc-trigger-' + id"
+        [attr.aria-controls]="'acc-content-' + id"
         [attr.aria-expanded]="isOpen"
         [attr.data-state]="isOpen ? 'open' : 'closed'"
-        class="flex flex-1 items-center justify-between py-4 font-medium transition-all group [&[data-state=open]>i]:rotate-180 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ring-offset-background"
-      >
+        class="group flex flex-1 cursor-pointer items-center justify-between py-4 font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 [&[data-state=open]>i]:rotate-180">
         <span class="text-left group-hover:underline">{{ title }}</span>
-        <i class="ri-arrow-down-s-line text-muted-foreground text-lg transition-transform duration-200"></i>
+        <i
+          class="ri-arrow-down-s-line text-lg text-muted-foreground transition-transform duration-200"></i>
       </button>
 
       <div
         [@expandCollapse]="isOpen ? 'expanded' : 'collapsed'"
-        [id]="'acc-content-'+id"
+        [id]="'acc-content-' + id"
         role="region"
-        [attr.aria-labelledby]="'acc-trigger-'+id"
+        [attr.aria-labelledby]="'acc-trigger-' + id"
         [attr.data-state]="isOpen ? 'open' : 'closed'"
         class="overflow-hidden">
         <div class="pb-4 pt-0 text-sm text-muted-foreground">
@@ -54,7 +58,7 @@ import { cn } from './utils/cn';
         </div>
       </div>
     </div>
-  `
+  `,
 })
 export class AccordionItemComponent {
   @Input() title: string = '';

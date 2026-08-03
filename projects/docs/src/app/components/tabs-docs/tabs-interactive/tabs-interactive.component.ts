@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
-import { TabsComponent, TabsListComponent, TabsTriggerComponent, TabsContentComponent } from '../../../../../../tolle/src/lib/tabs.component';
+import {
+  TabsComponent,
+  TabsListComponent,
+  TabsTriggerComponent,
+  TabsContentComponent,
+} from '../../../../../../tolle/src/lib/tabs.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { CardComponent } from '../../../../../../tolle/src/lib/card.component';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
@@ -11,32 +16,30 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-tabs-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        TabsComponent,
-        TabsListComponent,
-        TabsTriggerComponent,
-        TabsContentComponent,
-        PlaygroundComponent,
-        CardComponent,
-        ButtonComponent,
-        InputComponent,
-        LabelComponent,
-        SelectComponent,
-        SelectItemComponent
-    ],
-    template: `
+  selector: 'app-tabs-interactive',
+  imports: [
+    FormsModule,
+    TabsComponent,
+    TabsListComponent,
+    TabsTriggerComponent,
+    TabsContentComponent,
+    PlaygroundComponent,
+    CardComponent,
+    ButtonComponent,
+    InputComponent,
+    LabelComponent,
+    SelectComponent,
+    SelectItemComponent,
+  ],
+  template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <tolle-tabs defaultValue="account" class="w-[400px]">
-            <tolle-tabs-list 
-              [class]="variant === 'default' ? 'grid w-full grid-cols-2' : 'flex w-full'" 
-              [variant]="variant"
-            >
+            <tolle-tabs-list
+              [class]="variant === 'default' ? 'grid w-full grid-cols-2' : 'flex w-full'"
+              [variant]="variant">
               <tolle-tabs-trigger value="account">Account</tolle-tabs-trigger>
               <tolle-tabs-trigger value="password">Password</tolle-tabs-trigger>
             </tolle-tabs-list>
@@ -45,7 +48,9 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
                 <div class="space-y-4">
                   <div class="space-y-2">
                     <h3 class="text-lg font-semibold leading-none tracking-tight">Account</h3>
-                    <p class="text-sm text-muted-foreground">Make changes to your account here. Click save when you're done.</p>
+                    <p class="text-sm text-muted-foreground">
+                      Make changes to your account here. Click save when you're done.
+                    </p>
                   </div>
                   <div class="space-y-2">
                     <tolle-label for="name">Name</tolle-label>
@@ -66,7 +71,9 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
                 <div class="space-y-4">
                   <div class="space-y-2">
                     <h3 class="text-lg font-semibold leading-none tracking-tight">Password</h3>
-                    <p class="text-sm text-muted-foreground">Change your password here. After saving, you'll be logged out.</p>
+                    <p class="text-sm text-muted-foreground">
+                      Change your password here. After saving, you'll be logged out.
+                    </p>
                   </div>
                   <div class="space-y-2">
                     <tolle-label for="current">Current password</tolle-label>
@@ -96,7 +103,7 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class TabsInteractiveComponent {
   variant: 'default' | 'underline' = 'default';

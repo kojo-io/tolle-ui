@@ -1,5 +1,20 @@
-import { Component, Directive, Input, Output, EventEmitter, ElementRef, NgZone, ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit, OnInit, OnDestroy, inject, OnChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Directive,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  NgZone,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  AfterViewInit,
+  OnInit,
+  OnDestroy,
+  inject,
+  OnChanges,
+} from '@angular/core';
+
 import { Subscription } from 'rxjs';
 import { cn } from './utils/cn';
 import { MessageScrollerService, ScrollStartPosition } from './message-scroller.service';
@@ -30,19 +45,19 @@ import { MessageScrollerService, ScrollStartPosition } from './message-scroller.
  * @new
  */
 @Component({
-    selector: 'tolle-message-scroller',
-    // The host sits between a consumer-sized parent and the templated flex
-    // frame below; display:block would drop the parent's height and the
-    // frame's `flex-1 min-h-0` would have nothing to size against.
-    styles: [':host { display: flex; flex-direction: column; height: 100%; min-height: 0; }'],
-    imports: [CommonModule],
-    providers: [MessageScrollerService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-message-scroller',
+  // The host sits between a consumer-sized parent and the templated flex
+  // frame below; display:block would drop the parent's height and the
+  // frame's `flex-1 min-h-0` would have nothing to size against.
+  styles: [':host { display: flex; flex-direction: column; height: 100%; min-height: 0; }'],
+  imports: [],
+  providers: [MessageScrollerService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div [class]="cn('relative flex min-h-0 flex-1 flex-col overflow-hidden', class)">
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
 export class MessageScrollerComponent implements OnChanges, OnInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -84,7 +99,7 @@ export class MessageScrollerComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.service.threshold = this.threshold;
-    this.sub.add(this.service.atBottom$.subscribe((v) => this.atBottomChange.emit(v)));
+    this.sub.add(this.service.atBottom$.subscribe(v => this.atBottomChange.emit(v)));
   }
 
   ngOnDestroy(): void {
@@ -102,17 +117,17 @@ export class MessageScrollerComponent implements OnChanges, OnInit, OnDestroy {
  * follow streamed text and hold position when history is prepended.
  */
 @Component({
-    selector: 'tolle-message-scroller-viewport',
-    // Same reasoning as tolle-message-scroller: this host is the flex item the
-    // scrollable inner div sizes against, so it must join the flex chain itself.
-    styles: [':host { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-message-scroller-viewport',
+  // Same reasoning as tolle-message-scroller: this host is the flex item the
+  // scrollable inner div sizes against, so it must join the flex chain itself.
+  styles: [':host { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div #viewport [class]="cn('min-h-0 flex-1 overflow-y-auto overscroll-contain', class)">
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
 export class MessageScrollerViewportComponent implements OnChanges, AfterViewInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -212,22 +227,21 @@ export class MessageScrollerViewportComponent implements OnChanges, AfterViewIni
 
 /** The transcript itself. Announced politely so streamed replies reach screen readers. */
 @Component({
-    selector: 'tolle-message-scroller-content',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-message-scroller-content',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div
       role="log"
       aria-live="polite"
       aria-relevant="additions text"
-      [class]="cn('flex flex-col gap-4 p-4', class)"
-    >
+      [class]="cn('flex flex-col gap-4 p-4', class)">
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
-export class MessageScrollerContentComponent  implements OnChanges{
+export class MessageScrollerContentComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -276,31 +290,32 @@ export class MessageScrollerItemDirective implements OnInit, OnDestroy {
 
 /** Floating "jump to latest" control. Hidden while the reader is already at the edge. */
 @Component({
-    selector: 'tolle-message-scroller-button',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-    <button
-      *ngIf="!atBottom"
-      type="button"
-      [attr.aria-label]="ariaLabel"
-      [class]="cn(
-        'absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 rounded-full',
-        'border border-border bg-popover px-3 py-1.5 text-xs font-medium text-popover-foreground shadow-md',
-        'transition-colors hover:bg-accent hover:text-accent-foreground',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-        class
-      )"
-      (click)="jump()"
-    >
-      <i class="ri-arrow-down-line" aria-hidden="true"></i>
-      <ng-content></ng-content>
-    </button>
-  `
+  selector: 'tolle-message-scroller-button',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    @if (!atBottom) {
+      <button
+        type="button"
+        [attr.aria-label]="ariaLabel"
+        [class]="
+          cn(
+            'absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 rounded-full',
+            'border border-border bg-popover px-3 py-1.5 text-xs font-medium text-popover-foreground shadow-md',
+            'transition-colors hover:bg-accent hover:text-accent-foreground',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            class
+          )
+        "
+        (click)="jump()">
+        <i class="ri-arrow-down-line" aria-hidden="true"></i>
+        <ng-content></ng-content>
+      </button>
+    }
+  `,
 })
 export class MessageScrollerButtonComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -324,7 +339,7 @@ export class MessageScrollerButtonComponent implements OnChanges, OnInit, OnDest
 
   ngOnInit(): void {
     this.sub.add(
-      this.service.atBottom$.subscribe((v) => {
+      this.service.atBottom$.subscribe(v => {
         this.atBottom = v;
         this.cdr.markForCheck();
       })

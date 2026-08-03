@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { OtpComponent } from '../../../../../../tolle/src/lib/otp.component';
 import { OtpSlotComponent } from '../../../../../../tolle/src/lib/otp-slot.component';
@@ -10,42 +10,43 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
-    selector: 'app-otp-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        OtpComponent,
-        OtpSlotComponent,
-        OtpGroupComponent,
-        InputComponent,
-        SwitchComponent,
-        LabelComponent,
-        PlaygroundComponent
-    ],
-    templateUrl: './otp-interactive.component.html'
+  selector: 'app-otp-interactive',
+  imports: [
+    FormsModule,
+    OtpComponent,
+    OtpSlotComponent,
+    OtpGroupComponent,
+    InputComponent,
+    SwitchComponent,
+    LabelComponent,
+    PlaygroundComponent,
+  ],
+  templateUrl: './otp-interactive.component.html',
 })
 export class OtpInteractiveComponent {
-    protected readonly Array = Array;
-    length = 6;
-    disabled = false;
-    auto = true;
+  protected readonly Array = Array;
+  length = 6;
+  disabled = false;
+  auto = true;
 
-    otpValue = '';
+  otpValue = '';
 
-    get playgroundCode(): string {
-        const inputs = [
-            this.length !== 6 ? `[length]="${this.length}"` : '',
-            this.disabled ? '[disabled]="true"' : '',
-            this.auto ? '[auto]="true"' : ''
-        ].filter(Boolean).join('\n  ');
+  get playgroundCode(): string {
+    const inputs = [
+      this.length !== 6 ? `[length]="${this.length}"` : '',
+      this.disabled ? '[disabled]="true"' : '',
+      this.auto ? '[auto]="true"' : '',
+    ]
+      .filter(Boolean)
+      .join('\n  ');
 
-        if (this.auto) {
-            return `<tolle-otp
+    if (this.auto) {
+      return `<tolle-otp
   [(ngModel)]="otpValue"${inputs ? '\n  ' + inputs : ''}
 ></tolle-otp>`;
-        }
+    }
 
-        return `<tolle-otp #otp
+    return `<tolle-otp #otp
   [(ngModel)]="otpValue"${inputs ? '\n  ' + inputs : ''}
 >
   <tolle-otp-group>
@@ -68,5 +69,5 @@ export class OtpInteractiveComponent {
     ></tolle-otp-slot>
   </tolle-otp-group>
 </tolle-otp>`;
-    }
+  }
 }

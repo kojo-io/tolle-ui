@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { BreadcrumbComponent } from '../../../../../../tolle/src/lib/breadcrumb.component';
 import { BreadcrumbItemComponent } from '../../../../../../tolle/src/lib/breadcrumb-item.component';
@@ -11,20 +11,19 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-breadcrumb-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        BreadcrumbComponent,
-        BreadcrumbItemComponent,
-        BreadcrumbLinkComponent,
-        BreadcrumbSeparatorComponent,
-        PlaygroundComponent,
-        InputComponent,
-        SwitchComponent,
-        LabelComponent
-    ],
-    templateUrl: './breadcrumb-interactive.component.html'
+  selector: 'app-breadcrumb-interactive',
+  imports: [
+    FormsModule,
+    BreadcrumbComponent,
+    BreadcrumbItemComponent,
+    BreadcrumbLinkComponent,
+    BreadcrumbSeparatorComponent,
+    PlaygroundComponent,
+    InputComponent,
+    SwitchComponent,
+    LabelComponent,
+  ],
+  templateUrl: './breadcrumb-interactive.component.html',
 })
 export class BreadcrumbInteractiveComponent {
   label: string = 'Current Page';

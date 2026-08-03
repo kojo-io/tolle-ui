@@ -10,7 +10,7 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CountryCodesService } from './country-codes.service';
@@ -19,21 +19,23 @@ import { InputComponent } from './input.component';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-country-selector',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule, FormsModule, PopoverComponent, InputComponent],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => CountrySelectorComponent),
-            multi: true,
-        },
-    ],
-    template: `
+  selector: 'tolle-country-selector',
+  styles: [':host { display: block; }'],
+  imports: [FormsModule, PopoverComponent, InputComponent],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CountrySelectorComponent),
+      multi: true,
+    },
+  ],
+  template: `
     <div class="flex w-full flex-col gap-1.5">
-      <label *ngIf="label" [for]="id" [class]="computedLabelClass">
-        {{ label }}
-      </label>
+      @if (label) {
+        <label [for]="id" [class]="computedLabelClass">
+          {{ label }}
+        </label>
+      }
 
       <tolle-popover
         #popover
@@ -56,17 +58,22 @@ import { cn } from './utils/cn';
             [attr.aria-invalid]="error"
             [attr.aria-describedby]="error && errorMessage ? id + '-error' : null">
             <div class="flex items-center gap-2 truncate">
-              <img
-                *ngIf="selectedCountry"
-                [src]="getFlagUrl(selectedCountry.flag)"
-                class="h-4 w-6 flex-shrink-0 rounded-sm border border-border object-cover"
-                [alt]="selectedCountry.name" />
-              <span *ngIf="selectedCountry && showName" class="truncate font-medium">
-                {{ selectedCountry.name }}
-              </span>
-              <span *ngIf="!selectedCountry" class="truncate text-muted-foreground">
-                {{ placeholder }}
-              </span>
+              @if (selectedCountry) {
+                <img
+                  [src]="getFlagUrl(selectedCountry.flag)"
+                  class="h-4 w-6 flex-shrink-0 rounded-sm border border-border object-cover"
+                  [alt]="selectedCountry.name" />
+              }
+              @if (selectedCountry && showName) {
+                <span class="truncate font-medium">
+                  {{ selectedCountry.name }}
+                </span>
+              }
+              @if (!selectedCountry) {
+                <span class="truncate text-muted-foreground">
+                  {{ placeholder }}
+                </span>
+              }
             </div>
             <i [class]="iconClass"></i>
           </button>
@@ -89,51 +96,50 @@ import { cn } from './utils/cn';
           </div>
 
           <div role="listbox" class="max-h-[300px] overflow-y-auto p-1">
-            <div
-              *ngFor="let country of shadowCountries; let i = index"
-              [id]="id + '-option-' + i"
-              role="option"
-              [attr.aria-selected]="selectedCountry?.isoAlpha2 === country.isoAlpha2"
-              [attr.data-highlighted]="i === activeIndex ? '' : null"
-              (click)="selectCountry(country)"
-              [class]="getItemClass(country, i)">
-              <div class="flex w-full items-center gap-3">
-                <img
-                  [src]="getFlagUrl(country.flag)"
-                  class="h-4 w-6 flex-shrink-0 rounded-sm border border-border object-cover"
-                  [alt]="country.name" />
-                <span class="flex-1 truncate text-sm">{{ country.name }}</span>
-                <span class="text-xs text-muted-foreground">{{ country.dialCode }}</span>
-                <i
-                  *ngIf="selectedCountry?.isoAlpha2 === country.isoAlpha2"
-                  class="ri-check-line text-primary"></i>
+            @for (country of shadowCountries; track country; let i = $index) {
+              <div
+                [id]="id + '-option-' + i"
+                role="option"
+                [attr.aria-selected]="selectedCountry?.isoAlpha2 === country.isoAlpha2"
+                [attr.data-highlighted]="i === activeIndex ? '' : null"
+                (click)="selectCountry(country)"
+                [class]="getItemClass(country, i)">
+                <div class="flex w-full items-center gap-3">
+                  <img
+                    [src]="getFlagUrl(country.flag)"
+                    class="h-4 w-6 flex-shrink-0 rounded-sm border border-border object-cover"
+                    [alt]="country.name" />
+                  <span class="flex-1 truncate text-sm">{{ country.name }}</span>
+                  <span class="text-xs text-muted-foreground">{{ country.dialCode }}</span>
+                  @if (selectedCountry?.isoAlpha2 === country.isoAlpha2) {
+                    <i class="ri-check-line text-primary"></i>
+                  }
+                </div>
               </div>
-            </div>
-            <div
-              *ngIf="shadowCountries.length === 0"
-              class="py-6 text-center text-sm text-muted-foreground">
-              No countries found.
-            </div>
+            }
+            @if (shadowCountries.length === 0) {
+              <div class="py-6 text-center text-sm text-muted-foreground">No countries found.</div>
+            }
           </div>
         </div>
       </tolle-popover>
 
-      <ng-container *ngIf="!disabled">
-        <p
-          *ngIf="hint && !error"
-          class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus">
-          {{ hint }}
-        </p>
-        <p
-          *ngIf="error && errorMessage"
-          [id]="id + '-error'"
-          class="px-1 text-xs font-medium text-destructive">
-          {{ errorMessage }}
-        </p>
-      </ng-container>
+      @if (!disabled) {
+        @if (hint && !error) {
+          <p
+            class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
+            [class.opacity-0]="isFocused && hideHintOnFocus">
+            {{ hint }}
+          </p>
+        }
+        @if (error && errorMessage) {
+          <p [id]="id + '-error'" class="px-1 text-xs font-medium text-destructive">
+            {{ errorMessage }}
+          </p>
+        }
+      }
     </div>
-  `
+  `,
 })
 export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   @Input() id = `country-selector-${Math.random().toString(36).substr(2, 9)}`;
@@ -320,7 +326,7 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
     const selIdx = this.selectedCountry
       ? this.shadowCountries.findIndex(c => c.isoAlpha2 === this.selectedCountry.isoAlpha2)
       : -1;
-    this.activeIndex = selIdx >= 0 ? selIdx : (this.shadowCountries.length ? 0 : -1);
+    this.activeIndex = selIdx >= 0 ? selIdx : this.shadowCountries.length ? 0 : -1;
     setTimeout(() => {
       this.getSearchInputEl()?.focus();
       this.syncActiveDescendant();
@@ -358,9 +364,12 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
 
   private moveActive(delta: number) {
     if (!this.shadowCountries.length) return;
-    const next = this.activeIndex < 0
-      ? (delta > 0 ? 0 : this.shadowCountries.length - 1)
-      : this.activeIndex + delta;
+    const next =
+      this.activeIndex < 0
+        ? delta > 0
+          ? 0
+          : this.shadowCountries.length - 1
+        : this.activeIndex + delta;
     // Clamp (no wrap, matching shadcn).
     this.activeIndex = Math.max(0, Math.min(next, this.shadowCountries.length - 1));
     this.syncActiveDescendant();
@@ -378,7 +387,14 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
     if (this.disabled || this.readonly) return;
     if (this.popover?.isOpen) return; // once open, focus moves to the search input
     const key = event.key;
-    if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === ' ' || key === 'Home' || key === 'End') {
+    if (
+      key === 'ArrowDown' ||
+      key === 'ArrowUp' ||
+      key === 'Enter' ||
+      key === ' ' ||
+      key === 'Home' ||
+      key === 'End'
+    ) {
       event.preventDefault();
       this.popover.open();
     } else if (key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
@@ -392,9 +408,18 @@ export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   onSearchKeyDown(event: KeyboardEvent) {
     if (!this.popover?.isOpen) return;
     switch (event.key) {
-      case 'ArrowDown': event.preventDefault(); this.moveActive(1); break;
-      case 'ArrowUp': event.preventDefault(); this.moveActive(-1); break;
-      case 'Enter': event.preventDefault(); this.selectActive(); break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.moveActive(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.moveActive(-1);
+        break;
+      case 'Enter':
+        event.preventDefault();
+        this.selectActive();
+        break;
       case 'Escape':
         event.preventDefault();
         this.popover.close();

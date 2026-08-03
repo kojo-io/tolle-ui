@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ModalService } from '../../../../../../tolle/src/lib/modal.service';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
@@ -11,27 +11,27 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-modal-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ButtonComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        SwitchComponent,
-        InputComponent,
-        LabelComponent
-    ],
-    template: `
+  selector: 'app-modal-interactive',
+  imports: [
+    FormsModule,
+    ButtonComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    SwitchComponent,
+    InputComponent,
+    LabelComponent,
+  ],
+  template: `
     <section class="space-y-6">
       <h2 class="text-xl font-semibold tracking-tight text-foreground">Interactive Playground</h2>
-      
+
       <app-playground [code]="codeSnippet">
-        <div preview class="flex items-center justify-center min-h-[300px] w-full">
-          <div class="text-center space-y-4">
-            <p class="text-sm text-muted-foreground max-w-xs mx-auto">
-              The modal opens in an overlay. Configure the options and click the button to see it in action.
+        <div preview class="flex min-h-[300px] w-full items-center justify-center">
+          <div class="space-y-4 text-center">
+            <p class="mx-auto max-w-xs text-sm text-muted-foreground">
+              The modal opens in an overlay. Configure the options and click the button to see it in
+              action.
             </p>
             <tolle-button (click)="openDemo()">Launch Demo Modal</tolle-button>
           </div>
@@ -66,28 +66,28 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class ModalInteractiveComponent {
-    private modalService = inject(ModalService);
+  private modalService = inject(ModalService);
 
-    title = 'Interactive Demo';
-    size: 'xs' | 'sm' | 'default' | 'lg' | 'fullscreen' = 'default';
-    showCloseButton = true;
-    backdropClose = true;
+  title = 'Interactive Demo';
+  size: 'xs' | 'sm' | 'default' | 'lg' | 'fullscreen' = 'default';
+  showCloseButton = true;
+  backdropClose = true;
 
-    openDemo() {
-        this.modalService.open({
-            title: this.title,
-            size: this.size,
-            showCloseButton: this.showCloseButton,
-            backdropClose: this.backdropClose,
-            content: 'This modal was configured using the interactive controls in the playground!'
-        });
-    }
+  openDemo() {
+    this.modalService.open({
+      title: this.title,
+      size: this.size,
+      showCloseButton: this.showCloseButton,
+      backdropClose: this.backdropClose,
+      content: 'This modal was configured using the interactive controls in the playground!',
+    });
+  }
 
-    get codeSnippet(): string {
-        return `// Inject ModalService in your component
+  get codeSnippet(): string {
+    return `// Inject ModalService in your component
 constructor(private modalService: ModalService) {}
 
 openModal() {
@@ -99,5 +99,5 @@ openModal() {
     content: '...'
   });
 }`;
-    }
+  }
 }

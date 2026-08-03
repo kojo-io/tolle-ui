@@ -1,11 +1,20 @@
-import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  OnDestroy,
+} from '@angular/core';
+
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-resizable',
-    imports: [CommonModule],
-    template: `
+  selector: 'tolle-resizable',
+  imports: [],
+  template: `
     <div
       #container
       [class]="computedContainerClass"
@@ -14,42 +23,46 @@ import { cn } from './utils/cn';
       [style.minWidth.px]="minWidth"
       [style.minHeight.px]="minHeight"
       [style.maxWidth.px]="maxWidth"
-      [style.maxHeight.px]="maxHeight"
-    >
+      [style.maxHeight.px]="maxHeight">
       <ng-content></ng-content>
 
       <!-- Resize handles -->
-      <div
-        *ngIf="resizable"
-        class="absolute -right-1 -bottom-1 w-3 h-3 cursor-se-resize z-10"
-        (mousedown)="onResizeStart($event, 'both')"
-      >
-        <div class="absolute right-0 bottom-0 w-2 h-2 border-r-2 border-b-2 border-muted-foreground/50 rounded-sm"></div>
-      </div>
+      @if (resizable) {
+        <div
+          class="absolute -bottom-1 -right-1 z-10 h-3 w-3 cursor-se-resize"
+          (mousedown)="onResizeStart($event, 'both')">
+          <div
+            class="absolute bottom-0 right-0 h-2 w-2 rounded-sm border-b-2 border-r-2 border-muted-foreground/50"></div>
+        </div>
+      }
 
-      <div
-        *ngIf="resizable && directions.includes('right')"
-        class="absolute -right-1 top-0 bottom-0 w-2 cursor-col-resize z-10"
-        (mousedown)="onResizeStart($event, 'horizontal')"
-      >
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-4 rounded-full bg-muted-foreground/30"></div>
-      </div>
+      @if (resizable && directions.includes('right')) {
+        <div
+          class="absolute -right-1 bottom-0 top-0 z-10 w-2 cursor-col-resize"
+          (mousedown)="onResizeStart($event, 'horizontal')">
+          <div
+            class="absolute right-0 top-1/2 h-4 w-1 -translate-y-1/2 rounded-full bg-muted-foreground/30"></div>
+        </div>
+      }
 
-      <div
-        *ngIf="resizable && directions.includes('bottom')"
-        class="absolute -bottom-1 left-0 right-0 h-2 cursor-row-resize z-10"
-        (mousedown)="onResizeStart($event, 'vertical')"
-      >
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 h-1 w-4 rounded-full bg-muted-foreground/30"></div>
-      </div>
+      @if (resizable && directions.includes('bottom')) {
+        <div
+          class="absolute -bottom-1 left-0 right-0 z-10 h-2 cursor-row-resize"
+          (mousedown)="onResizeStart($event, 'vertical')">
+          <div
+            class="absolute bottom-0 left-1/2 h-1 w-4 -translate-x-1/2 rounded-full bg-muted-foreground/30"></div>
+        </div>
+      }
     </div>
   `,
-    styles: [`
-    :host {
-      display: inline-block;
-      position: relative;
-    }
-  `]
+  styles: [
+    `
+      :host {
+        display: inline-block;
+        position: relative;
+      }
+    `,
+  ],
 })
 export class ResizableComponent implements AfterViewInit, OnDestroy {
   @Input() width: number = 300;
@@ -158,10 +171,14 @@ export class ResizableComponent implements AfterViewInit, OnDestroy {
 
   private getResizeCursor(direction: 'horizontal' | 'vertical' | 'both'): string {
     switch (direction) {
-      case 'horizontal': return 'col-resize';
-      case 'vertical': return 'row-resize';
-      case 'both': return 'se-resize';
-      default: return '';
+      case 'horizontal':
+        return 'col-resize';
+      case 'vertical':
+        return 'row-resize';
+      case 'both':
+        return 'se-resize';
+      default:
+        return '';
     }
   }
 

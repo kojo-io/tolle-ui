@@ -1,6 +1,12 @@
 import {
-  Component, Input, OnInit, OnChanges, SimpleChanges,
-  TemplateRef, ContentChildren, QueryList
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  TemplateRef,
+  ContentChildren,
+  QueryList,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -20,176 +26,247 @@ export interface TableColumn {
 }
 
 @Component({
-    selector: 'tolle-data-table',
-    styles: [`
-    :host { display: block; width: 100%; height: 100%; }
-    table { width: 100%; border-collapse: collapse; display: table; }
-    thead { display: table-header-group; }
-    tbody { display: table-row-group; }
-    tr { display: table-row; }
-    th, td { display: table-cell; }
-  `],
-    imports: [
-        CommonModule,
-        FormsModule,
-        PaginationComponent,
-        InputComponent,
-        PopoverComponent,
-        PopoverContentComponent,
-        CheckboxComponent,
-    ],
-    template: `
-    <div class="h-full flex flex-col w-full">
-      <div class="flex items-center justify-between py-2 flex-none">
-        <div *ngIf="searchable" class="w-full max-w-sm">
-          <tolle-input
-            [size]="size === 'lg' ? 'default' : 'sm'"
-            class="w-full"
-            aria-label="Filter records"
-            placeholder="Filter records..."
-            [(ngModel)]="searchTerm"
-            (ngModelChange)="onSearch()">
-            <i prefix class="ri-search-line"></i>
-          </tolle-input>
-        </div>
+  selector: 'tolle-data-table',
+  styles: [
+    `
+      :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        display: table;
+      }
+      thead {
+        display: table-header-group;
+      }
+      tbody {
+        display: table-row-group;
+      }
+      tr {
+        display: table-row;
+      }
+      th,
+      td {
+        display: table-cell;
+      }
+    `,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PaginationComponent,
+    InputComponent,
+    PopoverComponent,
+    PopoverContentComponent,
+    CheckboxComponent,
+  ],
+  template: `
+    <div class="flex h-full w-full flex-col">
+      <div class="flex flex-none items-center justify-between py-2">
+        @if (searchable) {
+          <div class="w-full max-w-sm">
+            <tolle-input
+              [size]="size === 'lg' ? 'default' : 'sm'"
+              class="w-full"
+              aria-label="Filter records"
+              placeholder="Filter records..."
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearch()">
+              <i prefix class="ri-search-line"></i>
+            </tolle-input>
+          </div>
+        }
 
-        <tolle-popover *ngIf="allowColumnHiding && showSettings" class="ml-auto">
-          <button trigger
-                  [class]="cn(
-              'ml-auto flex items-center gap-2 rounded-md border border-input bg-background px-3 hover:bg-accent hover:text-accent-foreground transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring',
-              size === 'xs' ? 'h-7 text-xs' : 'h-9 text-sm'
-            )">
-            <i class="ri-settings-3-line"></i>
-            View
-            <i class="ri-arrow-down-s-line ml-1 opacity-50"></i>
-          </button>
-          <tolle-popover-content class="w-56 p-0 bg-background border-border">
-            <div class="p-2 border-b border-border">
-              <p class="text-xs font-medium text-muted-foreground px-2">Toggle Columns</p>
-            </div>
-            <div class="p-2 max-h-[300px] overflow-y-auto space-y-1">
-              <label *ngFor="let col of columns" class="flex items-center gap-2 px-2 py-1.5 rounded-sm hover:bg-accent cursor-pointer text-sm transition-colors">
-                <tolle-checkbox [ngModel]="columnVisibility[col.key]"
-                                (ngModelChange)="toggleColumn(col.key)"/>
-                <span>{{ col.label }}</span>
-              </label>
-            </div>
-          </tolle-popover-content>
-        </tolle-popover>
+        @if (allowColumnHiding && showSettings) {
+          <tolle-popover class="ml-auto">
+            <button
+              trigger
+              [class]="
+                cn(
+                  'ml-auto flex items-center gap-2 rounded-md border border-input bg-background px-3 outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring',
+                  size === 'xs' ? 'h-7 text-xs' : 'h-9 text-sm'
+                )
+              ">
+              <i class="ri-settings-3-line"></i>
+              View
+              <i class="ri-arrow-down-s-line ml-1 opacity-50"></i>
+            </button>
+            <tolle-popover-content class="w-56 border-border bg-background p-0">
+              <div class="border-b border-border p-2">
+                <p class="px-2 text-xs font-medium text-muted-foreground">Toggle Columns</p>
+              </div>
+              <div class="max-h-[300px] space-y-1 overflow-y-auto p-2">
+                @for (col of columns; track col) {
+                  <label
+                    class="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent">
+                    <tolle-checkbox
+                      [ngModel]="columnVisibility[col.key]"
+                      (ngModelChange)="toggleColumn(col.key)" />
+                    <span>{{ col.label }}</span>
+                  </label>
+                }
+              </div>
+            </tolle-popover-content>
+          </tolle-popover>
+        }
       </div>
 
-      <div [class]="cn('flex-1 min-h-0 overflow-hidden relative w-full', bordered ? 'rounded-md border border-border' : '', tableBackground)">
-        <div class="overflow-auto w-full h-full" [style.max-height]="maxHeight">
-
+      <div
+        [class]="
+          cn(
+            'relative min-h-0 w-full flex-1 overflow-hidden',
+            bordered ? 'rounded-md border border-border' : '',
+            tableBackground
+          )
+        ">
+        <div class="h-full w-full overflow-auto" [style.max-height]="maxHeight">
           <table class="w-full table-auto border-collapse">
             <thead [class]="cn('border-b border-border', resolvedHeaderBackground)">
-            <tr>
-              <th *ngIf="expandable" scope="col" [class]="cn('px-4', size === 'xs' ? 'w-[32px]' : 'w-[48px]', stickyHeader ? 'sticky top-0 z-10 ' + resolvedHeaderBackground : '')"></th>
+              <tr>
+                @if (expandable) {
+                  <th
+                    scope="col"
+                    [class]="
+                      cn(
+                        'px-4',
+                        size === 'xs' ? 'w-[32px]' : 'w-[48px]',
+                        stickyHeader ? 'sticky top-0 z-10 ' + resolvedHeaderBackground : ''
+                      )
+                    "></th>
+                }
 
-              <th *ngFor="let col of activeColumns"
-                  scope="col"
-                  [attr.aria-sort]="sortKey === col.key ? (sortDir === 'asc' ? 'ascending' : (sortDir === 'desc' ? 'descending' : 'none')) : 'none'"
-                  [class]="cn('text-left font-medium text-foreground',headerPaddingClass,fontSizeClass, col.class, stickyHeader ? 'sticky top-0 z-10 shadow-sm ' + resolvedHeaderBackground : '')">
-
-                <button *ngIf="col.sortable; else plainHeader"
-                     type="button"
-                     (click)="toggleSort(col.key)"
-                     class="flex items-center gap-1 cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
-                  {{ col.label }}
-                  <i [class]="getSortIcon(col.key)" aria-hidden="true"></i>
-                </button>
-
-                <ng-template #plainHeader>
-                  {{ col.label }}
-                </ng-template>
-              </th>
-            </tr>
+                @for (col of activeColumns; track col) {
+                  <th
+                    scope="col"
+                    [attr.aria-sort]="
+                      sortKey === col.key
+                        ? sortDir === 'asc'
+                          ? 'ascending'
+                          : sortDir === 'desc'
+                            ? 'descending'
+                            : 'none'
+                        : 'none'
+                    "
+                    [class]="
+                      cn(
+                        'text-left font-medium text-foreground',
+                        headerPaddingClass,
+                        fontSizeClass,
+                        col.class,
+                        stickyHeader
+                          ? 'sticky top-0 z-10 shadow-sm ' + resolvedHeaderBackground
+                          : ''
+                      )
+                    ">
+                    @if (col.sortable) {
+                      <button
+                        type="button"
+                        (click)="toggleSort(col.key)"
+                        class="flex cursor-pointer select-none items-center gap-1 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                        {{ col.label }}
+                        <i [class]="getSortIcon(col.key)" aria-hidden="true"></i>
+                      </button>
+                    } @else {
+                      {{ col.label }}
+                    }
+                  </th>
+                }
+              </tr>
             </thead>
 
             <tbody class="divide-y divide-border">
-            <ng-container *ngFor="let row of pagedData; let i = index">
-              <tr [class]="cn('transition-colors', getRowBackground(row, i), 'hover:bg-muted/50')">
-                <td *ngIf="expandable" class="px-4">
-                  <button (click)="toggleRow(i)"
-                          [attr.aria-label]="expandedRows.has(i) ? 'Collapse row' : 'Expand row'"
-                          [attr.aria-expanded]="expandedRows.has(i)"
-                          [class]="cn(
-                      'rounded-md hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                      size === 'xs' ? 'h-6 w-6' : 'h-8 w-8'
-                    )">
-                    <i [class]="expandedRows.has(i)
-                ? 'ri-arrow-down-s-line'
-                : 'ri-arrow-right-s-line'" aria-hidden="true">
-                    </i>
-                  </button>
-                </td>
+              @for (row of pagedData; track row; let i = $index) {
+                <tr
+                  [class]="cn('transition-colors', getRowBackground(row, i), 'hover:bg-muted/50')">
+                  @if (expandable) {
+                    <td class="px-4">
+                      <button
+                        (click)="toggleRow(i)"
+                        [attr.aria-label]="expandedRows.has(i) ? 'Collapse row' : 'Expand row'"
+                        [attr.aria-expanded]="expandedRows.has(i)"
+                        [class]="
+                          cn(
+                            'rounded-md transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                            size === 'xs' ? 'h-6 w-6' : 'h-8 w-8'
+                          )
+                        ">
+                        <i
+                          [class]="
+                            expandedRows.has(i) ? 'ri-arrow-down-s-line' : 'ri-arrow-right-s-line'
+                          "
+                          aria-hidden="true">
+                        </i>
+                      </button>
+                    </td>
+                  }
+                  @for (col of activeColumns; track col) {
+                    <td [class]="cn('align-middle', cellPaddingClass, fontSizeClass, col.class)">
+                      @if (getTemplate(col.key); as cell) {
+                        <ng-container
+                          *ngTemplateOutlet="
+                            cell.template;
+                            context: { $implicit: row[col.key], row: row }
+                          ">
+                        </ng-container>
+                      } @else {
+                        {{ row[col.key] }}
+                      }
+                    </td>
+                  }
+                </tr>
+                @if (expandedRows.has(i)) {
+                  <tr class="bg-muted/10">
+                    <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)" class="p-0">
+                      <div class="border-t border-dashed border-border p-6">
+                        @if (expandedTemplate) {
+                          <ng-container *ngTemplateOutlet="expandedTemplate; context: { row: row }">
+                          </ng-container>
+                        } @else {
+                          <p class="text-xs italic text-muted-foreground">No details available.</p>
+                        }
+                      </div>
+                    </td>
+                  </tr>
+                }
+              }
 
-                <td *ngFor="let col of activeColumns"
-                    [class]="cn('align-middle',cellPaddingClass,fontSizeClass,col.class)">
-
-                  <ng-container *ngIf="getTemplate(col.key) as cell; else defaultCell">
-                    <ng-container
-                      *ngTemplateOutlet="cell.template; context: { $implicit: row[col.key], row: row }">
-                    </ng-container>
-                  </ng-container>
-
-                  <ng-template #defaultCell>
-                    {{ row[col.key] }}
-                  </ng-template>
-                </td>
-              </tr>
-
-              <tr *ngIf="expandedRows.has(i)" class="bg-muted/10">
-                <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)"
-                    class="p-0">
-                  <div class="p-6 border-t border-dashed border-border">
-                    <ng-container *ngIf="expandedTemplate; else noExpanded">
-                      <ng-container
-                        *ngTemplateOutlet="expandedTemplate; context: { row: row }">
-                      </ng-container>
-                    </ng-container>
-
-                    <ng-template #noExpanded>
-                      <p class="text-xs text-muted-foreground italic">
-                        No details available.
-                      </p>
-                    </ng-template>
-                  </div>
-                </td>
-              </tr>
-            </ng-container>
-
-            <tr *ngIf="pagedData.length === 0">
-              <td [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)"
-                  class="h-24 text-center text-muted-foreground">
-                No results found.
-              </td>
-            </tr>
+              @if (pagedData.length === 0) {
+                <tr>
+                  <td
+                    [attr.colspan]="activeColumns.length + (expandable ? 1 : 0)"
+                    class="h-24 text-center text-muted-foreground">
+                    No results found.
+                  </td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>
       </div>
 
       <div class="flex-none">
-        <tolle-pagination
-          *ngIf="paginate && filteredData.length > 0"
-          [totalRecords]="filteredData.length"
-          [pageSizeOptions]="pageSizeOptions"
-          [currentPage]="currentPage"
-          [currentPageSize]="pageSize"
-          (onPageNumberChange)="handlePageChange($event)"
-          (onPageSizeChange)="handlePageSizeChange($event)"
-        ></tolle-pagination>
+        @if (paginate && filteredData.length > 0) {
+          <tolle-pagination
+            [totalRecords]="filteredData.length"
+            [pageSizeOptions]="pageSizeOptions"
+            [currentPage]="currentPage"
+            [currentPageSize]="pageSize"
+            (onPageNumberChange)="handlePageChange($event)"
+            (onPageSizeChange)="handlePageSizeChange($event)"></tolle-pagination>
+        }
       </div>
     </div>
-  `
+  `,
 })
 export class DataTableComponent implements OnInit, OnChanges {
   @Input() data: any[] = [];
   @Input() columns: TableColumn[] = [];
   @Input() searchable = true;
   @Input() paginate = true;
-  @Input() pageSizeOptions: number[] = []
+  @Input() pageSizeOptions: number[] = [];
   @Input() pageSize = 10;
   @Input() expandable = false;
 
@@ -269,28 +346,40 @@ export class DataTableComponent implements OnInit, OnChanges {
   // Style Getters
   get cellPaddingClass(): string {
     switch (this.size) {
-      case 'xs': return 'p-1 px-4';
-      case 'sm': return 'p-2 px-4';
-      case 'lg': return 'p-6 px-4';
-      default: return 'p-4';
+      case 'xs':
+        return 'p-1 px-4';
+      case 'sm':
+        return 'p-2 px-4';
+      case 'lg':
+        return 'p-6 px-4';
+      default:
+        return 'p-4';
     }
   }
 
   get headerPaddingClass(): string {
     switch (this.size) {
-      case 'xs': return 'h-7 px-4';
-      case 'sm': return 'h-9 px-4';
-      case 'lg': return 'h-14 px-4';
-      default: return 'h-12 px-4';
+      case 'xs':
+        return 'h-7 px-4';
+      case 'sm':
+        return 'h-9 px-4';
+      case 'lg':
+        return 'h-14 px-4';
+      default:
+        return 'h-12 px-4';
     }
   }
 
   get fontSizeClass(): string {
     switch (this.size) {
-      case 'xs': return 'text-[11px]';
-      case 'sm': return 'text-xs';
-      case 'lg': return 'text-base';
-      default: return 'text-sm';
+      case 'xs':
+        return 'text-[11px]';
+      case 'sm':
+        return 'text-xs';
+      case 'lg':
+        return 'text-base';
+      default:
+        return 'text-sm';
     }
   }
 
@@ -339,8 +428,7 @@ export class DataTableComponent implements OnInit, OnChanges {
 
   private applySearch() {
     if (!this.searchTerm) {
-      this.filteredData =
-        [...this.data];
+      this.filteredData = [...this.data];
       return;
     }
     const q = this.searchTerm.toLowerCase();
@@ -352,7 +440,8 @@ export class DataTableComponent implements OnInit, OnChanges {
   private applySort() {
     if (!this.sortKey || !this.sortDir) return;
     this.filteredData.sort((a, b) => {
-      const valA = a[this.sortKey]; const valB = b[this.sortKey];
+      const valA = a[this.sortKey];
+      const valB = b[this.sortKey];
       if (valA < valB) return this.sortDir === 'asc' ? -1 : 1;
       if (valA > valB) return this.sortDir === 'asc' ? 1 : -1;
       return 0;
@@ -404,14 +493,15 @@ export class DataTableComponent implements OnInit, OnChanges {
 
   getSortIcon(key: string) {
     if (this.sortKey !== key || !this.sortDir) return 'ri-expand-up-down-line opacity-20'; // Changed icon for inactive state
-    return this.sortDir === 'asc' ? 'ri-arrow-up-line text-foreground' : 'ri-arrow-down-line text-foreground';
+    return this.sortDir === 'asc'
+      ? 'ri-arrow-up-line text-foreground'
+      : 'ri-arrow-down-line text-foreground';
   }
 
   toggleRow(index: number) {
     if (this.expandedRows.has(index)) {
       this.expandedRows.delete(index);
-    }
-    else {
+    } else {
       this.expandedRows.add(index);
     }
   }

@@ -1,87 +1,102 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+
 import { cn } from './utils/cn';
-import {FormsModule} from '@angular/forms';
-import {SelectComponent} from './select.component';
-import {SelectItemComponent} from './select-item.component';
+import { FormsModule } from '@angular/forms';
+import { SelectComponent } from './select.component';
+import { SelectItemComponent } from './select-item.component';
 
 @Component({
-    selector: 'tolle-pagination',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
-    template: `
+  selector: 'tolle-pagination',
+  styles: [':host { display: block; }'],
+  imports: [FormsModule, SelectComponent, SelectItemComponent],
+  template: `
     <nav role="navigation" aria-label="pagination">
-    <div [class]="cn('flex items-center justify-between px-2 py-1', class)">
-
-      <div *ngIf="showCurrentPageInfo" class="text-sm text-muted-foreground">
-        <ng-container *ngIf="currentPageInfoTemplate; else defaultReport">
-          {{ pageReport }}
-        </ng-container>
-        <ng-template #defaultReport>
-          Showing {{ first }} to {{ last }} of {{ totalRecords }} entries
-        </ng-template>
-      </div>
-
-      <div class="flex items-center space-x-6 lg:space-x-8">
-
-        <div *ngIf="showPageOptions" class="flex items-center space-x-2">
-          <p class="text-sm font-medium">Rows per page</p>
-          <tolle-select
-            class="w-[70px]"
-            size="sm"
-            [ngModel]="currentPageSize"
-            (ngModelChange)="sizeChange($event)"
-          >
-            <tolle-select-item *ngFor="let opt of pageSizeOptions" [value]="opt">
-              {{ opt }}
-            </tolle-select-item>
-          </tolle-select>
-        </div>
-
-        <div class="flex items-center space-x-2">
-          <div *ngIf="!showPageLinks" class="flex w-[100px] items-center justify-center text-sm font-medium">
-            Page {{ currentPage }} of {{ totalPages }}
+      <div [class]="cn('flex items-center justify-between px-2 py-1', class)">
+        @if (showCurrentPageInfo) {
+          <div class="text-sm text-muted-foreground">
+            @if (currentPageInfoTemplate) {
+              {{ pageReport }}
+            } @else {
+              Showing {{ first }} to {{ last }} of {{ totalRecords }} entries
+            }
           </div>
+        }
 
-          <div *ngIf="showPageLinks" class="flex items-center space-x-1">
-            <button
-              (click)="previousPage()"
-              [disabled]="currentPage === 1"
-              aria-label="Go to previous page"
-              [class]="navBtnClass"
-            >
-              <i aria-hidden="true" class="ri-arrow-left-s-line"></i>
-            </button>
+        <div class="flex items-center space-x-6 lg:space-x-8">
+          @if (showPageOptions) {
+            <div class="flex items-center space-x-2">
+              <p class="text-sm font-medium">Rows per page</p>
+              <tolle-select
+                class="w-[70px]"
+                size="sm"
+                [ngModel]="currentPageSize"
+                (ngModelChange)="sizeChange($event)">
+                @for (opt of pageSizeOptions; track opt) {
+                  <tolle-select-item [value]="opt">
+                    {{ opt }}
+                  </tolle-select-item>
+                }
+              </tolle-select>
+            </div>
+          }
 
-            <button
-              *ngFor="let page of displayPageIndex"
-              (click)="selectPage(page)"
-              [attr.aria-current]="currentPage === page ? 'page' : null"
-              [class]="cn(
-                'h-8 w-8 text-sm rounded-md flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer',
-                currentPage === page
-                  ? 'bg-primary text-primary-foreground font-medium'
-                  : 'hover:bg-accent hover:text-accent-foreground'
-              )"
-            >
-              {{ page }}
-            </button>
+          <div class="flex items-center space-x-2">
+            @if (!showPageLinks) {
+              <div class="flex w-[100px] items-center justify-center text-sm font-medium">
+                Page {{ currentPage }} of {{ totalPages }}
+              </div>
+            }
 
-            <button
-              (click)="nextPage()"
-              [disabled]="currentPage === totalPages || totalPages === 0"
-              aria-label="Go to next page"
-              [class]="navBtnClass"
-            >
-              <i aria-hidden="true" class="ri-arrow-right-s-line"></i>
-            </button>
+            @if (showPageLinks) {
+              <div class="flex items-center space-x-1">
+                <button
+                  (click)="previousPage()"
+                  [disabled]="currentPage === 1"
+                  aria-label="Go to previous page"
+                  [class]="navBtnClass">
+                  <i aria-hidden="true" class="ri-arrow-left-s-line"></i>
+                </button>
+                @for (page of displayPageIndex; track page) {
+                  <button
+                    (click)="selectPage(page)"
+                    [attr.aria-current]="currentPage === page ? 'page' : null"
+                    [class]="
+                      cn(
+                        'flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                        currentPage === page
+                          ? 'bg-primary font-medium text-primary-foreground'
+                          : 'hover:bg-accent hover:text-accent-foreground'
+                      )
+                    ">
+                    {{ page }}
+                  </button>
+                }
+                <button
+                  (click)="nextPage()"
+                  [disabled]="currentPage === totalPages || totalPages === 0"
+                  aria-label="Go to next page"
+                  [class]="navBtnClass">
+                  <i aria-hidden="true" class="ri-arrow-right-s-line"></i>
+                </button>
+              </div>
+            }
           </div>
         </div>
       </div>
-    </div>
     </nav>
   `,
-    changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PaginationComponent implements OnInit, OnChanges {
   @Input() class = '';
@@ -108,7 +123,8 @@ export class PaginationComponent implements OnInit, OnChanges {
   private cd = inject(ChangeDetectorRef);
   protected cn = cn;
 
-  navBtnClass = 'h-8 w-8 p-0 flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer';
+  navBtnClass =
+    'h-8 w-8 p-0 flex items-center justify-center rounded-md border border-input bg-background hover:bg-accent hover:text-accent-foreground disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 cursor-pointer';
 
   ngOnInit(): void {
     if (this.pageSizeOptions.length === 0) {
@@ -122,7 +138,7 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (changes['totalRecords'] || changes['currentPage'] || changes['currentPageSize']) {
       this.initializePagination();
     }
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cd.markForCheck();
@@ -200,15 +216,22 @@ export class PaginationComponent implements OnInit, OnChanges {
     if (this.currentPageInfoTemplate) {
       this.pageReport = this.currentPageInfoTemplate.replace(
         /{first}|{last}|{totalRecords}|{currentPage}|{currentPageSize}|{totalPages}/g,
-        (match) => {
+        match => {
           switch (match) {
-            case '{first}': return `${this.first}`;
-            case '{last}': return `${this.last}`;
-            case '{totalRecords}': return `${this.totalRecords}`;
-            case '{totalPages}': return `${this.totalPages}`;
-            case '{currentPage}': return `${this.currentPage}`;
-            case '{currentPageSize}': return `${this.currentPageSize}`;
-            default: return match;
+            case '{first}':
+              return `${this.first}`;
+            case '{last}':
+              return `${this.last}`;
+            case '{totalRecords}':
+              return `${this.totalRecords}`;
+            case '{totalPages}':
+              return `${this.totalPages}`;
+            case '{currentPage}':
+              return `${this.currentPage}`;
+            case '{currentPageSize}':
+              return `${this.currentPageSize}`;
+            default:
+              return match;
           }
         }
       );

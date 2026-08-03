@@ -5,24 +5,22 @@ import { ScrollAreaOverviewComponent } from './scroll-area-overview/scroll-area-
 import { ScrollAreaInteractiveComponent } from './scroll-area-interactive/scroll-area-interactive.component';
 import { ScrollAreaApiComponent } from './scroll-area-api/scroll-area-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-scroll-area-docs',
-    imports: [
-        CommonModule,
-        ScrollAreaOverviewComponent,
-        ScrollAreaInteractiveComponent,
-        ScrollAreaApiComponent,
-        DocsWrapperComponent
-    ],
-    templateUrl: './scroll-area-docs.component.html'
+  selector: 'app-scroll-area-docs',
+  imports: [
+    ScrollAreaOverviewComponent,
+    ScrollAreaInteractiveComponent,
+    ScrollAreaApiComponent,
+    DocsWrapperComponent,
+  ],
+  templateUrl: './scroll-area-docs.component.html',
 })
 export class ScrollAreaDocsComponent implements OnInit {
-    baseService = inject(BaseService);
-    analytics = inject(AnalyticsService);
+  baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
 
-    ngOnInit(): void {
-        this.analytics.init();
-    }
+  ngOnInit(): void {
+    this.analytics.init();
+  }
 }

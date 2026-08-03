@@ -1,43 +1,56 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
-import { CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent } from '../../../../../../tolle/src/lib/card.component';
+import {
+  CardComponent,
+  CardHeaderComponent,
+  CardTitleComponent,
+  CardContentComponent,
+  CardFooterComponent,
+} from '../../../../../../tolle/src/lib/card.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-card-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        CardComponent,
-        CardHeaderComponent,
-        CardTitleComponent,
-        CardContentComponent,
-        CardFooterComponent,
-        PlaygroundComponent,
-        InputComponent,
-        SwitchComponent,
-        LabelComponent
-    ],
-    template: `
+  selector: 'app-card-interactive',
+  imports: [
+    FormsModule,
+    CardComponent,
+    CardHeaderComponent,
+    CardTitleComponent,
+    CardContentComponent,
+    CardFooterComponent,
+    PlaygroundComponent,
+    InputComponent,
+    SwitchComponent,
+    LabelComponent,
+  ],
+  template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <tolle-card [class]="customClass">
-            <tolle-card-header *ngIf="showHeader">
-              <tolle-card-title>{{ title }}</tolle-card-title>
-              <p *ngIf="description" class="text-sm text-muted-foreground">{{ description }}</p>
-            </tolle-card-header>
+            @if (showHeader) {
+              <tolle-card-header>
+                <tolle-card-title>{{ title }}</tolle-card-title>
+                @if (description) {
+                  <p class="text-sm text-muted-foreground">{{ description }}</p>
+                }
+              </tolle-card-header>
+            }
             <tolle-card-content>
-              <p class="text-sm">This is the main content area of the card. You can add any components or text here.</p>
+              <p class="text-sm">
+                This is the main content area of the card. You can add any components or text here.
+              </p>
             </tolle-card-content>
-            <tolle-card-footer *ngIf="showFooter">
-              <span class="text-xs text-muted-foreground">Card Footer Content</span>
-            </tolle-card-footer>
+            @if (showFooter) {
+              <tolle-card-footer>
+                <span class="text-xs text-muted-foreground">Card Footer Content</span>
+              </tolle-card-footer>
+            }
           </tolle-card>
         </div>
 
@@ -68,7 +81,7 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class CardInteractiveComponent {
   title = 'Card Title';

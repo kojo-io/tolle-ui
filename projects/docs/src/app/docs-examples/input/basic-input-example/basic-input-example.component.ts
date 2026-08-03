@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
 
 @Component({
-    selector: 'app-basic-input-example',
-    imports: [CommonModule, FormsModule, InputComponent],
-    template: `
+  selector: 'app-basic-input-example',
+  imports: [FormsModule, InputComponent],
+  template: `
     <div class="w-full max-w-sm space-y-4">
       <tolle-input
         label="Email"
@@ -16,6 +16,6 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
         <i prefix class="ri-mail-line"></i>
       </tolle-input>
     </div>
-  `
+  `,
 })
-export class BasicInputExampleComponent { }
+export class BasicInputExampleComponent {}

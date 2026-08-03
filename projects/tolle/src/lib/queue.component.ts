@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -106,9 +118,9 @@ export class QueueService {
     const values = [...this.statuses.values()];
     this.countsSource.next({
       total: values.length,
-      queued: values.filter((status) => status === 'queued').length,
-      running: values.filter((status) => status === 'running').length,
-      done: values.filter((status) => status === 'done').length,
+      queued: values.filter(status => status === 'queued').length,
+      running: values.filter(status => status === 'running').length,
+      done: values.filter(status => status === 'done').length,
     });
   }
 }
@@ -126,29 +138,32 @@ export class QueueService {
  * @new
  */
 @Component({
-    selector: 'tolle-queue',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    providers: [QueueService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-queue',
+  styles: [':host { display: block; }'],
+  imports: [],
+  providers: [QueueService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div [class]="computedClass">
       <div class="flex items-center gap-2">
         <i class="ri-stack-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
         <span class="truncate font-medium text-foreground">{{ title }}</span>
-        <span [class]="countClass" [attr.aria-label]="counts.total + ' items queued'">{{ counts.total }}</span>
+        <span [class]="countClass" [attr.aria-label]="counts.total + ' items queued'">{{
+          counts.total
+        }}</span>
       </div>
 
-      <p *ngIf="counts.total === 0" class="mt-2 text-sm text-muted-foreground">{{ emptyMessage }}</p>
+      @if (counts.total === 0) {
+        <p class="mt-2 text-sm text-muted-foreground">{{ emptyMessage }}</p>
+      }
 
       <div role="list" [class]="listClass">
         <ng-content></ng-content>
       </div>
     </div>
-  `
+  `,
 })
 export class QueueComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -178,7 +193,7 @@ export class QueueComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub.add(
-      this.service.counts$.subscribe((counts) => {
+      this.service.counts$.subscribe(counts => {
         this.counts = counts;
         this.cdr.markForCheck();
         this.countsChange.emit(counts);
@@ -207,28 +222,28 @@ export class QueueComponent implements OnChanges, OnInit, OnDestroy {
 
 /** A single entry in a `tolle-queue`. */
 @Component({
-    selector: 'tolle-queue-item',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-queue-item',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div role="listitem" [class]="computedClass" [attr.data-status]="status">
       <i [class]="iconClass" aria-hidden="true"></i>
 
       <span [class]="labelClass">{{ label }}</span>
       <ng-content></ng-content>
 
-      <button
-        *ngIf="removable"
-        type="button"
-        [attr.aria-label]="removeLabel"
-        class="ml-auto shrink-0 rounded-md p-0.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-        (click)="remove.emit()"
-      >
-        <i class="ri-close-line" aria-hidden="true"></i>
-      </button>
+      @if (removable) {
+        <button
+          type="button"
+          [attr.aria-label]="removeLabel"
+          class="ml-auto shrink-0 rounded-md p-0.5 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          (click)="remove.emit()">
+          <i class="ri-close-line" aria-hidden="true"></i>
+        </button>
+      }
     </div>
-  `
+  `,
 })
 export class QueueItemComponent implements OnInit, OnChanges, OnDestroy {
   /** Text describing the queued work. @default '' */

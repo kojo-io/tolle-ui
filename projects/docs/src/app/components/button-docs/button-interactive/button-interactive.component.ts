@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -10,19 +10,18 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-button-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ButtonComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        SwitchComponent,
-        InputComponent,
-        LabelComponent
-    ],
-    template: `
+  selector: 'app-button-interactive',
+  imports: [
+    FormsModule,
+    ButtonComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    SwitchComponent,
+    InputComponent,
+    LabelComponent,
+  ],
+  template: `
     <section class="mb-16" id="playground">
       <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
@@ -73,7 +72,7 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class ButtonInteractiveComponent {
   label = 'Button';

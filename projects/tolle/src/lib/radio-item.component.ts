@@ -1,47 +1,51 @@
 import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { cn } from './utils/cn';
 import { RadioService, RovingRadioItem } from './radio-service';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'tolle-radio-item',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    template: `
+  selector: 'tolle-radio-item',
+  styles: [':host { display: block; }'],
+  imports: [],
+  template: `
     <div
       (click)="!isEffectiveDisabled && select()"
-      [class]="cn(
-        'flex items-center space-x-2 group py-1',
-        isEffectiveDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-      )"
-    >
+      [class]="
+        cn(
+          'group flex items-center space-x-2 py-1',
+          isEffectiveDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+        )
+      ">
       <div
         role="radio"
         [attr.aria-checked]="isSelected"
         [attr.aria-disabled]="isEffectiveDisabled || null"
         [attr.data-state]="isSelected ? 'checked' : 'unchecked'"
-        [attr.tabindex]="isEffectiveDisabled ? -1 : (isTabbable ? 0 : -1)"
+        [attr.tabindex]="isEffectiveDisabled ? -1 : isTabbable ? 0 : -1"
         (keydown.enter)="isEffectiveDisabled ? null : select()"
         (keydown.space)="isEffectiveDisabled ? null : select(); $event.preventDefault()"
-        [class]="cn(
-        'aspect-square h-4 w-4 rounded-full border border-primary text-primary transition-all flex items-center justify-center',
-        'outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-        !isEffectiveDisabled && 'group-hover:border-primary/70',
-        isSelected ? 'bg-background' : 'bg-transparent',
-        class
-      )">
-        <div
-          *ngIf="isSelected"
-          class="h-2.5 w-2.5 rounded-full bg-primary animate-in zoom-in-50 duration-200"
-        ></div>
+        [class]="
+          cn(
+            'flex aspect-square h-4 w-4 items-center justify-center rounded-full border border-primary text-primary transition-all',
+            'outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+            !isEffectiveDisabled && 'group-hover:border-primary/70',
+            isSelected ? 'bg-background' : 'bg-transparent',
+            class
+          )
+        ">
+        @if (isSelected) {
+          <div class="h-2.5 w-2.5 rounded-full bg-primary duration-200 animate-in zoom-in-50"></div>
+        }
       </div>
 
-      <label class="text-sm font-medium leading-none select-none" [class.cursor-pointer]="!isEffectiveDisabled">
+      <label
+        class="select-none text-sm font-medium leading-none"
+        [class.cursor-pointer]="!isEffectiveDisabled">
         <ng-content></ng-content>
       </label>
     </div>
-  `
+  `,
 })
 export class RadioItemComponent implements OnInit, OnDestroy, RovingRadioItem {
   @Input() value: any;
@@ -84,7 +88,7 @@ export class RadioItemComponent implements OnInit, OnDestroy, RovingRadioItem {
     // Listen for selection changes
     this.sub.add(
       this.radioService.selectedValue$.subscribe(val => {
-        this.isSelected = (val === this.value);
+        this.isSelected = val === this.value;
         this.cdr.markForCheck(); // Trigger UI refresh
       })
     );
@@ -100,7 +104,7 @@ export class RadioItemComponent implements OnInit, OnDestroy, RovingRadioItem {
     // Listen for roving tabindex changes (which single item is tab-reachable)
     this.sub.add(
       this.radioService.tabbableValue$.subscribe(val => {
-        this.isTabbable = (val === this.value);
+        this.isTabbable = val === this.value;
         this.cdr.markForCheck(); // Trigger UI refresh
       })
     );

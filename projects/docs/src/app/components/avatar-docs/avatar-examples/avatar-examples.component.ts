@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 import { BasicAvatarComponent } from '../../../docs-examples/avatar/basic-avatar/basic-avatar.component';
 import { AvatarSizesComponent } from '../../../docs-examples/avatar/avatar-sizes/avatar-sizes.component';
@@ -7,31 +7,30 @@ import { AvatarShapesComponent } from '../../../docs-examples/avatar/avatar-shap
 import { AvatarFallbackExampleComponent } from '../../../docs-examples/avatar/avatar-fallback-example/avatar-fallback-example.component';
 
 @Component({
-    selector: 'app-avatar-examples',
-    imports: [
-        CommonModule,
-        ComponentPreviewComponent,
-        BasicAvatarComponent,
-        AvatarSizesComponent,
-        AvatarShapesComponent,
-        AvatarFallbackExampleComponent
-    ],
-    templateUrl: './avatar-examples.component.html'
+  selector: 'app-avatar-examples',
+  imports: [
+    ComponentPreviewComponent,
+    BasicAvatarComponent,
+    AvatarSizesComponent,
+    AvatarShapesComponent,
+    AvatarFallbackExampleComponent,
+  ],
+  templateUrl: './avatar-examples.component.html',
 })
 export class AvatarExamplesComponent {
-    basicCode = `<tolle-avatar src="https://github.com/nutlope.png">
+  basicCode = `<tolle-avatar src="https://github.com/nutlope.png">
   <tolle-avatar-fallback>JD</tolle-avatar-fallback>
 </tolle-avatar>`;
 
-    sizesCode = `<tolle-avatar size="sm" src="...">...</tolle-avatar>
+  sizesCode = `<tolle-avatar size="sm" src="...">...</tolle-avatar>
 <tolle-avatar size="default" src="...">...</tolle-avatar>
 <tolle-avatar size="lg" src="...">...</tolle-avatar>
 <tolle-avatar size="xl" src="...">...</tolle-avatar>`;
 
-    shapesCode = `<tolle-avatar shape="circle" src="...">...</tolle-avatar>
+  shapesCode = `<tolle-avatar shape="circle" src="...">...</tolle-avatar>
 <tolle-avatar shape="square" src="...">...</tolle-avatar>`;
 
-    fallbackCode = `<tolle-avatar src="invalid.png">
+  fallbackCode = `<tolle-avatar src="invalid.png">
   <tolle-avatar-fallback>JD</tolle-avatar-fallback>
 </tolle-avatar>
 

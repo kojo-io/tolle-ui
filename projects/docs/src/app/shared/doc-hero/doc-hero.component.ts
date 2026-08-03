@@ -1,5 +1,5 @@
 import { Component, Input, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { RegistryDocsService } from '../registry-docs.service';
 
@@ -10,56 +10,79 @@ import { RegistryDocsService } from '../registry-docs.service';
  *   <app-doc-hero slug="badge" id="overview" />
  */
 @Component({
-    selector: 'app-doc-hero',
-    imports: [CommonModule, RouterLink],
-    template: `
+  selector: 'app-doc-hero',
+  imports: [RouterLink],
+  template: `
     <header class="mb-10">
       <!-- Breadcrumb -->
-      <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-1.5 text-sm text-muted-foreground">
-        <a routerLink="/components" class="transition-colors hover:text-foreground hover:no-underline">Components</a>
+      <nav
+        aria-label="Breadcrumb"
+        class="mb-4 flex items-center gap-1.5 text-sm text-muted-foreground">
+        <a
+          routerLink="/components"
+          class="transition-colors hover:text-foreground hover:no-underline"
+          >Components</a
+        >
         <i class="ri-arrow-right-s-line text-base" aria-hidden="true"></i>
         <span class="font-medium text-foreground">{{ resolvedTitle }}</span>
       </nav>
 
-      <h1 class="scroll-m-20 text-4xl font-bold tracking-tight text-foreground">{{ resolvedTitle }}</h1>
+      <h1 class="scroll-m-20 text-4xl font-bold tracking-tight text-foreground">
+        {{ resolvedTitle }}
+      </h1>
 
       @if (resolvedDescription) {
-        <p class="mt-3 max-w-2xl text-lg text-balance text-muted-foreground">{{ resolvedDescription }}</p>
+        <p class="mt-3 max-w-2xl text-balance text-lg text-muted-foreground">
+          {{ resolvedDescription }}
+        </p>
       }
 
       <div class="mt-5 flex flex-wrap items-center gap-2">
         @if (isNew) {
-          <span class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
+          <span
+            class="inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
             New
           </span>
         }
         @if (categoryLabel) {
-          <span class="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+          <span
+            class="inline-flex items-center rounded-full border border-border px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
             {{ categoryLabel }}
           </span>
         }
         @if (resolvedSelector) {
-          <span class="rounded-md bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground">&lt;{{ resolvedSelector }}&gt;</span>
+          <span class="rounded-md bg-muted px-2 py-0.5 font-mono text-xs text-muted-foreground"
+            >&lt;{{ resolvedSelector }}&gt;</span
+          >
         }
-        <a href="https://github.com/kojo-io/tolle-ui" target="_blank" rel="noreferrer"
-           class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:no-underline">
+        <a
+          href="https://github.com/kojo-io/tolle-ui"
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground hover:no-underline">
           <i class="ri-github-fill" aria-hidden="true"></i> Source
         </a>
       </div>
 
       <!-- Install command -->
       @if (resolvedInstall) {
-        <div class="mt-6 flex max-w-xl items-center gap-2 rounded-lg border border-border bg-muted/40 px-3 py-2">
+        <div
+          class="mt-6 flex max-w-xl items-center gap-2 rounded-lg border border-border bg-muted/40 px-3 py-2">
           <span class="select-none font-mono text-sm text-primary">$</span>
-          <code class="flex-1 truncate font-mono text-[13px] text-foreground">{{ resolvedInstall }}</code>
-          <button type="button" (click)="copyInstall()" aria-label="Copy install command"
-                  class="grid h-7 w-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
+          <code class="flex-1 truncate font-mono text-[13px] text-foreground">{{
+            resolvedInstall
+          }}</code>
+          <button
+            type="button"
+            (click)="copyInstall()"
+            aria-label="Copy install command"
+            class="grid h-7 w-7 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground">
             <i [class]="copied ? 'ri-check-line' : 'ri-file-copy-line'"></i>
           </button>
         </div>
       }
     </header>
-  `
+  `,
 })
 export class DocHeroComponent {
   private registry = inject(RegistryDocsService);
@@ -103,7 +126,10 @@ export class DocHeroComponent {
     };
     return (
       special[slug] ??
-      slug.split(/[-_]/).map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')
+      slug
+        .split(/[-_]/)
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ')
     );
   }
   get resolvedSelector(): string | undefined {
@@ -117,7 +143,11 @@ export class DocHeroComponent {
     return this.reg?.isNew === true;
   }
   get resolvedInstall(): string | undefined {
-    return this.install ?? this.reg?.install ?? (this.slug ? `npx @tolle_/cli add ${this.slug}` : undefined);
+    return (
+      this.install ??
+      this.reg?.install ??
+      (this.slug ? `npx @tolle_/cli add ${this.slug}` : undefined)
+    );
   }
 
   copyInstall(): void {

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   CommandComponent,
   CommandInputComponent,
   CommandListComponent,
   CommandGroupComponent,
-  CommandItemComponent
+  CommandItemComponent,
 } from '../../../../../../tolle/src/lib/command.component';
 
 interface Repo {
@@ -14,16 +14,15 @@ interface Repo {
 }
 
 @Component({
-    selector: 'app-command-manual-filter',
-    imports: [
-        CommonModule,
-        CommandComponent,
-        CommandInputComponent,
-        CommandListComponent,
-        CommandGroupComponent,
-        CommandItemComponent
-    ],
-    templateUrl: './command-manual-filter.component.html'
+  selector: 'app-command-manual-filter',
+  imports: [
+    CommandComponent,
+    CommandInputComponent,
+    CommandListComponent,
+    CommandGroupComponent,
+    CommandItemComponent,
+  ],
+  templateUrl: './command-manual-filter.component.html',
 })
 export class CommandManualFilterComponent {
   private readonly repos: Repo[] = [
@@ -31,7 +30,7 @@ export class CommandManualFilterComponent {
     { name: 'design-tokens', owner: 'tolle' },
     { name: 'docs-site', owner: 'tolle' },
     { name: 'edge-worker', owner: 'acme' },
-    { name: 'payments-api', owner: 'acme' }
+    { name: 'payments-api', owner: 'acme' },
   ];
 
   results: Repo[] = this.repos;

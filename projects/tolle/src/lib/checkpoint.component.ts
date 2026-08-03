@@ -1,5 +1,14 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -11,7 +20,8 @@ const checkpointPillVariants = cva(
     variants: {
       active: {
         true: 'border-primary/50 bg-primary/10 text-primary',
-        false: 'border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground',
+        false:
+          'border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground',
       },
       size: {
         sm: 'px-2 py-0.5 text-[11px]',
@@ -34,11 +44,11 @@ export type CheckpointProps = VariantProps<typeof checkpointPillVariants>;
  * @new
  */
 @Component({
-    selector: 'tolle-checkpoint',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-checkpoint',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div [class]="computedClass" [attr.data-active]="active ? '' : null">
       <span class="h-px flex-1 bg-border" aria-hidden="true"></span>
 
@@ -48,19 +58,20 @@ export type CheckpointProps = VariantProps<typeof checkpointPillVariants>;
         [attr.aria-label]="ariaLabel || restoreLabel + ': ' + label"
         [attr.aria-current]="active ? 'step' : null"
         [class]="pillClass"
-        (click)="restore.emit()"
-      >
+        (click)="restore.emit()">
         <i [class]="icon + ' shrink-0'" aria-hidden="true"></i>
         <span class="truncate">{{ label }}</span>
-        <span *ngIf="timestamp" class="shrink-0 text-muted-foreground">{{ timestamp }}</span>
+        @if (timestamp) {
+          <span class="shrink-0 text-muted-foreground">{{ timestamp }}</span>
+        }
         <ng-content></ng-content>
       </button>
 
       <span class="h-px flex-1 bg-border" aria-hidden="true"></span>
     </div>
-  `
+  `,
 })
-export class CheckpointComponent  implements OnChanges{
+export class CheckpointComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

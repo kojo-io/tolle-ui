@@ -5,24 +5,22 @@ import { LabelOverviewComponent } from './label-overview/label-overview.componen
 import { LabelInteractiveComponent } from './label-interactive/label-interactive.component';
 import { LabelApiComponent } from './label-api/label-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-label-docs',
-    imports: [
-        CommonModule,
-        LabelOverviewComponent,
-        LabelInteractiveComponent,
-        LabelApiComponent,
-        DocsWrapperComponent
-    ],
-    templateUrl: './label-docs.component.html'
+  selector: 'app-label-docs',
+  imports: [
+    LabelOverviewComponent,
+    LabelInteractiveComponent,
+    LabelApiComponent,
+    DocsWrapperComponent,
+  ],
+  templateUrl: './label-docs.component.html',
 })
 export class LabelDocsComponent implements OnInit {
-    baseService = inject(BaseService);
-    analytics = inject(AnalyticsService);
+  baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
 
-    ngOnInit(): void {
-        this.analytics.init();
-    }
+  ngOnInit(): void {
+    this.analytics.init();
+  }
 }

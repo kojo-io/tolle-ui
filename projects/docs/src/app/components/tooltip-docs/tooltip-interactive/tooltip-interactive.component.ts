@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { TooltipDirective } from '../../../../../../tolle/src/lib/tooltip.directive';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
@@ -10,26 +10,25 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
-    selector: 'app-tooltip-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        TooltipDirective,
-        ButtonComponent,
-        SelectComponent,
-        SelectItemComponent,
-        InputComponent,
-        LabelComponent,
-        PlaygroundComponent
-    ],
-    templateUrl: './tooltip-interactive.component.html'
+  selector: 'app-tooltip-interactive',
+  imports: [
+    FormsModule,
+    TooltipDirective,
+    ButtonComponent,
+    SelectComponent,
+    SelectItemComponent,
+    InputComponent,
+    LabelComponent,
+    PlaygroundComponent,
+  ],
+  templateUrl: './tooltip-interactive.component.html',
 })
 export class TooltipInteractiveComponent {
-    content = 'Hover over me!';
-    placement: 'top' | 'bottom' | 'left' | 'right' = 'top';
+  content = 'Hover over me!';
+  placement: 'top' | 'bottom' | 'left' | 'right' = 'top';
 
-    get playgroundCode() {
-        return `
+  get playgroundCode() {
+    return `
 <button 
   tolleTooltip="${this.content}" 
   placement="${this.placement}"
@@ -37,5 +36,5 @@ export class TooltipInteractiveComponent {
   Hover over me
 </button>
     `.trim();
-    }
+  }
 }

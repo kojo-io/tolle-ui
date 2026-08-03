@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SliderComponent } from '../../../../../../tolle/src/lib/slider.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -8,32 +8,30 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 
 @Component({
-    selector: 'app-slider-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        SliderComponent,
-        PlaygroundComponent,
-        LabelComponent,
-        InputComponent,
-        SwitchComponent
-    ],
-    template: `
+  selector: 'app-slider-interactive',
+  imports: [
+    FormsModule,
+    SliderComponent,
+    PlaygroundComponent,
+    LabelComponent,
+    InputComponent,
+    SwitchComponent,
+  ],
+  template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <div class="w-full max-w-sm">
-             <div class="flex items-center justify-between mb-4">
-                <tolle-label>Value: {{ displayValue }}</tolle-label>
-             </div>
-             <tolle-slider 
-               [(ngModel)]="value" 
-               [min]="min" 
-               [max]="max" 
-               [step]="step"
-               [disabled]="isDisabled"
-             ></tolle-slider>
+            <div class="mb-4 flex items-center justify-between">
+              <tolle-label>Value: {{ displayValue }}</tolle-label>
+            </div>
+            <tolle-slider
+              [(ngModel)]="value"
+              [min]="min"
+              [max]="max"
+              [step]="step"
+              [disabled]="isDisabled"></tolle-slider>
           </div>
         </div>
 
@@ -61,7 +59,7 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class SliderInteractiveComponent {
   value: any = 50;

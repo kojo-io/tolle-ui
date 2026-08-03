@@ -1,5 +1,14 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -29,11 +38,11 @@ export type AttachmentProps = VariantProps<typeof attachmentVariants>;
  * @new
  */
 @Component({
-    selector: 'tolle-attachment',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-attachment',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div
       [class]="computedClass"
       role="button"
@@ -42,53 +51,55 @@ export type AttachmentProps = VariantProps<typeof attachmentVariants>;
       (click)="onOpen($event)"
       (keydown.enter)="onOpen($event)"
       (keydown.space)="onOpen($event)">
-      <img
-        *ngIf="isImage; else fileIcon"
-        [src]="url"
-        [alt]="name"
-        class="size-10 shrink-0 rounded-md object-cover" />
-
-      <ng-template #fileIcon>
-        <span class="flex size-10 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
+      @if (isImage) {
+        <img [src]="url" [alt]="name" class="size-10 shrink-0 rounded-md object-cover" />
+      } @else {
+        <span
+          class="flex size-10 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
           <i [class]="iconClass" aria-hidden="true"></i>
         </span>
-      </ng-template>
+      }
 
       <span class="flex min-w-0 flex-1 flex-col gap-0.5">
         <span class="truncate font-medium leading-none">{{ name }}</span>
 
         <span class="truncate text-xs text-muted-foreground">
-          <ng-container *ngIf="state === 'error'; else metaText">{{ errorLabel }}</ng-container>
-          <ng-template #metaText>{{ formattedSize }}</ng-template>
+          @if (state === 'error') {
+            {{ errorLabel }}
+          } @else {
+            {{ formattedSize }}
+          }
         </span>
 
-        <span
-          *ngIf="state === 'uploading'"
-          class="mt-1 block h-1 w-full overflow-hidden rounded-full bg-muted"
-          role="progressbar"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          [attr.aria-valuenow]="clampedProgress">
+        @if (state === 'uploading') {
           <span
-            class="block h-full rounded-full bg-primary transition-all"
-            [style.width.%]="clampedProgress"></span>
-        </span>
+            class="mt-1 block h-1 w-full overflow-hidden rounded-full bg-muted"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            [attr.aria-valuenow]="clampedProgress">
+            <span
+              class="block h-full rounded-full bg-primary transition-all"
+              [style.width.%]="clampedProgress"></span>
+          </span>
+        }
       </span>
 
-      <button
-        *ngIf="removable"
-        type="button"
-        [attr.aria-label]="removeLabel"
-        (click)="onRemove($event)"
-        class="shrink-0 rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-        <i class="ri-close-line" aria-hidden="true"></i>
-      </button>
+      @if (removable) {
+        <button
+          type="button"
+          [attr.aria-label]="removeLabel"
+          (click)="onRemove($event)"
+          class="shrink-0 rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          <i class="ri-close-line" aria-hidden="true"></i>
+        </button>
+      }
 
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
-export class AttachmentComponent  implements OnChanges{
+export class AttachmentComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -198,13 +209,15 @@ export class AttachmentComponent  implements OnChanges{
 
 /** Wrapping row of attachment cards below or above a message. */
 @Component({
-    selector: 'tolle-attachment-group',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `<div [class]="cn('flex flex-wrap items-start gap-2', class)"><ng-content></ng-content></div>`
+  selector: 'tolle-attachment-group',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<div [class]="cn('flex flex-wrap items-start gap-2', class)">
+    <ng-content></ng-content>
+  </div>`,
 })
-export class AttachmentGroupComponent  implements OnChanges{
+export class AttachmentGroupComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -226,17 +239,17 @@ export class AttachmentGroupComponent  implements OnChanges{
  * kept inside the slot so the card's own trigger does not also fire.
  */
 @Component({
-    selector: 'tolle-attachment-actions',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-attachment-actions',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div [class]="computedClass" (click)="onClick($event)">
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
-export class AttachmentActionsComponent  implements OnChanges{
+export class AttachmentActionsComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

@@ -1,47 +1,55 @@
 <section class="mb-16" id="interactive">
-    <h2 class="text-xl font-semibold tracking-tight mb-6/90">Interactive Playground</h2>
-    <app-playground [code]="playgroundCode">
-        <div preview
-            class="w-full h-full flex items-center justify-center p-8 bg-muted border border-border rounded-lg">
-            <div class="flex items-start space-x-2">
-                <tolle-checkbox [(ngModel)]="playgroundChecked" [size]="playgroundSize"
-                    [disabled]="playgroundDisabled" />
-                <div class="grid gap-1.5 leading-none">
-                    <label class="text-sm font-medium leading-none">
-                        {{ playgroundLabel }}
-                    </label>
-                    <p *ngIf="playgroundDescription" class="text-xs text-muted-foreground">
-                        {{ playgroundDescription }}
-                    </p>
-                </div>
-            </div>
+  <h2 class="mb-6/90 text-xl font-semibold tracking-tight">Interactive Playground</h2>
+  <app-playground [code]="playgroundCode">
+    <div
+      preview
+      class="flex h-full w-full items-center justify-center rounded-lg border border-border bg-muted p-8">
+      <div class="flex items-start space-x-2">
+        <tolle-checkbox
+          [(ngModel)]="playgroundChecked"
+          [size]="playgroundSize"
+          [disabled]="playgroundDisabled" />
+        <div class="grid gap-1.5 leading-none">
+          <label class="text-sm font-medium leading-none">
+            {{ playgroundLabel }}
+          </label>
+          @if (playgroundDescription) {
+            <p class="text-xs text-muted-foreground">
+              {{ playgroundDescription }}
+            </p>
+          }
         </div>
+      </div>
+    </div>
 
-        <div controls class="space-y-5">
-            <div class="space-y-1.5">
-                <tolle-label>Label</tolle-label>
-                <tolle-input [(ngModel)]="playgroundLabel" size="sm" placeholder="Checkbox label..." />
-            </div>
+    <div controls class="space-y-5">
+      <div class="space-y-1.5">
+        <tolle-label>Label</tolle-label>
+        <tolle-input [(ngModel)]="playgroundLabel" size="sm" placeholder="Checkbox label..." />
+      </div>
 
-            <div class="space-y-1.5">
-                <tolle-label>Description</tolle-label>
-                <tolle-input [(ngModel)]="playgroundDescription" size="sm" placeholder="Optional description..." />
-            </div>
+      <div class="space-y-1.5">
+        <tolle-label>Description</tolle-label>
+        <tolle-input
+          [(ngModel)]="playgroundDescription"
+          size="sm"
+          placeholder="Optional description..." />
+      </div>
 
-            <div class="space-y-1.5">
-                <tolle-label>Size</tolle-label>
-                <tolle-select [(ngModel)]="playgroundSize" size="sm">
-                    <tolle-select-item value="xs">Extra Small (xs)</tolle-select-item>
-                    <tolle-select-item value="sm">Small (sm)</tolle-select-item>
-                    <tolle-select-item value="default">Default</tolle-select-item>
-                    <tolle-select-item value="lg">Large (lg)</tolle-select-item>
-                </tolle-select>
-            </div>
+      <div class="space-y-1.5">
+        <tolle-label>Size</tolle-label>
+        <tolle-select [(ngModel)]="playgroundSize" size="sm">
+          <tolle-select-item value="xs">Extra Small (xs)</tolle-select-item>
+          <tolle-select-item value="sm">Small (sm)</tolle-select-item>
+          <tolle-select-item value="default">Default</tolle-select-item>
+          <tolle-select-item value="lg">Large (lg)</tolle-select-item>
+        </tolle-select>
+      </div>
 
-            <label class="flex items-center justify-between text-sm font-medium">
-                <span>Disabled State</span>
-                <tolle-switch [(ngModel)]="playgroundDisabled" size="sm" />
-            </label>
-        </div>
-    </app-playground>
+      <label class="flex items-center justify-between text-sm font-medium">
+        <span>Disabled State</span>
+        <tolle-switch [(ngModel)]="playgroundDisabled" size="sm" />
+      </label>
+    </div>
+  </app-playground>
 </section>

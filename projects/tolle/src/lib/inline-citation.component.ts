@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, inject, OnChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  inject,
+  OnChanges,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 import {
@@ -44,18 +52,17 @@ export type InlineCitationProps = VariantProps<typeof inlineCitationVariants>;
  * @new
  */
 @Component({
-    selector: 'tolle-inline-citation',
-    styles: [':host { display: inline-flex; }'],
-    imports: [CommonModule, HoverCardComponent, HoverCardTriggerComponent, HoverCardContentComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-inline-citation',
+  styles: [':host { display: inline-flex; }'],
+  imports: [HoverCardComponent, HoverCardTriggerComponent, HoverCardContentComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <tolle-hover-card
       [openDelay]="openDelay"
       [closeDelay]="closeDelay"
       [placement]="placement"
       (mouseenter)="scheduleRefresh(openDelay)"
-      (mouseleave)="scheduleRefresh(closeDelay)"
-    >
+      (mouseleave)="scheduleRefresh(closeDelay)">
       <tolle-hover-card-trigger>
         <sup
           role="button"
@@ -69,10 +76,9 @@ export type InlineCitationProps = VariantProps<typeof inlineCitationVariants>;
         <ng-content></ng-content>
       </tolle-hover-card-content>
     </tolle-hover-card>
-  `
+  `,
 })
 export class InlineCitationComponent implements OnChanges, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -129,29 +135,31 @@ export class InlineCitationComponent implements OnChanges, OnDestroy {
 
 /** The source preview shown inside a citation's hover card. */
 @Component({
-    selector: 'tolle-inline-citation-card',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-inline-citation-card',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div [class]="computedClass">
       <p class="truncate text-sm font-medium text-popover-foreground">{{ title }}</p>
-      <a
-        *ngIf="url"
-        [href]="url"
-        target="_blank"
-        rel="noreferrer noopener"
-        class="mt-0.5 flex items-center gap-1 truncate text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
-      >
-        <i class="ri-external-link-line shrink-0" aria-hidden="true"></i>
-        <span class="truncate">{{ displayUrl }}</span>
-      </a>
-      <p *ngIf="snippet" class="mt-2 line-clamp-3 text-xs leading-relaxed text-muted-foreground">{{ snippet }}</p>
+      @if (url) {
+        <a
+          [href]="url"
+          target="_blank"
+          rel="noreferrer noopener"
+          class="mt-0.5 flex items-center gap-1 truncate text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline">
+          <i class="ri-external-link-line shrink-0" aria-hidden="true"></i>
+          <span class="truncate">{{ displayUrl }}</span>
+        </a>
+      }
+      @if (snippet) {
+        <p class="mt-2 line-clamp-3 text-xs leading-relaxed text-muted-foreground">{{ snippet }}</p>
+      }
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
-export class InlineCitationCardComponent  implements OnChanges{
+export class InlineCitationCardComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -184,18 +192,20 @@ export class InlineCitationCardComponent  implements OnChanges{
 
 /** A pulled quote from the cited source, shown inside the citation card. */
 @Component({
-    selector: 'tolle-inline-citation-quote',
-    styles: [':host { display: inline-flex; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-inline-citation-quote',
+  styles: [':host { display: inline-flex; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <blockquote [class]="computedClass">
       <ng-content></ng-content>
-      <footer *ngIf="cite" class="mt-1 text-[11px] not-italic text-muted-foreground/80">— {{ cite }}</footer>
+      @if (cite) {
+        <footer class="mt-1 text-[11px] not-italic text-muted-foreground/80">— {{ cite }}</footer>
+      }
     </blockquote>
-  `
+  `,
 })
-export class InlineCitationQuoteComponent  implements OnChanges{
+export class InlineCitationQuoteComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

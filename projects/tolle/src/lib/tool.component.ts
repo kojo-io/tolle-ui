@@ -1,5 +1,19 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Directive, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Directive,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -109,16 +123,16 @@ export type ToolProps = VariantProps<typeof toolVariants>;
  * @new
  */
 @Component({
-    selector: 'tolle-tool',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    providers: [ToolService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-tool',
+  styles: [':host { display: block; }'],
+  imports: [],
+  providers: [ToolService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div [class]="computedClass" [attr.data-state]="open ? 'open' : 'closed'">
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
 export class ToolComponent implements OnInit, OnChanges, OnDestroy {
   /** Lifecycle of the call, driving the header chip and border. @default 'pending' */
@@ -143,7 +157,7 @@ export class ToolComponent implements OnInit, OnChanges, OnDestroy {
     // `skip(1)` drops the BehaviorSubject's current value so mounting never
     // emits a spurious `openChange`.
     this.subscriptions.add(
-      this.service.open$.pipe(skip(1)).subscribe((open) => {
+      this.service.open$.pipe(skip(1)).subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
         // Only user-driven toggles are worth reporting; echoing a change the
@@ -156,7 +170,7 @@ export class ToolComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['open']) this.applyInput(this.open);
     this.service.setState(this.state);
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -182,19 +196,18 @@ export class ToolComponent implements OnInit, OnChanges, OnDestroy {
 
 /** Clickable header of a `tolle-tool`: the tool's name plus its state chip. */
 @Component({
-    selector: 'tolle-tool-header',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-tool-header',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <button
       type="button"
       data-tool-header
       [attr.aria-expanded]="open"
       [attr.data-state]="open ? 'open' : 'closed'"
       [class]="computedClass"
-      (click)="onToggle()"
-    >
+      (click)="onToggle()">
       <i [class]="icon" class="shrink-0 text-muted-foreground" aria-hidden="true"></i>
 
       <span class="truncate font-medium text-foreground" data-tool-name>{{ name }}</span>
@@ -207,15 +220,13 @@ export class ToolComponent implements OnInit, OnChanges, OnDestroy {
       <i
         class="ri-arrow-down-s-line shrink-0 text-muted-foreground transition-transform duration-200"
         [class.rotate-180]="open"
-        aria-hidden="true"
-      ></i>
+        aria-hidden="true"></i>
 
       <ng-content></ng-content>
     </button>
-  `
+  `,
 })
 export class ToolHeaderComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -245,13 +256,13 @@ export class ToolHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
       })
     );
     this.subscriptions.add(
-      this.service.state$.subscribe((state) => {
+      this.service.state$.subscribe(state => {
         this.state = state;
         this.cdr.markForCheck();
       })
@@ -296,7 +307,6 @@ export class ToolHeaderComponent implements OnChanges, OnInit, OnDestroy {
  */
 @Directive()
 export abstract class ToolPayloadBase implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook subclasses keep
@@ -317,7 +327,7 @@ export abstract class ToolPayloadBase implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
       })
@@ -346,28 +356,31 @@ export abstract class ToolPayloadBase implements OnChanges, OnInit, OnDestroy {
 
 /** Arguments the tool was called with. Visible while the `tolle-tool` is expanded. */
 @Component({
-    selector: 'tolle-tool-input',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-    <div *ngIf="open" data-tool-input [class]="computedClass">
-      <p *ngIf="label" class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        {{ label }}
-      </p>
-
-      <pre
-        *ngIf="hasPayload; else projected"
-        class="max-h-64 overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground"
-      >{{ formatted }}</pre>
-
-      <ng-template #projected>
-        <div class="max-h-64 overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground">
-          <ng-content></ng-content>
-        </div>
-      </ng-template>
-    </div>
-  `
+  selector: 'tolle-tool-input',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    @if (open) {
+      <div data-tool-input [class]="computedClass">
+        @if (label) {
+          <p class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            {{ label }}
+          </p>
+        }
+        @if (hasPayload) {
+          <pre
+            class="max-h-64 overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground"
+            >{{ formatted }}</pre>
+        } @else {
+          <div
+            class="max-h-64 overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-foreground">
+            <ng-content></ng-content>
+          </div>
+        }
+      </div>
+    }
+  `,
 })
 export class ToolInputComponent extends ToolPayloadBase {
   /** Arguments passed to the tool; objects are pretty-printed as JSON. @default null */
@@ -384,25 +397,28 @@ export class ToolInputComponent extends ToolPayloadBase {
 
 /** Result the tool returned. Visible while the `tolle-tool` is expanded. */
 @Component({
-    selector: 'tolle-tool-output',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-    <div *ngIf="open" data-tool-output [class]="computedClass">
-      <p *ngIf="label" class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-        {{ label }}
-      </p>
-
-      <pre *ngIf="hasPayload; else projected" [class]="payloadClass">{{ formatted }}</pre>
-
-      <ng-template #projected>
-        <div [class]="payloadClass">
-          <ng-content></ng-content>
-        </div>
-      </ng-template>
-    </div>
-  `
+  selector: 'tolle-tool-output',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    @if (open) {
+      <div data-tool-output [class]="computedClass">
+        @if (label) {
+          <p class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            {{ label }}
+          </p>
+        }
+        @if (hasPayload) {
+          <pre [class]="payloadClass">{{ formatted }}</pre>
+        } @else {
+          <div [class]="payloadClass">
+            <ng-content></ng-content>
+          </div>
+        }
+      </div>
+    }
+  `,
 })
 export class ToolOutputComponent extends ToolPayloadBase {
   /** Result returned by the tool; objects are pretty-printed as JSON. @default null */

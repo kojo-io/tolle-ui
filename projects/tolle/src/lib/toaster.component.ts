@@ -5,50 +5,65 @@ import { ToastService, Toast, ToastPosition, ToastVariant } from './toast.servic
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-toaster',
-    imports: [CommonModule],
-    template: `
-    <div [class]="cn('fixed z-[10000] pointer-events-none flex flex-col gap-2 w-full max-w-[380px] p-4', positionClasses)">
-      <div
-        *ngFor="let toast of toasts$ | async"
-        role="status"
-        [attr.aria-live]="toast.variant === 'destructive' ? 'assertive' : 'polite'"
-        aria-atomic="true"
-        (mouseenter)="toastService.setPaused(toast.id, true)"
-        (mouseleave)="toastService.setPaused(toast.id, false)"
-        [class]="cn(
-          'pointer-events-auto relative overflow-hidden p-4 rounded-md border shadow-lg flex items-start justify-between gap-4 transition-all duration-300',
-          'bg-background text-foreground',
-          getVariantClasses(toast.variant)
-        )"
-      >
-        <!-- Opaque surface above, variant tint layered on top of it. -->
-        <div aria-hidden="true" [class]="cn('absolute inset-0 pointer-events-none', getTintClasses(toast.variant))"></div>
-
-        <div class="relative flex gap-3">
-          <i *ngIf="toast.variant && icons[toast.variant]" [class]="cn('text-lg', icons[toast.variant])"></i>
-          
-          <div class="grid gap-1">
-            <div *ngIf="toast.title" class="text-sm font-semibold leading-none">{{ toast.title }}</div>
-            <div class="text-xs opacity-90 leading-relaxed">{{ toast.description }}</div>
-          </div>
-        </div>
-
-        <button type="button" aria-label="Close" (click)="toastService.remove(toast.id)" class="relative opacity-50 hover:opacity-100 transition-opacity">
-          <span class="sr-only">Close</span>
-          <i class="ri-close-line text-lg"></i>
-        </button>
-
+  selector: 'tolle-toaster',
+  imports: [CommonModule],
+  template: `
+    <div
+      [class]="
+        cn(
+          'pointer-events-none fixed z-[10000] flex w-full max-w-[380px] flex-col gap-2 p-4',
+          positionClasses
+        )
+      ">
+      @for (toast of toasts$ | async; track toast) {
         <div
-          aria-hidden="true"
-          class="absolute bottom-0 left-0 h-1 transition-all duration-100 ease-linear z-10"
-          [style.width.%]="(toast.remainingTime / (toast.duration || 3000)) * 100"
-          [class]="getProgressClasses(toast.variant)"
-        ></div>
-      </div>
+          role="status"
+          [attr.aria-live]="toast.variant === 'destructive' ? 'assertive' : 'polite'"
+          aria-atomic="true"
+          (mouseenter)="toastService.setPaused(toast.id, true)"
+          (mouseleave)="toastService.setPaused(toast.id, false)"
+          [class]="
+            cn(
+              'pointer-events-auto relative flex items-start justify-between gap-4 overflow-hidden rounded-md border p-4 shadow-lg transition-all duration-300',
+              'bg-background text-foreground',
+              getVariantClasses(toast.variant)
+            )
+          ">
+          <!-- Opaque surface above, variant tint layered on top of it. -->
+          <div
+            aria-hidden="true"
+            [class]="
+              cn('pointer-events-none absolute inset-0', getTintClasses(toast.variant))
+            "></div>
+          <div class="relative flex gap-3">
+            @if (toast.variant && icons[toast.variant]) {
+              <i [class]="cn('text-lg', icons[toast.variant])"></i>
+            }
+            <div class="grid gap-1">
+              @if (toast.title) {
+                <div class="text-sm font-semibold leading-none">{{ toast.title }}</div>
+              }
+              <div class="text-xs leading-relaxed opacity-90">{{ toast.description }}</div>
+            </div>
+          </div>
+          <button
+            type="button"
+            aria-label="Close"
+            (click)="toastService.remove(toast.id)"
+            class="relative opacity-50 transition-opacity hover:opacity-100">
+            <span class="sr-only">Close</span>
+            <i class="ri-close-line text-lg"></i>
+          </button>
+          <div
+            aria-hidden="true"
+            class="absolute bottom-0 left-0 z-10 h-1 transition-all duration-100 ease-linear"
+            [style.width.%]="(toast.remainingTime / (toast.duration || 3000)) * 100"
+            [class]="getProgressClasses(toast.variant)"></div>
+        </div>
+      }
     </div>
   `,
-    styles: [':host { display: contents; }']
+  styles: [':host { display: contents; }'],
 })
 export class ToastContainerComponent implements OnInit, OnDestroy {
   toastService = inject(ToastService);
@@ -76,7 +91,7 @@ export class ToastContainerComponent implements OnInit, OnDestroy {
     destructive: 'ri-error-warning-line text-destructive',
     success: 'ri-checkbox-circle-line text-success',
     warning: 'ri-alert-line text-warning',
-    info: 'ri-information-line text-info'
+    info: 'ri-information-line text-info',
   };
 
   /**
@@ -89,7 +104,7 @@ export class ToastContainerComponent implements OnInit, OnDestroy {
     destructive: 'border-destructive/50 text-destructive',
     success: 'border-success/50 text-success',
     warning: 'border-warning/50 text-warning',
-    info: 'border-info/50 text-info'
+    info: 'border-info/50 text-info',
   };
 
   private tintClasses: Record<ToastVariant, string> = {
@@ -97,7 +112,7 @@ export class ToastContainerComponent implements OnInit, OnDestroy {
     destructive: 'bg-destructive/10',
     success: 'bg-success/10',
     warning: 'bg-warning/10',
-    info: 'bg-info/10'
+    info: 'bg-info/10',
   };
 
   private progressClasses: Record<ToastVariant, string> = {
@@ -105,7 +120,7 @@ export class ToastContainerComponent implements OnInit, OnDestroy {
     destructive: 'bg-destructive',
     success: 'bg-success',
     warning: 'bg-warning',
-    info: 'bg-info'
+    info: 'bg-info',
   };
 
   private resolve(variant: string | undefined): ToastVariant {
@@ -131,7 +146,7 @@ export class ToastContainerComponent implements OnInit, OnDestroy {
       'bottom-right': 'bottom-0 right-0',
       'bottom-left': 'bottom-0 left-0',
       'top-center': 'top-0 left-1/2 -translate-x-1/2 flex-col-reverse',
-      'bottom-center': 'bottom-0 left-1/2 -translate-x-1/2'
+      'bottom-center': 'bottom-0 left-1/2 -translate-x-1/2',
     };
     return pos[this.position];
   }

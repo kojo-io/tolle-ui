@@ -1,28 +1,26 @@
 import { Component, Input, forwardRef, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-textarea',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule, FormsModule],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => TextareaComponent),
-            multi: true
-        }
-    ],
-    template: `
-    <div class="flex flex-col gap-1.5 w-full">
-      <label
-        *ngIf="label"
-        [for]="id"
-        [class]="computedLabelClass"
-      >
-        {{ label }}
-      </label>
+  selector: 'tolle-textarea',
+  styles: [':host { display: block; }'],
+  imports: [FormsModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TextareaComponent),
+      multi: true,
+    },
+  ],
+  template: `
+    <div class="flex w-full flex-col gap-1.5">
+      @if (label) {
+        <label [for]="id" [class]="computedLabelClass">
+          {{ label }}
+        </label>
+      }
 
       <div class="relative">
         <textarea
@@ -37,40 +35,41 @@ import { cn } from './utils/cn';
           (blur)="onBlur()"
           (focus)="onFocus()"
           [class]="textareaClasses"
-          [style.resize]="(autoGrow || readonly || disabled) ? 'none' : 'vertical'"
+          [style.resize]="autoGrow || readonly || disabled ? 'none' : 'vertical'"
           [style.overflow]="autoGrow ? 'hidden' : 'auto'"
           [attr.aria-invalid]="error || null"
-          [attr.aria-describedby]="error && errorMessage ? id + '-error' : (hint ? id + '-hint' : null)"
-          [attr.maxlength]="maxLength"
-        ></textarea>
+          [attr.aria-describedby]="
+            error && errorMessage ? id + '-error' : hint ? id + '-hint' : null
+          "
+          [attr.maxlength]="maxLength"></textarea>
       </div>
 
-      <div *ngIf="(showCharacterCount || hint || errorMessage) && !disabled" class="flex justify-between items-center px-1">
-        <p
-          *ngIf="hint && !error"
-          [id]="id + '-hint'"
-          class="text-xs text-muted-foreground transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus"
-        >
-          {{ hint }}
-        </p>
-        <p
-          *ngIf="error && errorMessage"
-          [id]="id + '-error'"
-          class="text-xs text-destructive"
-        >
-          {{ errorMessage }}
-        </p>
-        <p
-          *ngIf="showCharacterCount"
-          class="text-[10px] uppercase tracking-wider text-muted-foreground ml-auto font-medium transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideCharacterCountOnFocus"
-        >
-          {{ value.length || 0 }}{{ maxLength ? ' / ' + maxLength : '' }}
-        </p>
-      </div>
+      @if ((showCharacterCount || hint || errorMessage) && !disabled) {
+        <div class="flex items-center justify-between px-1">
+          @if (hint && !error) {
+            <p
+              [id]="id + '-hint'"
+              class="text-xs text-muted-foreground transition-opacity duration-200"
+              [class.opacity-0]="isFocused && hideHintOnFocus">
+              {{ hint }}
+            </p>
+          }
+          @if (error && errorMessage) {
+            <p [id]="id + '-error'" class="text-xs text-destructive">
+              {{ errorMessage }}
+            </p>
+          }
+          @if (showCharacterCount) {
+            <p
+              class="ml-auto text-[10px] font-medium uppercase tracking-wider text-muted-foreground transition-opacity duration-200"
+              [class.opacity-0]="isFocused && hideCharacterCountOnFocus">
+              {{ value.length || 0 }}{{ maxLength ? ' / ' + maxLength : '' }}
+            </p>
+          }
+        </div>
+      }
     </div>
-  `
+  `,
 })
 export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild('textareaElement') textareaElement!: ElementRef<HTMLTextAreaElement>;
@@ -106,8 +105,8 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
 
   get computedLabelClass() {
     return cn(
-      "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
-      this.disabled && "opacity-50"
+      'text-sm font-medium text-foreground leading-none transition-opacity duration-200',
+      this.disabled && 'opacity-50'
     );
   }
 
@@ -132,7 +131,7 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
         'focus:ring-offset-0',
         'focus:shadow-none',
         // Border darkens on focus automatically
-        'focus:border-primary/80'
+        'focus:border-primary/80',
       ],
 
       // Error state
@@ -140,21 +139,18 @@ export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
         'border-destructive',
         !(this.readonly || this.disabled) && [
           'focus:border-destructive/80',
-          'focus:ring-destructive/30'
-        ]
+          'focus:ring-destructive/30',
+        ],
       ],
 
       // Disabled state
-      this.disabled && [
-        'cursor-not-allowed opacity-50',
-        'border-opacity-50'
-      ],
+      this.disabled && ['cursor-not-allowed opacity-50', 'border-opacity-50'],
 
       // Readonly state
       this.readonly && [
         'cursor-default',
         'border-dashed',
-        !this.disabled && 'focus:ring-0 focus:border-opacity-100'
+        !this.disabled && 'focus:ring-0 focus:border-opacity-100',
       ],
 
       // Scrollbar styling

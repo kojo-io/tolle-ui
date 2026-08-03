@@ -5,24 +5,22 @@ import { CollapsibleOverviewComponent } from './collapsible-overview/collapsible
 import { CollapsibleInteractiveComponent } from './collapsible-interactive/collapsible-interactive.component';
 import { CollapsibleApiComponent } from './collapsible-api/collapsible-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-collapsible-docs',
-    imports: [
-        CommonModule,
-        CollapsibleOverviewComponent,
-        CollapsibleInteractiveComponent,
-        CollapsibleApiComponent,
-        DocsWrapperComponent
-    ],
-    templateUrl: './collapsible-docs.component.html'
+  selector: 'app-collapsible-docs',
+  imports: [
+    CollapsibleOverviewComponent,
+    CollapsibleInteractiveComponent,
+    CollapsibleApiComponent,
+    DocsWrapperComponent,
+  ],
+  templateUrl: './collapsible-docs.component.html',
 })
 export class CollapsibleDocsComponent implements OnInit {
-    baseService = inject(BaseService);
-    analytics = inject(AnalyticsService);
+  baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
 
-    ngOnInit(): void {
-        this.analytics.init();
-    }
+  ngOnInit(): void {
+    this.analytics.init();
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -29,17 +29,17 @@ const checkboxVariants = cva(
 export type CheckboxProps = VariantProps<typeof checkboxVariants>;
 
 @Component({
-    selector: 'tolle-checkbox',
-    styles: [':host { display: inline-flex; }'],
-    imports: [CommonModule],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => CheckboxComponent),
-            multi: true
-        }
-    ],
-    template: `
+  selector: 'tolle-checkbox',
+  styles: [':host { display: inline-flex; }'],
+  imports: [],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CheckboxComponent),
+      multi: true,
+    },
+  ],
+  template: `
     <button
       type="button"
       role="checkbox"
@@ -47,16 +47,15 @@ export type CheckboxProps = VariantProps<typeof checkboxVariants>;
       [attr.data-state]="checked ? 'checked' : 'unchecked'"
       [disabled]="disabled"
       (click)="toggle()"
-      [class]="computedClass"
-    >
-      <i
-        *ngIf="checked"
-        class="ri-check-line font-bold"
-        [class]="size === 'xs' ? 'text-[10px]' : 'text-[14px]'"
-        aria-hidden="true"
-      ></i>
+      [class]="computedClass">
+      @if (checked) {
+        <i
+          class="ri-check-line font-bold"
+          [class]="size === 'xs' ? 'text-[10px]' : 'text-[14px]'"
+          aria-hidden="true"></i>
+      }
     </button>
-  `
+  `,
 })
 export class CheckboxComponent implements ControlValueAccessor {
   /** Extra Tailwind classes merged onto the checkbox via `cn()` (last-wins). */
@@ -74,10 +73,7 @@ export class CheckboxComponent implements ControlValueAccessor {
   constructor(private cdr: ChangeDetectorRef) {}
 
   get computedClass() {
-    return cn(
-      checkboxVariants({ size: this.size, checked: this.checked }),
-      this.class
-    );
+    return cn(checkboxVariants({ size: this.size, checked: this.checked }), this.class);
   }
 
   toggle() {
@@ -93,7 +89,14 @@ export class CheckboxComponent implements ControlValueAccessor {
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; this.cdr.markForCheck(); }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.cdr.markForCheck();
+  }
 }

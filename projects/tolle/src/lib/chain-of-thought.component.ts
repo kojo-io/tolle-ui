@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -96,12 +108,12 @@ export class ChainOfThoughtService {
  * @new
  */
 @Component({
-    selector: 'tolle-chain-of-thought',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    providers: [ChainOfThoughtService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `<div [class]="computedClass"><ng-content></ng-content></div>`
+  selector: 'tolle-chain-of-thought',
+  styles: [':host { display: block; }'],
+  imports: [],
+  providers: [ChainOfThoughtService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })
 export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -122,12 +134,12 @@ export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.service.setOpen(this.open);
     // skip(1) drops the replayed initial value so no `openChange` fires on init.
-    this.sub.add(this.service.open$.pipe(skip(1)).subscribe((open) => this.openChange.emit(open)));
+    this.sub.add(this.service.open$.pipe(skip(1)).subscribe(open => this.openChange.emit(open)));
   }
 
   ngOnChanges(): void {
     this.service.setOpen(this.open);
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -144,30 +156,27 @@ export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
 
 /** Clickable header that expands and collapses the reasoning steps. */
 @Component({
-    selector: 'tolle-chain-of-thought-header',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-chain-of-thought-header',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <button
       type="button"
       [attr.aria-expanded]="isOpen"
       [attr.data-state]="isOpen ? 'open' : 'closed'"
       [class]="computedClass"
-      (click)="toggle()"
-    >
+      (click)="toggle()">
       <i class="ri-brain-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
       <span class="truncate">{{ label }}</span>
       <ng-content></ng-content>
       <i
         [class]="isOpen ? 'ri-arrow-down-s-line shrink-0' : 'ri-arrow-right-s-line shrink-0'"
-        aria-hidden="true"
-      ></i>
+        aria-hidden="true"></i>
     </button>
-  `
+  `,
 })
 export class ChainOfThoughtHeaderComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -190,7 +199,7 @@ export class ChainOfThoughtHeaderComponent implements OnChanges, OnInit, OnDestr
 
   ngOnInit(): void {
     this.sub.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.isOpen = open;
         this.cdr.markForCheck();
       })
@@ -216,18 +225,19 @@ export class ChainOfThoughtHeaderComponent implements OnChanges, OnInit, OnDestr
 
 /** Holds the steps; rendered only while the trace is expanded. */
 @Component({
-    selector: 'tolle-chain-of-thought-content',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
-    <div *ngIf="isOpen" data-state="open" [class]="computedClass">
-      <ng-content></ng-content>
-    </div>
-  `
+  selector: 'tolle-chain-of-thought-content',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    @if (isOpen) {
+      <div data-state="open" [class]="computedClass">
+        <ng-content></ng-content>
+      </div>
+    }
+  `,
 })
 export class ChainOfThoughtContentComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -248,7 +258,7 @@ export class ChainOfThoughtContentComponent implements OnChanges, OnInit, OnDest
 
   ngOnInit(): void {
     this.sub.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.isOpen = open;
         this.cdr.markForCheck();
       })
@@ -266,12 +276,14 @@ export class ChainOfThoughtContentComponent implements OnChanges, OnInit, OnDest
 
 /** One reasoning step: a marker on the rail, a label, and any projected detail. */
 @Component({
-    selector: 'tolle-chain-of-thought-step',
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { '[class]': 'computedClass', '[attr.data-status]': 'status' },
-    template: `
-    <span class="tolle-cot-rail absolute bottom-0 left-3 top-6 w-px -translate-x-1/2 bg-border" aria-hidden="true"></span>
+  selector: 'tolle-chain-of-thought-step',
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[class]': 'computedClass', '[attr.data-status]': 'status' },
+  template: `
+    <span
+      class="tolle-cot-rail absolute bottom-0 left-3 top-6 w-px -translate-x-1/2 bg-border"
+      aria-hidden="true"></span>
     <span [class]="markerClass">
       <i [class]="icon" aria-hidden="true"></i>
     </span>
@@ -279,9 +291,9 @@ export class ChainOfThoughtContentComponent implements OnChanges, OnInit, OnDest
       <p [class]="labelClass">{{ label }}</p>
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
-export class ChainOfThoughtStepComponent  implements OnChanges{
+export class ChainOfThoughtStepComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -311,19 +323,24 @@ export class ChainOfThoughtStepComponent  implements OnChanges{
   }
 
   get labelClass() {
-    return cn('truncate text-sm', this.status === 'active' ? 'font-medium text-foreground' : 'text-muted-foreground');
+    return cn(
+      'truncate text-sm',
+      this.status === 'active' ? 'font-medium text-foreground' : 'text-muted-foreground'
+    );
   }
 }
 
 /** Wraps the result chips produced by a search step. */
 @Component({
-    selector: 'tolle-chain-of-thought-search-results',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `<div [class]="cn('mt-1.5 flex flex-wrap items-center gap-1', class)"><ng-content></ng-content></div>`
+  selector: 'tolle-chain-of-thought-search-results',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<div [class]="cn('mt-1.5 flex flex-wrap items-center gap-1', class)">
+    <ng-content></ng-content>
+  </div>`,
 })
-export class ChainOfThoughtSearchResultsComponent  implements OnChanges{
+export class ChainOfThoughtSearchResultsComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -342,18 +359,20 @@ export class ChainOfThoughtSearchResultsComponent  implements OnChanges{
 
 /** A single search result rendered as a small chip. */
 @Component({
-    selector: 'tolle-chain-of-thought-search-result',
-    styles: [':host { display: inline-flex; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-chain-of-thought-search-result',
+  styles: [':host { display: inline-flex; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <span [class]="computedClass">
-      <i *ngIf="icon" [class]="icon + ' shrink-0'" aria-hidden="true"></i>
+      @if (icon) {
+        <i [class]="icon + ' shrink-0'" aria-hidden="true"></i>
+      }
       <ng-content></ng-content>
     </span>
-  `
+  `,
 })
-export class ChainOfThoughtSearchResultComponent  implements OnChanges{
+export class ChainOfThoughtSearchResultComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

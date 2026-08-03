@@ -1,35 +1,52 @@
-import { Component, Input, ContentChildren, QueryList, AfterContentInit, ElementRef, inject, ChangeDetectorRef, OnDestroy, forwardRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  ContentChildren,
+  QueryList,
+  AfterContentInit,
+  ElementRef,
+  inject,
+  ChangeDetectorRef,
+  OnDestroy,
+  forwardRef,
+} from '@angular/core';
+
 import { cn } from './utils/cn';
 import { ResizablePanelItemComponent } from './resizable-panel-item.component';
 
 @Component({
-    selector: 'tolle-resizable-panel',
-    imports: [CommonModule],
-    template: `
+  selector: 'tolle-resizable-panel',
+  imports: [],
+  template: `
     <div [class]="computedContainerClass">
-      <div class="flex h-full w-full" [class.flex-col]="direction === 'vertical'" [class.flex-row]="direction === 'horizontal'">
+      <div
+        class="flex h-full w-full"
+        [class.flex-col]="direction === 'vertical'"
+        [class.flex-row]="direction === 'horizontal'">
         <ng-content></ng-content>
       </div>
     </div>
   `,
-    styles: [`
-    /* Fills its parent by default so consumers don't have to remember a
+  styles: [
+    `
+      /* Fills its parent by default so consumers don't have to remember a
        manual h-full — the flex row/col wrapper below only has something to
        distribute once this and the container div actually have a height. */
-    :host {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  `]
+      :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    `,
+  ],
 })
 export class ResizablePanelComponent implements AfterContentInit, OnDestroy {
   @Input() direction: 'horizontal' | 'vertical' = 'horizontal';
   @Input() class: string = '';
 
   // forwardRef breaks the panel <-> item circular import (TDZ at class-decoration time).
-  @ContentChildren(forwardRef(() => ResizablePanelItemComponent)) panels!: QueryList<ResizablePanelItemComponent>;
+  @ContentChildren(forwardRef(() => ResizablePanelItemComponent))
+  panels!: QueryList<ResizablePanelItemComponent>;
 
   private el = inject(ElementRef);
   private cdr = inject(ChangeDetectorRef);
@@ -61,7 +78,7 @@ export class ResizablePanelComponent implements AfterContentInit, OnDestroy {
 
   private updateLastStatus() {
     const panels = this.panels.toArray();
-    panels.forEach((p, i) => p.isLast = i === panels.length - 1);
+    panels.forEach((p, i) => (p.isLast = i === panels.length - 1));
   }
 
   startResize(item: ResizablePanelItemComponent, event: MouseEvent) {
@@ -97,9 +114,10 @@ export class ResizablePanelComponent implements AfterContentInit, OnDestroy {
     const currentPos = this.direction === 'horizontal' ? event.clientX : event.clientY;
     const deltaPx = currentPos - this.startCursorPosition;
 
-    const containerSize = this.direction === 'horizontal'
-      ? this.el.nativeElement.offsetWidth
-      : this.el.nativeElement.offsetHeight;
+    const containerSize =
+      this.direction === 'horizontal'
+        ? this.el.nativeElement.offsetWidth
+        : this.el.nativeElement.offsetHeight;
 
     const deltaPercent = (deltaPx / containerSize) * 100;
 
@@ -107,16 +125,28 @@ export class ResizablePanelComponent implements AfterContentInit, OnDestroy {
     const panelA = panels[this.activePanelIndex];
     const panelB = panels[this.activePanelIndex + 1];
 
-    const newSizeA = Math.max(panelA.minSize, this.startPanelSizes[this.activePanelIndex] + deltaPercent);
+    const newSizeA = Math.max(
+      panelA.minSize,
+      this.startPanelSizes[this.activePanelIndex] + deltaPercent
+    );
     const actualDelta = newSizeA - this.startPanelSizes[this.activePanelIndex];
-    const newSizeB = Math.max(panelB.minSize, this.startPanelSizes[this.activePanelIndex + 1] - actualDelta);
+    const newSizeB = Math.max(
+      panelB.minSize,
+      this.startPanelSizes[this.activePanelIndex + 1] - actualDelta
+    );
 
     panelA.size = newSizeA;
-    panelB.size = this.startPanelSizes[this.activePanelIndex] + this.startPanelSizes[this.activePanelIndex + 1] - panelA.size;
+    panelB.size =
+      this.startPanelSizes[this.activePanelIndex] +
+      this.startPanelSizes[this.activePanelIndex + 1] -
+      panelA.size;
 
     if (panelB.size < panelB.minSize) {
       panelB.size = panelB.minSize;
-      panelA.size = (this.startPanelSizes[this.activePanelIndex] + this.startPanelSizes[this.activePanelIndex + 1]) - panelB.minSize;
+      panelA.size =
+        this.startPanelSizes[this.activePanelIndex] +
+        this.startPanelSizes[this.activePanelIndex + 1] -
+        panelB.minSize;
     }
 
     this.cdr.detectChanges();
@@ -144,9 +174,6 @@ export class ResizablePanelComponent implements AfterContentInit, OnDestroy {
   }
 
   get computedContainerClass() {
-    return cn(
-      'w-full h-full',
-      this.class
-    );
+    return cn('w-full h-full', this.class);
   }
 }

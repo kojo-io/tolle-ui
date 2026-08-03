@@ -1,7 +1,28 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy, HostListener, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ElementRef,
+  ViewChild,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  OnDestroy,
+  HostListener,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { computePosition, flip, shift, offset, autoUpdate, size as sizeMiddleware } from '@floating-ui/dom';
+import {
+  computePosition,
+  flip,
+  shift,
+  offset,
+  autoUpdate,
+  size as sizeMiddleware,
+} from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 import { RangeCalendarComponent } from './range-calendar.component';
@@ -51,18 +72,18 @@ export type DateRangePickerProps = VariantProps<typeof dateRangePickerTriggerVar
  * deliberately the same shape as that one and as `tolle-date-time-picker`.
  */
 @Component({
-    selector: 'tolle-date-range-picker',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule, FormsModule, RangeCalendarComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => DateRangePickerComponent),
-            multi: true
-        }
-    ],
-    template: `
+  selector: 'tolle-date-range-picker',
+  styles: [':host { display: block; }'],
+  imports: [FormsModule, RangeCalendarComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DateRangePickerComponent),
+      multi: true,
+    },
+  ],
+  template: `
     <button
       #trigger
       type="button"
@@ -73,51 +94,51 @@ export type DateRangePickerProps = VariantProps<typeof dateRangePickerTriggerVar
       [disabled]="disabled"
       [class]="computedTriggerClass"
       (click)="toggle()"
-      (keydown)="onTriggerKeyDown($event)"
-    >
+      (keydown)="onTriggerKeyDown($event)">
       <span [class]="cn('truncate', displayValue ? 'text-foreground' : 'text-muted-foreground')">
         {{ displayValue || placeholder }}
       </span>
       <i class="ri-calendar-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
     </button>
 
-    <div
-      #popover
-      *ngIf="isOpen"
-      role="dialog"
-      [attr.aria-label]="'Choose a date range'"
-      class="fixed left-0 top-0 z-50"
-      style="visibility: hidden"
-    >
-      <div class="rounded-md border border-border bg-popover text-popover-foreground shadow-md">
-        <div class="p-3">
-          <tolle-range-calendar
-            [bordered]="false"
-            [ngModel]="value"
-            (rangeSelect)="onCalendarSelect($event)"
-            [disablePastDates]="disablePastDates"
-            [numberOfMonths]="numberOfMonths"
-          ></tolle-range-calendar>
-        </div>
-
-        <div class="flex items-center justify-between gap-2 border-t border-border px-3 py-2">
-          <button type="button" [class]="footerButtonClass" (click)="clearFromFooter()">
-            Clear
-          </button>
-          <button
-            type="button"
-            [class]="cn(footerButtonClass, 'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground')"
-            (click)="done()"
-          >
-            Done
-          </button>
+    @if (isOpen) {
+      <div
+        #popover
+        role="dialog"
+        [attr.aria-label]="'Choose a date range'"
+        class="fixed left-0 top-0 z-50"
+        style="visibility: hidden">
+        <div class="rounded-md border border-border bg-popover text-popover-foreground shadow-md">
+          <div class="p-3">
+            <tolle-range-calendar
+              [bordered]="false"
+              [ngModel]="value"
+              (rangeSelect)="onCalendarSelect($event)"
+              [disablePastDates]="disablePastDates"
+              [numberOfMonths]="numberOfMonths"></tolle-range-calendar>
+          </div>
+          <div class="flex items-center justify-between gap-2 border-t border-border px-3 py-2">
+            <button type="button" [class]="footerButtonClass" (click)="clearFromFooter()">
+              Clear
+            </button>
+            <button
+              type="button"
+              [class]="
+                cn(
+                  footerButtonClass,
+                  'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground'
+                )
+              "
+              (click)="done()">
+              Done
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-  `
+    }
+  `,
 })
 export class DateRangePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -178,7 +199,10 @@ export class DateRangePickerComponent implements OnChanges, ControlValueAccessor
   }
 
   private _outsideClickHandler = (event: MouseEvent) => {
-    if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+    if (
+      !this.trigger.nativeElement.contains(event.target) &&
+      !this.popover?.nativeElement.contains(event.target)
+    ) {
       this.close();
     }
   };
@@ -186,7 +210,10 @@ export class DateRangePickerComponent implements OnChanges, ControlValueAccessor
   constructor(private cdr: ChangeDetectorRef) {}
 
   get computedTriggerClass(): string {
-    return cn(dateRangePickerTriggerVariants({ size: this.size, invalid: this.invalid }), this.class);
+    return cn(
+      dateRangePickerTriggerVariants({ size: this.size, invalid: this.invalid }),
+      this.class
+    );
   }
 
   get displayValue(): string {
@@ -221,7 +248,9 @@ export class DateRangePickerComponent implements OnChanges, ControlValueAccessor
     }
   }
 
-  @HostListener('keydown.escape') onEscape() { if (this.isOpen) this.close(); }
+  @HostListener('keydown.escape') onEscape() {
+    if (this.isOpen) this.close();
+  }
 
   open() {
     if (this.disabled || this.isOpen) return;
@@ -235,7 +264,10 @@ export class DateRangePickerComponent implements OnChanges, ControlValueAccessor
     if (this.trigger?.nativeElement) {
       this.trigger.nativeElement.focus();
     }
-    const schedule = typeof requestAnimationFrame !== 'undefined' ? requestAnimationFrame : (fn: FrameRequestCallback) => setTimeout(fn, 0);
+    const schedule =
+      typeof requestAnimationFrame !== 'undefined'
+        ? requestAnimationFrame
+        : (fn: FrameRequestCallback) => setTimeout(fn, 0);
     schedule(() => {
       this.updatePosition();
       document.addEventListener('pointerdown', this._outsideClickHandler, true);
@@ -274,7 +306,7 @@ export class DateRangePickerComponent implements OnChanges, ControlValueAccessor
             offset(4),
             flip({
               fallbackAxisSideDirection: 'start',
-              padding: 8
+              padding: 8,
             }),
             shift({ padding: 8 }),
             sizeMiddleware({
@@ -284,8 +316,8 @@ export class DateRangePickerComponent implements OnChanges, ControlValueAccessor
                   maxHeight: `${Math.min(400, availableHeight)}px`,
                   minWidth: `${Math.max(rects.reference.width, 320)}px`, // Calendar minimum width
                 });
-              }
-            })
+              },
+            }),
           ],
         }).then(({ x, y, placement }) => {
           Object.assign(this.popover.nativeElement.style, {
@@ -343,8 +375,12 @@ export class DateRangePickerComponent implements OnChanges, ControlValueAccessor
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.cdr.markForCheck();

@@ -7,26 +7,28 @@ import {
   AfterContentChecked,
   ChangeDetectorRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-masked-input',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule, FormsModule],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => MaskedInputComponent),
-            multi: true,
-        },
-    ],
-    template: `
+  selector: 'tolle-masked-input',
+  styles: [':host { display: block; }'],
+  imports: [FormsModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MaskedInputComponent),
+      multi: true,
+    },
+  ],
+  template: `
     <div class="flex w-full flex-col gap-1.5">
-      <label *ngIf="label" [for]="id" [class]="computedLabelClass">
-        {{ label }}
-      </label>
+      @if (label) {
+        <label [for]="id" [class]="computedLabelClass">
+          {{ label }}
+        </label>
+      }
 
       <div [class]="computedContainerClass" (click)="focusInput()">
         <!-- Prefix Icon -->
@@ -57,19 +59,22 @@ import { cn } from './utils/cn';
         </div>
       </div>
 
-      <ng-container *ngIf="!disabled">
-        <p
-          *ngIf="hint && !error"
-          class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus">
-          {{ hint }}
-        </p>
-        <p *ngIf="error && errorMessage" [id]="id + '-error'" class="px-1 text-xs text-destructive">
-          {{ errorMessage }}
-        </p>
-      </ng-container>
+      @if (!disabled) {
+        @if (hint && !error) {
+          <p
+            class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
+            [class.opacity-0]="isFocused && hideHintOnFocus">
+            {{ hint }}
+          </p>
+        }
+        @if (error && errorMessage) {
+          <p [id]="id + '-error'" class="px-1 text-xs text-destructive">
+            {{ errorMessage }}
+          </p>
+        }
+      }
     </div>
-  `
+  `,
 })
 export class MaskedInputComponent implements ControlValueAccessor, AfterContentChecked {
   @Input() id: string = `masked-input-${Math.random().toString(36).substr(2, 9)}`;

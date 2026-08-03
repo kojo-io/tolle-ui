@@ -9,7 +9,7 @@ import {
   OnDestroy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { cn } from './utils/cn';
 
 /**
@@ -30,34 +30,33 @@ import { cn } from './utils/cn';
  * @new
  */
 @Component({
-    selector: 'tolle-command-dialog',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    template: `
-    <div
-      *ngIf="open"
-      class="fixed inset-0 z-[9999] flex items-start justify-center p-4 pt-[15vh]"
-      role="dialog"
-      aria-modal="true"
-      [attr.aria-label]="ariaLabel"
-    >
+  selector: 'tolle-command-dialog',
+  styles: [':host { display: block; }'],
+  imports: [],
+  template: `
+    @if (open) {
       <div
-        class="fixed inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in"
-        aria-hidden="true"
-        (click)="onBackdropClick()"
-      ></div>
-
-      <div
-        #panel
-        [class]="cn(
-          'relative z-10 w-full max-w-lg overflow-hidden rounded-lg border border-border bg-popover shadow-lg',
-          class
-        )"
-      >
-        <ng-content></ng-content>
+        class="fixed inset-0 z-[9999] flex items-start justify-center p-4 pt-[15vh]"
+        role="dialog"
+        aria-modal="true"
+        [attr.aria-label]="ariaLabel">
+        <div
+          class="fixed inset-0 bg-black/50 backdrop-blur-sm animate-in fade-in"
+          aria-hidden="true"
+          (click)="onBackdropClick()"></div>
+        <div
+          #panel
+          [class]="
+            cn(
+              'relative z-10 w-full max-w-lg overflow-hidden rounded-lg border border-border bg-popover shadow-lg',
+              class
+            )
+          ">
+          <ng-content></ng-content>
+        </div>
       </div>
-    </div>
-  `
+    }
+  `,
 })
 export class CommandDialogComponent implements OnInit, OnDestroy {
   /** Whether the palette is visible. Supports two-way binding via `[(open)]`. @default false */

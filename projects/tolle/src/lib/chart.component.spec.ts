@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -32,17 +32,16 @@ const TWO_SERIES: ChartSeries[] = [
 ];
 
 @Component({
-    imports: [
-        CommonModule,
-        ChartComponent,
-        ChartGridComponent,
-        ChartXAxisComponent,
-        ChartYAxisComponent,
-        ChartLineComponent,
-        ChartAreaComponent,
-        ChartBarComponent,
-    ],
-    template: `
+  imports: [
+    ChartComponent,
+    ChartGridComponent,
+    ChartXAxisComponent,
+    ChartYAxisComponent,
+    ChartLineComponent,
+    ChartAreaComponent,
+    ChartBarComponent,
+  ],
+  template: `
     <tolle-chart
       [data]="data"
       [series]="series"
@@ -52,17 +51,24 @@ const TWO_SERIES: ChartSeries[] = [
       [stacked]="stacked"
       [orientation]="orientation"
       [showTable]="showTable"
-      [hover]="hover"
-    >
+      [hover]="hover">
       <svg:g tolle-chart-grid></svg:g>
       <svg:g tolle-chart-y-axis></svg:g>
       <svg:g tolle-chart-x-axis></svg:g>
-      <svg:g *ngIf="mark === 'line'" tolle-chart-line seriesKey="a" curve="smooth" [showDots]="true"></svg:g>
-      <svg:g *ngIf="mark === 'area'" tolle-chart-area seriesKey="a"></svg:g>
-      <svg:g *ngIf="mark === 'bar'" tolle-chart-bar seriesKey="a" [maxWidth]="100"></svg:g>
-      <svg:g *ngIf="mark === 'bar'" tolle-chart-bar seriesKey="b" [maxWidth]="100"></svg:g>
+      @if (mark === 'line') {
+        <svg:g tolle-chart-line seriesKey="a" curve="smooth" [showDots]="true"></svg:g>
+      }
+      @if (mark === 'area') {
+        <svg:g tolle-chart-area seriesKey="a"></svg:g>
+      }
+      @if (mark === 'bar') {
+        <svg:g tolle-chart-bar seriesKey="a" [maxWidth]="100"></svg:g>
+      }
+      @if (mark === 'bar') {
+        <svg:g tolle-chart-bar seriesKey="b" [maxWidth]="100"></svg:g>
+      }
     </tolle-chart>
-  `
+  `,
 })
 class HostComponent {
   @ViewChild(ChartComponent) chart!: ChartComponent;
@@ -76,7 +82,11 @@ class HostComponent {
 }
 
 /** Pins the plot box so geometry assertions do not depend on the karma window. */
-function pinLayout(fixture: ComponentFixture<HostComponent>, width = 400, height = 200): ChartService {
+function pinLayout(
+  fixture: ComponentFixture<HostComponent>,
+  width = 400,
+  height = 200
+): ChartService {
   const service = fixture.debugElement
     .query(By.directive(ChartComponent))
     .injector.get(ChartService);
@@ -134,7 +144,9 @@ describe('ChartComponent', () => {
 
     expect(line.namespaceURI).toBe(SVG_NS);
     expect(fixture.nativeElement.querySelector('g[tolle-chart-grid]').namespaceURI).toBe(SVG_NS);
-    expect(fixture.nativeElement.querySelector('g[tolle-chart-x-axis] text').namespaceURI).toBe(SVG_NS);
+    expect(fixture.nativeElement.querySelector('g[tolle-chart-x-axis] text').namespaceURI).toBe(
+      SVG_NS
+    );
   });
 
   it('uses a viewBox so the plot scales with its container', () => {
@@ -186,12 +198,15 @@ describe('ChartComponent legend', () => {
   });
 
   it('keeps a series swatch when an earlier series is filtered out', () => {
-    fixture.componentInstance.series = [{ key: 'b', label: 'Cost' }, { key: 'a', label: 'Revenue' }];
+    fixture.componentInstance.series = [
+      { key: 'b', label: 'Cost' },
+      { key: 'a', label: 'Revenue' },
+    ];
     fixture.detectChanges();
 
     const legend = fixture.debugElement.query(By.directive(ChartLegendComponent));
     const items = legend.nativeElement.querySelectorAll('li');
-    const cost = Array.from(items as NodeListOf<HTMLElement>).find((li) =>
+    const cost = Array.from(items as NodeListOf<HTMLElement>).find(li =>
       li.textContent?.includes('Cost')
     );
     // 'Cost' registered second, so it keeps step 2 no matter where it now sits.
@@ -317,7 +332,7 @@ describe('ChartComponent hover layer', () => {
 
   it('emits the hovered index', fakeAsync(() => {
     const seen: (number | null)[] = [];
-    fixture.componentInstance.chart.activeIndexChange.subscribe((i) => seen.push(i));
+    fixture.componentInstance.chart.activeIndexChange.subscribe(i => seen.push(i));
 
     hitRects()[3].dispatchEvent(new PointerEvent('pointerenter'));
     tick();
@@ -331,7 +346,9 @@ describe('ChartComponent hover layer', () => {
     tick();
     fixture.detectChanges();
 
-    const tooltip = fixture.debugElement.query(By.directive(ChartTooltipComponent)).componentInstance;
+    const tooltip = fixture.debugElement.query(
+      By.directive(ChartTooltipComponent)
+    ).componentInstance;
     // Last band sits at the right edge, so the readout has to flip left of it.
     expect(tooltip.left).toBeLessThan(400 - tooltip.estimatedWidth);
   }));
@@ -355,7 +372,9 @@ describe('ChartXAxisComponent', () => {
 
   function axisLabels(): string[] {
     const axis = fixture.nativeElement.querySelector('g[tolle-chart-x-axis]');
-    return Array.from(axis.querySelectorAll('text')).map((t) => (t as SVGTextElement).textContent ?? '');
+    return Array.from(axis.querySelectorAll('text')).map(
+      t => (t as SVGTextElement).textContent ?? ''
+    );
   }
 
   it('draws every label when they all fit', () => {
@@ -428,14 +447,14 @@ describe('ChartYAxisComponent', () => {
 
     expect(texts.length).toBeGreaterThan(1);
     expect(texts[0].getAttribute('class')).toContain('fill-muted-foreground');
-    expect(texts.map((t) => t.textContent)).toContain('40');
+    expect(texts.map(t => t.textContent)).toContain('40');
   });
 
   it('puts the largest tick at the top of the plot', () => {
     const axis = fixture.nativeElement.querySelector('g[tolle-chart-y-axis]');
     const texts = Array.from(axis.querySelectorAll('text')) as SVGTextElement[];
-    const ys = texts.map((t) => Number(t.getAttribute('y')));
-    const values = texts.map((t) => Number(t.textContent));
+    const ys = texts.map(t => Number(t.getAttribute('y')));
+    const values = texts.map(t => Number(t.textContent));
 
     const topIndex = ys.indexOf(Math.min(...ys));
     expect(values[topIndex]).toBe(Math.max(...values));
@@ -662,7 +681,10 @@ describe('ChartBarComponent', () => {
     expect((d.match(/Q/g) ?? []).length).toBe(2);
 
     const baseline = service.yFor(0);
-    const numbers = d.split(/[^\d.\-]+/).filter(Boolean).map(Number);
+    const numbers = d
+      .split(/[^\d.\-]+/)
+      .filter(Boolean)
+      .map(Number);
     expect(numbers[1]).toBeCloseTo(baseline, 6);
     expect(numbers[numbers.length - 1]).toBeCloseTo(baseline, 6);
   });
@@ -769,7 +791,8 @@ describe('ChartBarComponent horizontal orientation', () => {
     // Reads the getter directly rather than the rendered DOM: ChartComponent is
     // OnPush and pinLayout's direct service.configure() marks it dirty via a
     // microtask, which a synchronous detectChanges() here would race.
-    const chart = fixture.debugElement.query(By.directive(ChartComponent)).componentInstance as ChartComponent;
+    const chart = fixture.debugElement.query(By.directive(ChartComponent))
+      .componentInstance as ChartComponent;
     const rect = chart.hitRects[0];
     expect(rect.width).toBeCloseTo(service.plotWidth, 6);
   });

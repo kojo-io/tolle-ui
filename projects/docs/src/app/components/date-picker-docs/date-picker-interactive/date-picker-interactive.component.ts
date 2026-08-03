@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { DatePickerComponent } from '../../../../../../tolle/src/lib/date-picker.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -10,29 +10,28 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 import { CalendarMode } from '../../../../../../tolle/src/lib/calendar.component';
 
 @Component({
-    selector: 'app-date-picker-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        DatePickerComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        SwitchComponent,
-        LabelComponent
-    ],
-    templateUrl: './date-picker-interactive.component.html'
+  selector: 'app-date-picker-interactive',
+  imports: [
+    FormsModule,
+    DatePickerComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    SwitchComponent,
+    LabelComponent,
+  ],
+  templateUrl: './date-picker-interactive.component.html',
 })
 export class DatePickerInteractiveComponent {
-    date: Date | null = null;
-    mode: CalendarMode = 'date';
-    disabled = false;
-    showClear = true;
-    disablePastDates = false;
-    showQuickActions = true;
+  date: Date | null = null;
+  mode: CalendarMode = 'date';
+  disabled = false;
+  showClear = true;
+  disablePastDates = false;
+  showQuickActions = true;
 
-    get playgroundCode() {
-        return `<tolle-date-picker
+  get playgroundCode() {
+    return `<tolle-date-picker
   [(ngModel)]="date"
   mode="${this.mode}"
   [disabled]="${this.disabled}"
@@ -40,5 +39,5 @@ export class DatePickerInteractiveComponent {
   [disablePastDates]="${this.disablePastDates}"
   [showQuickActions]="${this.showQuickActions}"
 ></tolle-date-picker>`;
-    }
+  }
 }

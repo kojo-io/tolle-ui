@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ContextMenuItem } from '../../../../../../tolle/src/lib/context-menu.service';
 import { ContextMenuTriggerDirective } from '../../../../../../tolle/src/lib/context-menu-trigger.directive';
@@ -8,58 +8,68 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-context-menu-interactive',
-    imports: [CommonModule, FormsModule, ContextMenuTriggerDirective, PlaygroundComponent, SwitchComponent, LabelComponent],
-    templateUrl: './context-menu-interactive.component.html'
+  selector: 'app-context-menu-interactive',
+  imports: [
+    FormsModule,
+    ContextMenuTriggerDirective,
+    PlaygroundComponent,
+    SwitchComponent,
+    LabelComponent,
+  ],
+  templateUrl: './context-menu-interactive.component.html',
 })
 export class ContextMenuInteractiveComponent {
-    showIcons = true;
-    includeSubmenu = true;
-    disableDelete = false;
+  showIcons = true;
+  includeSubmenu = true;
+  disableDelete = false;
 
-    get menuItems(): ContextMenuItem[] {
-        const items: ContextMenuItem[] = [
-            { id: 'edit', label: 'Edit', icon: this.showIcons ? 'ri-edit-line' : undefined },
-            { id: 'copy', label: 'Copy', icon: this.showIcons ? 'ri-file-copy-line' : undefined },
-        ];
+  get menuItems(): ContextMenuItem[] {
+    const items: ContextMenuItem[] = [
+      { id: 'edit', label: 'Edit', icon: this.showIcons ? 'ri-edit-line' : undefined },
+      { id: 'copy', label: 'Copy', icon: this.showIcons ? 'ri-file-copy-line' : undefined },
+    ];
 
-        if (this.includeSubmenu) {
-            items.push({
-                id: 'share',
-                label: 'Share',
-                icon: this.showIcons ? 'ri-share-line' : undefined,
-                submenu: [
-                    { id: 'email', label: 'Email', icon: this.showIcons ? 'ri-mail-line' : undefined },
-                    { id: 'message', label: 'Message', icon: this.showIcons ? 'ri-chat-3-line' : undefined }
-                ]
-            });
-        }
-
-        items.push({ separator: true });
-        items.push({
-            id: 'delete',
-            label: 'Delete',
-            icon: this.showIcons ? 'ri-delete-bin-line' : undefined,
-            destructive: true,
-            disabled: this.disableDelete
-        });
-
-        return items;
+    if (this.includeSubmenu) {
+      items.push({
+        id: 'share',
+        label: 'Share',
+        icon: this.showIcons ? 'ri-share-line' : undefined,
+        submenu: [
+          { id: 'email', label: 'Email', icon: this.showIcons ? 'ri-mail-line' : undefined },
+          { id: 'message', label: 'Message', icon: this.showIcons ? 'ri-chat-3-line' : undefined },
+        ],
+      });
     }
 
-    get playgroundCode(): string {
-        return `
+    items.push({ separator: true });
+    items.push({
+      id: 'delete',
+      label: 'Delete',
+      icon: this.showIcons ? 'ri-delete-bin-line' : undefined,
+      destructive: true,
+      disabled: this.disableDelete,
+    });
+
+    return items;
+  }
+
+  get playgroundCode(): string {
+    return `
 const menuItems: ContextMenuItem[] = [
   { id: 'edit', label: 'Edit', icon: ${this.showIcons ? "'ri-edit-line'" : 'undefined'} },
   { id: 'copy', label: 'Copy', icon: ${this.showIcons ? "'ri-file-copy-line'" : 'undefined'} },
-  ${this.includeSubmenu ? `{ 
+  ${
+    this.includeSubmenu
+      ? `{ 
     id: 'share', 
     label: 'Share', 
     submenu: [
       { id: 'email', label: 'Email' },
       { id: 'message', label: 'Message' }
     ] 
-  },` : ''}
+  },`
+      : ''
+  }
   { separator: true },
   { id: 'delete', label: 'Delete', destructive: true, disabled: ${this.disableDelete} }
 ];
@@ -68,5 +78,5 @@ const menuItems: ContextMenuItem[] = [
 <div [tolleContextMenuTrigger]="menuItems">
   Right click here
 </div>`;
-    }
+  }
 }

@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   MessageScrollerComponent,
   MessageScrollerViewportComponent,
@@ -10,26 +10,27 @@ import {
 } from './message-scroller.component';
 
 @Component({
-    imports: [
-        CommonModule,
-        MessageScrollerComponent,
-        MessageScrollerViewportComponent,
-        MessageScrollerContentComponent,
-        MessageScrollerButtonComponent,
-        MessageScrollerItemDirective,
-    ],
-    template: `
+  imports: [
+    MessageScrollerComponent,
+    MessageScrollerViewportComponent,
+    MessageScrollerContentComponent,
+    MessageScrollerButtonComponent,
+    MessageScrollerItemDirective,
+  ],
+  template: `
     <div style="height: 100px; width: 200px;">
       <tolle-message-scroller startPosition="top" (atBottomChange)="atBottomEvents.push($event)">
         <tolle-message-scroller-viewport>
           <tolle-message-scroller-content>
-            <div *ngFor="let m of messages" tolleMessageScrollerItem style="height: 40px">{{ m }}</div>
+            @for (m of messages; track m) {
+              <div tolleMessageScrollerItem style="height: 40px">{{ m }}</div>
+            }
           </tolle-message-scroller-content>
         </tolle-message-scroller-viewport>
         <tolle-message-scroller-button>Jump to latest</tolle-message-scroller-button>
       </tolle-message-scroller>
     </div>
-  `
+  `,
 })
 class HostComponent {
   messages = Array.from({ length: 20 }, (_, i) => `message ${i}`);
@@ -39,8 +40,10 @@ class HostComponent {
 describe('MessageScrollerComponent', () => {
   let fixture: ComponentFixture<HostComponent>;
 
-  const scrollerHost = (): HTMLElement => fixture.nativeElement.querySelector('tolle-message-scroller');
-  const viewportHost = (): HTMLElement => fixture.nativeElement.querySelector('tolle-message-scroller-viewport');
+  const scrollerHost = (): HTMLElement =>
+    fixture.nativeElement.querySelector('tolle-message-scroller');
+  const viewportHost = (): HTMLElement =>
+    fixture.nativeElement.querySelector('tolle-message-scroller-viewport');
   const viewportInner = (): HTMLElement => viewportHost().querySelector('div')!;
 
   beforeEach(async () => {

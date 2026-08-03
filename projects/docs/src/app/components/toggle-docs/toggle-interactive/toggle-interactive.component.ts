@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ToggleComponent } from '../../../../../../tolle/src/lib/toggle.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -8,27 +8,32 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-toggle-interactive',
-    imports: [
-        CommonModule,
-        FormsModule,
-        ToggleComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        LabelComponent
-    ],
-    template: `
+  selector: 'app-toggle-interactive',
+  imports: [
+    FormsModule,
+    ToggleComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    LabelComponent,
+  ],
+  template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
-          <tolle-toggle 
-            [variant]="variant" 
-            [size]="size" 
-            [(pressed)]="isPressed"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+          <tolle-toggle [variant]="variant" [size]="size" [(pressed)]="isPressed">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4">
               <path d="M6 12h9"></path>
               <path d="M11 7l5 5-5 5"></path>
               <circle cx="12" cy="12" r="10"></circle>
@@ -55,19 +60,19 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class ToggleInteractiveComponent {
-    isPressed = false;
-    variant: any = 'default';
-    size: any = 'default';
+  isPressed = false;
+  variant: any = 'default';
+  size: any = 'default';
 
-    get playgroundCode() {
-        const variantAttr = this.variant !== 'default' ? ` variant="${this.variant}"` : '';
-        const sizeAttr = this.size !== 'default' ? ` size="${this.size}"` : '';
+  get playgroundCode() {
+    const variantAttr = this.variant !== 'default' ? ` variant="${this.variant}"` : '';
+    const sizeAttr = this.size !== 'default' ? ` size="${this.size}"` : '';
 
-        return `<tolle-toggle[(pressed)]="isPressed"${variantAttr}${sizeAttr}>
+    return `<tolle-toggle[(pressed)]="isPressed"${variantAttr}${sizeAttr}>
   <icon-bold class="h-4 w-4" />
 </tolle-toggle>`;
-    }
+  }
 }

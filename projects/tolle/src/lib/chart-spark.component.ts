@@ -1,5 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import {
   ChartComponent,
   ChartLineComponent,
@@ -17,11 +24,11 @@ import {
  * @new
  */
 @Component({
-    selector: 'tolle-chart-spark',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule, ChartComponent, ChartLineComponent, ChartAreaComponent, ChartBarComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-chart-spark',
+  styles: [':host { display: block; }'],
+  imports: [ChartComponent, ChartLineComponent, ChartAreaComponent, ChartBarComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <tolle-chart
       [class]="class"
       [data]="data"
@@ -32,13 +39,18 @@ import {
       [hover]="hover"
       [showTable]="showTable"
       [ariaLabel]="ariaLabel"
-      [description]="description"
-    >
-      <svg:g *ngIf="type === 'line'" tolle-chart-line [seriesKey]="valueKey" [curve]="curve"></svg:g>
-      <svg:g *ngIf="type === 'area'" tolle-chart-area [seriesKey]="valueKey" [curve]="curve"></svg:g>
-      <svg:g *ngIf="type === 'bar'" tolle-chart-bar [seriesKey]="valueKey" [maxWidth]="maxBarWidth"></svg:g>
+      [description]="description">
+      @if (type === 'line') {
+        <svg:g tolle-chart-line [seriesKey]="valueKey" [curve]="curve"></svg:g>
+      }
+      @if (type === 'area') {
+        <svg:g tolle-chart-area [seriesKey]="valueKey" [curve]="curve"></svg:g>
+      }
+      @if (type === 'bar') {
+        <svg:g tolle-chart-bar [seriesKey]="valueKey" [maxWidth]="maxBarWidth"></svg:g>
+      }
     </tolle-chart>
-  `
+  `,
 })
 export class ChartSparkComponent implements OnChanges {
   /**

@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -17,15 +29,18 @@ export interface PlanProgress {
   total: number;
 }
 
-const planVariants = cva('w-full rounded-lg border border-border bg-card p-3 text-card-foreground', {
-  variants: {
-    size: {
-      sm: 'p-2 text-xs',
-      default: 'p-3 text-sm',
+const planVariants = cva(
+  'w-full rounded-lg border border-border bg-card p-3 text-card-foreground',
+  {
+    variants: {
+      size: {
+        sm: 'p-2 text-xs',
+        default: 'p-3 text-sm',
+      },
     },
-  },
-  defaultVariants: { size: 'default' },
-});
+    defaultVariants: { size: 'default' },
+  }
+);
 
 export type PlanProps = VariantProps<typeof planVariants>;
 
@@ -127,8 +142,8 @@ export class PlanService {
    */
   private recompute(): void {
     const total = this.order.length;
-    const activeIndex = this.order.findIndex((id) => this.statuses.get(id) === 'active');
-    const resolved = this.order.filter((id) => {
+    const activeIndex = this.order.findIndex(id => this.statuses.get(id) === 'active');
+    const resolved = this.order.filter(id => {
       const status = this.statuses.get(id);
       return status === 'done' || status === 'skipped';
     }).length;
@@ -153,34 +168,39 @@ export class PlanService {
  * @new
  */
 @Component({
-    selector: 'tolle-plan',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    providers: [PlanService],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-plan',
+  styles: [':host { display: block; }'],
+  imports: [],
+  providers: [PlanService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div [class]="computedClass" [attr.data-collapsed]="isCollapsed ? '' : null">
       <button
         type="button"
         [disabled]="!collapsible"
         [attr.aria-expanded]="collapsible ? !isCollapsed : null"
         [class]="headerClass"
-        (click)="toggle()"
-      >
-        <i
-          *ngIf="collapsible"
-          [class]="isCollapsed ? 'ri-arrow-right-s-line shrink-0 text-muted-foreground' : 'ri-arrow-down-s-line shrink-0 text-muted-foreground'"
-          aria-hidden="true"
-        ></i>
+        (click)="toggle()">
+        @if (collapsible) {
+          <i
+            [class]="
+              isCollapsed
+                ? 'ri-arrow-right-s-line shrink-0 text-muted-foreground'
+                : 'ri-arrow-down-s-line shrink-0 text-muted-foreground'
+            "
+            aria-hidden="true"></i>
+        }
         <span class="truncate font-medium text-foreground">{{ title }}</span>
-        <span class="ml-auto shrink-0 text-xs tabular-nums text-muted-foreground">{{ summary }}</span>
+        <span class="ml-auto shrink-0 text-xs tabular-nums text-muted-foreground">{{
+          summary
+        }}</span>
       </button>
 
       <div [class]="isCollapsed ? 'hidden' : 'mt-3 flex flex-col'">
         <ng-content></ng-content>
       </div>
     </div>
-  `
+  `,
 })
 export class PlanComponent implements OnInit, OnChanges, OnDestroy {
   /** Heading shown above the steps. @default 'Plan' */
@@ -210,7 +230,7 @@ export class PlanComponent implements OnInit, OnChanges, OnDestroy {
     // for a user toggle and echoed back out as a `collapsedChange`.
     this.isCollapsed = this.collapsed;
     this.sub.add(
-      this.service.collapsed$.subscribe((collapsed) => {
+      this.service.collapsed$.subscribe(collapsed => {
         const changed = this.isCollapsed !== collapsed;
         this.isCollapsed = collapsed;
         this.cdr.markForCheck();
@@ -218,7 +238,7 @@ export class PlanComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
     this.sub.add(
-      this.service.progress$.subscribe((progress) => {
+      this.service.progress$.subscribe(progress => {
         this.progress = progress;
         this.cdr.markForCheck();
       })
@@ -227,7 +247,7 @@ export class PlanComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(): void {
     this.service.setCollapsed(this.collapsed);
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -263,25 +283,35 @@ export class PlanComponent implements OnInit, OnChanges, OnDestroy {
 
 /** One numbered step of a `tolle-plan`. */
 @Component({
-    selector: 'tolle-plan-step',
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    host: { '[class]': 'computedClass', '[attr.data-status]': 'status' },
-    template: `
-    <span class="tolle-plan-rail absolute bottom-0 left-3 top-6 w-px -translate-x-1/2 bg-border" aria-hidden="true"></span>
+  selector: 'tolle-plan-step',
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '[class]': 'computedClass', '[attr.data-status]': 'status' },
+  template: `
+    <span
+      class="tolle-plan-rail absolute bottom-0 left-3 top-6 w-px -translate-x-1/2 bg-border"
+      aria-hidden="true"></span>
 
     <span [class]="badgeClass">
-      <i *ngIf="status === 'done'" class="ri-check-line" aria-hidden="true"></i>
-      <i *ngIf="status === 'skipped'" class="ri-subtract-line" aria-hidden="true"></i>
-      <ng-container *ngIf="status !== 'done' && status !== 'skipped'">{{ index }}</ng-container>
+      @if (status === 'done') {
+        <i class="ri-check-line" aria-hidden="true"></i>
+      }
+      @if (status === 'skipped') {
+        <i class="ri-subtract-line" aria-hidden="true"></i>
+      }
+      @if (status !== 'done' && status !== 'skipped') {
+        {{ index }}
+      }
     </span>
 
     <div class="min-w-0 flex-1 pt-0.5">
       <p [class]="labelClass">{{ label }}</p>
-      <p *ngIf="description" class="mt-0.5 text-xs text-muted-foreground">{{ description }}</p>
+      @if (description) {
+        <p class="mt-0.5 text-xs text-muted-foreground">{{ description }}</p>
+      }
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
 export class PlanStepComponent implements OnInit, OnChanges, OnDestroy {
   /** What this step does. @default '' */

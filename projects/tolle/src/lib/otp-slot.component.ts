@@ -1,19 +1,20 @@
 import { Component, Input } from '@angular/core';
-import { cn } from "./utils/cn";
-import { NgIf } from '@angular/common';
+import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-otp-slot',
-    styles: [':host { display: inline-flex; }'],
-    imports: [NgIf],
-    template: `
+  selector: 'tolle-otp-slot',
+  styles: [':host { display: inline-flex; }'],
+  imports: [],
+  template: `
     <div [class]="computedClass">
       <span class="text-lg font-medium">{{ char || '' }}</span>
-      <div *ngIf="isActive && !char" class="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div class="h-6 w-0.5 animate-caret-blink bg-foreground"></div>
-      </div>
+      @if (isActive && !char) {
+        <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div class="animate-caret-blink h-6 w-0.5 bg-foreground"></div>
+        </div>
+      }
     </div>
-  `
+  `,
 })
 export class OtpSlotComponent {
   @Input() char: string | undefined = '';
@@ -44,7 +45,7 @@ export class OtpSlotComponent {
         'ring-ring/30',
         'ring-offset-0',
         // Ensure it's above other slots
-        'z-10'
+        'z-10',
       ],
 
       // Filled state

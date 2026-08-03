@@ -5,24 +5,22 @@ import { SliderOverviewComponent } from './slider-overview/slider-overview.compo
 import { SliderInteractiveComponent } from './slider-interactive/slider-interactive.component';
 import { SliderApiComponent } from './slider-api/slider-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-slider-docs',
-    imports: [
-        CommonModule,
-        SliderOverviewComponent,
-        SliderInteractiveComponent,
-        SliderApiComponent,
-        DocsWrapperComponent
-    ],
-    templateUrl: './slider-docs.component.html'
+  selector: 'app-slider-docs',
+  imports: [
+    SliderOverviewComponent,
+    SliderInteractiveComponent,
+    SliderApiComponent,
+    DocsWrapperComponent,
+  ],
+  templateUrl: './slider-docs.component.html',
 })
 export class SliderDocsComponent implements OnInit {
-    baseService = inject(BaseService);
-    analytics = inject(AnalyticsService);
+  baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
 
-    ngOnInit(): void {
-        this.analytics.init();
-    }
+  ngOnInit(): void {
+    this.analytics.init();
+  }
 }

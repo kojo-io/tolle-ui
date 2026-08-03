@@ -1,32 +1,31 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import {
-    PromptInputComponent,
-    PromptInputToolbarComponent,
-    PromptInputToolsComponent,
-    PromptInputSubmitComponent
+  PromptInputComponent,
+  PromptInputToolbarComponent,
+  PromptInputToolsComponent,
+  PromptInputSubmitComponent,
 } from '../../../../../../tolle/src/lib/prompt-input.component';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 
 @Component({
-    selector: 'app-basic-prompt-input',
-    imports: [
-        CommonModule,
-        FormsModule,
-        PromptInputComponent,
-        PromptInputToolbarComponent,
-        PromptInputToolsComponent,
-        PromptInputSubmitComponent,
-        ButtonComponent
-    ],
-    templateUrl: './basic-prompt-input.component.html'
+  selector: 'app-basic-prompt-input',
+  imports: [
+    FormsModule,
+    PromptInputComponent,
+    PromptInputToolbarComponent,
+    PromptInputToolsComponent,
+    PromptInputSubmitComponent,
+    ButtonComponent,
+  ],
+  templateUrl: './basic-prompt-input.component.html',
 })
 export class BasicPromptInputComponent {
-    message = '';
-    sent: string[] = [];
+  message = '';
+  sent: string[] = [];
 
-    onSubmitted(text: string): void {
-        this.sent = [...this.sent, text];
-    }
+  onSubmitted(text: string): void {
+    this.sent = [...this.sent, text];
+  }
 }

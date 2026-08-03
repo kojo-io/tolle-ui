@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { BaseService } from '../../shared/base.service';
 import { RegistryDocsService } from '../../shared/registry-docs.service';
-import { NgIf } from '@angular/common';
+
 import { DocHeroComponent } from '../../shared/doc-hero/doc-hero.component';
 import { FormsModule } from '@angular/forms';
 import { AlertComponent } from '../../../../../tolle/src/lib/alert.component';
@@ -19,24 +19,23 @@ import { InputComponent } from '../../../../../tolle/src/lib/input.component';
 import { CheckboxComponent } from '../../../../../tolle/src/lib/checkbox.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
 
-
 @Component({
-    selector: 'app-alert-docs',
-    imports: [
-        BaseEditorComponent,
-        FormsModule,
-        AlertComponent,
-        PropTableComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        InputComponent,
-        CheckboxComponent,
-        DocsWrapperComponent,
-        DocHeroComponent
-    ],
-    templateUrl: './alert-docs.component.html',
-    styleUrl: './alert-docs.component.css'
+  selector: 'app-alert-docs',
+  imports: [
+    BaseEditorComponent,
+    FormsModule,
+    AlertComponent,
+    PropTableComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    InputComponent,
+    CheckboxComponent,
+    DocsWrapperComponent,
+    DocHeroComponent,
+  ],
+  templateUrl: './alert-docs.component.html',
+  styleUrl: './alert-docs.component.css',
 })
 export class AlertDocsComponent implements OnInit {
   baseService = inject(BaseService);
@@ -71,20 +70,20 @@ export class AlertDocsComponent implements OnInit {
   alertProps = computed(() => this.registry.inputs('alert'));
   alertOutputs = computed(() => this.registry.outputs('alert'));
 
-  selectedTab = "preview";
-  basicTab = "preview";
-  dismissTab = "preview";
+  selectedTab = 'preview';
+  basicTab = 'preview';
+  dismissTab = 'preview';
 
   viewOptions = [
     { label: 'Preview', value: 'preview' },
-    { label: 'Code', value: 'code' }
+    { label: 'Code', value: 'code' },
   ];
 
-  componentExampleOverride = "alert-component-override";
+  componentExampleOverride = 'alert-component-override';
 
   componentViewOptions = [
     { label: 'alert-component-override.css', value: 'alert-component-override' },
-    { label: 'override-example-tailwind.css', value: 'override-example-tailwind' }
+    { label: 'override-example-tailwind.css', value: 'override-example-tailwind' },
   ];
 
   previewCode = `<div class="p-20 rounded-lg bg-background flex flex-col space-y-4">

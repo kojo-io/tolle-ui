@@ -1,18 +1,20 @@
 import { Component, Input, forwardRef, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-otp',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule, FormsModule],
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => OtpComponent),
-            multi: true
-        }],
-    template: `
+  selector: 'tolle-otp',
+  styles: [':host { display: block; }'],
+  imports: [FormsModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => OtpComponent),
+      multi: true,
+    },
+  ],
+  template: `
     <div class="relative flex items-center gap-2">
       <input
         #hiddenInput
@@ -21,32 +23,37 @@ import { cn } from './utils/cn';
         autocomplete="one-time-code"
         aria-label="One-time code"
         [maxLength]="length"
-        class="absolute inset-0 opacity-0 cursor-default z-20"
+        class="absolute inset-0 z-20 cursor-default opacity-0"
         [(ngModel)]="value"
         (input)="onInputChange($event)"
         (focus)="isFocused = true"
         (blur)="isFocused = false; onTouched()"
-        [disabled]="disabled"
-      />
+        [disabled]="disabled" />
 
-      <div *ngIf="auto" class="flex items-center gap-2 pointer-events-none">
-        <div class="flex items-center">
-          <div *ngFor="let _ of slots; let i = index"
-               [class]="getSlotClass(i)"
-          >
-            {{ value[i] || '' }}
-            <div *ngIf="isFocused && value.length === i" class="absolute inset-0 flex items-center justify-center">
-              <div class="h-4 w-px animate-caret-blink bg-foreground duration-1000"></div>
-            </div>
+      @if (auto) {
+        <div class="pointer-events-none flex items-center gap-2">
+          <div class="flex items-center">
+            @for (_ of slots; track _; let i = $index) {
+              <div [class]="getSlotClass(i)">
+                {{ value[i] || '' }}
+                @if (isFocused && value.length === i) {
+                  <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="animate-caret-blink h-4 w-px bg-foreground duration-1000"></div>
+                  </div>
+                }
+              </div>
+            }
           </div>
         </div>
-      </div>
+      }
 
-      <div *ngIf="!auto" class="flex items-center gap-2 pointer-events-none">
-        <ng-content></ng-content>
-      </div>
+      @if (!auto) {
+        <div class="pointer-events-none flex items-center gap-2">
+          <ng-content></ng-content>
+        </div>
+      }
     </div>
-  `
+  `,
 })
 export class OtpComponent implements ControlValueAccessor {
   @Input()
@@ -55,7 +62,9 @@ export class OtpComponent implements ControlValueAccessor {
     this._length = numericVal;
     this.slots = Array(numericVal).fill(0);
   }
-  get length() { return this._length; }
+  get length() {
+    return this._length;
+  }
   private _length = 6;
 
   @Input() disabled = false;
@@ -66,10 +75,10 @@ export class OtpComponent implements ControlValueAccessor {
   value: string = '';
   isFocused = false;
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   onInputChange(event: any) {
     const val = event.target.value.replace(/\D/g, '');
@@ -90,8 +99,18 @@ export class OtpComponent implements ControlValueAccessor {
     );
   }
 
-  writeValue(value: any): void { this.value = value || ''; this.cdr.markForCheck(); }
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; this.cdr.markForCheck(); }
+  writeValue(value: any): void {
+    this.value = value || '';
+    this.cdr.markForCheck();
+  }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.cdr.markForCheck();
+  }
 }

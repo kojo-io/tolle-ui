@@ -1,5 +1,18 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy, OnChanges, OnDestroy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ElementRef,
+  ViewChild,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  OnChanges,
+  OnDestroy,
+  inject,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -49,18 +62,18 @@ export type DateTimePickerProps = VariantProps<typeof dateTimePickerTriggerVaria
  * @new
  */
 @Component({
-    selector: 'tolle-date-time-picker',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule, FormsModule, CalendarComponent, TimeColumnsComponent],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => DateTimePickerComponent),
-            multi: true,
-        },
-    ],
-    template: `
+  selector: 'tolle-date-time-picker',
+  styles: [':host { display: block; }'],
+  imports: [FormsModule, CalendarComponent, TimeColumnsComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DateTimePickerComponent),
+      multi: true,
+    },
+  ],
+  template: `
     <button
       #trigger
       type="button"
@@ -72,72 +85,65 @@ export type DateTimePickerProps = VariantProps<typeof dateTimePickerTriggerVaria
       [disabled]="disabled"
       [class]="computedTriggerClass"
       (click)="toggle()"
-      (keydown)="onTriggerKeyDown($event)"
-    >
+      (keydown)="onTriggerKeyDown($event)">
       <span [class]="cn('truncate', displayValue ? 'text-foreground' : 'text-muted-foreground')">
         {{ displayValue || placeholder }}
       </span>
       <i class="ri-calendar-schedule-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
     </button>
 
-    <div
-      *ngIf="isOpen"
-      #panel
-      role="dialog"
-      [id]="panelId"
-      [attr.aria-label]="ariaLabel || 'Choose a date and time'"
-      class="fixed left-0 top-0 z-[9999]"
-      style="visibility: hidden"
-    >
-      <div class="rounded-md border border-border bg-popover text-popover-foreground shadow-md">
-        <div class="flex flex-col sm:flex-row">
-          <div class="p-3">
-            <tolle-calendar
-              [bordered]="false"
-              [showQuickActions]="false"
-              [minDate]="calendarMin"
-              [maxDate]="calendarMax"
-              [ngModel]="value"
-              (dateSelect)="onDateSelect($event)"
-            ></tolle-calendar>
+    @if (isOpen) {
+      <div
+        #panel
+        role="dialog"
+        [id]="panelId"
+        [attr.aria-label]="ariaLabel || 'Choose a date and time'"
+        class="fixed left-0 top-0 z-[9999]"
+        style="visibility: hidden">
+        <div class="rounded-md border border-border bg-popover text-popover-foreground shadow-md">
+          <div class="flex flex-col sm:flex-row">
+            <div class="p-3">
+              <tolle-calendar
+                [bordered]="false"
+                [showQuickActions]="false"
+                [minDate]="calendarMin"
+                [maxDate]="calendarMax"
+                [ngModel]="value"
+                (dateSelect)="onDateSelect($event)"></tolle-calendar>
+            </div>
+            <div class="border-t border-border p-3 sm:border-l sm:border-t-0">
+              <tolle-time-columns
+                #columns
+                [hour]="hour"
+                [minute]="minute"
+                [second]="second"
+                [use12Hours]="use12Hours"
+                [showSeconds]="showSeconds"
+                [minuteStep]="minuteStep"
+                [minSeconds]="minSeconds"
+                [maxSeconds]="maxSeconds"
+                [size]="size"
+                (timeChange)="onTimeChange($event)"></tolle-time-columns>
+            </div>
           </div>
-
-          <div class="border-t border-border p-3 sm:border-l sm:border-t-0">
-            <tolle-time-columns
-              #columns
-              [hour]="hour"
-              [minute]="minute"
-              [second]="second"
-              [use12Hours]="use12Hours"
-              [showSeconds]="showSeconds"
-              [minuteStep]="minuteStep"
-              [minSeconds]="minSeconds"
-              [maxSeconds]="maxSeconds"
-              [size]="size"
-              (timeChange)="onTimeChange($event)"
-            ></tolle-time-columns>
+          <div class="flex items-center justify-between gap-2 border-t border-border px-3 py-2">
+            <button type="button" [class]="footerButtonClass" (click)="clear()">Clear</button>
+            <button
+              type="button"
+              [class]="
+                cn(
+                  footerButtonClass,
+                  'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground'
+                )
+              "
+              (click)="done()">
+              Done
+            </button>
           </div>
-        </div>
-
-        <div class="flex items-center justify-between gap-2 border-t border-border px-3 py-2">
-          <button
-            type="button"
-            [class]="footerButtonClass"
-            (click)="clear()"
-          >
-            Clear
-          </button>
-          <button
-            type="button"
-            [class]="cn(footerButtonClass, 'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground')"
-            (click)="done()"
-          >
-            Done
-          </button>
         </div>
       </div>
-    </div>
-  `
+    }
+  `,
 })
 export class DateTimePickerComponent implements ControlValueAccessor, OnChanges, OnDestroy {
   /** Text shown on the trigger when nothing is selected. @default 'Select date and time' */
@@ -206,7 +212,7 @@ export class DateTimePickerComponent implements ControlValueAccessor, OnChanges,
   ngOnChanges(): void {
     this.calendarMin = this.min ? startOfDay(this.min) : undefined;
     this.calendarMax = this.max ? startOfDay(this.max) : undefined;
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();

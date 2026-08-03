@@ -1,5 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -27,29 +34,37 @@ export type MarkerProps = VariantProps<typeof markerVariants>;
  * @new
  */
 @Component({
-    selector: 'tolle-marker',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-marker',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <div
       [class]="computedClass"
       [attr.role]="variant === 'separator' ? 'separator' : isLive ? 'status' : null"
       [attr.aria-live]="isLive ? 'polite' : null">
-      <span *ngIf="variant === 'separator'" aria-hidden="true" class="h-px flex-1 bg-border"></span>
+      @if (variant === 'separator') {
+        <span aria-hidden="true" class="h-px flex-1 bg-border"></span>
+      }
 
-      <i *ngIf="icon" [class]="iconClass" aria-hidden="true"></i>
+      @if (icon) {
+        <i [class]="iconClass" aria-hidden="true"></i>
+      }
 
       <span [class]="labelClass">
-        <span *ngIf="label">{{ label }}</span>
+        @if (label) {
+          <span>{{ label }}</span>
+        }
         <ng-content></ng-content>
       </span>
 
-      <span *ngIf="variant === 'separator'" aria-hidden="true" class="h-px flex-1 bg-border"></span>
+      @if (variant === 'separator') {
+        <span aria-hidden="true" class="h-px flex-1 bg-border"></span>
+      }
     </div>
-  `
+  `,
 })
-export class MarkerComponent  implements OnChanges{
+export class MarkerComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -99,13 +114,15 @@ export class MarkerComponent  implements OnChanges{
  * they read as a single step in the transcript.
  */
 @Component({
-    selector: 'tolle-marker-group',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `<div [class]="cn('flex w-full flex-col gap-0.5', class)" role="group"><ng-content></ng-content></div>`
+  selector: 'tolle-marker-group',
+  styles: [':host { display: block; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `<div [class]="cn('flex w-full flex-col gap-0.5', class)" role="group">
+    <ng-content></ng-content>
+  </div>`,
 })
-export class MarkerGroupComponent  implements OnChanges{
+export class MarkerGroupComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

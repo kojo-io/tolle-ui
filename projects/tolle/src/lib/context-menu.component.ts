@@ -1,12 +1,23 @@
-import { Component, ElementRef, HostListener, inject, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+  ChangeDetectorRef,
+} from '@angular/core';
+
 import { ContextMenuItem, ContextMenuService, ContextMenuState } from './context-menu.service';
 import { cn } from './utils/cn';
 
 @Component({
-    selector: 'tolle-context-menu',
-    imports: [CommonModule],
-    template: `
+  selector: 'tolle-context-menu',
+  imports: [],
+  template: `
     @if (isOpen) {
       <div
         #menu
@@ -14,22 +25,17 @@ import { cn } from './utils/cn';
         aria-orientation="vertical"
         tabindex="-1"
         [attr.data-state]="isOpen ? 'open' : 'closed'"
-        class="fixed z-50 min-w-[12rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md
-               data-[state=closed]:animate-out data-[state=open]:animate-in
-               data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0
-               data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95
-               slide-in-from-top-2"
+        class="fixed z-50 min-w-[12rem] overflow-hidden rounded-md border border-border bg-popover p-1 text-popover-foreground shadow-md slide-in-from-top-2 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
         [style.visibility]="isPositioned ? 'visible' : 'hidden'"
         [style.opacity]="isPositioned ? '1' : '0'"
         style="will-change: transform; top: 0; left: 0;"
-        (keydown)="onKeyDown($event)"
-      >
+        (keydown)="onKeyDown($event)">
         <div class="flex flex-col">
           @for (item of items; track $index) {
             @if (item.separator) {
-              <div role="separator" class="h-px -mx-1 my-1 bg-border"></div>
+              <div role="separator" class="-mx-1 my-1 h-px bg-border"></div>
             } @else {
-              <div class="relative group">
+              <div class="group relative">
                 <button
                   #itemButton
                   type="button"
@@ -41,19 +47,27 @@ import { cn } from './utils/cn';
                   (mouseenter)="onItemMouseEnter(item, itemButton)"
                   (mouseleave)="onItemMouseLeave()"
                   [disabled]="item.disabled"
-                  [class]="cn(
-                    'relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
-                    'transition-colors focus:bg-accent focus:text-accent-foreground hover:bg-accent hover:text-accent-foreground',
-                    'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-                    item.destructive ? 'text-destructive focus:bg-destructive/10 focus:text-destructive' : '',
-                    item.disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
-                    (item.type === 'checkbox' || item.type === 'radio') ? 'pl-8' : '',
-                    activeIndex === $index && 'bg-accent text-accent-foreground'
-                  )"
-                >
+                  [class]="
+                    cn(
+                      'relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
+                      'transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+                      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+                      item.destructive
+                        ? 'text-destructive focus:bg-destructive/10 focus:text-destructive'
+                        : '',
+                      item.disabled && 'pointer-events-none cursor-not-allowed opacity-50',
+                      item.type === 'checkbox' || item.type === 'radio' ? 'pl-8' : '',
+                      activeIndex === $index && 'bg-accent text-accent-foreground'
+                    )
+                  ">
                   @if (item.checked) {
                     <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-                      <i [class]="item.type === 'radio' ? 'ri-checkbox-blank-circle-fill h-2 w-2 fill-current' : 'ri-check-line h-4 w-4'"></i>
+                      <i
+                        [class]="
+                          item.type === 'radio'
+                            ? 'ri-checkbox-blank-circle-fill h-2 w-2 fill-current'
+                            : 'ri-check-line h-4 w-4'
+                        "></i>
                     </span>
                   }
                   @if (item.icon) {
@@ -61,7 +75,9 @@ import { cn } from './utils/cn';
                   }
                   <span class="flex-1 text-left">{{ item.label }}</span>
                   @if (item.shortcut && !item.submenu) {
-                    <span class="ml-auto text-xs tracking-widest text-muted-foreground pl-2">{{ item.shortcut }}</span>
+                    <span class="ml-auto pl-2 text-xs tracking-widest text-muted-foreground">{{
+                      item.shortcut
+                    }}</span>
                   }
                   @if (item.submenu) {
                     <i class="ri-arrow-right-s-line ml-auto h-4 w-4 opacity-50"></i>
@@ -83,28 +99,33 @@ import { cn } from './utils/cn';
           [style.opacity]="isSubmenuPositioned ? '1' : '0'"
           style="will-change: transform"
           (mouseenter)="onSubmenuMouseEnter()"
-          (mouseleave)="onSubmenuMouseLeave()"
-        >
+          (mouseleave)="onSubmenuMouseLeave()">
           @for (subItem of activeSubmenuItems; track $index) {
             @if (subItem.separator) {
-              <div role="separator" class="h-px -mx-1 my-1 bg-border"></div>
+              <div role="separator" class="-mx-1 my-1 h-px bg-border"></div>
             } @else {
               <button
                 type="button"
                 role="menuitem"
                 (click)="onSubItemClick(subItem)"
                 [disabled]="subItem.disabled"
-                [class]="cn(
-                  'relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
-                  'transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
-                  subItem.disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
-                  (subItem.type === 'checkbox' || subItem.type === 'radio') ? 'pl-8' : '',
-                  subItem.destructive ? 'text-destructive hover:bg-destructive/10' : ''
-                )"
-              >
+                [class]="
+                  cn(
+                    'relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
+                    'transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+                    subItem.disabled && 'pointer-events-none cursor-not-allowed opacity-50',
+                    subItem.type === 'checkbox' || subItem.type === 'radio' ? 'pl-8' : '',
+                    subItem.destructive ? 'text-destructive hover:bg-destructive/10' : ''
+                  )
+                ">
                 @if (subItem.checked) {
                   <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-                    <i [class]="subItem.type === 'radio' ? 'ri-checkbox-blank-circle-fill h-2 w-2 fill-current' : 'ri-check-line h-4 w-4'"></i>
+                    <i
+                      [class]="
+                        subItem.type === 'radio'
+                          ? 'ri-checkbox-blank-circle-fill h-2 w-2 fill-current'
+                          : 'ri-check-line h-4 w-4'
+                      "></i>
                   </span>
                 }
                 @if (subItem.icon) {
@@ -112,7 +133,9 @@ import { cn } from './utils/cn';
                 }
                 <span class="flex-1 text-left">{{ subItem.label }}</span>
                 @if (subItem.shortcut) {
-                  <span class="ml-auto text-xs tracking-widest text-muted-foreground pl-2">{{ subItem.shortcut }}</span>
+                  <span class="ml-auto pl-2 text-xs tracking-widest text-muted-foreground">{{
+                    subItem.shortcut
+                  }}</span>
                 }
               </button>
             }
@@ -121,9 +144,13 @@ import { cn } from './utils/cn';
       }
     }
   `,
-    styles: [`
-    :host { display: contents; }
-  `]
+  styles: [
+    `
+      :host {
+        display: contents;
+      }
+    `,
+  ],
 })
 export class ContextMenuComponent implements OnInit, OnDestroy {
   private contextMenuService = inject(ContextMenuService);
@@ -152,24 +179,26 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
   protected readonly cn = cn;
 
   ngOnInit() {
-    this.stateSubscription = this.contextMenuService.stateChanged.subscribe((state: ContextMenuState) => {
-      this.isOpen = state.isOpen;
-      this.items = state.items;
+    this.stateSubscription = this.contextMenuService.stateChanged.subscribe(
+      (state: ContextMenuState) => {
+        this.isOpen = state.isOpen;
+        this.items = state.items;
 
-      if (state.isOpen) {
-        this.activeIndex = -1;
-        this.isPositioned = false;
-        this.cdr.detectChanges();
-        requestAnimationFrame(() => {
-          this.positionMenu();
-          this.focusFirstItem();
-        });
-      } else {
-        this.closeSubmenu();
-        this.activeIndex = -1;
-        this.isPositioned = false;
+        if (state.isOpen) {
+          this.activeIndex = -1;
+          this.isPositioned = false;
+          this.cdr.detectChanges();
+          requestAnimationFrame(() => {
+            this.positionMenu();
+            this.focusFirstItem();
+          });
+        } else {
+          this.closeSubmenu();
+          this.activeIndex = -1;
+          this.isPositioned = false;
+        }
       }
-    });
+    );
   }
 
   // Helper to get items for the currently open submenu
@@ -221,7 +250,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
       if (this.openSubmenuId === item.id) {
         this.closeSubmenu();
       } else {
-        // We need the button ref to open it via click. 
+        // We need the button ref to open it via click.
         // Implementation detail: Hover is preferred for submenus.
       }
     } else {
@@ -248,7 +277,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
 
   onItemMouseLeave() {
     // We don't close immediately; we wait to see if the user enters the submenu
-    // Logic handled by the timeout in `onItemMouseEnter` of a sibling, 
+    // Logic handled by the timeout in `onItemMouseEnter` of a sibling,
     // or we could add a timeout here to close if they go nowhere.
   }
 
@@ -258,7 +287,7 @@ export class ContextMenuComponent implements OnInit, OnDestroy {
   }
 
   onSubmenuMouseLeave() {
-    // If user leaves submenu, standard behavior is usually to keep it open 
+    // If user leaves submenu, standard behavior is usually to keep it open
     // until they hover another main item or click away.
   }
 

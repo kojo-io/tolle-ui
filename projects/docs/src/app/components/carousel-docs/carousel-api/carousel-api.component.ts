@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-carousel-api',
-    imports: [CommonModule],
-    template: `
+  selector: 'app-carousel-api',
+  imports: [],
+  template: `
     <div class="space-y-8">
       <div>
-        <h2 class="text-lg font-bold mb-4">API Reference</h2>
+        <h2 class="mb-4 text-lg font-bold">API Reference</h2>
         <div class="space-y-4">
-          <div class="border rounded-lg overflow-hidden">
-            <table class="w-full text-sm text-left">
-              <thead class="bg-neutral-50 dark:bg-neutral-900 border-b">
+          <div class="overflow-hidden rounded-lg border">
+            <table class="w-full text-left text-sm">
+              <thead class="border-b bg-neutral-50 dark:bg-neutral-900">
                 <tr>
                   <th class="px-4 py-2 font-medium">Input</th>
                   <th class="px-4 py-2 font-medium">Type</th>
@@ -22,7 +21,9 @@ import { CommonModule } from '@angular/common';
                 <tr>
                   <td class="px-4 py-2">opt</td>
                   <td class="px-4 py-2"><code>EmblaOptionsType</code></td>
-                  <td class="px-4 py-2"><code>{{ '{ }' }}</code></td>
+                  <td class="px-4 py-2">
+                    <code>{{ '{ }' }}</code>
+                  </td>
                 </tr>
                 <tr>
                   <td class="px-4 py-2">plugins</td>
@@ -44,12 +45,12 @@ import { CommonModule } from '@angular/common';
           </div>
         </div>
       </div>
-      
+
       <div>
-        <h2 class="text-lg font-bold mb-4">Directives</h2>
-        <div class="border rounded-lg overflow-hidden">
-          <table class="w-full text-sm text-left">
-            <thead class="bg-neutral-50 dark:bg-neutral-900 border-b">
+        <h2 class="mb-4 text-lg font-bold">Directives</h2>
+        <div class="overflow-hidden rounded-lg border">
+          <table class="w-full text-left text-sm">
+            <thead class="border-b bg-neutral-50 dark:bg-neutral-900">
               <tr>
                 <th class="px-4 py-2 font-medium">Directive</th>
                 <th class="px-4 py-2 font-medium">Description</th>
@@ -81,6 +82,6 @@ import { CommonModule } from '@angular/common';
         </div>
       </div>
     </div>
-  `
+  `,
 })
-export class CarouselApiComponent { }
+export class CarouselApiComponent {}

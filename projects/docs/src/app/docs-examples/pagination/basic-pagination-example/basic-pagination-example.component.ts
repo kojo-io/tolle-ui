@@ -1,29 +1,28 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { PaginationComponent } from '../../../../../../tolle/src/lib/pagination.component';
 
 @Component({
-    selector: 'app-basic-pagination-example',
-    imports: [CommonModule, PaginationComponent],
-    template: `
-    <div class="w-full flex flex-col gap-4">
+  selector: 'app-basic-pagination-example',
+  imports: [PaginationComponent],
+  template: `
+    <div class="flex w-full flex-col gap-4">
       <tolle-pagination
         [totalRecords]="100"
         [currentPage]="page"
         [currentPageSize]="10"
-        (onPageNumberChange)="onPageChange($event)"
-      ></tolle-pagination>
+        (onPageNumberChange)="onPageChange($event)"></tolle-pagination>
 
-      <div class="text-sm text-muted-foreground mt-4 text-center">
+      <div class="mt-4 text-center text-sm text-muted-foreground">
         Current Page: <span class="font-mono text-foreground">{{ page }}</span>
       </div>
     </div>
-  `
+  `,
 })
 export class BasicPaginationExampleComponent {
-    page = 1;
+  page = 1;
 
-    onPageChange(event: number) {
-        this.page = event;
-    }
+  onPageChange(event: number) {
+    this.page = event;
+  }
 }

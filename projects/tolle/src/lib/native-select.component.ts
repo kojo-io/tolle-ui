@@ -1,5 +1,12 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ChangeDetectorRef,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -43,17 +50,17 @@ export type NativeSelectOption = {
  * @new
  */
 @Component({
-    selector: 'tolle-native-select',
-    styles: [':host { display: block; }'],
-    imports: [CommonModule],
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => NativeSelectComponent),
-            multi: true,
-        },
-    ],
-    template: `
+  selector: 'tolle-native-select',
+  styles: [':host { display: block; }'],
+  imports: [],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => NativeSelectComponent),
+      multi: true,
+    },
+  ],
+  template: `
     <div class="relative w-full">
       <select
         [id]="id"
@@ -62,35 +69,38 @@ export type NativeSelectOption = {
         [attr.aria-label]="ariaLabel || null"
         [class]="computedClass"
         (change)="onSelectChange($event)"
-        (blur)="onTouched()"
-      >
-        <option *ngIf="placeholder" value="" [selected]="value === null || value === undefined || value === ''" disabled>
-          {{ placeholder }}
-        </option>
+        (blur)="onTouched()">
+        @if (placeholder) {
+          <option
+            value=""
+            [selected]="value === null || value === undefined || value === ''"
+            disabled>
+            {{ placeholder }}
+          </option>
+        }
         <!--
-          The DOM value is the option's INDEX, not its value. A select element
-          coerces every option value to a string, which collapses all object
-          options to "[object Object]" and makes them indistinguishable on the
-          way back out. Indexing keeps object- and number-valued options
-          round-tripping exactly.
+        The DOM value is the option's INDEX, not its value. A select element
+        coerces every option value to a string, which collapses all object
+        options to "[object Object]" and makes them indistinguishable on the
+        way back out. Indexing keeps object- and number-valued options
+        round-tripping exactly.
         -->
-        <option
-          *ngFor="let option of options; let i = index"
-          [value]="i"
-          [disabled]="option.disabled || false"
-          [selected]="option.value === value"
-        >
-          {{ option.label }}
-        </option>
+        @for (option of options; track option; let i = $index) {
+          <option
+            [value]="i"
+            [disabled]="option.disabled || false"
+            [selected]="option.value === value">
+            {{ option.label }}
+          </option>
+        }
         <ng-content></ng-content>
       </select>
 
       <i
         class="ri-arrow-down-s-line pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
-        aria-hidden="true"
-      ></i>
+        aria-hidden="true"></i>
     </div>
-  `
+  `,
 })
 export class NativeSelectComponent implements ControlValueAccessor {
   /** Id applied to the underlying `<select>`; pair it with a `tolle-label`. */
@@ -131,7 +141,8 @@ export class NativeSelectComponent implements ControlValueAccessor {
     // Anything else came from a projected <option>, where the string is all
     // there is.
     const index = Number(raw);
-    const fromOptions = raw !== '' && Number.isInteger(index) && index >= 0 && index < this.options.length;
+    const fromOptions =
+      raw !== '' && Number.isInteger(index) && index >= 0 && index < this.options.length;
     const next = fromOptions ? this.options[index].value : raw;
 
     this.value = next;

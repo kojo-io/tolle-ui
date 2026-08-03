@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -35,22 +42,21 @@ export type ShimmerProps = VariantProps<typeof shimmerVariants>;
  * @new
  */
 @Component({
-    selector: 'tolle-shimmer',
-    styles: [':host { display: inline-flex; }'],
-    imports: [CommonModule],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    template: `
+  selector: 'tolle-shimmer',
+  styles: [':host { display: inline-flex; }'],
+  imports: [],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
     <span
       [attr.role]="active ? 'status' : null"
       [attr.aria-live]="active ? 'polite' : null"
       [attr.data-active]="active ? '' : null"
-      [class]="computedClass"
-    >
+      [class]="computedClass">
       <ng-content></ng-content>
     </span>
-  `
+  `,
 })
-export class ShimmerComponent  implements OnChanges{
+export class ShimmerComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
