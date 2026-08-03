@@ -11,9 +11,6 @@ import {
   SheetDescriptionComponent,
   SheetFooterComponent,
 } from '../../../../../../tolle/src/lib/sheet.component';
-import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
-import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
-import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
@@ -29,9 +26,6 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
     SheetTitleComponent,
     SheetDescriptionComponent,
     SheetFooterComponent,
-    ButtonComponent,
-    InputComponent,
-    LabelComponent,
     SwitchComponent,
     SelectComponent,
     SelectItemComponent,

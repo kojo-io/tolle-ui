@@ -1,6 +1,6 @@
 {
   "name": "@tolle_/tolle-ui",
-  "version": "18.3.3",
+  "version": "21.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -19,8 +19,9 @@
   "author": "Bernard Kojo Ossei-Agyei <bernard.ossei@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^18.2.0",
-    "@angular/core": "^18.2.0",
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/cdk": "^21.0.0",
     "@floating-ui/dom": "^1.7.4",
     "class-variance-authority": "^0.7.1",
     "tailwind-merge": "^3.4.0",
