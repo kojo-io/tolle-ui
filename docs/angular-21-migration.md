@@ -1,8 +1,12 @@
 # Angular 21 Support — Migration Plan
 
-**Status:** planned, not started
+**Status:** Phases 0–3 done on `feat/angular-21`. Library and docs build clean,
+1103/1103 specs pass, registry generates. Not merged, not published.
 **Target release:** `@tolle_/tolle-ui@21.2.0`
 **Working branch:** `feat/angular-21` (off `master`)
+
+> Execution turned up four things the plan did not anticipate. They are recorded
+> in [§9 Findings](#9-findings-from-execution) rather than silently folded in.
 
 ---
 
@@ -321,8 +325,12 @@ Not in this release. Recorded so they don't get lost.
 - **`@angular/animations` is deprecated upstream.** The npm package now carries a
   deprecation notice pointing at `animate.enter` / `animate.leave`. Used in three
   library files: `accordion-item.component.ts`, `alert.component.ts`,
-  `collapsible.component.ts`. It still ships and works on 21 — this is debt with a
-  deadline (likely v23), not a blocker.
+  `collapsible.component.ts`. It still ships and works on 21.
+
+  **Upgraded from "debt" to "recommend doing next"** after §9.1: the deprecation
+  actively breaks `ng update`'s resolver at every major hop and will keep doing so
+  on 22 and beyond. Removing it deletes that whole class of problem, and it is
+  only three files.
 - **Karma → Vitest.** Worth knowing before assuming otherwise: `@angular/build:karma`
   still exists in 21.2.19, and that release's Vitest builder (`@angular/build:unit-test`)
   is still flagged `[EXPERIMENTAL]` in its own `builders.json`. Staying on Karma
@@ -335,17 +343,104 @@ Not in this release. Recorded so they don't get lost.
 
 ---
 
+## 9. Findings from execution
+
+### 9.1 The `@angular/animations` deprecation breaks `ng update`'s resolver
+
+`ng update` refuses to complete the 19→20 and 20→21 hops. `@angular/animations`
+at the current patch (e.g. `20.3.27`, `21.2.19`) carries an npm **deprecation
+notice**; `ng update` avoids deprecated versions and falls back to the newest
+non-deprecated build (`20.1.8`). But `@angular/platform-browser@20.3.27` peers on
+`animations@20.3.27` *exactly*, so the resolver dead-ends.
+
+`--force` "resolves" it by installing the mismatched pair. Instead: pin the
+Angular versions in `package.json`, reinstall from a clean tree
+(`rm -rf node_modules package-lock.json`), and run the schematics separately
+with `--migrate-only`.
+
+**This recurs at every hop**, and strengthens the case for actually migrating off
+`@angular/animations` (see Deferred).
+
+### 9.2 `ng update` needs `NG_DISABLE_VERSION_CHECK=1` here
+
+Any `ng update` invocation — even `--migrate-only` with an explicit `--from`/`--to`
+— version-checks against the *latest* published CLI and downloads a temporary
+CLI 22, which requires Node `>=24.15.0`. This machine runs 24.14.1, so it aborts.
+`NG_DISABLE_VERSION_CHECK=1` keeps it on the locally installed CLI.
+
+### 9.3 `control-flow-migration` is **not** optional in v21
+
+It has no `"optional": true` flag in `@angular/core@21`'s `migrations.json`, so
+`ng update` runs it automatically: **295 files** converted from `*ngIf`/`*ngFor`
+to `@if`/`@for`, with `CommonModule` dropped from `imports` where it became
+unused. Two classes of fallout, both fixed:
+
+- **15 × TS2554.** `bar-list`, `category-bar`, `chart`, `tracker` declared a
+  1-arg helper `trackByIndex = (index: number): number => index`. `*ngFor`'s
+  `trackBy` accepted it (fewer params is assignable to `TrackByFunction`), but
+  the migration emitted `track trackByIndex($index, item)` — two args. Templates
+  now use `track $index`; the 8 dead helpers were removed.
+- **3 failing chart specs.** The migration reflowed `@for` bodies so
+  `{{ tick.label }}` sat on its own indented line inside `<svg:text>`, making
+  `textContent` `' Jan '` instead of `'Jan'`. Interpolations collapsed back
+  against the tags.
+
+### 9.4 `ng build docs` completes but never exits
+
+The docs build writes complete, correct output and prints its summary, then hangs.
+Diagnosed by bisection:
+
+| Test | Result |
+| --- | --- |
+| `ng build tolle` (library) | exits normally |
+| Stock Angular 21 app (`ng new`) | exits in 6s |
+| Docs app, `assets: []` | **hangs** |
+| Docs app, no `postcss.config.js` | **hangs** |
+| Docs app, stub `main.ts` | exits in 4s |
+| Docs app, `bootstrapApplication` with **no** providers | exits in 6s |
+| Docs app, full `appConfig` (with `provideRouter`) | **hangs** |
+| Node 20.20.2 instead of 24.14.1 | **hangs** |
+
+So it is neither upstream nor builder config: the docs app's **lazy route graph**
+(419 lines of routes → ~139 lazy chunks) leaves the `esbuild --service` child
+alive, and killing that child alone lets `ng` exit immediately.
+
+Not a correctness problem — the bundle is complete and the tests pass — but it
+would stall CI. `deploy-release-21.yml` therefore bounds the build with `timeout`
+and asserts on `dist/docs/browser/index.html` rather than on the exit code.
+
+**Worth filing upstream**, with the bisection table above as the repro.
+
+### 9.5 Smaller notes
+
+- `projects/tolle/registry/` is **gitignored** — a build artifact regenerated by
+  `generate:registry` and shipped via ng-packagr assets. Nothing to commit there.
+- The registry generator (ts-node + ts-morph) ran clean under TypeScript 5.9 on
+  the first try: 117 items, 255 classes, 854 inputs, 91 outputs. This was the
+  plan's highest-rated risk and it did not materialise.
+- The docs `initial` bundle is **828.82 kB** (194 kB transferred) against a
+  500 kB warning / 1 MB error budget — it warns, it does not fail. Left alone
+  deliberately; raising the budget to silence it is a separate decision.
+- 4 × NG8113 unused-import warnings were **pre-existing** (unused on `master`
+  too), newly surfaced by the v21 compiler. Removed.
+
 ## Risk summary
 
-| Risk | Likelihood | Notes |
-| --- | --- | --- |
-| Registry generator breaks under TS 5.9 | Medium | Never run on this toolchain; gates both builds |
-| `strictTemplates` errors in newer components | Medium | 5 chart families + data-table never compiled on 21 |
-| 647-file standalone sweep hides a real change | Low | Mechanical schematic; the build is the check |
-| Bundle budget failure | Low | Config change, not a code problem |
-| Linker rejects output in a real 21 app | Low | Phase 4 smoke test exists precisely to catch this |
+Scored before execution; outcomes filled in after.
 
-**Estimate:** 2–4 focused days, the bulk of it in Phase 2.
+| Risk | Predicted | Outcome |
+| --- | --- | --- |
+| Registry generator breaks under TS 5.9 | Medium | **Did not occur** — clean on first run |
+| `strictTemplates` errors in newer components | Medium | **Did not occur**; the chart families broke instead via the trackBy artifact (§9.3) |
+| 647-file standalone sweep hides a real change | Low | Did not occur |
+| Bundle budget failure | Low | Warns only (828.82 kB vs 500 kB warning / 1 MB error) |
+| Linker rejects output in a real 21 app | Low | **Still unverified** — Phase 4 smoke test outstanding |
+| *(unforeseen)* animations deprecation blocks `ng update` | — | **Occurred** (§9.1) |
+| *(unforeseen)* docs build never exits | — | **Occurred** (§9.4) |
+
+The two real obstacles were both unforeseen, and neither was in the library
+code — they were in the toolchain. The predicted code-level risks did not
+materialise.
 
 **Ongoing cost of dual-track:** every future fix needs a `release-18` backport
 decision, two deploy workflows, and two npm publishes.

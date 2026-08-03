@@ -47,7 +47,7 @@ export class AiNativeDocsComponent {
   /** A ready-to-paste briefing for a coding agent. */
   protected get agentBriefing(): string {
     return [
-      'You have access to Tolle UI, an Angular 18 component library.',
+      'You have access to Tolle UI, an Angular 21 component library.',
       `Component index:     ${this.origin}/llms.txt`,
       `Full API reference:  ${this.origin}/llms-full.txt`,
       'Add a component:     npx @tolle_/cli add <name>',

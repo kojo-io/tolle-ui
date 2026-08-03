@@ -1,0 +1,57 @@
+name: Deploy Tolle UI & Docs (v21)
+
+on:
+  push:
+    branches:
+      # `master` is the Angular 21 line. The frozen Angular 18 line deploys
+      # from `release-18` via deploy-release-18.yml.
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          # Angular 21 requires ^20.19.0 || ^22.12.0 || >=24.0.0.
+          # 22 resolves to the latest 22.x, which is well above 22.12.
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Documentation (tolle-ui-docs)
+        # `ng build docs` writes complete, correct output and prints its summary,
+        # but the process does not always exit: the docs app's lazy route graph
+        # (~139 chunks) leaves the esbuild service child alive. Reproduced locally
+        # on macOS under both Node 20 and 24; a stock Angular 21 app exits fine,
+        # and so does this app with the router removed.
+        #
+        # Bound the wait and assert on the artifact rather than the exit code, so
+        # a hang cannot stall the pipeline. If the build genuinely fails, the
+        # index.html check below still fails the job.
+        run: |
+          timeout --preserve-status 15m npm run build:docs || true
+          test -f dist/docs/browser/index.html \
+            || { echo "::error::docs build produced no index.html"; exit 1; }
+          echo "Built $(find dist/docs/browser -type f | wc -l) files"
+
+      - name: Deploy site to AWS (apex domain — tolle-ui.com)
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          # Consolidated app (landing + docs + /registry) serves the apex domain.
+          # The Angular 21 registry lives at /registry; the 18 line publishes its
+          # own copy under /v18/registry from the release-18 workflow.
+          source: dist/docs/browser/*
+          target: /var/www/tolle-ui
+          strip_components: 3
