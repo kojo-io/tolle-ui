@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { PropEntry } from '../types';
 
 @Component({
-  selector: 'app-prop-table',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'app-prop-table',
+    imports: [CommonModule],
+    template: `
     <div class="my-6 overflow-x-auto rounded-lg border border-border">
       <table class="w-full text-left text-sm">
         <thead class="border-b border-border bg-muted/50 text-xs uppercase tracking-wide text-muted-foreground">

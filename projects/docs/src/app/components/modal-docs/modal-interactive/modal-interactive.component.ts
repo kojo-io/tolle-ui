@@ -12,7 +12,6 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
     selector: 'app-modal-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

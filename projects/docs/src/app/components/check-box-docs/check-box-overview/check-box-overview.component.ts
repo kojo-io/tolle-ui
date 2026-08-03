@@ -4,7 +4,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-check-box-overview',
-    standalone: true,
     imports: [BaseEditorComponent, DocHeroComponent],
     templateUrl: './check-box-overview.component.html'
 })

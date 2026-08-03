@@ -11,16 +11,15 @@ import {
 } from './message.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    MessageComponent,
-    MessageGroupComponent,
-    MessageAvatarComponent,
-    MessageContentComponent,
-    MessageHeaderComponent,
-    MessageFooterComponent
-  ],
-  template: `
+    imports: [
+        MessageComponent,
+        MessageGroupComponent,
+        MessageAvatarComponent,
+        MessageContentComponent,
+        MessageHeaderComponent,
+        MessageFooterComponent
+    ],
+    template: `
     <tolle-message-group [align]="align">
       <tolle-message [align]="align">
         <tolle-message-avatar>AL</tolle-message-avatar>

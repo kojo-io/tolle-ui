@@ -12,20 +12,19 @@ import { ItemGroupExampleComponent } from '../../docs-examples/item/item-group/i
 
 
 @Component({
-  selector: 'app-item-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicItemComponent,
-    ItemVariantsComponent,
-    ItemGroupExampleComponent
-  ],
-  templateUrl: './item-docs.component.html',
-  styleUrl: './item-docs.component.css'
+    selector: 'app-item-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicItemComponent,
+        ItemVariantsComponent,
+        ItemGroupExampleComponent
+    ],
+    templateUrl: './item-docs.component.html',
+    styleUrl: './item-docs.component.css'
 })
 export class ItemDocsComponent {
   baseService = inject(BaseService);

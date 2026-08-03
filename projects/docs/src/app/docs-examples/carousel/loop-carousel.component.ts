@@ -10,18 +10,17 @@ import {
 } from '../../../../../tolle/src/lib/carousel';
 
 @Component({
-  selector: 'app-loop-carousel',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CarouselComponent,
-    CarouselContentDirective,
-    CarouselContainerDirective,
-    CarouselItemDirective,
-    CarouselPreviousDirective,
-    CarouselNextDirective
-  ],
-  template: `
+    selector: 'app-loop-carousel',
+    imports: [
+        CommonModule,
+        CarouselComponent,
+        CarouselContentDirective,
+        CarouselContainerDirective,
+        CarouselItemDirective,
+        CarouselPreviousDirective,
+        CarouselNextDirective
+    ],
+    template: `
     <div class="relative max-w-2xl mx-auto group">
       <tolle-carousel (api)="onApi($event)" [opts]="{ loop: true, dragFree: true }" class="w-full">
         <div tolleCarouselContent>

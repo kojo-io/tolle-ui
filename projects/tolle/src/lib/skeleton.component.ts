@@ -23,13 +23,12 @@ const skeletonVariants = cva(
 export type SkeletonProps = VariantProps<typeof skeletonVariants>;
 
 @Component({
-  selector: 'tolle-skeleton',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-skeleton',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div [class]="computedClass"></div>
-  `,
+  `
 })
 export class SkeletonComponent {
   /** Shape of the skeleton placeholder. @default 'rect' */

@@ -43,18 +43,17 @@ export type NativeSelectOption = {
  * @new
  */
 @Component({
-  selector: 'tolle-native-select',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => NativeSelectComponent),
-      multi: true,
-    },
-  ],
-  template: `
+    selector: 'tolle-native-select',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => NativeSelectComponent),
+            multi: true,
+        },
+    ],
+    template: `
     <div class="relative w-full">
       <select
         [id]="id"
@@ -91,7 +90,7 @@ export type NativeSelectOption = {
         aria-hidden="true"
       ></i>
     </div>
-  `,
+  `
 })
 export class NativeSelectComponent implements ControlValueAccessor {
   /** Id applied to the underlying `<select>`; pair it with a `tolle-label`. */

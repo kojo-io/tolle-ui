@@ -3,7 +3,6 @@ import { MarkerComponent, MarkerGroupComponent } from '../../../../../../tolle/s
 
 @Component({
     selector: 'app-marker-group',
-    standalone: true,
     imports: [MarkerComponent, MarkerGroupComponent],
     templateUrl: './marker-group.component.html'
 })

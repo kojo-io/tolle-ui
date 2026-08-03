@@ -70,9 +70,8 @@ describe('PopoverComponent', () => {
  * trigger. Capture-phase pointerdown must be immune to that.
  */
 @Component({
-  standalone: true,
-  imports: [PopoverComponent],
-  template: `
+    imports: [PopoverComponent],
+    template: `
     <div class="blocker" (mousedown)="$event.stopPropagation()" (pointerdown)="$event.stopPropagation()">
       <tolle-popover></tolle-popover>
     </div>

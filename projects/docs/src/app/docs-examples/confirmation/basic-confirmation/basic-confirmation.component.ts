@@ -5,7 +5,6 @@ type State = 'pending' | 'confirmed' | 'cancelled';
 
 @Component({
     selector: 'app-basic-confirmation',
-    standalone: true,
     imports: [ConfirmationComponent],
     templateUrl: './basic-confirmation.component.html'
 })

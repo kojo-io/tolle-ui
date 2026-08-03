@@ -9,10 +9,9 @@ import { BaseEditorComponent, EditorLanguage } from '../base-editor/base-editor.
  * knobs). Fully token-driven so it matches the rest of the modern docs.
  */
 @Component({
-  selector: 'app-playground',
-  standalone: true,
-  imports: [CommonModule, BaseEditorComponent],
-  template: `
+    selector: 'app-playground',
+    imports: [CommonModule, BaseEditorComponent],
+    template: `
     <div class="not-prose my-8 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
       <div class="flex flex-col lg:flex-row">
 
@@ -60,12 +59,12 @@ import { BaseEditorComponent, EditorLanguage } from '../base-editor/base-editor.
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     .preview-grid {
       background-image: radial-gradient(rgb(var(--muted-foreground) / 0.15) 1px, transparent 1px);
       background-size: 16px 16px;
     }
-  `],
+  `]
 })
 export class PlaygroundComponent {
   @Input() code: string = '';

@@ -157,17 +157,16 @@ export type NavigationMenuLinkProps = VariantProps<typeof navigationMenuLinkVari
  * @new
  */
 @Component({
-  selector: 'tolle-navigation-menu',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  providers: [NavigationMenuService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-navigation-menu',
+    styles: [':host { display: block; }'],
+    imports: [],
+    providers: [NavigationMenuService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <nav [attr.aria-label]="ariaLabel" [class]="computedClass" (keydown)="onKeydown($event)">
       <ng-content></ng-content>
     </nav>
-  `,
+  `
 })
 export class NavigationMenuComponent implements OnChanges, OnInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -254,16 +253,15 @@ export class NavigationMenuComponent implements OnChanges, OnInit, OnDestroy {
 
 /** The horizontal list that holds the navigation items. */
 @Component({
-  selector: 'tolle-navigation-menu-list',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-navigation-menu-list',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <ul [class]="cn('group flex flex-1 list-none items-center justify-center gap-1', class)">
       <ng-content></ng-content>
     </ul>
-  `,
+  `
 })
 export class NavigationMenuListComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -284,16 +282,15 @@ export class NavigationMenuListComponent  implements OnChanges{
 
 /** One entry in the list — a plain link, or a trigger plus its content panel. */
 @Component({
-  selector: 'tolle-navigation-menu-item',
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[class]': "'contents'" },
-  template: `
+    selector: 'tolle-navigation-menu-item',
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { '[class]': "'contents'" },
+    template: `
     <li [class]="cn('relative', class)">
       <ng-content></ng-content>
     </li>
-  `,
+  `
 })
 export class NavigationMenuItemComponent implements OnChanges, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -336,12 +333,11 @@ export class NavigationMenuItemComponent implements OnChanges, OnDestroy {
 
 /** Button that reveals its item's panel on hover, focus or click. */
 @Component({
-  selector: 'tolle-navigation-menu-trigger',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-navigation-menu-trigger',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       #trigger
       type="button"
@@ -365,7 +361,7 @@ export class NavigationMenuItemComponent implements OnChanges, OnDestroy {
         aria-hidden="true"
       ></i>
     </button>
-  `,
+  `
 })
 export class NavigationMenuTriggerComponent implements OnChanges, OnDestroy {
 
@@ -435,12 +431,11 @@ export class NavigationMenuTriggerComponent implements OnChanges, OnDestroy {
 
 /** The floating panel revealed by a trigger. Rendered only while open. */
 @Component({
-  selector: 'tolle-navigation-menu-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-navigation-menu-content',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     @if (isOpen) {
       <div
         #panel
@@ -455,7 +450,7 @@ export class NavigationMenuTriggerComponent implements OnChanges, OnDestroy {
         <ng-content></ng-content>
       </div>
     }
-  `,
+  `
 })
 export class NavigationMenuContentComponent implements OnChanges, OnDestroy {
 
@@ -553,12 +548,11 @@ export class NavigationMenuContentComponent implements OnChanges, OnDestroy {
 
 /** A link inside a panel (or directly in the list, for flat entries). */
 @Component({
-  selector: 'tolle-navigation-menu-link',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-navigation-menu-link',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <a
       [attr.href]="href || null"
       [attr.target]="target || null"
@@ -572,7 +566,7 @@ export class NavigationMenuContentComponent implements OnChanges, OnDestroy {
       <ng-content></ng-content>
       <ng-content select="[description]"></ng-content>
     </a>
-  `,
+  `
 })
 export class NavigationMenuLinkComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

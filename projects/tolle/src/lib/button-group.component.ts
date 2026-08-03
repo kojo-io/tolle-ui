@@ -3,15 +3,14 @@ import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-button-group',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-button-group',
+    imports: [CommonModule],
+    template: `
     <div [class]="cn('inline-flex items-center -space-x-px rounded-md shadow-sm', class)">
       <ng-content></ng-content>
     </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: inline-block;
     }

@@ -30,11 +30,10 @@ import { cn } from './utils/cn';
  * @new
  */
 @Component({
-  selector: 'tolle-command-dialog',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-command-dialog',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div
       *ngIf="open"
       class="fixed inset-0 z-[9999] flex items-start justify-center p-4 pt-[15vh]"
@@ -58,7 +57,7 @@ import { cn } from './utils/cn';
         <ng-content></ng-content>
       </div>
     </div>
-  `,
+  `
 })
 export class CommandDialogComponent implements OnInit, OnDestroy {
   /** Whether the palette is visible. Supports two-way binding via `[(open)]`. @default false */

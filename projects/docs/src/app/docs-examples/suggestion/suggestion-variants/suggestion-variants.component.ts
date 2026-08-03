@@ -3,7 +3,6 @@ import { SuggestionsComponent, SuggestionComponent } from '../../../../../../tol
 
 @Component({
     selector: 'app-suggestion-variants',
-    standalone: true,
     imports: [SuggestionsComponent, SuggestionComponent],
     templateUrl: './suggestion-variants.component.html'
 })

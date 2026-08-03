@@ -9,13 +9,12 @@ import {
 
 @Component({
     selector: 'app-task-files',
-    standalone: true,
     imports: [
-      TaskComponent,
-      TaskTriggerComponent,
-      TaskContentComponent,
-      TaskItemComponent,
-      TaskItemFileComponent
+        TaskComponent,
+        TaskTriggerComponent,
+        TaskContentComponent,
+        TaskItemComponent,
+        TaskItemFileComponent
     ],
     templateUrl: './task-files.component.html'
 })

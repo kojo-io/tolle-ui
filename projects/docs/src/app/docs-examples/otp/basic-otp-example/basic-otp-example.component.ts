@@ -5,7 +5,6 @@ import { OtpComponent } from '../../../../../../tolle/src/lib/otp.component';
 
 @Component({
     selector: 'app-basic-otp-example',
-    standalone: true,
     imports: [CommonModule, FormsModule, OtpComponent],
     template: `
     <div class="w-full flex flex-col items-center gap-4">

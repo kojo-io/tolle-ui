@@ -5,10 +5,9 @@ import { ToastService, Toast, ToastPosition, ToastVariant } from './toast.servic
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-toaster',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-toaster',
+    imports: [CommonModule],
+    template: `
     <div [class]="cn('fixed z-[10000] pointer-events-none flex flex-col gap-2 w-full max-w-[380px] p-4', positionClasses)">
       <div
         *ngFor="let toast of toasts$ | async"
@@ -49,7 +48,7 @@ import { cn } from './utils/cn';
       </div>
     </div>
   `,
-  styles: [':host { display: contents; }']
+    styles: [':host { display: contents; }']
 })
 export class ToastContainerComponent implements OnInit, OnDestroy {
   toastService = inject(ToastService);

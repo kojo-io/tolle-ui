@@ -9,14 +9,12 @@ import { BaseService } from '../../shared/base.service';
 
 @Component({
     selector: 'app-date-range-picker-docs',
-    standalone: true,
     imports: [
         CommonModule,
         DateRangePickerOverviewComponent,
         DateRangePickerInteractiveComponent,
         DateRangePickerApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './date-range-picker-docs.component.html'
 })

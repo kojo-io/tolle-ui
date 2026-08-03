@@ -5,7 +5,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-shimmer-settled',
-    standalone: true,
     imports: [CommonModule, ShimmerComponent, ButtonComponent],
     templateUrl: './shimmer-settled.component.html'
 })

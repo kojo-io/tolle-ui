@@ -37,11 +37,10 @@ const buttonVariants = cva(
 export type ButtonProps = VariantProps<typeof buttonVariants>;
 
 @Component({
-  selector: 'tolle-button',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-button',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    template: `
     <button
       [type]="type"
       [class]="computedClass"
@@ -60,9 +59,9 @@ export type ButtonProps = VariantProps<typeof buttonVariants>;
       </span>
     </button>
   `,
-  host: {
-    'class': 'tolle-button-wrapper inline-block align-middle'
-  }
+    host: {
+        'class': 'tolle-button-wrapper inline-block align-middle'
+    }
 })
 export class ButtonComponent {
   /** Extra Tailwind classes merged onto the button via `cn()` (last-wins). */

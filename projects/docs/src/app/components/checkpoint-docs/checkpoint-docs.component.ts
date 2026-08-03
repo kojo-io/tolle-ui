@@ -10,19 +10,18 @@ import { BasicCheckpointComponent } from '../../docs-examples/checkpoint/basic-c
 import { CheckpointActiveComponent } from '../../docs-examples/checkpoint/checkpoint-active/checkpoint-active.component';
 
 @Component({
-  selector: 'app-checkpoint-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicCheckpointComponent,
-    CheckpointActiveComponent
-  ],
-  templateUrl: './checkpoint-docs.component.html',
-  styleUrl: './checkpoint-docs.component.css'
+    selector: 'app-checkpoint-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicCheckpointComponent,
+        CheckpointActiveComponent
+    ],
+    templateUrl: './checkpoint-docs.component.html',
+    styleUrl: './checkpoint-docs.component.css'
 })
 export class CheckpointDocsComponent {
   baseService = inject(BaseService);

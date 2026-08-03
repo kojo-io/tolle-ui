@@ -7,7 +7,6 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
     selector: 'app-progress-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

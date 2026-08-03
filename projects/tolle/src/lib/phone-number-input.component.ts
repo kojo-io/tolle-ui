@@ -15,10 +15,9 @@ import parsePhoneNumber from 'libphonenumber-js';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-phone-number-input',
-  standalone: true,
-  imports: [CommonModule, FormsModule, CountrySelectorComponent, MaskedInputComponent],
-  template: `
+    selector: 'tolle-phone-number-input',
+    imports: [CommonModule, FormsModule, CountrySelectorComponent, MaskedInputComponent],
+    template: `
     <div class="flex w-full flex-col gap-1.5">
       <label *ngIf="label" [for]="id" [class]="computedLabelClass">
         {{ label }}
@@ -64,21 +63,21 @@ import { cn } from './utils/cn';
       </ng-container>
     </div>
   `,
-  styles: [
-    `
+    styles: [
+        `
       :host {
         display: block;
         width: 100%;
       }
     `,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => PhoneNumberInputComponent),
-      multi: true,
-    },
-  ],
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => PhoneNumberInputComponent),
+            multi: true,
+        },
+    ]
 })
 export class PhoneNumberInputComponent implements ControlValueAccessor {
   private cdr = inject(ChangeDetectorRef);

@@ -3,7 +3,6 @@ import { TrackerComponent, type TrackerBlock } from '../../../../../../tolle/src
 
 @Component({
     selector: 'app-basic-tracker',
-    standalone: true,
     imports: [TrackerComponent],
     styles: [':host { display: block; width: 100%; }'],
     templateUrl: './basic-tracker.component.html'

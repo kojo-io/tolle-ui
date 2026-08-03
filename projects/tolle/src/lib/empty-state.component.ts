@@ -21,11 +21,10 @@ const emptyStateVariants = cva(
 type EmptyStateVariants = VariantProps<typeof emptyStateVariants>;
 
 @Component({
-  selector: 'tolle-empty-state',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-empty-state',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div [class]="cn(emptyStateVariants({ variant }), class)">
 
       <div [class]="cn(

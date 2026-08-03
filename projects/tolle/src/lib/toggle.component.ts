@@ -29,8 +29,7 @@ export type ToggleProps = VariantProps<typeof toggleVariants>;
 
 @Component({
     selector: 'tolle-toggle',
-  styles: [':host { display: inline-flex; }'],
-    standalone: true,
+    styles: [':host { display: inline-flex; }'],
     imports: [CommonModule],
     template: `
     <button

@@ -4,7 +4,6 @@ import { SuggestionsComponent, SuggestionComponent } from '../../../../../../tol
 
 @Component({
     selector: 'app-basic-suggestions',
-    standalone: true,
     imports: [CommonModule, SuggestionsComponent, SuggestionComponent],
     templateUrl: './basic-suggestions.component.html'
 })

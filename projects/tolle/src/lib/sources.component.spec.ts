@@ -14,15 +14,14 @@ interface Citation {
 }
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    SourcesComponent,
-    SourcesTriggerComponent,
-    SourcesContentComponent,
-    SourceComponent,
-  ],
-  template: `
+    imports: [
+        CommonModule,
+        SourcesComponent,
+        SourcesTriggerComponent,
+        SourcesContentComponent,
+        SourceComponent,
+    ],
+    template: `
     <tolle-sources (openChange)="openEvents.push($event)">
       <tolle-sources-trigger></tolle-sources-trigger>
       <tolle-sources-content>
@@ -33,7 +32,7 @@ interface Citation {
         ></tolle-source>
       </tolle-sources-content>
     </tolle-sources>
-  `,
+  `
 })
 class HostComponent {
   citations: Citation[] = [

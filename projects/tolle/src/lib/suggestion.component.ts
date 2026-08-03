@@ -45,17 +45,16 @@ export type SuggestionsProps = VariantProps<typeof suggestionsVariants>;
  * `selected` output to react to any of them.
  */
 @Component({
-  selector: 'tolle-suggestions',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [SuggestionsService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-suggestions',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [SuggestionsService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" role="group" [attr.aria-label]="ariaLabel || null">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class SuggestionsComponent implements OnChanges, OnInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -129,12 +128,11 @@ export type SuggestionProps = VariantProps<typeof suggestionVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-suggestion',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-suggestion',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       type="button"
       data-suggestion
@@ -146,7 +144,7 @@ export type SuggestionProps = VariantProps<typeof suggestionVariants>;
       <i *ngIf="icon" [class]="icon" aria-hidden="true"></i>
       <ng-content></ng-content>
     </button>
-  `,
+  `
 })
 export class SuggestionComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

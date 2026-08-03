@@ -4,9 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DirectionDirective, DirectionService, type Direction } from './direction.component';
 
 @Component({
-  standalone: true,
-  imports: [DirectionDirective],
-  template: `
+    imports: [DirectionDirective],
+    template: `
     <div [tolleDirection]="direction" [tolleDirectionPublish]="publish" (directionChange)="seen.push($event)">
       <p>Chat surface</p>
     </div>

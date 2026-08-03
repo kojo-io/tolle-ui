@@ -12,15 +12,14 @@ import {
 } from './task.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    TaskComponent,
-    TaskTriggerComponent,
-    TaskContentComponent,
-    TaskItemComponent,
-    TaskItemFileComponent,
-  ],
-  template: `
+    imports: [
+        TaskComponent,
+        TaskTriggerComponent,
+        TaskContentComponent,
+        TaskItemComponent,
+        TaskItemFileComponent,
+    ],
+    template: `
     <tolle-task [status]="status" [title]="title" [open]="open" (openChange)="lastOpen = $event">
       <tolle-task-trigger></tolle-task-trigger>
       <tolle-task-content>
@@ -29,7 +28,7 @@ import {
         </tolle-task-item>
       </tolle-task-content>
     </tolle-task>
-  `,
+  `
 })
 class TaskHostComponent {
   @Input() status: TaskStatus = 'pending';

@@ -35,12 +35,11 @@ export type ShimmerProps = VariantProps<typeof shimmerVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-shimmer',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-shimmer',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <span
       [attr.role]="active ? 'status' : null"
       [attr.aria-live]="active ? 'polite' : null"
@@ -49,7 +48,7 @@ export type ShimmerProps = VariantProps<typeof shimmerVariants>;
     >
       <ng-content></ng-content>
     </span>
-  `,
+  `
 })
 export class ShimmerComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

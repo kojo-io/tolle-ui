@@ -23,14 +23,13 @@ import { shell } from '@codemirror/legacy-modes/mode/shell';
 export type EditorLanguage = 'javascript' | 'typescript' | 'html' | 'css' | 'bash' | 'json' | 'angular';
 
 @Component({
-  selector: 'app-base-editor',
-  standalone: true,
-  imports: [
-    FormsModule,
-  ],
-  templateUrl: './base-editor.component.html',
-  // Ensure the host has height so the editor can fill it
-  styles: [`
+    selector: 'app-base-editor',
+    imports: [
+        FormsModule,
+    ],
+    templateUrl: './base-editor.component.html',
+    // Ensure the host has height so the editor can fill it
+    styles: [`
     :host { display: block; height: 100%; width: 100%; }
     .w-full { height: 100%; }
   `]

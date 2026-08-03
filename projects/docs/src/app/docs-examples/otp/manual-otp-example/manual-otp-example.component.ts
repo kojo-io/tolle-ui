@@ -7,7 +7,6 @@ import { OtpSlotComponent } from '../../../../../../tolle/src/lib/otp-slot.compo
 
 @Component({
     selector: 'app-manual-otp-example',
-    standalone: true,
     imports: [CommonModule, FormsModule, OtpComponent, OtpGroupComponent, OtpSlotComponent],
     template: `
     <div class="w-full flex flex-col items-center gap-4">

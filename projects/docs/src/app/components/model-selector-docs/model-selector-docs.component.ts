@@ -12,20 +12,19 @@ import { ModelSelectorVariantsComponent } from '../../docs-examples/model-select
 
 
 @Component({
-  selector: 'app-model-selector-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicModelSelectorComponent,
-    ModelSelectorGroupedComponent,
-    ModelSelectorVariantsComponent
-  ],
-  templateUrl: './model-selector-docs.component.html',
-  styleUrl: './model-selector-docs.component.css'
+    selector: 'app-model-selector-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicModelSelectorComponent,
+        ModelSelectorGroupedComponent,
+        ModelSelectorVariantsComponent
+    ],
+    templateUrl: './model-selector-docs.component.html',
+    styleUrl: './model-selector-docs.component.css'
 })
 export class ModelSelectorDocsComponent {
   baseService = inject(BaseService);

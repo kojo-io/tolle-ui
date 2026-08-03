@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-basic-model-selector',
-    standalone: true,
     imports: [CommonModule, FormsModule, ModelSelectorComponent],
     templateUrl: './basic-model-selector.component.html'
 })

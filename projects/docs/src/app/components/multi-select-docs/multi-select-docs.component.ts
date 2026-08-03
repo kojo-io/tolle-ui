@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-multi-select-docs',
-    standalone: true,
     imports: [
         MultiSelectOverviewComponent,
         MultiSelectInteractiveComponent,
         MultiSelectApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './multi-select-docs.component.html',
     styleUrl: './multi-select-docs.component.css'

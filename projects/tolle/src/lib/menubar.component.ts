@@ -228,17 +228,16 @@ export type MenubarItemProps = VariantProps<typeof menubarItemVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-menubar',
-  standalone: true,
-  imports: [],
-  providers: [MenubarService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    role: 'menubar',
-    '[class]': 'computedClass',
-    '(keydown)': 'onKeydown($event)',
-  },
-  template: `<ng-content></ng-content>`,
+    selector: 'tolle-menubar',
+    imports: [],
+    providers: [MenubarService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        role: 'menubar',
+        '[class]': 'computedClass',
+        '(keydown)': 'onKeydown($event)',
+    },
+    template: `<ng-content></ng-content>`
 })
 export class MenubarComponent implements OnInit, OnChanges, OnDestroy {
   /** Height/padding scale, inherited by every trigger in the bar. @default 'default' */
@@ -333,14 +332,13 @@ export class MenubarComponent implements OnInit, OnChanges, OnDestroy {
 
 /** A single menu in the bar — wraps one trigger and its content panel. */
 @Component({
-  selector: 'tolle-menubar-menu',
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  // Presentational so the menubar "owns" the trigger's menuitem role directly
-  // even though this wrapper element sits in between.
-  host: { role: 'none', '[class]': "'relative inline-flex'" },
-  template: `<ng-content></ng-content>`,
+    selector: 'tolle-menubar-menu',
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    // Presentational so the menubar "owns" the trigger's menuitem role directly
+    // even though this wrapper element sits in between.
+    host: { role: 'none', '[class]': "'relative inline-flex'" },
+    template: `<ng-content></ng-content>`
 })
 export class MenubarMenuComponent implements MenubarMenuRef, OnInit, OnDestroy {
   /** Explicit id for the menu; one is generated when omitted. */
@@ -370,13 +368,12 @@ export class MenubarMenuComponent implements MenubarMenuRef, OnInit, OnDestroy {
 
 /** Button that opens its menu on click, and on hover once the bar is active. */
 @Component({
-  selector: 'tolle-menubar-trigger',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { role: 'none' },
-  template: `
+    selector: 'tolle-menubar-trigger',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { role: 'none' },
+    template: `
     <button
       #trigger
       type="button"
@@ -393,7 +390,7 @@ export class MenubarMenuComponent implements MenubarMenuRef, OnInit, OnDestroy {
     >
       <ng-content></ng-content>
     </button>
-  `,
+  `
 })
 export class MenubarTriggerComponent implements OnChanges, OnDestroy {
 
@@ -454,12 +451,11 @@ export class MenubarTriggerComponent implements OnChanges, OnDestroy {
 
 /** The dropdown panel of a menu. Rendered only while its menu is open. */
 @Component({
-  selector: 'tolle-menubar-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-menubar-content',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     @if (isOpen) {
       <div
         #panel
@@ -474,7 +470,7 @@ export class MenubarTriggerComponent implements OnChanges, OnDestroy {
         <ng-content></ng-content>
       </div>
     }
-  `,
+  `
 })
 export class MenubarContentComponent implements OnChanges, OnDestroy {
 
@@ -550,12 +546,11 @@ export class MenubarContentComponent implements OnChanges, OnDestroy {
 
 /** A selectable row inside a menu. Closes the bar when activated. */
 @Component({
-  selector: 'tolle-menubar-item',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-menubar-item',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       role="menuitem"
       [attr.tabindex]="disabled ? null : -1"
@@ -570,7 +565,7 @@ export class MenubarContentComponent implements OnChanges, OnDestroy {
       <span class="flex-1 truncate"><ng-content></ng-content></span>
       <ng-content select="[shortcut]"></ng-content>
     </div>
-  `,
+  `
 })
 export class MenubarItemComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -615,18 +610,17 @@ export class MenubarItemComponent  implements OnChanges{
 
 /** A non-interactive heading inside a menu. */
 @Component({
-  selector: 'tolle-menubar-label',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-menubar-label',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       [class]="cn('px-2 py-1.5 text-xs font-semibold text-muted-foreground', inset ? 'pl-8' : '', class)"
     >
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class MenubarLabelComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -649,12 +643,11 @@ export class MenubarLabelComponent  implements OnChanges{
 
 /** A horizontal rule between groups of menu items. */
 @Component({
-  selector: 'tolle-menubar-separator',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div role="separator" aria-orientation="horizontal" [class]="cn('-mx-1 my-1 h-px bg-border', class)"></div>`,
+    selector: 'tolle-menubar-separator',
+    styles: [':host { display: block; }'],
+    imports: [],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div role="separator" aria-orientation="horizontal" [class]="cn('-mx-1 my-1 h-px bg-border', class)"></div>`
 })
 export class MenubarSeparatorComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

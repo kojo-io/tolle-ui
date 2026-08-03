@@ -5,7 +5,6 @@ import { DateTimePickerComponent } from '../../../../../../tolle/src/lib/date-ti
 
 @Component({
     selector: 'app-basic-date-time-picker',
-    standalone: true,
     imports: [CommonModule, FormsModule, DateTimePickerComponent],
     templateUrl: './basic-date-time-picker.component.html'
 })

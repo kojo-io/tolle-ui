@@ -9,14 +9,12 @@ import { BaseService } from '../../shared/base.service';
 
 @Component({
     selector: 'app-modal-docs',
-    standalone: true,
     imports: [
         CommonModule,
         ModalOverviewComponent,
         ModalInteractiveComponent,
         ModalApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './modal-docs.component.html'
 })

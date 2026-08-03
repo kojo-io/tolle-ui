@@ -8,18 +8,16 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-accordion-docs',
-  standalone: true,
-  imports: [
-    AccordionOverviewComponent,
-    AccordionInteractiveComponent,
-    AccordionExamplesComponent,
-    AccordionApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './accordion-docs.component.html',
-  styleUrl: './accordion-docs.component.css'
+    selector: 'app-accordion-docs',
+    imports: [
+        AccordionOverviewComponent,
+        AccordionInteractiveComponent,
+        AccordionExamplesComponent,
+        AccordionApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './accordion-docs.component.html',
+    styleUrl: './accordion-docs.component.css'
 })
 export class AccordionDocsComponent {
   baseService = inject(BaseService);

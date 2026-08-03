@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-otp-docs',
-    standalone: true,
     imports: [
         OtpOverviewComponent,
         OtpInteractiveComponent,
         OtpApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './otp-docs.component.html',
     styleUrl: './otp-docs.component.css'

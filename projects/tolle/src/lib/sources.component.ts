@@ -82,17 +82,16 @@ export type SourcesProps = VariantProps<typeof sourcesVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-sources',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [SourcesService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-sources',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [SourcesService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" [attr.data-state]="open ? 'open' : 'closed'">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
   /** Whether the citation list is expanded. @default false */
@@ -154,12 +153,11 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
 
 /** Toggle for a `tolle-sources`, labelled with how many sources there are. */
 @Component({
-  selector: 'tolle-sources-trigger',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-sources-trigger',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       type="button"
       data-sources-trigger
@@ -180,7 +178,7 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
 
       <ng-content></ng-content>
     </button>
-  `,
+  `
 })
 export class SourcesTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -254,12 +252,11 @@ export class SourcesTriggerComponent implements OnChanges, OnInit, OnDestroy {
  * before the list has ever been opened.
  */
 @Component({
-  selector: 'tolle-sources-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-sources-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       data-sources-content
       [attr.data-state]="open ? 'open' : 'closed'"
@@ -269,7 +266,7 @@ export class SourcesTriggerComponent implements OnChanges, OnInit, OnDestroy {
     >
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class SourcesContentComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -328,12 +325,11 @@ export type SourceProps = VariantProps<typeof sourceVariants>;
 
 /** A single citation inside a `tolle-sources-content`. */
 @Component({
-  selector: 'tolle-source',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-source',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <a
       data-source
       [attr.href]="href || null"
@@ -366,7 +362,7 @@ export type SourceProps = VariantProps<typeof sourceVariants>;
 
       <ng-content></ng-content>
     </a>
-  `,
+  `
 })
 export class SourceComponent implements OnChanges, OnInit, OnDestroy {
 

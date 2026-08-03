@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-popover-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './popover-api.component.html'
 })

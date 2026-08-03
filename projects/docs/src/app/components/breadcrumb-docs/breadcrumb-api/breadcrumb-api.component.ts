@@ -3,10 +3,9 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 import { PropEntry } from '../../../shared/types';
 
 @Component({
-  selector: 'app-breadcrumb-api',
-  standalone: true,
-  imports: [PropTableComponent],
-  templateUrl: './breadcrumb-api.component.html'
+    selector: 'app-breadcrumb-api',
+    imports: [PropTableComponent],
+    templateUrl: './breadcrumb-api.component.html'
 })
 export class BreadcrumbApiComponent {
   breadcrumbProps: PropEntry[] = [

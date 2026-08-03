@@ -10,16 +10,15 @@ import {
 } from './command.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommandComponent,
-    CommandInputComponent,
-    CommandListComponent,
-    CommandEmptyComponent,
-    CommandGroupComponent,
-    CommandItemComponent,
-  ],
-  template: `
+    imports: [
+        CommandComponent,
+        CommandInputComponent,
+        CommandListComponent,
+        CommandEmptyComponent,
+        CommandGroupComponent,
+        CommandItemComponent,
+    ],
+    template: `
     <tolle-command (selected)="chosen = $event">
       <tolle-command-input placeholder="Search"></tolle-command-input>
       <tolle-command-list>
@@ -33,7 +32,7 @@ import {
         </tolle-command-group>
       </tolle-command-list>
     </tolle-command>
-  `,
+  `
 })
 class HostComponent {
   chosen: any = null;

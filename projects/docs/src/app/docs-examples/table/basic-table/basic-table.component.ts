@@ -11,7 +11,6 @@ import {
 
 @Component({
     selector: 'app-basic-table',
-    standalone: true,
     imports: [
         TableComponent,
         TableCaptionDirective,

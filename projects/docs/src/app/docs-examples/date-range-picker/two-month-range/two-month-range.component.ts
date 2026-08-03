@@ -5,10 +5,9 @@ import { DateRangePickerComponent } from '../../../../../../tolle/src/lib/date-r
 import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
 
 @Component({
-  selector: 'app-two-month-range',
-  standalone: true,
-  imports: [DateRangePickerComponent, FormsModule, DatePipe],
-  template: `
+    selector: 'app-two-month-range',
+    imports: [DateRangePickerComponent, FormsModule, DatePipe],
+    template: `
     <div class="w-full max-w-md">
       <tolle-date-range-picker
         [(ngModel)]="range"
@@ -19,7 +18,7 @@ import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
         Selected: {{ range.start | date:'mediumDate' }} – {{ range.end | date:'mediumDate' }}
       </p>
     </div>
-  `,
+  `
 })
 export class TwoMonthRangeComponent {
   // A range that crosses the month boundary shows the strip spanning both months.

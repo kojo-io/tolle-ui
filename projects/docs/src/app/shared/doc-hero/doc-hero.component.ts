@@ -10,10 +10,9 @@ import { RegistryDocsService } from '../registry-docs.service';
  *   <app-doc-hero slug="badge" id="overview" />
  */
 @Component({
-  selector: 'app-doc-hero',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
-  template: `
+    selector: 'app-doc-hero',
+    imports: [CommonModule, RouterLink],
+    template: `
     <header class="mb-10">
       <!-- Breadcrumb -->
       <nav aria-label="Breadcrumb" class="mb-4 flex items-center gap-1.5 text-sm text-muted-foreground">
@@ -60,7 +59,7 @@ import { RegistryDocsService } from '../registry-docs.service';
         </div>
       }
     </header>
-  `,
+  `
 })
 export class DocHeroComponent {
   private registry = inject(RegistryDocsService);

@@ -6,7 +6,6 @@ import {
 
 @Component({
     selector: 'app-attachment-states',
-    standalone: true,
     imports: [AttachmentComponent],
     templateUrl: './attachment-states.component.html'
 })

@@ -10,7 +10,6 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-sidebar-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

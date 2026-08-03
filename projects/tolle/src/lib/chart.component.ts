@@ -56,12 +56,11 @@ export abstract class ChartChild implements OnChanges, OnInit, OnDestroy {
  * Rendered automatically by `tolle-chart` when `hover` is on.
  */
 @Component({
-  selector: 'tolle-chart-tooltip',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chart-tooltip',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       *ngIf="index !== null"
       role="status"
@@ -77,7 +76,7 @@ export abstract class ChartChild implements OnChanges, OnInit, OnDestroy {
         <span class="ml-auto font-medium tabular-nums text-foreground">{{ row.value }}</span>
       </div>
     </div>
-  `,
+  `
 })
 export class ChartTooltipComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -177,19 +176,18 @@ export type ChartLegendProps = VariantProps<typeof chartLegendVariants>;
  * A single series gets no legend — the chart's own label already names it.
  */
 @Component({
-  selector: 'tolle-chart-legend',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chart-legend',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <ul [class]="computedClass">
       <li *ngFor="let entry of entries; trackBy: trackByIndex" class="flex items-center gap-1.5">
         <span class="h-2 w-2 shrink-0 rounded-[2px]" [style.background]="entry.color"></span>
         <span class="text-muted-foreground">{{ entry.label }}</span>
       </li>
     </ul>
-  `,
+  `
 })
 export class ChartLegendComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -255,12 +253,11 @@ export type ChartTableProps = VariantProps<typeof chartTableVariants>;
  * colour stays reachable without seeing or hovering it. Set `visible` to show it.
  */
 @Component({
-  selector: 'tolle-chart-table',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chart-table',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [attr.id]="tableId || null">
       <table [class]="computedClass">
         <caption class="sr-only">{{ caption }}</caption>
@@ -293,7 +290,7 @@ export type ChartTableProps = VariantProps<typeof chartTableVariants>;
         </tbody>
       </table>
     </div>
-  `,
+  `
 })
 export class ChartTableComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -390,13 +387,12 @@ export type ChartProps = VariantProps<typeof chartVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-chart',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, ChartTooltipComponent, ChartLegendComponent, ChartTableComponent],
-  providers: [ChartService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chart',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, ChartTooltipComponent, ChartLegendComponent, ChartTableComponent],
+    providers: [ChartService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <div class="relative w-full" #plot>
         <svg
@@ -444,7 +440,7 @@ export type ChartProps = VariantProps<typeof chartVariants>;
 
       <tolle-chart-table [tableId]="tableId" [visible]="showTable" [xHeader]="xHeader"></tolle-chart-table>
     </div>
-  `,
+  `
 })
 export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
@@ -605,11 +601,10 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
  * vertical chart's grid.
  */
 @Component({
-  selector: 'svg:g[tolle-chart-grid]',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'svg:g[tolle-chart-grid]',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <svg:line
       *ngFor="let line of valueLines; trackBy: trackByIndex"
       [attr.x1]="line.x1"
@@ -628,7 +623,7 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
       [class]="lineClass"
       stroke-width="1"
     ></svg:line>
-  `,
+  `
 })
 export class ChartGridComponent extends ChartChild {
   /** Also draws a rule at every category position. @default false */
@@ -666,11 +661,10 @@ export class ChartGridComponent extends ChartChild {
 
 /** X-axis tick labels, thinned so they never collide. */
 @Component({
-  selector: 'svg:g[tolle-chart-x-axis]',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'svg:g[tolle-chart-x-axis]',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <svg:text
       *ngFor="let tick of visibleTicks; trackBy: trackByIndex"
       [attr.x]="tick.x"
@@ -679,7 +673,7 @@ export class ChartGridComponent extends ChartChild {
       dominant-baseline="hanging"
       [class]="labelClass"
     >{{ tick.label }}</svg:text>
-  `,
+  `
 })
 export class ChartXAxisComponent extends ChartChild {
   /**
@@ -731,11 +725,10 @@ export class ChartXAxisComponent extends ChartChild {
 
 /** Y-axis tick labels at the nice tick values. */
 @Component({
-  selector: 'svg:g[tolle-chart-y-axis]',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'svg:g[tolle-chart-y-axis]',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <svg:text
       *ngFor="let tick of visibleTicks; trackBy: trackByIndex"
       [attr.x]="labelX"
@@ -744,7 +737,7 @@ export class ChartXAxisComponent extends ChartChild {
       dominant-baseline="middle"
       [class]="labelClass"
     >{{ tick.label }}</svg:text>
-  `,
+  `
 })
 export class ChartYAxisComponent extends ChartChild {
   /** Gap in px between the labels and the plot edge. @default 8 */
@@ -775,11 +768,10 @@ export class ChartYAxisComponent extends ChartChild {
 
 /** A line mark for one series, optionally monotone-smoothed and dotted. */
 @Component({
-  selector: 'svg:g[tolle-chart-line]',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'svg:g[tolle-chart-line]',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <svg:path
       [attr.d]="path"
       fill="none"
@@ -798,7 +790,7 @@ export class ChartYAxisComponent extends ChartChild {
       class="stroke-background"
       stroke-width="2"
     ></svg:circle>
-  `,
+  `
 })
 export class ChartLineComponent extends ChartChild {
   /** Key of the series to draw. @default '' */
@@ -829,11 +821,10 @@ export class ChartLineComponent extends ChartChild {
 
 /** A filled area for one series: a low-opacity wash under a 2px stroke. */
 @Component({
-  selector: 'svg:g[tolle-chart-area]',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'svg:g[tolle-chart-area]',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <svg:path
       [attr.d]="areaPath"
       [attr.fill]="color"
@@ -849,7 +840,7 @@ export class ChartLineComponent extends ChartChild {
       stroke-linecap="round"
       [class]="class"
     ></svg:path>
-  `,
+  `
 })
 export class ChartAreaComponent extends ChartChild {
   /** Key of the series to draw. @default '' */
@@ -943,18 +934,17 @@ export function barPathHorizontal(
  * baseline end stays square, and neighbours are separated by surface, not ink.
  */
 @Component({
-  selector: 'svg:g[tolle-chart-bar]',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'svg:g[tolle-chart-bar]',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <svg:path
       *ngFor="let bar of bars; trackBy: trackByIndex"
       [attr.d]="bar.d"
       [attr.fill]="color"
       [attr.fill-opacity]="bar.active ? 1 : 0.85"
     ></svg:path>
-  `,
+  `
 })
 export class ChartBarComponent extends ChartChild {
   /** Key of the series to draw. @default '' */

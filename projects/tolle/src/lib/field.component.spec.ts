@@ -147,14 +147,13 @@ describe('FieldLegendComponent', () => {
 });
 
 @Component({
-  standalone: true,
-  imports: [FieldComponent, FieldLabelComponent, FieldDescriptionComponent],
-  template: `
+    imports: [FieldComponent, FieldLabelComponent, FieldDescriptionComponent],
+    template: `
     <tolle-field>
       <tolle-field-label for="email">Email</tolle-field-label>
       <tolle-field-description id="email-hint">We never share it.</tolle-field-description>
     </tolle-field>
-  `,
+  `
 })
 class HostComponent {}
 

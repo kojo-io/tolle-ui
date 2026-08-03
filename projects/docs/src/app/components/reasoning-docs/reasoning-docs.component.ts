@@ -12,20 +12,19 @@ import { ReasoningCustomComponent } from '../../docs-examples/reasoning/reasonin
 
 
 @Component({
-  selector: 'app-reasoning-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicReasoningComponent,
-    ReasoningStreamingComponent,
-    ReasoningCustomComponent
-  ],
-  templateUrl: './reasoning-docs.component.html',
-  styleUrl: './reasoning-docs.component.css'
+    selector: 'app-reasoning-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicReasoningComponent,
+        ReasoningStreamingComponent,
+        ReasoningCustomComponent
+    ],
+    templateUrl: './reasoning-docs.component.html',
+    styleUrl: './reasoning-docs.component.css'
 })
 export class ReasoningDocsComponent {
   baseService = inject(BaseService);

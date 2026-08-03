@@ -4,18 +4,17 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/f
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-input',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-input',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div class="flex flex-col gap-1.5 w-full">
       <label
         *ngIf="label"
@@ -71,7 +70,7 @@ import { cn } from './utils/cn';
         </p>
       </ng-container>
     </div>
-  `,
+  `
 })
 export class InputComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild('inputElement') inputElement!: ElementRef<HTMLInputElement>;

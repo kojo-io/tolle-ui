@@ -40,13 +40,12 @@ describe('ResizablePanelComponent', () => {
 });
 
 @Component({
-  standalone: true,
-  imports: [ResizablePanelComponent],
-  template: `
+    imports: [ResizablePanelComponent],
+    template: `
     <div style="height: 300px; width: 400px;">
       <tolle-resizable-panel class="h-full"></tolle-resizable-panel>
     </div>
-  `,
+  `
 })
 class HostComponent {}
 

@@ -4,7 +4,6 @@ import { ChartSparkComponent } from '../../../../../../tolle/src/lib/chart-spark
 
 @Component({
     selector: 'app-chart-spark-in-a-list',
-    standalone: true,
     imports: [CommonModule, ChartSparkComponent],
     templateUrl: './chart-spark-in-a-list.component.html'
 })

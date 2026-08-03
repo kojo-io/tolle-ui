@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-tabs-docs',
-    standalone: true,
     imports: [
         CommonModule,
         TabsOverviewComponent,

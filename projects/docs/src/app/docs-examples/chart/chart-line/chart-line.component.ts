@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-chart-line',
-    standalone: true,
     imports: [
         ChartComponent,
         ChartGridComponent,

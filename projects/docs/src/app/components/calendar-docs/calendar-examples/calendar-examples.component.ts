@@ -6,15 +6,14 @@ import { ModeCalendarComponent } from '../../../docs-examples/calendar/mode-cale
 import { DisabledCalendarComponent } from '../../../docs-examples/calendar/disabled-calendar.component';
 
 @Component({
-  selector: 'app-calendar-examples',
-  standalone: true,
-  imports: [
-    ComponentPreviewComponent,
-    BasicCalendarComponent,
-    ModeCalendarComponent,
-    DisabledCalendarComponent
-  ],
-  template: `
+    selector: 'app-calendar-examples',
+    imports: [
+        ComponentPreviewComponent,
+        BasicCalendarComponent,
+        ModeCalendarComponent,
+        DisabledCalendarComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
 

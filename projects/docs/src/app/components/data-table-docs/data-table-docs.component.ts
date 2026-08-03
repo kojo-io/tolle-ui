@@ -12,22 +12,20 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 import { DataTableStickyDocsComponent } from './data-table-sticky/data-table-sticky.component';
 
 @Component({
-  selector: 'app-data-table-docs',
-  standalone: true,
-  imports: [
-    DataTableOverviewComponent,
-    DataTableInteractiveComponent,
-    DataTableBasicComponent,
-    ColumnHidingDocsComponent,
-    PaginationDocsComponent,
-    SearchableDocsComponent,
-    DataTableApiComponent,
-    DocsWrapperComponent,
-    DataTableStickyDocsComponent
-
-  ],
-  templateUrl: './data-table-docs.component.html',
-  styleUrl: './data-table-docs.component.css'
+    selector: 'app-data-table-docs',
+    imports: [
+        DataTableOverviewComponent,
+        DataTableInteractiveComponent,
+        DataTableBasicComponent,
+        ColumnHidingDocsComponent,
+        PaginationDocsComponent,
+        SearchableDocsComponent,
+        DataTableApiComponent,
+        DocsWrapperComponent,
+        DataTableStickyDocsComponent
+    ],
+    templateUrl: './data-table-docs.component.html',
+    styleUrl: './data-table-docs.component.css'
 })
 export class DataTableDocsComponent {
   baseService = inject(BaseService);

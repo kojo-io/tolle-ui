@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-context-menu-api',
-    standalone: true,
     imports: [CommonModule, PropTableComponent],
     templateUrl: './context-menu-api.component.html'
 })

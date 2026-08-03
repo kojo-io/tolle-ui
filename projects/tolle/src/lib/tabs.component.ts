@@ -46,7 +46,6 @@ class TabsService {
 @Component({
     selector: 'tolle-tabs',
     styles: [':host { display: block; }'],
-    standalone: true,
     imports: [CommonModule],
     providers: [TabsService],
     template: `<ng-content></ng-content>`,
@@ -84,7 +83,6 @@ export class TabsComponent {
 
 @Component({
     selector: 'tolle-tabs-list',
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: {
@@ -105,7 +103,6 @@ export class TabsListComponent {
 
 @Component({
     selector: 'tolle-tabs-trigger',
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: {
@@ -187,7 +184,6 @@ export class TabsTriggerComponent {
 
 @Component({
     selector: 'tolle-tabs-content',
-    standalone: true,
     imports: [CommonModule],
     template: `<div *ngIf="isActive"><ng-content></ng-content></div>`,
     host: {

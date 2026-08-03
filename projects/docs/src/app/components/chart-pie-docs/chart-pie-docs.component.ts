@@ -12,20 +12,19 @@ import { ChartPieManySlicesComponent } from '../../docs-examples/chart-pie/chart
 
 
 @Component({
-  selector: 'app-chart-pie-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicChartPieComponent,
-    ChartPieDonutComponent,
-    ChartPieManySlicesComponent
-  ],
-  templateUrl: './chart-pie-docs.component.html',
-  styleUrl: './chart-pie-docs.component.css'
+    selector: 'app-chart-pie-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicChartPieComponent,
+        ChartPieDonutComponent,
+        ChartPieManySlicesComponent
+    ],
+    templateUrl: './chart-pie-docs.component.html',
+    styleUrl: './chart-pie-docs.component.css'
 })
 export class ChartPieDocsComponent {
   baseService = inject(BaseService);

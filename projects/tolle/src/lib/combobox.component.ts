@@ -63,25 +63,24 @@ export type ComboboxOption = {
  * @new
  */
 @Component({
-  selector: 'tolle-combobox',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    CommandComponent,
-    CommandInputComponent,
-    CommandListComponent,
-    CommandEmptyComponent,
-    CommandItemComponent,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ComboboxComponent),
-      multi: true,
-    },
-  ],
-  template: `
+    selector: 'tolle-combobox',
+    styles: [':host { display: block; }'],
+    imports: [
+        CommonModule,
+        CommandComponent,
+        CommandInputComponent,
+        CommandListComponent,
+        CommandEmptyComponent,
+        CommandItemComponent,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => ComboboxComponent),
+            multi: true,
+        },
+    ],
+    template: `
     <button
       #trigger
       type="button"
@@ -135,7 +134,7 @@ export type ComboboxOption = {
         </tolle-command>
       </div>
     </div>
-  `,
+  `
 })
 export class ComboboxComponent implements ControlValueAccessor, OnDestroy {
   /** Options to choose from. @default [] */

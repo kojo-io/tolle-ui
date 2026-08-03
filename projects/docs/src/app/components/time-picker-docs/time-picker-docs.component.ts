@@ -13,21 +13,20 @@ import { TimePickerBoundedComponent } from '../../docs-examples/time-picker/time
 
 
 @Component({
-  selector: 'app-time-picker-docs',
-  standalone: true,
-  imports: [
-    RouterLink,
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicTimePickerComponent,
-    TimePicker12HourComponent,
-    TimePickerBoundedComponent
-  ],
-  templateUrl: './time-picker-docs.component.html',
-  styleUrl: './time-picker-docs.component.css'
+    selector: 'app-time-picker-docs',
+    imports: [
+        RouterLink,
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicTimePickerComponent,
+        TimePicker12HourComponent,
+        TimePickerBoundedComponent
+    ],
+    templateUrl: './time-picker-docs.component.html',
+    styleUrl: './time-picker-docs.component.css'
 })
 export class TimePickerDocsComponent {
   baseService = inject(BaseService);

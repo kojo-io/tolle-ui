@@ -11,21 +11,20 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-breadcrumb-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    BreadcrumbComponent,
-    BreadcrumbItemComponent,
-    BreadcrumbLinkComponent,
-    BreadcrumbSeparatorComponent,
-    PlaygroundComponent,
-    InputComponent,
-    SwitchComponent,
-    LabelComponent
-  ],
-  templateUrl: './breadcrumb-interactive.component.html'
+    selector: 'app-breadcrumb-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        BreadcrumbComponent,
+        BreadcrumbItemComponent,
+        BreadcrumbLinkComponent,
+        BreadcrumbSeparatorComponent,
+        PlaygroundComponent,
+        InputComponent,
+        SwitchComponent,
+        LabelComponent
+    ],
+    templateUrl: './breadcrumb-interactive.component.html'
 })
 export class BreadcrumbInteractiveComponent {
   label: string = 'Current Page';

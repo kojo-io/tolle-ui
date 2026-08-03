@@ -3,19 +3,18 @@ import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-card',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  // Card owns the vertical rhythm: `flex-col` + `gap-6` spaces the sections and
-  // `py-6` gives top/bottom padding. Sub-sections only add horizontal padding
-  // (`px-6`). This means a card renders correctly with ANY combination of
-  // header / content / footer — including content-only — with no `pt-0` hacks.
-  template: `
+    selector: 'tolle-card',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    // Card owns the vertical rhythm: `flex-col` + `gap-6` spaces the sections and
+    // `py-6` gives top/bottom padding. Sub-sections only add horizontal padding
+    // (`px-6`). This means a card renders correctly with ANY combination of
+    // header / content / footer — including content-only — with no `pt-0` hacks.
+    template: `
     <div [class]="cn('flex flex-col gap-6 rounded-lg border border-border bg-card text-card-foreground py-6 shadow-sm', class)">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class CardComponent { @Input() class = ''; protected cn = cn; }
 

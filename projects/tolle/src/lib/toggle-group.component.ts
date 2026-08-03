@@ -6,7 +6,6 @@ import { ToggleComponent } from './toggle.component';
 
 @Component({
     selector: 'tolle-toggle-group',
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     providers: [
@@ -213,8 +212,7 @@ export class ToggleGroupComponent implements AfterContentInit, AfterViewInit, Co
 
 @Component({
     selector: 'tolle-toggle-group-item',
-  styles: [':host { display: inline-flex; }'],
-    standalone: true,
+    styles: [':host { display: inline-flex; }'],
     imports: [CommonModule, ToggleComponent],
     template: `
         <tolle-toggle

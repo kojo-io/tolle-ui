@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-hover-card-docs',
-    standalone: true,
     imports: [
         CommonModule,
         HoverCardOverviewComponent,

@@ -8,22 +8,21 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-card-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CardComponent,
-    CardHeaderComponent,
-    CardTitleComponent,
-    CardContentComponent,
-    CardFooterComponent,
-    PlaygroundComponent,
-    InputComponent,
-    SwitchComponent,
-    LabelComponent
-  ],
-  template: `
+    selector: 'app-card-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CardComponent,
+        CardHeaderComponent,
+        CardTitleComponent,
+        CardContentComponent,
+        CardFooterComponent,
+        PlaygroundComponent,
+        InputComponent,
+        SwitchComponent,
+        LabelComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

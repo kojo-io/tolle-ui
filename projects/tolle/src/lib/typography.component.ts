@@ -31,15 +31,14 @@ export type TypographyProps = VariantProps<typeof typographyVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-typography',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  // `<ng-content>` may only appear once — a duplicated slot per branch would leave
-  // every branch but the first empty. Project once into a template and stamp that
-  // template into whichever tag the variant selects.
-  template: `
+    selector: 'tolle-typography',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    // `<ng-content>` may only appear once — a duplicated slot per branch would leave
+    // every branch but the first empty. Project once into a template and stamp that
+    // template into whichever tag the variant selects.
+    template: `
     <ng-template #body><ng-content></ng-content></ng-template>
 
     <h1 *ngIf="variant === 'h1'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h1>
@@ -49,7 +48,7 @@ export type TypographyProps = VariantProps<typeof typographyVariants>;
     <blockquote *ngIf="variant === 'blockquote'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></blockquote>
     <code *ngIf="variant === 'code'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></code>
     <p *ngIf="isParagraph" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></p>
-  `,
+  `
 })
 export class TypographyComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

@@ -12,10 +12,9 @@ interface Artifact {
 }
 
 @Component({
-  selector: 'app-ai-native-docs',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
-  templateUrl: './ai-native-docs.component.html',
+    selector: 'app-ai-native-docs',
+    imports: [CommonModule, RouterLink],
+    templateUrl: './ai-native-docs.component.html'
 })
 export class AiNativeDocsComponent {
   protected baseService = inject(BaseService);

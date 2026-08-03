@@ -175,14 +175,13 @@ describe('InputGroupTextareaComponent', () => {
 });
 
 @Component({
-  standalone: true,
-  imports: [
-    InputGroupComponent,
-    InputGroupAddonComponent,
-    InputGroupInputComponent,
-    InputGroupTextComponent,
-  ],
-  template: `
+    imports: [
+        InputGroupComponent,
+        InputGroupAddonComponent,
+        InputGroupInputComponent,
+        InputGroupTextComponent,
+    ],
+    template: `
     <tolle-input-group>
       <tolle-input-group-addon><i class="ri-search-line"></i></tolle-input-group-addon>
       <tolle-input-group-input placeholder="Search"></tolle-input-group-input>
@@ -190,7 +189,7 @@ describe('InputGroupTextareaComponent', () => {
         <tolle-input-group-text>.com</tolle-input-group-text>
       </tolle-input-group-addon>
     </tolle-input-group>
-  `,
+  `
 })
 class HostComponent {}
 

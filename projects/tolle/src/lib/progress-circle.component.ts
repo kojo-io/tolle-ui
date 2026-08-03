@@ -9,12 +9,11 @@ import { cn } from './utils/cn';
  * @new
  */
 @Component({
-  selector: 'tolle-progress-circle',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-progress-circle',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       [class]="computedClass"
       [style.width.px]="size"
@@ -50,7 +49,7 @@ import { cn } from './utils/cn';
         <ng-content></ng-content>
       </div>
     </div>
-  `,
+  `
 })
 export class ProgressCircleComponent implements OnChanges {
   /**

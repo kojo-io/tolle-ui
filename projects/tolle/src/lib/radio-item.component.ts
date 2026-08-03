@@ -5,11 +5,10 @@ import { RadioService, RovingRadioItem } from './radio-service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'tolle-radio-item',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-radio-item',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div
       (click)="!isEffectiveDisabled && select()"
       [class]="cn(

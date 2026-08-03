@@ -6,7 +6,6 @@ import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item
 
 @Component({
     selector: 'app-basic-select-example',
-    standalone: true,
     imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
     template: `
     <div class="w-full max-w-[200px] space-y-4">

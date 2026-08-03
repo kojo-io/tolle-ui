@@ -21,30 +21,29 @@ import { LazyLoadCarouselComponent } from '../../../docs-examples/carousel/lazy-
 import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel/infinite-scroll-carousel.component';
 
 @Component({
-  selector: 'app-carousel-examples',
-  standalone: true,
-  imports: [
-    ComponentPreviewComponent,
-    BasicCarouselComponent,
-    MultipleCarouselComponent,
-    VerticalCarouselComponent,
-    AutoplayCarouselComponent,
-    LoopCarouselComponent,
-    ThumbnailsCarouselComponent,
-    AlignmentCarouselComponent,
-    VariableWidthCarouselComponent,
-    RtlCarouselComponent,
-    AutoScrollCarouselComponent,
-    FadeCarouselComponent,
-    ClassNamesCarouselComponent,
-    ParallaxCarouselComponent,
-    ScaleCarouselComponent,
-    OpacityCarouselComponent,
-    ProgressCarouselComponent,
-    LazyLoadCarouselComponent,
-    InfiniteScrollCarouselComponent
-  ],
-  template: `
+    selector: 'app-carousel-examples',
+    imports: [
+        ComponentPreviewComponent,
+        BasicCarouselComponent,
+        MultipleCarouselComponent,
+        VerticalCarouselComponent,
+        AutoplayCarouselComponent,
+        LoopCarouselComponent,
+        ThumbnailsCarouselComponent,
+        AlignmentCarouselComponent,
+        VariableWidthCarouselComponent,
+        RtlCarouselComponent,
+        AutoScrollCarouselComponent,
+        FadeCarouselComponent,
+        ClassNamesCarouselComponent,
+        ParallaxCarouselComponent,
+        ScaleCarouselComponent,
+        OpacityCarouselComponent,
+        ProgressCarouselComponent,
+        LazyLoadCarouselComponent,
+        InfiniteScrollCarouselComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
 

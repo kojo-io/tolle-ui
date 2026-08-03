@@ -10,7 +10,6 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
     selector: 'app-hover-card-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

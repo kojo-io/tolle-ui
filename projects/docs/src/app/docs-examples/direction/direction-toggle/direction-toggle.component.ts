@@ -7,7 +7,6 @@ type Dir = 'ltr' | 'rtl';
 
 @Component({
     selector: 'app-direction-toggle',
-    standalone: true,
     imports: [DirectionDirective, InputComponent, ButtonComponent],
     templateUrl: './direction-toggle.component.html'
 })

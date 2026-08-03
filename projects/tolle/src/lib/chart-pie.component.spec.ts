@@ -349,9 +349,8 @@ describe('ChartPieComponent runaway-loop guard', () => {
 });
 
 @Component({
-  standalone: true,
-  imports: [ChartPieComponent],
-  template: `<tolle-chart-pie [data]="data" labelKey="region" valueKey="users" />`,
+    imports: [ChartPieComponent],
+    template: `<tolle-chart-pie [data]="data" labelKey="region" valueKey="users" />`
 })
 class GetterBoundHostComponent {
   hidden = new Set<string>();

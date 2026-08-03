@@ -3,7 +3,6 @@ import { TypographyComponent } from '../../../../../../tolle/src/lib/typography.
 
 @Component({
     selector: 'app-typography-blockquote',
-    standalone: true,
     imports: [TypographyComponent],
     templateUrl: './typography-blockquote.component.html'
 })

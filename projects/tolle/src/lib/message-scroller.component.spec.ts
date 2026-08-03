@@ -10,16 +10,15 @@ import {
 } from './message-scroller.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    MessageScrollerComponent,
-    MessageScrollerViewportComponent,
-    MessageScrollerContentComponent,
-    MessageScrollerButtonComponent,
-    MessageScrollerItemDirective,
-  ],
-  template: `
+    imports: [
+        CommonModule,
+        MessageScrollerComponent,
+        MessageScrollerViewportComponent,
+        MessageScrollerContentComponent,
+        MessageScrollerButtonComponent,
+        MessageScrollerItemDirective,
+    ],
+    template: `
     <div style="height: 100px; width: 200px;">
       <tolle-message-scroller startPosition="top" (atBottomChange)="atBottomEvents.push($event)">
         <tolle-message-scroller-viewport>
@@ -30,7 +29,7 @@ import {
         <tolle-message-scroller-button>Jump to latest</tolle-message-scroller-button>
       </tolle-message-scroller>
     </div>
-  `,
+  `
 })
 class HostComponent {
   messages = Array.from({ length: 20 }, (_, i) => `message ${i}`);

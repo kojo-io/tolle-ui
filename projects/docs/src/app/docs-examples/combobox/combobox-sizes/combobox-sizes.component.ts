@@ -5,7 +5,6 @@ import { ComboboxComponent, ComboboxOption } from '../../../../../../tolle/src/l
 
 @Component({
     selector: 'app-combobox-sizes',
-    standalone: true,
     imports: [CommonModule, FormsModule, ComboboxComponent],
     templateUrl: './combobox-sizes.component.html'
 })

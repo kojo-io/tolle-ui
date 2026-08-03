@@ -5,7 +5,6 @@ import { TimePickerComponent } from '../../../../../../tolle/src/lib/time-picker
 
 @Component({
     selector: 'app-time-picker-12-hour',
-    standalone: true,
     imports: [CommonModule, FormsModule, TimePickerComponent],
     templateUrl: './time-picker-12-hour.component.html'
 })

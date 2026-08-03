@@ -5,10 +5,9 @@ import { MultiSelectComponent } from '../../../../../../tolle/src/lib/multi-sele
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 
 @Component({
-  selector: 'app-basic-multi-select-example',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MultiSelectComponent, SelectItemComponent],
-  template: `
+    selector: 'app-basic-multi-select-example',
+    imports: [CommonModule, FormsModule, MultiSelectComponent, SelectItemComponent],
+    template: `
     <div class="w-full max-w-sm space-y-4">
       <tolle-multi-select [(ngModel)]="selectedFramworks" placeholder="Select frameworks...">
         <tolle-select-item value="angular">Angular</tolle-select-item>

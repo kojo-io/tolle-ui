@@ -11,9 +11,8 @@ import {
 } from './queue.component';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, QueueComponent, QueueItemComponent],
-  template: `
+    imports: [CommonModule, QueueComponent, QueueItemComponent],
+    template: `
     <tolle-queue [title]="title" (countsChange)="lastCounts = $event">
       <tolle-queue-item
         *ngIf="showFirst"
@@ -23,7 +22,7 @@ import {
       <tolle-queue-item label="Draft a reply" status="queued" (remove)="removed = 'draft'"></tolle-queue-item>
       <tolle-queue-item label="Send it" status="queued" [removable]="false"></tolle-queue-item>
     </tolle-queue>
-  `,
+  `
 })
 class QueueHostComponent {
   @Input() title = 'Queue';

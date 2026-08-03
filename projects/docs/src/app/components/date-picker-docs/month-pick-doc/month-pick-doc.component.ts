@@ -6,15 +6,14 @@ import {ComponentPreviewComponent} from '../../../shared/component-preview/compo
 import {MonthPickerComponent} from '../../../docs-examples/date-picker/month-picker/month-picker.component';
 
 @Component({
-  selector: 'app-month-pick-doc',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    ComponentPreviewComponent,
-    MonthPickerComponent
-  ],
-  templateUrl: './month-pick-doc.component.html',
-  styleUrl: './month-pick-doc.component.css'
+    selector: 'app-month-pick-doc',
+    imports: [
+        AsyncPipe,
+        ComponentPreviewComponent,
+        MonthPickerComponent
+    ],
+    templateUrl: './month-pick-doc.component.html',
+    styleUrl: './month-pick-doc.component.css'
 })
 export class MonthPickDocComponent implements OnInit {
   sourceService = inject(SourceCodeService);

@@ -26,7 +26,6 @@ const switchProps: PropEntry[] = [
 
 @Component({
     selector: 'app-switch-api',
-    standalone: true,
     imports: [CommonModule, PropTableComponent],
     templateUrl: './switch-api.component.html'
 })

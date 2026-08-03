@@ -28,11 +28,10 @@ const avatarVariants = cva(
 export type AvatarProps = VariantProps<typeof avatarVariants>;
 
 @Component({
-  selector: 'tolle-avatar',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [NgIf],
-  template: `
+    selector: 'tolle-avatar',
+    styles: [':host { display: inline-flex; }'],
+    imports: [NgIf],
+    template: `
     <!-- Image Layer -->
     <img *ngIf="src && !hasError"
          [src]="src"

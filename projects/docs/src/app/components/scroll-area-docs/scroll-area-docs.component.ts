@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-scroll-area-docs',
-    standalone: true,
     imports: [
         CommonModule,
         ScrollAreaOverviewComponent,

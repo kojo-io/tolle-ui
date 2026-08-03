@@ -12,20 +12,19 @@ import { NavHoverSwitchComponent } from '../../docs-examples/navigation-menu/nav
 
 
 @Component({
-  selector: 'app-navigation-menu-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    SiteNavComponent,
-    NavFlatAndDropdownComponent,
-    NavHoverSwitchComponent
-  ],
-  templateUrl: './navigation-menu-docs.component.html',
-  styleUrl: './navigation-menu-docs.component.css'
+    selector: 'app-navigation-menu-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        SiteNavComponent,
+        NavFlatAndDropdownComponent,
+        NavHoverSwitchComponent
+    ],
+    templateUrl: './navigation-menu-docs.component.html',
+    styleUrl: './navigation-menu-docs.component.css'
 })
 export class NavigationMenuDocsComponent {
   baseService = inject(BaseService);

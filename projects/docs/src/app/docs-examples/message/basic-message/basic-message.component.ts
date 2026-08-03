@@ -8,7 +8,6 @@ import { BubbleComponent } from '../../../../../../tolle/src/lib/bubble.componen
 
 @Component({
     selector: 'app-basic-message',
-    standalone: true,
     imports: [MessageComponent, MessageAvatarComponent, MessageContentComponent, BubbleComponent],
     templateUrl: './basic-message.component.html'
 })

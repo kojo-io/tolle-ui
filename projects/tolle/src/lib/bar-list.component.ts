@@ -18,12 +18,11 @@ export interface BarListRow {
  * @new
  */
 @Component({
-  selector: 'tolle-bar-list',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-bar-list',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <div
         *ngFor="let row of rows; trackBy: trackByIndex"
@@ -36,7 +35,7 @@ export interface BarListRow {
         </span>
       </div>
     </div>
-  `,
+  `
 })
 export class BarListComponent implements OnChanges {
   /**

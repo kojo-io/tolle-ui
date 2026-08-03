@@ -11,18 +11,17 @@ import { cn } from './utils/cn';
 import {DateRange} from './types/date-range';
 
 @Component({
-  selector: 'tolle-range-calendar',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => RangeCalendarComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-range-calendar',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => RangeCalendarComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div [class]="cn('text-popover-foreground inline-block min-w-fit', bordered ? 'p-3 border rounded-md bg-background shadow-sm' : '', class)">
 
       <!-- ===== Month / year quick pickers (shared by the single- and multi-month views) ===== -->

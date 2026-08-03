@@ -4,7 +4,6 @@ import { SuggestionsComponent, SuggestionComponent } from '../../../../../../tol
 
 @Component({
     selector: 'app-suggestion-scrolling',
-    standalone: true,
     imports: [CommonModule, SuggestionsComponent, SuggestionComponent],
     templateUrl: './suggestion-scrolling.component.html'
 })

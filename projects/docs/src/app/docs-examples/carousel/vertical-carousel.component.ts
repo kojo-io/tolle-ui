@@ -10,18 +10,17 @@ import {
 } from '../../../../../tolle/src/lib/carousel';
 
 @Component({
-  selector: 'app-vertical-carousel',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CarouselComponent,
-    CarouselContentDirective,
-    CarouselContainerDirective,
-    CarouselItemDirective,
-    CarouselPreviousDirective,
-    CarouselNextDirective
-  ],
-  template: `
+    selector: 'app-vertical-carousel',
+    imports: [
+        CommonModule,
+        CarouselComponent,
+        CarouselContentDirective,
+        CarouselContainerDirective,
+        CarouselItemDirective,
+        CarouselPreviousDirective,
+        CarouselNextDirective
+    ],
+    template: `
     <div class="relative max-w-2xl mx-auto group flex flex-col items-center">
       <tolle-carousel (api)="onApi($event)" orientation="vertical" [opts]="{ align: 'start', loop: true }" class="w-full">
         <div tolleCarouselContent class="h-[400px]">

@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-model-selector-variants',
-    standalone: true,
     imports: [CommonModule, FormsModule, ModelSelectorComponent],
     templateUrl: './model-selector-variants.component.html'
 })

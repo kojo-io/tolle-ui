@@ -12,20 +12,19 @@ import { ChainOfThoughtCollapsedComponent } from '../../docs-examples/chain-of-t
 
 
 @Component({
-  selector: 'app-chain-of-thought-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicChainOfThoughtComponent,
-    ChainOfThoughtProgressComponent,
-    ChainOfThoughtCollapsedComponent
-  ],
-  templateUrl: './chain-of-thought-docs.component.html',
-  styleUrl: './chain-of-thought-docs.component.css'
+    selector: 'app-chain-of-thought-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicChainOfThoughtComponent,
+        ChainOfThoughtProgressComponent,
+        ChainOfThoughtCollapsedComponent
+    ],
+    templateUrl: './chain-of-thought-docs.component.html',
+    styleUrl: './chain-of-thought-docs.component.css'
 })
 export class ChainOfThoughtDocsComponent {
   baseService = inject(BaseService);

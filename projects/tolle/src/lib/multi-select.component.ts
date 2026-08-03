@@ -77,16 +77,15 @@ export interface MultiSelectChip {
  * forms.
  */
 @Component({
-  selector: 'tolle-multi-select',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, BadgeComponent, InputComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    SelectService,
-    { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true }
-  ],
-  template: `
+    selector: 'tolle-multi-select',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule, BadgeComponent, InputComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        SelectService,
+        { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true }
+    ],
+    template: `
     <div class="relative w-full" #container>
       <button
         #trigger

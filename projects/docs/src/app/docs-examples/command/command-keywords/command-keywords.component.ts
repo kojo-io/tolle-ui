@@ -11,7 +11,6 @@ import {
 
 @Component({
     selector: 'app-command-keywords',
-    standalone: true,
     imports: [
         CommonModule,
         CommandComponent,

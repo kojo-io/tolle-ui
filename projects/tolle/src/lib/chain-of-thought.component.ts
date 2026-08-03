@@ -96,13 +96,12 @@ export class ChainOfThoughtService {
  * @new
  */
 @Component({
-  selector: 'tolle-chain-of-thought',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [ChainOfThoughtService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
+    selector: 'tolle-chain-of-thought',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [ChainOfThoughtService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="computedClass"><ng-content></ng-content></div>`
 })
 export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -145,12 +144,11 @@ export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
 
 /** Clickable header that expands and collapses the reasoning steps. */
 @Component({
-  selector: 'tolle-chain-of-thought-header',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chain-of-thought-header',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       type="button"
       [attr.aria-expanded]="isOpen"
@@ -166,7 +164,7 @@ export class ChainOfThoughtComponent implements OnInit, OnChanges, OnDestroy {
         aria-hidden="true"
       ></i>
     </button>
-  `,
+  `
 })
 export class ChainOfThoughtHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -218,16 +216,15 @@ export class ChainOfThoughtHeaderComponent implements OnChanges, OnInit, OnDestr
 
 /** Holds the steps; rendered only while the trace is expanded. */
 @Component({
-  selector: 'tolle-chain-of-thought-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chain-of-thought-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div *ngIf="isOpen" data-state="open" [class]="computedClass">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class ChainOfThoughtContentComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -269,12 +266,11 @@ export class ChainOfThoughtContentComponent implements OnChanges, OnInit, OnDest
 
 /** One reasoning step: a marker on the rail, a label, and any projected detail. */
 @Component({
-  selector: 'tolle-chain-of-thought-step',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[class]': 'computedClass', '[attr.data-status]': 'status' },
-  template: `
+    selector: 'tolle-chain-of-thought-step',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { '[class]': 'computedClass', '[attr.data-status]': 'status' },
+    template: `
     <span class="tolle-cot-rail absolute bottom-0 left-3 top-6 w-px -translate-x-1/2 bg-border" aria-hidden="true"></span>
     <span [class]="markerClass">
       <i [class]="icon" aria-hidden="true"></i>
@@ -283,7 +279,7 @@ export class ChainOfThoughtContentComponent implements OnChanges, OnInit, OnDest
       <p [class]="labelClass">{{ label }}</p>
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class ChainOfThoughtStepComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -321,12 +317,11 @@ export class ChainOfThoughtStepComponent  implements OnChanges{
 
 /** Wraps the result chips produced by a search step. */
 @Component({
-  selector: 'tolle-chain-of-thought-search-results',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('mt-1.5 flex flex-wrap items-center gap-1', class)"><ng-content></ng-content></div>`,
+    selector: 'tolle-chain-of-thought-search-results',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cn('mt-1.5 flex flex-wrap items-center gap-1', class)"><ng-content></ng-content></div>`
 })
 export class ChainOfThoughtSearchResultsComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -347,17 +342,16 @@ export class ChainOfThoughtSearchResultsComponent  implements OnChanges{
 
 /** A single search result rendered as a small chip. */
 @Component({
-  selector: 'tolle-chain-of-thought-search-result',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chain-of-thought-search-result',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <span [class]="computedClass">
       <i *ngIf="icon" [class]="icon + ' shrink-0'" aria-hidden="true"></i>
       <ng-content></ng-content>
     </span>
-  `,
+  `
 })
 export class ChainOfThoughtSearchResultComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

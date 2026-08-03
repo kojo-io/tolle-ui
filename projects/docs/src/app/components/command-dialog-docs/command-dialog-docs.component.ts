@@ -12,20 +12,19 @@ import { CommandDialogShortcutComponent } from '../../docs-examples/command-dial
 
 
 @Component({
-  selector: 'app-command-dialog-docs',
-  standalone: true,
-  imports: [
-    RouterLink,
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicCommandDialogComponent,
-    CommandDialogShortcutComponent
-  ],
-  templateUrl: './command-dialog-docs.component.html',
-  styleUrl: './command-dialog-docs.component.css'
+    selector: 'app-command-dialog-docs',
+    imports: [
+        RouterLink,
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicCommandDialogComponent,
+        CommandDialogShortcutComponent
+    ],
+    templateUrl: './command-dialog-docs.component.html',
+    styleUrl: './command-dialog-docs.component.css'
 })
 export class CommandDialogDocsComponent {
   baseService = inject(BaseService);

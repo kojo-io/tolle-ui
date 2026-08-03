@@ -13,7 +13,6 @@ import {
 
 @Component({
     selector: 'app-basic-command',
-    standalone: true,
     imports: [
         CommonModule,
         CommandComponent,

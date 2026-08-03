@@ -10,7 +10,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-sources-controlled',
-    standalone: true,
     imports: [
         CommonModule,
         SourcesComponent,

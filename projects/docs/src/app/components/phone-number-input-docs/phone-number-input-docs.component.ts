@@ -8,7 +8,6 @@ import { PhoneNumberInputApiComponent } from './phone-number-input-api/phone-num
 
 @Component({
     selector: 'app-phone-number-input-docs',
-    standalone: true,
     imports: [
         CommonModule,
         DocsWrapperComponent,
@@ -47,7 +46,7 @@ import { PhoneNumberInputApiComponent } from './phone-number-input-api/phone-num
         </ul>
       </ng-template>
     </app-docs-wrapper>
-  `,
+  `
 })
 export class PhoneNumberInputDocsComponent {
     baseService = inject(BaseService);

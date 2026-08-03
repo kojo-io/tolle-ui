@@ -3,7 +3,6 @@ import { BubbleComponent } from '../../../../../../tolle/src/lib/bubble.componen
 
 @Component({
     selector: 'app-collapsible-bubble',
-    standalone: true,
     imports: [BubbleComponent],
     templateUrl: './collapsible-bubble.component.html'
 })

@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-radio-group-docs',
-    standalone: true,
     imports: [
         RadioGroupOverviewComponent,
         RadioGroupInteractiveComponent,
         RadioGroupApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './radio-group-docs.component.html',
     styleUrl: './radio-group-docs.component.css'

@@ -12,10 +12,9 @@ import { BaseEditorComponent, EditorLanguage } from '../base-editor/base-editor.
  *   </app-preview>
  */
 @Component({
-  selector: 'app-preview',
-  standalone: true,
-  imports: [CommonModule, BaseEditorComponent],
-  template: `
+    selector: 'app-preview',
+    imports: [CommonModule, BaseEditorComponent],
+    template: `
     <div class="not-prose my-6 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
       <!-- Toolbar -->
       <div class="flex items-center gap-1 border-b border-border bg-muted/40 px-2 py-1.5">
@@ -64,13 +63,13 @@ import { BaseEditorComponent, EditorLanguage } from '../base-editor/base-editor.
       }
     </div>
   `,
-  styles: [`
+    styles: [`
     /* Subtle dotted backdrop so the preview surface reads as a canvas. */
     .preview-grid {
       background-image: radial-gradient(rgb(var(--muted-foreground) / 0.15) 1px, transparent 1px);
       background-size: 16px 16px;
     }
-  `],
+  `]
 })
 export class ComponentPreviewComponent {
   /** Source code shown under the Code tab. */

@@ -10,15 +10,14 @@ import {
 } from './conversation.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    ConversationComponent,
-    ConversationContentComponent,
-    ConversationEmptyStateComponent,
-    ConversationScrollButtonComponent,
-  ],
-  template: `
+    imports: [
+        CommonModule,
+        ConversationComponent,
+        ConversationContentComponent,
+        ConversationEmptyStateComponent,
+        ConversationScrollButtonComponent,
+    ],
+    template: `
     <tolle-conversation [empty]="empty" (atBottomChange)="atBottomEvents.push($event)">
       <tolle-conversation-empty-state title="Nothing here"></tolle-conversation-empty-state>
       <tolle-conversation-content>
@@ -26,7 +25,7 @@ import {
       </tolle-conversation-content>
       <tolle-conversation-scroll-button (jumped)="jumps = jumps + 1"></tolle-conversation-scroll-button>
     </tolle-conversation>
-  `,
+  `
 })
 class HostComponent {
   empty = false;

@@ -4,9 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TypographyComponent } from './typography.component';
 
 @Component({
-  standalone: true,
-  imports: [TypographyComponent],
-  template: `<tolle-typography [variant]="variant" [class]="extraClass">{{ text }}</tolle-typography>`
+    imports: [TypographyComponent],
+    template: `<tolle-typography [variant]="variant" [class]="extraClass">{{ text }}</tolle-typography>`
 })
 class TypographyHostComponent {
   variant: any = 'p';

@@ -12,20 +12,19 @@ import { PromptInputReactiveFormComponent } from '../../docs-examples/prompt-inp
 
 
 @Component({
-  selector: 'app-prompt-input-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicPromptInputComponent,
-    PromptInputStreamingComponent,
-    PromptInputReactiveFormComponent
-  ],
-  templateUrl: './prompt-input-docs.component.html',
-  styleUrl: './prompt-input-docs.component.css'
+    selector: 'app-prompt-input-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicPromptInputComponent,
+        PromptInputStreamingComponent,
+        PromptInputReactiveFormComponent
+    ],
+    templateUrl: './prompt-input-docs.component.html',
+    styleUrl: './prompt-input-docs.component.css'
 })
 export class PromptInputDocsComponent {
   baseService = inject(BaseService);

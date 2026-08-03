@@ -69,28 +69,27 @@ export type ModelSelectorProps = VariantProps<typeof modelSelectorTriggerVariant
  * @new
  */
 @Component({
-  selector: 'tolle-model-selector',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    PopoverComponent,
-    CommandComponent,
-    CommandInputComponent,
-    CommandListComponent,
-    CommandEmptyComponent,
-    CommandGroupComponent,
-    CommandItemComponent,
-  ],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ModelSelectorComponent),
-      multi: true,
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-model-selector',
+    styles: [':host { display: block; }'],
+    imports: [
+        CommonModule,
+        PopoverComponent,
+        CommandComponent,
+        CommandInputComponent,
+        CommandListComponent,
+        CommandEmptyComponent,
+        CommandGroupComponent,
+        CommandItemComponent,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => ModelSelectorComponent),
+            multi: true,
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <tolle-popover [placement]="placement" (onClose)="onPopoverClose()">
       <button
         trigger
@@ -142,7 +141,7 @@ export type ModelSelectorProps = VariantProps<typeof modelSelectorTriggerVariant
         </tolle-command>
       </div>
     </tolle-popover>
-  `,
+  `
 })
 export class ModelSelectorComponent implements ControlValueAccessor, OnChanges {
   /** Models to choose from; grouped by `provider` when that field is set. @default [] */

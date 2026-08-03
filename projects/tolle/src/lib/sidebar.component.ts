@@ -25,10 +25,9 @@ export type SidebarGroup = {
 }
 
 @Component({
-  selector: 'tolle-sidebar',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  template: `
+    selector: 'tolle-sidebar',
+    imports: [CommonModule, RouterModule],
+    template: `
     <aside [class]="cn(
       'flex flex-col h-full bg-background transition-[width] duration-300 ease-in-out shrink-0 overflow-hidden',
       collapsed ? 'w-16' : 'w-64',
@@ -228,7 +227,7 @@ export type SidebarGroup = {
       </div>
     </aside>
   `,
-  styles: [`
+    styles: [`
     :host { display: block; height: 100%; }
     button:disabled { cursor: not-allowed; opacity: 0.6; }
     * { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }

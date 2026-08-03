@@ -12,20 +12,19 @@ import { KbdShortcutComponent } from '../../docs-examples/kbd/kbd-shortcut/kbd-s
 
 
 @Component({
-  selector: 'app-kbd-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicKbdComponent,
-    KbdSizesComponent,
-    KbdShortcutComponent
-  ],
-  templateUrl: './kbd-docs.component.html',
-  styleUrl: './kbd-docs.component.css'
+    selector: 'app-kbd-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicKbdComponent,
+        KbdSizesComponent,
+        KbdShortcutComponent
+    ],
+    templateUrl: './kbd-docs.component.html',
+    styleUrl: './kbd-docs.component.css'
 })
 export class KbdDocsComponent {
   baseService = inject(BaseService);

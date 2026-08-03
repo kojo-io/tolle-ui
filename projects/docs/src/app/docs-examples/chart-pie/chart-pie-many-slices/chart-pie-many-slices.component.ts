@@ -10,7 +10,6 @@ interface Region {
 
 @Component({
     selector: 'app-chart-pie-many-slices',
-    standalone: true,
     imports: [CommonModule, ChartPieComponent, ButtonComponent],
     templateUrl: './chart-pie-many-slices.component.html'
 })

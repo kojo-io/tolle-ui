@@ -9,14 +9,12 @@ import { BaseService } from '../../shared/base.service';
 
 @Component({
     selector: 'app-empty-state-docs',
-    standalone: true,
     imports: [
         CommonModule,
         EmptyStateOverviewComponent,
         EmptyStateInteractiveComponent,
         EmptyStateApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './empty-state-docs.component.html'
 })

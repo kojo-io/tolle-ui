@@ -13,21 +13,20 @@ import { DateTimePickerBoundedComponent } from '../../docs-examples/date-time-pi
 
 
 @Component({
-  selector: 'app-date-time-picker-docs',
-  standalone: true,
-  imports: [
-    RouterLink,
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicDateTimePickerComponent,
-    DateTimePickerReactiveFormComponent,
-    DateTimePickerBoundedComponent
-  ],
-  templateUrl: './date-time-picker-docs.component.html',
-  styleUrl: './date-time-picker-docs.component.css'
+    selector: 'app-date-time-picker-docs',
+    imports: [
+        RouterLink,
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicDateTimePickerComponent,
+        DateTimePickerReactiveFormComponent,
+        DateTimePickerBoundedComponent
+    ],
+    templateUrl: './date-time-picker-docs.component.html',
+    styleUrl: './date-time-picker-docs.component.css'
 })
 export class DateTimePickerDocsComponent {
   baseService = inject(BaseService);

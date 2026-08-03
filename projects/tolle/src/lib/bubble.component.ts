@@ -46,12 +46,11 @@ export interface BubbleReaction {
  * @new
  */
 @Component({
-  selector: 'tolle-bubble',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-bubble',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       [class]="computedClass"
       [attr.role]="interactive ? 'button' : null"
@@ -77,7 +76,7 @@ export interface BubbleReaction {
 
       <ng-content select="[bubbleFooter]"></ng-content>
     </div>
-  `,
+  `
 })
 export class BubbleComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -160,16 +159,15 @@ export class BubbleComponent  implements OnChanges{
  * kept inside the row so an interactive bubble does not also fire.
  */
 @Component({
-  selector: 'tolle-bubble-actions',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-bubble-actions',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" (click)="onClick($event)">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class BubbleActionsComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -206,12 +204,11 @@ export class BubbleActionsComponent  implements OnChanges{
 
 /** Row of emoji reaction chips attached to a bubble. */
 @Component({
-  selector: 'tolle-bubble-reactions',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-bubble-reactions',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" (click)="stop($event)">
       <button
         *ngFor="let reaction of reactions; trackBy: trackByEmoji"
@@ -225,7 +222,7 @@ export class BubbleActionsComponent  implements OnChanges{
 
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class BubbleReactionsComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-inline-citation-variants',
-    standalone: true,
     imports: [CommonModule, InlineCitationComponent, InlineCitationCardComponent],
     templateUrl: './inline-citation-variants.component.html'
 })

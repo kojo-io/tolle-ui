@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-empty-state-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './empty-state-api.component.html'
 })

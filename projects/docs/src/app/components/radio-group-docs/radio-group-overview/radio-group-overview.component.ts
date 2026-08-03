@@ -7,7 +7,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-radio-group-overview',
-    standalone: true,
     imports: [
         BasicRadioGroupExampleComponent,
         AsyncPipe,

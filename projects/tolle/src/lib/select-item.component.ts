@@ -4,11 +4,10 @@ import { cn } from './utils/cn';
 import {SelectService} from './select.service';
 
 @Component({
-  selector: 'tolle-select-item',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-select-item',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div
       *ngIf="!hidden"
       [id]="id"
@@ -50,7 +49,7 @@ import {SelectService} from './select.service';
         <i class="ri-forbid-line"></i>
       </span>
     </div>
-  `,
+  `
 })
 export class SelectItemComponent {
   @Input() value: any;

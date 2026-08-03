@@ -30,16 +30,15 @@ export type SpinnerProps = VariantProps<typeof spinnerVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-spinner',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-spinner',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <span role="status" [attr.aria-label]="label" [class]="computedClass">
       <span class="sr-only">{{ label }}</span>
     </span>
-  `,
+  `
 })
 export class SpinnerComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);

@@ -31,12 +31,11 @@ export type ItemProps = VariantProps<typeof itemVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-item',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
+    selector: 'tolle-item',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="computedClass"><ng-content></ng-content></div>`
 })
 export class ItemComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -64,12 +63,11 @@ export class ItemComponent  implements OnChanges{
 
 /** Stacks several `tolle-item` rows as a single list. */
 @Component({
-  selector: 'tolle-item-group',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div role="list" [class]="cn('flex flex-col', class)"><ng-content></ng-content></div>`,
+    selector: 'tolle-item-group',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div role="list" [class]="cn('flex flex-col', class)"><ng-content></ng-content></div>`
 })
 export class ItemGroupComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -90,12 +88,11 @@ export class ItemGroupComponent  implements OnChanges{
 
 /** Leading media slot — avatar, icon, or thumbnail. */
 @Component({
-  selector: 'tolle-item-media',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex shrink-0 items-center justify-center text-muted-foreground', class)"><ng-content></ng-content></div>`,
+    selector: 'tolle-item-media',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cn('flex shrink-0 items-center justify-center text-muted-foreground', class)"><ng-content></ng-content></div>`
 })
 export class ItemMediaComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -116,12 +113,11 @@ export class ItemMediaComponent  implements OnChanges{
 
 /** Grows to fill the row; wraps the title and description. */
 @Component({
-  selector: 'tolle-item-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex min-w-0 flex-1 flex-col gap-0.5', class)"><ng-content></ng-content></div>`,
+    selector: 'tolle-item-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cn('flex min-w-0 flex-1 flex-col gap-0.5', class)"><ng-content></ng-content></div>`
 })
 export class ItemContentComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -142,12 +138,11 @@ export class ItemContentComponent  implements OnChanges{
 
 /** Primary line of the row. */
 @Component({
-  selector: 'tolle-item-title',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<p [class]="cn('truncate font-medium leading-none text-foreground', class)"><ng-content></ng-content></p>`,
+    selector: 'tolle-item-title',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<p [class]="cn('truncate font-medium leading-none text-foreground', class)"><ng-content></ng-content></p>`
 })
 export class ItemTitleComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -168,12 +163,11 @@ export class ItemTitleComponent  implements OnChanges{
 
 /** Secondary line of the row. */
 @Component({
-  selector: 'tolle-item-description',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<p [class]="cn('truncate text-sm text-muted-foreground', class)"><ng-content></ng-content></p>`,
+    selector: 'tolle-item-description',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<p [class]="cn('truncate text-sm text-muted-foreground', class)"><ng-content></ng-content></p>`
 })
 export class ItemDescriptionComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -194,12 +188,11 @@ export class ItemDescriptionComponent  implements OnChanges{
 
 /** Trailing slot for buttons, switches, or badges. */
 @Component({
-  selector: 'tolle-item-actions',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex shrink-0 items-center gap-2', class)"><ng-content></ng-content></div>`,
+    selector: 'tolle-item-actions',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cn('flex shrink-0 items-center gap-2', class)"><ng-content></ng-content></div>`
 })
 export class ItemActionsComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -220,12 +213,11 @@ export class ItemActionsComponent  implements OnChanges{
 
 /** Optional full-width header above the row's main line. */
 @Component({
-  selector: 'tolle-item-header',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex w-full items-center justify-between gap-2', class)"><ng-content></ng-content></div>`,
+    selector: 'tolle-item-header',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cn('flex w-full items-center justify-between gap-2', class)"><ng-content></ng-content></div>`
 })
 export class ItemHeaderComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -246,12 +238,11 @@ export class ItemHeaderComponent  implements OnChanges{
 
 /** Optional full-width footer below the row's main line. */
 @Component({
-  selector: 'tolle-item-footer',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex w-full items-center justify-between gap-2', class)"><ng-content></ng-content></div>`,
+    selector: 'tolle-item-footer',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cn('flex w-full items-center justify-between gap-2', class)"><ng-content></ng-content></div>`
 })
 export class ItemFooterComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

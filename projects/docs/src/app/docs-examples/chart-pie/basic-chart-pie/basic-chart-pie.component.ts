@@ -3,7 +3,6 @@ import { ChartPieComponent } from '../../../../../../tolle/src/lib/chart-pie.com
 
 @Component({
     selector: 'app-basic-chart-pie',
-    standalone: true,
     imports: [ChartPieComponent],
     templateUrl: './basic-chart-pie.component.html'
 })

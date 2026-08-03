@@ -14,22 +14,21 @@ import { ChartComboExampleComponent } from '../../docs-examples/chart/chart-comb
 
 
 @Component({
-  selector: 'app-chart-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    ChartLineExampleComponent,
-    ChartStackedBarComponent,
-    ChartAreaExampleComponent,
-    ChartBarHorizontalExampleComponent,
-    ChartComboExampleComponent
-  ],
-  templateUrl: './chart-docs.component.html',
-  styleUrl: './chart-docs.component.css'
+    selector: 'app-chart-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        ChartLineExampleComponent,
+        ChartStackedBarComponent,
+        ChartAreaExampleComponent,
+        ChartBarHorizontalExampleComponent,
+        ChartComboExampleComponent
+    ],
+    templateUrl: './chart-docs.component.html',
+    styleUrl: './chart-docs.component.css'
 })
 export class ChartDocsComponent {
   baseService = inject(BaseService);

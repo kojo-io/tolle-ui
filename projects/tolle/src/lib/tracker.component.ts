@@ -27,12 +27,11 @@ const STATUS_COLOR: Record<TrackerStatus, string> = {
  * @new
  */
 @Component({
-  selector: 'tolle-tracker',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, TooltipDirective],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-tracker',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, TooltipDirective],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" role="group" [attr.aria-label]="ariaLabel || null">
       <button
         *ngFor="let block of data; let i = index; trackBy: trackByIndex"
@@ -44,7 +43,7 @@ const STATUS_COLOR: Record<TrackerStatus, string> = {
         [attr.aria-label]="block.tooltip || 'Period ' + (i + 1)"
       ></button>
     </div>
-  `,
+  `
 })
 export class TrackerComponent implements OnChanges {
   /**

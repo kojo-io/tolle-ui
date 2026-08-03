@@ -12,20 +12,19 @@ import { MessageScrollerStreamingComponent } from '../../docs-examples/message-s
 
 
 @Component({
-  selector: 'app-message-scroller-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicMessageScrollerComponent,
-    MessageScrollerStartPositionComponent,
-    MessageScrollerStreamingComponent
-  ],
-  templateUrl: './message-scroller-docs.component.html',
-  styleUrl: './message-scroller-docs.component.css'
+    selector: 'app-message-scroller-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicMessageScrollerComponent,
+        MessageScrollerStartPositionComponent,
+        MessageScrollerStreamingComponent
+    ],
+    templateUrl: './message-scroller-docs.component.html',
+    styleUrl: './message-scroller-docs.component.css'
 })
 export class MessageScrollerDocsComponent {
   baseService = inject(BaseService);

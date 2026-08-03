@@ -6,7 +6,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-basic-popover-example',
-    standalone: true,
     imports: [CommonModule, PopoverComponent, PopoverContentComponent, ButtonComponent],
     template: `
     <div class="flex justify-center p-10">

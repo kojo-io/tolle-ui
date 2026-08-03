@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-tooltip-api',
-    standalone: true,
     imports: [CommonModule, PropTableComponent],
     templateUrl: './tooltip-api.component.html'
 })

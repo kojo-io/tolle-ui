@@ -23,28 +23,27 @@ import {
 
 
 @Component({
-  selector: 'app-doc-layout',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    SidebarComponent,
-    TooltipDirective,
-    ReactiveFormsModule,
-    NgStyle,
-    FormsModule,
-    AsyncPipe,
-    CommandDialogComponent,
-    CommandComponent,
-    CommandInputComponent,
-    CommandListComponent,
-    CommandGroupComponent,
-    CommandItemComponent,
-    CommandEmptyComponent,
-    CommandShortcutComponent,
-  ],
-  templateUrl: './doc-layout.component.html',
-  styleUrl: './doc-layout.component.css'
+    selector: 'app-doc-layout',
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        SidebarComponent,
+        TooltipDirective,
+        ReactiveFormsModule,
+        NgStyle,
+        FormsModule,
+        AsyncPipe,
+        CommandDialogComponent,
+        CommandComponent,
+        CommandInputComponent,
+        CommandListComponent,
+        CommandGroupComponent,
+        CommandItemComponent,
+        CommandEmptyComponent,
+        CommandShortcutComponent,
+    ],
+    templateUrl: './doc-layout.component.html',
+    styleUrl: './doc-layout.component.css'
 })
 export class DocLayoutComponent implements OnInit {
   ngOnInit(): void {

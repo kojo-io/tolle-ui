@@ -12,7 +12,6 @@ import { ShimmerComponent } from '../../../../../../tolle/src/lib/shimmer.compon
 
 @Component({
     selector: 'app-prompt-input-streaming',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

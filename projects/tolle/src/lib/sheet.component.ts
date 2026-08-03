@@ -6,11 +6,10 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-sheet',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `<ng-content></ng-content>`
+    selector: 'tolle-sheet',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `<ng-content></ng-content>`
 })
 export class SheetComponent {
   @Input() isOpen = false;
@@ -113,15 +112,14 @@ export class SheetComponent {
 }
 
 @Component({
-  selector: 'tolle-sheet-trigger',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `<ng-content></ng-content>`,
-  host: {
-    '(click)': 'onClick()',
-    'class': 'inline-block'
-  }
+    selector: 'tolle-sheet-trigger',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `<ng-content></ng-content>`,
+    host: {
+        '(click)': 'onClick()',
+        'class': 'inline-block'
+    }
 })
 export class SheetTriggerComponent {
   private sheet = inject(SheetComponent);
@@ -132,11 +130,10 @@ export class SheetTriggerComponent {
 }
 
 @Component({
-  selector: 'tolle-sheet-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, A11yModule],
-  template: `
+    selector: 'tolle-sheet-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, A11yModule],
+    template: `
     <ng-template #sheetContent>
       <div
         [class]="computedClass"

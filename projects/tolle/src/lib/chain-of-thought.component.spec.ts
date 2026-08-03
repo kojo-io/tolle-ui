@@ -12,16 +12,15 @@ import {
 } from './chain-of-thought.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    ChainOfThoughtComponent,
-    ChainOfThoughtHeaderComponent,
-    ChainOfThoughtContentComponent,
-    ChainOfThoughtStepComponent,
-    ChainOfThoughtSearchResultsComponent,
-    ChainOfThoughtSearchResultComponent,
-  ],
-  template: `
+    imports: [
+        ChainOfThoughtComponent,
+        ChainOfThoughtHeaderComponent,
+        ChainOfThoughtContentComponent,
+        ChainOfThoughtStepComponent,
+        ChainOfThoughtSearchResultsComponent,
+        ChainOfThoughtSearchResultComponent,
+    ],
+    template: `
     <tolle-chain-of-thought [open]="open" (openChange)="lastOpen = $event">
       <tolle-chain-of-thought-header [label]="label"></tolle-chain-of-thought-header>
       <tolle-chain-of-thought-content>
@@ -34,7 +33,7 @@ import {
         <tolle-chain-of-thought-step label="Wrote the answer" status="pending"></tolle-chain-of-thought-step>
       </tolle-chain-of-thought-content>
     </tolle-chain-of-thought>
-  `,
+  `
 })
 class ChainOfThoughtHostComponent {
   @Input() open = false;

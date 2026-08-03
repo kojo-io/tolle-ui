@@ -3,7 +3,6 @@ import { ShimmerComponent } from '../../../../../../tolle/src/lib/shimmer.compon
 
 @Component({
     selector: 'app-shimmer-sizes',
-    standalone: true,
     imports: [ShimmerComponent],
     templateUrl: './shimmer-sizes.component.html'
 })

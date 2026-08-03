@@ -16,7 +16,6 @@ interface Step {
 
 @Component({
     selector: 'app-chain-of-thought-progress',
-    standalone: true,
     imports: [
         CommonModule,
         ChainOfThoughtComponent,

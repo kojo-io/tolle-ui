@@ -9,7 +9,6 @@ import {
 
 @Component({
     selector: 'app-sources-variants',
-    standalone: true,
     imports: [
         CommonModule,
         SourcesComponent,

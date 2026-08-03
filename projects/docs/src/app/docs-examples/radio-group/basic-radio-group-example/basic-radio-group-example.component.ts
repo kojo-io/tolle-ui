@@ -6,7 +6,6 @@ import { JsonPipe } from '@angular/common';
 
 @Component({
     selector: 'app-basic-radio-group-example',
-    standalone: true,
     imports: [
         RadioGroupComponent,
         RadioItemComponent,

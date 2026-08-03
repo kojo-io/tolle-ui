@@ -3,10 +3,9 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
-  selector: 'app-alert-dialog-overview',
-  standalone: true,
-  imports: [BaseEditorComponent, DocHeroComponent],
-  template: `
+    selector: 'app-alert-dialog-overview',
+    imports: [BaseEditorComponent, DocHeroComponent],
+    template: `
     <app-doc-hero slug="alert-dialog" description="A modal dialog that interrupts the user with important content and expects a response." id="overview" />
 
     <section class="mb-14">

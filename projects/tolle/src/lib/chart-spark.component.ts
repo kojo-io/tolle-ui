@@ -17,12 +17,11 @@ import {
  * @new
  */
 @Component({
-  selector: 'tolle-chart-spark',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, ChartComponent, ChartLineComponent, ChartAreaComponent, ChartBarComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chart-spark',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, ChartComponent, ChartLineComponent, ChartAreaComponent, ChartBarComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <tolle-chart
       [class]="class"
       [data]="data"
@@ -39,7 +38,7 @@ import {
       <svg:g *ngIf="type === 'area'" tolle-chart-area [seriesKey]="valueKey" [curve]="curve"></svg:g>
       <svg:g *ngIf="type === 'bar'" tolle-chart-bar [seriesKey]="valueKey" [maxWidth]="maxBarWidth"></svg:g>
     </tolle-chart>
-  `,
+  `
 })
 export class ChartSparkComponent implements OnChanges {
   /**

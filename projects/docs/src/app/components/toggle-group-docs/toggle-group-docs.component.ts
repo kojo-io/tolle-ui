@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-toggle-group-docs',
-    standalone: true,
     imports: [
         CommonModule,
         ToggleGroupOverviewComponent,

@@ -9,7 +9,6 @@ import { PlaygroundComponent } from '../../../shared/playground/playground.compo
 
 @Component({
     selector: 'app-skeleton-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

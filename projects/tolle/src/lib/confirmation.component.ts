@@ -68,12 +68,11 @@ const CONFIRMATION_ICONS: Record<ConfirmationState, string> = {
  * @new
  */
 @Component({
-  selector: 'tolle-confirmation',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-confirmation',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" [attr.data-state]="currentState" role="group" [attr.aria-label]="title">
       <div class="flex items-start gap-3">
         <i [class]="iconClass" aria-hidden="true"></i>
@@ -102,7 +101,7 @@ const CONFIRMATION_ICONS: Record<ConfirmationState, string> = {
         </span>
       </div>
     </div>
-  `,
+  `
 })
 export class ConfirmationComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);

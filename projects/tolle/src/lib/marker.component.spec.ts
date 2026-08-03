@@ -4,9 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MarkerComponent, MarkerGroupComponent } from './marker.component';
 
 @Component({
-  standalone: true,
-  imports: [MarkerComponent, MarkerGroupComponent],
-  template: `
+    imports: [MarkerComponent, MarkerGroupComponent],
+    template: `
     <tolle-marker-group>
       <tolle-marker variant="status" [shimmer]="true">Thinking…</tolle-marker>
       <tolle-marker variant="default" icon="ri-tools-line">Ran a tool</tolle-marker>

@@ -7,10 +7,9 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 import { BasicCountrySelectorExampleComponent } from '../../../docs-examples/country-selector/basic-country-selector-example/basic-country-selector-example.component';
 
 @Component({
-  selector: 'app-country-selector-overview',
-  standalone: true,
-  imports: [CommonModule, AsyncPipe, BaseEditorComponent, ComponentPreviewComponent, DocHeroComponent, BasicCountrySelectorExampleComponent],
-  templateUrl: './country-selector-overview.component.html'
+    selector: 'app-country-selector-overview',
+    imports: [CommonModule, AsyncPipe, BaseEditorComponent, ComponentPreviewComponent, DocHeroComponent, BasicCountrySelectorExampleComponent],
+    templateUrl: './country-selector-overview.component.html'
 })
 export class CountrySelectorOverviewComponent {
   private sourceCodeService = inject(SourceCodeService);

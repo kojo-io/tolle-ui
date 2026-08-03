@@ -99,22 +99,21 @@ export class ContextService {
  * @new
  */
 @Component({
-  selector: 'tolle-context',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    HoverCardComponent,
-    HoverCardTriggerComponent,
-    HoverCardContentComponent,
-    // The sub-components are declared further down this file, so they are
-    // referenced lazily rather than read at decoration time.
-    forwardRef(() => ContextTriggerComponent),
-    forwardRef(() => ContextContentComponent),
-  ],
-  providers: [ContextService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-context',
+    styles: [':host { display: block; }'],
+    imports: [
+        CommonModule,
+        HoverCardComponent,
+        HoverCardTriggerComponent,
+        HoverCardContentComponent,
+        // The sub-components are declared further down this file, so they are
+        // referenced lazily rather than read at decoration time.
+        forwardRef(() => ContextTriggerComponent),
+        forwardRef(() => ContextContentComponent),
+    ],
+    providers: [ContextService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <tolle-hover-card
       [openDelay]="openDelay"
       [closeDelay]="closeDelay"
@@ -129,7 +128,7 @@ export class ContextService {
         <tolle-context-content></tolle-context-content>
       </tolle-hover-card-content>
     </tolle-hover-card>
-  `,
+  `
 })
 export class ContextComponent implements OnInit, OnChanges, OnDestroy {
   /** Tokens consumed so far. @default 0 */
@@ -209,12 +208,11 @@ export class ContextComponent implements OnInit, OnChanges, OnDestroy {
 
 /** The always-visible part of a `tolle-context`: percentage plus usage bar. */
 @Component({
-  selector: 'tolle-context-trigger',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-context-trigger',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <span
       role="meter"
       [attr.aria-valuenow]="percent"
@@ -230,7 +228,7 @@ export class ContextComponent implements OnInit, OnChanges, OnDestroy {
       <span>{{ percent }}%</span>
       <ng-content></ng-content>
     </span>
-  `,
+  `
 })
 export class ContextTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -281,12 +279,11 @@ export class ContextTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
 /** The hover breakdown of a `tolle-context`: used, total, input, output, cost. */
 @Component({
-  selector: 'tolle-context-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-context-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <div class="flex items-baseline justify-between gap-2">
         <span class="text-sm font-medium text-popover-foreground">Context</span>
@@ -308,7 +305,7 @@ export class ContextTriggerComponent implements OnChanges, OnInit, OnDestroy {
       </dl>
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class ContextContentComponent implements OnChanges, OnInit, OnDestroy {
 

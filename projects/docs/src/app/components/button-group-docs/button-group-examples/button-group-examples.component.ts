@@ -6,15 +6,14 @@ import { BasicButtonGroupComponent } from '../../../docs-examples/button-group/b
 import { MixedButtonGroupComponent } from '../../../docs-examples/button-group/mixed-button-group.component';
 
 @Component({
-  selector: 'app-button-group-examples',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ComponentPreviewComponent,
-    BasicButtonGroupComponent,
-    MixedButtonGroupComponent
-  ],
-  template: `
+    selector: 'app-button-group-examples',
+    imports: [
+        CommonModule,
+        ComponentPreviewComponent,
+        BasicButtonGroupComponent,
+        MixedButtonGroupComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
 

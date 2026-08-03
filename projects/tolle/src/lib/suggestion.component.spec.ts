@@ -4,9 +4,8 @@ import { CommonModule } from '@angular/common';
 import { SuggestionComponent, SuggestionsComponent } from './suggestion.component';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, SuggestionsComponent, SuggestionComponent],
-  template: `
+    imports: [CommonModule, SuggestionsComponent, SuggestionComponent],
+    template: `
     <tolle-suggestions (selected)="fromRow.push($event)">
       <tolle-suggestion
         *ngFor="let prompt of prompts"
@@ -17,7 +16,7 @@ import { SuggestionComponent, SuggestionsComponent } from './suggestion.componen
         >{{ prompt }}</tolle-suggestion
       >
     </tolle-suggestions>
-  `,
+  `
 })
 class HostComponent {
   prompts = ['Summarise this', 'Explain like I am five', 'Show me the code'];

@@ -11,7 +11,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-basic-item',
-    standalone: true,
     imports: [
         ItemComponent,
         ItemMediaComponent,

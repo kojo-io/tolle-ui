@@ -25,19 +25,18 @@ const alertVariants = cva(
 type AlertVariants = VariantProps<typeof alertVariants>;
 
 @Component({
-  selector: 'tolle-alert',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  animations: [
-    trigger('fade', [
-      transition(':leave', [
-        style({ opacity: 1, transform: 'scale(1)' }),
-        animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.95)', height: 0, margin: 0, padding: 0 }))
-      ])
-    ])
-  ],
-  template: `
+    selector: 'tolle-alert',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    animations: [
+        trigger('fade', [
+            transition(':leave', [
+                style({ opacity: 1, transform: 'scale(1)' }),
+                animate('300ms ease-in-out', style({ opacity: 0, transform: 'scale(0.95)', height: 0, margin: 0, padding: 0 }))
+            ])
+        ])
+    ],
+    template: `
     <div
       *ngIf="!dismissed"
       @fade

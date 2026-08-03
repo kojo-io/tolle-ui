@@ -14,22 +14,21 @@ import { ButtonComponent } from './button.component';
 import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
 
 @Component({
-  selector: 'tolle-alert-dialog-dynamic',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    AlertDialogComponent,
-    AlertDialogContentComponent,
-    AlertDialogHeaderComponent,
-    AlertDialogTitleComponent,
-    AlertDialogDescriptionComponent,
-    AlertDialogFooterComponent,
-    AlertDialogCancelComponent,
-    AlertDialogActionComponent,
-    ButtonComponent
-  ],
-  template: `
+    selector: 'tolle-alert-dialog-dynamic',
+    styles: [':host { display: block; }'],
+    imports: [
+        CommonModule,
+        AlertDialogComponent,
+        AlertDialogContentComponent,
+        AlertDialogHeaderComponent,
+        AlertDialogTitleComponent,
+        AlertDialogDescriptionComponent,
+        AlertDialogFooterComponent,
+        AlertDialogCancelComponent,
+        AlertDialogActionComponent,
+        ButtonComponent
+    ],
+    template: `
     <tolle-alert-dialog [open]="!closing" (openChange)="onOpenChange($event)">
         <tolle-alert-dialog-content [size]="config.size || 'lg'">
           <tolle-alert-dialog-header>

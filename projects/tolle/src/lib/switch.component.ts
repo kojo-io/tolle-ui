@@ -57,18 +57,17 @@ const switchThumbVariants = cva(
 export type SwitchProps = VariantProps<typeof switchTrackVariants>;
 
 @Component({
-  selector: 'tolle-switch',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SwitchComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-switch',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SwitchComponent),
+            multi: true
+        }
+    ],
+    template: `
     <button
       type="button"
       role="switch"

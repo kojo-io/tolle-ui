@@ -12,22 +12,21 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-dropdown-menu-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    DropdownMenuComponent,
-    DropdownTriggerDirective,
-    ButtonComponent,
-    PlaygroundComponent,
-    SwitchComponent,
-    SelectComponent,
-    SelectItemComponent,
-    InputComponent,
-    LabelComponent
-  ],
-  template: `
+    selector: 'app-dropdown-menu-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        DropdownMenuComponent,
+        DropdownTriggerDirective,
+        ButtonComponent,
+        PlaygroundComponent,
+        SwitchComponent,
+        SelectComponent,
+        SelectItemComponent,
+        InputComponent,
+        LabelComponent
+    ],
+    template: `
     <section class="space-y-6">
       <h2 class="text-xl font-semibold tracking-tight text-foreground">Interactive Playground</h2>
       

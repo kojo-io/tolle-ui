@@ -9,7 +9,6 @@ import {
 
 @Component({
     selector: 'app-menubar-sizes',
-    standalone: true,
     imports: [
         MenubarComponent,
         MenubarMenuComponent,

@@ -4,7 +4,6 @@ import { CategoryBarComponent } from '../../../../../../tolle/src/lib/category-b
 
 @Component({
     selector: 'app-category-bar-with-marker',
-    standalone: true,
     imports: [CommonModule, CategoryBarComponent],
     styles: [':host { display: block; width: 100%; }'],
     templateUrl: './category-bar-with-marker.component.html'

@@ -29,18 +29,17 @@ const checkboxVariants = cva(
 export type CheckboxProps = VariantProps<typeof checkboxVariants>;
 
 @Component({
-  selector: 'tolle-checkbox',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CheckboxComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-checkbox',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CheckboxComponent),
+            multi: true
+        }
+    ],
+    template: `
     <button
       type="button"
       role="checkbox"

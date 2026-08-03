@@ -14,19 +14,18 @@ import {
 } from './item.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    ItemComponent,
-    ItemGroupComponent,
-    ItemMediaComponent,
-    ItemContentComponent,
-    ItemTitleComponent,
-    ItemDescriptionComponent,
-    ItemActionsComponent,
-    ItemHeaderComponent,
-    ItemFooterComponent
-  ],
-  template: `
+    imports: [
+        ItemComponent,
+        ItemGroupComponent,
+        ItemMediaComponent,
+        ItemContentComponent,
+        ItemTitleComponent,
+        ItemDescriptionComponent,
+        ItemActionsComponent,
+        ItemHeaderComponent,
+        ItemFooterComponent
+    ],
+    template: `
     <tolle-item-group>
       <tolle-item [variant]="variant" [size]="size">
         <tolle-item-header>Header text</tolle-item-header>

@@ -19,7 +19,6 @@ interface DemoFile {
 
 @Component({
     selector: 'app-attachment-in-message',
-    standalone: true,
     imports: [
         AttachmentComponent,
         AttachmentGroupComponent,

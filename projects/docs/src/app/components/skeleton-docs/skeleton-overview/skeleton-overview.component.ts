@@ -8,7 +8,6 @@ import { BasicSkeletonExampleComponent } from '../../../docs-examples/skeleton/b
 
 @Component({
     selector: 'app-skeleton-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicSkeletonExampleComponent],
     templateUrl: './skeleton-overview.component.html'
 })

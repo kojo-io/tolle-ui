@@ -9,7 +9,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-reasoning-streaming',
-    standalone: true,
     imports: [
         CommonModule,
         ReasoningComponent,

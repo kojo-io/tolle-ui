@@ -3,7 +3,6 @@ import { ProgressCircleComponent } from '../../../../../../tolle/src/lib/progres
 
 @Component({
     selector: 'app-progress-circle-sizes',
-    standalone: true,
     imports: [ProgressCircleComponent],
     templateUrl: './progress-circle-sizes.component.html'
 })

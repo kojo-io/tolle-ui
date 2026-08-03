@@ -12,20 +12,19 @@ import { SpinnerInButtonComponent } from '../../docs-examples/spinner/spinner-in
 
 
 @Component({
-  selector: 'app-spinner-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicSpinnerComponent,
-    SpinnerSizesComponent,
-    SpinnerInButtonComponent
-  ],
-  templateUrl: './spinner-docs.component.html',
-  styleUrl: './spinner-docs.component.css'
+    selector: 'app-spinner-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicSpinnerComponent,
+        SpinnerSizesComponent,
+        SpinnerInButtonComponent
+    ],
+    templateUrl: './spinner-docs.component.html',
+    styleUrl: './spinner-docs.component.css'
 })
 export class SpinnerDocsComponent {
   baseService = inject(BaseService);

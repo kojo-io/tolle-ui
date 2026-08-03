@@ -4,7 +4,6 @@ import { DataTableComponent, TableColumn } from '../../../../../../tolle/src/lib
 
 @Component({
     selector: 'app-data-table-sticky',
-    standalone: true,
     imports: [CommonModule, DataTableComponent],
     templateUrl: './data-table-sticky.component.html',
     styles: [`

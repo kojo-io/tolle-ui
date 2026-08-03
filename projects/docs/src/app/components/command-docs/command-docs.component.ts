@@ -12,20 +12,19 @@ import { CommandManualFilterComponent } from '../../docs-examples/command/comman
 
 
 @Component({
-  selector: 'app-command-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicCommandComponent,
-    CommandKeywordsComponent,
-    CommandManualFilterComponent
-  ],
-  templateUrl: './command-docs.component.html',
-  styleUrl: './command-docs.component.css'
+    selector: 'app-command-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicCommandComponent,
+        CommandKeywordsComponent,
+        CommandManualFilterComponent
+    ],
+    templateUrl: './command-docs.component.html',
+    styleUrl: './command-docs.component.css'
 })
 export class CommandDocsComponent {
   baseService = inject(BaseService);

@@ -87,20 +87,19 @@ export type SelectProps = VariantProps<typeof selectTriggerVariants>;
  * `ControlValueAccessor`, so it works with `ngModel` and reactive forms.
  */
 @Component({
-  selector: 'tolle-select',
-  standalone: true,
-  imports: [CommonModule, FormsModule, InputComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    SelectService,
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectComponent),
-      multi: true,
-    },
-  ],
-  styles: [':host { display: block; }', '.hidden-dropdown { display: none !important; }'],
-  template: `
+    selector: 'tolle-select',
+    imports: [CommonModule, FormsModule, InputComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        SelectService,
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SelectComponent),
+            multi: true,
+        },
+    ],
+    styles: [':host { display: block; }', '.hidden-dropdown { display: none !important; }'],
+    template: `
     <div class="relative w-full" #container>
       <button
         type="button"
@@ -147,7 +146,7 @@ export type SelectProps = VariantProps<typeof selectTriggerVariants>;
         </div>
       </div>
     </div>
-  `,
+  `
 })
 export class SelectComponent
   implements ControlValueAccessor, AfterContentInit, OnChanges, OnDestroy {

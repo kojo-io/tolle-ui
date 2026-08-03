@@ -153,13 +153,12 @@ export class PlanService {
  * @new
  */
 @Component({
-  selector: 'tolle-plan',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [PlanService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-plan',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [PlanService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" [attr.data-collapsed]="isCollapsed ? '' : null">
       <button
         type="button"
@@ -181,7 +180,7 @@ export class PlanService {
         <ng-content></ng-content>
       </div>
     </div>
-  `,
+  `
 })
 export class PlanComponent implements OnInit, OnChanges, OnDestroy {
   /** Heading shown above the steps. @default 'Plan' */
@@ -264,12 +263,11 @@ export class PlanComponent implements OnInit, OnChanges, OnDestroy {
 
 /** One numbered step of a `tolle-plan`. */
 @Component({
-  selector: 'tolle-plan-step',
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  host: { '[class]': 'computedClass', '[attr.data-status]': 'status' },
-  template: `
+    selector: 'tolle-plan-step',
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    host: { '[class]': 'computedClass', '[attr.data-status]': 'status' },
+    template: `
     <span class="tolle-plan-rail absolute bottom-0 left-3 top-6 w-px -translate-x-1/2 bg-border" aria-hidden="true"></span>
 
     <span [class]="badgeClass">
@@ -283,7 +281,7 @@ export class PlanComponent implements OnInit, OnChanges, OnDestroy {
       <p *ngIf="description" class="mt-0.5 text-xs text-muted-foreground">{{ description }}</p>
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class PlanStepComponent implements OnInit, OnChanges, OnDestroy {
   /** What this step does. @default '' */

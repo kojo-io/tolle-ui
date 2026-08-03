@@ -9,9 +9,8 @@ import {
 } from './inline-citation.component';
 
 @Component({
-  standalone: true,
-  imports: [InlineCitationComponent, InlineCitationCardComponent, InlineCitationQuoteComponent],
-  template: `
+    imports: [InlineCitationComponent, InlineCitationCardComponent, InlineCitationQuoteComponent],
+    template: `
     <p>
       The library ships a preset.<tolle-inline-citation [index]="3" placement="bottom">
         <tolle-inline-citation-card
@@ -23,7 +22,7 @@ import {
         </tolle-inline-citation-card>
       </tolle-inline-citation>
     </p>
-  `,
+  `
 })
 class InlineCitationHostComponent {}
 

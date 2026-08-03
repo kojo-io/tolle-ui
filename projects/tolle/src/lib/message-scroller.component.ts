@@ -30,20 +30,19 @@ import { MessageScrollerService, ScrollStartPosition } from './message-scroller.
  * @new
  */
 @Component({
-  selector: 'tolle-message-scroller',
-  // The host sits between a consumer-sized parent and the templated flex
-  // frame below; display:block would drop the parent's height and the
-  // frame's `flex-1 min-h-0` would have nothing to size against.
-  styles: [':host { display: flex; flex-direction: column; height: 100%; min-height: 0; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [MessageScrollerService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-message-scroller',
+    // The host sits between a consumer-sized parent and the templated flex
+    // frame below; display:block would drop the parent's height and the
+    // frame's `flex-1 min-h-0` would have nothing to size against.
+    styles: [':host { display: flex; flex-direction: column; height: 100%; min-height: 0; }'],
+    imports: [CommonModule],
+    providers: [MessageScrollerService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="cn('relative flex min-h-0 flex-1 flex-col overflow-hidden', class)">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class MessageScrollerComponent implements OnChanges, OnInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -103,18 +102,17 @@ export class MessageScrollerComponent implements OnChanges, OnInit, OnDestroy {
  * follow streamed text and hold position when history is prepended.
  */
 @Component({
-  selector: 'tolle-message-scroller-viewport',
-  // Same reasoning as tolle-message-scroller: this host is the flex item the
-  // scrollable inner div sizes against, so it must join the flex chain itself.
-  styles: [':host { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-message-scroller-viewport',
+    // Same reasoning as tolle-message-scroller: this host is the flex item the
+    // scrollable inner div sizes against, so it must join the flex chain itself.
+    styles: [':host { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div #viewport [class]="cn('min-h-0 flex-1 overflow-y-auto overscroll-contain', class)">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class MessageScrollerViewportComponent implements OnChanges, AfterViewInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -214,12 +212,11 @@ export class MessageScrollerViewportComponent implements OnChanges, AfterViewIni
 
 /** The transcript itself. Announced politely so streamed replies reach screen readers. */
 @Component({
-  selector: 'tolle-message-scroller-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-message-scroller-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       role="log"
       aria-live="polite"
@@ -228,7 +225,7 @@ export class MessageScrollerViewportComponent implements OnChanges, AfterViewIni
     >
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class MessageScrollerContentComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -279,12 +276,11 @@ export class MessageScrollerItemDirective implements OnInit, OnDestroy {
 
 /** Floating "jump to latest" control. Hidden while the reader is already at the edge. */
 @Component({
-  selector: 'tolle-message-scroller-button',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-message-scroller-button',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       *ngIf="!atBottom"
       type="button"
@@ -301,7 +297,7 @@ export class MessageScrollerItemDirective implements OnInit, OnDestroy {
       <i class="ri-arrow-down-line" aria-hidden="true"></i>
       <ng-content></ng-content>
     </button>
-  `,
+  `
 })
 export class MessageScrollerButtonComponent implements OnChanges, OnInit, OnDestroy {
 

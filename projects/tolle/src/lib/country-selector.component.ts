@@ -19,18 +19,17 @@ import { InputComponent } from './input.component';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-country-selector',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, PopoverComponent, InputComponent],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CountrySelectorComponent),
-      multi: true,
-    },
-  ],
-  template: `
+    selector: 'tolle-country-selector',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule, PopoverComponent, InputComponent],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => CountrySelectorComponent),
+            multi: true,
+        },
+    ],
+    template: `
     <div class="flex w-full flex-col gap-1.5">
       <label *ngIf="label" [for]="id" [class]="computedLabelClass">
         {{ label }}
@@ -134,7 +133,7 @@ import { cn } from './utils/cn';
         </p>
       </ng-container>
     </div>
-  `,
+  `
 })
 export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
   @Input() id = `country-selector-${Math.random().toString(36).substr(2, 9)}`;

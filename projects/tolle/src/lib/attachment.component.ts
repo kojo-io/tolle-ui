@@ -29,12 +29,11 @@ export type AttachmentProps = VariantProps<typeof attachmentVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-attachment',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-attachment',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       [class]="computedClass"
       role="button"
@@ -87,7 +86,7 @@ export type AttachmentProps = VariantProps<typeof attachmentVariants>;
 
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class AttachmentComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -199,12 +198,11 @@ export class AttachmentComponent  implements OnChanges{
 
 /** Wrapping row of attachment cards below or above a message. */
 @Component({
-  selector: 'tolle-attachment-group',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex flex-wrap items-start gap-2', class)"><ng-content></ng-content></div>`,
+    selector: 'tolle-attachment-group',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cn('flex flex-wrap items-start gap-2', class)"><ng-content></ng-content></div>`
 })
 export class AttachmentGroupComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -228,16 +226,15 @@ export class AttachmentGroupComponent  implements OnChanges{
  * kept inside the slot so the card's own trigger does not also fire.
  */
 @Component({
-  selector: 'tolle-attachment-actions',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-attachment-actions',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" (click)="onClick($event)">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class AttachmentActionsComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

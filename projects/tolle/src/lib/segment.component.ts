@@ -27,17 +27,16 @@ export type SegmentItem = {
 }
 
 @Component({
-  selector: 'tolle-segment',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SegmentComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-segment',
+    imports: [CommonModule, FormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SegmentComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div
       #container
       [class]="cn(
@@ -85,7 +84,7 @@ export type SegmentItem = {
       </button>
     </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: block;
     }

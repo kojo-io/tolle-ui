@@ -4,17 +4,16 @@ import { cn } from './utils/cn';
 import { ResizablePanelItemComponent } from './resizable-panel-item.component';
 
 @Component({
-  selector: 'tolle-resizable-panel',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-resizable-panel',
+    imports: [CommonModule],
+    template: `
     <div [class]="computedContainerClass">
       <div class="flex h-full w-full" [class.flex-col]="direction === 'vertical'" [class.flex-row]="direction === 'horizontal'">
         <ng-content></ng-content>
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     /* Fills its parent by default so consumers don't have to remember a
        manual h-full — the flex row/col wrapper below only has something to
        distribute once this and the container div actually have a height. */

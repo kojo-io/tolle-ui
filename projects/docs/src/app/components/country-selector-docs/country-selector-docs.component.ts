@@ -7,16 +7,15 @@ import { CountrySelectorInteractiveComponent } from './country-selector-interact
 import { CountrySelectorApiComponent } from './country-selector-api/country-selector-api.component';
 
 @Component({
-  selector: 'app-country-selector-docs',
-  standalone: true,
-  imports: [
-    CommonModule,
-    DocsWrapperComponent,
-    CountrySelectorOverviewComponent,
-    CountrySelectorInteractiveComponent,
-    CountrySelectorApiComponent
-  ],
-  template: `
+    selector: 'app-country-selector-docs',
+    imports: [
+        CommonModule,
+        DocsWrapperComponent,
+        CountrySelectorOverviewComponent,
+        CountrySelectorInteractiveComponent,
+        CountrySelectorApiComponent
+    ],
+    template: `
     <app-docs-wrapper [tocTemplate]="toc">
       <div content class="space-y-12">
         <app-country-selector-overview id="overview" />
@@ -47,7 +46,7 @@ import { CountrySelectorApiComponent } from './country-selector-api/country-sele
         </ul>
       </ng-template>
     </app-docs-wrapper>
-  `,
+  `
 })
 export class CountrySelectorDocsComponent {
   baseService = inject(BaseService);

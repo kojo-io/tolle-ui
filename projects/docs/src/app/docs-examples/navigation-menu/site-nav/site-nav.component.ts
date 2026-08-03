@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-site-nav',
-    standalone: true,
     imports: [
         NavigationMenuComponent,
         NavigationMenuListComponent,

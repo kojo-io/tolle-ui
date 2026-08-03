@@ -16,7 +16,6 @@ import { KbdComponent, KbdGroupComponent } from '../../../../../../tolle/src/lib
 
 @Component({
     selector: 'app-basic-command-dialog',
-    standalone: true,
     imports: [
         CommonModule,
         CommandDialogComponent,

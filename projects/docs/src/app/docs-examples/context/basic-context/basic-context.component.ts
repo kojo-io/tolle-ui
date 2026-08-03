@@ -3,7 +3,6 @@ import { ContextComponent } from '../../../../../../tolle/src/lib/context.compon
 
 @Component({
     selector: 'app-basic-context',
-    standalone: true,
     imports: [ContextComponent],
     templateUrl: './basic-context.component.html'
 })

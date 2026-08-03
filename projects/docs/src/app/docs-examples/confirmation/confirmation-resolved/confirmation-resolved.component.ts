@@ -3,7 +3,6 @@ import { ConfirmationComponent } from '../../../../../../tolle/src/lib/confirmat
 
 @Component({
     selector: 'app-confirmation-resolved',
-    standalone: true,
     imports: [ConfirmationComponent],
     templateUrl: './confirmation-resolved.component.html'
 })

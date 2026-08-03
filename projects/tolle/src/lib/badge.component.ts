@@ -29,11 +29,10 @@ const badgeVariants = cva(
 export type BadgeProps = VariantProps<typeof badgeVariants>;
 
 @Component({
-  selector: 'tolle-badge',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-badge',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    template: `
     <div [class]="computedClass">
       <ng-content select="[prefix]"></ng-content>
 
@@ -50,7 +49,7 @@ export type BadgeProps = VariantProps<typeof badgeVariants>;
         <i class="ri-close-line" aria-hidden="true"></i>
       </button>
     </div>
-  `,
+  `
 })
 export class BadgeComponent {
   /** Visual style of the badge. @default 'default' */

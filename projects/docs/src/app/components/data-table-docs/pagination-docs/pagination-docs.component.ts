@@ -8,15 +8,14 @@ import {
 } from '../../../docs-examples/data-table/pagination-example/pagination-example.component';
 
 @Component({
-  selector: 'app-pagination-docs',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    ComponentPreviewComponent,
-    PaginationExampleComponent
-  ],
-  templateUrl: './pagination-docs.component.html',
-  styleUrl: './pagination-docs.component.css'
+    selector: 'app-pagination-docs',
+    imports: [
+        AsyncPipe,
+        ComponentPreviewComponent,
+        PaginationExampleComponent
+    ],
+    templateUrl: './pagination-docs.component.html',
+    styleUrl: './pagination-docs.component.css'
 })
 export class PaginationDocsComponent implements OnInit {
   sourceService = inject(SourceCodeService);

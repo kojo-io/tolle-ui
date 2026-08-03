@@ -4,7 +4,6 @@ import { ContextComponent } from '../../../../../../tolle/src/lib/context.compon
 
 @Component({
     selector: 'app-context-levels',
-    standalone: true,
     imports: [CommonModule, ContextComponent],
     templateUrl: './context-levels.component.html'
 })

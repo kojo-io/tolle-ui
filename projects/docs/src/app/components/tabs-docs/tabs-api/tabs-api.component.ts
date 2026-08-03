@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-tabs-api',
-    standalone: true,
     imports: [PropTableComponent, CommonModule],
     template: `
     <section class="mb-16" id="api-reference">

@@ -31,7 +31,6 @@ const REPLY =
 
 @Component({
     selector: 'app-message-scroller-streaming',
-    standalone: true,
     imports: [
         MessageScrollerComponent,
         MessageScrollerViewportComponent,

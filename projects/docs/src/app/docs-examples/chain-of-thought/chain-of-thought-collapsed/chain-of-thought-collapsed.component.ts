@@ -11,7 +11,6 @@ import {
 
 @Component({
     selector: 'app-chain-of-thought-collapsed',
-    standalone: true,
     imports: [
         CommonModule,
         ChainOfThoughtComponent,

@@ -8,7 +8,6 @@ import { BasicSelectExampleComponent } from '../../../docs-examples/select/basic
 
 @Component({
     selector: 'app-select-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, ComponentPreviewComponent, DocHeroComponent, BasicSelectExampleComponent],
     templateUrl: './select-overview.component.html'
 })

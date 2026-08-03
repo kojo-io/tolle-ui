@@ -11,17 +11,16 @@ import {
 } from './table.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    TableComponent,
-    TableHeaderDirective,
-    TableBodyDirective,
-    TableRowDirective,
-    TableHeadDirective,
-    TableCellDirective,
-    TableCaptionDirective,
-  ],
-  template: `
+    imports: [
+        TableComponent,
+        TableHeaderDirective,
+        TableBodyDirective,
+        TableRowDirective,
+        TableHeadDirective,
+        TableCellDirective,
+        TableCaptionDirective,
+    ],
+    template: `
     <tolle-table>
       <caption tolleTableCaption>Recent invoices</caption>
       <thead tolleTableHeader>
@@ -37,7 +36,7 @@ import {
         </tr>
       </tbody>
     </tolle-table>
-  `,
+  `
 })
 class HostComponent {
   firstSelected = false;

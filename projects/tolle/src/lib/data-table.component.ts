@@ -20,9 +20,8 @@ export interface TableColumn {
 }
 
 @Component({
-  selector: 'tolle-data-table',
-  standalone: true,
-  styles: [`
+    selector: 'tolle-data-table',
+    styles: [`
     :host { display: block; width: 100%; height: 100%; }
     table { width: 100%; border-collapse: collapse; display: table; }
     thead { display: table-header-group; }
@@ -30,16 +29,16 @@ export interface TableColumn {
     tr { display: table-row; }
     th, td { display: table-cell; }
   `],
-  imports: [
-    CommonModule,
-    FormsModule,
-    PaginationComponent,
-    InputComponent,
-    PopoverComponent,
-    PopoverContentComponent,
-    CheckboxComponent,
-  ],
-  template: `
+    imports: [
+        CommonModule,
+        FormsModule,
+        PaginationComponent,
+        InputComponent,
+        PopoverComponent,
+        PopoverContentComponent,
+        CheckboxComponent,
+    ],
+    template: `
     <div class="h-full flex flex-col w-full">
       <div class="flex items-center justify-between py-2 flex-none">
         <div *ngIf="searchable" class="w-full max-w-sm">

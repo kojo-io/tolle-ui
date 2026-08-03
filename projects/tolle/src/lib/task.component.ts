@@ -112,13 +112,12 @@ export class TaskService {
  * @new
  */
 @Component({
-  selector: 'tolle-task',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [TaskService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="computedClass" [attr.data-status]="status"><ng-content></ng-content></div>`,
+    selector: 'tolle-task',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [TaskService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="computedClass" [attr.data-status]="status"><ng-content></ng-content></div>`
 })
 export class TaskComponent implements OnInit, OnChanges, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -170,12 +169,11 @@ export class TaskComponent implements OnInit, OnChanges, OnDestroy {
 
 /** Header row of a `tolle-task`: status icon, title, and the expand chevron. */
 @Component({
-  selector: 'tolle-task-trigger',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-task-trigger',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       type="button"
       [attr.aria-expanded]="isOpen"
@@ -191,7 +189,7 @@ export class TaskComponent implements OnInit, OnChanges, OnDestroy {
         aria-hidden="true"
       ></i>
     </button>
-  `,
+  `
 })
 export class TaskTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -259,16 +257,15 @@ export class TaskTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
 /** The body of a `tolle-task`; rendered only while the task is expanded. */
 @Component({
-  selector: 'tolle-task-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-task-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div *ngIf="isOpen" [attr.data-state]="'open'" [class]="computedClass">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class TaskContentComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -310,17 +307,16 @@ export class TaskContentComponent implements OnChanges, OnInit, OnDestroy {
 
 /** One line of work inside a `tolle-task-content`. */
 @Component({
-  selector: 'tolle-task-item',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-task-item',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <i class="ri-corner-down-right-line mt-0.5 shrink-0 text-muted-foreground" aria-hidden="true"></i>
       <span class="min-w-0 flex-1"><ng-content></ng-content></span>
     </div>
-  `,
+  `
 })
 export class TaskItemComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -344,17 +340,16 @@ export class TaskItemComponent  implements OnChanges{
 
 /** An inline file chip, for naming the file a task step touched. */
 @Component({
-  selector: 'tolle-task-item-file',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-task-item-file',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <span [class]="computedClass">
       <i [class]="icon + ' shrink-0 text-muted-foreground'" aria-hidden="true"></i>
       <ng-content></ng-content>
     </span>
-  `,
+  `
 })
 export class TaskItemFileComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

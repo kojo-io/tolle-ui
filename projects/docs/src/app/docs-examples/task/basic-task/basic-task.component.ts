@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-basic-task',
-    standalone: true,
     imports: [TaskComponent, TaskTriggerComponent, TaskContentComponent, TaskItemComponent],
     templateUrl: './basic-task.component.html'
 })

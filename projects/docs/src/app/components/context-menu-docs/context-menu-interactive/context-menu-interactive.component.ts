@@ -9,7 +9,6 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
     selector: 'app-context-menu-interactive',
-    standalone: true,
     imports: [CommonModule, FormsModule, ContextMenuTriggerDirective, PlaygroundComponent, SwitchComponent, LabelComponent],
     templateUrl: './context-menu-interactive.component.html'
 })

@@ -32,18 +32,17 @@ const TWO_SERIES: ChartSeries[] = [
 ];
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    ChartComponent,
-    ChartGridComponent,
-    ChartXAxisComponent,
-    ChartYAxisComponent,
-    ChartLineComponent,
-    ChartAreaComponent,
-    ChartBarComponent,
-  ],
-  template: `
+    imports: [
+        CommonModule,
+        ChartComponent,
+        ChartGridComponent,
+        ChartXAxisComponent,
+        ChartYAxisComponent,
+        ChartLineComponent,
+        ChartAreaComponent,
+        ChartBarComponent,
+    ],
+    template: `
     <tolle-chart
       [data]="data"
       [series]="series"
@@ -63,7 +62,7 @@ const TWO_SERIES: ChartSeries[] = [
       <svg:g *ngIf="mark === 'bar'" tolle-chart-bar seriesKey="a" [maxWidth]="100"></svg:g>
       <svg:g *ngIf="mark === 'bar'" tolle-chart-bar seriesKey="b" [maxWidth]="100"></svg:g>
     </tolle-chart>
-  `,
+  `
 })
 class HostComponent {
   @ViewChild(ChartComponent) chart!: ChartComponent;

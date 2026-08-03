@@ -74,17 +74,16 @@ export type ReasoningProps = VariantProps<typeof reasoningVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-reasoning',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [ReasoningService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-reasoning',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [ReasoningService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" [attr.data-state]="open ? 'open' : 'closed'">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
   /** Whether the trace is expanded. @default false */
@@ -161,12 +160,11 @@ export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
  * trace is streaming and the elapsed thinking time once it is done.
  */
 @Component({
-  selector: 'tolle-reasoning-trigger',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-reasoning-trigger',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       type="button"
       data-reasoning-trigger
@@ -191,7 +189,7 @@ export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
 
       <ng-content></ng-content>
     </button>
-  `,
+  `
 })
 export class ReasoningTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -269,17 +267,16 @@ export class ReasoningTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
 /** The reasoning text itself. Rendered only while the trace is expanded. */
 @Component({
-  selector: 'tolle-reasoning-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-reasoning-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div *ngIf="open" data-reasoning-content [class]="computedClass">
       <p *ngIf="text" class="whitespace-pre-wrap">{{ text }}</p>
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class ReasoningContentComponent implements OnChanges, OnInit, OnDestroy {
 

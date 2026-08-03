@@ -12,19 +12,18 @@ import {
 import { ProgressComponent } from '../../../../../tolle/src/lib/progress.component';
 
 @Component({
-  selector: 'app-progress-carousel',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CarouselComponent,
-    CarouselContentDirective,
-    CarouselContainerDirective,
-    CarouselItemDirective,
-    CarouselPreviousDirective,
-    CarouselNextDirective,
-    ProgressComponent
-  ],
-  template: `
+    selector: 'app-progress-carousel',
+    imports: [
+        CommonModule,
+        CarouselComponent,
+        CarouselContentDirective,
+        CarouselContainerDirective,
+        CarouselItemDirective,
+        CarouselPreviousDirective,
+        CarouselNextDirective,
+        ProgressComponent
+    ],
+    template: `
     <div class="space-y-6 max-w-2xl mx-auto group">
       <div class="relative">
         <tolle-carousel (api)="onApi($event)" [opts]="{ dragFree: true }" class="w-full">

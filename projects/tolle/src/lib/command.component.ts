@@ -20,12 +20,11 @@ let commandItemId = 0;
  * @new
  */
 @Component({
-  selector: 'tolle-command',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [CommandService],
-  template: `
+    selector: 'tolle-command',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [CommandService],
+    template: `
     <div
       role="combobox"
       aria-haspopup="listbox"
@@ -36,7 +35,7 @@ let commandItemId = 0;
     >
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class CommandComponent implements OnInit, OnChanges, OnDestroy {
   /**
@@ -107,11 +106,10 @@ export class CommandComponent implements OnInit, OnChanges, OnDestroy {
 
 /** Search box for a `tolle-command`. Typing here drives the filtering. */
 @Component({
-  selector: 'tolle-command-input',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-command-input',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div [class]="cn('flex items-center gap-2 border-b border-border px-3', class)">
       <i class="ri-search-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
       <input
@@ -130,7 +128,7 @@ export class CommandComponent implements OnInit, OnChanges, OnDestroy {
         (input)="onInput($event)"
       />
     </div>
-  `,
+  `
 })
 export class CommandInputComponent implements OnInit, OnDestroy {
   /** Placeholder shown when the query is empty. @default 'Type a command or search…' */
@@ -181,16 +179,15 @@ export class CommandInputComponent implements OnInit, OnDestroy {
 
 /** Scrolling container for the command items. */
 @Component({
-  selector: 'tolle-command-list',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-command-list',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div role="listbox" [attr.aria-label]="ariaLabel || null" [class]="cn('max-h-80 overflow-y-auto overflow-x-hidden p-1', class)">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class CommandListComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -216,15 +213,14 @@ export class CommandListComponent  implements OnChanges{
  * can live in the template permanently.
  */
 @Component({
-  selector: 'tolle-command-empty',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-command-empty',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div *ngIf="isEmpty" role="status" [class]="cn('py-6 text-center text-sm text-muted-foreground', class)">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class CommandEmptyComponent implements OnInit, OnDestroy {
   /** Extra Tailwind classes merged onto the empty state via `cn()` (last-wins). */
@@ -256,11 +252,10 @@ export class CommandEmptyComponent implements OnInit, OnDestroy {
  * every item in the group, so you never get a stranded header.
  */
 @Component({
-  selector: 'tolle-command-group',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-command-group',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div role="group" [attr.aria-label]="heading || null" [class]="cn('overflow-hidden p-1 text-foreground', class)">
       <div
         *ngIf="heading"
@@ -270,7 +265,7 @@ export class CommandEmptyComponent implements OnInit, OnDestroy {
       </div>
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class CommandGroupComponent implements OnInit, OnDestroy {
   /** Section heading. @default '' */
@@ -312,11 +307,10 @@ export class CommandGroupComponent implements OnInit, OnDestroy {
 
 /** A selectable row in a command menu. */
 @Component({
-  selector: 'tolle-command-item',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-command-item',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div
       *ngIf="visible"
       [id]="id"
@@ -330,7 +324,7 @@ export class CommandGroupComponent implements OnInit, OnDestroy {
     >
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class CommandItemComponent implements OnInit, OnChanges, OnDestroy {
   /** Value emitted from the menu's `selected` output when this row is chosen. */
@@ -430,12 +424,11 @@ export class CommandItemComponent implements OnInit, OnChanges, OnDestroy {
 
 /** Divider between command groups. */
 @Component({
-  selector: 'tolle-command-separator',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div role="separator" [class]="cn('-mx-1 h-px bg-border', class)"></div>`,
+    selector: 'tolle-command-separator',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div role="separator" [class]="cn('-mx-1 h-px bg-border', class)"></div>`
 })
 export class CommandSeparatorComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -456,12 +449,11 @@ export class CommandSeparatorComponent  implements OnChanges{
 
 /** Right-aligned shortcut hint inside a command item. Pairs with `tolle-kbd`. */
 @Component({
-  selector: 'tolle-command-shortcut',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<span [class]="cn('ml-auto flex items-center gap-1 text-xs tracking-widest text-muted-foreground', class)"><ng-content></ng-content></span>`,
+    selector: 'tolle-command-shortcut',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<span [class]="cn('ml-auto flex items-center gap-1 text-xs tracking-widest text-muted-foreground', class)"><ng-content></ng-content></span>`
 })
 export class CommandShortcutComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

@@ -4,14 +4,13 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
-  selector: 'app-sheet-overview',
-  standalone: true,
-  imports: [
-    CommonModule,
-    BaseEditorComponent,
-    DocHeroComponent
-  ],
-  template: `
+    selector: 'app-sheet-overview',
+    imports: [
+        CommonModule,
+        BaseEditorComponent,
+        DocHeroComponent
+    ],
+    template: `
     <app-doc-hero slug="sheet" description="Extends the Dialog component to display content that complements the main content of the screen." id="overview" />
 
     <section class="mb-14">

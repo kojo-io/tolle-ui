@@ -12,18 +12,17 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/f
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-masked-input',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MaskedInputComponent),
-      multi: true,
-    },
-  ],
-  template: `
+    selector: 'tolle-masked-input',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => MaskedInputComponent),
+            multi: true,
+        },
+    ],
+    template: `
     <div class="flex w-full flex-col gap-1.5">
       <label *ngIf="label" [for]="id" [class]="computedLabelClass">
         {{ label }}
@@ -70,7 +69,7 @@ import { cn } from './utils/cn';
         </p>
       </ng-container>
     </div>
-  `,
+  `
 })
 export class MaskedInputComponent implements ControlValueAccessor, AfterContentChecked {
   @Input() id: string = `masked-input-${Math.random().toString(36).substr(2, 9)}`;

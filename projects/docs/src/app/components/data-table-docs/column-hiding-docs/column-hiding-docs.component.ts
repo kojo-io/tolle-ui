@@ -6,15 +6,14 @@ import {ComponentPreviewComponent} from '../../../shared/component-preview/compo
 import {ColumnHidingComponent} from '../../../docs-examples/data-table/column-hiding/column-hiding.component';
 
 @Component({
-  selector: 'app-column-hiding-docs',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    ComponentPreviewComponent,
-    ColumnHidingComponent
-  ],
-  templateUrl: './column-hiding-docs.component.html',
-  styleUrl: './column-hiding-docs.component.css'
+    selector: 'app-column-hiding-docs',
+    imports: [
+        AsyncPipe,
+        ComponentPreviewComponent,
+        ColumnHidingComponent
+    ],
+    templateUrl: './column-hiding-docs.component.html',
+    styleUrl: './column-hiding-docs.component.css'
 })
 export class ColumnHidingDocsComponent implements OnInit {
   sourceService = inject(SourceCodeService);

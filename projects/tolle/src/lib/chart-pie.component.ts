@@ -95,13 +95,12 @@ export type ChartPieProps = VariantProps<typeof chartPieVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-chart-pie',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, ChartTableComponent],
-  providers: [ChartService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-chart-pie',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, ChartTableComponent],
+    providers: [ChartService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <div class="relative w-full">
         <svg
@@ -161,7 +160,7 @@ export type ChartPieProps = VariantProps<typeof chartPieVariants>;
         [caption]="ariaLabel || 'Chart data'"
       ></tolle-chart-table>
     </div>
-  `,
+  `
 })
 export class ChartPieComponent implements OnChanges {
   /** Rows to plot, one slice each. @default [] */

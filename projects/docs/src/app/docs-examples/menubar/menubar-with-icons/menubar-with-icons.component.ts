@@ -11,7 +11,6 @@ import {
 
 @Component({
     selector: 'app-menubar-with-icons',
-    standalone: true,
     imports: [
         MenubarComponent,
         MenubarMenuComponent,

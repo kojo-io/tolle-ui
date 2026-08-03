@@ -34,12 +34,11 @@ export type CheckpointProps = VariantProps<typeof checkpointPillVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-checkpoint',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-checkpoint',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" [attr.data-active]="active ? '' : null">
       <span class="h-px flex-1 bg-border" aria-hidden="true"></span>
 
@@ -59,7 +58,7 @@ export type CheckpointProps = VariantProps<typeof checkpointPillVariants>;
 
       <span class="h-px flex-1 bg-border" aria-hidden="true"></span>
     </div>
-  `,
+  `
 })
 export class CheckpointComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

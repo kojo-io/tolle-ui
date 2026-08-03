@@ -12,7 +12,6 @@ import { TolleCellDirective } from '../../../../../../tolle/src/lib/tolle-cell.d
 
 @Component({
     selector: 'app-data-table-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

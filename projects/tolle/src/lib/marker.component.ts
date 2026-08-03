@@ -27,12 +27,11 @@ export type MarkerProps = VariantProps<typeof markerVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-marker',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-marker',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div
       [class]="computedClass"
       [attr.role]="variant === 'separator' ? 'separator' : isLive ? 'status' : null"
@@ -48,7 +47,7 @@ export type MarkerProps = VariantProps<typeof markerVariants>;
 
       <span *ngIf="variant === 'separator'" aria-hidden="true" class="h-px flex-1 bg-border"></span>
     </div>
-  `,
+  `
 })
 export class MarkerComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -100,12 +99,11 @@ export class MarkerComponent  implements OnChanges{
  * they read as a single step in the transcript.
  */
 @Component({
-  selector: 'tolle-marker-group',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex w-full flex-col gap-0.5', class)" role="group"><ng-content></ng-content></div>`,
+    selector: 'tolle-marker-group',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cn('flex w-full flex-col gap-0.5', class)" role="group"><ng-content></ng-content></div>`
 })
 export class MarkerGroupComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

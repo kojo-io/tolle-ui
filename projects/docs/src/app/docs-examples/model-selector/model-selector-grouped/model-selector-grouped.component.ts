@@ -9,7 +9,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-model-selector-grouped',
-    standalone: true,
     imports: [CommonModule, ReactiveFormsModule, ModelSelectorComponent, ButtonComponent],
     templateUrl: './model-selector-grouped.component.html'
 })

@@ -3,10 +3,9 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
-  selector: 'app-card-overview',
-  standalone: true,
-  imports: [BaseEditorComponent, DocHeroComponent],
-  template: `
+    selector: 'app-card-overview',
+    imports: [BaseEditorComponent, DocHeroComponent],
+    template: `
     <app-doc-hero
       slug="card"
       description="Displays a card component with a header, content area, and footer. Cards provide a structured way to present content and actions."

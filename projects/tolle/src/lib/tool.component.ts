@@ -109,17 +109,16 @@ export type ToolProps = VariantProps<typeof toolVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-tool',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [ToolService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-tool',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [ToolService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass" [attr.data-state]="open ? 'open' : 'closed'">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class ToolComponent implements OnInit, OnChanges, OnDestroy {
   /** Lifecycle of the call, driving the header chip and border. @default 'pending' */
@@ -183,12 +182,11 @@ export class ToolComponent implements OnInit, OnChanges, OnDestroy {
 
 /** Clickable header of a `tolle-tool`: the tool's name plus its state chip. */
 @Component({
-  selector: 'tolle-tool-header',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-tool-header',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       type="button"
       data-tool-header
@@ -214,7 +212,7 @@ export class ToolComponent implements OnInit, OnChanges, OnDestroy {
 
       <ng-content></ng-content>
     </button>
-  `,
+  `
 })
 export class ToolHeaderComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -348,12 +346,11 @@ export abstract class ToolPayloadBase implements OnChanges, OnInit, OnDestroy {
 
 /** Arguments the tool was called with. Visible while the `tolle-tool` is expanded. */
 @Component({
-  selector: 'tolle-tool-input',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-tool-input',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div *ngIf="open" data-tool-input [class]="computedClass">
       <p *ngIf="label" class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         {{ label }}
@@ -370,7 +367,7 @@ export abstract class ToolPayloadBase implements OnChanges, OnInit, OnDestroy {
         </div>
       </ng-template>
     </div>
-  `,
+  `
 })
 export class ToolInputComponent extends ToolPayloadBase {
   /** Arguments passed to the tool; objects are pretty-printed as JSON. @default null */
@@ -387,12 +384,11 @@ export class ToolInputComponent extends ToolPayloadBase {
 
 /** Result the tool returned. Visible while the `tolle-tool` is expanded. */
 @Component({
-  selector: 'tolle-tool-output',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-tool-output',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div *ngIf="open" data-tool-output [class]="computedClass">
       <p *ngIf="label" class="text-xs font-medium uppercase tracking-wide text-muted-foreground">
         {{ label }}
@@ -406,7 +402,7 @@ export class ToolInputComponent extends ToolPayloadBase {
         </div>
       </ng-template>
     </div>
-  `,
+  `
 })
 export class ToolOutputComponent extends ToolPayloadBase {
   /** Result returned by the tool; objects are pretty-printed as JSON. @default null */

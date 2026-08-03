@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-reasoning-custom',
-    standalone: true,
     imports: [CommonModule, ReasoningComponent, ReasoningTriggerComponent, ReasoningContentComponent],
     templateUrl: './reasoning-custom.component.html'
 })

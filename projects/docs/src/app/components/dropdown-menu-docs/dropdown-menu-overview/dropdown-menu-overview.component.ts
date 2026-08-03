@@ -7,10 +7,9 @@ import { ComponentPreviewComponent } from '../../../shared/component-preview/com
 import { BasicDropdownComponent } from '../../../docs-examples/dropdown-menu/basic-dropdown/basic-dropdown.component';
 
 @Component({
-  selector: 'app-dropdown-menu-overview',
-  standalone: true,
-  imports: [CommonModule, AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicDropdownComponent],
-  templateUrl: './dropdown-menu-overview.component.html'
+    selector: 'app-dropdown-menu-overview',
+    imports: [CommonModule, AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicDropdownComponent],
+    templateUrl: './dropdown-menu-overview.component.html'
 })
 export class DropdownMenuOverviewComponent {
   private sourceCodeService = inject(SourceCodeService);

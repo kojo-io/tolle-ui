@@ -5,7 +5,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-basic-tooltip-example',
-    standalone: true,
     imports: [CommonModule, TooltipDirective, ButtonComponent],
     template: `
     <div class="flex flex-wrap gap-4 items-center justify-center p-8">

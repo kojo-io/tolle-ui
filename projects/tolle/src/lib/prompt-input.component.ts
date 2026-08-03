@@ -96,20 +96,19 @@ export class PromptInputService {
  * @new
  */
 @Component({
-  selector: 'tolle-prompt-input',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [
-    PromptInputService,
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => PromptInputComponent),
-      multi: true,
-    },
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-prompt-input',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [
+        PromptInputService,
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => PromptInputComponent),
+            multi: true,
+        },
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <textarea
         #textarea
@@ -128,7 +127,7 @@ export class PromptInputService {
 
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class PromptInputComponent
   implements ControlValueAccessor, OnInit, OnChanges, AfterViewInit, OnDestroy
@@ -324,16 +323,15 @@ export class PromptInputComponent
 
 /** Bottom bar of a `tolle-prompt-input`: tools on the left, submit on the right. */
 @Component({
-  selector: 'tolle-prompt-input-toolbar',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-prompt-input-toolbar',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class PromptInputToolbarComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -357,16 +355,15 @@ export class PromptInputToolbarComponent  implements OnChanges{
 
 /** Left-aligned cluster of tool buttons inside a `tolle-prompt-input-toolbar`. */
 @Component({
-  selector: 'tolle-prompt-input-tools',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-prompt-input-tools',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class PromptInputToolsComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -417,12 +414,11 @@ export type PromptInputSubmitProps = VariantProps<typeof promptInputSubmitVarian
  * composer's status is 'streaming', so one control covers both directions.
  */
 @Component({
-  selector: 'tolle-prompt-input-submit',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-prompt-input-submit',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       type="button"
       data-prompt-input-submit
@@ -435,7 +431,7 @@ export type PromptInputSubmitProps = VariantProps<typeof promptInputSubmitVarian
       <i [class]="currentIcon" aria-hidden="true"></i>
       <span *ngIf="showLabel">{{ currentLabel }}</span>
     </button>
-  `,
+  `
 })
 export class PromptInputSubmitComponent implements OnChanges, OnInit, OnDestroy {
 

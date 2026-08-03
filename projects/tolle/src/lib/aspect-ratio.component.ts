@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-aspect-ratio',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-aspect-ratio',
+    imports: [CommonModule],
+    template: `
     <div
       #container
       [class]="cn('relative w-full overflow-hidden bg-muted/20', class)"
@@ -24,7 +23,7 @@ import { cn } from './utils/cn';
       <ng-content></ng-content>
     </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: block;
       width: 100%;

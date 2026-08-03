@@ -36,8 +36,7 @@ class AlertDialogInternalService {
 
 @Component({
     selector: 'tolle-alert-dialog',
-  styles: [':host { display: block; }'],
-    standalone: true,
+    styles: [':host { display: block; }'],
     imports: [CommonModule],
     providers: [AlertDialogInternalService],
     template: `<ng-content></ng-content>`
@@ -59,8 +58,7 @@ export class AlertDialogComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-trigger',
-  styles: [':host { display: block; }'],
-    standalone: true,
+    styles: [':host { display: block; }'],
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: {
@@ -77,8 +75,7 @@ export class AlertDialogTriggerComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-portal',
-  styles: [':host { display: block; }'],
-    standalone: true,
+    styles: [':host { display: block; }'],
     imports: [CommonModule],
     template: `
     <ng-template #portalContent>
@@ -175,7 +172,6 @@ export class AlertDialogPortalComponent implements OnInit, OnDestroy {
 
 @Component({
     selector: 'tolle-alert-dialog-content',
-    standalone: true,
     imports: [CommonModule, A11yModule],
     template: `<div [class]="computedClass" [attr.data-state]="isOpen ? 'open' : 'closed'"
         role="alertdialog"
@@ -224,7 +220,6 @@ export class AlertDialogContentComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-header',
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: { '[class]': 'computedClass' }
@@ -236,7 +231,6 @@ export class AlertDialogHeaderComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-footer',
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: { '[class]': 'computedClass' }
@@ -249,7 +243,6 @@ export class AlertDialogFooterComponent {
 @Component({
     selector: 'tolle-alert-dialog-title',
     styles: [':host { display: block; }'],
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: { '[class]': 'computedClass', '[attr.id]': 'id' }
@@ -264,7 +257,6 @@ export class AlertDialogTitleComponent {
 @Component({
     selector: 'tolle-alert-dialog-description',
     styles: [':host { display: block; }'],
-    standalone: true,
     imports: [CommonModule],
     template: `<ng-content></ng-content>`,
     host: { '[class]': 'computedClass', '[attr.id]': 'id' }
@@ -278,8 +270,7 @@ export class AlertDialogDescriptionComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-action',
-  styles: [':host { display: block; }'],
-    standalone: true,
+    styles: [':host { display: block; }'],
     imports: [CommonModule],
     template: `<ng-content></ng-content>`
 })
@@ -298,8 +289,7 @@ export class AlertDialogActionComponent {
 
 @Component({
     selector: 'tolle-alert-dialog-cancel',
-  styles: [':host { display: block; }'],
-    standalone: true,
+    styles: [':host { display: block; }'],
     imports: [CommonModule],
     template: `<ng-content></ng-content>`
 })

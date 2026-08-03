@@ -11,7 +11,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-basic-prompt-input',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

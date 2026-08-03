@@ -11,21 +11,20 @@ import { TextareaComponent } from '../../../../../../tolle/src/lib/textarea.comp
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-empty-state-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    EmptyStateComponent,
-    ButtonComponent,
-    PlaygroundComponent,
-    SelectComponent,
-    SelectItemComponent,
-    InputComponent,
-    TextareaComponent,
-    LabelComponent
-  ],
-  template: `
+    selector: 'app-empty-state-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        EmptyStateComponent,
+        ButtonComponent,
+        PlaygroundComponent,
+        SelectComponent,
+        SelectItemComponent,
+        InputComponent,
+        TextareaComponent,
+        LabelComponent
+    ],
+    template: `
     <section class="space-y-6">
       <h2 class="text-xl font-semibold tracking-tight text-foreground">Interactive Playground</h2>
       

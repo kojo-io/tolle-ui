@@ -10,19 +10,18 @@ import { BasicTrackerComponent } from '../../docs-examples/tracker/basic-tracker
 import { TrackerStatusCardComponent } from '../../docs-examples/tracker/tracker-status-card/tracker-status-card.component';
 
 @Component({
-  selector: 'app-tracker-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicTrackerComponent,
-    TrackerStatusCardComponent
-  ],
-  templateUrl: './tracker-docs.component.html',
-  styleUrl: './tracker-docs.component.css'
+    selector: 'app-tracker-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicTrackerComponent,
+        TrackerStatusCardComponent
+    ],
+    templateUrl: './tracker-docs.component.html',
+    styleUrl: './tracker-docs.component.css'
 })
 export class TrackerDocsComponent {
   baseService = inject(BaseService);

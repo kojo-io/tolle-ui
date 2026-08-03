@@ -12,20 +12,19 @@ import { ContextLiveComponent } from '../../docs-examples/context/context-live/c
 
 
 @Component({
-  selector: 'app-context-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicContextComponent,
-    ContextLevelsComponent,
-    ContextLiveComponent
-  ],
-  templateUrl: './context-docs.component.html',
-  styleUrl: './context-docs.component.css'
+    selector: 'app-context-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicContextComponent,
+        ContextLevelsComponent,
+        ContextLiveComponent
+    ],
+    templateUrl: './context-docs.component.html',
+    styleUrl: './context-docs.component.css'
 })
 export class ContextDocsComponent {
   baseService = inject(BaseService);

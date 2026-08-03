@@ -50,19 +50,18 @@ export type DatePickerProps = VariantProps<typeof datePickerTriggerVariants>;
  * shape as that one, not a typeable masked field.
  */
 @Component({
-  selector: 'tolle-date-picker',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, CalendarComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DatePickerComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-date-picker',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule, CalendarComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DatePickerComponent),
+            multi: true
+        }
+    ],
+    template: `
     <button
       #trigger
       type="button"

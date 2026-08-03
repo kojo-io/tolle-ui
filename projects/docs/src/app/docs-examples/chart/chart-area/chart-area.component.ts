@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-chart-area',
-    standalone: true,
     imports: [
         ChartComponent,
         ChartGridComponent,

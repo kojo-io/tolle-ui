@@ -25,7 +25,6 @@ interface Turn {
 
 @Component({
     selector: 'app-message-scroller-start-position',
-    standalone: true,
     imports: [
         MessageScrollerComponent,
         MessageScrollerViewportComponent,

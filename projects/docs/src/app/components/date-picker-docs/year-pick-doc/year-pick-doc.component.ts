@@ -6,15 +6,14 @@ import { ComponentPreviewComponent } from '../../../shared/component-preview/com
 import { YearPickerComponent } from '../../../docs-examples/date-picker/year-picker/year-picker.component';
 
 @Component({
-  selector: 'app-year-pick-doc',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    ComponentPreviewComponent,
-    YearPickerComponent
-  ],
-  templateUrl: './year-pick-doc.component.html',
-  styleUrl: './year-pick-doc.component.css'
+    selector: 'app-year-pick-doc',
+    imports: [
+        AsyncPipe,
+        ComponentPreviewComponent,
+        YearPickerComponent
+    ],
+    templateUrl: './year-pick-doc.component.html',
+    styleUrl: './year-pick-doc.component.css'
 })
 export class YearPickDocComponent implements OnInit {
   sourceService = inject(SourceCodeService);

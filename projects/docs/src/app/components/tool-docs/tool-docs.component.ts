@@ -12,20 +12,19 @@ import { ToolLifecycleComponent } from '../../docs-examples/tool/tool-lifecycle/
 
 
 @Component({
-  selector: 'app-tool-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicToolComponent,
-    ToolStatesComponent,
-    ToolLifecycleComponent
-  ],
-  templateUrl: './tool-docs.component.html',
-  styleUrl: './tool-docs.component.css'
+    selector: 'app-tool-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicToolComponent,
+        ToolStatesComponent,
+        ToolLifecycleComponent
+    ],
+    templateUrl: './tool-docs.component.html',
+    styleUrl: './tool-docs.component.css'
 })
 export class ToolDocsComponent {
   baseService = inject(BaseService);

@@ -4,10 +4,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-slider',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-slider',
+    imports: [CommonModule],
+    template: `
     <div 
       #container
       [class]="cn('relative flex w-full touch-none select-none items-center py-4 cursor-pointer', class, disabled ? 'opacity-50 pointer-events-none' : '')"
@@ -38,14 +37,14 @@ import { cn } from './utils/cn';
       ></div>
     </div>
   `,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SliderComponent),
-      multi: true
-    }
-  ],
-  styles: [`
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SliderComponent),
+            multi: true
+        }
+    ],
+    styles: [`
     :host { display: block; width: 100%; }
   `]
 })

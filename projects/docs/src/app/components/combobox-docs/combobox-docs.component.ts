@@ -13,21 +13,20 @@ import { ComboboxSizesComponent } from '../../docs-examples/combobox/combobox-si
 
 
 @Component({
-  selector: 'app-combobox-docs',
-  standalone: true,
-  imports: [
-    RouterLink,
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicComboboxComponent,
-    ComboboxReactiveFormComponent,
-    ComboboxSizesComponent
-  ],
-  templateUrl: './combobox-docs.component.html',
-  styleUrl: './combobox-docs.component.css'
+    selector: 'app-combobox-docs',
+    imports: [
+        RouterLink,
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicComboboxComponent,
+        ComboboxReactiveFormComponent,
+        ComboboxSizesComponent
+    ],
+    templateUrl: './combobox-docs.component.html',
+    styleUrl: './combobox-docs.component.css'
 })
 export class ComboboxDocsComponent {
   baseService = inject(BaseService);

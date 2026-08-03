@@ -5,7 +5,6 @@ import { SegmentComponent, SegmentItem } from '../../../../../../tolle/src/lib/s
 
 @Component({
     selector: 'app-basic-segment-example',
-    standalone: true,
     imports: [CommonModule, FormsModule, SegmentComponent],
     template: `
     <div class="space-y-4 max-w-sm">

@@ -51,19 +51,18 @@ export type DateRangePickerProps = VariantProps<typeof dateRangePickerTriggerVar
  * deliberately the same shape as that one and as `tolle-date-time-picker`.
  */
 @Component({
-  selector: 'tolle-date-range-picker',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, RangeCalendarComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DateRangePickerComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-date-range-picker',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule, RangeCalendarComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DateRangePickerComponent),
+            multi: true
+        }
+    ],
+    template: `
     <button
       #trigger
       type="button"

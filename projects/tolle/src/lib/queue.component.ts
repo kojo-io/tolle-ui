@@ -126,13 +126,12 @@ export class QueueService {
  * @new
  */
 @Component({
-  selector: 'tolle-queue',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [QueueService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-queue',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [QueueService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <div class="flex items-center gap-2">
         <i class="ri-stack-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
@@ -146,7 +145,7 @@ export class QueueService {
         <ng-content></ng-content>
       </div>
     </div>
-  `,
+  `
 })
 export class QueueComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -208,12 +207,11 @@ export class QueueComponent implements OnChanges, OnInit, OnDestroy {
 
 /** A single entry in a `tolle-queue`. */
 @Component({
-  selector: 'tolle-queue-item',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-queue-item',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div role="listitem" [class]="computedClass" [attr.data-status]="status">
       <i [class]="iconClass" aria-hidden="true"></i>
 
@@ -230,7 +228,7 @@ export class QueueComponent implements OnChanges, OnInit, OnDestroy {
         <i class="ri-close-line" aria-hidden="true"></i>
       </button>
     </div>
-  `,
+  `
 })
 export class QueueItemComponent implements OnInit, OnChanges, OnDestroy {
   /** Text describing the queued work. @default '' */

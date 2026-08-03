@@ -12,20 +12,19 @@ import { FieldValidationComponent } from '../../docs-examples/field/field-valida
 
 
 @Component({
-  selector: 'app-field-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicFieldComponent,
-    FieldSetExampleComponent,
-    FieldValidationComponent
-  ],
-  templateUrl: './field-docs.component.html',
-  styleUrl: './field-docs.component.css'
+    selector: 'app-field-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicFieldComponent,
+        FieldSetExampleComponent,
+        FieldValidationComponent
+    ],
+    templateUrl: './field-docs.component.html',
+    styleUrl: './field-docs.component.css'
 })
 export class FieldDocsComponent {
   baseService = inject(BaseService);

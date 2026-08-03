@@ -3,7 +3,6 @@ import { CheckpointComponent } from '../../../../../../tolle/src/lib/checkpoint.
 
 @Component({
     selector: 'app-checkpoint-active',
-    standalone: true,
     imports: [CheckpointComponent],
     templateUrl: './checkpoint-active.component.html'
 })

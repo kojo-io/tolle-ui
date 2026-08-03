@@ -12,20 +12,19 @@ import { SelectableRowsComponent } from '../../docs-examples/table/selectable-ro
 
 
 @Component({
-  selector: 'app-table-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicTableComponent,
-    TableWithFooterComponent,
-    SelectableRowsComponent
-  ],
-  templateUrl: './table-docs.component.html',
-  styleUrl: './table-docs.component.css'
+    selector: 'app-table-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicTableComponent,
+        TableWithFooterComponent,
+        SelectableRowsComponent
+    ],
+    templateUrl: './table-docs.component.html',
+    styleUrl: './table-docs.component.css'
 })
 export class TableDocsComponent {
   baseService = inject(BaseService);

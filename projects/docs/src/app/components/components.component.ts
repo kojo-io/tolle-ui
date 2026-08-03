@@ -3,13 +3,12 @@ import {RouterLink} from '@angular/router';
 import { RegistryNavService } from '../shared/registry-nav.service';
 
 @Component({
-  selector: 'app-components',
-  standalone: true,
-  imports: [
-    RouterLink
-  ],
-  templateUrl: './components.component.html',
-  styleUrl: './components.component.css'
+    selector: 'app-components',
+    imports: [
+        RouterLink
+    ],
+    templateUrl: './components.component.html',
+    styleUrl: './components.component.css'
 })
 export class ComponentsComponent {
   private nav = inject(RegistryNavService);

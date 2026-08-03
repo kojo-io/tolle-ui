@@ -21,12 +21,11 @@ export interface CategoryBarSegment {
  * @new
  */
 @Component({
-  selector: 'tolle-category-bar',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-category-bar',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <div class="relative flex w-full gap-0.5">
         <div
@@ -46,7 +45,7 @@ export interface CategoryBarSegment {
 
       <p class="sr-only">{{ summary }}</p>
     </div>
-  `,
+  `
 })
 export class CategoryBarComponent implements OnChanges {
   /**

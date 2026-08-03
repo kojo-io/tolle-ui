@@ -132,12 +132,11 @@ export type TimeColumnsProps = VariantProps<typeof timeOptionVariants>;
  * once instead of in both.
  */
 @Component({
-  selector: 'tolle-time-columns',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-time-columns',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="cn('flex items-stretch gap-1', class)">
       <div
         *ngFor="let column of columns; let ci = index; trackBy: trackColumn"
@@ -179,7 +178,7 @@ export type TimeColumnsProps = VariantProps<typeof timeOptionVariants>;
         </div>
       </div>
     </div>
-  `,
+  `
 })
 export class TimeColumnsComponent implements OnInit, OnChanges {
   /** Selected hour in 24-hour form, or `null` when nothing is chosen yet. @default null */
@@ -581,19 +580,18 @@ export type TimePickerProps = VariantProps<typeof timePickerTriggerVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-time-picker',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, TimeColumnsComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TimePickerComponent),
-      multi: true,
-    },
-  ],
-  template: `
+    selector: 'tolle-time-picker',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, TimeColumnsComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TimePickerComponent),
+            multi: true,
+        },
+    ],
+    template: `
     <button
       #trigger
       type="button"
@@ -639,7 +637,7 @@ export type TimePickerProps = VariantProps<typeof timePickerTriggerVariants>;
         ></tolle-time-columns>
       </div>
     </div>
-  `,
+  `
 })
 export class TimePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
 

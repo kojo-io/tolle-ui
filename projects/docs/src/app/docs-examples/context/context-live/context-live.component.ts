@@ -5,7 +5,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-context-live',
-    standalone: true,
     imports: [CommonModule, ContextComponent, ButtonComponent],
     templateUrl: './context-live.component.html'
 })

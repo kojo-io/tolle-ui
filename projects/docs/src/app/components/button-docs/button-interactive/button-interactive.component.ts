@@ -10,20 +10,19 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-button-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    ButtonComponent,
-    PlaygroundComponent,
-    SelectComponent,
-    SelectItemComponent,
-    SwitchComponent,
-    InputComponent,
-    LabelComponent
-  ],
-  template: `
+    selector: 'app-button-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        ButtonComponent,
+        PlaygroundComponent,
+        SelectComponent,
+        SelectItemComponent,
+        SwitchComponent,
+        InputComponent,
+        LabelComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

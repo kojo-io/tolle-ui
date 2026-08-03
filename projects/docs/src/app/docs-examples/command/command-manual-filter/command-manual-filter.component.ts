@@ -15,7 +15,6 @@ interface Repo {
 
 @Component({
     selector: 'app-command-manual-filter',
-    standalone: true,
     imports: [
         CommonModule,
         CommandComponent,

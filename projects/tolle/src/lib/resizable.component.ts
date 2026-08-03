@@ -3,10 +3,9 @@ import { CommonModule } from '@angular/common';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-resizable',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-resizable',
+    imports: [CommonModule],
+    template: `
     <div
       #container
       [class]="computedContainerClass"
@@ -45,7 +44,7 @@ import { cn } from './utils/cn';
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: inline-block;
       position: relative;

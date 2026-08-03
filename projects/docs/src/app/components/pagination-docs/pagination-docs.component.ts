@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-pagination-docs',
-    standalone: true,
     imports: [
         PaginationOverviewComponent,
         PaginationInteractiveComponent,
         PaginationApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './pagination-docs.component.html',
     styleUrl: './pagination-docs.component.css'

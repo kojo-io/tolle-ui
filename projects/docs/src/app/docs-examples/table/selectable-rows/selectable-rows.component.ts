@@ -18,7 +18,6 @@ interface TeamMember {
 
 @Component({
     selector: 'app-selectable-rows',
-    standalone: true,
     imports: [
         CommonModule,
         TableComponent,

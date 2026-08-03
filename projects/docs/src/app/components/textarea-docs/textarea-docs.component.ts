@@ -9,14 +9,12 @@ import { BaseService } from '../../shared/base.service';
 
 @Component({
     selector: 'app-textarea-docs',
-    standalone: true,
     imports: [
         CommonModule,
         TextareaOverviewComponent,
         TextareaInteractiveComponent,
         TextareaApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './textarea-docs.component.html',
     styleUrls: ['./textarea-docs.component.css']

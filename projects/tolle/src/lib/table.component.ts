@@ -28,18 +28,17 @@ import { cn } from './utils/cn';
  * @new
  */
 @Component({
-  selector: 'tolle-table',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-table',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="cn('relative w-full overflow-x-auto', containerClass)">
       <table [class]="cn('w-full caption-bottom border-collapse text-sm', class)">
         <ng-content></ng-content>
       </table>
     </div>
-  `,
+  `
 })
 export class TableComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);

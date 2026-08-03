@@ -12,20 +12,19 @@ import { MarkerInTranscriptComponent } from '../../docs-examples/marker/marker-i
 
 
 @Component({
-  selector: 'app-marker-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicMarkerComponent,
-    MarkerGroupExampleComponent,
-    MarkerInTranscriptComponent
-  ],
-  templateUrl: './marker-docs.component.html',
-  styleUrl: './marker-docs.component.css'
+    selector: 'app-marker-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicMarkerComponent,
+        MarkerGroupExampleComponent,
+        MarkerInTranscriptComponent
+    ],
+    templateUrl: './marker-docs.component.html',
+    styleUrl: './marker-docs.component.css'
 })
 export class MarkerDocsComponent {
   baseService = inject(BaseService);

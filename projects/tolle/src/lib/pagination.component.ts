@@ -6,11 +6,10 @@ import {SelectComponent} from './select.component';
 import {SelectItemComponent} from './select-item.component';
 
 @Component({
-  selector: 'tolle-pagination',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
-  template: `
+    selector: 'tolle-pagination',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule, SelectComponent, SelectItemComponent],
+    template: `
     <nav role="navigation" aria-label="pagination">
     <div [class]="cn('flex items-center justify-between px-2 py-1', class)">
 
@@ -82,7 +81,7 @@ import {SelectItemComponent} from './select-item.component';
     </div>
     </nav>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PaginationComponent implements OnInit, OnChanges {
   @Input() class = '';

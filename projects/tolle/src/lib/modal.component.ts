@@ -6,10 +6,9 @@ import { ModalRef } from './modal-ref';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-modal',
-  standalone: true,
-  imports: [CommonModule, A11yModule],
-  template: `
+    selector: 'tolle-modal',
+    imports: [CommonModule, A11yModule],
+    template: `
     <div [class]="modalClasses" class="pointer-events-auto"
       [attr.data-state]="closing ? 'closed' : 'open'"
       role="dialog"
@@ -51,7 +50,7 @@ import { cn } from './utils/cn';
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: contents; /* This makes the host "disappear" so the div targets the overlay pane directly */
     }

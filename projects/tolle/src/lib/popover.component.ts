@@ -4,11 +4,10 @@ import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/d
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'tolle-popover',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-popover',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `
     <div class="inline-block" #trigger (click)="toggle()">
       <ng-content select="[trigger]"></ng-content>
     </div>
@@ -21,7 +20,7 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChil
     >
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class PopoverComponent implements OnDestroy {
   @Input() placement: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end' = 'bottom';

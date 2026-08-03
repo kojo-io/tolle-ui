@@ -7,16 +7,15 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 import { BaseService } from '../../shared/base.service';
 
 @Component({
-  selector: 'app-carousel-docs',
-  standalone: true,
-  imports: [
-    CommonModule,
-    CarouselOverviewComponent,
-    CarouselExamplesComponent,
-    CarouselApiComponent,
-    DocsWrapperComponent
-  ],
-  templateUrl: './carousel-docs.component.html'
+    selector: 'app-carousel-docs',
+    imports: [
+        CommonModule,
+        CarouselOverviewComponent,
+        CarouselExamplesComponent,
+        CarouselApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './carousel-docs.component.html'
 })
 export class CarouselDocsComponent {
   baseService = inject(BaseService);

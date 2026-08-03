@@ -49,19 +49,18 @@ export type DateTimePickerProps = VariantProps<typeof dateTimePickerTriggerVaria
  * @new
  */
 @Component({
-  selector: 'tolle-date-time-picker',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, CalendarComponent, TimeColumnsComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DateTimePickerComponent),
-      multi: true,
-    },
-  ],
-  template: `
+    selector: 'tolle-date-time-picker',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule, CalendarComponent, TimeColumnsComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DateTimePickerComponent),
+            multi: true,
+        },
+    ],
+    template: `
     <button
       #trigger
       type="button"
@@ -138,7 +137,7 @@ export type DateTimePickerProps = VariantProps<typeof dateTimePickerTriggerVaria
         </div>
       </div>
     </div>
-  `,
+  `
 })
 export class DateTimePickerComponent implements ControlValueAccessor, OnChanges, OnDestroy {
   /** Text shown on the trigger when nothing is selected. @default 'Select date and time' */

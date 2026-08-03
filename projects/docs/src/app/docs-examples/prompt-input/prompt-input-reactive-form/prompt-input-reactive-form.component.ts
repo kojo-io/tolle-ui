@@ -12,7 +12,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-prompt-input-reactive-form',
-    standalone: true,
     imports: [
         CommonModule,
         ReactiveFormsModule,

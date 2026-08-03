@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-radio-group-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './radio-group-api.component.html'
 })

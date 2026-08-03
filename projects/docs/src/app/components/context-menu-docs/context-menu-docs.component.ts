@@ -9,14 +9,12 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-context-menu-docs',
-    standalone: true,
     imports: [
         CommonModule,
         ContextMenuOverviewComponent,
         ContextMenuInteractiveComponent,
         ContextMenuApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './context-menu-docs.component.html'
 })

@@ -4,10 +4,9 @@ import { ResizablePanelComponent } from './resizable-panel.component';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-resizable-panel-item',
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-resizable-panel-item',
+    imports: [CommonModule],
+    template: `
     <div [class]="computedContainerClass">
       <ng-content></ng-content>
     </div>
@@ -22,7 +21,7 @@ import { cn } from './utils/cn';
       </div>
     </div>
   `,
-  styles: [`
+    styles: [`
     :host {
       display: block;
       position: relative;

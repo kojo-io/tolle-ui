@@ -42,11 +42,10 @@ export type InputGroupProps = VariantProps<typeof inputGroupVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-input-group',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
+    selector: 'tolle-input-group',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    template: `<div [class]="computedClass"><ng-content></ng-content></div>`
 })
 export class InputGroupComponent {
   /** Height and text size of the group; match it to the input inside. @default 'default' */
@@ -85,11 +84,10 @@ export type InputGroupAddonProps = VariantProps<typeof inputGroupAddonVariants>;
  * Use `block-start` / `block-end` together with the group's `stacked` input.
  */
 @Component({
-  selector: 'tolle-input-group-addon',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
+    selector: 'tolle-input-group-addon',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    template: `<div [class]="computedClass"><ng-content></ng-content></div>`
 })
 export class InputGroupAddonComponent {
   /** Where the addon sits relative to the input. @default 'inline-start' */
@@ -130,11 +128,10 @@ export type InputGroupButtonProps = VariantProps<typeof inputGroupButtonVariants
 
 /** A compact button sized to sit inside an input group addon. */
 @Component({
-  selector: 'tolle-input-group-button',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
+    selector: 'tolle-input-group-button',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    template: `
     <button
       [type]="type"
       [disabled]="disabled"
@@ -144,7 +141,7 @@ export type InputGroupButtonProps = VariantProps<typeof inputGroupButtonVariants
     >
       <ng-content></ng-content>
     </button>
-  `,
+  `
 })
 export class InputGroupButtonComponent {
   /** Visual style of the button. @default 'ghost' */
@@ -170,11 +167,10 @@ export class InputGroupButtonComponent {
 
 /** Plain text inside an addon — a unit, prefix, or character counter. */
 @Component({
-  selector: 'tolle-input-group-text',
-  styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `<span [class]="cn('select-none whitespace-nowrap text-sm text-muted-foreground', class)"><ng-content></ng-content></span>`,
+    selector: 'tolle-input-group-text',
+    styles: [':host { display: inline-flex; }'],
+    imports: [CommonModule],
+    template: `<span [class]="cn('select-none whitespace-nowrap text-sm text-muted-foreground', class)"><ng-content></ng-content></span>`
 })
 export class InputGroupTextComponent {
   /** Extra Tailwind classes merged onto the text via `cn()` (last-wins). */
@@ -187,18 +183,17 @@ export class InputGroupTextComponent {
  * unfocusable-looking — the surrounding group owns the border and focus ring.
  */
 @Component({
-  selector: 'tolle-input-group-input',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputGroupInputComponent),
-      multi: true,
-    },
-  ],
-  template: `
+    selector: 'tolle-input-group-input',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputGroupInputComponent),
+            multi: true,
+        },
+    ],
+    template: `
     <input
       [id]="id"
       [type]="type"
@@ -211,7 +206,7 @@ export class InputGroupTextComponent {
       (input)="onInputChange($event)"
       (blur)="onTouched()"
     />
-  `,
+  `
 })
 export class InputGroupInputComponent implements ControlValueAccessor {
   /** Id applied to the underlying `<input>`. */
@@ -277,18 +272,17 @@ export class InputGroupInputComponent implements ControlValueAccessor {
 
 /** The textarea equivalent of `tolle-input-group-input`. */
 @Component({
-  selector: 'tolle-input-group-textarea',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputGroupTextareaComponent),
-      multi: true,
-    },
-  ],
-  template: `
+    selector: 'tolle-input-group-textarea',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => InputGroupTextareaComponent),
+            multi: true,
+        },
+    ],
+    template: `
     <textarea
       [id]="id"
       [rows]="rows"
@@ -301,7 +295,7 @@ export class InputGroupInputComponent implements ControlValueAccessor {
       (input)="onInputChange($event)"
       (blur)="onTouched()"
     ></textarea>
-  `,
+  `
 })
 export class InputGroupTextareaComponent implements ControlValueAccessor {
   /** Id applied to the underlying `<textarea>`. */

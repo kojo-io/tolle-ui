@@ -10,19 +10,18 @@ import { BasicCategoryBarComponent } from '../../docs-examples/category-bar/basi
 import { CategoryBarWithMarkerComponent } from '../../docs-examples/category-bar/category-bar-with-marker/category-bar-with-marker.component';
 
 @Component({
-  selector: 'app-category-bar-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicCategoryBarComponent,
-    CategoryBarWithMarkerComponent
-  ],
-  templateUrl: './category-bar-docs.component.html',
-  styleUrl: './category-bar-docs.component.css'
+    selector: 'app-category-bar-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicCategoryBarComponent,
+        CategoryBarWithMarkerComponent
+    ],
+    templateUrl: './category-bar-docs.component.html',
+    styleUrl: './category-bar-docs.component.css'
 })
 export class CategoryBarDocsComponent {
   baseService = inject(BaseService);

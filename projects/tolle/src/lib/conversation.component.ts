@@ -77,13 +77,12 @@ export type ConversationProps = VariantProps<typeof conversationVariants>;
  * @new
  */
 @Component({
-  selector: 'tolle-conversation',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  providers: [ConversationService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-conversation',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    providers: [ConversationService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <div
         #viewport
@@ -100,7 +99,7 @@ export type ConversationProps = VariantProps<typeof conversationVariants>;
 
       <ng-content select="tolle-conversation-scroll-button"></ng-content>
     </div>
-  `,
+  `
 })
 export class ConversationComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -212,16 +211,15 @@ export class ConversationComponent implements OnInit, OnChanges, AfterViewInit, 
 
 /** Vertical stack of messages inside a `tolle-conversation`. */
 @Component({
-  selector: 'tolle-conversation-content',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-conversation-content',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div [class]="computedClass">
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class ConversationContentComponent  implements OnChanges{
   private readonly cdr = inject(ChangeDetectorRef);
@@ -248,12 +246,11 @@ export class ConversationContentComponent  implements OnChanges{
  * nothing once the transcript reports content, so it can stay in the template.
  */
 @Component({
-  selector: 'tolle-conversation-empty-state',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-conversation-empty-state',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <div *ngIf="visible" data-conversation-empty [class]="computedClass">
       <div
         *ngIf="icon"
@@ -267,7 +264,7 @@ export class ConversationContentComponent  implements OnChanges{
 
       <ng-content></ng-content>
     </div>
-  `,
+  `
 })
 export class ConversationEmptyStateComponent implements OnChanges, OnInit, OnDestroy {
 
@@ -345,12 +342,11 @@ export type ConversationScrollButtonProps = VariantProps<typeof conversationScro
  * scrolled away from the newest message, and scrolls it back on click.
  */
 @Component({
-  selector: 'tolle-conversation-scroll-button',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
+    selector: 'tolle-conversation-scroll-button',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `
     <button
       *ngIf="visible"
       type="button"
@@ -362,7 +358,7 @@ export type ConversationScrollButtonProps = VariantProps<typeof conversationScro
       <i class="ri-arrow-down-line" aria-hidden="true"></i>
       <span *ngIf="size !== 'icon'">{{ label }}</span>
     </button>
-  `,
+  `
 })
 export class ConversationScrollButtonComponent implements OnChanges, OnInit, OnDestroy {
 

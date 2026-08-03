@@ -12,7 +12,6 @@ import { DateRange } from '../../../../../../tolle/src/lib/types/date-range';
 
 @Component({
     selector: 'app-date-range-picker-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

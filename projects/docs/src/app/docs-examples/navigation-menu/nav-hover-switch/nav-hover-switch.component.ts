@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-nav-hover-switch',
-    standalone: true,
     imports: [
         NavigationMenuComponent,
         NavigationMenuListComponent,

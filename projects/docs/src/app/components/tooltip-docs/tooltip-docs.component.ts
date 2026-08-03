@@ -9,7 +9,6 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-tooltip-docs',
-    standalone: true,
     imports: [
         CommonModule,
         TooltipOverviewComponent,

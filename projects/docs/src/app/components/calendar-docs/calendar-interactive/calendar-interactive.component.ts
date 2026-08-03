@@ -10,19 +10,18 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-calendar-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CalendarComponent,
-    PlaygroundComponent,
-    SelectComponent,
-    SelectItemComponent,
-    SwitchComponent,
-    LabelComponent
-  ],
-  template: `
+    selector: 'app-calendar-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CalendarComponent,
+        PlaygroundComponent,
+        SelectComponent,
+        SelectItemComponent,
+        SwitchComponent,
+        LabelComponent
+    ],
+    template: `
     <section class="mb-16" id="playground">
       <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">

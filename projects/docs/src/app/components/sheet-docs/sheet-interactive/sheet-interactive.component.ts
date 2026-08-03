@@ -19,27 +19,26 @@ import { SelectComponent } from '../../../../../../tolle/src/lib/select.componen
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 
 @Component({
-  selector: 'app-sheet-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    SheetComponent,
-    SheetTriggerComponent,
-    SheetContentComponent,
-    SheetHeaderComponent,
-    SheetTitleComponent,
-    SheetDescriptionComponent,
-    SheetFooterComponent,
-    ButtonComponent,
-    InputComponent,
-    LabelComponent,
-    SwitchComponent,
-    SelectComponent,
-    SelectItemComponent,
-    BaseEditorComponent
-  ],
-  template: `
+    selector: 'app-sheet-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        SheetComponent,
+        SheetTriggerComponent,
+        SheetContentComponent,
+        SheetHeaderComponent,
+        SheetTitleComponent,
+        SheetDescriptionComponent,
+        SheetFooterComponent,
+        ButtonComponent,
+        InputComponent,
+        LabelComponent,
+        SwitchComponent,
+        SelectComponent,
+        SelectItemComponent,
+        BaseEditorComponent
+    ],
+    template: `
     <section class="mb-16 scroll-mt-20" id="playground">
       <h2 class="text-3xl font-bold tracking-tight mb-6 text-foreground">Interactive Playground</h2>
       

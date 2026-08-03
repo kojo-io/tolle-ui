@@ -9,7 +9,6 @@ import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-progress-docs',
-    standalone: true,
     imports: [
         CommonModule,
         ProgressOverviewComponent,

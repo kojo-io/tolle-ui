@@ -5,18 +5,17 @@ import { cn } from './utils/cn';
 import { BadgeComponent } from './badge.component';
 
 @Component({
-  selector: 'tolle-tag-input',
-  styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, BadgeComponent],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TagInputComponent),
-      multi: true
-    }
-  ],
-  template: `
+    selector: 'tolle-tag-input',
+    styles: [':host { display: block; }'],
+    imports: [CommonModule, FormsModule, BadgeComponent],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TagInputComponent),
+            multi: true
+        }
+    ],
+    template: `
     <div class="flex flex-col gap-1.5 w-full">
       <label
         *ngIf="label"
@@ -68,7 +67,7 @@ import { BadgeComponent } from './badge.component';
         </p>
       </ng-container>
     </div>
-  `,
+  `
 })
 export class TagInputComponent implements ControlValueAccessor {
   @ViewChild('tagInput') tagInputElement!: ElementRef<HTMLInputElement>;

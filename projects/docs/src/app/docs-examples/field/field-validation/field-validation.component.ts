@@ -14,7 +14,6 @@ import {
 
 @Component({
     selector: 'app-field-validation',
-    standalone: true,
     imports: [
         ReactiveFormsModule,
         FieldComponent,
