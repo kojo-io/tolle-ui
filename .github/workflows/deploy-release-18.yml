@@ -3,8 +3,9 @@ name: Deploy Tolle UI & Docs (v18)
 on:
   push:
     branches:
+      # `master` is the Angular 21 line and deploys via deploy-release-21.yml.
+      # This workflow serves only the frozen Angular 18 line.
       - release-18
-      - master
 
 jobs:
   deploy:
