@@ -43,14 +43,20 @@ pnpm add @tolle_/tolle-ui
 
 ### 2. Install Peer Dependencies
 
+**npm 7+ installs peer dependencies automatically**, so `npm install @tolle_/tolle-ui`
+is usually all you need. To install them explicitly:
+
 ```bash
-npm install @angular/core@^21.0.0 @angular/common@^21.0.0 @angular/cdk@^21.0.0 @floating-ui/dom@^1.7.4 class-variance-authority@^0.7.1 tailwind-merge@^3.4.0 clsx@^2.1.1 date-fns@^4.1.0
+npm install @angular/cdk@^21.0.0 @floating-ui/dom@^1.7.4 class-variance-authority@^0.7.1 tailwind-merge@^3.4.0 clsx@^2.1.1 date-fns@^4.1.0 embla-carousel@^8.5.2 libphonenumber-js@^1.12.36 tailwindcss-animate@^1.0.7
 ```
 
-> 💡 If you already have Angular 21 installed, you only need to install the **non-Angular** dependencies.
+`@angular/core`, `common`, `forms`, `router`, `platform-browser`, `animations`
+and `rxjs` are also peers, but any Angular app already has them.
 
-> ℹ️ `@angular/cdk` is required — the overlay-based components (modal, sheet,
-> alert dialog) build on it.
+> ℹ️ `@angular/cdk` backs the overlay components (modal, sheet, alert dialog),
+> and `libphonenumber-js` backs `phone-number-input`. Both are required even if
+> you don't use those components: the library ships a single flat bundle, so
+> every import must resolve at build time.
 
 ---
 
