@@ -711,9 +711,7 @@ export class ChartGridComponent extends ChartChild {
         [attr.y]="labelY"
         text-anchor="middle"
         dominant-baseline="hanging"
-        [class]="labelClass">
-        {{ tick.label }}
-      </svg:text>
+        [class]="labelClass">{{ tick.label }}</svg:text>
     }
   `,
 })
@@ -777,9 +775,7 @@ export class ChartXAxisComponent extends ChartChild {
         [attr.y]="tick.y"
         text-anchor="end"
         dominant-baseline="middle"
-        [class]="labelClass">
-        {{ tick.label }}
-      </svg:text>
+        [class]="labelClass">{{ tick.label }}</svg:text>
     }
   `,
 })
