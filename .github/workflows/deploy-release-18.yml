@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.AWS_USER }}
           key: ${{ secrets.AWS_SSH_KEY }}
           # Consolidated app (landing + docs + /registry) now serves the apex domain.
-          # tolle-ui.com serves /var/www/tolle-ui; the old /tolle-ui-docs path held Storybook.
+          # tolle-ui.com serves /var/www/tolle-ui; the old /tolle-ui-docs path held Storybook which we don't use again.
           source: dist/docs/browser/*
           target: /var/www/tolle-ui
           strip_components: 3
