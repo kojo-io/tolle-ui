@@ -1,0 +1,123 @@
+name: Flutter (tolle_ui)
+
+# The Flutter package is a second implementation of one design system, not a
+# separate product. This workflow enforces both halves of that: the package has
+# to build and pass its own tests, and it has to stay level with the Angular
+# API contract the registry emits.
+
+on:
+  push:
+    branches: [master, 'feat/**', 'release-**']
+    paths:
+      - 'flutter/**'
+      - 'projects/tolle/src/lib/utils/color.ts'
+      - 'projects/registry/**'
+      - 'tools/**'
+      - '.github/workflows/flutter.yml'
+  pull_request:
+    paths:
+      - 'flutter/**'
+      - 'projects/tolle/src/lib/utils/color.ts'
+      - 'projects/registry/**'
+      - 'tools/**'
+      - '.github/workflows/flutter.yml'
+
+jobs:
+  package:
+    name: Analyze & test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter/tolle_ui
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+
+      - name: Test
+        run: flutter test
+
+      - name: Build the example
+        run: |
+          cd example
+          flutter pub get
+          flutter build web --release
+
+  parity:
+    name: API parity with Angular
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # The contract is generated from the Angular source rather than read from
+      # a committed copy, so a component whose inputs changed this commit is
+      # measured against its new signature, not its old one.
+      - name: Generate the parity contract
+        run: npm run generate:registry
+
+      # Strict mode fails only when a component that exists in Dart has fallen
+      # behind its contract. Components not yet started are the backlog, not a
+      # failure — see tools/check-flutter-parity.ts.
+      - name: Check parity
+        run: npm run check:flutter-parity -- --strict
+
+  color-parity:
+    name: Colour maths parity
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - run: npm ci
+
+      # Regenerating from the live TypeScript and failing on a diff is the point:
+      # if the Angular colour maths changes, the Dart port must be updated in the
+      # same commit, or the two libraries render different colours from one config.
+      - name: Regenerate the colour reference from the Angular source
+        run: npm run generate:flutter-color-reference
+
+      - name: Fail if the committed fixture is stale
+        run: |
+          if ! git diff --quiet -- flutter/tolle_ui/test/fixtures/color_reference.json; then
+            echo "::error::The Angular colour maths changed but the Dart fixture was not regenerated."
+            echo "Run: npm run generate:flutter-color-reference"
+            git diff -- flutter/tolle_ui/test/fixtures/color_reference.json
+            exit 1
+          fi
+
+      - name: Assert the Dart port still matches
+        run: |
+          cd flutter/tolle_ui
+          flutter pub get
+          flutter test test/color_math_test.dart

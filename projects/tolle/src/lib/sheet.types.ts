@@ -27,7 +27,11 @@ export interface SheetConfig<T = any> {
     /** Whether the sheet content has rounded corners on its inner side. Defaults to false */
     rounded?: boolean;
 
-    /** Data to pass to a Component content */
+    /**
+     * Data for a Component content. Keys that match the component's `@Input()`s
+     * are bound to them; every key is also readable from the injected
+     * `SheetRef` (`inject(SheetRef).config.data`).
+     */
     data?: { [key: string]: any };
 
     /** Context to pass to a TemplateRef content */

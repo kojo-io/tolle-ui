@@ -1,0 +1,33 @@
+name: tolle_ui
+description: Config-first UI components for Flutter — the Flutter line of Tolle UI.
+version: 0.1.0-dev
+repository: https://github.com/kojo-io/tolle-ui
+issue_tracker: https://github.com/kojo-io/tolle-ui/issues
+
+environment:
+  sdk: ^3.9.0
+  flutter: '>=3.27.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+# No runtime dependencies beyond the SDK, and that is deliberate. A UI package
+# that pulls in a platform-channel plugin (shared_preferences and friends)
+# forces platform setup on every consumer, including web and desktop, for
+# behaviour many apps never use. Persistence is an injectable interface
+# instead — see TolleThemeStore.
+
+flutter:
+  fonts:
+    # The same icon set the Angular library uses. Flutter's --tree-shake-icons
+    # strips unreferenced glyphs at build time, so shipping all 3229 costs a
+    # consuming app nothing.
+    - family: RemixIcon
+      fonts:
+        - asset: assets/fonts/RemixIcon.ttf

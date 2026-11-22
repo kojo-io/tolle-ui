@@ -17,6 +17,9 @@ import { cn } from './utils/cn';
 @Component({
   selector: 'tolle-phone-number-input',
   imports: [FormsModule, CountrySelectorComponent, MaskedInputComponent],
+  // A static id="…" would otherwise be copied onto the host too, and an
+  // outside `<label for>` would hit the host instead of the <input>.
+  host: { '[attr.id]': 'null' },
   template: `
     <div class="flex w-full flex-col gap-1.5">
       @if (label) {
@@ -87,10 +90,15 @@ import { cn } from './utils/cn';
 export class PhoneNumberInputComponent implements ControlValueAccessor {
   private cdr = inject(ChangeDetectorRef);
 
+  /** Id of the number `<input>`; a `<label for>` elsewhere can target it. @default auto-generated */
   @Input() id = `phone-input-${Math.random().toString(36).substr(2, 9)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
   @Input() label = '';
+  /** Help text shown below the control while it has no error. @default '' */
   @Input() hint = '';
+  /** Error text shown below the control while `error` is true. @default '' */
   @Input() errorMessage = '';
+  /** Marks the control invalid: destructive border, `aria-invalid`, and shows `errorMessage`. @default false */
   @Input() error = false;
   @Input() hideHintOnFocus = true;
   @Input() placeholder = 'Phone number';

@@ -15,6 +15,12 @@ import { computePosition, flip, shift, offset, size, autoUpdate } from '@floatin
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
+import {
   CommandComponent,
   CommandInputComponent,
   CommandListComponent,
@@ -71,7 +77,11 @@ export type ComboboxOption = {
     CommandListComponent,
     CommandEmptyComponent,
     CommandItemComponent,
+    FormControlLabelComponent,
+    FormControlMessageComponent,
   ],
+  // The id belongs to the trigger button so `<label for>` reaches it.
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -80,14 +90,20 @@ export type ComboboxOption = {
     },
   ],
   template: `
+    @if (label) {
+      <tolle-form-control-label [for]="id" [disabled]="disabled">{{ label }}</tolle-form-control-label>
+    }
     <button
       #trigger
       type="button"
+      [id]="id"
       role="combobox"
       aria-haspopup="listbox"
       [attr.aria-expanded]="isOpen"
       [attr.aria-controls]="isOpen ? panelId : null"
-      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-label]="label ? null : ariaLabel || null"
+      [attr.aria-invalid]="invalid || null"
+      [attr.aria-describedby]="describedBy(id, hint, errorMessage, invalid, disabled)"
       [attr.data-state]="isOpen ? 'open' : 'closed'"
       [disabled]="disabled"
       [class]="computedTriggerClass"
@@ -129,6 +145,9 @@ export type ComboboxOption = {
         </div>
       </div>
     }
+    @if (hasMessage(hint, errorMessage, invalid, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="invalid" />
+    }
   `,
 })
 export class ComboboxComponent implements ControlValueAccessor, OnDestroy {
@@ -156,6 +175,17 @@ export class ComboboxComponent implements ControlValueAccessor, OnDestroy {
   @Input() ariaLabel = '';
   /** Extra Tailwind classes merged onto the trigger via `cn()` (last-wins). */
   @Input() class = '';
+  /** Id of the trigger button; a `<label for>` elsewhere can target it. @default auto-generated */
+  @Input() id = `tolle-combobox-${Math.random().toString(36).slice(2, 11)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
+  @Input() label = '';
+  /** Help text shown below the control while it is not invalid. @default '' */
+  @Input() hint = '';
+  /** Error text shown below the control while `invalid` is true. @default '' */
+  @Input() errorMessage = '';
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
 
   /** Emitted with the chosen value whenever the selection changes. */
   @Output() valueChange = new EventEmitter<any>();

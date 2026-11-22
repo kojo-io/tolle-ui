@@ -20,6 +20,12 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { format, isValid, startOfDay } from 'date-fns';
 import { cn } from './utils/cn';
 import { CalendarComponent, CalendarMode } from './calendar.component';
+import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
 
 /**
  * The trigger button — same shape as `tolle-date-time-picker`'s, so the two
@@ -66,7 +72,9 @@ export type DatePickerProps = VariantProps<typeof datePickerTriggerVariants>;
 @Component({
   selector: 'tolle-date-picker',
   styles: [':host { display: block; }'],
-  imports: [FormsModule, CalendarComponent],
+  imports: [FormsModule, CalendarComponent, FormControlLabelComponent, FormControlMessageComponent],
+  // The id belongs to the trigger button so `<label for>` reaches it.
+  host: { '[attr.id]': 'null' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -76,12 +84,18 @@ export type DatePickerProps = VariantProps<typeof datePickerTriggerVariants>;
     },
   ],
   template: `
+    @if (label) {
+      <tolle-form-control-label [for]="id" [disabled]="disabled">{{ label }}</tolle-form-control-label>
+    }
     <button
       #trigger
       type="button"
+      [id]="id"
       aria-haspopup="dialog"
       [attr.aria-expanded]="isOpen"
-      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-label]="label ? null : ariaLabel || null"
+      [attr.aria-invalid]="invalid || null"
+      [attr.aria-describedby]="describedBy(id, hint, errorMessage, invalid, disabled)"
       [attr.data-state]="isOpen ? 'open' : 'closed'"
       [disabled]="disabled"
       [class]="computedTriggerClass"
@@ -138,6 +152,9 @@ export type DatePickerProps = VariantProps<typeof datePickerTriggerVariants>;
         </div>
       </div>
     }
+    @if (hasMessage(hint, errorMessage, invalid, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="invalid" />
+    }
   `,
 })
 export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
@@ -180,6 +197,17 @@ export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnD
   @Input() invalid = false;
   /** Accessible name when there is no associated visible label. @default '' */
   @Input() ariaLabel = '';
+  /** Id of the trigger button; a `<label for>` elsewhere can target it. @default auto-generated */
+  @Input() id = `tolle-date-picker-${Math.random().toString(36).slice(2, 11)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
+  @Input() label = '';
+  /** Help text shown below the control while it is not invalid. @default '' */
+  @Input() hint = '';
+  /** Error text shown below the control while `invalid` is true. @default '' */
+  @Input() errorMessage = '';
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
 
   /** Emitted with the chosen date, or `null` when the value is cleared. */
   @Output() valueChange = new EventEmitter<Date | null>();

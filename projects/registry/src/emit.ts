@@ -11,8 +11,10 @@
  */
 import * as fs from 'fs';
 import * as path from 'path';
-import { RegistryItem, ComponentClassMeta } from './types';
+import { RegistryItem } from './types';
 import { fileKey, resolveTransitive, FileNode } from './dep-graph';
+import { LibInfo, renderPage, renderPartStub, renderLlms, renderLlmsFull, bindingName, classifyVariants } from './agent';
+import type { AgentModel } from './enrich';
 
 const PKG = '@tolle_/tolle-ui';
 
@@ -32,7 +34,8 @@ export function emitAll(
   graph: Map<string, FileNode>,
   libDir: string,
   outDir: string,
-  libVersion: string
+  lib: LibInfo,
+  agent: AgentModel
 ) {
   const itemKeys = new Map(items.map((i) => [fileKey(i.file), i.name]));
   const payloads = items.map((i) => buildPayload(i, graph, itemKeys, libDir));
@@ -41,11 +44,37 @@ export function emitAll(
   writeRegistryIndex(items, payloads, outDir);
   for (const p of payloads) write(path.join(outDir, 'r', `${p.name}.json`), json(p));
   writeDocsContent(items, outDir);
-  write(path.join(outDir, 'llms.txt'), buildLlms(items));
-  write(path.join(outDir, 'llms-full.txt'), buildLlmsFull(items));
-  writeManifest(items, payloads, outDir, libVersion);
+  writeAgentDocs(items, agent, lib, outDir);
+  writeManifest(items, payloads, outDir, lib, agent);
 
   return { payloads };
+}
+
+/* ------------------------------ agent docs -------------------------------- */
+
+/**
+ * docs/<page>.md per component page (+ a stub per part), and llms.txt /
+ * llms-full.txt. Links in `llms.txt` are relative to the registry folder, which
+ * is how the npm package and `/registry/` on the site lay it out; `site/`
+ * holds a copy for the site root, where the links need the `/registry/` prefix.
+ */
+function writeAgentDocs(items: RegistryItem[], agent: AgentModel, lib: LibInfo, outDir: string) {
+  const byName = new Map(items.map((i) => [i.name, i]));
+  for (const page of agent.pages) {
+    write(path.join(outDir, 'docs', `${page.name}.md`), renderPage(page, lib));
+    for (const part of page.items.slice(1)) {
+      write(path.join(outDir, 'docs', `${part.name}.md`), renderPartStub(byName.get(part.name)!, page));
+    }
+  }
+  write(path.join(outDir, 'llms.txt'), renderLlms(agent.pages, lib, ''));
+  write(path.join(outDir, 'llms-full.txt'), renderLlmsFull(agent.pages, lib));
+  write(path.join(outDir, 'site', 'llms.txt'), renderLlms(agent.pages, lib, '/registry/'));
+  write(path.join(outDir, 'site', 'llms-full.txt'), renderLlmsFull(agent.pages, lib));
+}
+
+/** npm packages an item needs at runtime (rxjs ships with Angular). */
+export function npmDeps(item: RegistryItem, graph: Map<string, FileNode>): string[] {
+  return Object.keys(resolveTransitive(fileKey(item.file), graph).npm).filter((p) => p !== 'rxjs');
 }
 
 /* ------------------------------- payloads --------------------------------- */
@@ -131,81 +160,36 @@ function writeDocsContent(items: RegistryItem[], outDir: string) {
         name: c.className,
         selector: c.selector,
         kind: c.kind,
-        inputs: c.inputs,
-        outputs: c.outputs,
+        // Prop tables show what a consumer writes: the alias when there is one.
+        inputs: c.inputs.map(({ alias, ...i }) => ({ ...i, name: bindingName({ alias, ...i }) })),
+        outputs: c.outputs.map(({ alias, ...o }) => ({ ...o, name: alias ?? o.name })),
         slots: c.slots,
         variants: c.variants,
+        forms: c.forms,
       })),
     };
   }
   write(path.join(outDir, 'docs-content.json'), json(out));
 }
 
-/* --------------------------------- llms ----------------------------------- */
-
-function buildLlms(items: RegistryItem[]): string {
-  const lines = [
-    '# Tolle UI',
-    '',
-    '> A high-performance Angular 18 UI library. shadcn-style components you can install from npm (`@tolle_/tolle-ui`) or own via the CLI (`npx @tolle_/cli add <component>`). Config-first theming with CSS variables.',
-    '',
-    '## Components',
-    '',
-  ];
-  for (const i of items) {
-    lines.push(`- [${i.title ?? titleCase(i.name)}](r/${i.name}.json): ${i.description ?? describe(i)}`);
-  }
-  lines.push('', '## Reference', '', '- [Full component reference](llms-full.txt): every component with inputs, outputs, slots, and variants.');
-  return lines.join('\n') + '\n';
-}
-
-function buildLlmsFull(items: RegistryItem[]): string {
-  const out: string[] = [
-    '# Tolle UI — Full Component Reference',
-    '',
-    'Angular 18 standalone components. Install the package (`npm i @tolle_/tolle-ui`) and import, or own the source (`npx @tolle_/cli add <component>`).',
-    '',
-  ];
-  for (const i of items) {
-    out.push(`## ${i.title ?? titleCase(i.name)}`, '');
-    out.push(`- Install: \`npx @tolle_/cli add ${i.name}\``);
-    out.push(`- Import: \`${importLine(i)}\``);
-    out.push('');
-    for (const c of i.components) {
-      out.push(`### \`<${c.selector ?? c.className}>\`${c.kind === 'directive' ? ' (directive)' : ''}`, '');
-      if (c.inputs.length) {
-        out.push('Inputs:', '', '| Name | Type | Default | Description |', '| --- | --- | --- | --- |');
-        for (const p of c.inputs)
-          out.push(`| ${p.name}${p.required ? ' (required)' : ''} | \`${p.type}\` | ${p.default ? `\`${p.default}\`` : '—'} | ${p.description ?? ''} |`);
-        out.push('');
-      }
-      if (c.outputs.length) {
-        out.push('Outputs:', '', '| Name | Payload | Description |', '| --- | --- | --- |');
-        for (const o of c.outputs) out.push(`| ${o.name} | \`${o.type}\` | ${o.description ?? ''} |`);
-        out.push('');
-      }
-      if (c.slots.length) {
-        out.push('Slots: ' + c.slots.map((s) => (s.name === '' ? '_default_' : `\`${s.name}\``)).join(', '), '');
-      }
-      if (c.variants.length) {
-        out.push('Variants:');
-        for (const v of c.variants)
-          out.push(`- \`${v.name}\`: ${v.options.map((o) => `\`${o}\``).join(', ')}${v.default ? ` (default \`${v.default}\`)` : ''}`);
-        out.push('');
-      }
-    }
-  }
-  return out.join('\n') + '\n';
-}
-
 /* ------------------------------- manifest --------------------------------- */
 
-function writeManifest(items: RegistryItem[], payloads: Payload[], outDir: string, libVersion: string) {
+/**
+ * The MCP superset. `components` is one entry per registry item (the docs nav
+ * reads `name` / `isNew` from it); `pages` is the agent-facing grouping, each
+ * with its doc path, examples, services and types, so a server can answer
+ * every tool call from this file plus `docs/`.
+ */
+function writeManifest(items: RegistryItem[], payloads: Payload[], outDir: string, lib: LibInfo, agent: AgentModel) {
   const byName = new Map(payloads.map((p) => [p.name, p]));
+  const pageOf = new Map<string, string>();
+  for (const pg of agent.pages) for (const it of pg.items) pageOf.set(it.name, pg.name);
   const manifest = {
     package: PKG,
-    version: libVersion,
+    version: lib.version,
+    angular: lib.angularMajor,
     registry: 'r/{name}.json',
+    docs: 'docs/{name}.md',
     components: items.map((i) => {
       const p = byName.get(i.name)!;
       return {
@@ -215,14 +199,39 @@ function writeManifest(items: RegistryItem[], payloads: Payload[], outDir: strin
         category: p.category,
         selector: i.selector,
         isNew: i.isNew,
+        page: pageOf.get(i.name),
+        parent: i.parent,
         import: importLine(i),
         install: `npx @tolle_/cli add ${i.name}`,
         registryDependencies: p.registryDependencies,
         dependencies: p.dependencies,
         files: p.files.map((f) => f.path),
-        components: i.components,
+        components: i.components.map((c) => ({
+          ...c,
+          inputs: c.inputs.map((x) => ({ ...x, binding: bindingName(x) })),
+          ...classifyVariants(c),
+        })),
       };
     }),
+    pages: agent.pages.map((pg) => ({
+      name: pg.name,
+      title: pg.title,
+      description: pg.description,
+      category: pg.category,
+      isNew: pg.isNew,
+      doc: `docs/${pg.name}.md`,
+      whenToUse: pg.whenToUse,
+      alternatives: pg.alternatives,
+      pitfalls: pg.pitfalls,
+      keywords: pg.keywords,
+      parts: pg.items.slice(1).map((i) => i.name),
+      classes: pg.classes.map((c) => c.className),
+      selectors: pg.classes.map((c) => c.selector).filter(Boolean),
+      formControls: pg.classes.filter((c) => c.forms).map((c) => ({ className: c.className, ...c.forms })),
+      services: pg.services,
+      types: pg.types.map((t) => t.name),
+      examples: pg.examples,
+    })),
   };
   write(path.join(outDir, 'manifest.json'), json(manifest));
 }
@@ -234,7 +243,8 @@ function importLine(i: RegistryItem): string {
   return `import { ${classes} } from '${PKG}';`;
 }
 
-function describe(i: RegistryItem): string {
+/** Placeholder description, used until a sidecar provides a real one. */
+export function describe(i: RegistryItem): string {
   const c = i.components.find((x) => x.selector === i.selector) ?? i.components[0];
   const vs = c?.variants.map((v) => v.name) ?? [];
   const base = `${titleCase(i.name)} component`;
@@ -276,7 +286,7 @@ const CATEGORY: [RegExp, string][] = [
   [/avatar|carousel/, 'media'],
 ];
 
-function categorize(name: string): string {
+export function categorize(name: string): string {
   for (const [re, cat] of CATEGORY) if (re.test(name)) return cat;
   return 'components';
 }

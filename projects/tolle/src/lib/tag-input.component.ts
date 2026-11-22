@@ -15,6 +15,9 @@ import { BadgeComponent } from './badge.component';
   selector: 'tolle-tag-input',
   styles: [':host { display: block; }'],
   imports: [FormsModule, BadgeComponent],
+  // A static id="…" would otherwise be copied onto the host too, and an
+  // outside `<label for>` would hit the host instead of the <input>.
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -73,9 +76,13 @@ import { BadgeComponent } from './badge.component';
 export class TagInputComponent implements ControlValueAccessor {
   @ViewChild('tagInput') tagInputElement!: ElementRef<HTMLInputElement>;
 
+  /** Id of the inner `<input>`; a `<label for>` elsewhere can target it. @default auto-generated */
   @Input() id: string = `tag-input-${Math.random().toString(36).substr(2, 9)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
   @Input() label: string = '';
+  /** Help text shown below the control while it has no error. @default '' */
   @Input() hint: string = '';
+  /** Error text shown below the control while `error` is true. @default '' */
   @Input() errorMessage: string = '';
   @Input() placeholder: string = 'Type and press Enter...';
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
@@ -84,6 +91,7 @@ export class TagInputComponent implements ControlValueAccessor {
   // State inputs
   @Input() disabled: boolean = false;
   @Input() readonly: boolean = false;
+  /** Marks the control invalid: destructive border, `aria-invalid`, and shows `errorMessage`. @default false */
   @Input() error: boolean = false;
 
   // Tag-specific inputs

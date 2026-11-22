@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, Type, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { A11yModule } from '@angular/cdk/a11y';
 import { SheetRef } from './sheet-ref';
+import { componentInputs } from './component-inputs';
 import { cn } from './utils/cn';
 
 @Component({
@@ -55,7 +56,7 @@ import { cn } from './utils/cn';
               *ngTemplateOutlet="asTemplate; context: ref.config.context"></ng-container>
           }
           @case ('component') {
-            <ng-container *ngComponentOutlet="asComponent"></ng-container>
+            <ng-container *ngComponentOutlet="asComponent; inputs: contentInputs"></ng-container>
           }
         }
       </div>
@@ -71,6 +72,8 @@ import { cn } from './utils/cn';
 })
 export class SheetWrapperComponent implements OnInit {
   contentType: 'template' | 'string' | 'component' = 'string';
+  /** `config.data` entries that are inputs of a component content. */
+  contentInputs: Record<string, unknown> = {};
   content: any;
   isOpen = false;
 
@@ -84,6 +87,7 @@ export class SheetWrapperComponent implements OnInit {
   ngOnInit() {
     this.content = this.ref.config.content;
     this.determineContentType();
+    if (this.contentType === 'component') this.contentInputs = componentInputs(this.content, this.ref.config.data);
 
     // Trigger entry animation
     setTimeout(() => {

@@ -7,6 +7,9 @@ import { cn } from './utils/cn';
   selector: 'tolle-textarea',
   styles: [':host { display: block; }'],
   imports: [FormsModule],
+  // A static id="…" would otherwise be copied onto the host too, and an
+  // outside `<label for>` would hit the host instead of the <textarea>.
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -74,20 +77,32 @@ import { cn } from './utils/cn';
 export class TextareaComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild('textareaElement') textareaElement!: ElementRef<HTMLTextAreaElement>;
 
+  /** Id of the inner `<textarea>`; a `<label for>` elsewhere can target it. @default auto-generated */
   @Input() id = `textarea-${Math.random().toString(36).substring(2, 9)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
   @Input() label = '';
+  /** Placeholder text shown while empty. @default '' */
   @Input() placeholder = '';
+  /** Help text shown below the control while it has no error. @default '' */
   @Input() hint = '';
+  /** Error text shown below the control while `error` is true. @default '' */
   @Input() errorMessage = '';
+  /** Visible rows (the starting height when `autoGrow` is on). @default 3 */
   @Input() rows = 3;
+  /** Maximum characters; also the limit `showCharacterCount` displays. */
   @Input() maxLength?: number;
+  /** Shows a `count / maxLength` counter below the field. @default false */
   @Input() showCharacterCount = false;
+  /** Grows the height to fit the content. @default false */
   @Input() autoGrow = false;
+  /** Marks the control invalid: destructive border, `aria-invalid`, and shows `errorMessage`. @default false */
   @Input() error = false;
+  /** Extra Tailwind classes merged onto the `<textarea>` (this control's `class` input). @default '' */
   @Input() className = '';
 
-  // Focus behavior
+  /** Fade the hint out while the field has focus. @default true */
   @Input() hideHintOnFocus = true;
+  /** Fade the character counter out while the field has focus. @default false */
   @Input() hideCharacterCountOnFocus = false;
 
   // New States

@@ -1,0 +1,39 @@
+{
+  "name": "@tolle_/mcp",
+  "version": "0.1.0",
+  "description": "Model Context Protocol server for Tolle UI — version-matched component docs for coding agents.",
+  "bin": {
+    "tolle-mcp": "./dist/index.js"
+  },
+  "type": "commonjs",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build && node test/smoke.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "angular",
+    "tolle",
+    "ui",
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "agents"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kojo-io/tolle-ui.git",
+    "directory": "projects/mcp"
+  },
+  "homepage": "https://github.com/kojo-io/tolle-ui/tree/master/projects/mcp#readme",
+  "license": "MIT"
+}

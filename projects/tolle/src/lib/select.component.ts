@@ -23,6 +23,12 @@ import { SelectItemComponent } from './select-item.component';
 import { Subscription } from 'rxjs';
 import { SelectService } from './select.service';
 import { InputComponent } from './input.component';
+import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
 
 const selectTriggerVariants = cva(
   'flex w-full items-center justify-between rounded-md border border-input bg-background text-foreground shadow-sm transition-all duration-200',
@@ -88,8 +94,11 @@ export type SelectProps = VariantProps<typeof selectTriggerVariants>;
  */
 @Component({
   selector: 'tolle-select',
-  imports: [FormsModule, InputComponent],
+  imports: [FormsModule, InputComponent, FormControlLabelComponent, FormControlMessageComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // The id belongs to the trigger button so `<label for>` reaches it; leaving
+  // it on the host too would duplicate it.
+  host: { '[attr.id]': 'null' },
   providers: [
     SelectService,
     {
@@ -100,12 +109,18 @@ export type SelectProps = VariantProps<typeof selectTriggerVariants>;
   ],
   styles: [':host { display: block; }', '.hidden-dropdown { display: none !important; }'],
   template: `
+    @if (label) {
+      <tolle-form-control-label [for]="id" [disabled]="disabled">{{ label }}</tolle-form-control-label>
+    }
     <div class="relative w-full" #container>
       <button
         type="button"
         #trigger
+        [id]="id"
         role="combobox"
         aria-haspopup="listbox"
+        [attr.aria-invalid]="error || null"
+        [attr.aria-describedby]="describedBy(id, hint, errorMessage, error, disabled)"
         [attr.aria-expanded]="isOpen"
         [attr.aria-activedescendant]="isOpen ? activeDescendantId : null"
         [attr.data-state]="isOpen ? 'open' : 'closed'"
@@ -147,6 +162,9 @@ export type SelectProps = VariantProps<typeof selectTriggerVariants>;
         </div>
       </div>
     </div>
+    @if (hasMessage(hint, errorMessage, error, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="error" />
+    }
   `,
 })
 export class SelectComponent
@@ -164,6 +182,19 @@ export class SelectComponent
   @Input() size: SelectProps['size'] = 'default';
   /** Shows the current value but blocks opening the panel. @default false */
   @Input() readonly = false;
+  /** Id of the trigger button; a `<label for>` elsewhere can target it. @default auto-generated */
+  @Input() id = `tolle-select-${Math.random().toString(36).slice(2, 11)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
+  @Input() label = '';
+  /** Help text shown below the control while it has no error. @default '' */
+  @Input() hint = '';
+  /** Error text shown below the control while `error` is true. @default '' */
+  @Input() errorMessage = '';
+  /** Marks the control invalid: destructive border, `aria-invalid`, and shows `errorMessage`. @default false */
+  @Input() error = false;
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
 
   /** Emitted with the chosen value whenever the selection changes. */
   @Output() valueChange = new EventEmitter<any>();
@@ -231,6 +262,7 @@ export class SelectComponent
         disabled: this.disabled,
         readonly: this.readonly,
       }),
+      this.error && 'border-destructive focus:ring-destructive',
       this.class
     );
   }

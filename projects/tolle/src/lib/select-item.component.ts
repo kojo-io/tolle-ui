@@ -63,14 +63,31 @@ import { SelectService } from './select.service';
   `,
 })
 export class SelectItemComponent {
+  /** Value written to the parent select's form control when this option is chosen. */
   @Input() value: any;
+  /** Extra Tailwind classes merged onto the option row via `cn()` (last-wins). */
   @Input() class = '';
+  /**
+   * Whether the option is currently chosen. Set by the parent from its bound value.
+   * @internal
+   */
   @Input() selected = false;
+  /** Shows the option but prevents choosing it. */
   @Input() disabled = false;
-  @Input() multiSelect = false; // Will be set by parent component
-  // Stable option id used by the parent for aria-activedescendant wiring.
+  /**
+   * Renders a checkbox instead of a checkmark. Set by `tolle-multi-select`.
+   * @internal
+   */
+  @Input() multiSelect = false;
+  /**
+   * Stable option id used by the parent for aria-activedescendant wiring.
+   * @internal
+   */
   @Input() id = `select-item-${Math.random().toString(36).substr(2, 9)}`;
-  // Active-descendant highlight state, driven by the parent by index.
+  /**
+   * Keyboard highlight state, driven by the parent.
+   * @internal
+   */
   @Input() active = false;
 
   hidden = false;

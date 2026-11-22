@@ -86,7 +86,7 @@ function extractClass(
     for (const g of cvaGroups.get(cvaName) ?? []) variants.push(g);
   }
 
-  return {
+  return clean({
     className: clazz.getName() ?? 'Anonymous',
     selector,
     kind,
@@ -94,7 +94,45 @@ function extractClass(
     outputs: extractOutputs(clazz),
     slots: template ? extractSlots(template) : [],
     variants: dedupeVariants(variants),
-  };
+    forms: extractForms(clazz),
+    exportAs: arg ? getStringProp(arg, 'exportAs') : undefined,
+    internal: hasTag(clazz, 'internal') || undefined,
+  });
+}
+
+function hasTag(clazz: ClassDeclaration, name: string): boolean {
+  return clazz.getJsDocs().some((doc) => doc.getTags().some((tag) => tag.getTagName() === name));
+}
+
+/**
+ * A class with `writeValue()` is a ControlValueAccessor: its value is bound
+ * with `[(ngModel)]` / `formControlName`. Agents otherwise reach for a
+ * `[value]` or `[checked]` input that doesn't exist.
+ */
+function extractForms(clazz: ClassDeclaration): { valueType: string } | undefined {
+  const wv = clazz.getMethod('writeValue');
+  if (!wv) return undefined;
+  const t = wv.getParameters()[0]?.getTypeNode()?.getText() ?? 'any';
+  return { valueType: t.trim() };
+}
+
+/**
+ * The default to document: the initializer, unless it is generated per
+ * instance (`\`select-${Math.random()…}\``) and the author wrote a readable
+ * `@default` (e.g. "auto-generated") instead.
+ */
+function shownDefault(initializer: string | undefined, tag: string | undefined): string | undefined {
+  if (tag && initializer && /Math\.random|\$\{/.test(initializer)) return tag;
+  return initializer ?? tag;
+}
+
+/** `@Input('x')` / `@Input({ alias: 'x' })` → 'x'. */
+function decoratorAlias(dec: Decorator): string | undefined {
+  const a = dec.getArguments()[0];
+  if (!a) return undefined;
+  if (Node.isStringLiteral(a) || Node.isNoSubstitutionTemplateLiteral(a)) return a.getLiteralText();
+  if (Node.isObjectLiteralExpression(a)) return getStringProp(a, 'alias');
+  return undefined;
 }
 
 /* --------------------------------- inputs --------------------------------- */
@@ -115,12 +153,15 @@ function extractInputs(
     const { type, cva } = resolveType(written, aliasToCva, cvaGroups);
     if (cva) usedCva.add(cva);
     const js = getJsDoc(p);
+    const alias = decoratorAlias(dec);
     inputs.push(clean({
       name: p.getName(),
+      alias: alias && alias !== p.getName() ? alias : undefined,
       type,
-      default: p.getInitializer()?.getText() ?? js.defaultTag,
+      default: shownDefault(p.getInitializer()?.getText(), js.defaultTag),
       description: js.description,
       required: isRequired(dec),
+      internal: js.internal,
     }));
   }
 
@@ -136,12 +177,15 @@ function extractInputs(
       clazz.getProperty(`_${name}`)?.getInitializer()?.getText() ??
       clazz.getProperty(name)?.getInitializer()?.getText();
     const js = getJsDoc(acc);
+    const alias = decoratorAlias(dec);
     inputs.push(clean({
       name,
+      alias: alias && alias !== name ? alias : undefined,
       type,
       default: backing ?? js.defaultTag,
       description: js.description,
       required: isRequired(dec),
+      internal: js.internal,
     }));
   }
 
@@ -173,6 +217,7 @@ function inferTypeFromInitializer(init?: Node): string {
       return 'boolean';
     case SyntaxKind.StringLiteral:
     case SyntaxKind.NoSubstitutionTemplateLiteral:
+    case SyntaxKind.TemplateExpression:
       return 'string';
     case SyntaxKind.NumericLiteral:
       return 'number';
@@ -188,7 +233,9 @@ function inferTypeFromInitializer(init?: Node): string {
 function extractOutputs(clazz: ClassDeclaration): OutputMeta[] {
   const outputs: OutputMeta[] = [];
   for (const p of clazz.getProperties()) {
-    if (!p.getDecorator('Output')) continue;
+    const dec = p.getDecorator('Output');
+    if (!dec) continue;
+    const alias = decoratorAlias(dec);
     let type = 'void';
     const init = p.getInitializer();
     if (init && Node.isNewExpression(init)) {
@@ -196,7 +243,12 @@ function extractOutputs(clazz: ClassDeclaration): OutputMeta[] {
       if (targ) type = targ.getText();
     }
     const js = getJsDoc(p);
-    outputs.push(clean({ name: p.getName(), type, description: js.description }));
+    outputs.push(clean({
+      name: p.getName(),
+      alias: alias && alias !== p.getName() ? alias : undefined,
+      type,
+      description: js.description,
+    }));
   }
   return outputs;
 }
@@ -334,16 +386,19 @@ function isRequired(dec: Decorator): boolean {
   return !!(p && Node.isPropertyAssignment(p) && p.getInitializer()?.getText() === 'true');
 }
 
-function getJsDoc(node: JSDocableNode): { description?: string; defaultTag?: string } {
+function getJsDoc(node: JSDocableNode): { description?: string; defaultTag?: string; internal?: true } {
   const docs = node.getJsDocs();
   if (!docs.length) return {};
   const doc = docs[docs.length - 1];
   let defaultTag: string | undefined;
+  let internal: true | undefined;
   for (const tag of doc.getTags()) {
     if (tag.getTagName() === 'default') defaultTag = unquote((tag.getCommentText() ?? '').trim());
+    // `@internal`: set by a parent component, not by consumers — left out of agent docs.
+    if (tag.getTagName() === 'internal') internal = true;
   }
   const description = doc.getDescription().trim();
-  return { description: description || undefined, defaultTag };
+  return { description: description || undefined, defaultTag, internal };
 }
 
 function dedupeVariants(variants: VariantMeta[]): VariantMeta[] {

@@ -10,7 +10,14 @@
     "build:web": "npm run build:docs",
     "build:lib": "npm run generate:registry && ng build tolle --configuration production",
     "build:docs": "npm run generate:registry && ng build docs --configuration production",
-    "generate:registry": "ts-node -P projects/registry/tsconfig.json projects/registry/src/generate.ts"
+    "generate:registry": "ts-node -P projects/registry/tsconfig.json projects/registry/src/generate.ts",
+    "check:agent-docs": "ts-node -P projects/registry/tsconfig.json projects/registry/src/check.ts",
+    "check:examples": "ngc -p tools/tsconfig.examples.json",
+    "build:cli": "npm --prefix projects/cli run build",
+    "test:mcp": "npm --prefix projects/mcp test",
+    "generate:flutter-color-reference": "ts-node -P projects/registry/tsconfig.json tools/dump-color-reference.ts",
+    "check:flutter-parity": "ts-node -P projects/registry/tsconfig.json tools/check-flutter-parity.ts",
+    "generate:flutter-icons": "ts-node -P projects/registry/tsconfig.json tools/generate-flutter-icons.ts"
   },
   "private": false,
   "dependencies": {

@@ -59,6 +59,22 @@ Keep it to one line where possible; document units/allowed values when not obvio
 @Output() dismiss = new EventEmitter<void>();
 ```
 
+An input the **parent** component sets (select-item `active`, `selected`) gets an `@internal`
+tag. It stays in the docs-app prop table but is left out of the agent docs, so agents don't
+try to bind it:
+
+```ts
+/**
+ * Keyboard highlight state, driven by the parent.
+ * @internal
+ */
+@Input() active = false;
+```
+
+A cva group that no input feeds (checkbox `checked`) is reported to agents as a *styling state*
+the component sets itself, not as a variant — so it is fine for a form control's visual state
+to live in cva.
+
 ## 3. Selectors are `tolle-*`
 
 Use the `tolle-` prefix on every component/directive selector. The generator records the real
@@ -69,24 +85,47 @@ selector (not a docs wrapper), so it must be correct here.
 When you project content, prefer named `<ng-content select="[slotName]">` — the generator emits
 these as documented slots. Give each a clear, stable attribute name.
 
-## 5. Sidecar for metadata that can't be inferred
+## 5. Agent docs: an example and a sidecar
 
-Anything the AST can't carry — human title, long description, category, curated usage examples,
-a11y notes, or explicit registry-dependency overrides — goes in a typed sidecar **next to the
-component** so it can't drift:
+Every component ships an agent page (`registry/docs/<name>.md`, served by `@tolle_/mcp` and
+pointed to by `tolle init`). Two things the AST can't infer make that page good:
+
+**An example.** Add a standalone component under
+`projects/docs/src/app/docs-examples/<name>/<example>/<example>.component.ts`, importing from
+the lib by relative path like the existing ones. The generator rewrites it to
+`import { … } from '@tolle_/tolle-ui'` and puts it on the page; files whose name starts with
+`basic` come first. `npm run check:examples` type-checks every example with strict templates,
+so an example an agent copies is one that compiles.
+
+**A sidecar** `<name>.registry.ts` **next to the component** for what only a human knows:
 
 ```ts
-// button.registry.ts
-import type { RegistryMeta } from '../registry/types'; // added in Phase 1
-export const buttonRegistry: RegistryMeta = {
-  title: 'Button',
-  category: 'actions',
-  description: 'A clickable button with variants, sizes, and a busy state.',
-  examples: [{ title: 'Variants', code: `<tolle-button variant="secondary">Save</tolle-button>` }],
+// select.registry.ts
+import type { RegistrySidecar } from '../../../registry/src/types';
+
+export const selectRegistry: RegistrySidecar = {
+  description: 'A single-value dropdown whose options are projected `<tolle-select-item>` children…',
+  whenToUse: 'The user picks exactly one value from a short-to-medium list you write in the template.',
+  alternatives: [{ name: 'combobox', when: 'the options come from an array and need type-to-filter search.' }],
+  parts: ['select-item', 'select-group', 'select-separator'],
+  forms: { SelectComponent: { notes: 'It holds the `value` of the chosen `<tolle-select-item>`.' } },
+  pitfalls: ['Options are `<tolle-select-item value="…">` children — there is no `[options]` input.'],
+  keywords: ['dropdown', 'picker'],
 };
 ```
 
-Sidecars are optional — only add fields the generator can't infer from source.
+- `parts` — items documented on this page instead of as their own components. Items named
+  `<name>-item` / `-trigger` / `-content` / `-link` / `-separator` / … are grouped
+  automatically; declare the rest (`-group` parts, `dropdown-*` under `dropdown-menu`).
+- `pitfalls` — the mistakes agents actually make. Write them as instructions.
+- `forms` — what the form value holds, when `writeValue(value: any)` doesn't say.
+
+Sidecars are not lib code: the generator excludes them from the registry items and the CLI
+never copies them. Unknown items, parts or alternatives are reported as problems.
+
+`npm run check:agent-docs` (CI) fails when coverage regresses — a new component without a
+sidecar description or example, or a new input without JSDoc. After filling gaps, lower the
+baseline with `npm run check:agent-docs -- --update`.
 
 ## 6. Modern Angular — but NOT signal inputs (yet)
 
@@ -113,6 +152,30 @@ has bitten us more than once. Coordinate through a small parent-provided service
 an observable, and `markForCheck()` when it emits — see `menubar.component.ts`,
 `command.service.ts`, `select.service.ts`.
 
+### Form controls share one label contract
+
+Every form control takes `id`, `label`, `hint` and `errorMessage` (checkbox and switch: `id` and
+an inline `label`), with the same look and ARIA wiring as `tolle-input`. Don't hand-roll it — use
+`form-control-label.component.ts`:
+
+```ts
+host: { '[attr.id]': 'null' },   // the id belongs to the focusable element, not the host
+template: `
+  @if (label) { <tolle-form-control-label [for]="id" [disabled]="disabled">{{ label }}</tolle-form-control-label> }
+  <button [id]="id" [attr.aria-invalid]="error || null"
+          [attr.aria-describedby]="describedBy(id, hint, errorMessage, error, disabled)">…</button>
+  @if (hasMessage(hint, errorMessage, error, disabled)) {
+    <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="error" />
+  }
+`,
+```
+
+The `host` binding matters: a static `id="x"` on a component is also copied onto its host
+element, which leaves two elements with that id and makes an outside `<label for="x">` hit the
+host. When the focusable element is not labelable (slider thumbs, a radiogroup `div`), pass
+`[labelId]` instead of `[for]` and point `aria-labelledby` at it. New error flags are named
+`error`; the pickers that already use `invalid` keep it.
+
 ## 7. Charts consume validated colour tokens
 
 Chart marks use `--chart-1` … `--chart-5`. Those steps are validated for perceptual lightness,
@@ -135,3 +198,6 @@ colour is never the only channel carrying identity.
 - `npm test` — component specs pass. Locally:
   `CHROME_BIN="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" ng test tolle --watch=false --browsers=ChromeHeadless`
 - `ng serve docs` (or `npm start`) — the component renders correctly in **light and dark**.
+- `npm run generate:registry && npm run check:agent-docs && npm run check:examples` — the agent
+  docs didn't regress and every example compiles. Read your component's
+  `projects/tolle/registry/docs/<name>.md` once: it is what agents will see.

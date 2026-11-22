@@ -13,7 +13,8 @@
     {
       "glob": "**/*",
       "input": "registry",
-      "output": "registry"
+      "output": "registry",
+      "ignore": ["site/**", "flutter-parity.json"]
     }
   ]
 }

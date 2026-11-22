@@ -72,4 +72,6 @@ export async function runAdd(names: string[], flags: Record<string, string | boo
       }
     }
   }
+
+  log.info(`\nUsage docs: ${names.map((n) => `${INVOKE} docs ${n}`).join(' · ')}`);
 }

@@ -8,11 +8,11 @@ copyright notice and author attribution must remain intact.
 
 **Built with ❤️ by Bernard Kojo Ossei-Agyei**
 
-# @tolle/ui
+# @tolle_/tolle-ui
 
 A premium, high-performance Angular UI library meticulously crafted with a **Google Dark Mode** aesthetic. Built for speed, accessibility, and a modern "charcoal" look.
 
-
+The package major tracks the Angular major: `@tolle_/tolle-ui@21` is for Angular 21, `@18` for Angular 18.
 
 ## ✨ Features
 
@@ -27,9 +27,38 @@ A premium, high-performance Angular UI library meticulously crafted with a **Goo
 
 ## 🚀 Installation
 
-Install the library and its peer dependency (Floating UI):
+The quickest path is the CLI, which installs the package matching your Angular
+major, wires the theme, and writes agent instructions for coding assistants:
 
 ```bash
-npm install @tolle/ui @floating-ui/dom
+npx @tolle_/cli init
+```
 
-@import "@tolle/ui/styles/theme.css";
+Or by hand — npm 7+ installs the peer dependencies (Floating UI, cva,
+tailwind-merge, Remix Icon, …) for you:
+
+```bash
+npm install @tolle_/tolle-ui@^21
+```
+
+```css
+/* styles.css */
+@import '@tolle_/tolle-ui/theme.css';
+@import 'remixicon/fonts/remixicon.css';
+```
+
+```js
+// tailwind.config.js
+module.exports = {
+  presets: [require('@tolle_/tolle-ui/preset')],
+  content: ['./src/**/*.{html,ts}', './node_modules/@tolle_/tolle-ui/**/*.mjs'],
+};
+```
+
+## 🤖 Using Tolle UI with coding agents
+
+Component docs written for agents ship inside the package at
+`node_modules/@tolle_/tolle-ui/registry/` (`llms.txt` plus one page per
+component under `docs/`), so they always match the installed version.
+`npx @tolle_/cli agents` points `AGENTS.md` / Claude Code at them, and
+`npx -y @tolle_/mcp` serves them over MCP.

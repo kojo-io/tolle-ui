@@ -15,6 +15,9 @@ import { cn } from './utils/cn';
   selector: 'tolle-input',
   styles: [':host { display: block; }'],
   imports: [FormsModule],
+  // A static id="…" would otherwise be copied onto the host too, and an
+  // outside `<label for>` would hit the host instead of the <input>.
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -80,22 +83,33 @@ import { cn } from './utils/cn';
 export class InputComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild('inputElement') inputElement!: ElementRef<HTMLInputElement>;
 
+  /** Id of the inner `<input>`; a `<label for>` elsewhere can target it. @default auto-generated */
   @Input() id: string = `input-${Math.random().toString(36).substr(2, 9)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
   @Input() label: string = '';
+  /** Help text shown below the control while it has no error. @default '' */
   @Input() hint: string = '';
+  /** Error text shown below the control while `error` is true. @default '' */
   @Input() errorMessage: string = '';
+  /** Native input type: 'text', 'email', 'password', 'number', 'search', … The value stays a string. @default 'text' */
   @Input() type: string = 'text';
+  /** Placeholder text shown while empty. @default '' */
   @Input() placeholder: string = '';
+  /** Height and text size. @default 'default' */
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  /** Extra Tailwind classes for the bordered box around the input (width, margins). @default '' */
   @Input() containerClass: string = '';
+  /** Extra Tailwind classes merged onto the inner `<input>` via `cn()` (last-wins). @default '' */
   @Input() class: string = '';
 
-  // New States
+  /** Disables the input. @default false */
   @Input() disabled: boolean = false;
+  /** Shows the value but blocks editing. @default false */
   @Input() readonly: boolean = false;
+  /** Marks the control invalid: destructive border, `aria-invalid`, and shows `errorMessage`. @default false */
   @Input() error: boolean = false;
 
-  // Focus behavior
+  /** Fade the hint out while the input has focus. @default true */
   @Input() hideHintOnFocus: boolean = true;
 
   value: any = '';

@@ -19,7 +19,14 @@ export interface VariantMeta {
 
 /** A component `@Input()` (property- or setter-style). */
 export interface InputMeta {
+  /** Class property name. Consumers bind `alias` when it is set. */
   name: string;
+  /**
+   * Template binding name when it differs from the property, e.g.
+   * `@Input('tolleTooltip') content` → alias 'tolleTooltip'. This is what a
+   * consumer actually writes, so every agent/docs artifact prints it.
+   */
+  alias?: string;
   /** Resolved type text — a clean literal union where derivable, else the written type. */
   type: string;
   /** Default value text, from the initializer, backing field, or a `@default` JSDoc tag. */
@@ -28,11 +35,18 @@ export interface InputMeta {
   description?: string;
   /** True for `@Input({ required: true })`. */
   required?: boolean;
+  /**
+   * `@internal` JSDoc tag: the parent component sets it (select-item `active`).
+   * Still in the docs-app tables; left out of agent docs so agents don't bind it.
+   */
+  internal?: boolean;
 }
 
 /** A component `@Output()`. */
 export interface OutputMeta {
   name: string;
+  /** Template event name when it differs from the property (`@Output('x')`). */
+  alias?: string;
   /** Event payload type, e.g. 'void' | 'boolean' | 'MouseEvent'. */
   type: string;
   description?: string;
@@ -53,6 +67,47 @@ export interface ComponentClassMeta {
   outputs: OutputMeta[];
   slots: SlotMeta[];
   variants: VariantMeta[];
+  /**
+   * Set when the class is a form control (implements `writeValue`, i.e. a
+   * ControlValueAccessor). Its value is bound with `[(ngModel)]` /
+   * `formControlName`, not with an input.
+   */
+  forms?: FormsMeta;
+  /** `exportAs` name, for `#ref="name"` template references. */
+  exportAs?: string;
+  /**
+   * `@internal` on the class: a building block other components use
+   * (form-control label). Still a registry item so the CLI copies it; left out
+   * of the agent docs.
+   */
+  internal?: boolean;
+}
+
+export interface FormsMeta {
+  /** Type the control reads and writes, from the `writeValue` parameter. */
+  valueType: string;
+  /** Extra guidance from the sidecar, e.g. what the value holds. */
+  notes?: string;
+}
+
+/** A public root service (e.g. ToastService) — the imperative half of a component's API. */
+export interface ServiceMeta {
+  className: string;
+  /** Lib-relative file, e.g. 'toast.service.ts'. */
+  file: string;
+  description?: string;
+  /** Public methods and properties, as one-line signatures. */
+  members: { name: string; signature: string; description?: string }[];
+  /** Supporting exported types (config objects, refs) a caller must construct or read. */
+  types: { name: string; text: string }[];
+}
+
+/** One usage example. Docs-app examples compile in CI, so they are preferred. */
+export interface ExampleMeta {
+  title: string;
+  code: string;
+  /** Where it came from: a docs-app example path, or 'sidecar'. */
+  source: string;
 }
 
 /** Resolved dependencies of a registry item, used by the CLI to copy/install. */
@@ -69,13 +124,37 @@ export interface Dependencies {
   angular: string[];
 }
 
-/** Optional, author-provided metadata that can't be inferred from source. */
+/**
+ * Optional, author-provided metadata that can't be inferred from source.
+ * Lives in `<name>.registry.ts` next to the component; see CONTRIBUTING.md.
+ */
 export interface RegistrySidecar {
   title?: string;
+  /** One or two sentences: what it is. Replaces the generated placeholder. */
   description?: string;
   category?: string;
+  /** When an agent should reach for this component. */
+  whenToUse?: string;
+  /** Nearby components and when to pick them instead. */
+  alternatives?: { name: string; when: string }[];
+  /** Mistakes agents and people actually make with this component. */
+  pitfalls?: string[];
   a11yNotes?: string;
+  /**
+   * Other registry items that only make sense inside this one
+   * (e.g. select → ['select-item', 'select-group']). They are documented on
+   * this item's page instead of as separate components.
+   */
+  parts?: string[];
+  /** Per-class form-control notes, keyed by class name. */
+  forms?: Record<string, { valueType?: string; notes?: string }>;
+  /**
+   * Hand-written examples. Prefer a docs-app example under
+   * `projects/docs/src/app/docs-examples/<name>/` — those are type-checked.
+   */
   examples?: { title: string; code: string }[];
+  /** Extra search terms, e.g. ['dropdown', 'picker'] for select. */
+  keywords?: string[];
   /** Force-add registry item dependencies the AST can't see. */
   registryDependencies?: string[];
 }
@@ -97,8 +176,18 @@ export interface RegistryItem {
    * Remove the tag when the component is no longer newly released.
    */
   isNew?: boolean;
-  examples?: { title: string; code: string }[];
+  examples?: ExampleMeta[];
   a11yNotes?: string;
+  whenToUse?: string;
+  alternatives?: { name: string; when: string }[];
+  pitfalls?: string[];
+  keywords?: string[];
+  /** Items documented on this page (see RegistrySidecar.parts). */
+  parts?: string[];
+  /** Set on a part: the item whose page documents it. */
+  parent?: string;
+  /** Public root services that drive this component imperatively. */
+  services?: ServiceMeta[];
   components: ComponentClassMeta[];
   dependencies: Dependencies;
 }

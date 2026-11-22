@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { A11yModule } from '@angular/cdk/a11y';
 import { Subscription } from 'rxjs';
 import { ModalRef } from './modal-ref';
+import { componentInputs } from './component-inputs';
 import { cn } from './utils/cn';
 
 @Component({
@@ -59,7 +60,7 @@ import { cn } from './utils/cn';
             <ng-container *ngTemplateOutlet="asTemplate; context: ref.modal.context"></ng-container>
           }
           @case ('component') {
-            <ng-container *ngComponentOutlet="asComponent"></ng-container>
+            <ng-container *ngComponentOutlet="asComponent; inputs: contentInputs"></ng-container>
           }
         }
       </div>
@@ -79,6 +80,8 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   contentType: 'template' | 'string' | 'component' = 'string';
   content: any;
+  /** `modal.data` entries that are inputs of a component content. */
+  contentInputs: Record<string, unknown> = {};
   modalClasses = '';
   /** True while the exit animation plays, just before the overlay is torn down. */
   closing = false;
@@ -94,6 +97,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.content = this.ref.modal.content;
     this.modalClasses = this.getModalSizeCss();
     this.determineContentType();
+    if (this.contentType === 'component') this.contentInputs = componentInputs(this.content, this.ref.modal.data);
 
     this.subscription.add(
       this.ref.closing$.subscribe(closing => {

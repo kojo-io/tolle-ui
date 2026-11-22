@@ -23,6 +23,12 @@ import { SelectService } from './select.service';
 import { cn } from './utils/cn';
 import { InputComponent } from './input.component';
 import { BadgeComponent } from './badge.component';
+import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
 
 const multiSelectTriggerVariants = cva(
   'flex h-auto min-h-10 w-full items-center justify-between rounded-md border border-input bg-background text-sm shadow-sm transition-all duration-200',
@@ -79,19 +85,27 @@ export interface MultiSelectChip {
 @Component({
   selector: 'tolle-multi-select',
   styles: [':host { display: block; }'],
-  imports: [FormsModule, BadgeComponent, InputComponent],
+  imports: [FormsModule, BadgeComponent, InputComponent, FormControlLabelComponent, FormControlMessageComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // The id belongs to the trigger button so `<label for>` reaches it.
+  host: { '[attr.id]': 'null' },
   providers: [
     SelectService,
     { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true },
   ],
   template: `
+    @if (label) {
+      <tolle-form-control-label [for]="id" [disabled]="disabled">{{ label }}</tolle-form-control-label>
+    }
     <div class="relative w-full" #container>
       <button
         #trigger
         type="button"
+        [id]="id"
         role="combobox"
         aria-haspopup="listbox"
+        [attr.aria-invalid]="error || null"
+        [attr.aria-describedby]="describedBy(id, hint, errorMessage, error, disabled)"
         [attr.aria-expanded]="isOpen"
         [attr.aria-activedescendant]="isOpen ? activeDescendantId : null"
         (click)="toggle()"
@@ -202,6 +216,9 @@ export interface MultiSelectChip {
         </div>
       }
     </div>
+    @if (hasMessage(hint, errorMessage, error, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="error" />
+    }
   `,
 })
 export class MultiSelectComponent
@@ -221,8 +238,19 @@ export class MultiSelectComponent
   @Input() maxSelections?: number;
   /** How many chips to render before collapsing the rest into a "+N more" hint. @default 3 */
   @Input() maxDisplayItems = 3;
-  /** Applies the destructive border and focus ring. @default false */
+  /** Marks the control invalid: destructive border, `aria-invalid`, and shows `errorMessage`. @default false */
   @Input() error = false;
+  /** Id of the trigger button; a `<label for>` elsewhere can target it. @default auto-generated */
+  @Input() id = `tolle-multi-select-${Math.random().toString(36).slice(2, 11)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
+  @Input() label = '';
+  /** Help text shown below the control while it has no error. @default '' */
+  @Input() hint = '';
+  /** Error text shown below the control while `error` is true. @default '' */
+  @Input() errorMessage = '';
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
 
   /** Emitted with the full array of selected values whenever the selection changes. */
   @Output() valueChange = new EventEmitter<any[]>();
