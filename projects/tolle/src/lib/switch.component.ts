@@ -58,8 +58,11 @@ export type SwitchProps = VariantProps<typeof switchTrackVariants>;
 
 @Component({
   selector: 'tolle-switch',
-  styles: [':host { display: inline-flex; }'],
+  styles: [':host { display: inline-flex; align-items: center; gap: 0.5rem; }'],
   imports: [],
+  // The id belongs to the inner button — the element a `<label for>` can
+  // actually target. On the host it was unreachable (and would be duplicated).
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -70,6 +73,7 @@ export type SwitchProps = VariantProps<typeof switchTrackVariants>;
   template: `
     <button
       type="button"
+      [id]="id"
       role="switch"
       [attr.aria-checked]="checked"
       [attr.data-state]="checked ? 'checked' : 'unchecked'"
@@ -78,6 +82,9 @@ export type SwitchProps = VariantProps<typeof switchTrackVariants>;
       [class]="trackClass">
       <span [class]="thumbClass"></span>
     </button>
+    @if (label) {
+      <label [for]="id" [class]="labelClass">{{ label }}</label>
+    }
   `,
 })
 export class SwitchComponent implements ControlValueAccessor {
@@ -87,6 +94,17 @@ export class SwitchComponent implements ControlValueAccessor {
   @Input() disabled = false;
   /** Size of the switch. @default 'default' */
   @Input() size: SwitchProps['size'] = 'default';
+  /** Id of the switch button; a `<label for>` elsewhere can target it. @default auto-generated */
+  @Input() id = `tolle-switch-${Math.random().toString(36).slice(2, 11)}`;
+  /** Text label beside the switch; clicking it toggles the switch. @default '' */
+  @Input() label = '';
+
+  get labelClass() {
+    return cn(
+      'text-sm font-medium leading-none text-foreground select-none',
+      this.disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+    );
+  }
 
   checked = false;
 

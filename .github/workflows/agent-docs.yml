@@ -1,0 +1,60 @@
+name: Agent docs
+
+# What coding agents read about Tolle UI — registry/docs/*.md, llms.txt, the
+# MCP manifest — is generated from the component source, the docs-app examples
+# and the *.registry.ts sidecars. This keeps it honest:
+#   - every example an agent may copy type-checks, templates included
+#   - coverage (descriptions, examples, documented inputs) never regresses
+#   - the CLI and the MCP server still build and answer correctly
+
+on:
+  push:
+    branches: [master, 'feat/**', 'release-**']
+    paths:
+      - 'projects/tolle/src/**'
+      - 'projects/registry/**'
+      - 'projects/docs/src/app/docs-examples/**'
+      - 'projects/cli/**'
+      - 'projects/mcp/**'
+      - 'tools/tsconfig.examples.json'
+      - 'package.json'
+      - '.github/workflows/agent-docs.yml'
+  pull_request:
+    paths:
+      - 'projects/tolle/src/**'
+      - 'projects/registry/**'
+      - 'projects/docs/src/app/docs-examples/**'
+      - 'projects/cli/**'
+      - 'projects/mcp/**'
+      - 'tools/tsconfig.examples.json'
+      - 'package.json'
+      - '.github/workflows/agent-docs.yml'
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Generate registry and agent docs
+        run: npm run generate:registry
+
+      - name: Coverage ratchet and example problems
+        run: npm run check:agent-docs
+
+      - name: Type-check every docs example (strict templates)
+        run: npm run check:examples
+
+      - name: Build the CLI
+        run: npm run build:cli
+
+      - name: MCP server smoke test
+        run: npm run test:mcp

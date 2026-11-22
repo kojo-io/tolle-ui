@@ -3,11 +3,17 @@ import { Component, Input, forwardRef, AfterContentInit, OnChanges } from '@angu
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cn } from './utils/cn';
 import { RadioService } from './radio-service';
+import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
 
 @Component({
   selector: 'tolle-radio-group',
   styles: [':host { display: block; }'],
-  imports: [],
+  imports: [FormControlLabelComponent, FormControlMessageComponent],
   providers: [
     RadioService,
     {
@@ -18,17 +24,46 @@ import { RadioService } from './radio-service';
   ],
   host: {
     '(keydown)': 'onKeydown($event)',
+    // The id names the group's label/hint elements; keep it off the host.
+    '[attr.id]': 'null',
   },
   template: `
-    <div [class]="cn('grid gap-2', class)" role="radiogroup">
+    @if (label) {
+      <tolle-form-control-label [labelId]="id + '-label'" [disabled]="disabled">{{ label }}</tolle-form-control-label>
+    }
+    <div
+      [class]="cn('grid gap-2', class)"
+      role="radiogroup"
+      [attr.aria-labelledby]="label ? id + '-label' : null"
+      [attr.aria-invalid]="error || null"
+      [attr.aria-describedby]="describedBy(id, hint, errorMessage, error, disabled)">
       <ng-content></ng-content>
     </div>
+    @if (hasMessage(hint, errorMessage, error, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="error" />
+    }
   `,
 })
 export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
+  /** Extra Tailwind classes merged onto the options grid via `cn()` (last-wins). @default '' */
   @Input() class = '';
+  /** Disables every option. @default false */
   @Input() disabled = false;
+  /** Shared `name` of the underlying radios. @default auto-generated */
   @Input() name = `radio-group-${Math.random().toString(36).substring(2, 9)}`;
+  /** Base id for the group's label and message elements. @default auto-generated */
+  @Input() id = `tolle-radio-group-${Math.random().toString(36).slice(2, 11)}`;
+  /** Group label shown above the options and used as the radiogroup's accessible name. @default '' */
+  @Input() label = '';
+  /** Help text shown below the options while there is no error. @default '' */
+  @Input() hint = '';
+  /** Error text shown below the options while `error` is true. @default '' */
+  @Input() errorMessage = '';
+  /** Marks the group invalid: `aria-invalid` and shows `errorMessage`. @default false */
+  @Input() error = false;
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
 
   value: any;
   onChange: any = () => {};

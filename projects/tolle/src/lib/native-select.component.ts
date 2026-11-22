@@ -10,6 +10,12 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
+import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
 
 const nativeSelectVariants = cva(
   'flex w-full appearance-none items-center rounded-md border border-input bg-background text-foreground shadow-sm transition-colors ' +
@@ -52,7 +58,10 @@ export type NativeSelectOption = {
 @Component({
   selector: 'tolle-native-select',
   styles: [':host { display: block; }'],
-  imports: [],
+  imports: [FormControlLabelComponent, FormControlMessageComponent],
+  // The id belongs to the <select> so `<label for>` reaches it; leaving it on
+  // the host too would duplicate it (and the label would target the host).
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -61,12 +70,16 @@ export type NativeSelectOption = {
     },
   ],
   template: `
+    @if (label) {
+      <tolle-form-control-label [for]="id" [disabled]="disabled">{{ label }}</tolle-form-control-label>
+    }
     <div class="relative w-full">
       <select
         [id]="id"
         [disabled]="disabled"
         [attr.aria-invalid]="invalid || null"
-        [attr.aria-label]="ariaLabel || null"
+        [attr.aria-label]="label ? null : ariaLabel || null"
+        [attr.aria-describedby]="describedBy(id, hint, errorMessage, invalid, disabled)"
         [class]="computedClass"
         (change)="onSelectChange($event)"
         (blur)="onTouched()">
@@ -100,11 +113,23 @@ export type NativeSelectOption = {
         class="ri-arrow-down-s-line pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
         aria-hidden="true"></i>
     </div>
+    @if (hasMessage(hint, errorMessage, invalid, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="invalid" />
+    }
   `,
 })
 export class NativeSelectComponent implements ControlValueAccessor {
-  /** Id applied to the underlying `<select>`; pair it with a `tolle-label`. */
+  /** Id applied to the underlying `<select>`; a `<label for>` elsewhere can target it. @default auto-generated */
   @Input() id = `native-select-${Math.random().toString(36).slice(2, 11)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
+  @Input() label = '';
+  /** Help text shown below the control while it is not invalid. @default '' */
+  @Input() hint = '';
+  /** Error text shown below the control while `invalid` is true. @default '' */
+  @Input() errorMessage = '';
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
   /** Options to render. Omit and project `<option>` elements for custom markup. @default [] */
   @Input() options: NativeSelectOption[] = [];
   /** Non-selectable prompt shown when no value is set. @default '' */

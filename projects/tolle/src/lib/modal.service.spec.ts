@@ -1,8 +1,18 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ApplicationRef } from '@angular/core';
+import { ApplicationRef, Component, Input } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { ModalService } from './modal.service';
+import { SheetService } from './sheet.service';
+import { componentInputs } from './component-inputs';
+
+@Component({
+  selector: 'test-greeting',
+  template: `<p data-greeting>Hello, {{ name }}</p>`,
+})
+class GreetingComponent {
+  @Input() name = '';
+}
 
 describe('ModalService', () => {
   let service: ModalService;
@@ -47,4 +57,34 @@ describe('ModalService', () => {
     tick(300); // the fallback timeout in ModalRef, in case animationend never fires
     expect(overlayContainer()?.textContent ?? '').not.toContain('Hello there');
   }));
+
+  it('binds `data` keys that are inputs of a component content, and keeps all of them on the ref', fakeAsync(() => {
+    const ref = service.open({ content: GreetingComponent, data: { name: 'Ada', notAnInput: 1 } });
+    TestBed.inject(ApplicationRef).tick();
+    const shown = document.querySelector('.cdk-overlay-container [data-greeting]');
+    expect(shown?.textContent?.trim()).toBe('Hello, Ada');
+    expect(ref.modal.data).toEqual({ name: 'Ada', notAnInput: 1 });
+    ref.close();
+    tick(300);
+  }));
+});
+
+describe('SheetService', () => {
+  it('binds `data` keys that are inputs of a component content', fakeAsync(() => {
+    TestBed.configureTestingModule({ imports: [OverlayModule] });
+    const sheets = TestBed.inject(SheetService);
+    const ref = sheets.open({ content: GreetingComponent, data: { name: 'Grace' } });
+    TestBed.inject(ApplicationRef).tick();
+    const shown = document.querySelector('.cdk-overlay-container [data-greeting]');
+    expect(shown?.textContent?.trim()).toBe('Hello, Grace');
+    ref.close();
+    tick(1000);
+  }));
+});
+
+describe('componentInputs', () => {
+  it('keeps only real inputs, by template name', () => {
+    expect(componentInputs(GreetingComponent, { name: 'Ada', other: 1 })).toEqual({ name: 'Ada' });
+    expect(componentInputs(GreetingComponent, undefined)).toEqual({});
+  });
 });

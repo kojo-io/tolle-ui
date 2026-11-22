@@ -20,6 +20,12 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
+import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
 
 /* ------------------------------------------------------------------ *
  * Pure time helpers
@@ -601,8 +607,10 @@ export type TimePickerProps = VariantProps<typeof timePickerTriggerVariants>;
 @Component({
   selector: 'tolle-time-picker',
   styles: [':host { display: block; }'],
-  imports: [TimeColumnsComponent],
+  imports: [TimeColumnsComponent, FormControlLabelComponent, FormControlMessageComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // The id belongs to the trigger button so `<label for>` reaches it.
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -611,13 +619,19 @@ export type TimePickerProps = VariantProps<typeof timePickerTriggerVariants>;
     },
   ],
   template: `
+    @if (label) {
+      <tolle-form-control-label [for]="id" [disabled]="disabled">{{ label }}</tolle-form-control-label>
+    }
     <button
       #trigger
       type="button"
+      [id]="id"
       aria-haspopup="dialog"
       [attr.aria-expanded]="isOpen"
       [attr.aria-controls]="isOpen ? panelId : null"
-      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-label]="label ? null : ariaLabel || null"
+      [attr.aria-invalid]="invalid || null"
+      [attr.aria-describedby]="describedBy(id, hint, errorMessage, invalid, disabled)"
       [attr.data-state]="isOpen ? 'open' : 'closed'"
       [disabled]="disabled"
       [class]="computedTriggerClass"
@@ -655,6 +669,9 @@ export type TimePickerProps = VariantProps<typeof timePickerTriggerVariants>;
         </div>
       </div>
     }
+    @if (hasMessage(hint, errorMessage, invalid, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="invalid" />
+    }
   `,
 })
 export class TimePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
@@ -689,6 +706,17 @@ export class TimePickerComponent implements OnChanges, ControlValueAccessor, OnD
   @Input() invalid = false;
   /** Accessible name when there is no associated visible label. @default '' */
   @Input() ariaLabel = '';
+  /** Id of the trigger button; a `<label for>` elsewhere can target it. @default auto-generated */
+  @Input() id = `tolle-time-picker-${Math.random().toString(36).slice(2, 11)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
+  @Input() label = '';
+  /** Help text shown below the control while it is not invalid. @default '' */
+  @Input() hint = '';
+  /** Error text shown below the control while `invalid` is true. @default '' */
+  @Input() errorMessage = '';
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
   /** Exchange `Date` objects instead of `HH:mm` strings through the form control. @default 'string' */
   @Input() valueType: 'string' | 'date' = 'string';
   /** Extra Tailwind classes merged onto the trigger via `cn()` (last-wins). */

@@ -31,6 +31,18 @@ export function readConfig(cwd = process.cwd()): TolleConfig {
   return JSON.parse(fs.readFileSync(p, 'utf8')) as TolleConfig;
 }
 
+/** Hosted registry used when there is no components.json (e.g. `tolle docs` in any project). */
+export const DEFAULT_REGISTRY = 'https://tolle-ui.com/registry';
+
+/** components.json when present, else defaults — for read-only commands that don't need init. */
+export function readConfigOrDefault(cwd = process.cwd()): Pick<TolleConfig, 'registry' | 'ui'> {
+  try {
+    return readConfig(cwd);
+  } catch {
+    return { registry: DEFAULT_REGISTRY, ui: 'src/app/components/ui' };
+  }
+}
+
 export function writeJson(p: string, value: unknown): void {
   fs.mkdirSync(path.dirname(p), { recursive: true });
   fs.writeFileSync(p, JSON.stringify(value, null, 2) + '\n');

@@ -2,11 +2,25 @@ import { Component, Input, forwardRef, ElementRef, ViewChild, HostListener } fro
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cn } from './utils/cn';
+import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
 
 @Component({
   selector: 'tolle-slider',
-  imports: [],
+  imports: [FormControlLabelComponent, FormControlMessageComponent],
+  // The id names the slider's label/hint elements; keep it off the host.
+  host: { '[attr.id]': 'null' },
   template: `
+    @if (label) {
+      <!-- Thumbs are not labelable elements, so they reference the label by id; clicking it focuses the first thumb. -->
+      <tolle-form-control-label [labelId]="id + '-label'" [disabled]="disabled" (click)="focusThumb()">{{
+        label
+      }}</tolle-form-control-label>
+    }
     <div
       #container
       [class]="
@@ -33,6 +47,9 @@ import { cn } from './utils/cn';
           [style.transform]="'translateX(-50%)'"
           [attr.tabindex]="disabled ? null : 0"
           [attr.role]="'slider'"
+          [attr.aria-labelledby]="label ? id + '-label' : null"
+          [attr.aria-describedby]="describedBy(id, hint, '', false, disabled)"
+          [attr.aria-disabled]="disabled || null"
           [attr.aria-valuenow]="val"
           [attr.aria-valuemin]="min"
           [attr.aria-valuemax]="max"
@@ -40,6 +57,9 @@ import { cn } from './utils/cn';
           (focus)="activeIndex = i"></div>
       }
     </div>
+    @if (hasMessage(hint, '', false, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" />
+    }
   `,
   providers: [
     {
@@ -58,11 +78,31 @@ import { cn } from './utils/cn';
   ],
 })
 export class SliderComponent implements ControlValueAccessor {
+  /** Lowest value. @default 0 */
   @Input() min: number = 0;
+  /** Highest value. @default 100 */
   @Input() max: number = 100;
+  /** Increment the value snaps to (also the arrow-key step). @default 1 */
   @Input() step: number = 1;
+  /** Disables dragging and keyboard changes. @default false */
   @Input() disabled: boolean = false;
+  /** Extra Tailwind classes merged onto the track container via `cn()` (last-wins). @default '' */
   @Input() class: string = '';
+  /** Base id for the label and hint elements. @default auto-generated */
+  @Input() id = `tolle-slider-${Math.random().toString(36).slice(2, 11)}`;
+  /** Label shown above the slider and used as each thumb's accessible name. @default '' */
+  @Input() label = '';
+  /** Help text shown below the slider. @default '' */
+  @Input() hint = '';
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
+
+  /** Focus the first thumb — what clicking the label does. */
+  focusThumb() {
+    if (this.disabled) return;
+    this.container.nativeElement.querySelector<HTMLElement>('[role="slider"]')?.focus();
+  }
 
   @ViewChild('container', { static: true }) container!: ElementRef<HTMLElement>;
 

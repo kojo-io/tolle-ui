@@ -65,7 +65,7 @@
               },
               {
                 "glob": "llms*.txt",
-                "input": "projects/tolle/registry",
+                "input": "projects/tolle/registry/site",
                 "output": "/"
               },
               {

@@ -22,6 +22,9 @@ import { cn } from './utils/cn';
   selector: 'tolle-country-selector',
   styles: [':host { display: block; }'],
   imports: [FormsModule, PopoverComponent, InputComponent],
+  // A static id="…" would otherwise be copied onto the host too, and an
+  // outside `<label for>` would hit the host instead of the trigger.
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -142,10 +145,15 @@ import { cn } from './utils/cn';
   `,
 })
 export class CountrySelectorComponent implements OnInit, ControlValueAccessor {
+  /** Id of the trigger; a `<label for>` elsewhere can target it. @default auto-generated */
   @Input() id = `country-selector-${Math.random().toString(36).substr(2, 9)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
   @Input() label = '';
+  /** Help text shown below the control while it has no error. @default '' */
   @Input() hint = '';
+  /** Error text shown below the control while `error` is true. @default '' */
   @Input() errorMessage = '';
+  /** Marks the control invalid: destructive border, `aria-invalid`, and shows `errorMessage`. @default false */
   @Input() error = false;
   @Input() hideHintOnFocus = true;
   @Input() placeholder = 'Select country';

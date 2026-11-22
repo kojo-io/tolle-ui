@@ -30,8 +30,11 @@ export type CheckboxProps = VariantProps<typeof checkboxVariants>;
 
 @Component({
   selector: 'tolle-checkbox',
-  styles: [':host { display: inline-flex; }'],
+  styles: [':host { display: inline-flex; align-items: center; gap: 0.5rem; }'],
   imports: [],
+  // The id belongs to the inner button — the element a `<label for>` can
+  // actually target. On the host it was unreachable (and would be duplicated).
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -42,6 +45,7 @@ export type CheckboxProps = VariantProps<typeof checkboxVariants>;
   template: `
     <button
       type="button"
+      [id]="id"
       role="checkbox"
       [attr.aria-checked]="checked"
       [attr.data-state]="checked ? 'checked' : 'unchecked'"
@@ -55,6 +59,9 @@ export type CheckboxProps = VariantProps<typeof checkboxVariants>;
           aria-hidden="true"></i>
       }
     </button>
+    @if (label) {
+      <label [for]="id" [class]="labelClass">{{ label }}</label>
+    }
   `,
 })
 export class CheckboxComponent implements ControlValueAccessor {
@@ -64,6 +71,17 @@ export class CheckboxComponent implements ControlValueAccessor {
   @Input() disabled = false;
   /** Size of the checkbox. @default 'default' */
   @Input() size: CheckboxProps['size'] = 'default';
+  /** Id of the checkbox button; a `<label for>` elsewhere can target it. @default auto-generated */
+  @Input() id = `tolle-checkbox-${Math.random().toString(36).slice(2, 11)}`;
+  /** Text label beside the checkbox; clicking it toggles the checkbox. @default '' */
+  @Input() label = '';
+
+  get labelClass() {
+    return cn(
+      'text-sm font-medium leading-none text-foreground select-none',
+      this.disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+    );
+  }
 
   checked = false;
 

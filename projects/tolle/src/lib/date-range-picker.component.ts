@@ -26,6 +26,12 @@ import {
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 import { RangeCalendarComponent } from './range-calendar.component';
+import {
+  FormControlLabelComponent,
+  FormControlMessageComponent,
+  describedBy,
+  hasMessage,
+} from './form-control-label.component';
 import { format } from 'date-fns';
 import { DateRange } from './types/date-range';
 
@@ -74,7 +80,9 @@ export type DateRangePickerProps = VariantProps<typeof dateRangePickerTriggerVar
 @Component({
   selector: 'tolle-date-range-picker',
   styles: [':host { display: block; }'],
-  imports: [FormsModule, RangeCalendarComponent],
+  imports: [FormsModule, RangeCalendarComponent, FormControlLabelComponent, FormControlMessageComponent],
+  // The id belongs to the trigger button so `<label for>` reaches it.
+  host: { '[attr.id]': 'null' },
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -84,12 +92,18 @@ export type DateRangePickerProps = VariantProps<typeof dateRangePickerTriggerVar
     },
   ],
   template: `
+    @if (label) {
+      <tolle-form-control-label [for]="id" [disabled]="disabled">{{ label }}</tolle-form-control-label>
+    }
     <button
       #trigger
       type="button"
+      [id]="id"
       aria-haspopup="dialog"
       [attr.aria-expanded]="isOpen"
-      [attr.aria-label]="ariaLabel || null"
+      [attr.aria-label]="label ? null : ariaLabel || null"
+      [attr.aria-invalid]="invalid || null"
+      [attr.aria-describedby]="describedBy(id, hint, errorMessage, invalid, disabled)"
       [attr.data-state]="isOpen ? 'open' : 'closed'"
       [disabled]="disabled"
       [class]="computedTriggerClass"
@@ -136,6 +150,9 @@ export type DateRangePickerProps = VariantProps<typeof dateRangePickerTriggerVar
         </div>
       </div>
     }
+    @if (hasMessage(hint, errorMessage, invalid, disabled)) {
+      <tolle-form-control-message [controlId]="id" [hint]="hint" [errorMessage]="errorMessage" [error]="invalid" />
+    }
   `,
 })
 export class DateRangePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
@@ -164,6 +181,17 @@ export class DateRangePickerComponent implements OnChanges, ControlValueAccessor
   @Input() invalid = false;
   /** Accessible name when there is no associated visible label. @default '' */
   @Input() ariaLabel = '';
+  /** Id of the trigger button; a `<label for>` elsewhere can target it. @default auto-generated */
+  @Input() id = `tolle-date-range-picker-${Math.random().toString(36).slice(2, 11)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
+  @Input() label = '';
+  /** Help text shown below the control while it is not invalid. @default '' */
+  @Input() hint = '';
+  /** Error text shown below the control while `invalid` is true. @default '' */
+  @Input() errorMessage = '';
+
+  protected readonly describedBy = describedBy;
+  protected readonly hasMessage = hasMessage;
 
   /** Emitted with the selected range, including the half-made `{ start, end: null }` state. */
   @Output() valueChange = new EventEmitter<DateRange>();

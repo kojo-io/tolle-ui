@@ -18,8 +18,30 @@ Creates `components.json`, imports `@tolle_/tolle-ui/theme.css` into your global
 stylesheet, checks your Tailwind preset, and installs the base deps
 (`clsx`, `tailwind-merge`, `class-variance-authority`, `@angular/cdk`).
 
+It also writes **agent instructions**, so coding agents read the
+version-matched component docs instead of guessing: a fenced section in
+`AGENTS.md` (created if missing) and `CLAUDE.md` (only if it exists), plus a
+Claude Code skill at `.claude/skills/tolle-ui/SKILL.md`. Re-running replaces
+the section rather than duplicating it.
+
 Flags: `--ui <dir>` (default `src/app/components/ui`), `--registry <url>`,
-`--force`, `--skip-install`.
+`--force`, `--skip-install`, `--no-agents` (skip the agent files), `--mcp`
+(also register the `@tolle_/mcp` server in `.mcp.json`).
+
+### `tolle docs [component]`
+Prints a component's agent page — import line, compiled example, API, form
+binding, services, pitfalls — or the `llms.txt` index with no name. Reads the
+installed `@tolle_/tolle-ui` first, so it matches the project's version; works
+without `init`.
+
+```bash
+npx @tolle_/cli docs select
+npx @tolle_/cli docs            # index of every component
+```
+
+### `tolle agents [--mcp]`
+Re-writes the agent instructions without re-running `init` — e.g. in a project
+that was initialised before they existed.
 
 ### `tolle add <component> [...]`
 Resolves the component **and everything it transitively needs** (sibling

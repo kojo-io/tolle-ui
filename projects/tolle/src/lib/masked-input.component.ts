@@ -15,6 +15,9 @@ import { cn } from './utils/cn';
   selector: 'tolle-masked-input',
   styles: [':host { display: block; }'],
   imports: [FormsModule],
+  // A static id="…" would otherwise be copied onto the host too, and an
+  // outside `<label for>` would hit the host instead of the <input>.
+  host: { '[attr.id]': 'null' },
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -77,9 +80,13 @@ import { cn } from './utils/cn';
   `,
 })
 export class MaskedInputComponent implements ControlValueAccessor, AfterContentChecked {
+  /** Id of the inner `<input>`; a `<label for>` elsewhere can target it. @default auto-generated */
   @Input() id: string = `masked-input-${Math.random().toString(36).substr(2, 9)}`;
+  /** Label shown above the control and wired to it for screen readers. @default '' */
   @Input() label: string = '';
+  /** Help text shown below the control while it has no error. @default '' */
   @Input() hint: string = '';
+  /** Error text shown below the control while `error` is true. @default '' */
   @Input() errorMessage: string = '';
   @Input() mask: string = '';
   @Input() placeholder = '';
@@ -88,6 +95,7 @@ export class MaskedInputComponent implements ControlValueAccessor, AfterContentC
   @Input() readonly = false;
   @Input() class = '';
   @Input() containerClass: string = '';
+  /** Marks the control invalid: destructive border, `aria-invalid`, and shows `errorMessage`. @default false */
   @Input() error: boolean = false;
   @Input() size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
   @Input() returnRaw = false;

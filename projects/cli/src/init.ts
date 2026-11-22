@@ -1,13 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { execSync } from 'child_process';
-import { configPath, writeJson, log, TolleConfig, INVOKE } from './util';
+import { configPath, writeJson, log, TolleConfig, INVOKE, DEFAULT_REGISTRY, readConfigOrDefault } from './util';
+import { writeAgentFiles } from './agents';
 
 const DEFAULT: TolleConfig = {
   style: 'default',
   ui: 'src/app/components/ui',
   tailwind: { config: 'tailwind.config.js', css: 'src/styles.css' },
-  registry: 'https://tolle-ui.com/registry',
+  registry: DEFAULT_REGISTRY,
   aliases: { ui: '@/components/ui' },
 };
 
@@ -84,7 +85,17 @@ export async function runInit(flags: Record<string, string | boolean>): Promise<
     }
   }
 
+  if (!flags['no-agents']) {
+    writeAgentFiles(cwd, { ngMajor, ui: config.ui, mcp: !!flags.mcp });
+  }
+
   log.info(`\nDone. Next: ${INVOKE} add button`);
+}
+
+/** `tolle agents` — (re)write the agent instructions without re-running init. */
+export function runAgents(flags: Record<string, string | boolean>): void {
+  const cwd = process.cwd();
+  writeAgentFiles(cwd, { ngMajor: detectAngularMajor(cwd), ui: readConfigOrDefault(cwd).ui, mcp: !!flags.mcp });
 }
 
 /**

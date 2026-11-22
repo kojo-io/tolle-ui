@@ -27,8 +27,10 @@ export interface Modal<T = any> {
    */
   backdropClose?: boolean;
 
-  /** * Data to pass to a Component content.
-   * Accessed via @Input() in the child component.
+  /**
+   * Data for a Component content. Keys that match the component's `@Input()`s
+   * are bound to them; every key is also readable inside the component from
+   * the injected ref: `inject(ModalRef).modal.data`.
    */
   data?: { [key: string]: any };
 

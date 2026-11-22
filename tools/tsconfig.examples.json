@@ -1,0 +1,20 @@
+{
+  // Type-checks every docs-app example — TypeScript AND templates
+  // (strictTemplates). These examples are shipped to agents as copy-paste
+  // source in registry/docs/*.md, so one that does not compile is a bug.
+  //   npm run check:examples
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "outDir": "../out-tsc/examples",
+    "types": []
+  },
+  "files": [],
+  "include": ["../projects/docs/src/app/docs-examples/**/*.ts"],
+  "exclude": ["../projects/docs/src/app/docs-examples/**/*.spec.ts"],
+  "angularCompilerOptions": {
+    "strictTemplates": true,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
+  }
+}
