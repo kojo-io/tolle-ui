@@ -4,7 +4,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-tabs-overview',
-    standalone: true,
     imports: [BaseEditorComponent, DocHeroComponent],
     template: `
     <app-doc-hero

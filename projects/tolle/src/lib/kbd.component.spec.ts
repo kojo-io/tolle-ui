@@ -4,9 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { KbdComponent, KbdGroupComponent } from './kbd.component';
 
 @Component({
-  standalone: true,
-  imports: [KbdComponent, KbdGroupComponent],
-  template: `
+    imports: [KbdComponent, KbdGroupComponent],
+    template: `
     <tolle-kbd [size]="size" [variant]="variant" [class]="extraClass">{{ text }}</tolle-kbd>
 
     <tolle-kbd-group>

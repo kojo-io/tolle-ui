@@ -1,5 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -76,8 +89,7 @@ export type ReasoningProps = VariantProps<typeof reasoningVariants>;
 @Component({
   selector: 'tolle-reasoning',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [ReasoningService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -112,7 +124,7 @@ export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
     // `skip(1)` drops the BehaviorSubject's current value so simply mounting
     // the component never emits a spurious `openChange`.
     this.subscriptions.add(
-      this.service.open$.pipe(skip(1)).subscribe((open) => {
+      this.service.open$.pipe(skip(1)).subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
         // Only user-driven toggles are worth reporting; echoing a change the
@@ -126,7 +138,7 @@ export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
     if (changes['open']) this.applyInput(this.open);
     this.service.setStreaming(this.streaming);
     this.service.setDuration(this.duration);
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -163,8 +175,7 @@ export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
 @Component({
   selector: 'tolle-reasoning-trigger',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <button
@@ -173,28 +184,21 @@ export class ReasoningComponent implements OnInit, OnChanges, OnDestroy {
       [attr.aria-expanded]="open"
       [attr.data-state]="open ? 'open' : 'closed'"
       [class]="computedClass"
-      (click)="onToggle()"
-    >
-      <i
-        [class]="icon"
-        [class.animate-pulse]="streaming"
-        aria-hidden="true"
-      ></i>
+      (click)="onToggle()">
+      <i [class]="icon" [class.animate-pulse]="streaming" aria-hidden="true"></i>
 
       <span data-reasoning-label>{{ label }}</span>
 
       <i
         class="ri-arrow-down-s-line transition-transform duration-200"
         [class.rotate-180]="open"
-        aria-hidden="true"
-      ></i>
+        aria-hidden="true"></i>
 
       <ng-content></ng-content>
     </button>
   `,
 })
 export class ReasoningTriggerComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -223,19 +227,19 @@ export class ReasoningTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
       })
     );
     this.subscriptions.add(
-      this.service.streaming$.subscribe((streaming) => {
+      this.service.streaming$.subscribe(streaming => {
         this.streaming = streaming;
         this.cdr.markForCheck();
       })
     );
     this.subscriptions.add(
-      this.service.duration$.subscribe((duration) => {
+      this.service.duration$.subscribe(duration => {
         this.duration = duration;
         this.cdr.markForCheck();
       })
@@ -271,18 +275,20 @@ export class ReasoningTriggerComponent implements OnChanges, OnInit, OnDestroy {
 @Component({
   selector: 'tolle-reasoning-content',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="open" data-reasoning-content [class]="computedClass">
-      <p *ngIf="text" class="whitespace-pre-wrap">{{ text }}</p>
-      <ng-content></ng-content>
-    </div>
+    @if (open) {
+      <div data-reasoning-content [class]="computedClass">
+        @if (text) {
+          <p class="whitespace-pre-wrap">{{ text }}</p>
+        }
+        <ng-content></ng-content>
+      </div>
+    }
   `,
 })
 export class ReasoningContentComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -305,7 +311,7 @@ export class ReasoningContentComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
       })
@@ -317,9 +323,6 @@ export class ReasoningContentComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   get computedClass() {
-    return cn(
-      'border-l-2 border-border pl-4 text-muted-foreground',
-      this.class
-    );
+    return cn('border-l-2 border-border pl-4 text-muted-foreground', this.class);
   }
 }

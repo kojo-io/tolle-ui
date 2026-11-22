@@ -4,7 +4,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-calendar-overview',
-    standalone: true,
     imports: [BaseEditorComponent, DocHeroComponent],
     template: `
     <app-doc-hero slug="calendar" description="A versatile component that allows users to view and select dates, supporting various modes like date, month, and year selection." id="overview" />

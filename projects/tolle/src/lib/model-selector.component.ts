@@ -1,5 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, ViewChild, forwardRef, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  ViewChild,
+  forwardRef,
+  inject,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -46,7 +57,8 @@ const modelSelectorTriggerVariants = cva(
       },
       variant: {
         default: '',
-        ghost: 'border-transparent bg-transparent shadow-none hover:bg-accent hover:text-accent-foreground',
+        ghost:
+          'border-transparent bg-transparent shadow-none hover:bg-accent hover:text-accent-foreground',
       },
     },
     defaultVariants: { size: 'default', variant: 'default' },
@@ -71,9 +83,7 @@ export type ModelSelectorProps = VariantProps<typeof modelSelectorTriggerVariant
 @Component({
   selector: 'tolle-model-selector',
   styles: [':host { display: block; }'],
-  standalone: true,
   imports: [
-    CommonModule,
     PopoverComponent,
     CommandComponent,
     CommandInputComponent,
@@ -99,45 +109,56 @@ export type ModelSelectorProps = VariantProps<typeof modelSelectorTriggerVariant
         aria-haspopup="listbox"
         [attr.aria-label]="ariaLabel || 'Select a model'"
         [disabled]="disabled"
-        [class]="computedTriggerClass"
-      >
-        <i *ngIf="icon" [class]="icon + ' shrink-0 text-muted-foreground'" aria-hidden="true"></i>
-        <span [class]="selected ? 'truncate text-foreground' : 'truncate text-muted-foreground'">{{ triggerLabel }}</span>
+        [class]="computedTriggerClass">
+        @if (icon) {
+          <i [class]="icon + ' shrink-0 text-muted-foreground'" aria-hidden="true"></i>
+        }
+        <span [class]="selected ? 'truncate text-foreground' : 'truncate text-muted-foreground'">{{
+          triggerLabel
+        }}</span>
         <i class="ri-expand-up-down-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
       </button>
 
       <div class="w-72 overflow-hidden rounded-md border border-border bg-popover shadow-md">
         <tolle-command [ariaLabel]="ariaLabel || 'Select a model'" (selected)="onSelect($event)">
-          <tolle-command-input *ngIf="searchable" [placeholder]="searchPlaceholder"></tolle-command-input>
+          @if (searchable) {
+            <tolle-command-input [placeholder]="searchPlaceholder"></tolle-command-input>
+          }
           <tolle-command-list>
             <tolle-command-empty>{{ emptyMessage }}</tolle-command-empty>
-            <tolle-command-group *ngFor="let group of groups" [heading]="group.provider">
-              <tolle-command-item
-                *ngFor="let model of group.models"
-                [value]="model.id"
-                [label]="model.name"
-                [keywords]="[model.provider || '', model.description || '']"
-                [disabled]="model.disabled || false"
-                class="items-start"
-              >
-                <i
-                  class="ri-check-line mt-0.5 shrink-0 text-primary"
-                  [class.opacity-0]="model.id !== value"
-                  aria-hidden="true"
-                ></i>
-                <span class="flex min-w-0 flex-1 flex-col">
-                  <span class="flex items-center gap-1.5">
-                    <span class="truncate font-medium">{{ model.name }}</span>
-                    <span
-                      *ngIf="model.badge"
-                      class="shrink-0 rounded-full border border-border bg-muted px-1.5 py-px text-[10px] font-medium uppercase tracking-wide text-muted-foreground"
-                      >{{ model.badge }}</span
-                    >
-                  </span>
-                  <span *ngIf="model.description" class="truncate text-xs text-muted-foreground">{{ model.description }}</span>
-                </span>
-              </tolle-command-item>
-            </tolle-command-group>
+            @for (group of groups; track group) {
+              <tolle-command-group [heading]="group.provider">
+                @for (model of group.models; track model) {
+                  <tolle-command-item
+                    [value]="model.id"
+                    [label]="model.name"
+                    [keywords]="[model.provider || '', model.description || '']"
+                    [disabled]="model.disabled || false"
+                    class="items-start">
+                    <i
+                      class="ri-check-line mt-0.5 shrink-0 text-primary"
+                      [class.opacity-0]="model.id !== value"
+                      aria-hidden="true"></i>
+                    <span class="flex min-w-0 flex-1 flex-col">
+                      <span class="flex items-center gap-1.5">
+                        <span class="truncate font-medium">{{ model.name }}</span>
+                        @if (model.badge) {
+                          <span
+                            class="shrink-0 rounded-full border border-border bg-muted px-1.5 py-px text-[10px] font-medium uppercase tracking-wide text-muted-foreground"
+                            >{{ model.badge }}</span
+                          >
+                        }
+                      </span>
+                      @if (model.description) {
+                        <span class="truncate text-xs text-muted-foreground">{{
+                          model.description
+                        }}</span>
+                      }
+                    </span>
+                  </tolle-command-item>
+                }
+              </tolle-command-group>
+            }
           </tolle-command-list>
         </tolle-command>
       </div>
@@ -190,7 +211,7 @@ export class ModelSelectorComponent implements ControlValueAccessor, OnChanges {
 
   ngOnChanges(): void {
     this.groups = this.groupModels(this.models);
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -198,7 +219,7 @@ export class ModelSelectorComponent implements ControlValueAccessor, OnChanges {
 
   /** The selected `ModelOption`, or `null` when the value matches nothing. */
   get selected(): ModelOption | null {
-    return this.models.find((model) => model.id === this.value) ?? null;
+    return this.models.find(model => model.id === this.value) ?? null;
   }
 
   get triggerLabel(): string {
@@ -210,10 +231,7 @@ export class ModelSelectorComponent implements ControlValueAccessor, OnChanges {
   }
 
   get computedTriggerClass() {
-    return cn(
-      modelSelectorTriggerVariants({ size: this.size, variant: this.variant }),
-      this.class
-    );
+    return cn(modelSelectorTriggerVariants({ size: this.size, variant: this.variant }), this.class);
   }
 
   onSelect(id: string): void {

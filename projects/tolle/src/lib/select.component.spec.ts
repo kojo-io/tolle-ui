@@ -26,9 +26,8 @@ function settle(fixture: ComponentFixture<unknown>): Promise<void> {
 }
 
 @Component({
-  standalone: true,
-  imports: [SelectComponent, SelectItemComponent, FormsModule],
-  template: `
+    imports: [SelectComponent, SelectItemComponent, FormsModule],
+    template: `
     <tolle-select
       #select
       [ngModel]="value"
@@ -45,7 +44,7 @@ function settle(fixture: ComponentFixture<unknown>): Promise<void> {
       <tolle-select-item value="banana">Banana</tolle-select-item>
       <tolle-select-item value="cherry" [disabled]="cherryDisabled">Cherry</tolle-select-item>
     </tolle-select>
-  `,
+  `
 })
 class SelectHostComponent {
   @ViewChild('select') select!: SelectComponent;

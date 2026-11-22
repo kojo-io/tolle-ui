@@ -3,7 +3,6 @@ import { DataTableComponent, TableColumn } from '../../../../../../tolle/src/lib
 
 @Component({
     selector: 'app-sticky',
-    standalone: true,
     imports: [
         DataTableComponent
     ],

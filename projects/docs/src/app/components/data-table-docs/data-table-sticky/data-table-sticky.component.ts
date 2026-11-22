@@ -9,7 +9,6 @@ import { DataTableStickyComponent } from '../../../docs-examples/data-table/data
 
 @Component({
     selector: 'app-data-table-sticky-docs',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

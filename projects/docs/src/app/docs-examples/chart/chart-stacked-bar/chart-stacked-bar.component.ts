@@ -11,7 +11,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-chart-stacked-bar',
-    standalone: true,
     imports: [
         ChartComponent,
         ChartGridComponent,

@@ -12,20 +12,19 @@ import { SuggestionScrollingComponent } from '../../docs-examples/suggestion/sug
 
 
 @Component({
-  selector: 'app-suggestion-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicSuggestionsComponent,
-    SuggestionVariantsComponent,
-    SuggestionScrollingComponent
-  ],
-  templateUrl: './suggestion-docs.component.html',
-  styleUrl: './suggestion-docs.component.css'
+    selector: 'app-suggestion-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicSuggestionsComponent,
+        SuggestionVariantsComponent,
+        SuggestionScrollingComponent
+    ],
+    templateUrl: './suggestion-docs.component.html',
+    styleUrl: './suggestion-docs.component.css'
 })
 export class SuggestionDocsComponent {
   baseService = inject(BaseService);

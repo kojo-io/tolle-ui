@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -31,8 +31,7 @@ export type BadgeProps = VariantProps<typeof badgeVariants>;
 @Component({
   selector: 'tolle-badge',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div [class]="computedClass">
       <ng-content select="[prefix]"></ng-content>
@@ -41,14 +40,15 @@ export type BadgeProps = VariantProps<typeof badgeVariants>;
         <ng-content></ng-content>
       </span>
 
-      <button
-        *ngIf="removable"
-        type="button"
-        [attr.aria-label]="removeLabel"
-        (click)="onRemove.emit($event)"
-        class="ml-1 -mr-1 rounded-md transition-colors hover:bg-foreground/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1">
-        <i class="ri-close-line" aria-hidden="true"></i>
-      </button>
+      @if (removable) {
+        <button
+          type="button"
+          [attr.aria-label]="removeLabel"
+          (click)="onRemove.emit($event)"
+          class="-mr-1 ml-1 rounded-md transition-colors hover:bg-foreground/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1">
+          <i class="ri-close-line" aria-hidden="true"></i>
+        </button>
+      }
     </div>
   `,
 })
@@ -68,9 +68,6 @@ export class BadgeComponent {
   @Output() onRemove = new EventEmitter<MouseEvent>();
 
   get computedClass() {
-    return cn(
-      badgeVariants({ variant: this.variant, size: this.size }),
-      this.class
-    );
+    return cn(badgeVariants({ variant: this.variant, size: this.size }), this.class);
   }
 }

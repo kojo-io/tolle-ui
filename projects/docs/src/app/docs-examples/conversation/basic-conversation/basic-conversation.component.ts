@@ -19,7 +19,6 @@ interface Turn {
 
 @Component({
     selector: 'app-basic-conversation',
-    standalone: true,
     imports: [
         ConversationComponent,
         ConversationContentComponent,

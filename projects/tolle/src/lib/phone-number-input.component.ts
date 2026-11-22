@@ -7,7 +7,7 @@ import {
   Output,
   ChangeDetectorRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { CountrySelectorComponent } from './country-selector.component';
 import { MaskedInputComponent } from './masked-input.component';
@@ -16,13 +16,14 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-phone-number-input',
-  standalone: true,
-  imports: [CommonModule, FormsModule, CountrySelectorComponent, MaskedInputComponent],
+  imports: [FormsModule, CountrySelectorComponent, MaskedInputComponent],
   template: `
     <div class="flex w-full flex-col gap-1.5">
-      <label *ngIf="label" [for]="id" [class]="computedLabelClass">
-        {{ label }}
-      </label>
+      @if (label) {
+        <label [for]="id" [class]="computedLabelClass">
+          {{ label }}
+        </label>
+      }
 
       <div class="flex gap-2" (focusin)="onFocusIn()" (focusout)="onFocusOut()">
         <tolle-country-selector
@@ -51,17 +52,20 @@ import { cn } from './utils/cn';
           (ngModelChange)="onMaskInputChange($event)"></tolle-masked-input>
       </div>
 
-      <ng-container *ngIf="!disabled">
-        <p
-          *ngIf="hint && !error"
-          class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus">
-          {{ hint }}
-        </p>
-        <p *ngIf="error && errorMessage" [id]="id + '-error'" class="px-1 text-xs text-destructive">
-          {{ errorMessage }}
-        </p>
-      </ng-container>
+      @if (!disabled) {
+        @if (hint && !error) {
+          <p
+            class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
+            [class.opacity-0]="isFocused && hideHintOnFocus">
+            {{ hint }}
+          </p>
+        }
+        @if (error && errorMessage) {
+          <p [id]="id + '-error'" class="px-1 text-xs text-destructive">
+            {{ errorMessage }}
+          </p>
+        }
+      }
     </div>
   `,
   styles: [

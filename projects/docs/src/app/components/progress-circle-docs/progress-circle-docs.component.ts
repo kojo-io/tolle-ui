@@ -11,20 +11,19 @@ import { ProgressCircleLabelComponent } from '../../docs-examples/progress-circl
 import { ProgressCircleSizesComponent } from '../../docs-examples/progress-circle/progress-circle-sizes/progress-circle-sizes.component';
 
 @Component({
-  selector: 'app-progress-circle-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicProgressCircleComponent,
-    ProgressCircleLabelComponent,
-    ProgressCircleSizesComponent
-  ],
-  templateUrl: './progress-circle-docs.component.html',
-  styleUrl: './progress-circle-docs.component.css'
+    selector: 'app-progress-circle-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicProgressCircleComponent,
+        ProgressCircleLabelComponent,
+        ProgressCircleSizesComponent
+    ],
+    templateUrl: './progress-circle-docs.component.html',
+    styleUrl: './progress-circle-docs.component.css'
 })
 export class ProgressCircleDocsComponent {
   baseService = inject(BaseService);

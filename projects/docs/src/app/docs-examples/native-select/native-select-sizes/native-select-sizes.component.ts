@@ -3,7 +3,6 @@ import { NativeSelectComponent, NativeSelectOption } from '../../../../../../tol
 
 @Component({
     selector: 'app-native-select-sizes',
-    standalone: true,
     imports: [NativeSelectComponent],
     templateUrl: './native-select-sizes.component.html'
 })

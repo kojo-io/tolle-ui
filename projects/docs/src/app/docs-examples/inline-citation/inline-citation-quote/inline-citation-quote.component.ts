@@ -7,7 +7,6 @@ import {
 
 @Component({
     selector: 'app-inline-citation-quote',
-    standalone: true,
     imports: [InlineCitationComponent, InlineCitationCardComponent, InlineCitationQuoteComponent],
     templateUrl: './inline-citation-quote.component.html'
 })

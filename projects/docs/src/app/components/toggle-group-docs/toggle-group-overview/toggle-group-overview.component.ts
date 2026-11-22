@@ -4,7 +4,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-toggle-group-overview',
-    standalone: true,
     imports: [BaseEditorComponent, DocHeroComponent],
     template: `
     <app-doc-hero slug="toggle-group" description="A set of two-state buttons that can be toggled on or off." id="overview" />

@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-phone-number-input-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './phone-number-input-api.component.html'
 })

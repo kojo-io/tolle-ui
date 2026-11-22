@@ -1,5 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -30,8 +37,7 @@ export type FieldProps = VariantProps<typeof fieldVariants>;
 @Component({
   selector: 'tolle-field',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div role="group" [attr.data-invalid]="invalid || null" [class]="computedClass">
@@ -39,7 +45,7 @@ export type FieldProps = VariantProps<typeof fieldVariants>;
     </div>
   `,
 })
-export class FieldComponent  implements OnChanges{
+export class FieldComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -70,25 +76,27 @@ export class FieldComponent  implements OnChanges{
 @Component({
   selector: 'tolle-field-label',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <label
       [attr.for]="for || null"
-      [class]="cn(
-        'flex items-center gap-2 text-sm font-medium leading-none text-foreground',
-        'group-data-[invalid=true]/field:text-destructive',
-        'peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
-        class
-      )"
-    >
+      [class]="
+        cn(
+          'flex items-center gap-2 text-sm font-medium leading-none text-foreground',
+          'group-data-[invalid=true]/field:text-destructive',
+          'peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
+          class
+        )
+      ">
       <ng-content></ng-content>
-      <span *ngIf="required" class="text-destructive" aria-hidden="true">*</span>
+      @if (required) {
+        <span class="text-destructive" aria-hidden="true">*</span>
+      }
     </label>
   `,
 })
-export class FieldLabelComponent  implements OnChanges{
+export class FieldLabelComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -113,12 +121,13 @@ export class FieldLabelComponent  implements OnChanges{
 @Component({
   selector: 'tolle-field-content',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex flex-1 flex-col gap-1.5', class)"><ng-content></ng-content></div>`,
+  template: `<div [class]="cn('flex flex-1 flex-col gap-1.5', class)">
+    <ng-content></ng-content>
+  </div>`,
 })
-export class FieldContentComponent  implements OnChanges{
+export class FieldContentComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -142,8 +151,7 @@ export class FieldContentComponent  implements OnChanges{
 @Component({
   selector: 'tolle-field-description',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <p [id]="id || null" [class]="cn('text-balance text-xs text-muted-foreground', class)">
@@ -151,7 +159,7 @@ export class FieldContentComponent  implements OnChanges{
     </p>
   `,
 })
-export class FieldDescriptionComponent  implements OnChanges{
+export class FieldDescriptionComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -177,24 +185,29 @@ export class FieldDescriptionComponent  implements OnChanges{
 @Component({
   selector: 'tolle-field-error',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div
-      *ngIf="messages.length"
-      [id]="id || null"
-      role="alert"
-      [class]="cn('text-xs font-medium text-destructive', class)"
-    >
-      <ng-container *ngIf="messages.length === 1">{{ messages[0] }}</ng-container>
-      <ul *ngIf="messages.length > 1" class="ml-4 list-disc space-y-0.5">
-        <li *ngFor="let message of messages">{{ message }}</li>
-      </ul>
-    </div>
+    @if (messages.length) {
+      <div
+        [id]="id || null"
+        role="alert"
+        [class]="cn('text-xs font-medium text-destructive', class)">
+        @if (messages.length === 1) {
+          {{ messages[0] }}
+        }
+        @if (messages.length > 1) {
+          <ul class="ml-4 list-disc space-y-0.5">
+            @for (message of messages; track message) {
+              <li>{{ message }}</li>
+            }
+          </ul>
+        }
+      </div>
+    }
   `,
 })
-export class FieldErrorComponent  implements OnChanges{
+export class FieldErrorComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -225,8 +238,8 @@ export class FieldErrorComponent  implements OnChanges{
     if (typeof e === 'string') return e ? [e] : [];
     if (Array.isArray(e)) return e.filter(Boolean).map(String);
     return Object.values(e)
-      .filter((v) => v !== false && v !== null && v !== undefined)
-      .map((v) => (typeof v === 'string' ? v : String(v)));
+      .filter(v => v !== false && v !== null && v !== undefined)
+      .map(v => (typeof v === 'string' ? v : String(v)));
   }
 }
 
@@ -234,12 +247,13 @@ export class FieldErrorComponent  implements OnChanges{
 @Component({
   selector: 'tolle-field-group',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('flex w-full flex-col gap-6', class)"><ng-content></ng-content></div>`,
+  template: `<div [class]="cn('flex w-full flex-col gap-6', class)">
+    <ng-content></ng-content>
+  </div>`,
 })
-export class FieldGroupComponent  implements OnChanges{
+export class FieldGroupComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -260,12 +274,13 @@ export class FieldGroupComponent  implements OnChanges{
 @Component({
   selector: 'tolle-field-set',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<fieldset [class]="cn('flex w-full flex-col gap-4 border-0 p-0', class)"><ng-content></ng-content></fieldset>`,
+  template: `<fieldset [class]="cn('flex w-full flex-col gap-4 border-0 p-0', class)">
+    <ng-content></ng-content>
+  </fieldset>`,
 })
-export class FieldSetComponent  implements OnChanges{
+export class FieldSetComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -298,12 +313,11 @@ export type FieldLegendProps = VariantProps<typeof fieldLegendVariants>;
 @Component({
   selector: 'tolle-field-legend',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<legend [class]="computedClass"><ng-content></ng-content></legend>`,
 })
-export class FieldLegendComponent  implements OnChanges{
+export class FieldLegendComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -329,12 +343,11 @@ export class FieldLegendComponent  implements OnChanges{
 @Component({
   selector: 'tolle-field-separator',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div role="separator" [class]="cn('h-px w-full bg-border', class)"></div>`,
 })
-export class FieldSeparatorComponent  implements OnChanges{
+export class FieldSeparatorComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -355,12 +368,13 @@ export class FieldSeparatorComponent  implements OnChanges{
 @Component({
   selector: 'tolle-field-title',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="cn('text-sm font-medium leading-none text-foreground', class)"><ng-content></ng-content></div>`,
+  template: `<div [class]="cn('text-sm font-medium leading-none text-foreground', class)">
+    <ng-content></ng-content>
+  </div>`,
 })
-export class FieldTitleComponent  implements OnChanges{
+export class FieldTitleComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

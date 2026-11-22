@@ -9,9 +9,8 @@ import {
 } from './bubble.component';
 
 @Component({
-  standalone: true,
-  imports: [BubbleComponent, BubbleActionsComponent],
-  template: `
+    imports: [BubbleComponent, BubbleActionsComponent],
+    template: `
     <tolle-bubble [interactive]="true" (bubbleClick)="bubbleClicks = bubbleClicks + 1">
       Hello there
       <tolle-bubble-actions>

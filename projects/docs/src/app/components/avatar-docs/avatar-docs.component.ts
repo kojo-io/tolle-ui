@@ -8,18 +8,16 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-avatar-docs',
-  standalone: true,
-  imports: [
-    AvatarOverviewComponent,
-    AvatarInteractiveComponent,
-    AvatarExamplesComponent,
-    AvatarApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './avatar-docs.component.html',
-  styleUrl: './avatar-docs.component.css'
+    selector: 'app-avatar-docs',
+    imports: [
+        AvatarOverviewComponent,
+        AvatarInteractiveComponent,
+        AvatarExamplesComponent,
+        AvatarApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './avatar-docs.component.html',
+    styleUrl: './avatar-docs.component.css'
 })
 export class AvatarDocsComponent {
   baseService = inject(BaseService);

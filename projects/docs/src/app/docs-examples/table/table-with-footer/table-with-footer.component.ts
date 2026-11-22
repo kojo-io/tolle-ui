@@ -19,7 +19,6 @@ interface LineItem {
 
 @Component({
     selector: 'app-table-with-footer',
-    standalone: true,
     imports: [
         CommonModule,
         TableComponent,

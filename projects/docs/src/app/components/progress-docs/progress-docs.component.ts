@@ -5,25 +5,22 @@ import { ProgressOverviewComponent } from './progress-overview/progress-overview
 import { ProgressInteractiveComponent } from './progress-interactive/progress-interactive.component';
 import { ProgressApiComponent } from './progress-api/progress-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-progress-docs',
-    standalone: true,
-    imports: [
-        CommonModule,
-        ProgressOverviewComponent,
-        ProgressInteractiveComponent,
-        ProgressApiComponent,
-        DocsWrapperComponent
-    ],
-    templateUrl: './progress-docs.component.html'
+  selector: 'app-progress-docs',
+  imports: [
+    ProgressOverviewComponent,
+    ProgressInteractiveComponent,
+    ProgressApiComponent,
+    DocsWrapperComponent,
+  ],
+  templateUrl: './progress-docs.component.html',
 })
 export class ProgressDocsComponent implements OnInit {
-    baseService = inject(BaseService);
-    analytics = inject(AnalyticsService);
+  baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
 
-    ngOnInit(): void {
-        this.analytics.init();
-    }
+  ngOnInit(): void {
+    this.analytics.init();
+  }
 }

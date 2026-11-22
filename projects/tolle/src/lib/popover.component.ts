@@ -1,30 +1,44 @@
-
-import { CommonModule } from '@angular/common';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'tolle-popover',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div class="inline-block" #trigger (click)="toggle()">
       <ng-content select="[trigger]"></ng-content>
     </div>
 
-    <div
-      *ngIf="isOpen"
-      #popover
-      class="fixed top-0 left-0 w-max z-[9999]"
-      style="visibility: hidden"
-    >
-      <ng-content></ng-content>
-    </div>
+    @if (isOpen) {
+      <div #popover class="fixed left-0 top-0 z-[9999] w-max" style="visibility: hidden">
+        <ng-content></ng-content>
+      </div>
+    }
   `,
 })
 export class PopoverComponent implements OnDestroy {
-  @Input() placement: 'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end' = 'bottom';
+  @Input() placement:
+    | 'top'
+    | 'bottom'
+    | 'left'
+    | 'right'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left-start'
+    | 'left-end'
+    | 'right-start'
+    | 'right-end' = 'bottom';
   @Output() onOpen = new EventEmitter<void>();
   @Output() onClose = new EventEmitter<void>();
 
@@ -35,7 +49,10 @@ export class PopoverComponent implements OnDestroy {
   private cleanup?: () => void;
 
   private _outsideClickHandler = (event: MouseEvent) => {
-    if (!this.triggerEl?.nativeElement.contains(event.target) && !this.popoverEl?.nativeElement.contains(event.target)) {
+    if (
+      !this.triggerEl?.nativeElement.contains(event.target) &&
+      !this.popoverEl?.nativeElement.contains(event.target)
+    ) {
       this.close();
     }
   };
@@ -69,23 +86,19 @@ export class PopoverComponent implements OnDestroy {
   private updatePosition() {
     if (!this.triggerEl || !this.popoverEl) return;
 
-    this.cleanup = autoUpdate(
-      this.triggerEl.nativeElement,
-      this.popoverEl.nativeElement,
-      () => {
-        computePosition(this.triggerEl.nativeElement, this.popoverEl.nativeElement, {
-          placement: this.placement,
-          strategy: 'fixed',
-          middleware: [offset(8), flip(), shift({ padding: 8 })],
-        }).then(({ x, y }) => {
-          Object.assign(this.popoverEl.nativeElement.style, {
-            left: `${x}px`,
-            top: `${y}px`,
-            visibility: 'visible',
-          });
+    this.cleanup = autoUpdate(this.triggerEl.nativeElement, this.popoverEl.nativeElement, () => {
+      computePosition(this.triggerEl.nativeElement, this.popoverEl.nativeElement, {
+        placement: this.placement,
+        strategy: 'fixed',
+        middleware: [offset(8), flip(), shift({ padding: 8 })],
+      }).then(({ x, y }) => {
+        Object.assign(this.popoverEl.nativeElement.style, {
+          left: `${x}px`,
+          top: `${y}px`,
+          visibility: 'visible',
         });
-      }
-    );
+      });
+    });
   }
 
   ngOnDestroy() {

@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-input-group-stacked',
-    standalone: true,
     imports: [
         FormsModule,
         InputGroupComponent,

@@ -7,7 +7,6 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 
 @Component({
     selector: 'app-calendar-range-interactive',
-    standalone: true,
     imports: [
         CommonModule,
         FormsModule,

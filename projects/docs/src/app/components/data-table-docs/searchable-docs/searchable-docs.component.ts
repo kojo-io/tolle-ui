@@ -6,15 +6,14 @@ import {ComponentPreviewComponent} from '../../../shared/component-preview/compo
 import {SearchableComponent} from '../../../docs-examples/data-table/searchable/searchable.component';
 
 @Component({
-  selector: 'app-searchable-docs',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    ComponentPreviewComponent,
-    SearchableComponent
-  ],
-  templateUrl: './searchable-docs.component.html',
-  styleUrl: './searchable-docs.component.css'
+    selector: 'app-searchable-docs',
+    imports: [
+        AsyncPipe,
+        ComponentPreviewComponent,
+        SearchableComponent
+    ],
+    templateUrl: './searchable-docs.component.html',
+    styleUrl: './searchable-docs.component.css'
 })
 export class SearchableDocsComponent implements OnInit {
   sourceService = inject(SourceCodeService);

@@ -3,8 +3,9 @@ name: Deploy Tolle UI & Docs (v18)
 on:
   push:
     branches:
+      # `master` is the Angular 21 line and deploys via deploy-release-21.yml.
+      # This workflow serves only the frozen Angular 18 line.
       - release-18
-      - master
 
 jobs:
   deploy:
@@ -27,14 +28,21 @@ jobs:
         run: |
           npm run build:docs
 
-      - name: Deploy site to AWS (apex domain — tolle-ui.com)
+      - name: Deploy v18 registry to AWS (tolle-ui.com/v18/registry)
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.AWS_HOST }}
           username: ${{ secrets.AWS_USER }}
           key: ${{ secrets.AWS_SSH_KEY }}
-          # Consolidated app (landing + docs + /registry) now serves the apex domain.
-          # tolle-ui.com serves /var/www/tolle-ui; the old /tolle-ui-docs path held Storybook which we don't use again.
-          source: dist/docs/browser/*
-          target: /var/www/tolle-ui
-          strip_components: 3
+          # `master` (Angular 21) owns /registry. The 18 line publishes its own
+          # copy here so Angular 18 users can point the CLI at a matching registry:
+          #   npx @tolle_/cli init --registry https://tolle-ui.com/v18/registry
+          # Consumers who already installed @tolle_/tolle-ui@v18 resolve the
+          # registry from node_modules and never hit the network for this.
+          source: dist/docs/browser/registry/*
+          target: /var/www/tolle-ui/v18/registry
+          strip_components: 4
+
+      # NOTE: the site itself is no longer deployed from this branch — the apex
+      # domain serves the Angular 21 build from `master`. Only the versioned
+      # registry above is published from the 18 line.

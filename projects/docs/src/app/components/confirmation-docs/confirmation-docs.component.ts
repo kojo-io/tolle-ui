@@ -10,19 +10,18 @@ import { BasicConfirmationComponent } from '../../docs-examples/confirmation/bas
 import { ConfirmationResolvedComponent } from '../../docs-examples/confirmation/confirmation-resolved/confirmation-resolved.component';
 
 @Component({
-  selector: 'app-confirmation-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicConfirmationComponent,
-    ConfirmationResolvedComponent
-  ],
-  templateUrl: './confirmation-docs.component.html',
-  styleUrl: './confirmation-docs.component.css'
+    selector: 'app-confirmation-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicConfirmationComponent,
+        ConfirmationResolvedComponent
+    ],
+    templateUrl: './confirmation-docs.component.html',
+    styleUrl: './confirmation-docs.component.css'
 })
 export class ConfirmationDocsComponent {
   baseService = inject(BaseService);

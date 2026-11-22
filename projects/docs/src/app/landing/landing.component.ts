@@ -1,8 +1,13 @@
 import { Component, computed, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { RegistryNavService, NavItem, CATEGORY_ICON, NON_COMPONENT_GROUPS } from '../shared/registry-nav.service';
+import {
+  RegistryNavService,
+  NavItem,
+  CATEGORY_ICON,
+  NON_COMPONENT_GROUPS,
+} from '../shared/registry-nav.service';
 import { ThemeService } from '../../../../tolle/src/lib/theme.service';
 import { ButtonComponent } from '../../../../tolle/src/lib/button.component';
 import { BadgeComponent } from '../../../../tolle/src/lib/badge.component';
@@ -35,9 +40,7 @@ interface Category {
 
 @Component({
   selector: 'app-landing',
-  standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     RouterLink,
     ButtonComponent,
@@ -74,8 +77,8 @@ export class LandingComponent {
   protected categories = computed<Category[]>(() =>
     this.registryNav
       .groups()
-      .filter((g) => !NON_COMPONENT_GROUPS.has(g.title))
-      .map((g) => ({
+      .filter(g => !NON_COMPONENT_GROUPS.has(g.title))
+      .map(g => ({
         name: g.title,
         count: g.items.length,
         icon: CATEGORY_ICON[g.title] ?? 'ri-puzzle-line',

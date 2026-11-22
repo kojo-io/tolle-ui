@@ -18,7 +18,6 @@ interface Turn {
 
 @Component({
     selector: 'app-conversation-auto-scroll',
-    standalone: true,
     imports: [
         ConversationComponent,
         ConversationContentComponent,

@@ -1,5 +1,20 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -79,8 +94,7 @@ export type ConversationProps = VariantProps<typeof conversationVariants>;
 @Component({
   selector: 'tolle-conversation',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [ConversationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -93,8 +107,7 @@ export type ConversationProps = VariantProps<typeof conversationVariants>;
         aria-relevant="additions text"
         [attr.aria-label]="ariaLabel || null"
         [class]="viewportComputedClass"
-        (scroll)="onScroll()"
-      >
+        (scroll)="onScroll()">
         <ng-content></ng-content>
       </div>
 
@@ -132,13 +145,13 @@ export class ConversationComponent implements OnInit, OnChanges, AfterViewInit, 
   ngOnInit(): void {
     this.service.setEmpty(this.empty);
     this.subscriptions.add(
-      this.service.scrollRequest$.subscribe((behavior) => this.scrollToBottom(behavior))
+      this.service.scrollRequest$.subscribe(behavior => this.scrollToBottom(behavior))
     );
   }
 
   ngOnChanges(): void {
     this.service.setEmpty(this.empty);
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -214,8 +227,7 @@ export class ConversationComponent implements OnInit, OnChanges, AfterViewInit, 
 @Component({
   selector: 'tolle-conversation-content',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass">
@@ -223,7 +235,7 @@ export class ConversationComponent implements OnInit, OnChanges, AfterViewInit, 
     </div>
   `,
 })
-export class ConversationContentComponent  implements OnChanges{
+export class ConversationContentComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -250,27 +262,29 @@ export class ConversationContentComponent  implements OnChanges{
 @Component({
   selector: 'tolle-conversation-empty-state',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="visible" data-conversation-empty [class]="computedClass">
-      <div
-        *ngIf="icon"
-        class="flex size-10 items-center justify-center rounded-full bg-muted text-muted-foreground"
-      >
-        <i [class]="icon" aria-hidden="true"></i>
+    @if (visible) {
+      <div data-conversation-empty [class]="computedClass">
+        @if (icon) {
+          <div
+            class="flex size-10 items-center justify-center rounded-full bg-muted text-muted-foreground">
+            <i [class]="icon" aria-hidden="true"></i>
+          </div>
+        }
+        @if (title) {
+          <p class="text-sm font-medium text-foreground">{{ title }}</p>
+        }
+        @if (description) {
+          <p class="max-w-sm text-sm text-muted-foreground">{{ description }}</p>
+        }
+        <ng-content></ng-content>
       </div>
-
-      <p *ngIf="title" class="text-sm font-medium text-foreground">{{ title }}</p>
-      <p *ngIf="description" class="max-w-sm text-sm text-muted-foreground">{{ description }}</p>
-
-      <ng-content></ng-content>
-    </div>
+    }
   `,
 })
 export class ConversationEmptyStateComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -297,7 +311,7 @@ export class ConversationEmptyStateComponent implements OnChanges, OnInit, OnDes
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.empty$.subscribe((empty) => {
+      this.service.empty$.subscribe(empty => {
         this.visible = empty;
         this.cdr.markForCheck();
       })
@@ -309,10 +323,7 @@ export class ConversationEmptyStateComponent implements OnChanges, OnInit, OnDes
   }
 
   get computedClass() {
-    return cn(
-      'flex flex-col items-center justify-center gap-2 px-6 py-12 text-center',
-      this.class
-    );
+    return cn('flex flex-col items-center justify-center gap-2 px-6 py-12 text-center', this.class);
   }
 }
 
@@ -322,8 +333,10 @@ const conversationScrollButtonVariants = cva(
     variants: {
       variant: {
         default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/90',
-        secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        outline: 'border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground',
+        secondary:
+          'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        outline:
+          'border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground',
       },
       size: {
         sm: 'h-7 px-2 text-xs',
@@ -347,25 +360,25 @@ export type ConversationScrollButtonProps = VariantProps<typeof conversationScro
 @Component({
   selector: 'tolle-conversation-scroll-button',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <button
-      *ngIf="visible"
-      type="button"
-      data-conversation-scroll-button
-      [attr.aria-label]="label"
-      [class]="computedClass"
-      (click)="onClick()"
-    >
-      <i class="ri-arrow-down-line" aria-hidden="true"></i>
-      <span *ngIf="size !== 'icon'">{{ label }}</span>
-    </button>
+    @if (visible) {
+      <button
+        type="button"
+        data-conversation-scroll-button
+        [attr.aria-label]="label"
+        [class]="computedClass"
+        (click)="onClick()">
+        <i class="ri-arrow-down-line" aria-hidden="true"></i>
+        @if (size !== 'icon') {
+          <span>{{ label }}</span>
+        }
+      </button>
+    }
   `,
 })
 export class ConversationScrollButtonComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -395,7 +408,7 @@ export class ConversationScrollButtonComponent implements OnChanges, OnInit, OnD
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.atBottom$.subscribe((atBottom) => {
+      this.service.atBottom$.subscribe(atBottom => {
         this.visible = !atBottom;
         this.cdr.markForCheck();
       })

@@ -3,7 +3,6 @@ import { TypographyComponent } from '../../../../../../tolle/src/lib/typography.
 
 @Component({
     selector: 'app-typography-variants',
-    standalone: true,
     imports: [TypographyComponent],
     templateUrl: './typography-variants.component.html'
 })

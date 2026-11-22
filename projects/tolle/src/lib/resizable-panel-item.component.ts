@@ -1,34 +1,33 @@
 import { Component, Input, inject, HostBinding } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ResizablePanelComponent } from './resizable-panel.component';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-resizable-panel-item',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div [class]="computedContainerClass">
       <ng-content></ng-content>
     </div>
 
-    <div
-      *ngIf="resizable && !isLast"
-      [class]="computedHandleClass"
-      (mousedown)="onHandleMouseDown($event)"
-    >
-      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div [class]="computedHandleIndicatorClass"></div>
+    @if (resizable && !isLast) {
+      <div [class]="computedHandleClass" (mousedown)="onHandleMouseDown($event)">
+        <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div [class]="computedHandleIndicatorClass"></div>
+        </div>
       </div>
-    </div>
-  `,
-  styles: [`
-    :host {
-      display: block;
-      position: relative;
-      overflow: visible;
     }
-  `]
+  `,
+  styles: [
+    `
+      :host {
+        display: block;
+        position: relative;
+        overflow: visible;
+      }
+    `,
+  ],
 })
 export class ResizablePanelItemComponent {
   @Input() @HostBinding('style.flex') size: number = 1;
@@ -41,10 +40,7 @@ export class ResizablePanelItemComponent {
   private container = inject(ResizablePanelComponent);
 
   get computedContainerClass() {
-    return cn(
-      'relative h-full w-full overflow-hidden',
-      this.class
-    );
+    return cn('relative h-full w-full overflow-hidden', this.class);
   }
 
   get computedHandleClass() {
@@ -60,10 +56,7 @@ export class ResizablePanelItemComponent {
 
   get computedHandleIndicatorClass() {
     const isHorizontal = this.container?.direction === 'horizontal';
-    return cn(
-      'bg-muted-foreground/40 rounded-full',
-      isHorizontal ? 'w-1 h-6' : 'h-1 w-6'
-    );
+    return cn('bg-muted-foreground/40 rounded-full', isHorizontal ? 'w-1 h-6' : 'h-1 w-6');
   }
 
   onHandleMouseDown(event: MouseEvent) {

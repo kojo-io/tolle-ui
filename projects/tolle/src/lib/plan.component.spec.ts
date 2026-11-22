@@ -5,15 +5,14 @@ import { By } from '@angular/platform-browser';
 import { PlanComponent, PlanStepComponent, type PlanStepStatus } from './plan.component';
 
 @Component({
-  standalone: true,
-  imports: [PlanComponent, PlanStepComponent],
-  template: `
+    imports: [PlanComponent, PlanStepComponent],
+    template: `
     <tolle-plan [title]="title" [collapsed]="collapsed" (collapsedChange)="lastCollapsed = $event">
       <tolle-plan-step label="Read the schema" [status]="firstStatus"></tolle-plan-step>
       <tolle-plan-step label="Write the migration" [status]="secondStatus" description="Adds two columns"></tolle-plan-step>
       <tolle-plan-step label="Run it" status="pending"></tolle-plan-step>
     </tolle-plan>
-  `,
+  `
 })
 class PlanHostComponent {
   @Input() title = 'Plan';

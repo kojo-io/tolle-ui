@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-chart-bar-horizontal',
-    standalone: true,
     imports: [
         ChartComponent,
         ChartGridComponent,

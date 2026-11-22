@@ -12,20 +12,19 @@ import { CollapsibleBubbleComponent } from '../../docs-examples/bubble/collapsib
 
 
 @Component({
-  selector: 'app-bubble-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicBubbleComponent,
-    BubbleActionsExampleComponent,
-    CollapsibleBubbleComponent
-  ],
-  templateUrl: './bubble-docs.component.html',
-  styleUrl: './bubble-docs.component.css'
+    selector: 'app-bubble-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicBubbleComponent,
+        BubbleActionsExampleComponent,
+        CollapsibleBubbleComponent
+    ],
+    templateUrl: './bubble-docs.component.html',
+    styleUrl: './bubble-docs.component.css'
 })
 export class BubbleDocsComponent {
   baseService = inject(BaseService);

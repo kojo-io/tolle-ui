@@ -12,20 +12,19 @@ import { MessageHeaderFooterComponent } from '../../docs-examples/message/messag
 
 
 @Component({
-  selector: 'app-message-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicMessageComponent,
-    MessageGroupExampleComponent,
-    MessageHeaderFooterComponent
-  ],
-  templateUrl: './message-docs.component.html',
-  styleUrl: './message-docs.component.css'
+    selector: 'app-message-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicMessageComponent,
+        MessageGroupExampleComponent,
+        MessageHeaderFooterComponent
+    ],
+    templateUrl: './message-docs.component.html',
+    styleUrl: './message-docs.component.css'
 })
 export class MessageDocsComponent {
   baseService = inject(BaseService);

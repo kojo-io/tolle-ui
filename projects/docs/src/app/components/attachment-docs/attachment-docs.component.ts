@@ -12,20 +12,19 @@ import { AttachmentInMessageComponent } from '../../docs-examples/attachment/att
 
 
 @Component({
-  selector: 'app-attachment-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicAttachmentComponent,
-    AttachmentStatesComponent,
-    AttachmentInMessageComponent
-  ],
-  templateUrl: './attachment-docs.component.html',
-  styleUrl: './attachment-docs.component.css'
+    selector: 'app-attachment-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicAttachmentComponent,
+        AttachmentStatesComponent,
+        AttachmentInMessageComponent
+    ],
+    templateUrl: './attachment-docs.component.html',
+    styleUrl: './attachment-docs.component.css'
 })
 export class AttachmentDocsComponent {
   baseService = inject(BaseService);

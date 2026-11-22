@@ -3,14 +3,13 @@ import {DatePickerComponent} from '../../../../../../tolle/src/lib/date-picker.c
 import {FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-month-picker',
-  standalone: true,
-  imports: [
-    DatePickerComponent,
-    FormsModule
-  ],
-  templateUrl: './month-picker.component.html',
-  styleUrl: './month-picker.component.css'
+    selector: 'app-month-picker',
+    imports: [
+        DatePickerComponent,
+        FormsModule
+    ],
+    templateUrl: './month-picker.component.html',
+    styleUrl: './month-picker.component.css'
 })
 export class MonthPickerComponent {
   date: Date = new Date();

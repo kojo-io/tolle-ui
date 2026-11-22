@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
@@ -9,39 +9,39 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 
 @Component({
-    selector: 'app-select-interactive',
-    standalone: true,
-    imports: [
-        CommonModule,
-        FormsModule,
-        SelectComponent,
-        SelectItemComponent,
-        InputComponent,
-        SwitchComponent,
-        LabelComponent,
-        PlaygroundComponent
-    ],
-    templateUrl: './select-interactive.component.html'
+  selector: 'app-select-interactive',
+  imports: [
+    FormsModule,
+    SelectComponent,
+    SelectItemComponent,
+    InputComponent,
+    SwitchComponent,
+    LabelComponent,
+    PlaygroundComponent,
+  ],
+  templateUrl: './select-interactive.component.html',
 })
 export class SelectInteractiveComponent {
-    placeholder = 'Select an option';
-    size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
-    searchable = false;
-    disabled = false;
-    readonly = false;
+  placeholder = 'Select an option';
+  size: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  searchable = false;
+  disabled = false;
+  readonly = false;
 
-    selectedValue = '';
+  selectedValue = '';
 
-    get playgroundCode(): string {
-        const inputs = [
-            this.placeholder !== 'Select an option' ? `placeholder="${this.placeholder}"` : '',
-            this.size !== 'default' ? `size="${this.size}"` : '',
-            this.searchable ? '[searchable]="true"' : '',
-            this.disabled ? '[disabled]="true"' : '',
-            this.readonly ? '[readonly]="true"' : ''
-        ].filter(Boolean).join('\n  ');
+  get playgroundCode(): string {
+    const inputs = [
+      this.placeholder !== 'Select an option' ? `placeholder="${this.placeholder}"` : '',
+      this.size !== 'default' ? `size="${this.size}"` : '',
+      this.searchable ? '[searchable]="true"' : '',
+      this.disabled ? '[disabled]="true"' : '',
+      this.readonly ? '[readonly]="true"' : '',
+    ]
+      .filter(Boolean)
+      .join('\n  ');
 
-        return `<tolle-select
+    return `<tolle-select
   [(ngModel)]="selectedValue"${inputs ? '\n  ' + inputs : ''}
 >
   <tolle-select-item value="apple">Apple</tolle-select-item>
@@ -52,5 +52,5 @@ export class SelectInteractiveComponent {
 </tolle-select>
 
 <!-- Selected: {{ selectedValue }} -->`;
-    }
+  }
 }

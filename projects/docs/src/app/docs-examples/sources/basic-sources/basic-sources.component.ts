@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-basic-sources',
-    standalone: true,
     imports: [SourcesComponent, SourcesTriggerComponent, SourcesContentComponent, SourceComponent],
     templateUrl: './basic-sources.component.html'
 })

@@ -4,7 +4,6 @@ import { NativeSelectComponent, NativeSelectOption } from '../../../../../../tol
 
 @Component({
     selector: 'app-native-select-forms',
-    standalone: true,
     imports: [FormsModule, NativeSelectComponent],
     templateUrl: './native-select-forms.component.html'
 })

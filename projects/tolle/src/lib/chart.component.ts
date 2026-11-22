@@ -1,11 +1,37 @@
-import { Component, Directive, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, ElementRef, ViewChild, OnInit, OnChanges, OnDestroy, AfterViewInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Directive,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ElementRef,
+  ViewChild,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  AfterViewInit,
+  inject,
+} from '@angular/core';
+
 import { Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
-import { ChartService, type ChartSeries, type ChartMargin, type ChartOrientation } from './chart.service';
+import {
+  ChartService,
+  type ChartSeries,
+  type ChartMargin,
+  type ChartOrientation,
+} from './chart.service';
 
-export type { ChartSeries, ChartMargin, ChartTick, ChartBand, ChartOrientation } from './chart.service';
+export type {
+  ChartSeries,
+  ChartMargin,
+  ChartTick,
+  ChartBand,
+  ChartOrientation,
+} from './chart.service';
 
 let chartId = 0;
 
@@ -35,7 +61,6 @@ export abstract class ChartChild implements OnChanges, OnInit, OnDestroy {
    * replaces every node instead of patching it. Marks are positional, so the
    * index IS the identity.
    */
-  trackByIndex = (index: number): number => index;
 
   ngOnInit(): void {
     this.register();
@@ -58,29 +83,29 @@ export abstract class ChartChild implements OnChanges, OnInit, OnDestroy {
 @Component({
   selector: 'tolle-chart-tooltip',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div
-      *ngIf="index !== null"
-      role="status"
-      aria-live="polite"
-      [class]="computedClass"
-      [style.left.px]="left"
-      [style.top.px]="top"
-    >
-      <p class="mb-1 text-xs font-medium text-foreground">{{ xLabel }}</p>
-      <div *ngFor="let row of rows; trackBy: trackByIndex" class="flex items-center gap-2 text-xs">
-        <span class="h-0.5 w-3 shrink-0 rounded-full" [style.background]="row.color"></span>
-        <span class="text-muted-foreground">{{ row.label }}</span>
-        <span class="ml-auto font-medium tabular-nums text-foreground">{{ row.value }}</span>
+    @if (index !== null) {
+      <div
+        role="status"
+        aria-live="polite"
+        [class]="computedClass"
+        [style.left.px]="left"
+        [style.top.px]="top">
+        <p class="mb-1 text-xs font-medium text-foreground">{{ xLabel }}</p>
+        @for (row of rows; track $index) {
+          <div class="flex items-center gap-2 text-xs">
+            <span class="h-0.5 w-3 shrink-0 rounded-full" [style.background]="row.color"></span>
+            <span class="text-muted-foreground">{{ row.label }}</span>
+            <span class="ml-auto font-medium tabular-nums text-foreground">{{ row.value }}</span>
+          </div>
+        }
       </div>
-    </div>
+    }
   `,
 })
 export class ChartTooltipComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -91,7 +116,6 @@ export class ChartTooltipComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
-  trackByIndex = (index: number): number => index;
 
   /** Distance in px the tooltip sits from the crosshair. @default 12 */
   @Input() offset = 12;
@@ -109,7 +133,7 @@ export class ChartTooltipComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.chart.activeIndex$.subscribe((index) => {
+      this.chart.activeIndex$.subscribe(index => {
         this.index = index;
         this.cdr.markForCheck();
       })
@@ -122,14 +146,14 @@ export class ChartTooltipComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   get xLabel(): string {
-    return this.index === null ? '' : this.chart.xLabels[this.index] ?? '';
+    return this.index === null ? '' : (this.chart.xLabels[this.index] ?? '');
   }
 
   /** One row per series: colour key, label, and the formatted value. */
   get rows(): { label: string; value: string; color: string }[] {
     const index = this.index;
     if (index === null) return [];
-    return this.chart.series.map((item) => {
+    return this.chart.series.map(item => {
       const value = this.chart.valueAt(item.key, index);
       return {
         label: item.label,
@@ -179,20 +203,20 @@ export type ChartLegendProps = VariantProps<typeof chartLegendVariants>;
 @Component({
   selector: 'tolle-chart-legend',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <ul [class]="computedClass">
-      <li *ngFor="let entry of entries; trackBy: trackByIndex" class="flex items-center gap-1.5">
-        <span class="h-2 w-2 shrink-0 rounded-[2px]" [style.background]="entry.color"></span>
-        <span class="text-muted-foreground">{{ entry.label }}</span>
-      </li>
+      @for (entry of entries; track $index) {
+        <li class="flex items-center gap-1.5">
+          <span class="h-2 w-2 shrink-0 rounded-[2px]" [style.background]="entry.color"></span>
+          <span class="text-muted-foreground">{{ entry.label }}</span>
+        </li>
+      }
     </ul>
   `,
 })
 export class ChartLegendComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -203,7 +227,6 @@ export class ChartLegendComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
-  trackByIndex = (index: number): number => index;
 
   /** Horizontal alignment of the legend row. @default 'center' */
   @Input() align: ChartLegendProps['align'] = 'center';
@@ -226,7 +249,7 @@ export class ChartLegendComponent implements OnChanges, OnInit, OnDestroy {
 
   /** One entry per series, coloured by series identity. */
   get entries(): { label: string; color: string }[] {
-    return this.chart.series.map((item) => ({
+    return this.chart.series.map(item => ({
       label: item.label,
       color: this.chart.colorFor(item.key),
     }));
@@ -257,46 +280,51 @@ export type ChartTableProps = VariantProps<typeof chartTableVariants>;
 @Component({
   selector: 'tolle-chart-table',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [attr.id]="tableId || null">
       <table [class]="computedClass">
-        <caption class="sr-only">{{ caption }}</caption>
+        <caption class="sr-only">
+          {{
+            caption
+          }}
+        </caption>
         <thead>
           <tr>
-            <th scope="col" class="border-b border-border px-2 py-1 font-medium text-muted-foreground">
+            <th
+              scope="col"
+              class="border-b border-border px-2 py-1 font-medium text-muted-foreground">
               {{ xHeader }}
             </th>
-            <th
-              *ngFor="let item of chart.series; trackBy: trackByIndex"
-              scope="col"
-              class="border-b border-border px-2 py-1 font-medium text-muted-foreground"
-            >
-              {{ item.label }}
-            </th>
+            @for (item of chart.series; track $index) {
+              <th
+                scope="col"
+                class="border-b border-border px-2 py-1 font-medium text-muted-foreground">
+                {{ item.label }}
+              </th>
+            }
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of rows; trackBy: trackByIndex">
-            <th scope="row" class="border-b border-border px-2 py-1 font-normal text-foreground">
-              {{ row.label }}
-            </th>
-            <td
-              *ngFor="let cell of row.cells; trackBy: trackByIndex"
-              class="border-b border-border px-2 py-1 tabular-nums text-foreground"
-            >
-              {{ cell }}
-            </td>
-          </tr>
+          @for (row of rows; track $index) {
+            <tr>
+              <th scope="row" class="border-b border-border px-2 py-1 font-normal text-foreground">
+                {{ row.label }}
+              </th>
+              @for (cell of row.cells; track $index) {
+                <td class="border-b border-border px-2 py-1 tabular-nums text-foreground">
+                  {{ cell }}
+                </td>
+              }
+            </tr>
+          }
         </tbody>
       </table>
     </div>
   `,
 })
 export class ChartTableComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -307,7 +335,6 @@ export class ChartTableComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
-  trackByIndex = (index: number): number => index;
 
   /** Shows the table instead of hiding it from sighted readers. @default false */
   @Input() visible = false;
@@ -336,7 +363,7 @@ export class ChartTableComponent implements OnChanges, OnInit, OnDestroy {
   get rows(): { label: string; cells: string[] }[] {
     return this.chart.xLabels.map((label, i) => ({
       label,
-      cells: this.chart.series.map((item) => {
+      cells: this.chart.series.map(item => {
         const value = this.chart.valueAt(item.key, i);
         return value == null ? '—' : this.chart.formatValue(value);
       }),
@@ -392,8 +419,7 @@ export type ChartProps = VariantProps<typeof chartVariants>;
 @Component({
   selector: 'tolle-chart',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, ChartTooltipComponent, ChartLegendComponent, ChartTableComponent],
+  imports: [ChartTooltipComponent, ChartLegendComponent, ChartTableComponent],
   providers: [ChartService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -407,8 +433,7 @@ export type ChartProps = VariantProps<typeof chartVariants>;
           [attr.aria-label]="ariaLabel || null"
           [attr.aria-describedby]="tableId"
           class="block w-full overflow-visible"
-          (pointerleave)="onPointerLeave()"
-        >
+          (pointerleave)="onPointerLeave()">
           <title>{{ ariaLabel }}</title>
           <desc>{{ description || ariaLabel }}</desc>
 
@@ -416,39 +441,45 @@ export type ChartProps = VariantProps<typeof chartVariants>;
             <ng-content></ng-content>
           </svg:g>
 
-          <svg:line
-            *ngIf="crosshairX !== null"
-            [attr.x1]="crosshairX"
-            [attr.x2]="crosshairX"
-            [attr.y1]="chart.plotTop"
-            [attr.y2]="chart.plotBottom"
-            class="pointer-events-none stroke-border"
-            stroke-width="1"
-          ></svg:line>
+          @if (crosshairX !== null) {
+            <svg:line
+              [attr.x1]="crosshairX"
+              [attr.x2]="crosshairX"
+              [attr.y1]="chart.plotTop"
+              [attr.y2]="chart.plotBottom"
+              class="pointer-events-none stroke-border"
+              stroke-width="1"></svg:line>
+          }
 
-          <svg:rect
-            *ngFor="let rect of hitRects; let i = index; trackBy: trackByIndex"
-            [attr.x]="rect.x"
-            [attr.y]="rect.y"
-            [attr.width]="rect.width"
-            [attr.height]="rect.height"
-            fill="transparent"
-            (pointerenter)="onEnterBand(i)"
-          ></svg:rect>
+          @for (rect of hitRects; track $index; let i = $index) {
+            <svg:rect
+              [attr.x]="rect.x"
+              [attr.y]="rect.y"
+              [attr.width]="rect.width"
+              [attr.height]="rect.height"
+              fill="transparent"
+              (pointerenter)="onEnterBand(i)"></svg:rect>
+          }
         </svg>
 
-        <tolle-chart-tooltip *ngIf="hover"></tolle-chart-tooltip>
+        @if (hover) {
+          <tolle-chart-tooltip></tolle-chart-tooltip>
+        }
       </div>
 
-      <tolle-chart-legend *ngIf="series.length > 1"></tolle-chart-legend>
+      @if (series.length > 1) {
+        <tolle-chart-legend></tolle-chart-legend>
+      }
 
-      <tolle-chart-table [tableId]="tableId" [visible]="showTable" [xHeader]="xHeader"></tolle-chart-table>
+      <tolle-chart-table
+        [tableId]="tableId"
+        [visible]="showTable"
+        [xHeader]="xHeader"></tolle-chart-table>
     </div>
   `,
 })
 export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
-  trackByIndex = (index: number): number => index;
 
   /** Rows to plot, in x order. @default [] */
   @Input() data: Record<string, any>[] = [];
@@ -507,7 +538,7 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
     this.push();
     this.subscriptions.add(this.chart.layout$.subscribe(() => this.cdr.markForCheck()));
     this.subscriptions.add(
-      this.chart.activeIndex$.subscribe((index) => {
+      this.chart.activeIndex$.subscribe(index => {
         // Bars carry their own hover state; a crosshair belongs to point scales.
         this.crosshairX =
           index != null && this.chart.mode === 'point' ? this.chart.xFor(index) : null;
@@ -519,7 +550,7 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
 
   ngOnChanges(): void {
     this.push();
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -581,7 +612,12 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
       const band = this.chart.hitBandFor(i);
       return horizontal
         ? { x: this.chart.plotLeft, y: band.start, width: this.chart.plotWidth, height: band.width }
-        : { x: band.start, y: this.chart.plotTop, width: band.width, height: this.chart.plotHeight };
+        : {
+            x: band.start,
+            y: this.chart.plotTop,
+            width: band.width,
+            height: this.chart.plotHeight,
+          };
     });
   }
 
@@ -606,28 +642,27 @@ export class ChartComponent implements OnInit, OnChanges, AfterViewInit, OnDestr
  */
 @Component({
   selector: 'svg:g[tolle-chart-grid]',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <svg:line
-      *ngFor="let line of valueLines; trackBy: trackByIndex"
-      [attr.x1]="line.x1"
-      [attr.x2]="line.x2"
-      [attr.y1]="line.y1"
-      [attr.y2]="line.y2"
-      [class]="lineClass"
-      stroke-width="1"
-    ></svg:line>
-    <svg:line
-      *ngFor="let line of categoryLines; trackBy: trackByIndex"
-      [attr.x1]="line.x1"
-      [attr.x2]="line.x2"
-      [attr.y1]="line.y1"
-      [attr.y2]="line.y2"
-      [class]="lineClass"
-      stroke-width="1"
-    ></svg:line>
+    @for (line of valueLines; track $index) {
+      <svg:line
+        [attr.x1]="line.x1"
+        [attr.x2]="line.x2"
+        [attr.y1]="line.y1"
+        [attr.y2]="line.y2"
+        [class]="lineClass"
+        stroke-width="1"></svg:line>
+    }
+    @for (line of categoryLines; track $index) {
+      <svg:line
+        [attr.x1]="line.x1"
+        [attr.x2]="line.x2"
+        [attr.y1]="line.y1"
+        [attr.y2]="line.y2"
+        [class]="lineClass"
+        stroke-width="1"></svg:line>
+    }
   `,
 })
 export class ChartGridComponent extends ChartChild {
@@ -639,7 +674,7 @@ export class ChartGridComponent extends ChartChild {
   /** Rules at each value tick, spanning the plot in the cross direction. */
   get valueLines(): { x1: number; y1: number; x2: number; y2: number }[] {
     const horizontal = this.chart.orientation === 'horizontal';
-    return this.chart.ticks.map((tick) =>
+    return this.chart.ticks.map(tick =>
       horizontal
         ? { x1: tick.y, x2: tick.y, y1: this.chart.plotTop, y2: this.chart.plotBottom }
         : { x1: this.chart.plotLeft, x2: this.chart.plotRight, y1: tick.y, y2: tick.y }
@@ -667,18 +702,17 @@ export class ChartGridComponent extends ChartChild {
 /** X-axis tick labels, thinned so they never collide. */
 @Component({
   selector: 'svg:g[tolle-chart-x-axis]',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <svg:text
-      *ngFor="let tick of visibleTicks; trackBy: trackByIndex"
-      [attr.x]="tick.x"
-      [attr.y]="labelY"
-      text-anchor="middle"
-      dominant-baseline="hanging"
-      [class]="labelClass"
-    >{{ tick.label }}</svg:text>
+    @for (tick of visibleTicks; track $index) {
+      <svg:text
+        [attr.x]="tick.x"
+        [attr.y]="labelY"
+        text-anchor="middle"
+        dominant-baseline="hanging"
+        [class]="labelClass">{{ tick.label }}</svg:text>
+    }
   `,
 })
 export class ChartXAxisComponent extends ChartChild {
@@ -711,12 +745,12 @@ export class ChartXAxisComponent extends ChartChild {
    */
   get visibleTicks(): { x: number; label: string }[] {
     if (this.chart.orientation === 'horizontal') {
-      return this.chart.ticks.map((tick) => ({ x: tick.y, label: tick.label }));
+      return this.chart.ticks.map(tick => ({ x: tick.y, label: tick.label }));
     }
     const stride = this.stride;
     return this.chart.xLabels
       .map((label, i) => ({ label, x: this.chart.xFor(i), i }))
-      .filter((tick) => tick.i % stride === 0);
+      .filter(tick => tick.i % stride === 0);
   }
 
   get labelY(): number {
@@ -732,18 +766,17 @@ export class ChartXAxisComponent extends ChartChild {
 /** Y-axis tick labels at the nice tick values. */
 @Component({
   selector: 'svg:g[tolle-chart-y-axis]',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <svg:text
-      *ngFor="let tick of visibleTicks; trackBy: trackByIndex"
-      [attr.x]="labelX"
-      [attr.y]="tick.y"
-      text-anchor="end"
-      dominant-baseline="middle"
-      [class]="labelClass"
-    >{{ tick.label }}</svg:text>
+    @for (tick of visibleTicks; track $index) {
+      <svg:text
+        [attr.x]="labelX"
+        [attr.y]="tick.y"
+        text-anchor="end"
+        dominant-baseline="middle"
+        [class]="labelClass">{{ tick.label }}</svg:text>
+    }
   `,
 })
 export class ChartYAxisComponent extends ChartChild {
@@ -776,8 +809,7 @@ export class ChartYAxisComponent extends ChartChild {
 /** A line mark for one series, optionally monotone-smoothed and dotted. */
 @Component({
   selector: 'svg:g[tolle-chart-line]',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <svg:path
@@ -787,17 +819,16 @@ export class ChartYAxisComponent extends ChartChild {
       stroke-width="2"
       stroke-linejoin="round"
       stroke-linecap="round"
-      [class]="class"
-    ></svg:path>
-    <svg:circle
-      *ngFor="let point of dots; trackBy: trackByIndex"
-      [attr.cx]="point.x"
-      [attr.cy]="point.y"
-      [attr.r]="dotRadius"
-      [attr.fill]="color"
-      class="stroke-background"
-      stroke-width="2"
-    ></svg:circle>
+      [class]="class"></svg:path>
+    @for (point of dots; track $index) {
+      <svg:circle
+        [attr.cx]="point.x"
+        [attr.cy]="point.y"
+        [attr.r]="dotRadius"
+        [attr.fill]="color"
+        class="stroke-background"
+        stroke-width="2"></svg:circle>
+    }
   `,
 })
 export class ChartLineComponent extends ChartChild {
@@ -830,16 +861,14 @@ export class ChartLineComponent extends ChartChild {
 /** A filled area for one series: a low-opacity wash under a 2px stroke. */
 @Component({
   selector: 'svg:g[tolle-chart-area]',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <svg:path
       [attr.d]="areaPath"
       [attr.fill]="color"
       [attr.fill-opacity]="fillOpacity"
-      stroke="none"
-    ></svg:path>
+      stroke="none"></svg:path>
     <svg:path
       [attr.d]="linePath"
       fill="none"
@@ -847,8 +876,7 @@ export class ChartLineComponent extends ChartChild {
       stroke-width="2"
       stroke-linejoin="round"
       stroke-linecap="round"
-      [class]="class"
-    ></svg:path>
+      [class]="class"></svg:path>
   `,
 })
 export class ChartAreaComponent extends ChartChild {
@@ -900,12 +928,39 @@ export function barPath(
   const corner = yValue + sign * r;
 
   return (
-    'M ' + x + ' ' + yBase +
-    ' L ' + x + ' ' + corner +
-    ' Q ' + x + ' ' + yValue + ' ' + (x + r) + ' ' + yValue +
-    ' L ' + (right - r) + ' ' + yValue +
-    ' Q ' + right + ' ' + yValue + ' ' + right + ' ' + corner +
-    ' L ' + right + ' ' + yBase + ' Z'
+    'M ' +
+    x +
+    ' ' +
+    yBase +
+    ' L ' +
+    x +
+    ' ' +
+    corner +
+    ' Q ' +
+    x +
+    ' ' +
+    yValue +
+    ' ' +
+    (x + r) +
+    ' ' +
+    yValue +
+    ' L ' +
+    (right - r) +
+    ' ' +
+    yValue +
+    ' Q ' +
+    right +
+    ' ' +
+    yValue +
+    ' ' +
+    right +
+    ' ' +
+    corner +
+    ' L ' +
+    right +
+    ' ' +
+    yBase +
+    ' Z'
   );
 }
 
@@ -928,12 +983,39 @@ export function barPathHorizontal(
   const corner = xValue - sign * r;
 
   return (
-    'M ' + xBase + ' ' + y +
-    ' L ' + corner + ' ' + y +
-    ' Q ' + xValue + ' ' + y + ' ' + xValue + ' ' + (y + r) +
-    ' L ' + xValue + ' ' + (bottom - r) +
-    ' Q ' + xValue + ' ' + bottom + ' ' + corner + ' ' + bottom +
-    ' L ' + xBase + ' ' + bottom + ' Z'
+    'M ' +
+    xBase +
+    ' ' +
+    y +
+    ' L ' +
+    corner +
+    ' ' +
+    y +
+    ' Q ' +
+    xValue +
+    ' ' +
+    y +
+    ' ' +
+    xValue +
+    ' ' +
+    (y + r) +
+    ' L ' +
+    xValue +
+    ' ' +
+    (bottom - r) +
+    ' Q ' +
+    xValue +
+    ' ' +
+    bottom +
+    ' ' +
+    corner +
+    ' ' +
+    bottom +
+    ' L ' +
+    xBase +
+    ' ' +
+    bottom +
+    ' Z'
   );
 }
 
@@ -944,16 +1026,15 @@ export function barPathHorizontal(
  */
 @Component({
   selector: 'svg:g[tolle-chart-bar]',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <svg:path
-      *ngFor="let bar of bars; trackBy: trackByIndex"
-      [attr.d]="bar.d"
-      [attr.fill]="color"
-      [attr.fill-opacity]="bar.active ? 1 : 0.85"
-    ></svg:path>
+    @for (bar of bars; track $index) {
+      <svg:path
+        [attr.d]="bar.d"
+        [attr.fill]="color"
+        [attr.fill-opacity]="bar.active ? 1 : 0.85"></svg:path>
+    }
   `,
 })
 export class ChartBarComponent extends ChartChild {
@@ -979,7 +1060,7 @@ export class ChartBarComponent extends ChartChild {
   override ngOnInit(): void {
     super.ngOnInit();
     this.subscriptions.add(
-      this.chart.activeIndex$.subscribe((index) => {
+      this.chart.activeIndex$.subscribe(index => {
         this.activeIndex = index;
         this.cdr.markForCheck();
       })
@@ -1014,7 +1095,7 @@ export class ChartBarComponent extends ChartChild {
       yValue: number;
     }[] = [];
     const seriesCount = Math.max(1, this.chart.series.length);
-    const found = this.chart.series.findIndex((item) => item.key === this.seriesKey);
+    const found = this.chart.series.findIndex(item => item.key === this.seriesKey);
     const slotIndex = found < 0 ? 0 : found;
     const horizontal = this.chart.orientation === 'horizontal';
 

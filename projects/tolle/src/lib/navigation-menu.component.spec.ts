@@ -12,16 +12,15 @@ import {
 } from './navigation-menu.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    NavigationMenuComponent,
-    NavigationMenuListComponent,
-    NavigationMenuItemComponent,
-    NavigationMenuTriggerComponent,
-    NavigationMenuContentComponent,
-    NavigationMenuLinkComponent,
-  ],
-  template: `
+    imports: [
+        NavigationMenuComponent,
+        NavigationMenuListComponent,
+        NavigationMenuItemComponent,
+        NavigationMenuTriggerComponent,
+        NavigationMenuContentComponent,
+        NavigationMenuLinkComponent,
+    ],
+    template: `
     <tolle-navigation-menu [closeDelay]="closeDelay" (openChange)="lastOpenId = $event">
       <tolle-navigation-menu-list>
         <tolle-navigation-menu-item id="products">
@@ -39,7 +38,7 @@ import {
         </tolle-navigation-menu-item>
       </tolle-navigation-menu-list>
     </tolle-navigation-menu>
-  `,
+  `
 })
 class HostComponent {
   @ViewChild(NavigationMenuComponent) nav!: NavigationMenuComponent;

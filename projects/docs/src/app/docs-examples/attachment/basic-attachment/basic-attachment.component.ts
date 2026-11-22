@@ -3,7 +3,6 @@ import { AttachmentComponent } from '../../../../../../tolle/src/lib/attachment.
 
 @Component({
     selector: 'app-basic-attachment',
-    standalone: true,
     imports: [AttachmentComponent],
     templateUrl: './basic-attachment.component.html'
 })

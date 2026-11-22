@@ -12,20 +12,19 @@ import { ConversationAutoScrollComponent } from '../../docs-examples/conversatio
 
 
 @Component({
-  selector: 'app-conversation-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicConversationComponent,
-    ConversationEmptyStateExampleComponent,
-    ConversationAutoScrollComponent
-  ],
-  templateUrl: './conversation-docs.component.html',
-  styleUrl: './conversation-docs.component.css'
+    selector: 'app-conversation-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicConversationComponent,
+        ConversationEmptyStateExampleComponent,
+        ConversationAutoScrollComponent
+    ],
+    templateUrl: './conversation-docs.component.html',
+    styleUrl: './conversation-docs.component.css'
 })
 export class ConversationDocsComponent {
   baseService = inject(BaseService);

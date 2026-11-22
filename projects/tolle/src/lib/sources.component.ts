@@ -1,5 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -50,7 +63,7 @@ export class SourcesService {
   }
 
   unregister(id: string): void {
-    this.idsSource.next(this.idsSource.value.filter((existing) => existing !== id));
+    this.idsSource.next(this.idsSource.value.filter(existing => existing !== id));
   }
 
   /** Zero-based position of a source, or -1 when it is not registered. */
@@ -84,8 +97,7 @@ export type SourcesProps = VariantProps<typeof sourcesVariants>;
 @Component({
   selector: 'tolle-sources',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [SourcesService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -116,7 +128,7 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
     // `skip(1)` drops the BehaviorSubject's current value so mounting never
     // emits a spurious `openChange`.
     this.subscriptions.add(
-      this.service.open$.pipe(skip(1)).subscribe((open) => {
+      this.service.open$.pipe(skip(1)).subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
         // Only user-driven toggles are worth reporting; echoing a change the
@@ -128,7 +140,7 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['open']) this.applyInput(this.open);
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -156,8 +168,7 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
 @Component({
   selector: 'tolle-sources-trigger',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <button
@@ -166,8 +177,7 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
       [attr.aria-expanded]="open"
       [attr.data-state]="open ? 'open' : 'closed'"
       [class]="computedClass"
-      (click)="onToggle()"
-    >
+      (click)="onToggle()">
       <i class="ri-links-line" aria-hidden="true"></i>
 
       <span data-sources-label>{{ label }}</span>
@@ -175,15 +185,13 @@ export class SourcesComponent implements OnInit, OnChanges, OnDestroy {
       <i
         class="ri-arrow-down-s-line transition-transform duration-200"
         [class.rotate-180]="open"
-        aria-hidden="true"
-      ></i>
+        aria-hidden="true"></i>
 
       <ng-content></ng-content>
     </button>
   `,
 })
 export class SourcesTriggerComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -207,13 +215,13 @@ export class SourcesTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
       })
     );
     this.subscriptions.add(
-      this.service.ids$.subscribe((ids) => {
+      this.service.ids$.subscribe(ids => {
         this.registered = ids.length;
         this.cdr.markForCheck();
       })
@@ -256,8 +264,7 @@ export class SourcesTriggerComponent implements OnChanges, OnInit, OnDestroy {
 @Component({
   selector: 'tolle-sources-content',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
@@ -265,14 +272,12 @@ export class SourcesTriggerComponent implements OnChanges, OnInit, OnDestroy {
       [attr.data-state]="open ? 'open' : 'closed'"
       [attr.inert]="open ? null : ''"
       [attr.aria-hidden]="open ? null : 'true'"
-      [class]="computedClass"
-    >
+      [class]="computedClass">
       <ng-content></ng-content>
     </div>
   `,
 })
 export class SourcesContentComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -293,7 +298,7 @@ export class SourcesContentComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.open = open;
         this.cdr.markForCheck();
       })
@@ -330,8 +335,7 @@ export type SourceProps = VariantProps<typeof sourceVariants>;
 @Component({
   selector: 'tolle-source',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a
@@ -339,37 +343,28 @@ export type SourceProps = VariantProps<typeof sourceVariants>;
       [attr.href]="href || null"
       target="_blank"
       rel="noreferrer noopener"
-      [class]="computedClass"
-    >
-      <img
-        *ngIf="favicon; else chip"
-        [attr.src]="favicon"
-        alt=""
-        aria-hidden="true"
-        class="size-4 shrink-0 rounded-sm"
-      />
-
-      <ng-template #chip>
+      [class]="computedClass">
+      @if (favicon) {
+        <img [attr.src]="favicon" alt="" aria-hidden="true" class="size-4 shrink-0 rounded-sm" />
+      } @else {
         <span
           class="flex size-4 shrink-0 items-center justify-center rounded-sm bg-muted text-[10px] font-medium text-muted-foreground"
           aria-hidden="true"
           >{{ position }}</span
         >
-      </ng-template>
+      }
 
       <span class="truncate text-foreground" data-source-title>{{ title || href }}</span>
 
       <i
         class="ri-external-link-line ml-auto shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100"
-        aria-hidden="true"
-      ></i>
+        aria-hidden="true"></i>
 
       <ng-content></ng-content>
     </a>
   `,
 })
 export class SourceComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps

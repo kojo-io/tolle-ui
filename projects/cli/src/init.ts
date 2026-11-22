@@ -11,6 +11,22 @@ const DEFAULT: TolleConfig = {
   aliases: { ui: '@/components/ui' },
 };
 
+/**
+ * Angular majors that publish their own registry alongside the current line.
+ * The apex `/registry` always serves the newest supported major, so older
+ * still-maintained lines get a versioned path. Only majors listed here are
+ * actually deployed — anything else falls through to the default rather than
+ * pointing at a URL that would 404.
+ */
+const VERSIONED_REGISTRIES: Record<number, string> = {
+  18: 'https://tolle-ui.com/v18/registry',
+};
+
+/** The hosted registry matching this project's Angular major. */
+function registryFor(ngMajor: number | null): string {
+  return (ngMajor !== null && VERSIONED_REGISTRIES[ngMajor]) || DEFAULT.registry;
+}
+
 /** `tolle init` — scaffold components.json, wire theming, install base deps. */
 export async function runInit(flags: Record<string, string | boolean>): Promise<void> {
   const cwd = process.cwd();
@@ -19,10 +35,15 @@ export async function runInit(flags: Record<string, string | boolean>): Promise<
     throw new Error(`${p} already exists. Use --force to overwrite.`);
   }
 
+  // Detected once: it decides both the registry written to components.json and
+  // the versions installed below.
+  const ngMajor = detectAngularMajor(cwd);
+  if (ngMajor) log.step(`Detected Angular ${ngMajor}`);
+
   const config: TolleConfig = {
     ...DEFAULT,
     ui: (flags.ui as string) || DEFAULT.ui,
-    registry: (flags.registry as string) || DEFAULT.registry,
+    registry: (flags.registry as string) || registryFor(ngMajor),
   };
   writeJson(p, config);
   log.ok('Created components.json');
@@ -31,21 +52,34 @@ export async function runInit(flags: Record<string, string | boolean>): Promise<
   ensureThemeCss(cwd, config);
 
   if (!flags['skip-install']) {
-    // Pin @angular/cdk to the project's Angular major — a bare `@angular/cdk`
-    // installs the latest (e.g. 22), whose peer range rejects an Angular 18 app.
-    const ngMajor = detectAngularMajor(cwd);
+    // Pin BOTH @tolle_/tolle-ui and @angular/cdk to the project's Angular major.
+    // The library version tracks the Angular major it was built against, and
+    // `latest` points at the newest line — so a bare `@tolle_/tolle-ui` installs
+    // e.g. 21.x into an Angular 18 app, whose peer range rejects it. Angular's
+    // partial-Ivy output is not backward compatible, so that combination does
+    // not merely warn, it fails to build.
+    const lib = ngMajor ? `@tolle_/tolle-ui@^${ngMajor}` : '@tolle_/tolle-ui';
     const cdk = ngMajor ? `@angular/cdk@^${ngMajor}` : '@angular/cdk';
-    const base = ['@tolle_/tolle-ui', 'clsx', 'tailwind-merge', 'class-variance-authority', cdk];
+    const base = [lib, 'clsx', 'tailwind-merge', 'class-variance-authority', cdk];
     log.step(`Installing base deps: ${base.join(', ')}`);
     try {
       execSync(`npm install ${base.join(' ')}`, { stdio: 'inherit', cwd });
     } catch {
-      // A remaining peer-dep conflict shouldn't hard-fail init — retry tolerantly.
-      try {
-        log.warn('Install hit a peer conflict — retrying with --legacy-peer-deps');
-        execSync(`npm install ${base.join(' ')} --legacy-peer-deps`, { stdio: 'inherit', cwd });
-      } catch {
-        log.warn(`Install manually: npm i ${base.join(' ')}`);
+      if (ngMajor) {
+        // Everything was pinned to the detected major, so a conflict here is a
+        // real problem. Retrying with --legacy-peer-deps would force a
+        // mismatched install and silently poison `tolle add`, which resolves
+        // the registry out of node_modules.
+        log.warn(`Install failed — resolve the conflict, then: npm i ${base.join(' ')}`);
+      } else {
+        // Angular major unknown, so nothing could be pinned. Here a tolerant
+        // retry is reasonable: there is no known-good version to protect.
+        try {
+          log.warn('Install hit a peer conflict — retrying with --legacy-peer-deps');
+          execSync(`npm install ${base.join(' ')} --legacy-peer-deps`, { stdio: 'inherit', cwd });
+        } catch {
+          log.warn(`Install manually: npm i ${base.join(' ')}`);
+        }
       }
     }
   }
@@ -54,9 +88,10 @@ export async function runInit(flags: Record<string, string | boolean>): Promise<
 }
 
 /**
- * Best-effort read of the project's Angular major (e.g. 18) so peer deps like
- * @angular/cdk are installed at a compatible version. Prefers the installed
- * @angular/core, then the version declared in the project's package.json.
+ * Best-effort read of the project's Angular major (e.g. 18) so `@tolle_/tolle-ui`,
+ * `@angular/cdk` and the hosted registry are all selected to match. Prefers the
+ * installed @angular/core, then the version declared in the project's package.json.
+ * Returns null when neither is readable, in which case nothing is pinned.
  */
 function detectAngularMajor(cwd: string): number | null {
   const fromVersion = (v: unknown): number | null => {

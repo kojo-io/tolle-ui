@@ -1,6 +1,6 @@
 {
   "name": "@tolle_/tolle-ui",
-  "version": "18.3.3",
+  "version": "21.2.0",
   "publishConfig": {
     "access": "public"
   },
@@ -19,14 +19,21 @@
   "author": "Bernard Kojo Ossei-Agyei <bernard.ossei@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^18.2.0",
-    "@angular/core": "^18.2.0",
+    "@angular/animations": "^21.0.0",
+    "@angular/cdk": "^21.0.0",
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "rxjs": "^6.5.3 || ^7.4.0",
     "@floating-ui/dom": "^1.7.4",
     "class-variance-authority": "^0.7.1",
     "tailwind-merge": "^3.4.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel": "^8.5.2",
+    "libphonenumber-js": "^1.12.36",
     "tailwindcss-animate": "^1.0.7"
   },
   "dependencies": {

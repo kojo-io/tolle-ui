@@ -9,15 +9,14 @@ import {
 } from './tool.component';
 
 @Component({
-  standalone: true,
-  imports: [ToolComponent, ToolHeaderComponent, ToolInputComponent, ToolOutputComponent],
-  template: `
+    imports: [ToolComponent, ToolHeaderComponent, ToolInputComponent, ToolOutputComponent],
+    template: `
     <tolle-tool [state]="state" [open]="open" (openChange)="openEvents.push($event)">
       <tolle-tool-header name="get_weather"></tolle-tool-header>
       <tolle-tool-input [payload]="input"></tolle-tool-input>
       <tolle-tool-output [payload]="output"></tolle-tool-output>
     </tolle-tool>
-  `,
+  `
 })
 class HostComponent {
   state: ToolState = 'pending';

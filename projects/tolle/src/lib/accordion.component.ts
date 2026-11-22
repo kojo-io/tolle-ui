@@ -1,18 +1,17 @@
 import { Component, Input, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { AccordionItemComponent } from './accordion-item.component';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-accordion',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule], // No AccordionItemComponent import needed here if projected via ng-content
+  imports: [], // No AccordionItemComponent import needed here if projected via ng-content
   template: `
     <div [class]="cn('w-full', class)">
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
 export class AccordionComponent implements AfterContentInit {
   @Input() type: 'single' | 'multiple' = 'single';
@@ -34,7 +33,7 @@ export class AccordionComponent implements AfterContentInit {
       if (item.id === undefined) item.id = `accordion-item-${index}`;
 
       // Set up the toggle bridge
-      item.onToggle = (id) => this.handleToggle(id);
+      item.onToggle = id => this.handleToggle(id);
     });
   }
 

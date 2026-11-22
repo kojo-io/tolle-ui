@@ -1,5 +1,19 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ElementRef, ViewChild, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy, HostListener, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ElementRef,
+  ViewChild,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  OnDestroy,
+  HostListener,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -52,15 +66,14 @@ export type DatePickerProps = VariantProps<typeof datePickerTriggerVariants>;
 @Component({
   selector: 'tolle-date-picker',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, CalendarComponent],
+  imports: [FormsModule, CalendarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => DatePickerComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   template: `
     <button
@@ -73,59 +86,61 @@ export type DatePickerProps = VariantProps<typeof datePickerTriggerVariants>;
       [disabled]="disabled"
       [class]="computedTriggerClass"
       (click)="toggle()"
-      (keydown)="onTriggerKeyDown($event)"
-    >
+      (keydown)="onTriggerKeyDown($event)">
       <span [class]="cn('truncate', displayValue ? 'text-foreground' : 'text-muted-foreground')">
         {{ displayValue || placeholder }}
       </span>
       <i class="ri-calendar-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
     </button>
 
-    <div
-      #popover
-      *ngIf="isOpen"
-      role="dialog"
-      [attr.aria-label]="'Choose a date'"
-      class="fixed left-0 top-0 z-[50]"
-      style="visibility: hidden"
-    >
-      <div class="rounded-md border border-border bg-popover text-popover-foreground shadow-md">
-        <div class="p-3">
-          <tolle-calendar
-            [bordered]="false"
-            [showQuickActions]="false"
-            [(ngModel)]="value"
-            (ngModelChange)="onCalendarChange($event)"
-            [mode]="mode"
-            [disablePastDates]="disablePastDates"
-            [minDate]="minDate"
-            [maxDate]="maxDate"
-            [formatMonthFn]="formatMonthFn"
-            [formatYearFn]="formatYearFn"
-          ></tolle-calendar>
-        </div>
-
-        <div
-          *ngIf="showQuickActions"
-          class="flex items-center justify-between gap-2 border-t border-border px-3 py-2"
-        >
-          <button *ngIf="showClear" type="button" [class]="footerButtonClass" (click)="clearFromFooter()">
-            Clear
-          </button>
-          <button
-            type="button"
-            [class]="cn(footerButtonClass, 'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground', !showClear && 'ml-auto')"
-            (click)="done()"
-          >
-            Done
-          </button>
+    @if (isOpen) {
+      <div
+        #popover
+        role="dialog"
+        [attr.aria-label]="'Choose a date'"
+        class="fixed left-0 top-0 z-[50]"
+        style="visibility: hidden">
+        <div class="rounded-md border border-border bg-popover text-popover-foreground shadow-md">
+          <div class="p-3">
+            <tolle-calendar
+              [bordered]="false"
+              [showQuickActions]="false"
+              [(ngModel)]="value"
+              (ngModelChange)="onCalendarChange($event)"
+              [mode]="mode"
+              [disablePastDates]="disablePastDates"
+              [minDate]="minDate"
+              [maxDate]="maxDate"
+              [formatMonthFn]="formatMonthFn"
+              [formatYearFn]="formatYearFn"></tolle-calendar>
+          </div>
+          @if (showQuickActions) {
+            <div class="flex items-center justify-between gap-2 border-t border-border px-3 py-2">
+              @if (showClear) {
+                <button type="button" [class]="footerButtonClass" (click)="clearFromFooter()">
+                  Clear
+                </button>
+              }
+              <button
+                type="button"
+                [class]="
+                  cn(
+                    footerButtonClass,
+                    'bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground',
+                    !showClear && 'ml-auto'
+                  )
+                "
+                (click)="done()">
+                Done
+              </button>
+            </div>
+          }
         </div>
       </div>
-    </div>
-  `
+    }
+  `,
 })
 export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -200,7 +215,10 @@ export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnD
   }
 
   private _outsideClickHandler = (event: MouseEvent) => {
-    if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+    if (
+      !this.trigger.nativeElement.contains(event.target) &&
+      !this.popover?.nativeElement.contains(event.target)
+    ) {
       this.close();
     }
   };
@@ -221,10 +239,14 @@ export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnD
     }
 
     switch (this.mode) {
-      case 'date': return format(date, 'MMM d, yyyy');
-      case 'month': return format(date, 'MMMM yyyy');
-      case 'year': return format(date, 'yyyy');
-      default: return format(date, 'MMM d, yyyy');
+      case 'date':
+        return format(date, 'MMM d, yyyy');
+      case 'month':
+        return format(date, 'MMMM yyyy');
+      case 'year':
+        return format(date, 'yyyy');
+      default:
+        return format(date, 'MMM d, yyyy');
     }
   }
 
@@ -246,7 +268,9 @@ export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnD
     }
   }
 
-  @HostListener('keydown.escape') onEscape() { if (this.isOpen) this.close(); }
+  @HostListener('keydown.escape') onEscape() {
+    if (this.isOpen) this.close();
+  }
 
   open() {
     if (this.disabled || this.isOpen) return;
@@ -290,11 +314,7 @@ export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnD
         computePosition(this.trigger.nativeElement, this.popover.nativeElement, {
           strategy: 'fixed',
           placement: 'bottom-start',
-          middleware: [
-            offset(4),
-            flip(),
-            shift({ padding: 8 })
-          ],
+          middleware: [offset(4), flip(), shift({ padding: 8 })],
         }).then(({ x, y, strategy }) => {
           Object.assign(this.popover.nativeElement.style, {
             position: strategy,
@@ -333,8 +353,12 @@ export class DatePickerComponent implements OnChanges, ControlValueAccessor, OnD
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.cdr.markForCheck();

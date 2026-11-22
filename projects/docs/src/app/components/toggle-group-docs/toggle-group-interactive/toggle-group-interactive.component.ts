@@ -1,36 +1,32 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
-import { ToggleGroupComponent, ToggleGroupItemComponent } from '../../../../../../tolle/src/lib/toggle-group.component';
+import {
+  ToggleGroupComponent,
+  ToggleGroupItemComponent,
+} from '../../../../../../tolle/src/lib/toggle-group.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-toggle-group-interactive',
-    standalone: true,
-    imports: [
-        CommonModule,
-        FormsModule,
-        ToggleGroupComponent,
-        ToggleGroupItemComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        LabelComponent
-    ],
-    template: `
+  selector: 'app-toggle-group-interactive',
+  imports: [
+    FormsModule,
+    ToggleGroupComponent,
+    ToggleGroupItemComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    LabelComponent,
+  ],
+  template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
-          <tolle-toggle-group
-            [type]="type"
-            [variant]="variant"
-            [size]="size"
-            [(ngModel)]="value"
-          >
+          <tolle-toggle-group [type]="type" [variant]="variant" [size]="size" [(ngModel)]="value">
             <tolle-toggle-group-item value="bold">B</tolle-toggle-group-item>
             <tolle-toggle-group-item value="italic">I</tolle-toggle-group-item>
             <tolle-toggle-group-item value="underline">U</tolle-toggle-group-item>
@@ -63,23 +59,23 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class ToggleGroupInteractiveComponent {
-    type: 'single' | 'multiple' = 'single';
-    variant: 'default' | 'outline' = 'default';
-    size: 'default' | 'sm' | 'lg' = 'default';
-    value: any = 'bold';
+  type: 'single' | 'multiple' = 'single';
+  variant: 'default' | 'outline' = 'default';
+  size: 'default' | 'sm' | 'lg' = 'default';
+  value: any = 'bold';
 
-    get playgroundCode() {
-        const typeAttr = this.type !== 'single' ? ` type="${this.type}"` : '';
-        const variantAttr = this.variant !== 'default' ? ` variant="${this.variant}"` : '';
-        const sizeAttr = this.size !== 'default' ? ` size="${this.size}"` : '';
+  get playgroundCode() {
+    const typeAttr = this.type !== 'single' ? ` type="${this.type}"` : '';
+    const variantAttr = this.variant !== 'default' ? ` variant="${this.variant}"` : '';
+    const sizeAttr = this.size !== 'default' ? ` size="${this.size}"` : '';
 
-        return `<tolle-toggle-group${typeAttr}${variantAttr}${sizeAttr}>
+    return `<tolle-toggle-group${typeAttr}${variantAttr}${sizeAttr}>
   <tolle-toggle-group-item value="bold">B</tolle-toggle-group-item>
   <tolle-toggle-group-item value="italic">I</tolle-toggle-group-item>
   <tolle-toggle-group-item value="underline">U</tolle-toggle-group-item>
 </tolle-toggle-group>`;
-    }
+  }
 }

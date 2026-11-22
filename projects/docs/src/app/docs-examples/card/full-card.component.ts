@@ -4,7 +4,6 @@ import { ButtonComponent } from '../../../../../tolle/src/lib/button.component';
 
 @Component({
     selector: 'app-full-card',
-    standalone: true,
     imports: [CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent, CardFooterComponent, ButtonComponent],
     template: `
     <tolle-card class="max-w-[400px]">

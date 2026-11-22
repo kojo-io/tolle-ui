@@ -1,5 +1,15 @@
-import { Component, Directive, Injectable, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, OnDestroy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Directive,
+  Injectable,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  OnDestroy,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -101,8 +111,7 @@ abstract class MessageAlignAware implements OnChanges, OnDestroy {
 @Component({
   selector: 'tolle-message',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [MessageAlignService],
   template: `<div [class]="computedClass" role="listitem"><ng-content></ng-content></div>`,
@@ -122,7 +131,7 @@ export class MessageComponent implements OnChanges {
   ngOnChanges(): void {
     // Push alignment into the service so OnPush children get told about it.
     this.service.setAlign(this.align ?? 'start');
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -157,12 +166,11 @@ export type MessageGroupProps = VariantProps<typeof messageGroupVariants>;
 @Component({
   selector: 'tolle-message-group',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="computedClass" role="group"><ng-content></ng-content></div>`,
 })
-export class MessageGroupComponent  implements OnChanges{
+export class MessageGroupComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -193,8 +201,7 @@ export class MessageGroupComponent  implements OnChanges{
 @Component({
   selector: 'tolle-message-avatar',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })
@@ -211,8 +218,7 @@ export class MessageAvatarComponent extends MessageAlignAware {
 @Component({
   selector: 'tolle-message-content',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })
@@ -230,8 +236,7 @@ export class MessageContentComponent extends MessageAlignAware {
 @Component({
   selector: 'tolle-message-header',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })
@@ -249,8 +254,7 @@ export class MessageHeaderComponent extends MessageAlignAware {
 @Component({
   selector: 'tolle-message-footer',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })

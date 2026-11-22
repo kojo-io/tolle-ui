@@ -3,7 +3,6 @@ import { QueueComponent, QueueItemComponent } from '../../../../../../tolle/src/
 
 @Component({
     selector: 'app-basic-queue',
-    standalone: true,
     imports: [QueueComponent, QueueItemComponent],
     templateUrl: './basic-queue.component.html'
 })

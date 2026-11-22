@@ -9,7 +9,6 @@ import { ManualOtpExampleComponent } from '../../../docs-examples/otp/manual-otp
 
 @Component({
     selector: 'app-otp-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, ComponentPreviewComponent, DocHeroComponent, BasicOtpExampleComponent, ManualOtpExampleComponent],
     templateUrl: './otp-overview.component.html'
 })

@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { skip } from 'rxjs/operators';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -114,11 +126,12 @@ export class TaskService {
 @Component({
   selector: 'tolle-task',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [TaskService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div [class]="computedClass" [attr.data-status]="status"><ng-content></ng-content></div>`,
+  template: `<div [class]="computedClass" [attr.data-status]="status">
+    <ng-content></ng-content>
+  </div>`,
 })
 export class TaskComponent implements OnInit, OnChanges, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -142,12 +155,12 @@ export class TaskComponent implements OnInit, OnChanges, OnDestroy {
     this.push();
     // skip(1) drops the BehaviorSubject's replayed value so the component does
     // not emit an `openChange` for its own initial state.
-    this.sub.add(this.service.open$.pipe(skip(1)).subscribe((open) => this.openChange.emit(open)));
+    this.sub.add(this.service.open$.pipe(skip(1)).subscribe(open => this.openChange.emit(open)));
   }
 
   ngOnChanges(): void {
     this.push();
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -172,8 +185,7 @@ export class TaskComponent implements OnInit, OnChanges, OnDestroy {
 @Component({
   selector: 'tolle-task-trigger',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <button
@@ -181,20 +193,21 @@ export class TaskComponent implements OnInit, OnChanges, OnDestroy {
       [attr.aria-expanded]="isOpen"
       [attr.data-state]="isOpen ? 'open' : 'closed'"
       [class]="computedClass"
-      (click)="toggle()"
-    >
+      (click)="toggle()">
       <i [class]="iconClass" [attr.data-status]="status" aria-hidden="true"></i>
       <span class="min-w-0 flex-1 truncate text-left">{{ title }}</span>
       <ng-content></ng-content>
       <i
-        [class]="isOpen ? 'ri-arrow-down-s-line shrink-0 text-muted-foreground' : 'ri-arrow-right-s-line shrink-0 text-muted-foreground'"
-        aria-hidden="true"
-      ></i>
+        [class]="
+          isOpen
+            ? 'ri-arrow-down-s-line shrink-0 text-muted-foreground'
+            : 'ri-arrow-right-s-line shrink-0 text-muted-foreground'
+        "
+        aria-hidden="true"></i>
     </button>
   `,
 })
 export class TaskTriggerComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -217,19 +230,19 @@ export class TaskTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.isOpen = open;
         this.cdr.markForCheck();
       })
     );
     this.sub.add(
-      this.service.status$.subscribe((status) => {
+      this.service.status$.subscribe(status => {
         this.status = status;
         this.cdr.markForCheck();
       })
     );
     this.sub.add(
-      this.service.title$.subscribe((title) => {
+      this.service.title$.subscribe(title => {
         this.title = title;
         this.cdr.markForCheck();
       })
@@ -261,17 +274,17 @@ export class TaskTriggerComponent implements OnChanges, OnInit, OnDestroy {
 @Component({
   selector: 'tolle-task-content',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div *ngIf="isOpen" [attr.data-state]="'open'" [class]="computedClass">
-      <ng-content></ng-content>
-    </div>
+    @if (isOpen) {
+      <div [attr.data-state]="'open'" [class]="computedClass">
+        <ng-content></ng-content>
+      </div>
+    }
   `,
 })
 export class TaskContentComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -292,7 +305,7 @@ export class TaskContentComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub.add(
-      this.service.open$.subscribe((open) => {
+      this.service.open$.subscribe(open => {
         this.isOpen = open;
         this.cdr.markForCheck();
       })
@@ -312,17 +325,18 @@ export class TaskContentComponent implements OnChanges, OnInit, OnDestroy {
 @Component({
   selector: 'tolle-task-item',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass">
-      <i class="ri-corner-down-right-line mt-0.5 shrink-0 text-muted-foreground" aria-hidden="true"></i>
+      <i
+        class="ri-corner-down-right-line mt-0.5 shrink-0 text-muted-foreground"
+        aria-hidden="true"></i>
       <span class="min-w-0 flex-1"><ng-content></ng-content></span>
     </div>
   `,
 })
-export class TaskItemComponent  implements OnChanges{
+export class TaskItemComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -346,8 +360,7 @@ export class TaskItemComponent  implements OnChanges{
 @Component({
   selector: 'tolle-task-item-file',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <span [class]="computedClass">
@@ -356,7 +369,7 @@ export class TaskItemComponent  implements OnChanges{
     </span>
   `,
 })
-export class TaskItemFileComponent  implements OnChanges{
+export class TaskItemFileComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

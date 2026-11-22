@@ -9,18 +9,16 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 
 @Component({
-  selector: 'app-card-docs',
-  standalone: true,
-  imports: [
-    CardOverviewComponent,
-    CardInteractiveComponent,
-    CardExamplesComponent,
-    CardApiComponent,
-    DocsWrapperComponent
-
-  ],
-  templateUrl: './card-docs.component.html',
-  styleUrl: './card-docs.component.css'
+    selector: 'app-card-docs',
+    imports: [
+        CardOverviewComponent,
+        CardInteractiveComponent,
+        CardExamplesComponent,
+        CardApiComponent,
+        DocsWrapperComponent
+    ],
+    templateUrl: './card-docs.component.html',
+    styleUrl: './card-docs.component.css'
 })
 export class CardDocsComponent implements OnInit {
   baseService = inject(BaseService);

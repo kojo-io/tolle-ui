@@ -1,5 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cn } from './utils/cn';
 import { TooltipDirective } from './tooltip.directive';
 
@@ -29,20 +36,19 @@ const STATUS_COLOR: Record<TrackerStatus, string> = {
 @Component({
   selector: 'tolle-tracker',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, TooltipDirective],
+  imports: [TooltipDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass" role="group" [attr.aria-label]="ariaLabel || null">
-      <button
-        *ngFor="let block of data; let i = index; trackBy: trackByIndex"
-        type="button"
-        class="flex-1 rounded-[2px] transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-        [style.height.px]="blockHeight"
-        [style.background]="colorFor(block)"
-        [tolleTooltip]="block.tooltip || ''"
-        [attr.aria-label]="block.tooltip || 'Period ' + (i + 1)"
-      ></button>
+      @for (block of data; track $index; let i = $index) {
+        <button
+          type="button"
+          class="flex-1 rounded-[2px] transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          [style.height.px]="blockHeight"
+          [style.background]="colorFor(block)"
+          [tolleTooltip]="block.tooltip || ''"
+          [attr.aria-label]="block.tooltip || 'Period ' + (i + 1)"></button>
+      }
     </div>
   `,
 })
@@ -57,7 +63,6 @@ export class TrackerComponent implements OnChanges {
   }
 
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
-  trackByIndex = (index: number): number => index;
 
   /** One block per period, in chronological order. @default [] */
   @Input() data: TrackerBlock[] = [];

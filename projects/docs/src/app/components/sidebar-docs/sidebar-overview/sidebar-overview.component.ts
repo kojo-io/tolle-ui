@@ -8,7 +8,6 @@ import { BasicSidebarExampleComponent } from '../../../docs-examples/sidebar/bas
 
 @Component({
     selector: 'app-sidebar-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicSidebarExampleComponent],
     templateUrl: './sidebar-overview.component.html'
 })

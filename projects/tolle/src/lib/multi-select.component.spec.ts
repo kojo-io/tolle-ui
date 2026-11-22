@@ -26,9 +26,8 @@ function settle(fixture: ComponentFixture<unknown>): Promise<void> {
 }
 
 @Component({
-  standalone: true,
-  imports: [MultiSelectComponent, SelectItemComponent, FormsModule],
-  template: `
+    imports: [MultiSelectComponent, SelectItemComponent, FormsModule],
+    template: `
     <tolle-multi-select
       #ms
       [ngModel]="value"
@@ -48,7 +47,7 @@ function settle(fixture: ComponentFixture<unknown>): Promise<void> {
       <tolle-select-item value="cherry" [multiSelect]="true">Cherry</tolle-select-item>
       <tolle-select-item value="date" [multiSelect]="true">Date</tolle-select-item>
     </tolle-multi-select>
-  `,
+  `
 })
 class MultiSelectHostComponent {
   @ViewChild('ms') ms!: MultiSelectComponent;

@@ -19,7 +19,6 @@ import {
 
 @Component({
     selector: 'app-field-set',
-    standalone: true,
     imports: [
         FormsModule,
         FieldComponent,

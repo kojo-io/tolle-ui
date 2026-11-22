@@ -1,5 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -31,12 +38,11 @@ export type KbdProps = VariantProps<typeof kbdVariants>;
 @Component({
   selector: 'tolle-kbd',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<kbd [class]="computedClass"><ng-content></ng-content></kbd>`,
 })
-export class KbdComponent  implements OnChanges{
+export class KbdComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -66,12 +72,13 @@ export class KbdComponent  implements OnChanges{
 @Component({
   selector: 'tolle-kbd-group',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<span [class]="cn('inline-flex items-center gap-1', class)"><ng-content></ng-content></span>`,
+  template: `<span [class]="cn('inline-flex items-center gap-1', class)"
+    ><ng-content></ng-content
+  ></span>`,
 })
-export class KbdGroupComponent  implements OnChanges{
+export class KbdGroupComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

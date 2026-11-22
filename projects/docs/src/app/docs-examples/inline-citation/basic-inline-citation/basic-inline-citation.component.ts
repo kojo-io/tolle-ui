@@ -6,7 +6,6 @@ import {
 
 @Component({
     selector: 'app-basic-inline-citation',
-    standalone: true,
     imports: [InlineCitationComponent, InlineCitationCardComponent],
     templateUrl: './basic-inline-citation.component.html'
 })

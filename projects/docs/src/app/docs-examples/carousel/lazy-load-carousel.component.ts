@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { EmblaCarouselType } from 'embla-carousel';
 import {
   CarouselComponent,
@@ -7,66 +7,86 @@ import {
   CarouselContainerDirective,
   CarouselItemDirective,
   CarouselPreviousDirective,
-  CarouselNextDirective
+  CarouselNextDirective,
 } from '../../../../../tolle/src/lib/carousel';
 
 @Component({
   selector: 'app-lazy-load-carousel',
-  standalone: true,
   imports: [
-    CommonModule,
     CarouselComponent,
     CarouselContentDirective,
     CarouselContainerDirective,
     CarouselItemDirective,
     CarouselPreviousDirective,
-    CarouselNextDirective
+    CarouselNextDirective,
   ],
   template: `
-    <div class="relative max-w-2xl mx-auto group">
+    <div class="group relative mx-auto max-w-2xl">
       <tolle-carousel (api)="onApi($event)" class="w-full">
         <div tolleCarouselContent>
           <div tolleCarouselContainer>
-            <div *ngFor="let item of slides; let i = index" tolleCarouselItem class="basis-[80%] md:basis-[70%]">
-              <div class="p-2">
-                <div class="relative flex aspect-video items-center justify-center rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900 overflow-hidden shadow-sm transition-all duration-300">
-                  <img *ngIf="loadedSlides.has(i)" 
-                       [src]="'https://images.unsplash.com/photo-' + (seeds[i]) + '?auto=format&fit=crop&q=80&w=800'" 
-                       class="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
-                       (load)="onImageLoad(i)"
-                       [class.opacity-0]="!imagesReady.has(i)"
-                       [class.scale-110]="!imagesReady.has(i)"
-                       [class.scale-100]="imagesReady.has(i)">
-                  
-                  <div *ngIf="!imagesReady.has(i)" class="absolute inset-0 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900">
-                    <div class="flex flex-col items-center gap-2">
-                      <i class="ri-loader-4-line animate-spin text-3xl text-primary/40"></i>
-                      <span class="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">Loading asset</span>
-                    </div>
+            @for (item of slides; track item; let i = $index) {
+              <div tolleCarouselItem class="basis-[80%] md:basis-[70%]">
+                <div class="p-2">
+                  <div
+                    class="relative flex aspect-video items-center justify-center overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 shadow-sm transition-all duration-300 dark:border-neutral-800 dark:bg-neutral-900">
+                    @if (loadedSlides.has(i)) {
+                      <img
+                        [src]="
+                          'https://images.unsplash.com/photo-' +
+                          seeds[i] +
+                          '?auto=format&fit=crop&q=80&w=800'
+                        "
+                        class="absolute inset-0 h-full w-full object-cover transition-all duration-700 ease-in-out"
+                        (load)="onImageLoad(i)"
+                        [class.opacity-0]="!imagesReady.has(i)"
+                        [class.scale-110]="!imagesReady.has(i)"
+                        [class.scale-100]="imagesReady.has(i)" />
+                    }
+                    @if (!imagesReady.has(i)) {
+                      <div
+                        class="absolute inset-0 flex items-center justify-center bg-neutral-100 dark:bg-neutral-900">
+                        <div class="flex flex-col items-center gap-2">
+                          <i class="ri-loader-4-line animate-spin text-3xl text-primary/40"></i>
+                          <span
+                            class="text-[10px] font-medium uppercase tracking-widest text-neutral-400"
+                            >Loading asset</span
+                          >
+                        </div>
+                      </div>
+                    }
                   </div>
                 </div>
               </div>
-            </div>
+            }
           </div>
         </div>
-        
-        <button tolleCarouselPrevious class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+
+        <button
+          tolleCarouselPrevious
+          class="absolute left-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white/80 text-neutral-600 opacity-0 shadow-sm backdrop-blur-sm transition-all hover:bg-white disabled:opacity-30 group-hover:opacity-100 dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900">
           <i class="ri-arrow-left-s-line text-xl"></i>
         </button>
-        <button tolleCarouselNext class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 bg-white/80 backdrop-blur-sm text-neutral-600 hover:bg-white dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900 shadow-sm transition-all opacity-0 group-hover:opacity-100 disabled:opacity-30">
+        <button
+          tolleCarouselNext
+          class="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white/80 text-neutral-600 opacity-0 shadow-sm backdrop-blur-sm transition-all hover:bg-white disabled:opacity-30 group-hover:opacity-100 dark:border-neutral-800 dark:bg-neutral-950/80 dark:text-neutral-400 dark:hover:bg-neutral-900">
           <i class="ri-arrow-right-s-line text-xl"></i>
         </button>
       </tolle-carousel>
 
-      <div class="flex justify-center gap-2 mt-4">
-        <button *ngFor="let snap of scrollSnaps; let i = index"
-                (click)="scrollTo(i)"
-                [class]="'w-2 h-2 rounded-full transition-all duration-300 ' + (selectedIndex === i ? 'bg-primary w-4' : 'bg-neutral-300 dark:bg-neutral-700')"
-                [attr.aria-label]="'Go to slide ' + (i + 1)">
-        </button>
+      <div class="mt-4 flex justify-center gap-2">
+        @for (snap of scrollSnaps; track snap; let i = $index) {
+          <button
+            (click)="scrollTo(i)"
+            [class]="
+              'h-2 w-2 rounded-full transition-all duration-300 ' +
+              (selectedIndex === i ? 'w-4 bg-primary' : 'bg-neutral-300 dark:bg-neutral-700')
+            "
+            [attr.aria-label]="'Go to slide ' + (i + 1)"></button>
+        }
       </div>
     </div>
-  `
+  `,
 })
 export class LazyLoadCarouselComponent {
   api?: any;
@@ -85,10 +105,10 @@ export class LazyLoadCarouselComponent {
     '1441974231531-c6227db76b6e',
     '1500382017468-9049fee7c9cd',
     '1470071459604-3b5ec3a7fe05',
-    '1447752875215-b2761acb3c5d'
+    '1447752875215-b2761acb3c5d',
   ];
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   onApi(api: EmblaCarouselType) {
     this.api = api;

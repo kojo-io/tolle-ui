@@ -3,14 +3,13 @@ import {DatePickerComponent} from '../../../../../../tolle/src/lib/date-picker.c
 import {FormsModule} from '@angular/forms';
 
 @Component({
-  selector: 'app-base-date-picker',
-  standalone: true,
-  imports: [
-    DatePickerComponent,
-    FormsModule
-  ],
-  templateUrl: './base-date-picker.component.html',
-  styleUrl: './base-date-picker.component.css'
+    selector: 'app-base-date-picker',
+    imports: [
+        DatePickerComponent,
+        FormsModule
+    ],
+    templateUrl: './base-date-picker.component.html',
+    styleUrl: './base-date-picker.component.css'
 })
 export class BaseDatePickerComponent {
   date: Date = new Date();

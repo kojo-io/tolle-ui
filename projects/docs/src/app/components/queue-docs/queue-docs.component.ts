@@ -10,19 +10,18 @@ import { BasicQueueComponent } from '../../docs-examples/queue/basic-queue/basic
 import { QueueStatusesComponent } from '../../docs-examples/queue/queue-statuses/queue-statuses.component';
 
 @Component({
-  selector: 'app-queue-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicQueueComponent,
-    QueueStatusesComponent
-  ],
-  templateUrl: './queue-docs.component.html',
-  styleUrl: './queue-docs.component.css'
+    selector: 'app-queue-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicQueueComponent,
+        QueueStatusesComponent
+    ],
+    templateUrl: './queue-docs.component.html',
+    styleUrl: './queue-docs.component.css'
 })
 export class QueueDocsComponent {
   baseService = inject(BaseService);

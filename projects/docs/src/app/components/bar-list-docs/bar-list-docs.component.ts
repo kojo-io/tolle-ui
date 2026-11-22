@@ -10,19 +10,18 @@ import { BasicBarListComponent } from '../../docs-examples/bar-list/basic-bar-li
 import { BarListInACardComponent } from '../../docs-examples/bar-list/bar-list-in-a-card/bar-list-in-a-card.component';
 
 @Component({
-  selector: 'app-bar-list-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicBarListComponent,
-    BarListInACardComponent
-  ],
-  templateUrl: './bar-list-docs.component.html',
-  styleUrl: './bar-list-docs.component.css'
+    selector: 'app-bar-list-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicBarListComponent,
+        BarListInACardComponent
+    ],
+    templateUrl: './bar-list-docs.component.html',
+    styleUrl: './bar-list-docs.component.css'
 })
 export class BarListDocsComponent {
   baseService = inject(BaseService);

@@ -3,10 +3,9 @@ import { PropEntry } from '../../../shared/types';
 import { PropTableComponent } from '../../../shared/prop-table/prop-table.component';
 
 @Component({
-  selector: 'app-country-selector-api',
-  standalone: true,
-  imports: [PropTableComponent],
-  templateUrl: './country-selector-api.component.html'
+    selector: 'app-country-selector-api',
+    imports: [PropTableComponent],
+    templateUrl: './country-selector-api.component.html'
 })
 export class CountrySelectorApiComponent {
   props: PropEntry[] = [

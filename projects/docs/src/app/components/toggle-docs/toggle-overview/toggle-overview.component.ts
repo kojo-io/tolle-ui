@@ -4,7 +4,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-toggle-overview',
-    standalone: true,
     imports: [BaseEditorComponent, DocHeroComponent],
     template: `
     <app-doc-hero slug="toggle" description="A two-state button that can be either on or off." id="overview" />

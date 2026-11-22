@@ -3,7 +3,6 @@ import { TrackerComponent, type TrackerBlock } from '../../../../../../tolle/src
 
 @Component({
     selector: 'app-tracker-status-card',
-    standalone: true,
     imports: [TrackerComponent],
     styles: [':host { display: block; width: 100%; }'],
     templateUrl: './tracker-status-card.component.html'

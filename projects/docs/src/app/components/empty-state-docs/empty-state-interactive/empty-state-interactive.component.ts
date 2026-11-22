@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { EmptyStateComponent } from '../../../../../../tolle/src/lib/empty-state.component';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
@@ -12,9 +12,7 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
   selector: 'app-empty-state-interactive',
-  standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     EmptyStateComponent,
     ButtonComponent,
@@ -23,24 +21,26 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
     SelectItemComponent,
     InputComponent,
     TextareaComponent,
-    LabelComponent
+    LabelComponent,
   ],
   template: `
     <section class="space-y-6">
       <h2 class="text-xl font-semibold tracking-tight text-foreground">Interactive Playground</h2>
-      
+
       <app-playground [code]="codeSnippet">
-        <div preview class="flex items-center justify-center min-h-[400px] w-full">
-          <tolle-empty-state 
-            [variant]="variant" 
-            [title]="title" 
+        <div preview class="flex min-h-[400px] w-full items-center justify-center">
+          <tolle-empty-state
+            [variant]="variant"
+            [title]="title"
             [description]="description"
             class="w-full">
             <i icon [class]="iconClass"></i>
-            <div actions *ngIf="variant !== 'minimal'" class="gap-2 flex">
-              <tolle-button variant="outline" size="sm">Explore</tolle-button>
-              <tolle-button size="sm">Get Started</tolle-button>
-            </div>
+            @if (variant !== 'minimal') {
+              <div actions class="flex gap-2">
+                <tolle-button variant="outline" size="sm">Explore</tolle-button>
+                <tolle-button size="sm">Get Started</tolle-button>
+              </div>
+            }
           </tolle-empty-state>
         </div>
 
@@ -74,7 +74,7 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class EmptyStateInteractiveComponent {
   title = 'No results found';
@@ -86,16 +86,25 @@ export class EmptyStateInteractiveComponent {
     const size = this.variant === 'minimal' ? 'text-xl' : 'text-3xl';
     const base = 'text-muted-foreground/60';
     switch (this.iconType) {
-      case 'inbox': return `ri-inbox-line ${size} ${base}`;
-      case 'search': return `ri-search-2-line ${size} ${base}`;
-      case 'error': return `ri-error-warning-line ${size} ${base}`;
-      default: return `ri-inbox-line ${size} ${base}`;
+      case 'inbox':
+        return `ri-inbox-line ${size} ${base}`;
+      case 'search':
+        return `ri-search-2-line ${size} ${base}`;
+      case 'error':
+        return `ri-error-warning-line ${size} ${base}`;
+      default:
+        return `ri-inbox-line ${size} ${base}`;
     }
   }
 
   get codeSnippet(): string {
     const descAttr = this.description ? ` description="${this.description}"` : '';
-    const iconTag = this.iconType === 'search' ? 'ri-search-2-line' : this.iconType === 'error' ? 'ri-error-warning-line' : 'ri-inbox-line';
+    const iconTag =
+      this.iconType === 'search'
+        ? 'ri-search-2-line'
+        : this.iconType === 'error'
+          ? 'ri-error-warning-line'
+          : 'ri-inbox-line';
 
     return `<tolle-empty-state 
   variant="${this.variant}" 

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -25,11 +25,8 @@ export type SkeletonProps = VariantProps<typeof skeletonVariants>;
 @Component({
   selector: 'tolle-skeleton',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `
-    <div [class]="computedClass"></div>
-  `,
+  imports: [],
+  template: ` <div [class]="computedClass"></div> `,
 })
 export class SkeletonComponent {
   /** Shape of the skeleton placeholder. @default 'rect' */

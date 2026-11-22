@@ -4,7 +4,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-button-group-overview',
-    standalone: true,
     imports: [BaseEditorComponent, DocHeroComponent],
     template: `
     <app-doc-hero slug="button-group" description="Groups a series of buttons together on a single line." id="overview" />

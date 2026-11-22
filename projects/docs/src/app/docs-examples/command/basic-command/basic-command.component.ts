@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   CommandComponent,
   CommandInputComponent,
@@ -8,24 +8,22 @@ import {
   CommandGroupComponent,
   CommandItemComponent,
   CommandSeparatorComponent,
-  CommandShortcutComponent
+  CommandShortcutComponent,
 } from '../../../../../../tolle/src/lib/command.component';
 
 @Component({
-    selector: 'app-basic-command',
-    standalone: true,
-    imports: [
-        CommonModule,
-        CommandComponent,
-        CommandInputComponent,
-        CommandListComponent,
-        CommandEmptyComponent,
-        CommandGroupComponent,
-        CommandItemComponent,
-        CommandSeparatorComponent,
-        CommandShortcutComponent
-    ],
-    templateUrl: './basic-command.component.html'
+  selector: 'app-basic-command',
+  imports: [
+    CommandComponent,
+    CommandInputComponent,
+    CommandListComponent,
+    CommandEmptyComponent,
+    CommandGroupComponent,
+    CommandItemComponent,
+    CommandSeparatorComponent,
+    CommandShortcutComponent,
+  ],
+  templateUrl: './basic-command.component.html',
 })
 export class BasicCommandComponent {
   chosen: string | null = null;

@@ -8,7 +8,6 @@ import { BasicResizableExampleComponent } from '../../../docs-examples/resizable
 
 @Component({
     selector: 'app-resizable-overview',
-    standalone: true,
     imports: [AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicResizableExampleComponent],
     templateUrl: './resizable-overview.component.html'
 })

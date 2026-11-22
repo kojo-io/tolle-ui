@@ -1,5 +1,16 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, OnChanges, OnDestroy, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnInit,
+  OnChanges,
+  OnDestroy,
+  inject,
+} from '@angular/core';
+
 import { Subscription } from 'rxjs';
 import { cn } from './utils/cn';
 import { CommandService } from './command.service';
@@ -22,8 +33,7 @@ let commandItemId = 0;
 @Component({
   selector: 'tolle-command',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [CommandService],
   template: `
     <div
@@ -32,8 +42,7 @@ let commandItemId = 0;
       aria-expanded="true"
       [attr.aria-label]="ariaLabel || null"
       [class]="computedClass"
-      (keydown)="onKeyDown($event)"
-    >
+      (keydown)="onKeyDown($event)">
       <ng-content></ng-content>
     </div>
   `,
@@ -59,8 +68,8 @@ export class CommandComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.service.shouldFilter = this.shouldFilter;
-    this.subscriptions.add(this.service.selected$.subscribe((value) => this.selected.emit(value)));
-    this.subscriptions.add(this.service.query$.subscribe((query) => this.queryChange.emit(query)));
+    this.subscriptions.add(this.service.selected$.subscribe(value => this.selected.emit(value)));
+    this.subscriptions.add(this.service.query$.subscribe(query => this.queryChange.emit(query)));
   }
 
   ngOnChanges(): void {
@@ -72,7 +81,10 @@ export class CommandComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   get computedClass() {
-    return cn('flex w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground', this.class);
+    return cn(
+      'flex w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+      this.class
+    );
   }
 
   /**
@@ -109,8 +121,7 @@ export class CommandComponent implements OnInit, OnChanges, OnDestroy {
 @Component({
   selector: 'tolle-command-input',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <div [class]="cn('flex items-center gap-2 border-b border-border px-3', class)">
       <i class="ri-search-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
@@ -122,13 +133,14 @@ export class CommandComponent implements OnInit, OnChanges, OnDestroy {
         autocomplete="off"
         spellcheck="false"
         [value]="value"
-        [class]="cn(
-          'h-11 w-full bg-transparent py-3 text-sm text-foreground outline-none',
-          'placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
-          inputClass
-        )"
-        (input)="onInput($event)"
-      />
+        [class]="
+          cn(
+            'h-11 w-full bg-transparent py-3 text-sm text-foreground outline-none',
+            'placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50',
+            inputClass
+          )
+        "
+        (input)="onInput($event)" />
     </div>
   `,
 })
@@ -152,14 +164,14 @@ export class CommandInputComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.activeId$.subscribe((id) => {
+      this.service.activeId$.subscribe(id => {
         this.activeId = id;
         this.cdr.markForCheck();
       })
     );
     // The dialog clears the query when it reopens; mirror that back into the box.
     this.subscriptions.add(
-      this.service.query$.subscribe((query) => {
+      this.service.query$.subscribe(query => {
         if (query !== this.value) {
           this.value = query;
           this.cdr.markForCheck();
@@ -183,16 +195,18 @@ export class CommandInputComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'tolle-command-list',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div role="listbox" [attr.aria-label]="ariaLabel || null" [class]="cn('max-h-80 overflow-y-auto overflow-x-hidden p-1', class)">
+    <div
+      role="listbox"
+      [attr.aria-label]="ariaLabel || null"
+      [class]="cn('max-h-80 overflow-y-auto overflow-x-hidden p-1', class)">
       <ng-content></ng-content>
     </div>
   `,
 })
-export class CommandListComponent  implements OnChanges{
+export class CommandListComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -218,12 +232,13 @@ export class CommandListComponent  implements OnChanges{
 @Component({
   selector: 'tolle-command-empty',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div *ngIf="isEmpty" role="status" [class]="cn('py-6 text-center text-sm text-muted-foreground', class)">
-      <ng-content></ng-content>
-    </div>
+    @if (isEmpty) {
+      <div role="status" [class]="cn('py-6 text-center text-sm text-muted-foreground', class)">
+        <ng-content></ng-content>
+      </div>
+    }
   `,
 })
 export class CommandEmptyComponent implements OnInit, OnDestroy {
@@ -258,16 +273,18 @@ export class CommandEmptyComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'tolle-command-group',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div role="group" [attr.aria-label]="heading || null" [class]="cn('overflow-hidden p-1 text-foreground', class)">
-      <div
-        *ngIf="heading"
-        [class]="cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', hidden && 'hidden')"
-      >
-        {{ heading }}
-      </div>
+    <div
+      role="group"
+      [attr.aria-label]="heading || null"
+      [class]="cn('overflow-hidden p-1 text-foreground', class)">
+      @if (heading) {
+        <div
+          [class]="cn('px-2 py-1.5 text-xs font-medium text-muted-foreground', hidden && 'hidden')">
+          {{ heading }}
+        </div>
+      }
       <ng-content></ng-content>
     </div>
   `,
@@ -288,9 +305,9 @@ export class CommandGroupComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.visible$.subscribe((visible) => {
+      this.service.visible$.subscribe(visible => {
         // Hide the heading once none of this group's items survive the filter.
-        this.hidden = this.memberIds.size > 0 && !visible.some((id) => this.memberIds.has(id));
+        this.hidden = this.memberIds.size > 0 && !visible.some(id => this.memberIds.has(id));
         this.cdr.markForCheck();
       })
     );
@@ -314,22 +331,21 @@ export class CommandGroupComponent implements OnInit, OnDestroy {
 @Component({
   selector: 'tolle-command-item',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div
-      *ngIf="visible"
-      [id]="id"
-      role="option"
-      [attr.aria-selected]="active"
-      [attr.aria-disabled]="disabled || null"
-      [attr.data-active]="active ? '' : null"
-      [class]="computedClass"
-      (click)="onClick()"
-      (mouseenter)="onMouseEnter()"
-    >
-      <ng-content></ng-content>
-    </div>
+    @if (visible) {
+      <div
+        [id]="id"
+        role="option"
+        [attr.aria-selected]="active"
+        [attr.aria-disabled]="disabled || null"
+        [attr.data-active]="active ? '' : null"
+        [class]="computedClass"
+        (click)="onClick()"
+        (mouseenter)="onMouseEnter()">
+        <ng-content></ng-content>
+      </div>
+    }
   `,
 })
 export class CommandItemComponent implements OnInit, OnChanges, OnDestroy {
@@ -370,19 +386,19 @@ export class CommandItemComponent implements OnInit, OnChanges, OnDestroy {
     this.group?.addMember(this.id);
 
     this.subscriptions.add(
-      this.service.visible$.subscribe((ids) => {
+      this.service.visible$.subscribe(ids => {
         this.visible = ids.includes(this.id);
         this.cdr.markForCheck();
       })
     );
     this.subscriptions.add(
-      this.service.activeId$.subscribe((activeId) => {
+      this.service.activeId$.subscribe(activeId => {
         this.active = activeId === this.id;
         this.cdr.markForCheck();
       })
     );
     this.subscriptions.add(
-      this.service.selected$.subscribe((value) => {
+      this.service.selected$.subscribe(value => {
         if (value === this.value) this.selected.emit(value);
       })
     );
@@ -432,12 +448,11 @@ export class CommandItemComponent implements OnInit, OnChanges, OnDestroy {
 @Component({
   selector: 'tolle-command-separator',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div role="separator" [class]="cn('-mx-1 h-px bg-border', class)"></div>`,
 })
-export class CommandSeparatorComponent  implements OnChanges{
+export class CommandSeparatorComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -458,12 +473,16 @@ export class CommandSeparatorComponent  implements OnChanges{
 @Component({
   selector: 'tolle-command-shortcut',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<span [class]="cn('ml-auto flex items-center gap-1 text-xs tracking-widest text-muted-foreground', class)"><ng-content></ng-content></span>`,
+  template: `<span
+    [class]="
+      cn('ml-auto flex items-center gap-1 text-xs tracking-widest text-muted-foreground', class)
+    "
+    ><ng-content></ng-content
+  ></span>`,
 })
-export class CommandShortcutComponent  implements OnChanges{
+export class CommandShortcutComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

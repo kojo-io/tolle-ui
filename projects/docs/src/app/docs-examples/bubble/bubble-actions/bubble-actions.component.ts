@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-bubble-actions',
-    standalone: true,
     imports: [BubbleComponent, BubbleActionsComponent, BubbleReactionsComponent],
     templateUrl: './bubble-actions.component.html'
 })

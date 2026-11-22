@@ -9,7 +9,6 @@ import { BubbleComponent } from '../../../../../../tolle/src/lib/bubble.componen
 
 @Component({
     selector: 'app-marker-in-transcript',
-    standalone: true,
     imports: [
         MarkerComponent,
         MessageComponent,

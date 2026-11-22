@@ -5,25 +5,22 @@ import { AlertDialogOverviewComponent } from './alert-dialog-overview/alert-dial
 import { AlertDialogInteractiveComponent } from './alert-dialog-interactive/alert-dialog-interactive.component';
 import { AlertDialogApiComponent } from './alert-dialog-api/alert-dialog-api.component';
 import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.component';
-import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-alert-dialog-docs',
-    standalone: true,
-    imports: [
-        CommonModule,
-        AlertDialogOverviewComponent,
-        AlertDialogInteractiveComponent,
-        AlertDialogApiComponent,
-        DocsWrapperComponent
-    ],
-    templateUrl: './alert-dialog-docs.component.html'
+  selector: 'app-alert-dialog-docs',
+  imports: [
+    AlertDialogOverviewComponent,
+    AlertDialogInteractiveComponent,
+    AlertDialogApiComponent,
+    DocsWrapperComponent,
+  ],
+  templateUrl: './alert-dialog-docs.component.html',
 })
 export class AlertDialogDocsComponent implements OnInit {
-    baseService = inject(BaseService);
-    analytics = inject(AnalyticsService);
+  baseService = inject(BaseService);
+  analytics = inject(AnalyticsService);
 
-    ngOnInit(): void {
-        this.analytics.init();
-    }
+  ngOnInit(): void {
+    this.analytics.init();
+  }
 }

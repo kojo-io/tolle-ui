@@ -10,19 +10,18 @@ import { BasicTaskComponent } from '../../docs-examples/task/basic-task/basic-ta
 import { TaskFilesComponent } from '../../docs-examples/task/task-files/task-files.component';
 
 @Component({
-  selector: 'app-task-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicTaskComponent,
-    TaskFilesComponent
-  ],
-  templateUrl: './task-docs.component.html',
-  styleUrl: './task-docs.component.css'
+    selector: 'app-task-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicTaskComponent,
+        TaskFilesComponent
+    ],
+    templateUrl: './task-docs.component.html',
+    styleUrl: './task-docs.component.css'
 })
 export class TaskDocsComponent {
   baseService = inject(BaseService);

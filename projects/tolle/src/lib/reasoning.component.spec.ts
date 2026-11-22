@@ -7,9 +7,8 @@ import {
 } from './reasoning.component';
 
 @Component({
-  standalone: true,
-  imports: [ReasoningComponent, ReasoningTriggerComponent, ReasoningContentComponent],
-  template: `
+    imports: [ReasoningComponent, ReasoningTriggerComponent, ReasoningContentComponent],
+    template: `
     <tolle-reasoning
       [open]="open"
       [streaming]="streaming"
@@ -19,7 +18,7 @@ import {
       <tolle-reasoning-trigger></tolle-reasoning-trigger>
       <tolle-reasoning-content text="First I considered the options."></tolle-reasoning-content>
     </tolle-reasoning>
-  `,
+  `
 })
 class HostComponent {
   open = false;

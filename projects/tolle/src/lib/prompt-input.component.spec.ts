@@ -9,14 +9,13 @@ import {
 } from './prompt-input.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    PromptInputComponent,
-    PromptInputToolbarComponent,
-    PromptInputToolsComponent,
-    PromptInputSubmitComponent,
-  ],
-  template: `
+    imports: [
+        PromptInputComponent,
+        PromptInputToolbarComponent,
+        PromptInputToolsComponent,
+        PromptInputSubmitComponent,
+    ],
+    template: `
     <tolle-prompt-input
       [status]="status"
       [submitOnEnter]="submitOnEnter"
@@ -30,7 +29,7 @@ import {
         <tolle-prompt-input-submit></tolle-prompt-input-submit>
       </tolle-prompt-input-toolbar>
     </tolle-prompt-input>
-  `,
+  `
 })
 class HostComponent {
   status: PromptInputStatus = 'ready';

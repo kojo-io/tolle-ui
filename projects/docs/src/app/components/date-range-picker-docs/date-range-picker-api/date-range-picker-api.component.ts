@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-date-range-picker-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './date-range-picker-api.component.html'
 })

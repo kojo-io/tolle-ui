@@ -1,21 +1,21 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { SuggestionComponent, SuggestionsComponent } from './suggestion.component';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, SuggestionsComponent, SuggestionComponent],
+  imports: [SuggestionsComponent, SuggestionComponent],
   template: `
     <tolle-suggestions (selected)="fromRow.push($event)">
-      <tolle-suggestion
-        *ngFor="let prompt of prompts"
-        [value]="prompt"
-        [size]="size"
-        [disabled]="disabled"
-        (selected)="fromPill.push($event)"
-        >{{ prompt }}</tolle-suggestion
-      >
+      @for (prompt of prompts; track prompt) {
+        <tolle-suggestion
+          [value]="prompt"
+          [size]="size"
+          [disabled]="disabled"
+          (selected)="fromPill.push($event)"
+          >{{ prompt }}</tolle-suggestion
+        >
+      }
     </tolle-suggestions>
   `,
 })
@@ -41,7 +41,7 @@ describe('SuggestionComponent', () => {
 
   it('renders one pill per suggestion, labelled with its projected text', () => {
     expect(pills().length).toBe(3);
-    expect(pills().map((pill) => pill.textContent!.trim())).toEqual([
+    expect(pills().map(pill => pill.textContent!.trim())).toEqual([
       'Summarise this',
       'Explain like I am five',
       'Show me the code',

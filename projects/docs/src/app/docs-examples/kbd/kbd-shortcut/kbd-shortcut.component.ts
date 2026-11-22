@@ -3,7 +3,6 @@ import { KbdComponent, KbdGroupComponent } from '../../../../../../tolle/src/lib
 
 @Component({
     selector: 'app-kbd-shortcut',
-    standalone: true,
     imports: [KbdComponent, KbdGroupComponent],
     templateUrl: './kbd-shortcut.component.html'
 })

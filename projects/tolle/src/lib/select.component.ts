@@ -14,7 +14,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -88,8 +88,7 @@ export type SelectProps = VariantProps<typeof selectTriggerVariants>;
  */
 @Component({
   selector: 'tolle-select',
-  standalone: true,
-  imports: [CommonModule, FormsModule, InputComponent],
+  imports: [FormsModule, InputComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     SelectService,
@@ -113,8 +112,7 @@ export type SelectProps = VariantProps<typeof selectTriggerVariants>;
         (click)="toggle()"
         (keydown)="onTriggerKeyDown($event)"
         [disabled]="disabled"
-        [class]="computedTriggerClass"
-      >
+        [class]="computedTriggerClass">
         <span class="truncate" [class.text-muted-foreground]="!selectedLabel">
           {{ selectedLabel || placeholder }}
         </span>
@@ -124,33 +122,36 @@ export type SelectProps = VariantProps<typeof selectTriggerVariants>;
       <div
         #popover
         [class.hidden-dropdown]="!isOpen"
-        class="fixed bg-popover z-[999] overflow-auto flex flex-col rounded-md border border-border text-popover-foreground shadow-md"
+        class="fixed z-[999] flex flex-col overflow-auto rounded-md border border-border bg-popover text-popover-foreground shadow-md"
         style="visibility: hidden; top: 0; left: 0;">
-        <div *ngIf="searchable" class="p-2 border-b border-border bg-popover h-auto">
-          <tolle-input
-            #searchInput
-            size="xs"
-            placeholder="Search..."
-            [(ngModel)]="searchQuery"
-            (ngModelChange)="onSearchChange($event)"
-            (keydown)="onSearchKeyDown($event)"
-            class="w-full">
-            <i prefix class="ri-search-line"></i>
-          </tolle-input>
-        </div>
-
-        <div role="listbox" class="p-1 overflow-y-auto grow h-full w-full">
-          <ng-content></ng-content>
-          <div *ngIf="noResults" class="py-6 text-center text-sm text-muted-foreground">
-            No results found.
+        @if (searchable) {
+          <div class="h-auto border-b border-border bg-popover p-2">
+            <tolle-input
+              #searchInput
+              size="xs"
+              placeholder="Search..."
+              [(ngModel)]="searchQuery"
+              (ngModelChange)="onSearchChange($event)"
+              (keydown)="onSearchKeyDown($event)"
+              class="w-full">
+              <i prefix class="ri-search-line"></i>
+            </tolle-input>
           </div>
+        }
+
+        <div role="listbox" class="h-full w-full grow overflow-y-auto p-1">
+          <ng-content></ng-content>
+          @if (noResults) {
+            <div class="py-6 text-center text-sm text-muted-foreground">No results found.</div>
+          }
         </div>
       </div>
     </div>
   `,
 })
 export class SelectComponent
-  implements ControlValueAccessor, AfterContentInit, OnChanges, OnDestroy {
+  implements ControlValueAccessor, AfterContentInit, OnChanges, OnDestroy
+{
   /** Text shown on the trigger when nothing is selected. @default 'Select an option' */
   @Input() placeholder = 'Select an option';
   /** Extra Tailwind classes merged onto the trigger via `cn()` (last-wins). @default '' */
@@ -175,7 +176,8 @@ export class SelectComponent
   @ViewChild('popover') popover!: ElementRef;
   @ViewChild('container') container!: ElementRef;
   @ViewChild('searchInput', { read: ElementRef }) searchInput?: ElementRef<HTMLElement>;
-  @ContentChildren(SelectItemComponent, { descendants: true }) items!: QueryList<SelectItemComponent>;
+  @ContentChildren(SelectItemComponent, { descendants: true })
+  items!: QueryList<SelectItemComponent>;
 
   private sub = new Subscription();
   private itemsChangeSub?: Subscription;
@@ -194,8 +196,8 @@ export class SelectComponent
   private typeaheadTime = 0;
   private pendingTypeaheadChar = '';
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   protected cn = cn;
 
@@ -287,7 +289,10 @@ export class SelectComponent
   }
 
   private _outsideClickHandler = (event: MouseEvent) => {
-    if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+    if (
+      !this.trigger.nativeElement.contains(event.target) &&
+      !this.popover?.nativeElement.contains(event.target)
+    ) {
       this.close();
     }
   };
@@ -344,7 +349,7 @@ export class SelectComponent
               apply({ rects, elements, availableHeight }) {
                 Object.assign(elements.floating.style, {
                   width: rects.reference.width + 'px',
-                  maxHeight: availableHeight + 'px'
+                  maxHeight: availableHeight + 'px',
                 });
               },
             }),
@@ -394,7 +399,7 @@ export class SelectComponent
 
   private updateActiveStates() {
     const list = this.navigableItems;
-    const activeItem = this.activeIndex >= 0 ? list[this.activeIndex] ?? null : null;
+    const activeItem = this.activeIndex >= 0 ? (list[this.activeIndex] ?? null) : null;
     this.items?.forEach(i => (i.active = i === activeItem));
     this.syncActiveDescendant();
     this.cdr.markForCheck();
@@ -428,7 +433,8 @@ export class SelectComponent
   private moveActive(delta: number) {
     const list = this.navigableItems;
     if (!list.length) return;
-    const next = this.activeIndex < 0 ? (delta > 0 ? 0 : list.length - 1) : this.activeIndex + delta;
+    const next =
+      this.activeIndex < 0 ? (delta > 0 ? 0 : list.length - 1) : this.activeIndex + delta;
     this.setActive(next); // setActive clamps (no wrap, matching shadcn)
   }
 
@@ -462,7 +468,13 @@ export class SelectComponent
   }
 
   private isTypeaheadChar(event: KeyboardEvent): boolean {
-    return event.key.length === 1 && event.key !== ' ' && !event.ctrlKey && !event.metaKey && !event.altKey;
+    return (
+      event.key.length === 1 &&
+      event.key !== ' ' &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    );
   }
 
   private typeahead(char: string) {
@@ -490,7 +502,14 @@ export class SelectComponent
     const key = event.key;
 
     if (!this.isOpen) {
-      if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === ' ' || key === 'Home' || key === 'End') {
+      if (
+        key === 'ArrowDown' ||
+        key === 'ArrowUp' ||
+        key === 'Enter' ||
+        key === ' ' ||
+        key === 'Home' ||
+        key === 'End'
+      ) {
         event.preventDefault();
         this.open();
         return;
@@ -504,10 +523,22 @@ export class SelectComponent
     }
 
     switch (key) {
-      case 'ArrowDown': event.preventDefault(); this.moveActive(1); break;
-      case 'ArrowUp': event.preventDefault(); this.moveActive(-1); break;
-      case 'Home': event.preventDefault(); this.setActive(0); break;
-      case 'End': event.preventDefault(); this.setActive(this.navigableItems.length - 1); break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.moveActive(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.moveActive(-1);
+        break;
+      case 'Home':
+        event.preventDefault();
+        this.setActive(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        this.setActive(this.navigableItems.length - 1);
+        break;
       case 'Enter':
       case ' ':
         event.preventDefault();
@@ -534,9 +565,18 @@ export class SelectComponent
   onSearchKeyDown(event: KeyboardEvent) {
     if (!this.isOpen) return;
     switch (event.key) {
-      case 'ArrowDown': event.preventDefault(); this.moveActive(1); break;
-      case 'ArrowUp': event.preventDefault(); this.moveActive(-1); break;
-      case 'Enter': event.preventDefault(); this.selectActive(); break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.moveActive(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.moveActive(-1);
+        break;
+      case 'Enter':
+        event.preventDefault();
+        this.selectActive();
+        break;
       case 'Escape':
         event.preventDefault();
         this.close();
@@ -560,8 +600,12 @@ export class SelectComponent
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.cdr.markForCheck();

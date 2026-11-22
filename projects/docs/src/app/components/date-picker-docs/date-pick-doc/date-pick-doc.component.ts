@@ -6,15 +6,14 @@ import { BaseDatePickerComponent } from '../../../docs-examples/date-picker/base
 import { ComponentPreviewComponent } from '../../../shared/component-preview/component-preview.component';
 
 @Component({
-  selector: 'app-date-pick-doc',
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    BaseDatePickerComponent,
-    ComponentPreviewComponent
-  ],
-  templateUrl: './date-pick-doc.component.html',
-  styleUrl: './date-pick-doc.component.css'
+    selector: 'app-date-pick-doc',
+    imports: [
+        AsyncPipe,
+        BaseDatePickerComponent,
+        ComponentPreviewComponent
+    ],
+    templateUrl: './date-pick-doc.component.html',
+    styleUrl: './date-pick-doc.component.css'
 })
 export class DatePickDocComponent implements OnInit {
   sourceService = inject(SourceCodeService);

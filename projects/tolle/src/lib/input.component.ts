@@ -1,34 +1,38 @@
-import { Component, Input, forwardRef, ChangeDetectorRef, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  forwardRef,
+  ChangeDetectorRef,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-input',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => InputComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   template: `
-    <div class="flex flex-col gap-1.5 w-full">
-      <label
-        *ngIf="label"
-        [for]="id"
-        [class]="computedLabelClass">
-        {{ label }}
-      </label>
+    <div class="flex w-full flex-col gap-1.5">
+      @if (label) {
+        <label [for]="id" [class]="computedLabelClass">
+          {{ label }}
+        </label>
+      }
 
-      <div
-        [class]="computedContainerClass"
-        (click)="focusInput()"
-      >
-        <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
+      <div [class]="computedContainerClass" (click)="focusInput()">
+        <div
+          class="flex h-full items-center text-muted-foreground transition-colors duration-200 group-focus-within:text-primary">
           <ng-content select="[prefix]"></ng-content>
         </div>
 
@@ -45,31 +49,31 @@ import { cn } from './utils/cn';
           (input)="onInputChange($event)"
           [class]="computedInputClass"
           [attr.aria-invalid]="error || null"
-          [attr.aria-describedby]="error && errorMessage ? id + '-error' : (hint ? id + '-hint' : null)"
-        />
+          [attr.aria-describedby]="
+            error && errorMessage ? id + '-error' : hint ? id + '-hint' : null
+          " />
 
-        <div class="h-full flex items-center text-muted-foreground group-focus-within:text-primary transition-colors duration-200">
+        <div
+          class="flex h-full items-center text-muted-foreground transition-colors duration-200 group-focus-within:text-primary">
           <ng-content select="[suffix]"></ng-content>
         </div>
       </div>
 
-      <ng-container *ngIf="!disabled">
-        <p
-          *ngIf="hint && !error"
-          [id]="id + '-hint'"
-          class="text-xs text-muted-foreground px-1 transition-opacity duration-200"
-          [class.opacity-0]="isFocused && hideHintOnFocus"
-        >
-          {{ hint }}
-        </p>
-        <p
-          *ngIf="error && errorMessage"
-          [id]="id + '-error'"
-          class="text-xs text-destructive px-1"
-        >
-          {{ errorMessage }}
-        </p>
-      </ng-container>
+      @if (!disabled) {
+        @if (hint && !error) {
+          <p
+            [id]="id + '-hint'"
+            class="px-1 text-xs text-muted-foreground transition-opacity duration-200"
+            [class.opacity-0]="isFocused && hideHintOnFocus">
+            {{ hint }}
+          </p>
+        }
+        @if (error && errorMessage) {
+          <p [id]="id + '-error'" class="px-1 text-xs text-destructive">
+            {{ errorMessage }}
+          </p>
+        }
+      }
     </div>
   `,
 })
@@ -95,11 +99,11 @@ export class InputComponent implements ControlValueAccessor, AfterViewInit {
   @Input() hideHintOnFocus: boolean = true;
 
   value: any = '';
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
   isFocused: boolean = false;
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     if (this.inputElement?.nativeElement.hasAttribute('autofocus')) {
@@ -112,8 +116,12 @@ export class InputComponent implements ControlValueAccessor, AfterViewInit {
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
@@ -146,56 +154,53 @@ export class InputComponent implements ControlValueAccessor, AfterViewInit {
 
   get computedLabelClass() {
     return cn(
-      "text-sm font-medium text-foreground leading-none transition-opacity duration-200",
-      this.disabled && "opacity-50"
+      'text-sm font-medium text-foreground leading-none transition-opacity duration-200',
+      this.disabled && 'opacity-50'
     );
   }
 
   get computedContainerClass() {
     return cn(
       // Base styles
-      "group relative flex items-center w-full rounded-md border transition-all duration-200",
-      "bg-background",
+      'group relative flex items-center w-full rounded-md border transition-all duration-200',
+      'bg-background',
 
       // Border and shadow
-      "border-input shadow-sm",
+      'border-input shadow-sm',
 
       // Sizing
-      this.size === 'xs' && "h-8 px-2 gap-1.5 text-xs",
-      this.size === 'sm' && "h-9 px-3 gap-2 text-sm",
-      this.size === 'default' && "h-10 px-3 gap-2 text-sm",
-      this.size === 'lg' && "h-11 px-4 gap-3 text-base",
+      this.size === 'xs' && 'h-8 px-2 gap-1.5 text-xs',
+      this.size === 'sm' && 'h-9 px-3 gap-2 text-sm',
+      this.size === 'default' && 'h-10 px-3 gap-2 text-sm',
+      this.size === 'lg' && 'h-11 px-4 gap-3 text-base',
 
       // Focus state - SIMPLE AND ELEGANT LIKE ZARDUI
       // The magic happens in CSS: border darkens automatically on focus
       !(this.readonly || this.disabled) && [
-        "focus-within:border-primary/80",
-        "focus-within:ring-4",
-        "focus-within:ring-ring/30",
-        "focus-within:ring-offset-0",
-        "focus-within:shadow-none",
+        'focus-within:border-primary/80',
+        'focus-within:ring-4',
+        'focus-within:ring-ring/30',
+        'focus-within:ring-offset-0',
+        'focus-within:shadow-none',
       ],
 
       // Error state
       this.error && [
-        "border-destructive",
+        'border-destructive',
         !(this.readonly || this.disabled) && [
-          "focus-within:border-destructive/80",
-          "focus-within:ring-destructive/30"
-        ]
+          'focus-within:border-destructive/80',
+          'focus-within:ring-destructive/30',
+        ],
       ],
 
       // Disabled state
-      this.disabled && [
-        "cursor-not-allowed opacity-50",
-        "border-opacity-50"
-      ],
+      this.disabled && ['cursor-not-allowed opacity-50', 'border-opacity-50'],
 
       // Readonly state
       this.readonly && [
-        "cursor-default",
-        "border-dashed",
-        !this.disabled && "focus-within:ring-0 focus-within:border-opacity-100"
+        'cursor-default',
+        'border-dashed',
+        !this.disabled && 'focus-within:ring-0 focus-within:border-opacity-100',
       ],
 
       this.containerClass
@@ -205,27 +210,27 @@ export class InputComponent implements ControlValueAccessor, AfterViewInit {
   get computedInputClass() {
     return cn(
       // Base styles
-      "flex-1 bg-transparent border-none p-0",
-      "placeholder:text-muted-foreground",
+      'flex-1 bg-transparent border-none p-0',
+      'placeholder:text-muted-foreground',
 
       // Remove all default focus styles
-      "focus:outline-none focus:ring-0 focus:shadow-none",
+      'focus:outline-none focus:ring-0 focus:shadow-none',
 
       // Text sizing
-      this.size === 'xs' && "text-xs",
-      this.size === 'sm' && "text-sm",
-      this.size === 'default' && "text-sm",
-      this.size === 'lg' && "text-base",
+      this.size === 'xs' && 'text-xs',
+      this.size === 'sm' && 'text-sm',
+      this.size === 'default' && 'text-sm',
+      this.size === 'lg' && 'text-base',
 
       // Cursor states
-      this.disabled && "cursor-not-allowed",
-      this.readonly && "cursor-default",
+      this.disabled && 'cursor-not-allowed',
+      this.readonly && 'cursor-default',
 
       // Text color
-      "text-foreground",
+      'text-foreground',
 
       // Selection color
-      "selection:bg-primary/20 selection:text-foreground",
+      'selection:bg-primary/20 selection:text-foreground',
 
       this.class
     );

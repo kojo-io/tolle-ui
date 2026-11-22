@@ -108,10 +108,9 @@ describe('component host display', () => {
 
   it('lets a vertical margin actually separate two stacked components', () => {
     @Component({
-      standalone: true,
-      imports: [Tolle.CardComponent],
-      template: `<tolle-card></tolle-card><tolle-card></tolle-card>`,
-    })
+    imports: [Tolle.CardComponent],
+    template: `<tolle-card></tolle-card><tolle-card></tolle-card>`
+})
     class StackHostComponent {}
 
     TestBed.resetTestingModule();

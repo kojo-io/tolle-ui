@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-sidebar-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './sidebar-api.component.html'
 })

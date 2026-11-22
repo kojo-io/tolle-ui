@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { SegmentComponent } from '../../../../../../tolle/src/lib/segment.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CalendarComponent, CalendarMode } from '../../../../../../tolle/src/lib/calendar.component';
+import {
+  CalendarComponent,
+  CalendarMode,
+} from '../../../../../../tolle/src/lib/calendar.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { SelectComponent } from '../../../../../../tolle/src/lib/select.component';
 import { SelectItemComponent } from '../../../../../../tolle/src/lib/select-item.component';
@@ -11,7 +14,6 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
   selector: 'app-calendar-interactive',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -20,18 +22,20 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
     SelectComponent,
     SelectItemComponent,
     SwitchComponent,
-    LabelComponent
+    LabelComponent,
   ],
   template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <div class="flex flex-col items-center gap-4">
-            <p class="text-sm text-muted-foreground" *ngIf="date">Selected: {{ date | date:'fullDate' }}</p>
-            <tolle-calendar 
+            @if (date) {
+              <p class="text-sm text-muted-foreground">Selected: {{ date | date: 'fullDate' }}</p>
+            }
+            <tolle-calendar
               [(ngModel)]="date"
-              [mode]="mode" 
+              [mode]="mode"
               [disablePastDates]="disablePastDates"
               [showQuickActions]="showQuickActions">
             </tolle-calendar>
@@ -60,7 +64,7 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class CalendarInteractiveComponent {
   date: Date = new Date();

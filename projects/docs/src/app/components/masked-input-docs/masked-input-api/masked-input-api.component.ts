@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-masked-input-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './masked-input-api.component.html'
 })

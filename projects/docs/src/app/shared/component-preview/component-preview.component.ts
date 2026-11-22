@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { BaseEditorComponent, EditorLanguage } from '../base-editor/base-editor.component';
 
 /**
@@ -13,22 +13,15 @@ import { BaseEditorComponent, EditorLanguage } from '../base-editor/base-editor.
  */
 @Component({
   selector: 'app-preview',
-  standalone: true,
-  imports: [CommonModule, BaseEditorComponent],
+  imports: [BaseEditorComponent],
   template: `
     <div class="not-prose my-6 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
       <!-- Toolbar -->
       <div class="flex items-center gap-1 border-b border-border bg-muted/40 px-2 py-1.5">
-        <button
-          type="button"
-          (click)="tab = 'preview'"
-          [class]="tabClass('preview')">
+        <button type="button" (click)="tab = 'preview'" [class]="tabClass('preview')">
           <i class="ri-eye-line text-[13px]"></i> Preview
         </button>
-        <button
-          type="button"
-          (click)="tab = 'code'"
-          [class]="tabClass('code')">
+        <button type="button" (click)="tab = 'code'" [class]="tabClass('code')">
           <i class="ri-code-s-slash-line text-[13px]"></i> Code
         </button>
 
@@ -48,10 +41,14 @@ import { BaseEditorComponent, EditorLanguage } from '../base-editor/base-editor.
       <!-- Preview -->
       @if (tab === 'preview') {
         <div
-          [class]="'flex min-h-[240px] flex-wrap gap-4 bg-background p-8 preview-grid ' +
-            (align === 'start' ? 'items-start justify-start' :
-             align === 'stretch' ? 'items-stretch justify-center' :
-             'items-center justify-center')">
+          [class]="
+            'preview-grid flex min-h-[240px] flex-wrap gap-4 bg-background p-8 ' +
+            (align === 'start'
+              ? 'items-start justify-start'
+              : align === 'stretch'
+                ? 'items-stretch justify-center'
+                : 'items-center justify-center')
+          ">
           <ng-content></ng-content>
         </div>
       }
@@ -64,13 +61,15 @@ import { BaseEditorComponent, EditorLanguage } from '../base-editor/base-editor.
       }
     </div>
   `,
-  styles: [`
-    /* Subtle dotted backdrop so the preview surface reads as a canvas. */
-    .preview-grid {
-      background-image: radial-gradient(rgb(var(--muted-foreground) / 0.15) 1px, transparent 1px);
-      background-size: 16px 16px;
-    }
-  `],
+  styles: [
+    `
+      /* Subtle dotted backdrop so the preview surface reads as a canvas. */
+      .preview-grid {
+        background-image: radial-gradient(rgb(var(--muted-foreground) / 0.15) 1px, transparent 1px);
+        background-size: 16px 16px;
+      }
+    `,
+  ],
 })
 export class ComponentPreviewComponent {
   /** Source code shown under the Code tab. */

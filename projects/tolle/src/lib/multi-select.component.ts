@@ -13,7 +13,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate, size } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -79,12 +79,11 @@ export interface MultiSelectChip {
 @Component({
   selector: 'tolle-multi-select',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, BadgeComponent, InputComponent],
+  imports: [FormsModule, BadgeComponent, InputComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     SelectService,
-    { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true }
+    { provide: NG_VALUE_ACCESSOR, useExisting: MultiSelectComponent, multi: true },
   ],
   template: `
     <div class="relative w-full" #container>
@@ -99,82 +98,115 @@ export interface MultiSelectChip {
         (keydown)="onTriggerKeyDown($event)"
         [disabled]="disabled"
         [class]="computedTriggerClass">
-
-        <div class="flex flex-wrap gap-1 items-center max-w-[95%]">
-          <ng-container *ngIf="value.length; else placeholderTpl">
-            <tolle-badge *ngFor="let item of displayItems; trackBy: trackChip" size="xs" variant="secondary" [removable]="true" (onRemove)="removeValue($event, item.value)">
-              {{ item.label }}
-            </tolle-badge>
-            <span *ngIf="exceedsDisplayLimit" class="text-xs text-muted-foreground px-1">
-              +{{ value.length - maxDisplayItems }} more
-            </span>
-            <span *ngIf="maxSelections && value.length >= maxSelections" class="text-xs text-muted-foreground px-1">
-              (Max reached)
-            </span>
-          </ng-container>
-          <ng-template #placeholderTpl><span class="text-muted-foreground">{{ placeholder }}</span></ng-template>
+        <div class="flex max-w-[95%] flex-wrap items-center gap-1">
+          @if (value.length) {
+            @for (item of displayItems; track trackChip($index, item)) {
+              <tolle-badge
+                size="xs"
+                variant="secondary"
+                [removable]="true"
+                (onRemove)="removeValue($event, item.value)">
+                {{ item.label }}
+              </tolle-badge>
+            }
+            @if (exceedsDisplayLimit) {
+              <span class="px-1 text-xs text-muted-foreground">
+                +{{ value.length - maxDisplayItems }} more
+              </span>
+            }
+            @if (maxSelections && value.length >= maxSelections) {
+              <span class="px-1 text-xs text-muted-foreground"> (Max reached) </span>
+            }
+          } @else {
+            <span class="text-muted-foreground">{{ placeholder }}</span>
+          }
         </div>
-        <i [class]="cn('ri-arrow-down-s-line text-muted-foreground ml-2 transition-transform duration-200', isOpen ? 'rotate-180' : '')"></i>
+        <i
+          [class]="
+            cn(
+              'ri-arrow-down-s-line ml-2 text-muted-foreground transition-transform duration-200',
+              isOpen ? 'rotate-180' : ''
+            )
+          "></i>
       </button>
 
-      <div #popover *ngIf="isOpen"
-           role="listbox"
-           aria-multiselectable="true"
-           class="fixed bg-popover text-popover-foreground z-[999] rounded-md border border-border shadow-md overflow-hidden"
-           style="visibility: hidden; top: 0; left: 0;">
-
-        <div class="p-2 border-b border-border space-y-2 bg-popover">
-          <div class="flex items-center justify-between px-1 text-xs">
-            <span class="text-muted-foreground">
-              {{ value.length }} selected
-              <span *ngIf="maxSelections">/ {{ maxSelections }} max</span>
-            </span>
-            <span *ngIf="maxSelections && value.length >= maxSelections" class="text-destructive text-xs font-medium">
-              Maximum reached
-            </span>
+      @if (isOpen) {
+        <div
+          #popover
+          role="listbox"
+          aria-multiselectable="true"
+          class="fixed z-[999] overflow-hidden rounded-md border border-border bg-popover text-popover-foreground shadow-md"
+          style="visibility: hidden; top: 0; left: 0;">
+          <div class="space-y-2 border-b border-border bg-popover p-2">
+            <div class="flex items-center justify-between px-1 text-xs">
+              <span class="text-muted-foreground">
+                {{ value.length }} selected
+                @if (maxSelections) {
+                  <span>/ {{ maxSelections }} max</span>
+                }
+              </span>
+              @if (maxSelections && value.length >= maxSelections) {
+                <span class="text-xs font-medium text-destructive"> Maximum reached </span>
+              }
+            </div>
+            @if (searchable) {
+              <tolle-input
+                #searchInput
+                size="xs"
+                placeholder="Search..."
+                [(ngModel)]="searchQuery"
+                (ngModelChange)="onSearchChange($event)"
+                (keydown)="onSearchKeyDown($event)">
+                <i prefix class="ri-search-line"></i>
+              </tolle-input>
+            }
+            <div class="flex items-center justify-between px-1">
+              <button
+                type="button"
+                (click)="selectAll()"
+                [disabled]="!!(maxSelections && selectableItems.length > maxSelections)"
+                [class]="
+                  cn(
+                    'text-[10px] font-bold uppercase transition-colors',
+                    maxSelections && selectableItems.length > maxSelections
+                      ? 'cursor-not-allowed text-muted-foreground'
+                      : 'text-primary hover:underline'
+                  )
+                ">
+                Select All
+              </button>
+              <button
+                type="button"
+                (click)="clearAll()"
+                class="text-[10px] font-bold uppercase text-muted-foreground hover:underline">
+                Clear
+              </button>
+            </div>
           </div>
-
-          <tolle-input *ngIf="searchable" #searchInput size="xs" placeholder="Search..." [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)" (keydown)="onSearchKeyDown($event)">
-            <i prefix class="ri-search-line"></i>
-          </tolle-input>
-
-          <div class="flex items-center justify-between px-1">
-            <button type="button"
-                    (click)="selectAll()"
-                    [disabled]="!!(maxSelections && selectableItems.length > maxSelections)"
-                    [class]="cn(
-                      'text-[10px] font-bold uppercase transition-colors',
-                      maxSelections && selectableItems.length > maxSelections
-                        ? 'text-muted-foreground cursor-not-allowed'
-                        : 'text-primary hover:underline'
-                    )">
-              Select All
-            </button>
-            <button type="button" (click)="clearAll()" class="text-[10px] font-bold uppercase text-muted-foreground hover:underline">
-              Clear
-            </button>
+          <div class="max-h-60 overflow-y-auto p-1">
+            <ng-content></ng-content>
+            @if (noResults) {
+              <div class="py-4 text-center text-xs text-muted-foreground">
+                No results found for "{{ searchQuery }}"
+              </div>
+            }
+            @if (maxSelections && value.length >= maxSelections) {
+              <div class="border-t border-border bg-muted/20 p-2 text-center">
+                <span class="text-xs text-destructive">
+                  <i class="ri-alert-line mr-1"></i>
+                  Maximum selection limit reached ({{ maxSelections }})
+                </span>
+              </div>
+            }
           </div>
         </div>
-
-        <div class="p-1 max-h-60 overflow-y-auto">
-          <ng-content></ng-content>
-          <div *ngIf="noResults" class="py-4 text-center text-xs text-muted-foreground">
-            No results found for "{{searchQuery}}"
-          </div>
-          <div *ngIf="maxSelections && value.length >= maxSelections"
-               class="p-2 text-center border-t border-border bg-muted/20">
-            <span class="text-xs text-destructive">
-              <i class="ri-alert-line mr-1"></i>
-              Maximum selection limit reached ({{maxSelections}})
-            </span>
-          </div>
-        </div>
-      </div>
+      }
     </div>
-  `
+  `,
 })
 export class MultiSelectComponent
-  implements ControlValueAccessor, AfterContentInit, OnChanges, OnDestroy {
+  implements ControlValueAccessor, AfterContentInit, OnChanges, OnDestroy
+{
   /** Text shown on the trigger when nothing is selected. @default 'Select options...' */
   @Input() placeholder = 'Select options...';
   /** Padding and text size of the trigger. @default 'default' */
@@ -202,7 +234,8 @@ export class MultiSelectComponent
   @ViewChild('trigger') trigger!: ElementRef;
   @ViewChild('popover') popover!: ElementRef;
   @ViewChild('searchInput', { read: ElementRef }) searchInput?: ElementRef<HTMLElement>;
-  @ContentChildren(SelectItemComponent, { descendants: true }) items!: QueryList<SelectItemComponent>;
+  @ContentChildren(SelectItemComponent, { descendants: true })
+  items!: QueryList<SelectItemComponent>;
 
   value: any[] = [];
   selectedItems: MultiSelectChip[] = [];
@@ -254,10 +287,12 @@ export class MultiSelectComponent
 
   ngAfterContentInit() {
     this.syncItems();
-    this.sub.add(this.items.changes.subscribe(() => {
-      this.syncItems();
-      this.cdr.markForCheck();
-    }));
+    this.sub.add(
+      this.items.changes.subscribe(() => {
+        this.syncItems();
+        this.cdr.markForCheck();
+      })
+    );
   }
 
   /**
@@ -293,7 +328,10 @@ export class MultiSelectComponent
   }
 
   private _outsideClickHandler = (event: MouseEvent) => {
-    if (!this.trigger.nativeElement.contains(event.target) && !this.popover?.nativeElement.contains(event.target)) {
+    if (
+      !this.trigger.nativeElement.contains(event.target) &&
+      !this.popover?.nativeElement.contains(event.target)
+    ) {
       this.close();
     }
   };
@@ -343,7 +381,7 @@ export class MultiSelectComponent
             apply({ rects, elements, availableHeight }) {
               Object.assign(elements.floating.style, {
                 width: rects.reference.width + 'px',
-                maxHeight: availableHeight + 'px'
+                maxHeight: availableHeight + 'px',
               });
             },
           }),
@@ -454,7 +492,7 @@ export class MultiSelectComponent
 
   private updateActiveStates() {
     const list = this.navigableItems;
-    const activeItem = this.activeIndex >= 0 ? list[this.activeIndex] ?? null : null;
+    const activeItem = this.activeIndex >= 0 ? (list[this.activeIndex] ?? null) : null;
     this.items?.forEach(i => (i.active = i === activeItem));
     this.syncActiveDescendant();
     this.cdr.markForCheck();
@@ -488,7 +526,8 @@ export class MultiSelectComponent
   private moveActive(delta: number) {
     const list = this.navigableItems;
     if (!list.length) return;
-    const next = this.activeIndex < 0 ? (delta > 0 ? 0 : list.length - 1) : this.activeIndex + delta;
+    const next =
+      this.activeIndex < 0 ? (delta > 0 ? 0 : list.length - 1) : this.activeIndex + delta;
     this.setActive(next); // setActive clamps (no wrap, matching shadcn)
   }
 
@@ -522,7 +561,13 @@ export class MultiSelectComponent
   }
 
   private isTypeaheadChar(event: KeyboardEvent): boolean {
-    return event.key.length === 1 && event.key !== ' ' && !event.ctrlKey && !event.metaKey && !event.altKey;
+    return (
+      event.key.length === 1 &&
+      event.key !== ' ' &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey
+    );
   }
 
   private typeahead(char: string) {
@@ -553,7 +598,14 @@ export class MultiSelectComponent
     const key = event.key;
 
     if (!this.isOpen) {
-      if (key === 'ArrowDown' || key === 'ArrowUp' || key === 'Enter' || key === ' ' || key === 'Home' || key === 'End') {
+      if (
+        key === 'ArrowDown' ||
+        key === 'ArrowUp' ||
+        key === 'Enter' ||
+        key === ' ' ||
+        key === 'Home' ||
+        key === 'End'
+      ) {
         event.preventDefault();
         this.open();
         return;
@@ -567,10 +619,22 @@ export class MultiSelectComponent
     }
 
     switch (key) {
-      case 'ArrowDown': event.preventDefault(); this.moveActive(1); break;
-      case 'ArrowUp': event.preventDefault(); this.moveActive(-1); break;
-      case 'Home': event.preventDefault(); this.setActive(0); break;
-      case 'End': event.preventDefault(); this.setActive(this.navigableItems.length - 1); break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.moveActive(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.moveActive(-1);
+        break;
+      case 'Home':
+        event.preventDefault();
+        this.setActive(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        this.setActive(this.navigableItems.length - 1);
+        break;
       case 'Enter':
       case ' ':
         event.preventDefault();
@@ -597,9 +661,18 @@ export class MultiSelectComponent
   onSearchKeyDown(event: KeyboardEvent) {
     if (!this.isOpen) return;
     switch (event.key) {
-      case 'ArrowDown': event.preventDefault(); this.moveActive(1); break;
-      case 'ArrowUp': event.preventDefault(); this.moveActive(-1); break;
-      case 'Enter': event.preventDefault(); this.selectActive(); break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.moveActive(1);
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        this.moveActive(-1);
+        break;
+      case 'Enter':
+        event.preventDefault();
+        this.selectActive();
+        break;
       case 'Escape':
         event.preventDefault();
         this.close();
@@ -615,16 +688,20 @@ export class MultiSelectComponent
   }
 
   // ControlValueAccessor
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
   writeValue(v: any[]): void {
     this.value = Array.isArray(v) ? v : [];
     this.syncItems();
     this.refreshDisplay();
     this.cdr.markForCheck();
   }
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
     this.cdr.markForCheck();

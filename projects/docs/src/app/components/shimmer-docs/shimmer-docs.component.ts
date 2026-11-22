@@ -12,20 +12,19 @@ import { ShimmerSettledComponent } from '../../docs-examples/shimmer/shimmer-set
 
 
 @Component({
-  selector: 'app-shimmer-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicShimmerComponent,
-    ShimmerSizesComponent,
-    ShimmerSettledComponent
-  ],
-  templateUrl: './shimmer-docs.component.html',
-  styleUrl: './shimmer-docs.component.css'
+    selector: 'app-shimmer-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicShimmerComponent,
+        ShimmerSizesComponent,
+        ShimmerSettledComponent
+    ],
+    templateUrl: './shimmer-docs.component.html',
+    styleUrl: './shimmer-docs.component.css'
 })
 export class ShimmerDocsComponent {
   baseService = inject(BaseService);

@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-select-docs',
-    standalone: true,
     imports: [
         SelectOverviewComponent,
         SelectInteractiveComponent,
         SelectApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './select-docs.component.html',
     styleUrl: './select-docs.component.css'

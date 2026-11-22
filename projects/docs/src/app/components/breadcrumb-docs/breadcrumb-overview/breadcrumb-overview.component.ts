@@ -3,10 +3,9 @@ import { BaseEditorComponent } from '../../../shared/base-editor/base-editor.com
 import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
-  selector: 'app-breadcrumb-overview',
-  standalone: true,
-  imports: [BaseEditorComponent, DocHeroComponent],
-  templateUrl: './breadcrumb-overview.component.html'
+    selector: 'app-breadcrumb-overview',
+    imports: [BaseEditorComponent, DocHeroComponent],
+    templateUrl: './breadcrumb-overview.component.html'
 })
 export class BreadcrumbOverviewComponent {
   installationCode = `import { 

@@ -3,7 +3,6 @@ import { CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComp
 
 @Component({
     selector: 'app-basic-card',
-    standalone: true,
     imports: [CardComponent, CardHeaderComponent, CardTitleComponent, CardContentComponent],
     template: `
     <tolle-card class="max-w-[350px]">

@@ -1,30 +1,29 @@
-import {Component, Input, forwardRef, AfterContentInit, OnChanges} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, forwardRef, AfterContentInit, OnChanges } from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cn } from './utils/cn';
-import {RadioService} from './radio-service';
+import { RadioService } from './radio-service';
 
 @Component({
   selector: 'tolle-radio-group',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [
     RadioService,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => RadioGroupComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   host: {
-    '(keydown)': 'onKeydown($event)'
+    '(keydown)': 'onKeydown($event)',
   },
   template: `
     <div [class]="cn('grid gap-2', class)" role="radiogroup">
       <ng-content></ng-content>
     </div>
-  `
+  `,
 })
 export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
   @Input() class = '';
@@ -63,8 +62,12 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
     this.radioService.select(value);
     this.suppress = false;
   }
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 
   /**
    * WAI-ARIA radio group keyboard nav: Arrow Down/Right select+focus the next
@@ -97,9 +100,7 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
     if (current < 0) {
       next = forward ? 0 : items.length - 1;
     } else {
-      next = forward
-        ? (current + 1) % items.length
-        : (current - 1 + items.length) % items.length;
+      next = forward ? (current + 1) % items.length : (current - 1 + items.length) % items.length;
     }
 
     const targetItem = items[next];

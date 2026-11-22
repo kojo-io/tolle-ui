@@ -9,7 +9,6 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
     selector: 'app-accordion-interactive',
-    standalone: true,
     imports: [
         FormsModule,
         AccordionComponent,

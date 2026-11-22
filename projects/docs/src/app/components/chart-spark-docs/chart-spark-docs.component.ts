@@ -11,20 +11,19 @@ import { ChartSparkTypesComponent } from '../../docs-examples/chart-spark/chart-
 import { ChartSparkInAListComponent } from '../../docs-examples/chart-spark/chart-spark-in-a-list/chart-spark-in-a-list.component';
 
 @Component({
-  selector: 'app-chart-spark-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicChartSparkComponent,
-    ChartSparkTypesComponent,
-    ChartSparkInAListComponent
-  ],
-  templateUrl: './chart-spark-docs.component.html',
-  styleUrl: './chart-spark-docs.component.css'
+    selector: 'app-chart-spark-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicChartSparkComponent,
+        ChartSparkTypesComponent,
+        ChartSparkInAListComponent
+    ],
+    templateUrl: './chart-spark-docs.component.html',
+    styleUrl: './chart-spark-docs.component.css'
 })
 export class ChartSparkDocsComponent {
   baseService = inject(BaseService);

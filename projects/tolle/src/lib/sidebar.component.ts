@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { cn } from './utils/cn';
 
@@ -16,43 +16,45 @@ export type SidebarItem = {
   external?: boolean;
   /** Short trailing pill, e.g. 'New' or 'Beta'. Hidden while the sidebar is collapsed. */
   badge?: string;
-}
+};
 
 export type SidebarGroup = {
   title: string;
   items: SidebarItem[];
   id?: string;
-}
+};
 
 @Component({
   selector: 'tolle-sidebar',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   template: `
-    <aside [class]="cn(
-      'flex flex-col h-full bg-background transition-[width] duration-300 ease-in-out shrink-0 overflow-hidden',
-      collapsed ? 'w-16' : 'w-64',
-      class
-    )">
-      <div class="flex h-14 shrink-0 items-center px-3 overflow-hidden whitespace-nowrap">
+    <aside
+      [class]="
+        cn(
+          'flex h-full shrink-0 flex-col overflow-hidden bg-background transition-[width] duration-300 ease-in-out',
+          collapsed ? 'w-16' : 'w-64',
+          class
+        )
+      ">
+      <div class="flex h-14 shrink-0 items-center overflow-hidden whitespace-nowrap px-3">
         <ng-content select="[header]"></ng-content>
       </div>
 
-      <div class="flex-1 min-h-0 overflow-y-auto overflow-x-hidden py-4 px-3">
-
+      <div class="min-h-0 flex-1 overflow-y-auto overflow-x-hidden px-3 py-4">
         @for (group of items; track group.id || group.title || $index; let gIndex = $index) {
           <div class="mb-6">
-
-            <div [class]="cn(
-              'mb-2 px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70 transition-all duration-200 overflow-hidden',
-              collapsed ? 'opacity-0 h-0 mb-0 px-0' : 'opacity-100 h-auto'
-            )">
+            <div
+              [class]="
+                cn(
+                  'mb-2 overflow-hidden px-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70 transition-all duration-200',
+                  collapsed ? 'mb-0 h-0 px-0 opacity-0' : 'h-auto opacity-100'
+                )
+              ">
               {{ group.title }}
             </div>
 
             <div class="flex flex-col gap-1">
               @for (item of group.items; track item.id || item.title || $index; let i = $index) {
-
                 @if (item.items && item.items.length) {
                   <!-- Parent Item (Group) -->
                   <div class="relative">
@@ -61,78 +63,118 @@ export type SidebarGroup = {
                       (click)="toggleParent(group, item, gIndex, i)"
                       [disabled]="collapsed"
                       [attr.aria-expanded]="isParentExpanded(group, item, gIndex, i)"
-                      [class]="cn(
-                        'group w-full relative flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                        'hover:bg-accent hover:text-accent-foreground',
-                        isParentExpanded(group, item, gIndex, i) ? 'text-foreground bg-accent/50' : 'text-muted-foreground',
-                        collapsed ? 'justify-center' : 'justify-start'
-                      )"
-                    >
-                      <i aria-hidden="true" [class]="cn(
-                          item.icon || 'ri-circle-fill',
-                          'h-4 w-4 text-lg shrink-0 transition-transform',
-                          !collapsed && 'group-hover:scale-110'
-                        )"></i>
+                      [class]="
+                        cn(
+                          'group relative flex w-full items-center rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                          'hover:bg-accent hover:text-accent-foreground',
+                          isParentExpanded(group, item, gIndex, i)
+                            ? 'bg-accent/50 text-foreground'
+                            : 'text-muted-foreground',
+                          collapsed ? 'justify-center' : 'justify-start'
+                        )
+                      ">
+                      <i
+                        aria-hidden="true"
+                        [class]="
+                          cn(
+                            item.icon || 'ri-circle-fill',
+                            'h-4 w-4 shrink-0 text-lg transition-transform',
+                            !collapsed && 'group-hover:scale-110'
+                          )
+                        "></i>
 
-                      <span [class]="cn(
-                        'truncate transition-all duration-300',
-                        collapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'
-                      )">
+                      <span
+                        [class]="
+                          cn(
+                            'truncate transition-all duration-300',
+                            collapsed ? 'ml-0 w-0 opacity-0' : 'ml-3 w-auto opacity-100'
+                          )
+                        ">
                         {{ item.title }}
                       </span>
 
                       @if (!collapsed) {
-                        <i [class]="cn(
-                          'ri-arrow-down-s-line ml-auto transition-transform duration-300',
-                          isParentExpanded(group, item, gIndex, i) ? 'rotate-180' : ''
-                        )"></i>
+                        <i
+                          [class]="
+                            cn(
+                              'ri-arrow-down-s-line ml-auto transition-transform duration-300',
+                              isParentExpanded(group, item, gIndex, i) ? 'rotate-180' : ''
+                            )
+                          "></i>
                       }
                     </button>
 
                     <!-- Submenu Grid Transition -->
-                    <div [class]="cn(
-                      'grid transition-[grid-template-rows] duration-300 ease-in-out',
-                      isParentExpanded(group, item, gIndex, i) && !collapsed ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                    )">
+                    <div
+                      [class]="
+                        cn(
+                          'grid transition-[grid-template-rows] duration-300 ease-in-out',
+                          isParentExpanded(group, item, gIndex, i) && !collapsed
+                            ? 'grid-rows-[1fr] opacity-100'
+                            : 'grid-rows-[0fr] opacity-0'
+                        )
+                      ">
                       <div class="overflow-hidden">
-                        <div class="flex flex-col gap-1 mt-1 ml-4 border-l border-border/50 pl-2">
-
-                          @for (subItem of item.items; track subItem.id || subItem.title || $index; let j = $index) {
+                        <div class="ml-4 mt-1 flex flex-col gap-1 border-l border-border/50 pl-2">
+                          @for (
+                            subItem of item.items;
+                            track subItem.id || subItem.title || $index;
+                            let j = $index
+                          ) {
                             @if (subItem.items && subItem.items.length) {
                               <!-- Grandchild Item Group (Recursive-ish logic for depth 2) -->
                               <div class="relative">
                                 <button
                                   type="button"
-                                  (click)="toggleChild(group, item, subItem, gIndex, i, j); $event.stopPropagation()"
-                                  [attr.aria-expanded]="isChildExpanded(group, item, subItem, gIndex, i, j)"
-                                  [class]="cn(
-                                    'group w-full relative flex items-center rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                                    'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
-                                    isChildExpanded(group, item, subItem, gIndex, i, j) ? 'text-foreground bg-accent/30' : ''
-                                  )"
-                                >
-                                  <span class="w-1.5 h-1.5 rounded-full bg-border shrink-0"></span>
+                                  (click)="
+                                    toggleChild(group, item, subItem, gIndex, i, j);
+                                    $event.stopPropagation()
+                                  "
+                                  [attr.aria-expanded]="
+                                    isChildExpanded(group, item, subItem, gIndex, i, j)
+                                  "
+                                  [class]="
+                                    cn(
+                                      'group relative flex w-full items-center rounded-md px-3 py-1.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                                      'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                                      isChildExpanded(group, item, subItem, gIndex, i, j)
+                                        ? 'bg-accent/30 text-foreground'
+                                        : ''
+                                    )
+                                  ">
+                                  <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-border"></span>
                                   <span class="ml-2 truncate">{{ subItem.title }}</span>
-                                  <i [class]="cn(
-                                    'ri-arrow-right-s-line ml-auto transition-transform duration-300 text-xs',
-                                    isChildExpanded(group, item, subItem, gIndex, i, j) ? 'rotate-90' : ''
-                                  )"></i>
+                                  <i
+                                    [class]="
+                                      cn(
+                                        'ri-arrow-right-s-line ml-auto text-xs transition-transform duration-300',
+                                        isChildExpanded(group, item, subItem, gIndex, i, j)
+                                          ? 'rotate-90'
+                                          : ''
+                                      )
+                                    "></i>
                                 </button>
 
-                                <div [class]="cn(
-                                  'grid transition-[grid-template-rows] duration-300 ease-in-out',
-                                  isChildExpanded(group, item, subItem, gIndex, i, j) ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                                )">
+                                <div
+                                  [class]="
+                                    cn(
+                                      'grid transition-[grid-template-rows] duration-300 ease-in-out',
+                                      isChildExpanded(group, item, subItem, gIndex, i, j)
+                                        ? 'grid-rows-[1fr] opacity-100'
+                                        : 'grid-rows-[0fr] opacity-0'
+                                    )
+                                  ">
                                   <div class="overflow-hidden">
-                                    <div class="flex flex-col gap-1 mt-1 ml-4 border-l border-border/30 pl-2">
+                                    <div
+                                      class="ml-4 mt-1 flex flex-col gap-1 border-l border-border/30 pl-2">
                                       @for (grandChild of subItem.items; track grandChild.title) {
                                         <a
                                           [routerLink]="grandChild.url"
                                           [routerLinkActive]="activeClasses"
                                           [routerLinkActiveOptions]="{ exact: true }"
-                                          class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                                        >
-                                          <span class="w-1.5 h-1.5 rounded-full bg-border/70 shrink-0"></span>
+                                          class="flex items-center gap-2 whitespace-nowrap rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                                          <span
+                                            class="h-1.5 w-1.5 shrink-0 rounded-full bg-border/70"></span>
                                           <span class="truncate">{{ grandChild.title }}</span>
                                         </a>
                                       }
@@ -140,16 +182,14 @@ export type SidebarGroup = {
                                   </div>
                                 </div>
                               </div>
-                            }
-                            @else {
+                            } @else {
                               <!-- Standard Sub Item -->
                               <a
                                 [routerLink]="subItem.url"
                                 [routerLinkActive]="activeClasses"
                                 [routerLinkActiveOptions]="{ exact: true }"
-                                class="flex items-center gap-2 hover:no-underline rounded-md px-3 py-1.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground text-muted-foreground whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                              >
-                                <span class="w-1.5 h-1.5 rounded-full bg-border shrink-0"></span>
+                                class="flex items-center gap-2 whitespace-nowrap rounded-md px-3 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                                <span class="h-1.5 w-1.5 shrink-0 rounded-full bg-border"></span>
                                 <span class="truncate">{{ subItem.title }}</span>
                               </a>
                             }
@@ -158,60 +198,77 @@ export type SidebarGroup = {
                       </div>
                     </div>
                   </div>
-                }
-                @else if (item.external) {
+                } @else if (item.external) {
                   <!-- External / static-file Item (opens in a new tab) -->
                   <a
                     [href]="item.url"
                     target="_blank"
                     rel="noopener noreferrer"
-                    [class]="cn(
-                      'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                      'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
-                      collapsed ? 'justify-center' : 'justify-start'
-                    )"
-                  >
-                    <i aria-hidden="true" [class]="cn(
-                        item.icon || 'ri-circle-fill',
-                        'h-4 w-4 text-lg shrink-0 transition-transform',
-                        !collapsed && 'group-hover:scale-110'
-                      )"></i>
-                    <span [class]="cn(
-                      'truncate transition-all duration-300',
-                      collapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'
-                    )">
+                    [class]="
+                      cn(
+                        'group relative flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                        'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                        collapsed ? 'justify-center' : 'justify-start'
+                      )
+                    ">
+                    <i
+                      aria-hidden="true"
+                      [class]="
+                        cn(
+                          item.icon || 'ri-circle-fill',
+                          'h-4 w-4 shrink-0 text-lg transition-transform',
+                          !collapsed && 'group-hover:scale-110'
+                        )
+                      "></i>
+                    <span
+                      [class]="
+                        cn(
+                          'truncate transition-all duration-300',
+                          collapsed ? 'ml-0 w-0 opacity-0' : 'ml-3 w-auto opacity-100'
+                        )
+                      ">
                       {{ item.title }}
                     </span>
                     @if (!collapsed) {
-                      <i aria-hidden="true" class="ri-external-link-line ml-auto text-xs opacity-50 transition-opacity group-hover:opacity-100"></i>
+                      <i
+                        aria-hidden="true"
+                        class="ri-external-link-line ml-auto text-xs opacity-50 transition-opacity group-hover:opacity-100"></i>
                     }
                   </a>
-                }
-                @else {
+                } @else {
                   <!-- Standard Top-Level Item -->
                   <a
                     [routerLink]="item.url"
                     [routerLinkActive]="activeClasses"
                     [routerLinkActiveOptions]="{ exact: true }"
-                    [class]="cn(
-                      'group relative hover:no-underline flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-                      'hover:bg-accent hover:text-accent-foreground text-muted-foreground',
-                      collapsed ? 'justify-center' : 'justify-start'
-                    )"
-                  >
-                    <i aria-hidden="true" [class]="cn(
-                        item.icon || 'ri-circle-fill',
-                        'h-4 w-4 text-lg shrink-0 transition-transform',
-                        !collapsed && 'group-hover:scale-110'
-                      )"></i>
-                    <span [class]="cn(
-                      'truncate transition-all duration-300',
-                      collapsed ? 'opacity-0 w-0 ml-0' : 'opacity-100 w-auto ml-3'
-                    )">
+                    [class]="
+                      cn(
+                        'group relative flex items-center rounded-md px-3 py-2 text-sm font-medium transition-colors hover:no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                        'text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+                        collapsed ? 'justify-center' : 'justify-start'
+                      )
+                    ">
+                    <i
+                      aria-hidden="true"
+                      [class]="
+                        cn(
+                          item.icon || 'ri-circle-fill',
+                          'h-4 w-4 shrink-0 text-lg transition-transform',
+                          !collapsed && 'group-hover:scale-110'
+                        )
+                      "></i>
+                    <span
+                      [class]="
+                        cn(
+                          'truncate transition-all duration-300',
+                          collapsed ? 'ml-0 w-0 opacity-0' : 'ml-3 w-auto opacity-100'
+                        )
+                      ">
                       {{ item.title }}
                     </span>
                     @if (item.badge && !collapsed) {
-                      <span class="ml-auto shrink-0 rounded-full border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium leading-none text-primary">
+                      <span
+                        class="ml-auto shrink-0 rounded-full border border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium leading-none text-primary">
                         {{ item.badge }}
                       </span>
                     }
@@ -223,16 +280,26 @@ export type SidebarGroup = {
         }
       </div>
 
-      <div class="shrink-0 p-3 overflow-hidden whitespace-nowrap">
+      <div class="shrink-0 overflow-hidden whitespace-nowrap p-3">
         <ng-content select="[footer]"></ng-content>
       </div>
     </aside>
   `,
-  styles: [`
-    :host { display: block; height: 100%; }
-    button:disabled { cursor: not-allowed; opacity: 0.6; }
-    * { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-  `]
+  styles: [
+    `
+      :host {
+        display: block;
+        height: 100%;
+      }
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      * {
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+    `,
+  ],
 })
 export class SidebarComponent implements OnChanges {
   @Input() items: SidebarGroup[] = [];
@@ -257,16 +324,19 @@ export class SidebarComponent implements OnChanges {
     return cn(
       'transition-colors',
       // Default: Solid Primary (Badge-like) with lighter opacity (80% instead of 90%)
-      this.variant === 'default' && 'bg-primary/80 text-primary-foreground hover:bg-primary hover:text-primary-foreground',
+      this.variant === 'default' &&
+        'bg-primary/80 text-primary-foreground hover:bg-primary hover:text-primary-foreground',
 
       // Secondary: Solid Secondary
-      this.variant === 'secondary' && 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+      this.variant === 'secondary' &&
+        'bg-secondary text-secondary-foreground hover:bg-secondary/80',
 
       // Ghost: Subtle background (Sidebar standard)
       this.variant === 'ghost' && 'bg-accent text-accent-foreground',
 
       // Outline: Bordered
-      this.variant === 'outline' && 'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground'
+      this.variant === 'outline' &&
+        'border border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground'
     );
   }
 
@@ -317,7 +387,14 @@ export class SidebarComponent implements OnChanges {
     return `${groupId}__${itemId}`;
   }
 
-  getChildId(group: SidebarGroup, parent: SidebarItem, subItem: SidebarItem, gIndex: number, iIndex: number, sIndex: number): string {
+  getChildId(
+    group: SidebarGroup,
+    parent: SidebarItem,
+    subItem: SidebarItem,
+    gIndex: number,
+    iIndex: number,
+    sIndex: number
+  ): string {
     const parentId = this.getParentId(group, parent, gIndex, iIndex);
     const subItemId = subItem.id || subItem.title || `c-${sIndex}`;
     return `${parentId}__${subItemId}`;
@@ -337,7 +414,14 @@ export class SidebarComponent implements OnChanges {
     this.expandedParents = newSet;
   }
 
-  toggleChild(group: SidebarGroup, parent: SidebarItem, subItem: SidebarItem, gIndex: number, iIndex: number, sIndex: number) {
+  toggleChild(
+    group: SidebarGroup,
+    parent: SidebarItem,
+    subItem: SidebarItem,
+    gIndex: number,
+    iIndex: number,
+    sIndex: number
+  ) {
     const id = this.getChildId(group, parent, subItem, gIndex, iIndex, sIndex);
 
     const newSet = new Set(this.expandedChildren);
@@ -355,11 +439,25 @@ export class SidebarComponent implements OnChanges {
   }
 
   // --- TEMPLATE HELPERS ---
-  isParentExpanded(group: SidebarGroup, item: SidebarItem, gIndex: number, iIndex: number): boolean {
+  isParentExpanded(
+    group: SidebarGroup,
+    item: SidebarItem,
+    gIndex: number,
+    iIndex: number
+  ): boolean {
     return this.expandedParents.has(this.getParentId(group, item, gIndex, iIndex));
   }
 
-  isChildExpanded(group: SidebarGroup, parent: SidebarItem, subItem: SidebarItem, gIndex: number, iIndex: number, sIndex: number): boolean {
-    return this.expandedChildren.has(this.getChildId(group, parent, subItem, gIndex, iIndex, sIndex));
+  isChildExpanded(
+    group: SidebarGroup,
+    parent: SidebarItem,
+    subItem: SidebarItem,
+    gIndex: number,
+    iIndex: number,
+    sIndex: number
+  ): boolean {
+    return this.expandedChildren.has(
+      this.getChildId(group, parent, subItem, gIndex, iIndex, sIndex)
+    );
   }
 }

@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, TemplateRef, Type } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  Type,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { A11yModule } from '@angular/cdk/a11y';
 import { Subscription } from 'rxjs';
@@ -7,55 +15,63 @@ import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-modal',
-  standalone: true,
   imports: [CommonModule, A11yModule],
   template: `
-    <div [class]="modalClasses" class="pointer-events-auto"
+    <div
+      [class]="modalClasses"
+      class="pointer-events-auto"
       [attr.data-state]="closing ? 'closed' : 'open'"
       role="dialog"
       aria-modal="true"
       [attr.aria-labelledby]="ref.modal.title ? titleId : null"
       [attr.aria-describedby]="contentType === 'string' ? descId : null"
-      cdkTrapFocus cdkTrapFocusAutoCapture
+      cdkTrapFocus
+      cdkTrapFocusAutoCapture
       (mousedown)="$event.stopPropagation()">
-
-      <button
-        *ngIf="ref.modal.showCloseButton"
-        type="button"
-        (click)="ref.close()"
-        aria-label="Close"
-        class="absolute right-4 top-4 grid h-6 w-6 place-items-center rounded-sm text-muted-foreground opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-        <i class="ri-close-line text-base" aria-hidden="true"></i>
-      </button>
+      @if (ref.modal.showCloseButton) {
+        <button
+          type="button"
+          (click)="ref.close()"
+          aria-label="Close"
+          class="absolute right-4 top-4 grid h-6 w-6 place-items-center rounded-sm text-muted-foreground opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+          <i class="ri-close-line text-base" aria-hidden="true"></i>
+        </button>
+      }
 
       <!-- Header -->
-      <div *ngIf="ref.modal.title" class="flex shrink-0 flex-col gap-1.5 pr-8 text-center sm:text-left">
-        <h2 [id]="titleId" class="text-lg font-semibold leading-none tracking-tight text-foreground">
-          {{ ref.modal.title }}
-        </h2>
-      </div>
+      @if (ref.modal.title) {
+        <div class="flex shrink-0 flex-col gap-1.5 pr-8 text-center sm:text-left">
+          <h2
+            [id]="titleId"
+            class="text-lg font-semibold leading-none tracking-tight text-foreground">
+            {{ ref.modal.title }}
+          </h2>
+        </div>
+      }
 
       <!-- Body -->
       <div class="min-h-0 flex-1 overflow-y-auto">
-        <ng-container [ngSwitch]="contentType">
-          <p *ngSwitchCase="'string'" [id]="descId" class="text-sm leading-relaxed text-muted-foreground">{{ content }}</p>
-
-          <ng-container *ngSwitchCase="'template'">
+        @switch (contentType) {
+          @case ('string') {
+            <p [id]="descId" class="text-sm leading-relaxed text-muted-foreground">{{ content }}</p>
+          }
+          @case ('template') {
             <ng-container *ngTemplateOutlet="asTemplate; context: ref.modal.context"></ng-container>
-          </ng-container>
-
-          <ng-container *ngSwitchCase="'component'">
+          }
+          @case ('component') {
             <ng-container *ngComponentOutlet="asComponent"></ng-container>
-          </ng-container>
-        </ng-container>
+          }
+        }
       </div>
     </div>
   `,
-  styles: [`
-    :host {
-      display: contents; /* This makes the host "disappear" so the div targets the overlay pane directly */
-    }
-  `]
+  styles: [
+    `
+      :host {
+        display: contents; /* This makes the host "disappear" so the div targets the overlay pane directly */
+      }
+    `,
+  ],
 })
 export class ModalComponent implements OnInit, OnDestroy {
   private readonly cdr = inject(ChangeDetectorRef);
@@ -80,7 +96,7 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.determineContentType();
 
     this.subscription.add(
-      this.ref.closing$.subscribe((closing) => {
+      this.ref.closing$.subscribe(closing => {
         this.closing = closing;
         this.cdr.markForCheck();
       })
@@ -119,7 +135,11 @@ export class ModalComponent implements OnInit, OnDestroy {
     else this.contentType = 'component';
   }
 
-  get asTemplate() { return this.content as TemplateRef<any>; }
-  get asComponent() { return this.content as Type<any>; }
+  get asTemplate() {
+    return this.content as TemplateRef<any>;
+  }
+  get asComponent() {
+    return this.content as Type<any>;
+  }
   protected cn = cn;
 }

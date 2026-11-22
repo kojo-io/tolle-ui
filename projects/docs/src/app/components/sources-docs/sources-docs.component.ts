@@ -12,20 +12,19 @@ import { SourcesControlledComponent } from '../../docs-examples/sources/sources-
 
 
 @Component({
-  selector: 'app-sources-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicSourcesComponent,
-    SourcesVariantsComponent,
-    SourcesControlledComponent
-  ],
-  templateUrl: './sources-docs.component.html',
-  styleUrl: './sources-docs.component.css'
+    selector: 'app-sources-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicSourcesComponent,
+        SourcesVariantsComponent,
+        SourcesControlledComponent
+    ],
+    templateUrl: './sources-docs.component.html',
+    styleUrl: './sources-docs.component.css'
 })
 export class SourcesDocsComponent {
   baseService = inject(BaseService);

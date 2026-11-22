@@ -1,113 +1,206 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges, forwardRef, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  forwardRef,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
+  ElementRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
-  addDays, addMonths, subMonths, startOfMonth, endOfMonth,
-  startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth,
-  isSameDay, isToday, setMonth, setYear, addYears, subYears,
-  isBefore, startOfDay, isWithinInterval, format
+  addDays,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  eachDayOfInterval,
+  isSameMonth,
+  isSameDay,
+  isToday,
+  setMonth,
+  setYear,
+  addYears,
+  subYears,
+  isBefore,
+  startOfDay,
+  isWithinInterval,
+  format,
 } from 'date-fns';
 import { cn } from './utils/cn';
-import {DateRange} from './types/date-range';
+import { DateRange } from './types/date-range';
 
 @Component({
   selector: 'tolle-range-calendar',
   styles: [':host { display: block; }'],
-  standalone: true,
   imports: [CommonModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => RangeCalendarComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   template: `
-    <div [class]="cn('text-popover-foreground inline-block min-w-fit', bordered ? 'p-3 border rounded-md bg-background shadow-sm' : '', class)">
-
+    <div
+      [class]="
+        cn(
+          'inline-block min-w-fit text-popover-foreground',
+          bordered ? 'rounded-md border bg-background p-3 shadow-sm' : '',
+          class
+        )
+      ">
       <!-- ===== Month / year quick pickers (shared by the single- and multi-month views) ===== -->
-      <ng-container *ngIf="currentView !== 'date'">
-        <div class="flex items-center justify-between pt-1 pb-4 gap-2">
+      @if (currentView !== 'date') {
+        <div class="flex items-center justify-between gap-2 pb-4 pt-1">
           <div class="flex items-center gap-1">
-            <button type="button" (click)="setView('month', pickerMonthIndex)" [class]="headerBtnClass('month')">
+            <button
+              type="button"
+              (click)="setView('month', pickerMonthIndex)"
+              [class]="headerBtnClass('month')">
               {{ pickerDate | date: 'MMMM' }}
             </button>
-            <button type="button" (click)="setView('year', pickerMonthIndex)" [class]="headerBtnClass('year')">
+            <button
+              type="button"
+              (click)="setView('year', pickerMonthIndex)"
+              [class]="headerBtnClass('year')">
               {{ pickerDate | date: 'yyyy' }}
             </button>
           </div>
           <div class="flex items-center space-x-1">
-            <button type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous"><i class="ri-arrow-left-s-line text-lg"></i></button>
-            <button type="button" (click)="next()" [class]="navBtnClass" aria-label="Next"><i class="ri-arrow-right-s-line text-lg"></i></button>
-          </div>
-        </div>
-
-        <div *ngIf="currentView === 'month'" class="grid grid-cols-3 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
-          <button *ngFor="let month of months; let i = index" type="button" (click)="selectMonth(i)"
-            [class]="cn('text-sm py-2.5 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', i === pickerDate.getMonth() ? 'bg-primary text-primary-foreground' : '')">
-            {{ month }}
-          </button>
-        </div>
-
-        <div *ngIf="currentView === 'year'" class="grid grid-cols-4 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
-          <button *ngFor="let year of years" type="button" (click)="selectYear(year)"
-            [class]="cn('text-sm py-2 rounded-md hover:bg-accent hover:text-accent-foreground transition-colors', year === pickerDate.getFullYear() ? 'bg-primary text-primary-foreground' : '')">
-            {{ year }}
-          </button>
-        </div>
-      </ng-container>
-
-      <!-- ===== Multi-month view (side-by-side, shared range) ===== -->
-      <div *ngIf="currentView === 'date' && numberOfMonths > 1" class="flex flex-col gap-4 sm:flex-row">
-        <div *ngFor="let m of visibleMonths; let idx = index" class="space-y-2">
-          <div class="flex items-center justify-between pt-1 pb-2">
-            <button *ngIf="idx === 0" type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous month">
+            <button type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous">
               <i class="ri-arrow-left-s-line text-lg"></i>
             </button>
-            <span *ngIf="idx !== 0" class="h-7 w-7"></span>
-
-            <!-- Each panel's month and year open the quick pickers for that panel,
-                 so a two-month view jumps the same way the single-month one does. -->
-            <div class="flex items-center gap-1">
-              <button type="button" (click)="setView('month', idx)" [class]="headerBtnClass('month')">{{ m.date | date: 'MMMM' }}</button>
-              <button type="button" (click)="setView('year', idx)" [class]="headerBtnClass('year')">{{ m.date | date: 'yyyy' }}</button>
-            </div>
-
-            <button *ngIf="idx === visibleMonths.length - 1" type="button" (click)="next()" [class]="navBtnClass" aria-label="Next month">
+            <button type="button" (click)="next()" [class]="navBtnClass" aria-label="Next">
               <i class="ri-arrow-right-s-line text-lg"></i>
             </button>
-            <span *ngIf="idx !== visibleMonths.length - 1" class="h-7 w-7"></span>
-          </div>
-
-          <div class="grid grid-cols-7 gap-y-1">
-            <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">{{ day }}</span>
-          </div>
-          <div role="grid" class="grid grid-cols-7 gap-y-1" (keydown)="onGridKeydown($event)">
-            <ng-container *ngFor="let date of m.days">
-              <!-- Only the month's own days are rendered; adjacent-month days are
-                   blank spacers so each calendar in a multi-month view is self-contained. -->
-              <button
-                *ngIf="isCurrentMonth(date, m.date); else pad"
-                type="button"
-                role="gridcell"
-                [attr.data-date]="fmtKey(date)"
-                [attr.aria-selected]="isSelected(date)"
-                [attr.aria-label]="(date | date:'fullDate')"
-                (click)="selectDate(date)"
-                [disabled]="isDateDisabled(date)"
-                [class]="getDayClass(date, m.date)"
-              >
-                {{ date | date: 'd' }}
-              </button>
-              <ng-template #pad><span class="h-9 w-9" aria-hidden="true"></span></ng-template>
-            </ng-container>
           </div>
         </div>
-      </div>
+        @if (currentView === 'month') {
+          <div class="grid w-64 grid-cols-3 gap-2 duration-200 animate-in fade-in zoom-in-95">
+            @for (month of months; track month; let i = $index) {
+              <button
+                type="button"
+                (click)="selectMonth(i)"
+                [class]="
+                  cn(
+                    'rounded-md py-2.5 text-sm transition-colors hover:bg-accent hover:text-accent-foreground',
+                    i === pickerDate.getMonth() ? 'bg-primary text-primary-foreground' : ''
+                  )
+                ">
+                {{ month }}
+              </button>
+            }
+          </div>
+        }
+        @if (currentView === 'year') {
+          <div class="grid w-64 grid-cols-4 gap-2 duration-200 animate-in fade-in zoom-in-95">
+            @for (year of years; track year) {
+              <button
+                type="button"
+                (click)="selectYear(year)"
+                [class]="
+                  cn(
+                    'rounded-md py-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground',
+                    year === pickerDate.getFullYear() ? 'bg-primary text-primary-foreground' : ''
+                  )
+                ">
+                {{ year }}
+              </button>
+            }
+          </div>
+        }
+      }
+
+      <!-- ===== Multi-month view (side-by-side, shared range) ===== -->
+      @if (currentView === 'date' && numberOfMonths > 1) {
+        <div class="flex flex-col gap-4 sm:flex-row">
+          @for (m of visibleMonths; track m; let idx = $index) {
+            <div class="space-y-2">
+              <div class="flex items-center justify-between pb-2 pt-1">
+                @if (idx === 0) {
+                  <button
+                    type="button"
+                    (click)="prev()"
+                    [class]="navBtnClass"
+                    aria-label="Previous month">
+                    <i class="ri-arrow-left-s-line text-lg"></i>
+                  </button>
+                }
+                @if (idx !== 0) {
+                  <span class="h-7 w-7"></span>
+                }
+                <!-- Each panel's month and year open the quick pickers for that panel,
+                so a two-month view jumps the same way the single-month one does. -->
+                <div class="flex items-center gap-1">
+                  <button
+                    type="button"
+                    (click)="setView('month', idx)"
+                    [class]="headerBtnClass('month')">
+                    {{ m.date | date: 'MMMM' }}
+                  </button>
+                  <button
+                    type="button"
+                    (click)="setView('year', idx)"
+                    [class]="headerBtnClass('year')">
+                    {{ m.date | date: 'yyyy' }}
+                  </button>
+                </div>
+                @if (idx === visibleMonths.length - 1) {
+                  <button
+                    type="button"
+                    (click)="next()"
+                    [class]="navBtnClass"
+                    aria-label="Next month">
+                    <i class="ri-arrow-right-s-line text-lg"></i>
+                  </button>
+                }
+                @if (idx !== visibleMonths.length - 1) {
+                  <span class="h-7 w-7"></span>
+                }
+              </div>
+              <div class="grid grid-cols-7 gap-y-1">
+                @for (day of weekDays; track day) {
+                  <span class="w-9 text-center text-[0.8rem] font-normal text-muted-foreground">{{
+                    day
+                  }}</span>
+                }
+              </div>
+              <div role="grid" class="grid grid-cols-7 gap-y-1" (keydown)="onGridKeydown($event)">
+                @for (date of m.days; track date) {
+                  <!-- Only the month's own days are rendered; adjacent-month days are
+                  blank spacers so each calendar in a multi-month view is self-contained. -->
+                  @if (isCurrentMonth(date, m.date)) {
+                    <button
+                      type="button"
+                      role="gridcell"
+                      [attr.data-date]="fmtKey(date)"
+                      [attr.aria-selected]="isSelected(date)"
+                      [attr.aria-label]="date | date: 'fullDate'"
+                      (click)="selectDate(date)"
+                      [disabled]="isDateDisabled(date)"
+                      [class]="getDayClass(date, m.date)">
+                      {{ date | date: 'd' }}
+                    </button>
+                  } @else {
+                    <span class="h-9 w-9" aria-hidden="true"></span>
+                  }
+                }
+              </div>
+            </div>
+          }
+        </div>
+      }
 
       <!-- ===== Single-month view ===== -->
-      <ng-container *ngIf="currentView === 'date' && numberOfMonths <= 1">
-        <div class="flex items-center justify-between pt-1 pb-4 gap-2">
+      @if (currentView === 'date' && numberOfMonths <= 1) {
+        <div class="flex items-center justify-between gap-2 pb-4 pt-1">
           <div class="flex items-center gap-1">
             <button type="button" (click)="setView('month')" [class]="headerBtnClass('month')">
               {{ viewDate | date: 'MMMM' }}
@@ -117,36 +210,48 @@ import {DateRange} from './types/date-range';
             </button>
           </div>
           <div class="flex items-center space-x-1">
-            <button type="button" (click)="prev()" [class]="navBtnClass" aria-label="Previous month"><i class="ri-arrow-left-s-line text-lg"></i></button>
-            <button type="button" (click)="next()" [class]="navBtnClass" aria-label="Next month"><i class="ri-arrow-right-s-line text-lg"></i></button>
-          </div>
-        </div>
-
-        <div class="space-y-2 animate-in fade-in zoom-in-95 duration-200">
-          <div class="grid grid-cols-7 gap-y-1 w-full">
-            <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">
-              {{ day }}
-            </span>
-          </div>
-          <div role="grid" class="grid grid-cols-7 gap-y-1 w-full" (keydown)="onGridKeydown($event)">
             <button
-              *ngFor="let date of daysInMonth"
               type="button"
-              role="gridcell"
-              [attr.data-date]="fmtKey(date)"
-              [attr.aria-selected]="isSelected(date)"
-              [attr.aria-label]="(date | date:'fullDate')"
-              (click)="selectDate(date)"
-              [disabled]="isDateDisabled(date)"
-              [class]="getDayClass(date)"
-            >
-              {{ date | date: 'd' }}
+              (click)="prev()"
+              [class]="navBtnClass"
+              aria-label="Previous month">
+              <i class="ri-arrow-left-s-line text-lg"></i>
+            </button>
+            <button type="button" (click)="next()" [class]="navBtnClass" aria-label="Next month">
+              <i class="ri-arrow-right-s-line text-lg"></i>
             </button>
           </div>
         </div>
-      </ng-container>
+        <div class="space-y-2 duration-200 animate-in fade-in zoom-in-95">
+          <div class="grid w-full grid-cols-7 gap-y-1">
+            @for (day of weekDays; track day) {
+              <span class="w-9 text-center text-[0.8rem] font-normal text-muted-foreground">
+                {{ day }}
+              </span>
+            }
+          </div>
+          <div
+            role="grid"
+            class="grid w-full grid-cols-7 gap-y-1"
+            (keydown)="onGridKeydown($event)">
+            @for (date of daysInMonth; track date) {
+              <button
+                type="button"
+                role="gridcell"
+                [attr.data-date]="fmtKey(date)"
+                [attr.aria-selected]="isSelected(date)"
+                [attr.aria-label]="date | date: 'fullDate'"
+                (click)="selectDate(date)"
+                [disabled]="isDateDisabled(date)"
+                [class]="getDayClass(date)">
+                {{ date | date: 'd' }}
+              </button>
+            }
+          </div>
+        </div>
+      }
     </div>
-  `
+  `,
 })
 export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() class = '';
@@ -173,13 +278,18 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
   months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   years: number[] = [];
 
-  navBtnClass = cn('h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 border border-input rounded-md flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring');
+  navBtnClass = cn(
+    'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 border border-input rounded-md flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
+  );
 
   onTouched: () => void = () => {};
   onChange: (value: DateRange) => void = () => {};
   protected cn = cn;
 
-  constructor(private cdr: ChangeDetectorRef, private el: ElementRef<HTMLElement>) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private el: ElementRef<HTMLElement>
+  ) {}
 
   ngOnInit() {
     this.generateDays();
@@ -206,7 +316,10 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
       const monthDate = addMonths(this.viewDate, i);
       return {
         date: monthDate,
-        days: eachDayOfInterval({ start: startOfWeek(startOfMonth(monthDate)), end: endOfWeek(endOfMonth(monthDate)) }),
+        days: eachDayOfInterval({
+          start: startOfWeek(startOfMonth(monthDate)),
+          end: endOfWeek(endOfMonth(monthDate)),
+        }),
       };
     });
   }
@@ -231,7 +344,9 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
   headerBtnClass(view: 'month' | 'year') {
     return cn(
       'text-sm font-semibold px-2 py-1 rounded transition-colors',
-      this.currentView === view ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground'
+      this.currentView === view
+        ? 'bg-secondary text-secondary-foreground'
+        : 'hover:bg-accent hover:text-accent-foreground'
     );
   }
 
@@ -283,7 +398,7 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
 
     // Only re-anchor the view when the clicked day isn't already on a visible month
     // (so clicking the right-hand month in a 2-month view doesn't jump the calendar).
-    const onVisibleMonth = this.visibleMonths.some((m) => isSameMonth(date, m.date));
+    const onVisibleMonth = this.visibleMonths.some(m => isSameMonth(date, m.date));
     if (!onVisibleMonth) {
       this.viewDate = startOfMonth(date);
       this.generateDays();
@@ -311,15 +426,32 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
 
     let next: Date | null = null;
     switch (event.key) {
-      case 'ArrowLeft': next = addDays(current, -1); break;
-      case 'ArrowRight': next = addDays(current, 1); break;
-      case 'ArrowUp': next = addDays(current, -7); break;
-      case 'ArrowDown': next = addDays(current, 7); break;
-      case 'Home': next = startOfWeek(current); break;
-      case 'End': next = endOfWeek(current); break;
-      case 'PageUp': next = subMonths(current, 1); break;
-      case 'PageDown': next = addMonths(current, 1); break;
-      default: return;
+      case 'ArrowLeft':
+        next = addDays(current, -1);
+        break;
+      case 'ArrowRight':
+        next = addDays(current, 1);
+        break;
+      case 'ArrowUp':
+        next = addDays(current, -7);
+        break;
+      case 'ArrowDown':
+        next = addDays(current, 7);
+        break;
+      case 'Home':
+        next = startOfWeek(current);
+        break;
+      case 'End':
+        next = endOfWeek(current);
+        break;
+      case 'PageUp':
+        next = subMonths(current, 1);
+        break;
+      case 'PageDown':
+        next = addMonths(current, 1);
+        break;
+      default:
+        return;
     }
 
     event.preventDefault();
@@ -329,7 +461,10 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
   private focusDay(date: Date) {
     const selector = `[data-date="${this.fmtKey(date)}"]`;
     let btn = this.el.nativeElement.querySelector(selector) as HTMLElement | null;
-    if (btn) { btn.focus(); return; }
+    if (btn) {
+      btn.focus();
+      return;
+    }
 
     // Target day isn't currently rendered → page the view toward it, then retry.
     if (this.numberOfMonths > 1) {
@@ -403,10 +538,15 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
       'h-9 w-9 p-0 font-normal text-sm transition-all flex items-center justify-center relative z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
 
       // Default State (Not selected, Not disabled)
-      !isInside && !isStart && !isEnd && !isDisabled && 'hover:bg-accent hover:text-accent-foreground rounded-md',
+      !isInside &&
+        !isStart &&
+        !isEnd &&
+        !isDisabled &&
+        'hover:bg-accent hover:text-accent-foreground rounded-md',
 
       // The "Caps": Start and End
-      (isStart || isEnd) && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
+      (isStart || isEnd) &&
+        'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground',
 
       // The "Strip": Dates between start and end
       isInside && !isStart && !isEnd && 'bg-accent text-accent-foreground rounded-none',
@@ -418,7 +558,11 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
       isStart && !end && 'rounded-md',
 
       // Muted/Disabled logic
-      !isInside && isTodayDate && !isStart && !isEnd && 'bg-accent/50 text-accent-foreground rounded-md',
+      !isInside &&
+        isTodayDate &&
+        !isStart &&
+        !isEnd &&
+        'bg-accent/50 text-accent-foreground rounded-md',
       (isOutside || isDisabled) && 'text-muted-foreground opacity-50',
       isDisabled && 'cursor-not-allowed'
     );
@@ -437,6 +581,10 @@ export class RangeCalendarComponent implements OnInit, OnChanges, ControlValueAc
       this.generateYears();
     }
   }
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 }

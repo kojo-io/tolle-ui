@@ -1,53 +1,61 @@
 import { Component, Input, forwardRef, ElementRef, ViewChild, HostListener } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cn } from './utils/cn';
 
 @Component({
   selector: 'tolle-slider',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
-    <div 
+    <div
       #container
-      [class]="cn('relative flex w-full touch-none select-none items-center py-4 cursor-pointer', class, disabled ? 'opacity-50 pointer-events-none' : '')"
-      (pointerdown)="onPointerDown($event)"
-    >
+      [class]="
+        cn(
+          'relative flex w-full cursor-pointer touch-none select-none items-center py-4',
+          class,
+          disabled ? 'pointer-events-none opacity-50' : ''
+        )
+      "
+      (pointerdown)="onPointerDown($event)">
       <!-- Track -->
       <div class="relative h-1.5 w-full grow overflow-hidden rounded-full bg-primary/20">
         <div
           class="absolute h-full bg-primary transition-all duration-75"
           [style.left.%]="rangeStart"
-          [style.width.%]="rangeWidth"
-        ></div>
+          [style.width.%]="rangeWidth"></div>
       </div>
-      
+
       <!-- Thumbs -->
-      <div
-        *ngFor="let val of values; let i = index"
-        class="absolute block h-4 w-4 rounded-full border border-primary/50 bg-background shadow transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:border-primary cursor-grab active:cursor-grabbing z-10"
-        [style.left.%]="getPercentage(val)"
-        [style.transform]="'translateX(-50%)'"
-        [attr.tabindex]="disabled ? null : 0"
-        [attr.role]="'slider'"
-        [attr.aria-valuenow]="val"
-        [attr.aria-valuemin]="min"
-        [attr.aria-valuemax]="max"
-        (keydown)="onKeyDown($event, i)"
-        (focus)="activeIndex = i"
-      ></div>
+      @for (val of values; track val; let i = $index) {
+        <div
+          class="absolute z-10 block h-4 w-4 cursor-grab rounded-full border border-primary/50 bg-background shadow transition-colors hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:cursor-grabbing"
+          [style.left.%]="getPercentage(val)"
+          [style.transform]="'translateX(-50%)'"
+          [attr.tabindex]="disabled ? null : 0"
+          [attr.role]="'slider'"
+          [attr.aria-valuenow]="val"
+          [attr.aria-valuemin]="min"
+          [attr.aria-valuemax]="max"
+          (keydown)="onKeyDown($event, i)"
+          (focus)="activeIndex = i"></div>
+      }
     </div>
   `,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SliderComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  styles: [`
-    :host { display: block; width: 100%; }
-  `]
+  styles: [
+    `
+      :host {
+        display: block;
+        width: 100%;
+      }
+    `,
+  ],
 })
 export class SliderComponent implements ControlValueAccessor {
   @Input() min: number = 0;
@@ -63,8 +71,8 @@ export class SliderComponent implements ControlValueAccessor {
   isDragging = false;
   cn = cn;
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   get isRange() {
     return this.values.length > 1;

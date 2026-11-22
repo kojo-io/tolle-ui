@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-data-table-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './data-table-api.component.html'
 })

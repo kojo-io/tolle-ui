@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-input-group-search',
-    standalone: true,
     imports: [
         FormsModule,
         InputGroupComponent,

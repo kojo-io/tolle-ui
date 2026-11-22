@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-input-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './input-api.component.html'
 })

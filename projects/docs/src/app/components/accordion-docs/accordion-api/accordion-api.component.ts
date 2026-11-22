@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-accordion-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './accordion-api.component.html'
 })

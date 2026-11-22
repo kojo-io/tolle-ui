@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-nav-flat-and-dropdown',
-    standalone: true,
     imports: [
         NavigationMenuComponent,
         NavigationMenuListComponent,

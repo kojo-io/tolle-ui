@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-basic-tool',
-    standalone: true,
     imports: [ToolComponent, ToolHeaderComponent, ToolInputComponent, ToolOutputComponent],
     templateUrl: './basic-tool.component.html'
 })

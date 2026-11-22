@@ -1,5 +1,16 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Injectable, Input, OnChanges, OnDestroy, OnInit, forwardRef, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  forwardRef,
+  inject,
+} from '@angular/core';
+
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -38,16 +49,19 @@ const contextTriggerVariants = cva(
   }
 );
 
-const contextBarVariants = cva('h-full rounded-full transition-[width,background-color] duration-300', {
-  variants: {
-    level: {
-      normal: 'bg-primary',
-      warning: 'bg-warning',
-      critical: 'bg-destructive',
+const contextBarVariants = cva(
+  'h-full rounded-full transition-[width,background-color] duration-300',
+  {
+    variants: {
+      level: {
+        normal: 'bg-primary',
+        warning: 'bg-warning',
+        critical: 'bg-destructive',
+      },
     },
-  },
-  defaultVariants: { level: 'normal' },
-});
+    defaultVariants: { level: 'normal' },
+  }
+);
 
 export type ContextProps = VariantProps<typeof contextTriggerVariants>;
 
@@ -101,14 +115,10 @@ export class ContextService {
 @Component({
   selector: 'tolle-context',
   styles: [':host { display: block; }'],
-  standalone: true,
   imports: [
-    CommonModule,
     HoverCardComponent,
     HoverCardTriggerComponent,
     HoverCardContentComponent,
-    // The sub-components are declared further down this file, so they are
-    // referenced lazily rather than read at decoration time.
     forwardRef(() => ContextTriggerComponent),
     forwardRef(() => ContextContentComponent),
   ],
@@ -120,8 +130,7 @@ export class ContextService {
       [closeDelay]="closeDelay"
       [placement]="placement"
       (mouseenter)="scheduleRefresh(openDelay)"
-      (mouseleave)="scheduleRefresh(closeDelay)"
-    >
+      (mouseleave)="scheduleRefresh(closeDelay)">
       <tolle-hover-card-trigger>
         <tolle-context-trigger></tolle-context-trigger>
       </tolle-hover-card-trigger>
@@ -211,8 +220,7 @@ export class ContextComponent implements OnInit, OnChanges, OnDestroy {
 @Component({
   selector: 'tolle-context-trigger',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <span
@@ -222,8 +230,7 @@ export class ContextComponent implements OnInit, OnChanges, OnDestroy {
       aria-valuemax="100"
       [attr.aria-label]="'Context window ' + percent + '% used'"
       [attr.data-level]="usage.level"
-      [class]="computedClass"
-    >
+      [class]="computedClass">
       <span class="h-1.5 w-10 overflow-hidden rounded-full bg-muted">
         <span [class]="barClass" [style.width.%]="percent"></span>
       </span>
@@ -233,7 +240,6 @@ export class ContextComponent implements OnInit, OnChanges, OnDestroy {
   `,
 })
 export class ContextTriggerComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -254,7 +260,7 @@ export class ContextTriggerComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub.add(
-      this.service.usage$.subscribe((usage) => {
+      this.service.usage$.subscribe(usage => {
         this.usage = usage;
         this.cdr.markForCheck();
       })
@@ -283,35 +289,41 @@ export class ContextTriggerComponent implements OnChanges, OnInit, OnDestroy {
 @Component({
   selector: 'tolle-context-content',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass">
       <div class="flex items-baseline justify-between gap-2">
         <span class="text-sm font-medium text-popover-foreground">Context</span>
-        <span class="text-xs tabular-nums text-muted-foreground">{{ tokens(usage.used) }} / {{ tokens(usage.total) }}</span>
+        <span class="text-xs tabular-nums text-muted-foreground"
+          >{{ tokens(usage.used) }} / {{ tokens(usage.total) }}</span
+        >
       </div>
       <dl class="mt-2 flex flex-col gap-1 text-xs">
-        <div *ngIf="usage.inputTokens !== null" class="flex items-center justify-between gap-2">
-          <dt class="text-muted-foreground">Input</dt>
-          <dd class="tabular-nums text-popover-foreground">{{ tokens(usage.inputTokens) }}</dd>
-        </div>
-        <div *ngIf="usage.outputTokens !== null" class="flex items-center justify-between gap-2">
-          <dt class="text-muted-foreground">Output</dt>
-          <dd class="tabular-nums text-popover-foreground">{{ tokens(usage.outputTokens) }}</dd>
-        </div>
-        <div *ngIf="usage.cost !== null" class="flex items-center justify-between gap-2">
-          <dt class="text-muted-foreground">Cost</dt>
-          <dd class="tabular-nums text-popover-foreground">{{ currency }}{{ usage.cost }}</dd>
-        </div>
+        @if (usage.inputTokens !== null) {
+          <div class="flex items-center justify-between gap-2">
+            <dt class="text-muted-foreground">Input</dt>
+            <dd class="tabular-nums text-popover-foreground">{{ tokens(usage.inputTokens) }}</dd>
+          </div>
+        }
+        @if (usage.outputTokens !== null) {
+          <div class="flex items-center justify-between gap-2">
+            <dt class="text-muted-foreground">Output</dt>
+            <dd class="tabular-nums text-popover-foreground">{{ tokens(usage.outputTokens) }}</dd>
+          </div>
+        }
+        @if (usage.cost !== null) {
+          <div class="flex items-center justify-between gap-2">
+            <dt class="text-muted-foreground">Cost</dt>
+            <dd class="tabular-nums text-popover-foreground">{{ currency }}{{ usage.cost }}</dd>
+          </div>
+        }
       </dl>
       <ng-content></ng-content>
     </div>
   `,
 })
 export class ContextContentComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -335,7 +347,7 @@ export class ContextContentComponent implements OnChanges, OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub.add(
-      this.service.usage$.subscribe((usage) => {
+      this.service.usage$.subscribe(usage => {
         this.usage = usage;
         this.cdr.markForCheck();
       })

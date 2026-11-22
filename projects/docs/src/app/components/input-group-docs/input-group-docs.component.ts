@@ -12,20 +12,19 @@ import { InputGroupStackedComponent } from '../../docs-examples/input-group/inpu
 
 
 @Component({
-  selector: 'app-input-group-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    InputGroupSearchComponent,
-    InputGroupAddonsComponent,
-    InputGroupStackedComponent
-  ],
-  templateUrl: './input-group-docs.component.html',
-  styleUrl: './input-group-docs.component.css'
+    selector: 'app-input-group-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        InputGroupSearchComponent,
+        InputGroupAddonsComponent,
+        InputGroupStackedComponent
+    ],
+    templateUrl: './input-group-docs.component.html',
+    styleUrl: './input-group-docs.component.css'
 })
 export class InputGroupDocsComponent {
   baseService = inject(BaseService);

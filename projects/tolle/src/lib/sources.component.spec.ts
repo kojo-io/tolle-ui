@@ -1,6 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   SourceComponent,
   SourcesComponent,
@@ -14,23 +14,14 @@ interface Citation {
 }
 
 @Component({
-  standalone: true,
-  imports: [
-    CommonModule,
-    SourcesComponent,
-    SourcesTriggerComponent,
-    SourcesContentComponent,
-    SourceComponent,
-  ],
+  imports: [SourcesComponent, SourcesTriggerComponent, SourcesContentComponent, SourceComponent],
   template: `
     <tolle-sources (openChange)="openEvents.push($event)">
       <tolle-sources-trigger></tolle-sources-trigger>
       <tolle-sources-content>
-        <tolle-source
-          *ngFor="let citation of citations"
-          [href]="citation.href"
-          [title]="citation.title"
-        ></tolle-source>
+        @for (citation of citations; track citation) {
+          <tolle-source [href]="citation.href" [title]="citation.title"></tolle-source>
+        }
       </tolle-sources-content>
     </tolle-sources>
   `,
@@ -114,13 +105,13 @@ describe('SourcesComponent', () => {
   });
 
   it('shows the source title', () => {
-    expect(
-      fixture.nativeElement.querySelector('[data-source-title]').textContent.trim()
-    ).toBe('Alpha');
+    expect(fixture.nativeElement.querySelector('[data-source-title]').textContent.trim()).toBe(
+      'Alpha'
+    );
   });
 
   it('numbers the sources in document order', () => {
-    const chips = links().map((link) => link.querySelector('span')!.textContent!.trim());
+    const chips = links().map(link => link.querySelector('span')!.textContent!.trim());
 
     expect(chips).toEqual(['1', '2', '3']);
   });

@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-tool-states',
-    standalone: true,
     imports: [ToolComponent, ToolHeaderComponent, ToolInputComponent, ToolOutputComponent],
     templateUrl: './tool-states.component.html'
 })

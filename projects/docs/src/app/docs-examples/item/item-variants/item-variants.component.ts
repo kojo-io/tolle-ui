@@ -8,7 +8,6 @@ import {
 
 @Component({
     selector: 'app-item-variants',
-    standalone: true,
     imports: [ItemComponent, ItemContentComponent, ItemTitleComponent, ItemDescriptionComponent],
     templateUrl: './item-variants.component.html'
 })

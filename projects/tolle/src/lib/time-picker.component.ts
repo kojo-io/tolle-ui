@@ -1,5 +1,21 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ElementRef, ViewChild, ViewChildren, QueryList, ChangeDetectorRef, ChangeDetectionStrategy, OnDestroy, OnInit, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ElementRef,
+  ViewChild,
+  ViewChildren,
+  QueryList,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+  OnDestroy,
+  OnInit,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { computePosition, flip, shift, offset, autoUpdate } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -134,50 +150,50 @@ export type TimeColumnsProps = VariantProps<typeof timeOptionVariants>;
 @Component({
   selector: 'tolle-time-columns',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="cn('flex items-stretch gap-1', class)">
-      <div
-        *ngFor="let column of columns; let ci = index; trackBy: trackColumn"
-        class="flex flex-col"
-      >
-        <div class="px-1 pb-1 text-center text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
-          {{ column.label }}
+      @for (column of columns; track trackColumn(ci, column); let ci = $index) {
+        <div class="flex flex-col">
+          <div
+            class="px-1 pb-1 text-center text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
+            {{ column.label }}
+          </div>
+          <div
+            #listbox
+            role="listbox"
+            tabindex="0"
+            [attr.aria-label]="column.label"
+            [attr.aria-activedescendant]="activeDescendantFor(ci)"
+            (keydown)="onColumnKeydown($event, ci)"
+            [class]="
+              cn(
+                'flex flex-col gap-0.5 overflow-y-auto scroll-smooth rounded-md p-1',
+                'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+                column.kind === 'meridiem' ? 'w-14' : 'w-14',
+                heightClass
+              )
+            ">
+            @for (option of column.options; track trackOption($index, option)) {
+              <button
+                type="button"
+                role="option"
+                tabindex="-1"
+                [id]="option.id"
+                [attr.aria-selected]="isSelected(column, option)"
+                [attr.aria-disabled]="option.disabled"
+                [attr.data-selected]="isSelected(column, option)"
+                [attr.data-active]="isActive(ci, option)"
+                [disabled]="option.disabled"
+                [class]="optionClass(column, option, ci)"
+                (click)="choose(column, option, ci)">
+                {{ option.label }}
+              </button>
+            }
+          </div>
         </div>
-        <div
-          #listbox
-          role="listbox"
-          tabindex="0"
-          [attr.aria-label]="column.label"
-          [attr.aria-activedescendant]="activeDescendantFor(ci)"
-          (keydown)="onColumnKeydown($event, ci)"
-          [class]="cn(
-            'flex flex-col gap-0.5 overflow-y-auto scroll-smooth rounded-md p-1',
-            'focus:outline-none focus-visible:ring-2 focus-visible:ring-ring',
-            column.kind === 'meridiem' ? 'w-14' : 'w-14',
-            heightClass
-          )"
-        >
-          <button
-            *ngFor="let option of column.options; trackBy: trackOption"
-            type="button"
-            role="option"
-            tabindex="-1"
-            [id]="option.id"
-            [attr.aria-selected]="isSelected(column, option)"
-            [attr.aria-disabled]="option.disabled"
-            [attr.data-selected]="isSelected(column, option)"
-            [attr.data-active]="isActive(ci, option)"
-            [disabled]="option.disabled"
-            [class]="optionClass(column, option, ci)"
-            (click)="choose(column, option, ci)"
-          >
-            {{ option.label }}
-          </button>
-        </div>
-      </div>
+      }
     </div>
   `,
 })
@@ -232,7 +248,7 @@ export class TimeColumnsComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.rebuild();
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -358,10 +374,10 @@ export class TimeColumnsComponent implements OnInit, OnChanges {
   }
 
   private syncActiveToSelection(): void {
-    this.activeIndex = this.columns.map((column) => {
-      const idx = column.options.findIndex((o) => this.isSelected(column, o));
+    this.activeIndex = this.columns.map(column => {
+      const idx = column.options.findIndex(o => this.isSelected(column, o));
       if (idx >= 0) return idx;
-      const firstEnabled = column.options.findIndex((o) => !o.disabled);
+      const firstEnabled = column.options.findIndex(o => !o.disabled);
       return firstEnabled >= 0 ? firstEnabled : 0;
     });
   }
@@ -372,7 +388,9 @@ export class TimeColumnsComponent implements OnInit, OnChanges {
     switch (column.kind) {
       case 'hour':
         if (this.hour === null) return false;
-        return this.use12Hours ? to12Hour(this.hour).hour12 === option.face : this.hour === option.face;
+        return this.use12Hours
+          ? to12Hour(this.hour).hour12 === option.face
+          : this.hour === option.face;
       case 'minute':
         return this.minute !== null && this.minute === option.face;
       case 'second':
@@ -513,7 +531,7 @@ export class TimeColumnsComponent implements OnInit, OnChanges {
    * behind a fixed-position panel.
    */
   scrollSelectedIntoView(): void {
-    this.listboxes?.forEach((ref) => {
+    this.listboxes?.forEach(ref => {
       const list = ref.nativeElement;
       const selected = list.querySelector('[data-selected="true"]') as HTMLElement | null;
       if (!selected) return;
@@ -583,8 +601,7 @@ export type TimePickerProps = VariantProps<typeof timePickerTriggerVariants>;
 @Component({
   selector: 'tolle-time-picker',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, TimeColumnsComponent],
+  imports: [TimeColumnsComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -605,44 +622,42 @@ export type TimePickerProps = VariantProps<typeof timePickerTriggerVariants>;
       [disabled]="disabled"
       [class]="computedTriggerClass"
       (click)="toggle()"
-      (keydown)="onTriggerKeyDown($event)"
-    >
+      (keydown)="onTriggerKeyDown($event)">
       <span [class]="cn('truncate', displayValue ? 'text-foreground' : 'text-muted-foreground')">
         {{ displayValue || placeholder }}
       </span>
       <i class="ri-time-line shrink-0 text-muted-foreground" aria-hidden="true"></i>
     </button>
 
-    <div
-      *ngIf="isOpen"
-      #panel
-      role="dialog"
-      [id]="panelId"
-      [attr.aria-label]="ariaLabel || 'Choose a time'"
-      class="fixed left-0 top-0 z-[9999]"
-      style="visibility: hidden"
-    >
-      <div class="rounded-md border border-border bg-popover p-2 text-popover-foreground shadow-md">
-        <tolle-time-columns
-          #columns
-          [hour]="hour"
-          [minute]="minute"
-          [second]="second"
-          [use12Hours]="use12Hours"
-          [showSeconds]="showSeconds"
-          [minuteStep]="minuteStep"
-          [secondStep]="secondStep"
-          [minSeconds]="minSeconds"
-          [maxSeconds]="maxSeconds"
-          [size]="size"
-          (timeChange)="onTimeChange($event)"
-        ></tolle-time-columns>
+    @if (isOpen) {
+      <div
+        #panel
+        role="dialog"
+        [id]="panelId"
+        [attr.aria-label]="ariaLabel || 'Choose a time'"
+        class="fixed left-0 top-0 z-[9999]"
+        style="visibility: hidden">
+        <div
+          class="rounded-md border border-border bg-popover p-2 text-popover-foreground shadow-md">
+          <tolle-time-columns
+            #columns
+            [hour]="hour"
+            [minute]="minute"
+            [second]="second"
+            [use12Hours]="use12Hours"
+            [showSeconds]="showSeconds"
+            [minuteStep]="minuteStep"
+            [secondStep]="secondStep"
+            [minSeconds]="minSeconds"
+            [maxSeconds]="maxSeconds"
+            [size]="size"
+            (timeChange)="onTimeChange($event)"></tolle-time-columns>
+        </div>
       </div>
-    </div>
+    }
   `,
 })
 export class TimePickerComponent implements OnChanges, ControlValueAccessor, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps

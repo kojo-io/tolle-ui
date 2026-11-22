@@ -3,7 +3,6 @@ import { BubbleComponent } from '../../../../../../tolle/src/lib/bubble.componen
 
 @Component({
     selector: 'app-basic-bubble',
-    standalone: true,
     imports: [BubbleComponent],
     templateUrl: './basic-bubble.component.html'
 })

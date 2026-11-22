@@ -9,7 +9,6 @@ import { BasicSwitchExampleComponent } from '../../../docs-examples/switch/basic
 
 @Component({
     selector: 'app-switch-overview',
-    standalone: true,
     imports: [CommonModule, ComponentPreviewComponent, DocHeroComponent, BasicSwitchExampleComponent],
     templateUrl: './switch-overview.component.html'
 })

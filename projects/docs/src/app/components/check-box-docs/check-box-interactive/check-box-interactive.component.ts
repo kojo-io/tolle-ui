@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { CheckboxComponent } from '../../../../../../tolle/src/lib/checkbox.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
@@ -10,30 +10,28 @@ import { SwitchComponent } from '../../../../../../tolle/src/lib/switch.componen
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-    selector: 'app-check-box-interactive',
-    standalone: true,
-    imports: [
-        CommonModule,
-        FormsModule,
-        CheckboxComponent,
-        PlaygroundComponent,
-        SelectComponent,
-        SelectItemComponent,
-        InputComponent,
-        SwitchComponent,
-        LabelComponent
-    ],
-    templateUrl: './check-box-interactive.component.html'
+  selector: 'app-check-box-interactive',
+  imports: [
+    FormsModule,
+    CheckboxComponent,
+    PlaygroundComponent,
+    SelectComponent,
+    SelectItemComponent,
+    InputComponent,
+    SwitchComponent,
+    LabelComponent,
+  ],
+  templateUrl: './check-box-interactive.component.html',
 })
 export class CheckBoxInteractiveComponent {
-    playgroundLabel = 'Accept terms and conditions';
-    playgroundDescription = 'You agree to our Terms of Service and Privacy Policy.';
-    playgroundSize: 'xs' | 'sm' | 'default' | 'lg' = 'default';
-    playgroundDisabled = false;
-    playgroundChecked = false;
+  playgroundLabel = 'Accept terms and conditions';
+  playgroundDescription = 'You agree to our Terms of Service and Privacy Policy.';
+  playgroundSize: 'xs' | 'sm' | 'default' | 'lg' = 'default';
+  playgroundDisabled = false;
+  playgroundChecked = false;
 
-    get playgroundCode() {
-        return `<div class="flex items-start space-x-2">
+  get playgroundCode() {
+    return `<div class="flex items-start space-x-2">
   <tolle-checkbox
     [(ngModel)]="checked"
     size="${this.playgroundSize}"
@@ -46,5 +44,5 @@ export class CheckBoxInteractiveComponent {
     ${this.playgroundDescription ? `<p class="text-xs text-muted-foreground">${this.playgroundDescription}</p>` : ''}
   </div>
 </div>`;
-    }
+  }
 }

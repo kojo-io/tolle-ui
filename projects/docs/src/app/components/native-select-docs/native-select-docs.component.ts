@@ -12,20 +12,19 @@ import { NativeSelectFormsComponent } from '../../docs-examples/native-select/na
 
 
 @Component({
-  selector: 'app-native-select-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicNativeSelectComponent,
-    NativeSelectSizesComponent,
-    NativeSelectFormsComponent
-  ],
-  templateUrl: './native-select-docs.component.html',
-  styleUrl: './native-select-docs.component.css'
+    selector: 'app-native-select-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicNativeSelectComponent,
+        NativeSelectSizesComponent,
+        NativeSelectFormsComponent
+    ],
+    templateUrl: './native-select-docs.component.html',
+    styleUrl: './native-select-docs.component.css'
 })
 export class NativeSelectDocsComponent {
   baseService = inject(BaseService);

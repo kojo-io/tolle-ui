@@ -9,7 +9,6 @@ import { BasicTextareaExampleComponent } from '../../../docs-examples/textarea/b
 
 @Component({
     selector: 'app-textarea-overview',
-    standalone: true,
     imports: [CommonModule, ComponentPreviewComponent, DocHeroComponent, BasicTextareaExampleComponent],
     templateUrl: './textarea-overview.component.html'
 })

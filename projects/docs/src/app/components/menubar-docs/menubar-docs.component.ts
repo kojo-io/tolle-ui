@@ -12,20 +12,19 @@ import { MenubarWithIconsComponent } from '../../docs-examples/menubar/menubar-w
 
 
 @Component({
-  selector: 'app-menubar-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicMenubarComponent,
-    MenubarSizesComponent,
-    MenubarWithIconsComponent
-  ],
-  templateUrl: './menubar-docs.component.html',
-  styleUrl: './menubar-docs.component.css'
+    selector: 'app-menubar-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicMenubarComponent,
+        MenubarSizesComponent,
+        MenubarWithIconsComponent
+    ],
+    templateUrl: './menubar-docs.component.html',
+    styleUrl: './menubar-docs.component.css'
 })
 export class MenubarDocsComponent {
   baseService = inject(BaseService);

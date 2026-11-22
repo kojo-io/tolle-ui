@@ -3,7 +3,6 @@ import { DirectionDirective } from '../../../../../../tolle/src/lib/direction.co
 
 @Component({
     selector: 'app-basic-direction',
-    standalone: true,
     imports: [DirectionDirective],
     templateUrl: './basic-direction.component.html'
 })

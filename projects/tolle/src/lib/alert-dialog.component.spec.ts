@@ -16,20 +16,19 @@ import {
 } from './alert-dialog.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    AlertDialogComponent,
-    AlertDialogTriggerComponent,
-    AlertDialogPortalComponent,
-    AlertDialogContentComponent,
-    AlertDialogHeaderComponent,
-    AlertDialogFooterComponent,
-    AlertDialogTitleComponent,
-    AlertDialogDescriptionComponent,
-    AlertDialogActionComponent,
-    AlertDialogCancelComponent,
-  ],
-  template: `
+    imports: [
+        AlertDialogComponent,
+        AlertDialogTriggerComponent,
+        AlertDialogPortalComponent,
+        AlertDialogContentComponent,
+        AlertDialogHeaderComponent,
+        AlertDialogFooterComponent,
+        AlertDialogTitleComponent,
+        AlertDialogDescriptionComponent,
+        AlertDialogActionComponent,
+        AlertDialogCancelComponent,
+    ],
+    template: `
     <tolle-alert-dialog (openChange)="openEvents.push($event)">
       <tolle-alert-dialog-trigger>
         <button type="button">Open</button>
@@ -51,7 +50,7 @@ import {
         </tolle-alert-dialog-content>
       </tolle-alert-dialog-portal>
     </tolle-alert-dialog>
-  `,
+  `
 })
 class HostComponent {
   openEvents: boolean[] = [];

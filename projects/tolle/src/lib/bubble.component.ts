@@ -1,5 +1,14 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -48,8 +57,7 @@ export interface BubbleReaction {
 @Component({
   selector: 'tolle-bubble',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
@@ -60,26 +68,29 @@ export interface BubbleReaction {
       (keydown.enter)="onTrigger($event)"
       (keydown.space)="onTrigger($event)">
       <!-- Single content slot: collapsing only swaps the wrapper's classes so the
-           projected nodes are never re-created (and never render empty). -->
+      projected nodes are never re-created (and never render empty). -->
       <div [class]="contentClass" [style.max-height]="contentStyle">
         <ng-content></ng-content>
       </div>
 
-      <button
-        *ngIf="collapsible"
-        type="button"
-        [attr.aria-expanded]="!collapsed"
-        (click)="toggle($event)"
-        class="mt-1 inline-flex items-center gap-1 rounded-sm text-xs font-medium underline underline-offset-2 opacity-80 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-        {{ collapsed ? expandLabel : collapseLabel }}
-        <i [class]="collapsed ? 'ri-arrow-down-s-line' : 'ri-arrow-up-s-line'" aria-hidden="true"></i>
-      </button>
+      @if (collapsible) {
+        <button
+          type="button"
+          [attr.aria-expanded]="!collapsed"
+          (click)="toggle($event)"
+          class="mt-1 inline-flex items-center gap-1 rounded-sm text-xs font-medium underline underline-offset-2 opacity-80 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+          {{ collapsed ? expandLabel : collapseLabel }}
+          <i
+            [class]="collapsed ? 'ri-arrow-down-s-line' : 'ri-arrow-up-s-line'"
+            aria-hidden="true"></i>
+        </button>
+      }
 
       <ng-content select="[bubbleFooter]"></ng-content>
     </div>
   `,
 })
-export class BubbleComponent  implements OnChanges{
+export class BubbleComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -162,8 +173,7 @@ export class BubbleComponent  implements OnChanges{
 @Component({
   selector: 'tolle-bubble-actions',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass" (click)="onClick($event)">
@@ -171,7 +181,7 @@ export class BubbleComponent  implements OnChanges{
     </div>
   `,
 })
-export class BubbleActionsComponent  implements OnChanges{
+export class BubbleActionsComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -208,26 +218,28 @@ export class BubbleActionsComponent  implements OnChanges{
 @Component({
   selector: 'tolle-bubble-reactions',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass" (click)="stop($event)">
-      <button
-        *ngFor="let reaction of reactions; trackBy: trackByEmoji"
-        type="button"
-        [attr.aria-pressed]="!!reaction.reacted"
-        [class]="chipClass(reaction)"
-        (click)="onReact(reaction, $event)">
-        <span aria-hidden="true">{{ reaction.emoji }}</span>
-        <span *ngIf="reaction.count" class="tabular-nums">{{ reaction.count }}</span>
-      </button>
+      @for (reaction of reactions; track trackByEmoji($index, reaction)) {
+        <button
+          type="button"
+          [attr.aria-pressed]="!!reaction.reacted"
+          [class]="chipClass(reaction)"
+          (click)="onReact(reaction, $event)">
+          <span aria-hidden="true">{{ reaction.emoji }}</span>
+          @if (reaction.count) {
+            <span class="tabular-nums">{{ reaction.count }}</span>
+          }
+        </button>
+      }
 
       <ng-content></ng-content>
     </div>
   `,
 })
-export class BubbleReactionsComponent  implements OnChanges{
+export class BubbleReactionsComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

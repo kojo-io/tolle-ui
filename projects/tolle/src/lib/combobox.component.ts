@@ -9,7 +9,7 @@ import {
   ChangeDetectorRef,
   OnDestroy,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { computePosition, flip, shift, offset, size, autoUpdate } from '@floating-ui/dom';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -65,9 +65,7 @@ export type ComboboxOption = {
 @Component({
   selector: 'tolle-combobox',
   styles: [':host { display: block; }'],
-  standalone: true,
   imports: [
-    CommonModule,
     CommandComponent,
     CommandInputComponent,
     CommandListComponent,
@@ -94,47 +92,43 @@ export type ComboboxOption = {
       [disabled]="disabled"
       [class]="computedTriggerClass"
       (click)="toggle()"
-      (keydown)="onTriggerKeyDown($event)"
-    >
+      (keydown)="onTriggerKeyDown($event)">
       <span [class]="cn('truncate', selectedLabel ? 'text-foreground' : 'text-muted-foreground')">
         {{ selectedLabel || placeholder }}
       </span>
       <i
         class="ri-expand-up-down-line shrink-0 text-muted-foreground transition-transform"
-        aria-hidden="true"
-      ></i>
+        aria-hidden="true"></i>
     </button>
 
-    <div
-      *ngIf="isOpen"
-      #panel
-      [id]="panelId"
-      class="fixed left-0 top-0 z-[9999]"
-      style="visibility: hidden"
-    >
-      <div class="overflow-hidden rounded-md border border-border bg-popover shadow-md">
-        <tolle-command [shouldFilter]="shouldFilter" (selected)="onSelect($event)" (queryChange)="searchChange.emit($event)">
-          <tolle-command-input [placeholder]="searchPlaceholder"></tolle-command-input>
-          <tolle-command-list>
-            <tolle-command-empty>{{ emptyMessage }}</tolle-command-empty>
-            <tolle-command-item
-              *ngFor="let option of options"
-              [value]="option.value"
-              [label]="option.label"
-              [keywords]="option.keywords || []"
-              [disabled]="option.disabled || false"
-            >
-              <i
-                class="ri-check-line shrink-0"
-                [class.opacity-0]="option.value !== value"
-                aria-hidden="true"
-              ></i>
-              <span class="truncate">{{ option.label }}</span>
-            </tolle-command-item>
-          </tolle-command-list>
-        </tolle-command>
+    @if (isOpen) {
+      <div #panel [id]="panelId" class="fixed left-0 top-0 z-[9999]" style="visibility: hidden">
+        <div class="overflow-hidden rounded-md border border-border bg-popover shadow-md">
+          <tolle-command
+            [shouldFilter]="shouldFilter"
+            (selected)="onSelect($event)"
+            (queryChange)="searchChange.emit($event)">
+            <tolle-command-input [placeholder]="searchPlaceholder"></tolle-command-input>
+            <tolle-command-list>
+              <tolle-command-empty>{{ emptyMessage }}</tolle-command-empty>
+              @for (option of options; track option) {
+                <tolle-command-item
+                  [value]="option.value"
+                  [label]="option.label"
+                  [keywords]="option.keywords || []"
+                  [disabled]="option.disabled || false">
+                  <i
+                    class="ri-check-line shrink-0"
+                    [class.opacity-0]="option.value !== value"
+                    aria-hidden="true"></i>
+                  <span class="truncate">{{ option.label }}</span>
+                </tolle-command-item>
+              }
+            </tolle-command-list>
+          </tolle-command>
+        </div>
       </div>
-    </div>
+    }
   `,
 })
 export class ComboboxComponent implements ControlValueAccessor, OnDestroy {
@@ -206,7 +200,7 @@ export class ComboboxComponent implements ControlValueAccessor, OnDestroy {
   };
 
   get selectedLabel(): string {
-    return this.options.find((o) => o.value === this.value)?.label ?? '';
+    return this.options.find(o => o.value === this.value)?.label ?? '';
   }
 
   get computedTriggerClass() {

@@ -8,7 +8,6 @@ import { BasicPhoneNumberInputExampleComponent } from '../../../docs-examples/ph
 
 @Component({
     selector: 'app-phone-number-input-overview',
-    standalone: true,
     imports: [CommonModule, AsyncPipe, BaseEditorComponent, ComponentPreviewComponent, DocHeroComponent, BasicPhoneNumberInputExampleComponent],
     templateUrl: './phone-number-input-overview.component.html'
 })

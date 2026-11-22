@@ -4,7 +4,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-avatar-overview',
-    standalone: true,
     imports: [BaseEditorComponent, DocHeroComponent],
     templateUrl: './avatar-overview.component.html'
 })

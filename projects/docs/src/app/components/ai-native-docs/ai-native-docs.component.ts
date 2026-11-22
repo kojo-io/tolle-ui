@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterLink } from '@angular/router';
 import { BaseService } from '../../shared/base.service';
 
@@ -13,8 +13,7 @@ interface Artifact {
 
 @Component({
   selector: 'app-ai-native-docs',
-  standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './ai-native-docs.component.html',
 })
 export class AiNativeDocsComponent {
@@ -48,7 +47,7 @@ export class AiNativeDocsComponent {
   /** A ready-to-paste briefing for a coding agent. */
   protected get agentBriefing(): string {
     return [
-      'You have access to Tolle UI, an Angular 18 component library.',
+      'You have access to Tolle UI, an Angular 21 component library.',
       `Component index:     ${this.origin}/llms.txt`,
       `Full API reference:  ${this.origin}/llms-full.txt`,
       'Add a component:     npx @tolle_/cli add <name>',

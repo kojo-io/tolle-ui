@@ -3,7 +3,6 @@ import { ComponentPreviewComponent } from '../../../shared/component-preview/com
 import { SourceCodeService } from '../../../shared/source-code.service';
 import { BasicCarouselComponent } from '../../../docs-examples/carousel/basic-carousel.component';
 import { MultipleCarouselComponent } from '../../../docs-examples/carousel/multiple-carousel.component';
-import { VerticalCarouselComponent } from '../../../docs-examples/carousel/vertical-carousel.component';
 import { AutoplayCarouselComponent } from '../../../docs-examples/carousel/autoplay-carousel.component';
 import { LoopCarouselComponent } from '../../../docs-examples/carousel/loop-carousel.component';
 import { ThumbnailsCarouselComponent } from '../../../docs-examples/carousel/thumbnails-carousel.component';
@@ -21,30 +20,28 @@ import { LazyLoadCarouselComponent } from '../../../docs-examples/carousel/lazy-
 import { InfiniteScrollCarouselComponent } from '../../../docs-examples/carousel/infinite-scroll-carousel.component';
 
 @Component({
-  selector: 'app-carousel-examples',
-  standalone: true,
-  imports: [
-    ComponentPreviewComponent,
-    BasicCarouselComponent,
-    MultipleCarouselComponent,
-    VerticalCarouselComponent,
-    AutoplayCarouselComponent,
-    LoopCarouselComponent,
-    ThumbnailsCarouselComponent,
-    AlignmentCarouselComponent,
-    VariableWidthCarouselComponent,
-    RtlCarouselComponent,
-    AutoScrollCarouselComponent,
-    FadeCarouselComponent,
-    ClassNamesCarouselComponent,
-    ParallaxCarouselComponent,
-    ScaleCarouselComponent,
-    OpacityCarouselComponent,
-    ProgressCarouselComponent,
-    LazyLoadCarouselComponent,
-    InfiniteScrollCarouselComponent
-  ],
-  template: `
+    selector: 'app-carousel-examples',
+    imports: [
+        ComponentPreviewComponent,
+        BasicCarouselComponent,
+        MultipleCarouselComponent,
+        AutoplayCarouselComponent,
+        LoopCarouselComponent,
+        ThumbnailsCarouselComponent,
+        AlignmentCarouselComponent,
+        VariableWidthCarouselComponent,
+        RtlCarouselComponent,
+        AutoScrollCarouselComponent,
+        FadeCarouselComponent,
+        ClassNamesCarouselComponent,
+        ParallaxCarouselComponent,
+        ScaleCarouselComponent,
+        OpacityCarouselComponent,
+        ProgressCarouselComponent,
+        LazyLoadCarouselComponent,
+        InfiniteScrollCarouselComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
 

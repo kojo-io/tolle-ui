@@ -1,23 +1,16 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 import { PlaygroundComponent } from '../../../shared/playground/playground.component';
 import { InputComponent } from '../../../../../../tolle/src/lib/input.component';
 
 @Component({
-    selector: 'app-label-interactive',
-    standalone: true,
-    imports: [
-        CommonModule,
-        FormsModule,
-        LabelComponent,
-        PlaygroundComponent,
-        InputComponent
-    ],
-    template: `
+  selector: 'app-label-interactive',
+  imports: [FormsModule, LabelComponent, PlaygroundComponent, InputComponent],
+  template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <div class="space-y-2">
@@ -34,15 +27,15 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class LabelInteractiveComponent {
-    label = 'Your Message';
+  label = 'Your Message';
 
-    get playgroundCode() {
-        return `<div class="grid w-full max-w-sm items-center gap-1.5">
+  get playgroundCode() {
+    return `<div class="grid w-full max-w-sm items-center gap-1.5">
   <tolle-label for="email">${this.label}</tolle-label>
   <tolle-input type="email" id="email" placeholder="Email" />
 </div>`;
-    }
+  }
 }

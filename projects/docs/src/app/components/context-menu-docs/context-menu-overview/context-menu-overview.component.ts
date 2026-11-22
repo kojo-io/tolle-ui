@@ -8,7 +8,6 @@ import { BasicContextMenuExampleComponent } from '../../../docs-examples/context
 
 @Component({
     selector: 'app-context-menu-overview',
-    standalone: true,
     imports: [CommonModule, AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicContextMenuExampleComponent],
     templateUrl: './context-menu-overview.component.html'
 })

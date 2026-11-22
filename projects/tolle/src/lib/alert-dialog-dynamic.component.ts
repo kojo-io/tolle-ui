@@ -1,5 +1,5 @@
 import { Component, Inject, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   AlertDialogComponent,
   AlertDialogContentComponent,
@@ -8,7 +8,7 @@ import {
   AlertDialogDescriptionComponent,
   AlertDialogFooterComponent,
   AlertDialogCancelComponent,
-  AlertDialogActionComponent
+  AlertDialogActionComponent,
 } from './alert-dialog.component';
 import { ButtonComponent } from './button.component';
 import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
@@ -16,9 +16,7 @@ import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
 @Component({
   selector: 'tolle-alert-dialog-dynamic',
   styles: [':host { display: block; }'],
-  standalone: true,
   imports: [
-    CommonModule,
     AlertDialogComponent,
     AlertDialogContentComponent,
     AlertDialogHeaderComponent,
@@ -27,30 +25,30 @@ import { AlertDialogConfig, AlertDialogRef } from './alert-dialog.types';
     AlertDialogFooterComponent,
     AlertDialogCancelComponent,
     AlertDialogActionComponent,
-    ButtonComponent
+    ButtonComponent,
   ],
   template: `
     <tolle-alert-dialog [open]="!closing" (openChange)="onOpenChange($event)">
-        <tolle-alert-dialog-content [size]="config.size || 'lg'">
-          <tolle-alert-dialog-header>
-            <tolle-alert-dialog-title>{{ config.title }}</tolle-alert-dialog-title>
-            <tolle-alert-dialog-description>
-              {{ config.description }}
-            </tolle-alert-dialog-description>
-          </tolle-alert-dialog-header>
-          <tolle-alert-dialog-footer>
-            <tolle-alert-dialog-cancel (cancelled)="result = false">
-              <tolle-button variant="outline">{{ config.cancelText || 'Cancel' }}</tolle-button>
-            </tolle-alert-dialog-cancel>
-            <tolle-alert-dialog-action (confirmed)="result = true">
-              <tolle-button [variant]="config.variant === 'destructive' ? 'destructive' : 'default'">
-                {{ config.actionText || 'Continue' }}
-              </tolle-button>
-            </tolle-alert-dialog-action>
-          </tolle-alert-dialog-footer>
-        </tolle-alert-dialog-content>
+      <tolle-alert-dialog-content [size]="config.size || 'lg'">
+        <tolle-alert-dialog-header>
+          <tolle-alert-dialog-title>{{ config.title }}</tolle-alert-dialog-title>
+          <tolle-alert-dialog-description>
+            {{ config.description }}
+          </tolle-alert-dialog-description>
+        </tolle-alert-dialog-header>
+        <tolle-alert-dialog-footer>
+          <tolle-alert-dialog-cancel (cancelled)="result = false">
+            <tolle-button variant="outline">{{ config.cancelText || 'Cancel' }}</tolle-button>
+          </tolle-alert-dialog-cancel>
+          <tolle-alert-dialog-action (confirmed)="result = true">
+            <tolle-button [variant]="config.variant === 'destructive' ? 'destructive' : 'default'">
+              {{ config.actionText || 'Continue' }}
+            </tolle-button>
+          </tolle-alert-dialog-action>
+        </tolle-alert-dialog-footer>
+      </tolle-alert-dialog-content>
     </tolle-alert-dialog>
-  `
+  `,
 })
 export class AlertDialogDynamicComponent {
   config!: AlertDialogConfig;

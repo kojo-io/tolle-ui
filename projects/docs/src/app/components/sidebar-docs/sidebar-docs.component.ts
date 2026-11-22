@@ -8,13 +8,11 @@ import { DocsWrapperComponent } from '../shared/docs-wrapper/docs-wrapper.compon
 
 @Component({
     selector: 'app-sidebar-docs',
-    standalone: true,
     imports: [
         SidebarOverviewComponent,
         SidebarInteractiveComponent,
         SidebarApiComponent,
         DocsWrapperComponent
-
     ],
     templateUrl: './sidebar-docs.component.html',
     styleUrl: './sidebar-docs.component.css'

@@ -3,7 +3,6 @@ import { ChartSparkComponent } from '../../../../../../tolle/src/lib/chart-spark
 
 @Component({
     selector: 'app-chart-spark-types',
-    standalone: true,
     imports: [ChartSparkComponent],
     templateUrl: './chart-spark-types.component.html'
 })

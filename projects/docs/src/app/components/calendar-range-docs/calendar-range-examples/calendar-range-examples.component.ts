@@ -5,14 +5,13 @@ import { BasicRangeCalendarComponent } from '../../../docs-examples/calendar-ran
 import { TwoMonthRangeCalendarComponent } from '../../../docs-examples/calendar-range/two-month-range-calendar.component';
 
 @Component({
-  selector: 'app-calendar-range-examples',
-  standalone: true,
-  imports: [
-    ComponentPreviewComponent,
-    BasicRangeCalendarComponent,
-    TwoMonthRangeCalendarComponent
-  ],
-  template: `
+    selector: 'app-calendar-range-examples',
+    imports: [
+        ComponentPreviewComponent,
+        BasicRangeCalendarComponent,
+        TwoMonthRangeCalendarComponent
+    ],
+    template: `
     <section class="mb-16" id="examples">
       <h2 class="mb-6 scroll-m-20 text-xl font-semibold tracking-tight">Examples</h2>
 

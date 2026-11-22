@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-basic-chain-of-thought',
-    standalone: true,
     imports: [
         ChainOfThoughtComponent,
         ChainOfThoughtHeaderComponent,

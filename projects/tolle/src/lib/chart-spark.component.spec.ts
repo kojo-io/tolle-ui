@@ -13,9 +13,8 @@ const ROWS = [
 ];
 
 @Component({
-  standalone: true,
-  imports: [ChartSparkComponent],
-  template: `
+    imports: [ChartSparkComponent],
+    template: `
     <tolle-chart-spark
       [data]="data"
       valueKey="sales"
@@ -23,7 +22,7 @@ const ROWS = [
       [type]="type"
       [hover]="hover"
     ></tolle-chart-spark>
-  `,
+  `
 })
 class HostComponent {
   data = ROWS;

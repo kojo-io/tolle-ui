@@ -4,7 +4,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-spinner-in-button',
-    standalone: true,
     imports: [SpinnerComponent, ButtonComponent],
     templateUrl: './spinner-in-button.component.html'
 })

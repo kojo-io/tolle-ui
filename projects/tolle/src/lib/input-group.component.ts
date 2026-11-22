@@ -1,5 +1,12 @@
-import { Component, Input, Output, EventEmitter, forwardRef, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ChangeDetectorRef,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -44,8 +51,7 @@ export type InputGroupProps = VariantProps<typeof inputGroupVariants>;
 @Component({
   selector: 'tolle-input-group',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })
 export class InputGroupComponent {
@@ -87,8 +93,7 @@ export type InputGroupAddonProps = VariantProps<typeof inputGroupAddonVariants>;
 @Component({
   selector: 'tolle-input-group-addon',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `<div [class]="computedClass"><ng-content></ng-content></div>`,
 })
 export class InputGroupAddonComponent {
@@ -132,16 +137,14 @@ export type InputGroupButtonProps = VariantProps<typeof inputGroupButtonVariants
 @Component({
   selector: 'tolle-input-group-button',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <button
       [type]="type"
       [disabled]="disabled"
       [attr.aria-label]="ariaLabel || null"
       [class]="computedClass"
-      (click)="clicked.emit($event)"
-    >
+      (click)="clicked.emit($event)">
       <ng-content></ng-content>
     </button>
   `,
@@ -172,9 +175,11 @@ export class InputGroupButtonComponent {
 @Component({
   selector: 'tolle-input-group-text',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
-  template: `<span [class]="cn('select-none whitespace-nowrap text-sm text-muted-foreground', class)"><ng-content></ng-content></span>`,
+  imports: [],
+  template: `<span
+    [class]="cn('select-none whitespace-nowrap text-sm text-muted-foreground', class)"
+    ><ng-content></ng-content
+  ></span>`,
 })
 export class InputGroupTextComponent {
   /** Extra Tailwind classes merged onto the text via `cn()` (last-wins). */
@@ -189,8 +194,7 @@ export class InputGroupTextComponent {
 @Component({
   selector: 'tolle-input-group-input',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -209,8 +213,7 @@ export class InputGroupTextComponent {
       [attr.aria-describedby]="ariaDescribedby || null"
       [class]="computedClass"
       (input)="onInputChange($event)"
-      (blur)="onTouched()"
-    />
+      (blur)="onTouched()" />
   `,
 })
 export class InputGroupInputComponent implements ControlValueAccessor {
@@ -279,8 +282,7 @@ export class InputGroupInputComponent implements ControlValueAccessor {
 @Component({
   selector: 'tolle-input-group-textarea',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -299,8 +301,7 @@ export class InputGroupInputComponent implements ControlValueAccessor {
       [attr.aria-describedby]="ariaDescribedby || null"
       [class]="computedClass"
       (input)="onInputChange($event)"
-      (blur)="onTouched()"
-    ></textarea>
+      (blur)="onTouched()"></textarea>
   `,
 })
 export class InputGroupTextareaComponent implements ControlValueAccessor {

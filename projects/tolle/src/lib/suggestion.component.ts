@@ -1,5 +1,17 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Injectable, Input, OnDestroy, OnInit, Output, inject, ChangeDetectorRef, OnChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+  ChangeDetectorRef,
+  OnChanges,
+} from '@angular/core';
+
 import { Subject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -47,8 +59,7 @@ export type SuggestionsProps = VariantProps<typeof suggestionsVariants>;
 @Component({
   selector: 'tolle-suggestions',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [SuggestionsService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -83,9 +94,7 @@ export class SuggestionsComponent implements OnChanges, OnInit, OnDestroy {
   private readonly subscriptions = new Subscription();
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this.service.selected$.subscribe((value) => this.selected.emit(value))
-    );
+    this.subscriptions.add(this.service.selected$.subscribe(value => this.selected.emit(value)));
   }
 
   ngOnDestroy(): void {
@@ -102,9 +111,12 @@ const suggestionVariants = cva(
   {
     variants: {
       variant: {
-        outline: 'border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground',
-        secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground',
+        outline:
+          'border-border bg-background text-foreground hover:bg-accent hover:text-accent-foreground',
+        secondary:
+          'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        ghost:
+          'border-transparent bg-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground',
       },
       size: {
         sm: 'h-7 px-2.5 text-xs',
@@ -131,8 +143,7 @@ export type SuggestionProps = VariantProps<typeof suggestionVariants>;
 @Component({
   selector: 'tolle-suggestion',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <button
@@ -141,14 +152,15 @@ export type SuggestionProps = VariantProps<typeof suggestionVariants>;
       [disabled]="disabled"
       [attr.aria-label]="ariaLabel || null"
       [class]="computedClass"
-      (click)="onClick()"
-    >
-      <i *ngIf="icon" [class]="icon" aria-hidden="true"></i>
+      (click)="onClick()">
+      @if (icon) {
+        <i [class]="icon" aria-hidden="true"></i>
+      }
       <ng-content></ng-content>
     </button>
   `,
 })
-export class SuggestionComponent  implements OnChanges{
+export class SuggestionComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

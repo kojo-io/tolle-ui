@@ -4,9 +4,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShimmerComponent, type ShimmerProps } from './shimmer.component';
 
 @Component({
-  standalone: true,
-  imports: [ShimmerComponent],
-  template: `<tolle-shimmer [active]="active" [size]="size">{{ text }}</tolle-shimmer>`,
+    imports: [ShimmerComponent],
+    template: `<tolle-shimmer [active]="active" [size]="size">{{ text }}</tolle-shimmer>`
 })
 class ShimmerHostComponent {
   @Input() active = true;

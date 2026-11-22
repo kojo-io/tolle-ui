@@ -3,7 +3,6 @@ import { SpinnerComponent } from '../../../../../../tolle/src/lib/spinner.compon
 
 @Component({
     selector: 'app-basic-spinner',
-    standalone: true,
     imports: [SpinnerComponent],
     templateUrl: './basic-spinner.component.html'
 })

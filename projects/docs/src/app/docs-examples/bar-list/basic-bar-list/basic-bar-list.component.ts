@@ -3,7 +3,6 @@ import { BarListComponent } from '../../../../../../tolle/src/lib/bar-list.compo
 
 @Component({
     selector: 'app-basic-bar-list',
-    standalone: true,
     imports: [BarListComponent],
     styles: [':host { display: block; width: 100%; }'],
     templateUrl: './basic-bar-list.component.html'

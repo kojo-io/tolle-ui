@@ -11,7 +11,6 @@ import {
 
 @Component({
     selector: 'app-basic-menubar',
-    standalone: true,
     imports: [
         MenubarComponent,
         MenubarMenuComponent,

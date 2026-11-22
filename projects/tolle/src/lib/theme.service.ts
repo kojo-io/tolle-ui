@@ -6,8 +6,9 @@ import {
   Renderer2,
   RendererFactory2,
   RendererStyleFlags2,
+  DOCUMENT
 } from '@angular/core';
-import {DOCUMENT, isPlatformBrowser} from '@angular/common';
+import {isPlatformBrowser} from '@angular/common';
 import { TOLLE_CONFIG, TolleConfig } from './tolle-config';
 import { BehaviorSubject } from 'rxjs';
 import { hexToRgb, radiusScale, generateThemeCss, generateBaseCss, generateChartCss } from './utils/color';

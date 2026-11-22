@@ -12,7 +12,6 @@ import { BadgeComponent } from '../../../../../../tolle/src/lib/badge.component'
 
 @Component({
     selector: 'app-item-group',
-    standalone: true,
     imports: [
         ItemComponent,
         ItemGroupComponent,

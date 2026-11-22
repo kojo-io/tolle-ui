@@ -12,20 +12,19 @@ import { TypographyBlockquoteComponent } from '../../docs-examples/typography/ty
 
 
 @Component({
-  selector: 'app-typography-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicTypographyComponent,
-    TypographyVariantsComponent,
-    TypographyBlockquoteComponent
-  ],
-  templateUrl: './typography-docs.component.html',
-  styleUrl: './typography-docs.component.css'
+    selector: 'app-typography-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicTypographyComponent,
+        TypographyVariantsComponent,
+        TypographyBlockquoteComponent
+    ],
+    templateUrl: './typography-docs.component.html',
+    styleUrl: './typography-docs.component.css'
 })
 export class TypographyDocsComponent {
   baseService = inject(BaseService);

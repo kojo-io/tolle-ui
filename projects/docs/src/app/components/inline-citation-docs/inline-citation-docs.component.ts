@@ -12,20 +12,19 @@ import { InlineCitationVariantsComponent } from '../../docs-examples/inline-cita
 
 
 @Component({
-  selector: 'app-inline-citation-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicInlineCitationComponent,
-    InlineCitationQuoteExampleComponent,
-    InlineCitationVariantsComponent
-  ],
-  templateUrl: './inline-citation-docs.component.html',
-  styleUrl: './inline-citation-docs.component.css'
+    selector: 'app-inline-citation-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicInlineCitationComponent,
+        InlineCitationQuoteExampleComponent,
+        InlineCitationVariantsComponent
+    ],
+    templateUrl: './inline-citation-docs.component.html',
+    styleUrl: './inline-citation-docs.component.css'
 })
 export class InlineCitationDocsComponent {
   baseService = inject(BaseService);

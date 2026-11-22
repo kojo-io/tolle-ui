@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef, ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -59,14 +59,13 @@ export type SwitchProps = VariantProps<typeof switchTrackVariants>;
 @Component({
   selector: 'tolle-switch',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SwitchComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   template: `
     <button
@@ -76,11 +75,10 @@ export type SwitchProps = VariantProps<typeof switchTrackVariants>;
       [attr.data-state]="checked ? 'checked' : 'unchecked'"
       [disabled]="disabled"
       (click)="toggle()"
-      [class]="trackClass"
-    >
+      [class]="trackClass">
       <span [class]="thumbClass"></span>
     </button>
-  `
+  `,
 })
 export class SwitchComponent implements ControlValueAccessor {
   /** Extra Tailwind classes merged onto the switch track via `cn()` (last-wins). */
@@ -98,10 +96,7 @@ export class SwitchComponent implements ControlValueAccessor {
   constructor(private cdr: ChangeDetectorRef) {}
 
   get trackClass() {
-    return cn(
-      switchTrackVariants({ size: this.size, checked: this.checked }),
-      this.class
-    );
+    return cn(switchTrackVariants({ size: this.size, checked: this.checked }), this.class);
   }
 
   get thumbClass() {
@@ -121,7 +116,14 @@ export class SwitchComponent implements ControlValueAccessor {
     this.cdr.markForCheck();
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; this.cdr.markForCheck(); }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+    this.cdr.markForCheck();
+  }
 }

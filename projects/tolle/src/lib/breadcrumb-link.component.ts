@@ -1,36 +1,34 @@
-import {Component, Input} from '@angular/core';
-import {NgIf, NgTemplateOutlet} from '@angular/common';
+import { Component, Input } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'tolle-breadcrumb-link',
-  standalone: true,
-  imports: [
-    NgIf,
-    NgTemplateOutlet
-  ],
+  imports: [NgTemplateOutlet],
   template: `
     <ng-template #content>
       <ng-content></ng-content>
     </ng-template>
 
-    <ng-container *ngIf="active; else linkTemplate">
+    @if (active) {
       <span
         role="link"
         aria-disabled="true"
         aria-current="page"
-        class="font-normal text-foreground"
-      >
+        class="font-normal text-foreground">
         <ng-container *ngTemplateOutlet="content"></ng-container>
       </span>
-    </ng-container>
-
-    <ng-template #linkTemplate>
-      <a class="transition-colors hover:text-foreground cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-sm">
+    } @else {
+      <a
+        class="cursor-pointer rounded-sm transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
         <ng-container *ngTemplateOutlet="content"></ng-container>
       </a>
-    </ng-template>
+    }
   `,
-  styles: `:host { display: inline-flex; }`
+  styles: `
+    :host {
+      display: inline-flex;
+    }
+  `,
 })
 export class BreadcrumbLinkComponent {
   @Input() active: boolean = false;

@@ -1,5 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ChangeDetectorRef, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ChangeDetectorRef,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 
@@ -70,36 +80,53 @@ const CONFIRMATION_ICONS: Record<ConfirmationState, string> = {
 @Component({
   selector: 'tolle-confirmation',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div [class]="computedClass" [attr.data-state]="currentState" role="group" [attr.aria-label]="title">
+    <div
+      [class]="computedClass"
+      [attr.data-state]="currentState"
+      role="group"
+      [attr.aria-label]="title">
       <div class="flex items-start gap-3">
         <i [class]="iconClass" aria-hidden="true"></i>
 
         <div class="min-w-0 flex-1">
           <p class="font-medium text-foreground">{{ title }}</p>
-          <p *ngIf="description" class="mt-0.5 text-sm text-muted-foreground">{{ description }}</p>
+          @if (description) {
+            <p class="mt-0.5 text-sm text-muted-foreground">{{ description }}</p>
+          }
 
           <div class="empty:hidden"><ng-content></ng-content></div>
 
-          <div *ngIf="currentState === 'pending'" class="mt-3 flex flex-wrap items-center gap-2">
-            <button type="button" [disabled]="disabled" [class]="confirmButtonClass" (click)="confirm()">
-              <i class="ri-check-line" aria-hidden="true"></i>
-              {{ confirmLabel }}
-            </button>
-            <button type="button" [disabled]="disabled" [class]="cancelButtonClass" (click)="cancel()">
-              <i class="ri-close-line" aria-hidden="true"></i>
-              {{ cancelLabel }}
-            </button>
-          </div>
+          @if (currentState === 'pending') {
+            <div class="mt-3 flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                [disabled]="disabled"
+                [class]="confirmButtonClass"
+                (click)="confirm()">
+                <i class="ri-check-line" aria-hidden="true"></i>
+                {{ confirmLabel }}
+              </button>
+              <button
+                type="button"
+                [disabled]="disabled"
+                [class]="cancelButtonClass"
+                (click)="cancel()">
+                <i class="ri-close-line" aria-hidden="true"></i>
+                {{ cancelLabel }}
+              </button>
+            </div>
+          }
         </div>
 
-        <span *ngIf="currentState !== 'pending'" [class]="resolvedClass">
-          <i [class]="iconName" aria-hidden="true"></i>
-          {{ resolvedLabel }}
-        </span>
+        @if (currentState !== 'pending') {
+          <span [class]="resolvedClass">
+            <i [class]="iconName" aria-hidden="true"></i>
+            {{ resolvedLabel }}
+          </span>
+        }
       </div>
     </div>
   `,
@@ -139,7 +166,7 @@ export class ConfirmationComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['state']) this.answer = null;
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();

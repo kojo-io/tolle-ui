@@ -21,75 +21,79 @@ export type SegmentItem = {
   label: string;
   value: any;
   disabled?: boolean;
-  icon?: string;   // Added: Optional icon class (e.g., 'ri-home-line')
-  class?: string;  // Added: Custom class for specific item wrapper
-  data?: any;      // Added: Extra data payload for custom templates
-}
+  icon?: string; // Added: Optional icon class (e.g., 'ri-home-line')
+  class?: string; // Added: Custom class for specific item wrapper
+  data?: any; // Added: Extra data payload for custom templates
+};
 
 @Component({
   selector: 'tolle-segment',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => SegmentComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   template: `
     <div
       #container
-      [class]="cn(
-        'relative flex items-center p-1 bg-muted rounded-lg select-none w-full gap-1',
-        class
-      )"
+      [class]="
+        cn('relative flex w-full select-none items-center gap-1 rounded-lg bg-muted p-1', class)
+      "
       role="radiogroup"
-      (keydown)="onKeydown($event)"
-    >
+      (keydown)="onKeydown($event)">
       <div
-        class="absolute top-1 bottom-1 bg-primary shadow-sm rounded-md transition-all duration-300 ease-tolle"
+        class="absolute bottom-1 top-1 rounded-md bg-primary shadow-sm transition-all duration-300 ease-tolle"
         [style.left.px]="gliderLeft"
         [style.width.px]="gliderWidth"
-        [class.opacity-0]="!hasValue"
-      ></div>
+        [class.opacity-0]="!hasValue"></div>
 
-      <button
-        *ngFor="let item of items"
-        #itemEls
-        type="button"
-        role="radio"
-        [disabled]="item.disabled || disabled"
-        [attr.aria-checked]="value === item.value"
-        [attr.tabindex]="getTabIndex(item)"
-        (click)="select(item.value)"
-        [class]="cn(
-          'relative z-10 flex-1 px-3 py-1.5 text-sm font-medium transition-colors duration-200 rounded-md text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
-          'flex items-center justify-center gap-2',
-          value === item.value
-            ? 'text-primary-foreground'
-            : 'text-muted-foreground hover:text-foreground/70',
-          item.disabled && 'opacity-50 cursor-not-allowed',
-          item.class
-        )"
-      >
-        <ng-container *ngIf="itemTemplate; else defaultContent">
-          <ng-container *ngTemplateOutlet="itemTemplate; context: { $implicit: item, selected: value === item.value }">
-          </ng-container>
-        </ng-container>
-
-        <ng-template #defaultContent>
-          <i *ngIf="item.icon" [class]="item.icon"></i>
-          <span class="truncate">{{ item.label }}</span>
-        </ng-template>
-      </button>
+      @for (item of items; track item) {
+        <button
+          #itemEls
+          type="button"
+          role="radio"
+          [disabled]="item.disabled || disabled"
+          [attr.aria-checked]="value === item.value"
+          [attr.tabindex]="getTabIndex(item)"
+          (click)="select(item.value)"
+          [class]="
+            cn(
+              'relative z-10 flex-1 rounded-md px-3 py-1.5 text-center text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+              'flex items-center justify-center gap-2',
+              value === item.value
+                ? 'text-primary-foreground'
+                : 'text-muted-foreground hover:text-foreground/70',
+              item.disabled && 'cursor-not-allowed opacity-50',
+              item.class
+            )
+          ">
+          @if (itemTemplate) {
+            <ng-container
+              *ngTemplateOutlet="
+                itemTemplate;
+                context: { $implicit: item, selected: value === item.value }
+              ">
+            </ng-container>
+          } @else {
+            @if (item.icon) {
+              <i [class]="item.icon"></i>
+            }
+            <span class="truncate">{{ item.label }}</span>
+          }
+        </button>
+      }
     </div>
   `,
-  styles: [`
-    :host {
-      display: block;
-    }
-  `]
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
 })
 export class SegmentComponent implements ControlValueAccessor, AfterViewInit, OnChanges, OnDestroy {
   @Input() items: SegmentItem[] = [];
@@ -107,10 +111,10 @@ export class SegmentComponent implements ControlValueAccessor, AfterViewInit, On
 
   private resizeObserver?: ResizeObserver;
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     setTimeout(() => this.updateGlider());
@@ -235,8 +239,12 @@ export class SegmentComponent implements ControlValueAccessor, AfterViewInit, On
     setTimeout(() => this.updateGlider());
   }
 
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;

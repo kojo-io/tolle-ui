@@ -4,7 +4,6 @@ import { PropTableComponent } from '../../../shared/prop-table/prop-table.compon
 
 @Component({
     selector: 'app-resizable-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './resizable-api.component.html'
 })

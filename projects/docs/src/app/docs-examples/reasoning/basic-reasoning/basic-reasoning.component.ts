@@ -7,7 +7,6 @@ import {
 
 @Component({
     selector: 'app-basic-reasoning',
-    standalone: true,
     imports: [ReasoningComponent, ReasoningTriggerComponent, ReasoningContentComponent],
     templateUrl: './basic-reasoning.component.html'
 })

@@ -13,17 +13,16 @@ import {
 } from './menubar.component';
 
 @Component({
-  standalone: true,
-  imports: [
-    MenubarComponent,
-    MenubarMenuComponent,
-    MenubarTriggerComponent,
-    MenubarContentComponent,
-    MenubarItemComponent,
-    MenubarSeparatorComponent,
-    MenubarLabelComponent,
-  ],
-  template: `
+    imports: [
+        MenubarComponent,
+        MenubarMenuComponent,
+        MenubarTriggerComponent,
+        MenubarContentComponent,
+        MenubarItemComponent,
+        MenubarSeparatorComponent,
+        MenubarLabelComponent,
+    ],
+    template: `
     <tolle-menubar [size]="size" (openChange)="lastOpenId = $event">
       <tolle-menubar-menu id="file">
         <tolle-menubar-trigger>File</tolle-menubar-trigger>
@@ -43,7 +42,7 @@ import {
         </tolle-menubar-content>
       </tolle-menubar-menu>
     </tolle-menubar>
-  `,
+  `
 })
 class HostComponent {
   @ViewChild(MenubarComponent) menubar!: MenubarComponent;

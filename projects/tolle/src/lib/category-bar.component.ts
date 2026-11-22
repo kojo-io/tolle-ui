@@ -1,5 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cn } from './utils/cn';
 
 /** One resolved segment: its share of the bar's width, its paint, and the numbers behind it. */
@@ -23,25 +30,24 @@ export interface CategoryBarSegment {
 @Component({
   selector: 'tolle-category-bar',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass">
       <div class="relative flex w-full gap-0.5">
-        <div
-          *ngFor="let segment of segments; let i = index; trackBy: trackByIndex"
-          class="h-2 first:rounded-l-full last:rounded-r-full"
-          [style.width.%]="segment.percent"
-          [style.background]="segment.color"
-          [attr.title]="segment.label || null"
-        ></div>
+        @for (segment of segments; track $index; let i = $index) {
+          <div
+            class="h-2 first:rounded-l-full last:rounded-r-full"
+            [style.width.%]="segment.percent"
+            [style.background]="segment.color"
+            [attr.title]="segment.label || null"></div>
+        }
 
-        <span
-          *ngIf="clampedMarker !== null"
-          class="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-foreground shadow"
-          [style.left.%]="clampedMarker"
-        ></span>
+        @if (clampedMarker !== null) {
+          <span
+            class="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-background bg-foreground shadow"
+            [style.left.%]="clampedMarker"></span>
+        }
       </div>
 
       <p class="sr-only">{{ summary }}</p>
@@ -59,7 +65,6 @@ export class CategoryBarComponent implements OnChanges {
   }
 
   /** Identity for `*ngFor`, so a redraw patches nodes instead of replacing them. */
-  trackByIndex = (index: number): number => index;
 
   /** Width of each segment. Values that are not finite and greater than zero are dropped. @default [] */
   @Input() values: number[] = [];
@@ -101,8 +106,13 @@ export class CategoryBarComponent implements OnChanges {
   }
 
   get summary(): string {
-    const parts = this.segments.map((s) => (s.label ? s.label + ': ' : '') + s.percent.toFixed(0) + '%');
-    const marker = this.clampedMarker !== null ? ', current position ' + this.clampedMarker.toFixed(0) + '%' : '';
+    const parts = this.segments.map(
+      s => (s.label ? s.label + ': ' : '') + s.percent.toFixed(0) + '%'
+    );
+    const marker =
+      this.clampedMarker !== null
+        ? ', current position ' + this.clampedMarker.toFixed(0) + '%'
+        : '';
     const prefix = this.ariaLabel ? this.ariaLabel + '. ' : '';
     return prefix + parts.join(', ') + marker;
   }

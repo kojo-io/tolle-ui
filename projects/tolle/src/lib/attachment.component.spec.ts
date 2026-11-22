@@ -8,9 +8,8 @@ import {
 } from './attachment.component';
 
 @Component({
-  standalone: true,
-  imports: [AttachmentComponent, AttachmentGroupComponent, AttachmentActionsComponent],
-  template: `
+    imports: [AttachmentComponent, AttachmentGroupComponent, AttachmentActionsComponent],
+    template: `
     <tolle-attachment-group>
       <tolle-attachment
         name="notes.txt"

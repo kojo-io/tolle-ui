@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -11,16 +11,16 @@ import {
 } from './queue.component';
 
 @Component({
-  standalone: true,
-  imports: [CommonModule, QueueComponent, QueueItemComponent],
+  imports: [QueueComponent, QueueItemComponent],
   template: `
     <tolle-queue [title]="title" (countsChange)="lastCounts = $event">
+      @if (showFirst) {
+        <tolle-queue-item label="Summarise the thread" [status]="firstStatus"></tolle-queue-item>
+      }
       <tolle-queue-item
-        *ngIf="showFirst"
-        label="Summarise the thread"
-        [status]="firstStatus"
-      ></tolle-queue-item>
-      <tolle-queue-item label="Draft a reply" status="queued" (remove)="removed = 'draft'"></tolle-queue-item>
+        label="Draft a reply"
+        status="queued"
+        (remove)="removed = 'draft'"></tolle-queue-item>
       <tolle-queue-item label="Send it" status="queued" [removable]="false"></tolle-queue-item>
     </tolle-queue>
   `,
@@ -45,8 +45,10 @@ describe('QueueComponent', () => {
     host = fixture.nativeElement;
   });
 
-  const countBadge = (): HTMLElement => host.querySelector('tolle-queue [aria-label$="items queued"]')!;
-  const items = (): HTMLElement[] => Array.from(host.querySelectorAll('tolle-queue-item [role="listitem"]'));
+  const countBadge = (): HTMLElement =>
+    host.querySelector('tolle-queue [aria-label$="items queued"]')!;
+  const items = (): HTMLElement[] =>
+    Array.from(host.querySelectorAll('tolle-queue-item [role="listitem"]'));
 
   it('should create', () => {
     expect(fixture.debugElement.query(By.directive(QueueComponent))).toBeTruthy();
@@ -143,7 +145,9 @@ describe('QueueComponent when empty', () => {
 
   it('shows a zero count and the empty message', () => {
     expect(fixture.nativeElement.textContent).toContain('Nothing queued.');
-    expect(fixture.nativeElement.querySelector('[aria-label$="items queued"]').textContent.trim()).toBe('0');
+    expect(
+      fixture.nativeElement.querySelector('[aria-label$="items queued"]').textContent.trim()
+    ).toBe('0');
   });
 
   it('accepts a custom empty message', () => {

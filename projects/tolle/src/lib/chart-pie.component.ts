@@ -1,5 +1,14 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
 import { ChartService, ChartColorScale } from './chart.service';
@@ -43,7 +52,9 @@ export function arcPath(
 
   if (span >= Math.PI * 2 - 1e-6) {
     const mid = start + Math.PI;
-    return arcPath(cx, cy, outer, inner, start, mid) + ' ' + arcPath(cx, cy, outer, inner, mid, end);
+    return (
+      arcPath(cx, cy, outer, inner, start, mid) + ' ' + arcPath(cx, cy, outer, inner, mid, end)
+    );
   }
 
   const large = span > Math.PI ? 1 : 0;
@@ -54,18 +65,57 @@ export function arcPath(
     const [ix1, iy1] = polarPoint(cx, cy, inner, end);
     const [ix0, iy0] = polarPoint(cx, cy, inner, start);
     return (
-      'M ' + ox0 + ' ' + oy0 +
-      ' A ' + outer + ' ' + outer + ' 0 ' + large + ' 1 ' + ox1 + ' ' + oy1 +
-      ' L ' + ix1 + ' ' + iy1 +
-      ' A ' + inner + ' ' + inner + ' 0 ' + large + ' 0 ' + ix0 + ' ' + iy0 +
+      'M ' +
+      ox0 +
+      ' ' +
+      oy0 +
+      ' A ' +
+      outer +
+      ' ' +
+      outer +
+      ' 0 ' +
+      large +
+      ' 1 ' +
+      ox1 +
+      ' ' +
+      oy1 +
+      ' L ' +
+      ix1 +
+      ' ' +
+      iy1 +
+      ' A ' +
+      inner +
+      ' ' +
+      inner +
+      ' 0 ' +
+      large +
+      ' 0 ' +
+      ix0 +
+      ' ' +
+      iy0 +
       ' Z'
     );
   }
 
   return (
-    'M ' + cx + ' ' + cy +
-    ' L ' + ox0 + ' ' + oy0 +
-    ' A ' + outer + ' ' + outer + ' 0 ' + large + ' 1 ' + ox1 + ' ' + oy1 +
+    'M ' +
+    cx +
+    ' ' +
+    cy +
+    ' L ' +
+    ox0 +
+    ' ' +
+    oy0 +
+    ' A ' +
+    outer +
+    ' ' +
+    outer +
+    ' 0 ' +
+    large +
+    ' 1 ' +
+    ox1 +
+    ' ' +
+    oy1 +
     ' Z'
   );
 }
@@ -97,8 +147,7 @@ export type ChartPieProps = VariantProps<typeof chartPieVariants>;
 @Component({
   selector: 'tolle-chart-pie',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule, ChartTableComponent],
+  imports: [ChartTableComponent],
   providers: [ChartService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
@@ -112,54 +161,58 @@ export type ChartPieProps = VariantProps<typeof chartPieVariants>;
           [attr.aria-label]="ariaLabel || null"
           [attr.aria-describedby]="tableId"
           class="block w-full"
-          (pointerleave)="onLeave()"
-        >
+          (pointerleave)="onLeave()">
           <title>{{ ariaLabel }}</title>
           <desc>{{ description || ariaLabel }}</desc>
 
-          <svg:path
-            *ngFor="let slice of slices; let i = index; trackBy: trackSlice"
-            [attr.d]="slice.d"
-            [attr.fill]="slice.color"
-            [attr.fill-opacity]="activeIndex === i ? 1 : 0.85"
-            (pointerenter)="onEnter(i)"
-          ></svg:path>
+          @for (slice of slices; track trackSlice(i, slice); let i = $index) {
+            <svg:path
+              [attr.d]="slice.d"
+              [attr.fill]="slice.color"
+              [attr.fill-opacity]="activeIndex === i ? 1 : 0.85"
+              (pointerenter)="onEnter(i)"></svg:path>
+          }
         </svg>
 
-        <div
-          *ngIf="activeSlice"
-          role="status"
-          aria-live="polite"
-          class="pointer-events-none absolute z-10 min-w-[8rem] rounded-md border border-border bg-popover p-2 text-popover-foreground shadow-md"
-          [style.left.px]="tooltipLeft"
-          [style.top.px]="tooltipTop"
-        >
-          <div class="flex items-center gap-2 text-xs">
-            <span class="h-2 w-2 shrink-0 rounded-[2px]" [style.background]="activeSlice.color"></span>
-            <span class="text-muted-foreground">{{ activeSlice.label }}</span>
-            <span class="ml-auto font-medium tabular-nums text-foreground">
-              {{ formatValue(activeSlice.value) }}
-            </span>
+        @if (activeSlice) {
+          <div
+            role="status"
+            aria-live="polite"
+            class="pointer-events-none absolute z-10 min-w-[8rem] rounded-md border border-border bg-popover p-2 text-popover-foreground shadow-md"
+            [style.left.px]="tooltipLeft"
+            [style.top.px]="tooltipTop">
+            <div class="flex items-center gap-2 text-xs">
+              <span
+                class="h-2 w-2 shrink-0 rounded-[2px]"
+                [style.background]="activeSlice.color"></span>
+              <span class="text-muted-foreground">{{ activeSlice.label }}</span>
+              <span class="ml-auto font-medium tabular-nums text-foreground">
+                {{ formatValue(activeSlice.value) }}
+              </span>
+            </div>
+            <p class="mt-0.5 text-right text-xs tabular-nums text-muted-foreground">
+              {{ formatPercent(activeSlice.percent) }}
+            </p>
           </div>
-          <p class="mt-0.5 text-right text-xs text-muted-foreground tabular-nums">
-            {{ formatPercent(activeSlice.percent) }}
-          </p>
-        </div>
+        }
       </div>
 
-      <ul *ngIf="slices.length > 1" class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-2 text-xs">
-        <li *ngFor="let slice of slices; trackBy: trackSlice" class="flex items-center gap-1.5">
-          <span class="h-2 w-2 shrink-0 rounded-[2px]" [style.background]="slice.color"></span>
-          <span class="text-muted-foreground">{{ slice.label }}</span>
-        </li>
-      </ul>
+      @if (slices.length > 1) {
+        <ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-2 text-xs">
+          @for (slice of slices; track trackSlice($index, slice)) {
+            <li class="flex items-center gap-1.5">
+              <span class="h-2 w-2 shrink-0 rounded-[2px]" [style.background]="slice.color"></span>
+              <span class="text-muted-foreground">{{ slice.label }}</span>
+            </li>
+          }
+        </ul>
+      }
 
       <tolle-chart-table
         [tableId]="tableId"
         [visible]="showTable"
         [xHeader]="labelHeader"
-        [caption]="ariaLabel || 'Chart data'"
-      ></tolle-chart-table>
+        [caption]="ariaLabel || 'Chart data'"></tolle-chart-table>
     </div>
   `,
 })
@@ -217,14 +270,14 @@ export class ChartPieComponent implements OnChanges {
       series: [{ key: this.valueKey, label: this.valueHeader }],
     });
     this._slices = this.computeSlices();
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
   }
 
   private get labels(): string[] {
-    return (this.data ?? []).map((row) => {
+    return (this.data ?? []).map(row => {
       const raw = row?.[this.labelKey];
       return raw == null ? '' : String(raw);
     });
@@ -258,7 +311,7 @@ export class ChartPieComponent implements OnChanges {
 
   private computeSlices(): ChartPieSlice[] {
     const rows = this.data ?? [];
-    const values = rows.map((row) => {
+    const values = rows.map(row => {
       const num = Number(row?.[this.valueKey]);
       // A pie divides a whole; a negative share has no meaning in one.
       return Number.isFinite(num) && num > 0 ? num : 0;

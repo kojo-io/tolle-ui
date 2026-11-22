@@ -10,7 +10,6 @@ import { BubbleComponent } from '../../../../../../tolle/src/lib/bubble.componen
 
 @Component({
     selector: 'app-message-group',
-    standalone: true,
     imports: [
         MessageComponent,
         MessageGroupComponent,

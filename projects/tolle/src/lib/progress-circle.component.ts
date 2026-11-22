@@ -1,5 +1,12 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cn } from './utils/cn';
 
 /**
@@ -11,8 +18,7 @@ import { cn } from './utils/cn';
 @Component({
   selector: 'tolle-progress-circle',
   styles: [':host { display: inline-flex; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
@@ -22,8 +28,7 @@ import { cn } from './utils/cn';
       role="progressbar"
       [attr.aria-valuemin]="0"
       [attr.aria-valuemax]="100"
-      [attr.aria-valuenow]="clampedValue"
-    >
+      [attr.aria-valuenow]="clampedValue">
       <svg [attr.width]="size" [attr.height]="size" [attr.viewBox]="viewBox" class="block">
         <svg:circle
           [attr.cx]="center"
@@ -31,8 +36,7 @@ import { cn } from './utils/cn';
           [attr.r]="radius"
           fill="none"
           [attr.stroke-width]="strokeWidth"
-          class="stroke-primary/20"
-        ></svg:circle>
+          class="stroke-primary/20"></svg:circle>
         <svg:circle
           [attr.cx]="center"
           [attr.cy]="center"
@@ -43,10 +47,10 @@ import { cn } from './utils/cn';
           [attr.stroke-dasharray]="circumference"
           [attr.stroke-dashoffset]="dashOffset"
           [attr.transform]="'rotate(-90 ' + center + ' ' + center + ')'"
-          class="stroke-primary transition-[stroke-dashoffset] duration-300 ease-in-out"
-        ></svg:circle>
+          class="stroke-primary transition-[stroke-dashoffset] duration-300 ease-in-out"></svg:circle>
       </svg>
-      <div class="absolute inset-0 flex items-center justify-center text-sm font-medium tabular-nums text-foreground">
+      <div
+        class="absolute inset-0 flex items-center justify-center text-sm font-medium tabular-nums text-foreground">
         <ng-content></ng-content>
       </div>
     </div>

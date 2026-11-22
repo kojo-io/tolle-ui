@@ -1,5 +1,21 @@
-import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Injectable, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild, forwardRef, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Injectable,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+  forwardRef,
+  inject,
+} from '@angular/core';
+
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -98,8 +114,7 @@ export class PromptInputService {
 @Component({
   selector: 'tolle-prompt-input',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   providers: [
     PromptInputService,
     {
@@ -123,8 +138,7 @@ export class PromptInputService {
         [class]="textareaComputedClass"
         (input)="onInput($event)"
         (keydown)="onKeyDown($event)"
-        (blur)="onBlur()"
-      ></textarea>
+        (blur)="onBlur()"></textarea>
 
       <ng-content></ng-content>
     </div>
@@ -180,7 +194,7 @@ export class PromptInputComponent
 
   ngOnChanges(): void {
     this.syncService();
-  
+
     // A bound `class` input is written through Angular's styling path,
     // which does not mark an OnPush view dirty on its own.
     this.cdr.markForCheck();
@@ -326,8 +340,7 @@ export class PromptInputComponent
 @Component({
   selector: 'tolle-prompt-input-toolbar',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass">
@@ -335,7 +348,7 @@ export class PromptInputComponent
     </div>
   `,
 })
-export class PromptInputToolbarComponent  implements OnChanges{
+export class PromptInputToolbarComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -359,8 +372,7 @@ export class PromptInputToolbarComponent  implements OnChanges{
 @Component({
   selector: 'tolle-prompt-input-tools',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="computedClass">
@@ -368,7 +380,7 @@ export class PromptInputToolbarComponent  implements OnChanges{
     </div>
   `,
 })
-export class PromptInputToolsComponent  implements OnChanges{
+export class PromptInputToolsComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -419,8 +431,7 @@ export type PromptInputSubmitProps = VariantProps<typeof promptInputSubmitVarian
 @Component({
   selector: 'tolle-prompt-input-submit',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <button
@@ -430,15 +441,15 @@ export type PromptInputSubmitProps = VariantProps<typeof promptInputSubmitVarian
       [attr.aria-label]="currentLabel"
       [disabled]="isDisabled"
       [class]="computedClass"
-      (click)="onClick()"
-    >
+      (click)="onClick()">
       <i [class]="currentIcon" aria-hidden="true"></i>
-      <span *ngIf="showLabel">{{ currentLabel }}</span>
+      @if (showLabel) {
+        <span>{{ currentLabel }}</span>
+      }
     </button>
   `,
 })
 export class PromptInputSubmitComponent implements OnChanges, OnInit, OnDestroy {
-
   /**
    * Angular writes a bound `class` input through its styling path, which does
    * not mark an OnPush component dirty — without this hook the component keeps
@@ -470,13 +481,13 @@ export class PromptInputSubmitComponent implements OnChanges, OnInit, OnDestroy 
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.service.status$.subscribe((status) => {
+      this.service.status$.subscribe(status => {
         this.status = status;
         this.cdr.markForCheck();
       })
     );
     this.subscriptions.add(
-      this.service.canSubmit$.subscribe((canSubmit) => {
+      this.service.canSubmit$.subscribe(canSubmit => {
         this.canSubmit = canSubmit;
         this.cdr.markForCheck();
       })

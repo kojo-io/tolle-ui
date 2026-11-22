@@ -1,5 +1,13 @@
-import { Component, Directive, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Directive,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
+
 import { cn } from './utils/cn';
 
 /**
@@ -30,8 +38,7 @@ import { cn } from './utils/cn';
 @Component({
   selector: 'tolle-table',
   styles: [':host { display: block; }'],
-  standalone: true,
-  imports: [CommonModule],
+  imports: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div [class]="cn('relative w-full overflow-x-auto', containerClass)">
@@ -41,7 +48,7 @@ import { cn } from './utils/cn';
     </div>
   `,
 })
-export class TableComponent  implements OnChanges{
+export class TableComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**
@@ -88,7 +95,9 @@ export class TableBodyDirective {
 @Directive({
   selector: '[tolleTableFooter]',
   standalone: true,
-  host: { '[class]': `cn('border-t border-border bg-muted/50 font-medium [&>tr]:last:border-b-0', class)` },
+  host: {
+    '[class]': `cn('border-t border-border bg-muted/50 font-medium [&>tr]:last:border-b-0', class)`,
+  },
 })
 export class TableFooterDirective {
   /** Extra Tailwind classes merged onto the `<tfoot>` via `cn()` (last-wins). */

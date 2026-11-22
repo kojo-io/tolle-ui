@@ -10,7 +10,6 @@ import {
 
 @Component({
     selector: 'app-input-group-addons',
-    standalone: true,
     imports: [
         FormsModule,
         InputGroupComponent,

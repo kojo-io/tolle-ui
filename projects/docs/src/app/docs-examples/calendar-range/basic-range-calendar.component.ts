@@ -5,7 +5,6 @@ import { RangeCalendarComponent } from '../../../../../tolle/src/lib/range-calen
 
 @Component({
     selector: 'app-basic-range-calendar',
-    standalone: true,
     imports: [RangeCalendarComponent, FormsModule, JsonPipe],
     template: `
     <div class="flex flex-col items-center gap-4 p-4 border rounded-lg bg-card">

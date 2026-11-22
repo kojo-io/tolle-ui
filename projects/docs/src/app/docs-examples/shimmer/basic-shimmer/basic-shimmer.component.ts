@@ -3,7 +3,6 @@ import { ShimmerComponent } from '../../../../../../tolle/src/lib/shimmer.compon
 
 @Component({
     selector: 'app-basic-shimmer',
-    standalone: true,
     imports: [ShimmerComponent],
     templateUrl: './basic-shimmer.component.html'
 })

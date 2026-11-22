@@ -1,13 +1,33 @@
 import {
-  Component, Input, OnInit, forwardRef, Output, EventEmitter, ChangeDetectorRef
+  Component,
+  Input,
+  OnInit,
+  forwardRef,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import {
-  addDays, addMonths, subMonths, startOfMonth, endOfMonth,
-  startOfWeek, endOfWeek, eachDayOfInterval, isSameMonth,
-  isSameDay, isToday, setMonth, setYear, addYears, subYears,
-  isBefore, startOfDay, format
+  addDays,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  eachDayOfInterval,
+  isSameMonth,
+  isSameDay,
+  isToday,
+  setMonth,
+  setYear,
+  addYears,
+  subYears,
+  isBefore,
+  startOfDay,
+  format,
 } from 'date-fns';
 import { cn } from './utils/cn';
 
@@ -16,38 +36,54 @@ export type CalendarMode = 'date' | 'month' | 'year';
 @Component({
   selector: 'tolle-calendar',
   styles: [':host { display: block; }'],
-  standalone: true,
   imports: [CommonModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => CalendarComponent),
-      multi: true
-    }
+      multi: true,
+    },
   ],
   template: `
-    <div [class]="cn('text-popover-foreground inline-block min-w-fit', bordered ? 'p-3 border rounded-md bg-background shadow-sm' : '', class)">
+    <div
+      [class]="
+        cn(
+          'inline-block min-w-fit text-popover-foreground',
+          bordered ? 'rounded-md border bg-background p-3 shadow-sm' : '',
+          class
+        )
+      ">
       <!-- Header with Navigation -->
-      <div class="flex items-center justify-between pt-1 pb-4 gap-2">
+      <div class="flex items-center justify-between gap-2 pb-4 pt-1">
         <!-- View Selector -->
         <div class="flex items-center gap-1">
-          <button *ngIf="mode !== 'year'"
-            type="button"
-            (click)="setView('month')"
-            [class]="cn(
-              'text-sm font-semibold px-2 py-1 rounded transition-colors',
-              currentView === 'month' ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground'
-            )">
-            {{ formatMonthYear(viewDate, 'month') }}
-          </button>
+          @if (mode !== 'year') {
+            <button
+              type="button"
+              (click)="setView('month')"
+              [class]="
+                cn(
+                  'rounded px-2 py-1 text-sm font-semibold transition-colors',
+                  currentView === 'month'
+                    ? 'bg-secondary text-secondary-foreground'
+                    : 'hover:bg-accent hover:text-accent-foreground'
+                )
+              ">
+              {{ formatMonthYear(viewDate, 'month') }}
+            </button>
+          }
 
           <button
             type="button"
             (click)="setView('year')"
-            [class]="cn(
-              'text-sm font-semibold px-2 py-1 rounded transition-colors',
-              currentView === 'year' ? 'bg-secondary text-secondary-foreground' : 'hover:bg-accent hover:text-accent-foreground'
-            )">
+            [class]="
+              cn(
+                'rounded px-2 py-1 text-sm font-semibold transition-colors',
+                currentView === 'year'
+                  ? 'bg-secondary text-secondary-foreground'
+                  : 'hover:bg-accent hover:text-accent-foreground'
+              )
+            ">
             {{ formatMonthYear(viewDate, 'year') }}
           </button>
         </div>
@@ -64,76 +100,71 @@ export type CalendarMode = 'date' | 'month' | 'year';
       </div>
 
       <!-- DATE MODE -->
-      <div *ngIf="currentView === 'date' && mode === 'date'" class="space-y-2 animate-in fade-in zoom-in-95 duration-200">
-        <div class="grid grid-cols-7 gap-1 w-full">
-          <span *ngFor="let day of weekDays" class="text-[0.8rem] text-muted-foreground font-normal text-center w-9">
-            {{ day }}
-          </span>
+      @if (currentView === 'date' && mode === 'date') {
+        <div class="space-y-2 duration-200 animate-in fade-in zoom-in-95">
+          <div class="grid w-full grid-cols-7 gap-1">
+            @for (day of weekDays; track day) {
+              <span class="w-9 text-center text-[0.8rem] font-normal text-muted-foreground">
+                {{ day }}
+              </span>
+            }
+          </div>
+          <div role="grid" class="grid w-full grid-cols-7 gap-1" (keydown)="onGridKeydown($event)">
+            @for (date of daysInMonth; track date) {
+              <button
+                type="button"
+                role="gridcell"
+                [attr.aria-selected]="isSelected(date)"
+                [attr.aria-label]="date | date: 'fullDate'"
+                (click)="selectDate(date)"
+                [disabled]="isDateDisabled(date)"
+                [class]="getDayClass(date)">
+                {{ formatDate(date, 'day') }}
+              </button>
+            }
+          </div>
         </div>
-        <div role="grid" class="grid grid-cols-7 gap-1 w-full" (keydown)="onGridKeydown($event)">
-          <button
-            *ngFor="let date of daysInMonth"
-            type="button"
-            role="gridcell"
-            [attr.aria-selected]="isSelected(date)"
-            [attr.aria-label]="(date | date:'fullDate')"
-            (click)="selectDate(date)"
-            [disabled]="isDateDisabled(date)"
-            [class]="getDayClass(date)"
-          >
-            {{ formatDate(date, 'day') }}
-          </button>
-        </div>
-      </div>
+      }
 
       <!-- MONTH SELECTOR (for date mode and month mode) -->
-      <div *ngIf="(currentView === 'month')"
-           class="grid grid-cols-3 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
-        <button
-          *ngFor="let month of months; let i = index"
-          type="button"
-          (click)="selectMonth(i)"
-          [class]="getMonthClass(i)"
-        >
-          {{ month }}
-        </button>
-      </div>
+      @if (currentView === 'month') {
+        <div class="grid w-64 grid-cols-3 gap-2 duration-200 animate-in fade-in zoom-in-95">
+          @for (month of months; track month; let i = $index) {
+            <button type="button" (click)="selectMonth(i)" [class]="getMonthClass(i)">
+              {{ month }}
+            </button>
+          }
+        </div>
+      }
 
       <!-- YEAR SELECTOR (for date mode and year mode) -->
-      <div *ngIf="(currentView === 'year') "
-           class="grid grid-cols-4 gap-2 w-64 animate-in fade-in zoom-in-95 duration-200">
-        <button
-          *ngFor="let year of years"
-          type="button"
-          (click)="selectYear(year)"
-          [class]="getYearClass(year)"
-        >
-          {{ year }}
-        </button>
-      </div>
+      @if (currentView === 'year') {
+        <div class="grid w-64 grid-cols-4 gap-2 duration-200 animate-in fade-in zoom-in-95">
+          @for (year of years; track year) {
+            <button type="button" (click)="selectYear(year)" [class]="getYearClass(year)">
+              {{ year }}
+            </button>
+          }
+        </div>
+      }
 
       <!-- Quick Actions -->
-      <div *ngIf="showQuickActions" class="border-t pt-3 mt-3">
-        <div class="flex items-center justify-between gap-2">
-          <button
-            type="button"
-            (click)="selectToday()"
-            [class]="quickActionBtnClass"
-            [disabled]="isTodayDisabled()"
-          >
-            Today
-          </button>
-          <button
-            type="button"
-            (click)="clear()"
-            [class]="quickActionBtnClass"
-          >
-            Clear
-          </button>
+      @if (showQuickActions) {
+        <div class="mt-3 border-t pt-3">
+          <div class="flex items-center justify-between gap-2">
+            <button
+              type="button"
+              (click)="selectToday()"
+              [class]="quickActionBtnClass"
+              [disabled]="isTodayDisabled()">
+              Today
+            </button>
+            <button type="button" (click)="clear()" [class]="quickActionBtnClass">Clear</button>
+          </div>
         </div>
-      </div>
+      }
     </div>
-  `
+  `,
 })
 export class CalendarComponent implements OnInit, ControlValueAccessor {
   @Input() class = '';
@@ -161,8 +192,12 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
   years: number[] = [];
   yearRangeStart: number;
 
-  navBtnClass = cn('h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 border border-input rounded-md flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring');
-  quickActionBtnClass = cn('px-3 py-1.5 text-sm rounded hover:bg-accent text-muted-foreground hover:text-foreground transition-colors');
+  navBtnClass = cn(
+    'h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 border border-input rounded-md flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring'
+  );
+  quickActionBtnClass = cn(
+    'px-3 py-1.5 text-sm rounded hover:bg-accent text-muted-foreground hover:text-foreground transition-colors'
+  );
 
   onTouched: () => void = () => {};
   onChange: (value: any) => void = () => {};
@@ -320,15 +355,32 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
 
     let next: Date | null = null;
     switch (event.key) {
-      case 'ArrowLeft': next = addDays(current, -1); break;
-      case 'ArrowRight': next = addDays(current, 1); break;
-      case 'ArrowUp': next = addDays(current, -7); break;
-      case 'ArrowDown': next = addDays(current, 7); break;
-      case 'Home': next = startOfWeek(current); break;
-      case 'End': next = endOfWeek(current); break;
-      case 'PageUp': next = subMonths(current, 1); break;
-      case 'PageDown': next = addMonths(current, 1); break;
-      default: return;
+      case 'ArrowLeft':
+        next = addDays(current, -1);
+        break;
+      case 'ArrowRight':
+        next = addDays(current, 1);
+        break;
+      case 'ArrowUp':
+        next = addDays(current, -7);
+        break;
+      case 'ArrowDown':
+        next = addDays(current, 7);
+        break;
+      case 'Home':
+        next = startOfWeek(current);
+        break;
+      case 'End':
+        next = endOfWeek(current);
+        break;
+      case 'PageUp':
+        next = subMonths(current, 1);
+        break;
+      case 'PageDown':
+        next = addMonths(current, 1);
+        break;
+      default:
+        return;
     }
 
     event.preventDefault();
@@ -361,10 +413,10 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
       this.generateDays();
     } else if (this.mode === 'month') {
       this.viewDate = setMonth(this.viewDate, monthIndex);
-      this.selectedDate =  this.viewDate;
-      this.onChange( this.viewDate);
+      this.selectedDate = this.viewDate;
+      this.onChange(this.viewDate);
       this.onTouched();
-      this.dateSelect.emit( this.viewDate);
+      this.dateSelect.emit(this.viewDate);
     }
   }
 
@@ -375,10 +427,10 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
       this.generateDays();
     } else if (this.mode === 'year' || this.mode === 'month') {
       this.viewDate = setYear(this.viewDate, year);
-      this.selectedDate =  this.viewDate;
-      this.onChange( this.viewDate);
+      this.selectedDate = this.viewDate;
+      this.onChange(this.viewDate);
       this.onTouched();
-      this.dateSelect.emit( this.viewDate);
+      this.dateSelect.emit(this.viewDate);
     }
   }
 
@@ -395,7 +447,8 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
     return cn(
       'h-9 w-9 p-0 font-normal text-sm rounded-md transition-all flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
       !isSelected && !isDisabled && 'hover:bg-accent hover:text-accent-foreground',
-      isSelected && 'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground',
+      isSelected &&
+        'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground',
       !isSelected && isTodayDate && 'bg-accent text-accent-foreground',
       (isOutside || isDisabled) && 'text-muted-foreground opacity-50',
       isDisabled && 'cursor-not-allowed'
@@ -403,30 +456,35 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   getMonthClass(monthIndex: number) {
-    const isSelected = this.selectedDate &&
+    const isSelected =
+      this.selectedDate &&
       this.selectedDate.getMonth() === monthIndex &&
       this.selectedDate.getFullYear() === this.viewDate.getFullYear();
-    const isCurrent = new Date().getMonth() === monthIndex &&
+    const isCurrent =
+      new Date().getMonth() === monthIndex &&
       new Date().getFullYear() === this.viewDate.getFullYear();
 
     return cn(
       'text-sm py-2.5 rounded-md transition-colors',
-      isSelected ? 'bg-primary text-primary-foreground hover:bg-primary' :
-        isCurrent ? 'border border-primary/30 text-primary' :
-          'hover:bg-accent hover:text-accent-foreground'
+      isSelected
+        ? 'bg-primary text-primary-foreground hover:bg-primary'
+        : isCurrent
+          ? 'border border-primary/30 text-primary'
+          : 'hover:bg-accent hover:text-accent-foreground'
     );
   }
 
   getYearClass(year: number) {
-    const isSelected = this.selectedDate &&
-      this.selectedDate.getFullYear() === year;
+    const isSelected = this.selectedDate && this.selectedDate.getFullYear() === year;
     const isCurrent = new Date().getFullYear() === year;
 
     return cn(
       'text-sm py-2 rounded-md transition-colors',
-      isSelected ? 'bg-primary text-primary-foreground hover:bg-primary' :
-        isCurrent ? 'border border-primary/30 text-primary' :
-          'hover:bg-accent hover:text-accent-foreground'
+      isSelected
+        ? 'bg-primary text-primary-foreground hover:bg-primary'
+        : isCurrent
+          ? 'border border-primary/30 text-primary'
+          : 'hover:bg-accent hover:text-accent-foreground'
     );
   }
 
@@ -438,7 +496,6 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
       return true;
     }
     return !!(this.maxDate && isBefore(this.maxDate, date));
-
   }
 
   isTodayDisabled(): boolean {
@@ -470,6 +527,10 @@ export class CalendarComponent implements OnInit, ControlValueAccessor {
       }
     }
   }
-  registerOnChange(fn: any): void { this.onChange = fn; }
-  registerOnTouched(fn: any): void { this.onTouched = fn; }
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
 }

@@ -4,7 +4,6 @@ import { PropEntry } from '../../../shared/types';
 
 @Component({
     selector: 'app-check-box-api',
-    standalone: true,
     imports: [PropTableComponent],
     templateUrl: './check-box-api.component.html'
 })

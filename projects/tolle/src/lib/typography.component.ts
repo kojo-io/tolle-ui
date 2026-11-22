@@ -1,4 +1,11 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnChanges,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from './utils/cn';
@@ -33,7 +40,6 @@ export type TypographyProps = VariantProps<typeof typographyVariants>;
 @Component({
   selector: 'tolle-typography',
   styles: [':host { display: block; }'],
-  standalone: true,
   imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   // `<ng-content>` may only appear once — a duplicated slot per branch would leave
@@ -42,16 +48,32 @@ export type TypographyProps = VariantProps<typeof typographyVariants>;
   template: `
     <ng-template #body><ng-content></ng-content></ng-template>
 
-    <h1 *ngIf="variant === 'h1'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h1>
-    <h2 *ngIf="variant === 'h2'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h2>
-    <h3 *ngIf="variant === 'h3'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h3>
-    <h4 *ngIf="variant === 'h4'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h4>
-    <blockquote *ngIf="variant === 'blockquote'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></blockquote>
-    <code *ngIf="variant === 'code'" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></code>
-    <p *ngIf="isParagraph" [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></p>
+    @if (variant === 'h1') {
+      <h1 [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h1>
+    }
+    @if (variant === 'h2') {
+      <h2 [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h2>
+    }
+    @if (variant === 'h3') {
+      <h3 [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h3>
+    }
+    @if (variant === 'h4') {
+      <h4 [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></h4>
+    }
+    @if (variant === 'blockquote') {
+      <blockquote [class]="computedClass">
+        <ng-container *ngTemplateOutlet="body"></ng-container>
+      </blockquote>
+    }
+    @if (variant === 'code') {
+      <code [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></code>
+    }
+    @if (isParagraph) {
+      <p [class]="computedClass"><ng-container *ngTemplateOutlet="body"></ng-container></p>
+    }
   `,
 })
-export class TypographyComponent  implements OnChanges{
+export class TypographyComponent implements OnChanges {
   private readonly cdr = inject(ChangeDetectorRef);
 
   /**

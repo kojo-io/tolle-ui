@@ -13,7 +13,6 @@ import {
 
 @Component({
     selector: 'app-basic-field',
-    standalone: true,
     imports: [
         FormsModule,
         FieldComponent,

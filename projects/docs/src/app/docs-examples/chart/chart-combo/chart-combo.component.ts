@@ -11,7 +11,6 @@ import {
 
 @Component({
     selector: 'app-chart-combo',
-    standalone: true,
     imports: [
         ChartComponent,
         ChartGridComponent,

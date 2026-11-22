@@ -10,20 +10,19 @@ import { InputComponent } from '../../../../../../tolle/src/lib/input.component'
 import { LabelComponent } from '../../../../../../tolle/src/lib/label.component';
 
 @Component({
-  selector: 'app-country-selector-interactive',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    CountrySelectorComponent,
-    SelectComponent,
-    SelectItemComponent,
-    SwitchComponent,
-    PlaygroundComponent,
-    InputComponent,
-    LabelComponent
-  ],
-  templateUrl: './country-selector-interactive.component.html'
+    selector: 'app-country-selector-interactive',
+    imports: [
+        CommonModule,
+        FormsModule,
+        CountrySelectorComponent,
+        SelectComponent,
+        SelectItemComponent,
+        SwitchComponent,
+        PlaygroundComponent,
+        InputComponent,
+        LabelComponent
+    ],
+    templateUrl: './country-selector-interactive.component.html'
 })
 export class CountrySelectorInteractiveComponent {
   selectedIso = 'GH';

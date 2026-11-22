@@ -4,7 +4,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-accordion-overview',
-    standalone: true,
     imports: [BaseEditorComponent, DocHeroComponent],
     templateUrl: './accordion-overview.component.html'
 })

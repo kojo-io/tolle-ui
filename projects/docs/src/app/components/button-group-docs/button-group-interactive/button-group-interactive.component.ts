@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../../../../../../tolle/src/lib/button.component';
 import { ButtonGroupComponent } from '../../../../../../tolle/src/lib/button-group.component';
@@ -10,20 +10,18 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
 
 @Component({
   selector: 'app-button-group-interactive',
-  standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     ButtonComponent,
     ButtonGroupComponent,
     PlaygroundComponent,
     SelectComponent,
     SelectItemComponent,
-    LabelComponent
+    LabelComponent,
   ],
   template: `
     <section class="mb-16" id="playground">
-      <h2 class="text-xl font-semibold tracking-tight mb-6">Interactive Playground</h2>
+      <h2 class="mb-6 text-xl font-semibold tracking-tight">Interactive Playground</h2>
       <app-playground [code]="playgroundCode" language="angular">
         <div preview>
           <tolle-button-group>
@@ -55,7 +53,7 @@ import { LabelComponent } from '../../../../../../tolle/src/lib/label.component'
         </div>
       </app-playground>
     </section>
-  `
+  `,
 })
 export class ButtonGroupInteractiveComponent {
   variant: any = 'outline';

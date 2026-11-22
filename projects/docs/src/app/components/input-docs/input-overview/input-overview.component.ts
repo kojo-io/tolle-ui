@@ -9,7 +9,6 @@ import { BasicInputExampleComponent } from '../../../docs-examples/input/basic-i
 
 @Component({
     selector: 'app-input-overview',
-    standalone: true,
     imports: [CommonModule, ComponentPreviewComponent, DocHeroComponent, BasicInputExampleComponent],
     templateUrl: './input-overview.component.html'
 })

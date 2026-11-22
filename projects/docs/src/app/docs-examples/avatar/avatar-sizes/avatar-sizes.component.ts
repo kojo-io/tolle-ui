@@ -4,7 +4,6 @@ import { AvatarFallbackComponent } from '../../../../../../tolle/src/lib/avatar-
 
 @Component({
     selector: 'app-avatar-sizes',
-    standalone: true,
     imports: [AvatarComponent, AvatarFallbackComponent],
     templateUrl: './avatar-sizes.component.html'
 })

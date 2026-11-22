@@ -10,19 +10,18 @@ import { BasicDirectionComponent } from '../../docs-examples/direction/basic-dir
 import { DirectionToggleComponent } from '../../docs-examples/direction/direction-toggle/direction-toggle.component';
 
 @Component({
-  selector: 'app-direction-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicDirectionComponent,
-    DirectionToggleComponent
-  ],
-  templateUrl: './direction-docs.component.html',
-  styleUrl: './direction-docs.component.css'
+    selector: 'app-direction-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicDirectionComponent,
+        DirectionToggleComponent
+    ],
+    templateUrl: './direction-docs.component.html',
+    styleUrl: './direction-docs.component.css'
 })
 export class DirectionDocsComponent {
   baseService = inject(BaseService);

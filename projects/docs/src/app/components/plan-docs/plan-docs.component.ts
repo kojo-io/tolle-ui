@@ -10,19 +10,18 @@ import { BasicPlanComponent } from '../../docs-examples/plan/basic-plan/basic-pl
 import { PlanCollapsedComponent } from '../../docs-examples/plan/plan-collapsed/plan-collapsed.component';
 
 @Component({
-  selector: 'app-plan-docs',
-  standalone: true,
-  imports: [
-    DocsWrapperComponent,
-    DocHeroComponent,
-    BaseEditorComponent,
-    ComponentPreviewComponent,
-    PropTableComponent,
-    BasicPlanComponent,
-    PlanCollapsedComponent
-  ],
-  templateUrl: './plan-docs.component.html',
-  styleUrl: './plan-docs.component.css'
+    selector: 'app-plan-docs',
+    imports: [
+        DocsWrapperComponent,
+        DocHeroComponent,
+        BaseEditorComponent,
+        ComponentPreviewComponent,
+        PropTableComponent,
+        BasicPlanComponent,
+        PlanCollapsedComponent
+    ],
+    templateUrl: './plan-docs.component.html',
+    styleUrl: './plan-docs.component.css'
 })
 export class PlanDocsComponent {
   baseService = inject(BaseService);

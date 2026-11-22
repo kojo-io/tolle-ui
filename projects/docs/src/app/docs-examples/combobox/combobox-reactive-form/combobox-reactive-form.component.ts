@@ -6,7 +6,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-combobox-reactive-form',
-    standalone: true,
     imports: [CommonModule, ReactiveFormsModule, ComboboxComponent, ButtonComponent],
     templateUrl: './combobox-reactive-form.component.html'
 })

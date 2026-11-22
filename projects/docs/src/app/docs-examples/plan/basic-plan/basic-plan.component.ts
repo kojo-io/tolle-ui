@@ -3,7 +3,6 @@ import { PlanComponent, PlanStepComponent } from '../../../../../../tolle/src/li
 
 @Component({
     selector: 'app-basic-plan',
-    standalone: true,
     imports: [PlanComponent, PlanStepComponent],
     templateUrl: './basic-plan.component.html'
 })

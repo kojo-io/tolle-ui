@@ -3,7 +3,6 @@ import { DocHeroComponent } from '../../../shared/doc-hero/doc-hero.component';
 
 @Component({
     selector: 'app-carousel-overview',
-    standalone: true,
     imports: [DocHeroComponent],
     template: `
     <app-doc-hero slug="carousel" description="A motion and touch compatible carousel component built using Embla Carousel core." id="overview" />

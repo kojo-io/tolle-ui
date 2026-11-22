@@ -9,7 +9,6 @@ import { TwoMonthRangeComponent } from '../../../docs-examples/date-range-picker
 
 @Component({
     selector: 'app-date-range-picker-overview',
-    standalone: true,
     imports: [CommonModule, AsyncPipe, BaseEditorComponent, DocHeroComponent, ComponentPreviewComponent, BasicRangeComponent, TwoMonthRangeComponent],
     templateUrl: './date-range-picker-overview.component.html'
 })

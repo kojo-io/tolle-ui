@@ -6,7 +6,6 @@ import { ButtonComponent } from '../../../../../../tolle/src/lib/button.componen
 
 @Component({
     selector: 'app-date-time-picker-reactive-form',
-    standalone: true,
     imports: [CommonModule, ReactiveFormsModule, DateTimePickerComponent, ButtonComponent],
     templateUrl: './date-time-picker-reactive-form.component.html'
 })

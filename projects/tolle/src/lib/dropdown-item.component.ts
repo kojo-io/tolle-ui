@@ -2,10 +2,9 @@ import {Component, Input} from '@angular/core';
 import { cn } from './utils/cn';
 
 @Component({
-  selector: 'tolle-dropdown-item',
-  standalone: true,
-  imports: [],
-  template: `
+    selector: 'tolle-dropdown-item',
+    imports: [],
+    template: `
     <div
       role="menuitem"
       tabindex="-1"
@@ -15,7 +14,7 @@ import { cn } from './utils/cn';
       <ng-content></ng-content>
     </div>
   `,
-  styles: `:host { display: block; }`
+    styles: `:host { display: block; }`
 })
 export class DropdownItemComponent {
   @Input() class: string = '';

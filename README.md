@@ -11,7 +11,21 @@ This **config-first** approach allows you to rebrand your entire application in 
 
 ## Installation
 
-Tolle UI is built for **Angular 18** and relies on a small set of **peer dependencies** to stay lightweight and flexible.
+Tolle UI relies on a small set of **peer dependencies** to stay lightweight and flexible.
+
+### Supported Angular versions
+
+The library major tracks the Angular major it is built against. Angular's
+partial-Ivy output is not backward compatible, so pick the line that matches
+your app:
+
+| Your Angular | Install | npm tag |
+| --- | --- | --- |
+| **21.x** | `npm install @tolle_/tolle-ui` | `latest` |
+| **18.x** | `npm install @tolle_/tolle-ui@v18` | `v18` |
+
+The 18.x line is maintained on the `release-18` branch and receives fixes only.
+New work targets Angular 21.
 
 ### 1. Install Tolle UI
 
@@ -29,11 +43,20 @@ pnpm add @tolle_/tolle-ui
 
 ### 2. Install Peer Dependencies
 
+**npm 7+ installs peer dependencies automatically**, so `npm install @tolle_/tolle-ui`
+is usually all you need. To install them explicitly:
+
 ```bash
-npm install @angular/core@^18.2.0 @angular/common@^18.2.0 @floating-ui/dom@^1.7.4 class-variance-authority@^0.7.1 tailwind-merge@^3.4.0 clsx@^2.1.1 date-fns@^4.1.0
+npm install @angular/cdk@^21.0.0 @floating-ui/dom@^1.7.4 class-variance-authority@^0.7.1 tailwind-merge@^3.4.0 clsx@^2.1.1 date-fns@^4.1.0 embla-carousel@^8.5.2 libphonenumber-js@^1.12.36 tailwindcss-animate@^1.0.7
 ```
 
-> 💡 If you already have Angular 18 installed, you only need to install the **non-Angular** dependencies.
+`@angular/core`, `common`, `forms`, `router`, `platform-browser`, `animations`
+and `rxjs` are also peers, but any Angular app already has them.
+
+> ℹ️ `@angular/cdk` backs the overlay components (modal, sheet, alert dialog),
+> and `libphonenumber-js` backs `phone-number-input`. Both are required even if
+> you don't use those components: the library ships a single flat bundle, so
+> every import must resolve at build time.
 
 ---
 
